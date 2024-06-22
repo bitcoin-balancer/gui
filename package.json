@@ -1,0 +1,67 @@
+{
+  "name": "gui",
+  "description": "Balancer GUI is a Progressive Web Application designed to interact with Balancer API through the HTTPS Protocol.",
+  "private": false,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "gui-environment --development && vite && sw-builder",
+    "build": "gui-environment --production && tsc -b && vite build && sw-builder",
+    "preview": "gui-environment --production && vite preview && sw-builder",
+    "test": "echo \"Error: tests are executed with  npm run test:(e2e|integration|unit)\" && exit 1",
+    "test:e2e": "vitest run --config=vitest.test-e2e.config.ts",
+    "test:integration": "vitest run --config vitest.test-integration.config.ts",
+    "test:unit": "vitest run --config vitest.test-unit.config.ts",
+    "test:bench": "vitest bench",
+    "watch-test:e2e": "vitest --config=vitest.test-e2e.config.ts",
+    "watch-test:unit": "vitest --config vitest.test-unit.config.ts",
+    "watch-test:integration": "vitest --config vitest.test-integration.config.ts",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitcoin-balancer/gui"
+  },
+  "keywords": [
+    "bitcoin",
+    "trading",
+    "strategy",
+    "trading-strategy",
+    "spot",
+    "spot-market",
+    "bitcoin-spot-market",
+    "automated",
+    "self-hosted"
+  ],
+  "author": "Jesus Graterol",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bitcoin-balancer/gui/issues"
+  },
+  "dependencies": {
+    "browser-style-normalizer": "^1.0.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sw-service": "^1.1.0",
+    "webfont-ubuntu": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^7.13.1",
+    "@typescript-eslint/parser": "^7.13.1",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb-typescript": "^18.0.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.7",
+    "gui-environment": "^1.0.2",
+    "postcss": "^8.4.38",
+    "sw-builder": "^1.0.3",
+    "tailwindcss": "^3.4.4",
+    "typescript": "^5.2.2",
+    "vite": "^5.3.1",
+    "vitest": "^1.6.0"
+  }
+}

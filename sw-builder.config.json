@@ -1,0 +1,9 @@
+{
+  "outDir": "dist",
+  "template": "base",
+  "includeToPrecache": [
+    "/assets",
+    "/index.html"
+  ],
+  "excludeFilesFromPrecache": []
+}
