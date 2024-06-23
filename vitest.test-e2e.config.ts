@@ -3,6 +3,6 @@ import viteConfig from './vite.config.ts';
 
 export default mergeConfig(viteConfig, defineConfig({
   test: {
-    include: ['**/*.test-e2e.ts'],
+    include: ['**/*.test-e2e.tsx'],
   },
 }));

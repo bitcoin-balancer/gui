@@ -1,12 +1,15 @@
-/* eslint-disable arrow-body-style */
+import { useState } from 'react';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
 const App = () => {
+  const [count, setCount] = useState(0);
+
   return (
     <>
-      <h1 className="text-5xl">Balancer GUI</h1>
+      <h1 className="text-5xl">Balancer GUI: {count}</h1>
+      <button className='px-5 py-3 hover:bg-slate-200' onClick={() => setCount(count + 1)}>+1</button>
     </>
   );
 };

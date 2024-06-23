@@ -16,7 +16,7 @@ module.exports = {
   plugins: ['react-refresh'],
   overrides: [
     {
-      files: [ '*.test-*.ts', "*.bench.ts" ],
+      files: [ '*.test-*.{ts,tsx}', "*.bench.ts" ],
       rules: {
         'object-curly-newline': 'off',
         'import/no-extraneous-dependencies': [ 'error', { 'devDependencies': true } ]
