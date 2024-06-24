@@ -41,11 +41,8 @@ USER node
 FROM nginx:1.27.0-alpine
 
 # copy the build's outputs as well as the nginx's configuration 
-COPY --chown=nginx:nginx --from=build /usr/src/app/dist /usr/share/nginx/html
-COPY --chown=nginx:nginx /nginx.conf  /etc/nginx/conf.d/default.conf
-
-# activate the non-root user
-USER nginx
+COPY --from=build /usr/src/app/dist /usr/share/nginx/html
+COPY /nginx.conf  /etc/nginx/conf.d/default.conf
 
 # expose the port
 EXPOSE 8090
