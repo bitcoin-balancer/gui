@@ -1,0 +1,14 @@
+dist
+node_modules
+.dockerignore
+.eslintrc.cjs
+.git
+.gitignore
+Dockerfile
+LICENSE
+README.md
+npm-debug.log
+.npmrc
+vitest.test-e2e.config.ts
+vitest.test-integration.config.ts
+vitest.test-unit.config.ts

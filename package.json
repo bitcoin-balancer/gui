@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "gui-environment --development && vite && sw-builder",
-    "build": "gui-environment --production && tsc -b && vite build && sw-builder",
+    "build-development": "gui-environment --development && tsc -b && vite build && sw-builder",
+    "build-production": "gui-environment --production && tsc -b && vite build && sw-builder",
     "preview": "gui-environment --production && vite preview && sw-builder",
     "test": "echo \"Error: tests are executed with  npm run test:(e2e|integration|unit)\" && exit 1",
     "test:e2e": "vitest run --config=vitest.test-e2e.config.ts",
