@@ -17,17 +17,14 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm ci
 
-# copy the source code and assign the ownership to the user 'node'
-COPY --chown=node:node . .
+# copy the source code
+COPY . .
 
 # initialize the build's environment
 ARG NODE_ENV
 
 # build the app
 RUN npm run build-${NODE_ENV}
-
-# activate the non-root user
-USER node
 
 
 
