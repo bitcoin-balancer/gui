@@ -1,6 +1,6 @@
 {
   "name": "gui",
-  "description": "Balancer GUI is a Progressive Web Application designed to interact with Balancer API through the HTTPS Protocol.",
+  "description": "The Balancer GUI is a powerful, user-friendly Progressive Web Application designed to streamline the configuration and management of the Balancer API.",
   "private": false,
   "version": "1.0.0",
   "type": "module",
@@ -9,7 +9,7 @@
     "build-development": "gui-environment --development && tsc -b && vite build && sw-builder",
     "build-production": "gui-environment --production && tsc -b && vite build && sw-builder",
     "preview": "gui-environment --production && vite preview && sw-builder",
-    "test": "echo \"Error: tests are executed with  npm run test:(e2e|integration|unit)\" && exit 1",
+    "test": "echo \"Error: tests are executed with  npm run test:(e2e|integration|unit|bench)\" && exit 1",
     "test:e2e": "vitest run --config=vitest.test-e2e.config.ts",
     "test:integration": "vitest run --config vitest.test-integration.config.ts",
     "test:unit": "vitest run --config vitest.test-unit.config.ts",
