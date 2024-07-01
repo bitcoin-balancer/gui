@@ -7,9 +7,6 @@
 # extend the official Node.js Alpine image
 FROM node:22.3.0-alpine AS build
 
-# environment variables
-ENV WORKDIR_PATH=/usr/src/app
-
 # Create app directory
 WORKDIR /usr/src/app
 
