@@ -12,7 +12,7 @@ WORKDIR /usr/src/app
 
 # install the dependencies
 COPY package*.json ./
-RUN npm ci --omit=dev
+RUN npm ci
 
 # copy the source code
 COPY . .
