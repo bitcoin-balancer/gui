@@ -5,7 +5,7 @@ import { IEnvironment } from './types';
  ************************************************************************************************ */
 const ENVIRONMENT: IEnvironment = {
   production: true,
-  version: '1.0.0',
+  version: '(package.json).version',
 };
 
 
