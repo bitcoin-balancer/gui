@@ -52,7 +52,7 @@ interface IAltchaWidgetProps extends DetailedHTMLProps<HTMLAttributes<HTMLElemen
   challengeurl: string;
 
   // JSON-encoded challenge data. If avoiding an HTTP request to challengeurl, provide the data here
-  challengejson?: IRecord;
+  challengejson?: IRecord<string>;
 
   // automatically verify without user interaction
   auto?: 'onfocus' | 'onload' | 'onsubmit';
@@ -94,7 +94,7 @@ interface IAltchaWidgetProps extends DetailedHTMLProps<HTMLAttributes<HTMLElemen
   spamfilter?: boolean;
 
   // JSON-encoded translation strings
-  strings?: IRecord;
+  strings?: IRecord<string>;
 
   // enable server-side verification by configuring the URL to use for verification requests
   verifyurl?: boolean;
