@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+import 'altcha';
 import { ENVIRONMENT } from '../environment/environment.ts';
+import { Altcha } from '../shared/components/altcha/altcha.component.tsx';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -7,12 +9,19 @@ import { ENVIRONMENT } from '../environment/environment.ts';
 const App = () => {
   const [count, setCount] = useState(0);
 
+
+  const handleAltchaVerification = useCallback((payload: string) => {
+    console.log(payload);
+  }, []);
+
   return (
     <>
       <h1 className="text-5xl">Balancer GU: {count}</h1>
       <p>Production: {ENVIRONMENT.production ? 'true' : 'false'}</p>
       <p>{ENVIRONMENT.version}</p>
       <button className='px-5 py-3 hover:bg-slate-200' onClick={() => setCount(count + 1)}>+1</button>
+      <br/><br/>
+      <Altcha onVerified={handleAltchaVerification}/>
     </>
   );
 };

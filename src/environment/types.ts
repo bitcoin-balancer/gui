@@ -11,10 +11,13 @@
  */
 type IEnvironment = {
   // the kind of build that was performed
-  production: boolean,
+  production: boolean;
 
   // the current version of the GUI
-  version: string,
+  version: string;
+
+  // the base URL to the RESTful API
+  apiURL: string;
 };
 
 

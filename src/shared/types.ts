@@ -1,12 +1,16 @@
-import { IEnvironment } from './types';
+
 
 /* ************************************************************************************************
- *                                      ENVIRONMENT VARIABLES                                     *
+ *                                         UTILITY TYPES                                          *
  ************************************************************************************************ */
-const ENVIRONMENT: IEnvironment = {
-  production: true,
-  version: '(package.json).version',
-  apiURL: 'https://balancerapi.jesusgraterol.dev',
+
+/**
+ * Record
+ * This utility type is used to replace the original 'object' type which can become difficult to
+ * deal with.
+ */
+type IRecord = {
+  [key: string]: unknown;
 };
 
 
@@ -16,6 +20,6 @@ const ENVIRONMENT: IEnvironment = {
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export {
-  ENVIRONMENT,
+export type {
+  IRecord,
 };

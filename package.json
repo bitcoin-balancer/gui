@@ -42,6 +42,7 @@
     "url": "https://github.com/bitcoin-balancer/gui/issues"
   },
   "dependencies": {
+    "altcha": "^0.6.3",
     "browser-style-normalizer": "^1.0.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -61,8 +62,8 @@
     "eslint": "^8.57.0",
     "eslint-config-airbnb-typescript": "^18.0.0",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-plugin-react-refresh": "^0.4.7",
-    "gui-environment": "^1.0.5",
+    "eslint-plugin-react-refresh": "^0.4.8",
+    "gui-environment": "^1.0.6",
     "jsdom": "^24.1.0",
     "postcss": "^8.4.39",
     "sw-builder": "^1.0.3",
