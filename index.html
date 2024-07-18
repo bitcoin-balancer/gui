@@ -1,10 +1,233 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" translate="no">
   <head>
+	  <!-- Charset -->
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
+
+
+
+    <!-- Viewport -->
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+
+
+
+    <!-- General Information Tags -->
+    <title>Balancer</title>
+    <meta name="description" content="Balancer is a cutting-edge, open-source, self-hosted platform that empowers users to automate the Value Averaging Strategy for Bitcoin.">
+    <meta name="keywords" content="bitcoin, trading, spot, market, dca, strategy, value-averaging, open-source, profit, investment">
+    <meta name="author" content="Jesus Graterol">
+
+
+
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Balancer" />
+    <meta property="og:site_name" content="Balancer" />
+    <meta property="og:description" content="Balancer is a cutting-edge, open-source, self-hosted platform that empowers users to automate the Value Averaging Strategy for Bitcoin." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://balancer.jesusgraterol.dev" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content="https://balancer.jesusgraterol.dev/open-graph/ogimage.png" />
+    <meta property="og:image:secure_url" content="https://balancer.jesusgraterol.dev/open-graph/ogimage.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:alt" content="The cover image for the Balancer project" />
+
+
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="512x512" href="favicons/512x512.png">
+    <link rel="icon" type="image/png" sizes="384x384" href="favicons/384x384.png">
+    <link rel="icon" type="image/png" sizes="256x256" href="favicons/256x256.png">
+    <link rel="icon" type="image/png" sizes="240x240" href="favicons/240x240.png">
+    <link rel="icon" type="image/png" sizes="224x224" href="favicons/224x224.png">
+    <link rel="icon" type="image/png" sizes="208x208" href="favicons/208x208.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="favicons/192x192.png">
+    <link rel="icon" type="image/png" sizes="176x176" href="favicons/176x176.png">
+    <link rel="icon" type="image/png" sizes="160x160" href="favicons/160x160.png">
+    <link rel="icon" type="image/png" sizes="144x144" href="favicons/144x144.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="favicons/128x128.png">
+    <link rel="icon" type="image/png" sizes="112x112" href="favicons/112x112.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="favicons/96x96.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="favicons/64x64.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="favicons/48x48.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicons/32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicons/16x16.png">
+
+
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#0C0C0C">
+
+
+
+    <!-- Manifest -->
+    <link rel="manifest" href="manifest.webmanifest">
+
+
+
+		<!-- Fallback Application Metadata for Legacy Browsers -->
+		<meta name="application-name" content="Balancer">
+
+
+
+		<!-- Run in Standalone Mode without the Browser Interface -->
+		<meta name="mobile-web-app-capable" content="yes">
+
+
+
+		<!-- Apple Tags -->
+
+		<!-- Run the App in Fullscreen Without the Browser Interface -->
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-touch-fullscreen" content="yes">
+		
+		<!-- Application Title under the PWA Icon on the user's home screen -->
+		<meta name="apple-mobile-web-app-title" content="Balancer" />
+		
+		<!-- Status Bar Color "default"|"black"|"black-translucent"|"white" -->
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!-- Apple Shortcut Icon -->
+		<link rel="shortcut icon" href="pwa-assets/apple-touch-icons/180x180.png">
+
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" sizes="16x16" href="pwa-assets/apple-touch-icons/16x16.png">
+    <link rel="apple-touch-icon" sizes="20x20" href="pwa-assets/apple-touch-icons/20x20.png">
+    <link rel="apple-touch-icon" sizes="29x29" href="pwa-assets/apple-touch-icons/29x29.png">
+    <link rel="apple-touch-icon" sizes="32x32" href="pwa-assets/apple-touch-icons/32x32.png">
+    <link rel="apple-touch-icon" sizes="40x40" href="pwa-assets/apple-touch-icons/40x40.png">
+    <link rel="apple-touch-icon" sizes="50x50" href="pwa-assets/apple-touch-icons/50x50.png">
+    <link rel="apple-touch-icon" sizes="57x57" href="pwa-assets/apple-touch-icons/57x57.png">
+    <link rel="apple-touch-icon" sizes="58x58" href="pwa-assets/apple-touch-icons/58x58.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="pwa-assets/apple-touch-icons/60x60.png">
+    <link rel="apple-touch-icon" sizes="64x64" href="pwa-assets/apple-touch-icons/64x64.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="pwa-assets/apple-touch-icons/72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="pwa-assets/apple-touch-icons/76x76.png">
+    <link rel="apple-touch-icon" sizes="80x80" href="pwa-assets/apple-touch-icons/80x80.png">
+    <link rel="apple-touch-icon" sizes="87x87" href="pwa-assets/apple-touch-icons/87x87.png">
+    <link rel="apple-touch-icon" sizes="100x100" href="pwa-assets/apple-touch-icons/100x100.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="pwa-assets/apple-touch-icons/114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="pwa-assets/apple-touch-icons/120x120.png">
+    <link rel="apple-touch-icon" sizes="128x128" href="pwa-assets/apple-touch-icons/128x128.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="pwa-assets/apple-touch-icons/144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="pwa-assets/apple-touch-icons/152x152.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="pwa-assets/apple-touch-icons/167x167.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="pwa-assets/apple-touch-icons/180x180.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="pwa-assets/apple-touch-icons/192x192.png">
+    <link rel="apple-touch-icon" sizes="256x256" href="pwa-assets/apple-touch-icons/256x256.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="pwa-assets/apple-touch-icons/512x512.png">
+    <link rel="apple-touch-icon" sizes="1024x1024" href="pwa-assets/apple-touch-icons/1024x1024.png">
+
+    <!-- Apple Splash Screens -->
+    <link
+      href="pwa-assets/apple-splash-screens/640x1136.png"
+      rel="apple-touch-startup-image"
+      media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+    />
+    <link
+      href="pwa-assets/apple-splash-screens/750x1334.png"
+      rel="apple-touch-startup-image"
+      media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+    />
+    <link
+      href="pwa-assets/apple-splash-screens/828x1792.png"
+      rel="apple-touch-startup-image"
+      media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+    />
+    <link
+      href="pwa-assets/apple-splash-screens/1125x2436.png"
+      rel="apple-touch-startup-image"
+      media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
+    />
+    <link
+      href="pwa-assets/apple-splash-screens/1136x640.png"
+      rel="apple-touch-startup-image"
+      media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+    />
+    <link
+      href="pwa-assets/apple-splash-screens/1242x2208.png"
+      rel="apple-touch-startup-image"
+      media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
+    />
+    <link
+      href="pwa-assets/apple-splash-screens/1242x2688.png"
+      rel="apple-touch-startup-image"
+      media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
+    />
+    <link
+      href="pwa-assets/apple-splash-screens/1334x750.png"
+      rel="apple-touch-startup-image"
+      media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+    />
+    <link
+      href="pwa-assets/apple-splash-screens/1536x2048.png"
+      rel="apple-touch-startup-image"
+      media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+    />
+    <link
+      href="pwa-assets/apple-splash-screens/1668x2224.png"
+      rel="apple-touch-startup-image"
+      media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+    />
+    <link
+      href="pwa-assets/apple-splash-screens/1668x2388.png"
+      rel="apple-touch-startup-image"
+      media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+    />
+    <link
+      href="pwa-assets/apple-splash-screens/1792x828.png"
+      rel="apple-touch-startup-image"
+      media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+    />
+    <link
+      href="pwa-assets/apple-splash-screens/2048x1536.png"
+      rel="apple-touch-startup-image"
+      media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+    />
+    <link
+      href="pwa-assets/apple-splash-screens/2048x2732.png"
+      rel="apple-touch-startup-image"
+      media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+    />
+    <link
+      href="pwa-assets/apple-splash-screens/2208x1242.png"
+      rel="apple-touch-startup-image"
+      media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
+    />
+    <link
+      href="pwa-assets/apple-splash-screens/2224x1668.png"
+      rel="apple-touch-startup-image"
+      media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+    />
+    <link
+      href="pwa-assets/apple-splash-screens/2388x1668.png"
+      rel="apple-touch-startup-image"
+      media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+    />
+    <link
+      href="pwa-assets/apple-splash-screens/2436x1125.png"
+      rel="apple-touch-startup-image"
+      media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
+    />
+    <link
+      href="pwa-assets/apple-splash-screens/2688x1242.png"
+      rel="apple-touch-startup-image"
+      media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
+    />
+    <link
+      href="pwa-assets/apple-splash-screens/2732x2048.png"
+      rel="apple-touch-startup-image"
+      media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+    />
+
+
+
+		<!-- Microsoft Tags -->
+
+		<!-- Support for older versions of IE -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+
+    <!-- Google Site Verification -->
+    <!-- @TODO -->
   </head>
   <body>
     <div id="root"></div>
