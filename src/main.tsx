@@ -7,8 +7,6 @@ import './index.css';
 // register the Service Worker
 SWService.register();
 
-
-
 // render the app
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

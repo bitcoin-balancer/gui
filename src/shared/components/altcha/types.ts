@@ -11,12 +11,16 @@ import { IRecord } from '../../types';
  * ...
  */
 type IProps = {
-  onVerified: (payload: string) => void;
+  // the function that will be invoked when the challenge is solved or in case of errors
+  onChange: (payload: string) => void;
+
+  // if enabled, logs will be printed at every step of the process
+  debug?: boolean;
 };
 
 /**
  * State Change Event
- * The event triggered by the Sltcha Widget when its state changes.
+ * The event triggered by the Altcha Widget when its state changes.
  */
 type IEventState = 'error' | 'verified' | 'verifying' | 'unverified' | 'expired';
 type IEventDetail = {

@@ -29,7 +29,7 @@ const App = () => {
       Please wait
     </Button>
       <br/><br/>
-      <Altcha onVerified={handleAltchaVerification}/>
+      <Altcha onChange={handleAltchaVerification} debug={true}/>
     </>
   );
 };
