@@ -35,7 +35,7 @@ npm run build-production
 
 
 
-Preview the `production` build
+Preview the build
 
 ```bash
 npm run preview
