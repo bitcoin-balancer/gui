@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
-import 'altcha';
 import { ENVIRONMENT } from '../environment/environment.ts';
 import { Altcha } from '../shared/components/altcha/altcha.component.tsx';
+import { Button } from '@/shadcn/components/ui/button';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -16,10 +16,12 @@ const App = () => {
 
   return (
     <>
-      <h1 className="text-5xl">Balancer GU: {count}</h1>
+      <h1 className="text-5xl">Balancer GUI: {count}</h1>
       <p>Production: {ENVIRONMENT.production ? 'true' : 'false'}</p>
       <p>{ENVIRONMENT.version}</p>
       <button className='px-5 py-3 hover:bg-slate-200' onClick={() => setCount(count + 1)}>+1</button>
+      <br/><br/>
+      <Button>Click me</Button>
       <br/><br/>
       <Altcha onVerified={handleAltchaVerification}/>
     </>

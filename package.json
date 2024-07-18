@@ -42,17 +42,24 @@
     "url": "https://github.com/bitcoin-balancer/gui/issues"
   },
   "dependencies": {
+    "@radix-ui/react-slot": "^1.1.0",
     "altcha": "^0.6.3",
     "browser-style-normalizer": "^1.0.5",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.408.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "sw-service": "^1.1.0",
+    "tailwind-merge": "^2.4.0",
+    "tailwindcss-animate": "^1.0.7",
     "webfont-ubuntu": "^1.0.0"
   },
   "devDependencies": {
     "@testing-library/dom": "^10.3.2",
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.5.2",
+    "@types/node": "^20.14.11",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.16.1",
