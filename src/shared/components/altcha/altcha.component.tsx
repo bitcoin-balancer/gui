@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { useRef, useEffect } from 'react';
 import 'altcha';
-import { AltchaService } from '../../backend/altcha/altcha.service.ts';
+import { AltchaService } from '../../backend/altcha/index.ts';
 import { IProps, IStateChangeEvent } from './types.ts';
 
 /* ************************************************************************************************
@@ -9,6 +9,7 @@ import { IProps, IStateChangeEvent } from './types.ts';
  ************************************************************************************************ */
 const Altcha = ({ onChange, debug }: IProps) => {
   const ref = useRef<HTMLElement>(null);
+
 
 
   useEffect(() => {
@@ -40,6 +41,8 @@ const Altcha = ({ onChange, debug }: IProps) => {
       }
     };
   }, [onChange, debug]);
+
+
 
   return (
     <altcha-widget
