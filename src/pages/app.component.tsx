@@ -11,10 +11,11 @@ import { Button } from '@/shared/shadcn/components/ui/button.tsx';
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
 const App = () => {
+  console.log('in App');
   const [count, setCount] = useState(0);
-  //const breakpoint = useMediaQueryBreakpoint();
+  const breakpoint = useMediaQueryBreakpoint();
   const isOnline = useOnlineStatus();
-  //console.log('breakpoint', breakpoint);
+  console.log('breakpoint', breakpoint);
   console.log('isOnline', isOnline);
 
 
@@ -30,7 +31,7 @@ const App = () => {
       <button className='px-5 py-3 hover:bg-slate-200' onClick={() => setCount(count + 1)}>+1</button>
       <br/><br/>
       {/* <p>breakpoint: {breakpoint}</p> */}
-      <p>isOnline: {String(isOnline)}</p>
+      { /* <p>isOnline: {String(isOnline)}</p> */}
       <br/><br/>
       <Button><EnvelopeOpenIcon className="mr-2 h-4 w-4" /> Login with Email</Button>
     <Button disabled>
