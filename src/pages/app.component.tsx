@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react';
 import { EnvelopeOpenIcon, ReloadIcon } from '@radix-ui/react-icons';
 import { ENVIRONMENT } from '../environment/environment.ts';
 import { Altcha } from '../shared/components/altcha/altcha.component.tsx';
+import { useMediaQueryBreakpoint } from '../shared/hooks/media-query-breakpoint/index.ts';
 
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 
@@ -10,6 +11,8 @@ import { Button } from '@/shared/shadcn/components/ui/button.tsx';
  ************************************************************************************************ */
 const App = () => {
   const [count, setCount] = useState(0);
+  const breakpoint = useMediaQueryBreakpoint();
+  console.log(breakpoint);
 
 
   const handleAltchaVerification = useCallback((payload: string) => {
@@ -29,7 +32,7 @@ const App = () => {
       Please wait
     </Button>
       <br/><br/>
-      <Altcha onChange={handleAltchaVerification} debug={true}/>
+      <Altcha onChange={handleAltchaVerification} debug={false}/>
     </>
   );
 };
