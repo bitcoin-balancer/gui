@@ -25,6 +25,15 @@ const Router = () => {
     {
       path: '/app',
       element: <App />,
+      children: [
+        {
+          path: '/app/users',
+          lazy: async () => {
+            const { Users } = await import('./pages/app/users/index.component.tsx');
+            return { Component: Users };
+          },
+        },
+      ],
     },
     {
       path: '*',
