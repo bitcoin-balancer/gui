@@ -1,9 +1,9 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Landing } from './pages/landing/index.component.tsx';
-import { SignIn } from './pages/sign-in/index.component.tsx';
-import { UpdatePassword } from './pages/update-password/index.component.tsx';
-import { App } from './pages/app/index.component.tsx';
-import { NotFound } from './pages/not-found/index.component.tsx';
+import Landing from './pages/landing/index.component.tsx';
+import SignIn from './pages/sign-in/index.component.tsx';
+import UpdatePassword from './pages/update-password/index.component.tsx';
+import App from './pages/app/index.component.tsx';
+import NotFoundError from './pages/not-found-error/index.component.tsx';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -37,7 +37,7 @@ const Router = () => {
     },
     {
       path: '*',
-      element: <NotFound />,
+      element: <NotFoundError />,
     },
   ]);
   return <RouterProvider router={router} />;
@@ -50,6 +50,4 @@ const Router = () => {
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export {
-  Router,
-};
+export default Router;

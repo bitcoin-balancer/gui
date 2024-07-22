@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { SWService } from 'sw-service';
-import { Router } from './router.tsx';
+import Router from './router.tsx';
 import './index.css';
 
 // register the Service Worker
