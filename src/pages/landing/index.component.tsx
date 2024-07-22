@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { EnvelopeOpenIcon, ReloadIcon } from '@radix-ui/react-icons';
+import { RefreshCw } from 'lucide-react';
 import { ENVIRONMENT } from '../../environment/environment.ts';
 import { Altcha } from '../../shared/components/altcha/index.component.tsx';
 import useMediaQueryBreakpoint from '../../shared/hooks/media-query-breakpoint/index.ts';
@@ -39,13 +39,13 @@ const Landing = () => {
       {/* <p>breakpoint: {breakpoint}</p> */}
       { /* <p>isOnline: {String(isOnline)}</p> */}
       <br/><br/>
-      <Button><EnvelopeOpenIcon className="mr-2 h-4 w-4" /> Login with Email</Button>
+      <Button><RefreshCw className="mr-2 h-4 w-4" /> Login with Email</Button>
       <br/><br/>
 
       <Button variant="link"><Link to='app/users'>Users</Link></Button>
 
     <Button disabled>
-      <ReloadIcon className='mr-2 h-4 w-4 animate-spin' />
+      <RefreshCw className='mr-2 h-4 w-4 animate-spin' />
       Please wait
     </Button>
       <br/><br/>

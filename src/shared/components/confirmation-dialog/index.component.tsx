@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ClipboardIcon } from '@radix-ui/react-icons';
+import { Clipboard } from 'lucide-react';
 import { Button } from '../../shadcn/components/ui/button';
 import {
   Dialog,
@@ -84,15 +84,17 @@ const ConfirmationDialog = () => {
               <InputOTPSlot index={5} className='shadow-md' />
             </InputOTPGroup>
           </InputOTP>
-          <Button variant="ghost" size="icon" className='sm:-mr-9'>
-            <ClipboardIcon className="h-4 w-4" />
-          </Button>
+
         </div>
         <p className='text-light text-center text-xs'>Enter your one-time password</p>
         <DialogFooter className='flex mt-5'>
-          <Button variant='ghost' onClick={handleClose}>Cancel</Button>
+          <Button variant='ghost' onClick={handleClose} className='mt-3 sm:mt-0'>CANCEL</Button>
           <span className='flex-1'></span>
-          <Button onClick={handleClose} className='bg-primary'>Confirm</Button>
+          <Button onClick={handleClose} variant='outline' className='sm:hidden mt-3'>PASTE</Button>
+          <Button variant="outline" size="icon" className='hidden sm:flex'>
+            <Clipboard className="h-4 w-4" />
+          </Button>
+          <Button onClick={handleClose} className='bg-primary'>CONFIRM</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
