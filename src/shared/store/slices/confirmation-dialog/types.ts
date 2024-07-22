@@ -13,7 +13,7 @@ type IConfirmationDialogSlice = {
   isOpen: boolean;
 
   // ...
-  onOpenChange: () => void;
+  onOpenChange: (isOpen: boolean) => void;
 };
 
 

@@ -13,7 +13,7 @@ const createConfirmationDialogSlice: StateCreator<IConfirmationDialogSlice> = (
   set,
 ) => ({
   isOpen: false,
-  onOpenChange: () => set((state) => ({ isOpen: !state.isOpen })),
+  onOpenChange: (isOpen: boolean) => set(() => ({ isOpen })),
 });
 
 

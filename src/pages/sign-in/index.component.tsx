@@ -4,6 +4,8 @@ import { Altcha } from '../../shared/components/altcha/index.component.tsx';
 import { Button } from '../../shared/shadcn/components/ui/button';
 import { Input } from '../../shared/shadcn/components/ui/input';
 import { Label } from '../../shared/shadcn/components/ui/label';
+import { useBoundStore } from '../../shared/store/index.ts';
+import ConfirmationDialog from '../../shared/components/confirmation-dialog/index.component.tsx';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -14,12 +16,15 @@ import { Label } from '../../shared/shadcn/components/ui/label';
  * Component in charge of authenticating users.
  */
 const SignIn = () => {
+  const onOpenChange = useBoundStore((state) => state.onOpenChange);
   const handleAltchaVerification = (payload: string) => {
     console.log(payload);
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    onOpenChange(true);
+    console.log('here');
   };
 
   return (
@@ -85,6 +90,9 @@ const SignIn = () => {
 
       </section>
 
+
+      {/* CONFIRMATION DIALOG */}
+      <ConfirmationDialog />
     </main>
   );
 };

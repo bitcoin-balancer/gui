@@ -1,30 +1,20 @@
-import { create } from 'zustand';
-import { createConfirmationDialogSlice } from './slices/confirmation-dialog/index.ts';
-import { IBoundStore } from './types.ts';
+import { IConfirmationDialogSlice } from './slices/confirmation-dialog';
 
 /* ************************************************************************************************
- *                                         IMPLEMENTATION                                         *
+ *                                             TYPES                                              *
  ************************************************************************************************ */
 
 /**
  * Bound Store
- * The combination of all existing state slices.
+ * The type containing the types for all slices.
  */
-const useBoundStore = create<IBoundStore>((set, get, api) => ({
-  ...createConfirmationDialogSlice(set, get, api),
-}));
-
-
+type IBoundStore = IConfirmationDialogSlice;
 
 
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export {
-  // types
-  type IBoundStore,
-
-  // store
-  useBoundStore,
+export type {
+  IBoundStore,
 };
