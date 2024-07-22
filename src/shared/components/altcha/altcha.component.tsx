@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { useRef, useEffect } from 'react';
+import { useEffect } from 'react';
 import 'altcha';
 import { AltchaService } from '../../backend/altcha/index.ts';
 import { IProps, IStateChangeEvent } from './types.ts';
@@ -8,14 +8,10 @@ import { IProps, IStateChangeEvent } from './types.ts';
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
 const Altcha = ({ onChange, debug }: IProps) => {
-  const ref = useRef<HTMLElement>(null);
-
-
-
   useEffect(() => {
     if (debug) console.log('in useEffect');
     // element instance
-    const el = ref.current;
+    const el: HTMLElement | undefined = document.getElementsByName('altcha-widget')[0];
 
     // state event handler
     const onStateChange = (event: IStateChangeEvent): void => {
@@ -46,7 +42,7 @@ const Altcha = ({ onChange, debug }: IProps) => {
 
   return (
     <altcha-widget
-      ref={ref}
+      name="altcha-widget"
       challengeurl={AltchaService.CHALLENGE_URL}
       refetchonexpire
       hidelogo
