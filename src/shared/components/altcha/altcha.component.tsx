@@ -7,7 +7,12 @@ import { IProps, IStateChangeEvent } from './types.ts';
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
-const Altcha = ({ onChange, debug }: IProps) => {
+
+/**
+ * Altcha
+ * Component in charge of implementing the Altcha Widget and handling its events.
+ */
+const Altcha = ({ onChange, debug = false }: IProps) => {
   useEffect(() => {
     if (debug) console.log('in useEffect');
     // element instance
@@ -50,6 +55,7 @@ const Altcha = ({ onChange, debug }: IProps) => {
     ></altcha-widget>
   );
 };
+
 
 
 

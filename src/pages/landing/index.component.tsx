@@ -11,6 +11,11 @@ import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
+
+/**
+ * Landing
+ * Component in charge of showcasing the project's mission, vision and core features.
+ */
 const Landing = () => {
   console.log('in Landing');
   const [count, setCount] = useState(0);
@@ -48,6 +53,9 @@ const Landing = () => {
     </>
   );
 };
+
+
+
 
 
 /* ************************************************************************************************

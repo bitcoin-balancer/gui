@@ -3,11 +3,17 @@ import Landing from './pages/landing/index.component.tsx';
 import SignIn from './pages/sign-in/index.component.tsx';
 import UpdatePassword from './pages/update-password/index.component.tsx';
 import App from './pages/app/index.component.tsx';
+import Error from './pages/app/error/index.component.tsx';
 import NotFoundError from './pages/not-found-error/index.component.tsx';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
+
+/**
+ * Router
+ * The router context that will be used to manage the navigation throughout the app.
+ */
 const Router = () => {
   const router = createBrowserRouter([
     {
@@ -25,6 +31,7 @@ const Router = () => {
     {
       path: '/app',
       element: <App />,
+      errorElement: <Error />,
       children: [
         {
           path: 'users',

@@ -1,17 +1,18 @@
-
+import { SWService } from 'sw-service';
+import { Button } from '../../../shared/shadcn/components/ui/button';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
 
 /**
- * Update Password
- * Component in charge of enabling users to set the password once their accounts are created or in
- * case they forget it in the future.
+ * Error
+ * Component in charge of handling errors that can occur when loading lazy loaded routes.
  */
-const UpdatePassword = () => (
+const Error = () => (
   <>
-    <h1 className="text-5xl">Update Password Component</h1>
+    <h1 className="text-4xl mt-5">Error Component</h1>
+    <Button variant='ghost' onClick={SWService.updateApp}>Refresh App</Button>
   </>
 );
 
@@ -22,4 +23,4 @@ const UpdatePassword = () => (
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export default UpdatePassword;
+export default Error;
