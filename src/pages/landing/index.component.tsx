@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { EnvelopeOpenIcon, ReloadIcon } from '@radix-ui/react-icons';
 import { ENVIRONMENT } from '../../environment/environment.ts';
-import { Altcha } from '../../shared/components/altcha/altcha.component.tsx';
+import { Altcha } from '../../shared/components/altcha/index.component.tsx';
 import useMediaQueryBreakpoint from '../../shared/hooks/media-query-breakpoint/index.ts';
 import useOnlineStatus from '../../shared/hooks/online-status/index.ts';
 

@@ -1,6 +1,6 @@
 import { FormEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { Altcha } from '../../shared/components/altcha/altcha.component.tsx';
+import { Altcha } from '../../shared/components/altcha/index.component.tsx';
 import { Button } from '../../shared/shadcn/components/ui/button';
 import { Input } from '../../shared/shadcn/components/ui/input';
 import { Label } from '../../shared/shadcn/components/ui/label';
@@ -44,7 +44,7 @@ const SignIn = () => {
       <section className='flex-1 self-center p-5 sm:p-10'>
 
         <article className='w-full sm:w-10/12 md:11/12 lg:w-9/12 xl:w-7/12 2xl:w-6/12 mx-auto'>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} noValidate>
 
             <h1 className='text-3xl font-bold text-center'>Sign In</h1>
             <p className='text-light text-md text-center'>Enter your credentials to log into your account</p>
