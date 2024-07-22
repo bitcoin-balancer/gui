@@ -3,6 +3,8 @@
   "template": "base",
   "includeToPrecache": [
     "/assets",
+    "/installer",
+    "/logo",
     "/index.html"
   ],
   "excludeFilesFromPrecache": []
