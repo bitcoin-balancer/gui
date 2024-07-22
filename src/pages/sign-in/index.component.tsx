@@ -1,4 +1,6 @@
+import { FormEvent } from 'react';
 import { Link } from 'react-router-dom';
+import { Altcha } from '../../shared/components/altcha/altcha.component.tsx';
 import { Button } from '../../shared/shadcn/components/ui/button';
 import { Input } from '../../shared/shadcn/components/ui/input';
 import { Label } from '../../shared/shadcn/components/ui/label';
@@ -12,10 +14,16 @@ import { Label } from '../../shared/shadcn/components/ui/label';
  * Component in charge of authenticating users.
  */
 const SignIn = () => {
-  const as = '';
+  const handleAltchaVerification = (payload: string) => {
+    console.log(payload);
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
 
   return (
-    <main className='flex h-dvh'>
+    <main className='flex min-h-dvh'>
 
       <section className='hidden md:block flex-1 bg-primary shadow-2xl p-10'>
 
@@ -36,34 +44,42 @@ const SignIn = () => {
       <section className='flex-1 self-center p-5 sm:p-10'>
 
         <article className='w-full sm:w-10/12 md:11/12 lg:w-9/12 xl:w-7/12 2xl:w-6/12 mx-auto'>
-          <h1 className='text-3xl font-bold text-center'>Sign In</h1>
-          <p className='text-light text-md text-center'>Enter your credentials to log into your account</p>
+          <form onSubmit={handleSubmit}>
 
-          <div className='mt-5'>
-            <Label htmlFor='nickname'>Nickname</Label>
-            <Input
-              id='nickname'
-              type='text'
-              placeholder='JohnDoe'
-              autoComplete='false'
-            />
-          </div>
+            <h1 className='text-3xl font-bold text-center'>Sign In</h1>
+            <p className='text-light text-md text-center'>Enter your credentials to log into your account</p>
 
-          <div className='mt-5'>
-            <Label htmlFor='password'>Password</Label>
-            <Input
-              id='password'
-              type='password'
-              placeholder='********'
-              autoComplete='false'
-            />
-          </div>
+            <div className='mt-5'>
+              <Label htmlFor='nickname'>Nickname</Label>
+              <Input
+                id='nickname'
+                type='text'
+                placeholder='Satoshi'
+                autoComplete='false'
+              />
+            </div>
 
-          <Button type='submit' variant='default' className='bg-primary mt-7 w-full'>Sign In</Button>
+            <div className='mt-5'>
+              <Label htmlFor='password'>Password</Label>
+              <Input
+                id='password'
+                type='password'
+                placeholder='********'
+                autoComplete='false'
+              />
+            </div>
 
-          <Button type='submit' variant='outline' className='mt-3 w-full'>Update Password</Button>
+            <div className='mt-5'>
+              <Altcha onChange={handleAltchaVerification}/>
+            </div>
 
-          <p className='text-light text-sm mt-6 text-center'>If this is the first time you are signing into your account, go through the <Link to='/update-password'><strong>"Update Password"</strong></Link> section to set a password on it.</p>
+            <Button type='submit' variant='default' className='bg-primary mt-7 w-full'>Sign In</Button>
+
+            <Link to='/update-password'><Button type='button' variant='outline' className='mt-3 w-full'>Update Password</Button></Link>
+
+            <p className='text-light text-sm mt-6 text-center'>If this is the first time you are signing into your account, go through the <Link to='/update-password'><strong>"Update Password"</strong></Link> section to set a password on it.</p>
+
+          </form>
 
         </article>
 
