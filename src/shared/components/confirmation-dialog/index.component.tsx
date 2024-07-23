@@ -139,15 +139,15 @@ const ConfirmationDialog = () => {
 
             <InputOTP maxLength={6} value={otpToken} onChange={onOTPTokenChanges}>
               <InputOTPGroup>
-                <InputOTPSlot index={0} className='shadow-md' />
-                <InputOTPSlot index={1} className='shadow-md' />
-                <InputOTPSlot index={2} className='shadow-md' />
+                <InputOTPSlot index={0} className='shadow-md ring-1 ring-slate-200' />
+                <InputOTPSlot index={1} className='shadow-md ring-1 ring-slate-200' />
+                <InputOTPSlot index={2} className='shadow-md ring-1 ring-slate-200' />
               </InputOTPGroup>
               <InputOTPSeparator />
               <InputOTPGroup>
-                <InputOTPSlot index={3} className='shadow-md' />
-                <InputOTPSlot index={4} className='shadow-md' />
-                <InputOTPSlot index={5} className='shadow-md' />
+                <InputOTPSlot index={3} className='shadow-md ring-1 ring-slate-200' />
+                <InputOTPSlot index={4} className='shadow-md ring-1 ring-slate-200' />
+                <InputOTPSlot index={5} className='shadow-md ring-1 ring-slate-200' />
               </InputOTPGroup>
             </InputOTP>
 
