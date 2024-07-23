@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from 'react';
-import { MediaQueryService } from '../../services/media-query/index.ts';
+import { MediaQueryService } from '../../services/media-query/index.service.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
