@@ -15,7 +15,7 @@ The Balancer GUI empowers you to take complete control of your Value Averaging S
 
 ## Scripts
 
-Serve the application in a dev server
+Serve the application in a dev server:
 
 ```bash
 npm run dev
@@ -23,7 +23,7 @@ npm run dev
 
 
 
-Build the application
+Build the application:
 
 ```bash
 npm run build-development
@@ -35,7 +35,7 @@ npm run build-production
 
 
 
-Preview the build
+Preview the build:
 
 ```bash
 npm run preview
@@ -58,7 +58,9 @@ npm run preview
 
 ## @TODO
 
+- [ ] Create Bitcoin Quotes Component and place it in `sign-in` and `update-password` routes
 - [ ] ...
+
 
 
 
