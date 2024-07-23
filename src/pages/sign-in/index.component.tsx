@@ -4,6 +4,7 @@ import { Altcha } from '../../shared/components/altcha/index.component.tsx';
 import { Button } from '../../shared/shadcn/components/ui/button';
 import { Input } from '../../shared/shadcn/components/ui/input';
 import { Label } from '../../shared/shadcn/components/ui/label';
+import { Toaster } from '../../shared/shadcn/components/ui/toaster';
 import { useBoundStore } from '../../shared/store/index.store.ts';
 import ConfirmationDialog from '../../shared/components/confirmation-dialog/index.component.tsx';
 
@@ -24,6 +25,7 @@ const SignIn = () => {
 
 
 
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     openConfirmationDialog({
@@ -35,6 +37,10 @@ const SignIn = () => {
       },
     });
   };
+
+
+
+
 
   return (
     <main className='flex min-h-dvh'>
@@ -98,8 +104,19 @@ const SignIn = () => {
       </section>
 
 
+
+
+
       {/* CONFIRMATION DIALOG */}
       <ConfirmationDialog />
+
+
+
+
+
+      {/* TOASTR */}
+      <Toaster />
+
     </main>
   );
 };

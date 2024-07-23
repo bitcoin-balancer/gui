@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Clipboard } from 'lucide-react';
+import { extractMessage } from 'error-message-utils';
 import { Button } from '../../shadcn/components/ui/button';
 import {
   Dialog,
@@ -21,8 +22,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '../../shadcn/components/ui/tooltip';
+import { useToast } from '../../shadcn/components/ui/use-toast';
 import { useBoundStore } from '../../store/index.store.ts';
 import { otpTokenValid } from '../../backend/validations/index.service.ts';
+import { ClipboardService } from '@/shared/services/clipboard/index.service.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -37,6 +40,8 @@ const ConfirmationDialog = () => {
    *                                             STATE                                            *
    ********************************************************************************************** */
   const [otpToken, setOTPToken] = useState<string>('');
+  const [readingClipboard, setReadingClipboard] = useState<boolean>(false);
+  const { toast } = useToast();
   const isOpen = useBoundStore((state) => state.isConfirmationDialogOpen);
   const config = useBoundStore((state) => state.confirmationDialogConfig);
   const close = useBoundStore((state) => state.closeConfirmationDialog);
@@ -76,8 +81,27 @@ const ConfirmationDialog = () => {
     }
   };
 
-  const pasteOTPToken = () => {
-    onOTPTokenChanges('123456');
+  /**
+   * Attempts to read the OTP Token from the system's clipboard. If it is a valid OTP Token, it
+   * puts it through the handler right away. Otherwise, it displays the error and aborts.
+   */
+  const pasteOTPToken = async () => {
+    try {
+      setReadingClipboard(true);
+      const val = await ClipboardService.readText();
+      if (!otpTokenValid(val)) {
+        throw new Error(`The text extracted from the system's clipboard is not a valid OTP Token. Received: '${val}'`);
+      }
+      onOTPTokenChanges(val);
+    } catch (e) {
+      toast({
+        variant: 'destructive',
+        title: 'Clipboard Error',
+        description: extractMessage(e),
+      });
+    } finally {
+      setReadingClipboard(false);
+    }
   };
 
 
@@ -142,14 +166,14 @@ const ConfirmationDialog = () => {
 
           <span className='flex-1'></span>
 
-          {config?.mode === 'OTP' && <Button type='button' onClick={pasteOTPToken} variant='outline' className='sm:hidden mt-3' aria-label='Click this button to paste the OTP Token from the clipboard'>PASTE</Button>}
+          {(config?.mode === 'OTP' && ClipboardService.isSupported) && <Button type='button' onClick={pasteOTPToken} disabled={readingClipboard} variant='outline' className='sm:hidden mt-3' aria-label='Click this button to paste the OTP Token from the clipboard'>PASTE</Button>}
 
           {
-            config?.mode === 'OTP'
+            (config?.mode === 'OTP' && ClipboardService.isSupported)
             && <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button type='button' onClick={pasteOTPToken} variant="outline" size="icon" className='hidden sm:flex' aria-label='Click this button to paste the OTP Token from the clipboard'><Clipboard className="h-4 w-4" aria-hidden='true' /></Button>
+                  <Button type='button' onClick={pasteOTPToken} disabled={readingClipboard} variant="outline" size="icon" className='hidden sm:flex' aria-label='Click this button to paste the OTP Token from the clipboard'><Clipboard className="h-4 w-4" aria-hidden='true' /></Button>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>Paste the one-time password</p>
