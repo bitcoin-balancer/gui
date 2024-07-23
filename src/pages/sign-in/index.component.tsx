@@ -31,7 +31,7 @@ const SignIn = () => {
     openConfirmationDialog({
       mode: 'OTP',
       title: 'Confirm Authentication',
-      subTitle: 'The account will be authenticated, allowing you to interact with Balancer.',
+      description: 'Sign in to access powerful tools for monitoring, customizing, and enhancing Balancer’s performance.',
       onConfirmation: async (confirmation: string) => {
         console.log(`In sign-in: ${confirmation}`);
       },

@@ -1,16 +1,8 @@
-import { PropsWithChildren } from 'react';
+
 
 /* ************************************************************************************************
  *                                             TYPES                                              *
  ************************************************************************************************ */
-
-/**
- * Component Props
- * ...
- */
-type IComponentProps = PropsWithChildren<{
-  onClose: (payload: unknown) => void;
-}>;
 
 
 
@@ -19,5 +11,5 @@ type IComponentProps = PropsWithChildren<{
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export type {
-  IComponentProps,
+
 };

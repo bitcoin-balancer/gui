@@ -116,7 +116,7 @@ const ConfirmationDialog = () => {
         <DialogHeader>
 
           <DialogTitle>{config?.title || 'Confirm Action'}</DialogTitle>
-          {config?.subTitle && <DialogDescription>{config.subTitle}</DialogDescription>}
+          <DialogDescription>{config?.description}</DialogDescription>
 
         </DialogHeader>
 
@@ -158,11 +158,11 @@ const ConfirmationDialog = () => {
         {/* DIALOG FOOTER */}
         <DialogFooter className='flex mt-5'>
 
-          <Button type='button' variant='ghost' onClick={closeDialog} className='mt-3 sm:mt-0 text-warn'>CANCEL</Button>
+          <Button type='button' variant='ghost' onClick={closeDialog} className='mt-3 sm:mt-0'>Cancel</Button>
 
           <span className='flex-1'></span>
 
-          {(config?.mode === 'OTP' && ClipboardService.isSupported) && <Button type='button' onClick={pasteOTPToken} disabled={readingClipboard} variant='outline' className='sm:hidden mt-3' aria-label='Paste the one-time password from the system’s clipboard'>PASTE</Button>}
+          {(config?.mode === 'OTP' && ClipboardService.isSupported) && <Button type='button' onClick={pasteOTPToken} disabled={readingClipboard} variant='outline' className='sm:hidden mt-3' aria-label='Paste the one-time password from the system’s clipboard'>Paste</Button>}
 
           {
             (config?.mode === 'OTP' && ClipboardService.isSupported)
@@ -178,7 +178,7 @@ const ConfirmationDialog = () => {
             </TooltipProvider>
           }
 
-          <Button type='submit' onClick={() => closeDialog(true)} disabled={config?.mode === 'OTP'} className='bg-primary'>CONFIRM</Button>
+          <Button type='submit' onClick={() => closeDialog(true)} disabled={config?.mode === 'OTP'} className='bg-primary'>Confirm</Button>
 
         </DialogFooter>
 

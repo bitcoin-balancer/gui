@@ -19,7 +19,7 @@ type IConfirmationDialogMode = 'OTP' | 'BUTTON_CLICK';
 type IConfirmationDialogConfig = {
   mode: IConfirmationDialogMode;
   title?: string;
-  subTitle?: string;
+  description: string;
   content?: string | string[];
   onConfirmation: (confirmation: string) => Promise<void>;
 };
