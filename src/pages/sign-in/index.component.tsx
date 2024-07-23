@@ -16,15 +16,24 @@ import ConfirmationDialog from '../../shared/components/confirmation-dialog/inde
  * Component in charge of authenticating users.
  */
 const SignIn = () => {
-  const onOpenChange = useBoundStore((state) => state.onOpenChange);
+  const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
   const handleAltchaVerification = (payload: string) => {
     console.log(payload);
   };
 
+
+
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onOpenChange(true);
-    console.log('here');
+    openConfirmationDialog({
+      mode: 'OTP',
+      title: 'Confirm Authentication',
+      subTitle: 'The account will be authenticated, allowing you to interact with Balancer.',
+      onConfirmation: async (confirmation: string) => {
+        console.log(`In sign-in: ${confirmation}`);
+      },
+    });
   };
 
   return (
@@ -33,7 +42,7 @@ const SignIn = () => {
       <section className='hidden md:block flex-1 bg-primary shadow-2xl p-10'>
 
         <article className='flex flex-col h-full'>
-          <img src='logo/logo-light.png' alt='Balancer Logo' width='192' height='60' className='w-52' />
+          <img src='logo/logo-light.png' alt='Balancer Logo' width='192' height='60' className='w-48' />
 
           <span className='my-auto'></span>
 
@@ -74,9 +83,7 @@ const SignIn = () => {
               />
             </div>
 
-            <div className='mt-5'>
-              <Altcha onChange={handleAltchaVerification}/>
-            </div>
+            <div className='mt-6'><Altcha onChange={handleAltchaVerification}/></div>
 
             <Button type='submit' variant='default' className='bg-primary mt-7 w-full'>Sign In</Button>
 

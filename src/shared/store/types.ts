@@ -1,4 +1,4 @@
-import { IConfirmationDialogSlice } from './slices/confirmation-dialog';
+import { IConfirmationDialogSlice } from './slices/confirmation-dialog/index.ts';
 
 /* ************************************************************************************************
  *                                             TYPES                                              *
@@ -9,6 +9,8 @@ import { IConfirmationDialogSlice } from './slices/confirmation-dialog';
  * The type containing the types for all slices.
  */
 type IBoundStore = IConfirmationDialogSlice;
+
+
 
 
 
