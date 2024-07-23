@@ -21,8 +21,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '../../shadcn/components/ui/tooltip';
-import { useBoundStore } from '../../store/index.ts';
-import { otpTokenValid } from '../../backend/validations/index.ts';
+import { useBoundStore } from '../../store/index.store.ts';
+import { otpTokenValid } from '../../backend/validations/index.service.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

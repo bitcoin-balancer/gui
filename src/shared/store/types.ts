@@ -1,4 +1,4 @@
-import { IConfirmationDialogSlice } from './slices/confirmation-dialog/index.ts';
+import { IConfirmationDialogSlice } from './slices/confirmation-dialog/index.slice.ts';
 
 /* ************************************************************************************************
  *                                             TYPES                                              *

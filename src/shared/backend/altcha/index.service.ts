@@ -1,4 +1,4 @@
-import { APIService } from '../api/index.ts';
+import { APIService } from '../api/index.service.ts';
 import { IAltchaService } from './types.ts';
 
 /* ************************************************************************************************

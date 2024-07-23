@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { createConfirmationDialogSlice } from './slices/confirmation-dialog/index.ts';
+import { createConfirmationDialogSlice } from './slices/confirmation-dialog/index.slice.ts';
 import { IBoundStore } from './types.ts';
 
 /* ************************************************************************************************

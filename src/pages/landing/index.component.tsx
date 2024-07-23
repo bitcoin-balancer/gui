@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { RefreshCw } from 'lucide-react';
 import { ENVIRONMENT } from '../../environment/environment.ts';
 import { Altcha } from '../../shared/components/altcha/index.component.tsx';
-import useMediaQueryBreakpoint from '../../shared/hooks/media-query-breakpoint/index.ts';
-import useOnlineStatus from '../../shared/hooks/online-status/index.ts';
+import useMediaQueryBreakpoint from '../../shared/hooks/media-query-breakpoint/index.hook.ts';
+import useOnlineStatus from '../../shared/hooks/online-status/index.hook.ts';
 
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 

@@ -4,7 +4,7 @@ import { Altcha } from '../../shared/components/altcha/index.component.tsx';
 import { Button } from '../../shared/shadcn/components/ui/button';
 import { Input } from '../../shared/shadcn/components/ui/input';
 import { Label } from '../../shared/shadcn/components/ui/label';
-import { useBoundStore } from '../../shared/store/index.ts';
+import { useBoundStore } from '../../shared/store/index.store.ts';
 import ConfirmationDialog from '../../shared/components/confirmation-dialog/index.component.tsx';
 
 /* ************************************************************************************************
