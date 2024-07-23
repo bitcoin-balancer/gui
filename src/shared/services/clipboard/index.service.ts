@@ -26,12 +26,51 @@ const clipboardServiceFactory = (): IClipboardService => {
 
 
   /* **********************************************************************************************
+   *                                            HELPERS                                           *
+   ********************************************************************************************** */
+
+  /**
+   * Verifies if the Clipboard API is supported by the user's browser.
+   * @throws
+   * - if the API is not supported
+   */
+  const __validateAvailability = (): void => {
+    if (!__isSupported) {
+      throw new Error('The Clipboard API is not supported by the browser.');
+    }
+  };
+
+
+
+
+  /* **********************************************************************************************
    *                                            ACTIONS                                           *
    ********************************************************************************************** */
 
-  const someAction = () => {
-    // ...
+  /**
+   * Writes text to the system clipboard.
+   * @returns Promise<void>
+   * @throws
+   * - NotAllowedError: if writing to the clipboard is not allowed.
+   */
+  const writeText = (text: string): Promise<void> => {
+    __validateAvailability();
+    return window.navigator.clipboard.writeText(text);
   };
+
+  /**
+   * Requests text from the system clipboard.
+   * @returns Promise<string>
+   * @throws
+   * - NotAllowedError: if the access to read the clipboard is not allowed
+   * - NotFoundError: if the clipboard indicates that it contains data that can be represented as a
+   * text but is unable to provide a textual representation
+   */
+  const readText = async (): Promise<string> => {
+    __validateAvailability();
+    return window.navigator.clipboard.readText();
+  };
+
 
 
 
@@ -46,7 +85,8 @@ const clipboardServiceFactory = (): IClipboardService => {
     },
 
     // actions
-    someAction,
+    writeText,
+    readText,
   });
 };
 
