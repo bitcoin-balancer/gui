@@ -15,6 +15,12 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from '../../shadcn/components/ui/input-otp';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '../../shadcn/components/ui/tooltip';
 import { useBoundStore } from '../../store/index.ts';
 import { otpTokenValid } from '../../backend/validations/index.ts';
 
@@ -138,7 +144,19 @@ const ConfirmationDialog = () => {
 
           {config?.mode === 'OTP' && <Button type='button' onClick={pasteOTPToken} variant='outline' className='sm:hidden mt-3' aria-label='Click this button to paste the OTP Token from the clipboard'>PASTE</Button>}
 
-          {config?.mode === 'OTP' && <Button type='button' onClick={pasteOTPToken} variant="outline" size="icon" className='hidden sm:flex' aria-label='Click this button to paste the OTP Token from the clipboard'><Clipboard className="h-4 w-4" aria-hidden='true' /></Button>}
+          {
+            config?.mode === 'OTP'
+            && <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button type='button' onClick={pasteOTPToken} variant="outline" size="icon" className='hidden sm:flex' aria-label='Click this button to paste the OTP Token from the clipboard'><Clipboard className="h-4 w-4" aria-hidden='true' /></Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Paste the one-time password</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          }
 
           <Button type='submit' onClick={() => closeDialog(true)} disabled={config?.mode === 'OTP'} className='bg-primary'>CONFIRM</Button>
 
