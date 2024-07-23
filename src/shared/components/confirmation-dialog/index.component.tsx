@@ -25,7 +25,7 @@ import {
 import { useToast } from '../../shadcn/components/ui/use-toast';
 import { useBoundStore } from '../../store/index.store.ts';
 import { otpTokenValid } from '../../backend/validations/index.service.ts';
-import { ClipboardService } from '@/shared/services/clipboard/index.service.ts';
+import { ClipboardService } from '../../services/clipboard/index.service.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -94,11 +94,7 @@ const ConfirmationDialog = () => {
       }
       onOTPTokenChanges(val);
     } catch (e) {
-      toast({
-        variant: 'destructive',
-        title: 'Clipboard Error',
-        description: extractMessage(e),
-      });
+      toast({ variant: 'destructive', title: 'Clipboard Error', description: extractMessage(e) });
     } finally {
       setReadingClipboard(false);
     }
@@ -114,7 +110,7 @@ const ConfirmationDialog = () => {
   return (
     <Dialog open={isOpen} onOpenChange={closeDialog}>
 
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className='sm:max-w-[425px]'>
 
         {/* DIALOG HEADER */}
         <DialogHeader>
@@ -137,7 +133,7 @@ const ConfirmationDialog = () => {
           && <>
             <div className='flex justify-center items-center mt-5'>
 
-            <InputOTP maxLength={6} value={otpToken} onChange={onOTPTokenChanges}>
+            <InputOTP maxLength={6} value={otpToken} onChange={onOTPTokenChanges} aria-label='One-time password input'>
               <InputOTPGroup>
                 <InputOTPSlot index={0} className='shadow-md ring-1 ring-slate-200' />
                 <InputOTPSlot index={1} className='shadow-md ring-1 ring-slate-200' />
@@ -166,17 +162,17 @@ const ConfirmationDialog = () => {
 
           <span className='flex-1'></span>
 
-          {(config?.mode === 'OTP' && ClipboardService.isSupported) && <Button type='button' onClick={pasteOTPToken} disabled={readingClipboard} variant='outline' className='sm:hidden mt-3' aria-label='Click this button to paste the OTP Token from the clipboard'>PASTE</Button>}
+          {(config?.mode === 'OTP' && ClipboardService.isSupported) && <Button type='button' onClick={pasteOTPToken} disabled={readingClipboard} variant='outline' className='sm:hidden mt-3' aria-label='Paste the one-time password from the system’s clipboard'>PASTE</Button>}
 
           {
             (config?.mode === 'OTP' && ClipboardService.isSupported)
             && <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button type='button' onClick={pasteOTPToken} disabled={readingClipboard} variant="outline" size="icon" className='hidden sm:flex' aria-label='Click this button to paste the OTP Token from the clipboard'><Clipboard className="h-4 w-4" aria-hidden='true' /></Button>
+                  <Button type='button' onClick={pasteOTPToken} disabled={readingClipboard} variant='outline' size='icon' className='hidden sm:flex' aria-label='Paste the one-time password from the system’s clipboard'><Clipboard className='h-4 w-4' aria-hidden='true' /></Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Paste the one-time password</p>
+                  <p>Paste the one-time password from the system’s clipboard</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
