@@ -9,7 +9,7 @@
  * The confirmation dialog can be used to confirm an action with a simple click or it can also
  * require any kind of input.
  */
-type IConfirmationDialogMode = 'OTP' | 'BUTTON_CLICK';
+type IConfirmationDialogMode = 'OTP' | 'CLICK';
 
 /**
  * Dialog Configuration

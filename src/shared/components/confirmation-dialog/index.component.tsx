@@ -59,7 +59,7 @@ const ConfirmationDialog = () => {
    * @param confirmed?
    */
   const closeDialog = (confirmed?: unknown) => {
-    if (config?.mode === 'BUTTON_CLICK' && confirmed === true) {
+    if (config?.mode === 'CLICK' && confirmed === true) {
       config.onConfirmation('');
     }
     if (config?.mode === 'OTP' && otpTokenValid(confirmed)) {
