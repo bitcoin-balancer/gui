@@ -34,6 +34,13 @@ const Router = () => {
       errorElement: <Error />,
       children: [
         {
+          index: true,
+          lazy: async () => {
+            const Dashboard = await import('./pages/app/dashboard/index.component.tsx');
+            return { Component: Dashboard.default };
+          },
+        },
+        {
           path: 'users',
           lazy: async () => {
             const Users = await import('./pages/app/users/index.component.tsx');
