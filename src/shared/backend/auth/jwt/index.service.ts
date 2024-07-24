@@ -1,3 +1,4 @@
+import { APIService } from '../../api/index.service';
 import { IJWTService, IRefreshTokenRecord } from './types';
 
 /* ************************************************************************************************
@@ -31,7 +32,12 @@ const jwtServiceFactory = (): IJWTService => {
    * @throws
    * - 4500: if the uid has an invalid format
    */
-  const listRecords = async (uid: string): Promise<IRefreshTokenRecord[]> => [];
+  const listRecords = (uid: string): Promise<IRefreshTokenRecord[]> => APIService.request(
+    'GET',
+    `auth/jwt/${uid}`,
+    undefined,
+    true,
+  ) as Promise<IRefreshTokenRecord[]>;
 
 
 
@@ -42,12 +48,13 @@ const jwtServiceFactory = (): IJWTService => {
    ********************************************************************************************** */
 
   /**
-   * Verifies the user's credentials and executes the authentication process.
+   * Verifies the user's credentials and executes the authentication process. Once it completes, it
+   * also updates the authenticated state via the APIService.
    * @param nickname
    * @param password
    * @param otpToken
    * @param altchaPayload
-   * @returns Promise<string>
+   * @returns Promise<void>
    * @throws
    * - 3500: if the nickname's format is invalid
    * - 3509: if the pasword's format is invalid or is too weak
@@ -64,19 +71,42 @@ const jwtServiceFactory = (): IJWTService => {
     password: string,
     otpToken: string,
     altchaPayload: string,
-  ): Promise<string> => '';
+  ): Promise<void> => {
+    const accessJWT = await APIService.request(
+      'POST',
+      'auth/jwt/sign-in',
+      {
+        nickname,
+        password,
+        otpToken,
+        altchaPayload,
+      },
+    ) as string;
+    await APIService.accessJWTChanged(accessJWT);
+  };
 
 
 
   /**
-   * Signs an user out from a single or multiple devices in one go.
+   * Signs an user out from a single or multiple devices in one go. Once it completes, it also
+   * updates the authenticated state via the APIService.
    * @param allDevices?
    * @returns Promise<void>
    * @throws
    * - 4500: if the uid has an invalid format
    * - 4501: if the Refresh JWT has an invalid format
    */
-  const signOut = async (allDevices?: boolean): Promise<void> => {};
+  const signOut = async (allDevices?: boolean): Promise<void> => {
+    await APIService.request(
+      'POST',
+      'auth/jwt/sign-out',
+      { allDevices },
+      true,
+    );
+    await APIService.accessJWTChanged(undefined);
+  };
+
+
 
 
 

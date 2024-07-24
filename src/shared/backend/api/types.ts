@@ -20,7 +20,7 @@ type IAPIService = {
   buildURL: (resourcePath: string) => string;
 
   // access JWT management
-  accessJWTChanged: (newAccessJWT: string | undefined) => void;
+  accessJWTChanged: (newAccessJWT: string | undefined) => Promise<void>;
 
   // actions
   request: (

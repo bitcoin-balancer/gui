@@ -21,7 +21,7 @@ type IJWTService = {
     password: string,
     otpToken: string,
     altchaPayload: string,
-  ) => Promise<string>;
+  ) => Promise<void>;
   signOut: (allDevices?: boolean) => Promise<void>;
 };
 
