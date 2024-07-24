@@ -15,6 +15,9 @@ type IAPIService = {
   // helpers
   buildURL: (resourcePath: string) => string;
 
+  // access JWT management
+  accessJWTChanged: (newAccessJWT: string | undefined) => void;
+
   // actions
   // ...
 };

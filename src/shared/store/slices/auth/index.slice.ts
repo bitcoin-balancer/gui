@@ -1,20 +1,20 @@
-import { create } from 'zustand';
-import { createConfirmationDialogSlice } from './slices/confirmation-dialog/index.slice.ts';
-import { IBoundStore } from './types.ts';
-import { createAuthenticatedSlice } from './slices/auth/index.slice.ts';
+import { StateCreator } from 'zustand';
+import { IAuthenticatedSlice } from './types';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
 
 /**
- * Bound Store
- * The combination of all existing state slices.
+ * Authenticated Slice
+ * Slice in charge of managing the state of the user's authentication.
  */
-const useBoundStore = create<IBoundStore>((set, get, api) => ({
-  ...createAuthenticatedSlice(set, get, api),
-  ...createConfirmationDialogSlice(set, get, api),
-}));
+const createAuthenticatedSlice: StateCreator<IAuthenticatedSlice> = (
+  set,
+) => ({
+  authenticated: undefined,
+  setAuthenticated: (authState: boolean) => set(() => ({ authenticated: authState })),
+});
 
 
 
@@ -25,8 +25,8 @@ const useBoundStore = create<IBoundStore>((set, get, api) => ({
  ************************************************************************************************ */
 export {
   // types
-  type IBoundStore,
+  type IAuthenticatedSlice,
 
-  // store
-  useBoundStore,
+  // slice
+  createAuthenticatedSlice,
 };

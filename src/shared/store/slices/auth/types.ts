@@ -1,15 +1,20 @@
-import { IAuthenticatedSlice } from './slices/auth/types.ts';
-import { IConfirmationDialogSlice } from './slices/confirmation-dialog/index.slice.ts';
+
 
 /* ************************************************************************************************
  *                                             TYPES                                              *
  ************************************************************************************************ */
 
 /**
- * Bound Store
- * The type containing the types for all slices.
+ * Authenticated Slice
+ * Slice in charge of managing the state of the user's authentication.
  */
-type IBoundStore = IAuthenticatedSlice & IConfirmationDialogSlice;
+type IAuthenticatedSlice = {
+  // if undefined, the auth state has not yet been loaded. true means the user is authenticated
+  authenticated: boolean | undefined;
+
+  // the slice's controller
+  setAuthenticated: (authState: boolean) => void;
+};
 
 
 
@@ -19,5 +24,5 @@ type IBoundStore = IAuthenticatedSlice & IConfirmationDialogSlice;
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export type {
-  IBoundStore,
+  IAuthenticatedSlice,
 };

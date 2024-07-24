@@ -1,5 +1,5 @@
 import { FormEvent } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { Altcha } from '../../shared/components/altcha/index.component.tsx';
 import { Button } from '../../shared/shadcn/components/ui/button';
 import { Input } from '../../shared/shadcn/components/ui/input';
@@ -17,14 +17,23 @@ import ConfirmationDialog from '../../shared/components/confirmation-dialog/inde
  * Component in charge of authenticating users.
  */
 const SignIn = () => {
+  /* **********************************************************************************************
+   *                                             STATE                                            *
+   ********************************************************************************************** */
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
+  const authenticated = useBoundStore((state) => state.authenticated);
+
+
+
+
+
+  /* **********************************************************************************************
+   *                                        EVENT HANDLERS                                        *
+   ********************************************************************************************** */
+
   const handleAltchaVerification = (payload: string) => {
     console.log(payload);
   };
-
-
-
-
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -41,14 +50,19 @@ const SignIn = () => {
 
 
 
-
+  /* **********************************************************************************************
+   *                                           COMPONENT                                          *
+   ********************************************************************************************** */
+  if (authenticated) {
+    return <Navigate to='/app' />;
+  }
   return (
-    <main className='flex min-h-dvh'>
+    <main className='flex min-h-dvh animate-in fade-in slide-in-from-left duration-500'>
 
       <section className='hidden md:block flex-1 bg-primary shadow-2xl p-10'>
 
         <article className='flex flex-col h-full'>
-          <img src='logo/logo-light.png' alt='Balancer Logo' width='192' height='60' className='w-48' />
+          <Link to='/'><img src='logo/logo-light.png' alt='Balancer Logo' width='192' height='60' className='w-48' /></Link>
 
           <span className='my-auto'></span>
 
@@ -91,7 +105,7 @@ const SignIn = () => {
 
             <div className='mt-6'><Altcha onChange={handleAltchaVerification}/></div>
 
-            <Button type='submit' variant='default' className='bg-primary mt-7 w-full'>Sign In</Button>
+            <Button type='submit' variant='default' className='bg-primary hover:bg-secondary mt-7 w-full'>Sign In</Button>
 
             <Link to='/update-password'><Button type='button' variant='outline' className='mt-3 w-full'>Update Password</Button></Link>
 

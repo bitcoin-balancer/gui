@@ -11,6 +11,9 @@ import { openURL } from '../../shared/services/utils/index.service.ts';
 const GITHUB_URL = 'https://github.com/bitcoin-balancer';
 
 
+
+
+
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
@@ -20,10 +23,9 @@ const GITHUB_URL = 'https://github.com/bitcoin-balancer';
  * Component in charge of showcasing the project's mission, vision and core features.
  */
 const Landing = () => {
-  console.log('in Landing');
-
+  let a = '';
   return (
-    <main className='min-h-dvh'>
+    <main className='min-h-dvh animate-in fade-in slide-in-from-top duration-500'>
 
       {/* HEADER */}
       <header className='flex justify-center items-center gap-3 bg-primary p-4'>
@@ -32,11 +34,11 @@ const Landing = () => {
 
         <span className='flex-1'></span>
 
-        <Button className='bg-primary hidden sm:flex' onClick={() => openURL(GITHUB_URL)}><Github className='mr-2' /> View on GitHub</Button>
-        <Button size='icon' className='bg-primary sm:hidden' onClick={() => openURL(GITHUB_URL)}><Github /></Button>
+        <Button className='bg-primary hover:bg-secondary hidden sm:flex' onClick={() => openURL(GITHUB_URL)}><Github className='mr-2' /> View on GitHub</Button>
+        <Button size='icon' className='bg-primary hover:bg-secondary sm:hidden' onClick={() => openURL(GITHUB_URL)}><Github /></Button>
 
-        <Link to='/app' className='hidden sm:flex'><Button className='bg-primary'>Go to App <LogIn className='ml-2' /></Button></Link>
-        <Link to='/app' className='sm:hidden'><Button size='icon' className='bg-primary'><LogIn /></Button></Link>
+        <Link to='/app' className='hidden sm:flex'><Button className='bg-primary hover:bg-secondary'>Go to App <LogIn className='ml-2' /></Button></Link>
+        <Link to='/app' className='sm:hidden'><Button size='icon' className='bg-primary hover:bg-secondary'><LogIn /></Button></Link>
 
       </header>
 
