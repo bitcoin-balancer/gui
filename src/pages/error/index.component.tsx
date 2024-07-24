@@ -1,5 +1,5 @@
 import { SWService } from 'sw-service';
-import { Button } from '../../../shared/shadcn/components/ui/button';
+import { Button } from '../../shared/shadcn/components/ui/button.tsx';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

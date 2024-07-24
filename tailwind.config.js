@@ -22,8 +22,6 @@ module.exports = {
         secondary: '#171717',
         success: '#1B5E20',
         error: '#B71C1C',
-        warn: '#BF360C',
-        info: '#0D47A1',
         light: '#64748b'
       },
       keyframes: {

@@ -22,8 +22,6 @@
 
   --success-color: #1B5E20;
   --error-color: #B71C1C;
-  --warn-color: #BF360C;
-  --info-color: #0D47A1;
 
   --text-color: #0f172a;
   --light-text-color: #64748b;
@@ -74,7 +72,7 @@
  ************************************************************************************************ */
 
 /*
- * anchor tag
+ * Anchor Tag
  */
 a:hover {
   text-decoration: underline;

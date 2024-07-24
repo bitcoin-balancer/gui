@@ -1,12 +1,15 @@
-import { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { RefreshCw } from 'lucide-react';
-import { ENVIRONMENT } from '../../environment/environment.ts';
-import { Altcha } from '../../shared/components/altcha/index.component.tsx';
-import useMediaQueryBreakpoint from '../../shared/hooks/media-query-breakpoint/index.hook.ts';
-import useOnlineStatus from '../../shared/hooks/online-status/index.hook.ts';
+import { Github, LogIn } from 'lucide-react';
+import { Button } from '../../shared/shadcn/components/ui/button.tsx';
+import { openURL } from '../../shared/services/utils/index.service.ts';
 
-import { Button } from '@/shared/shadcn/components/ui/button.tsx';
+/* ************************************************************************************************
+ *                                           CONSTANTS                                            *
+ ************************************************************************************************ */
+
+// the URL to the project's GitHub Page
+const GITHUB_URL = 'https://github.com/bitcoin-balancer';
+
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -18,39 +21,42 @@ import { Button } from '@/shared/shadcn/components/ui/button.tsx';
  */
 const Landing = () => {
   console.log('in Landing');
-  const [count, setCount] = useState(0);
-  const breakpoint = useMediaQueryBreakpoint();
-  const isOnline = useOnlineStatus();
-  console.log('breakpoint', breakpoint);
-  console.log('isOnline', isOnline);
-
-
-  const handleAltchaVerification = useCallback((payload: string) => {
-    console.log(payload);
-  }, []);
 
   return (
-    <>
-      <h1 className="text-5xl">Balancer GUI: {count}</h1>
-      <p>Production: {ENVIRONMENT.production ? 'true' : 'false'}</p>
-      <p>{ENVIRONMENT.version}</p>
-      <button className='px-5 py-3 hover:bg-slate-200' onClick={() => setCount(count + 1)}>+1</button>
-      <br/><br/>
-      {/* <p>breakpoint: {breakpoint}</p> */}
-      { /* <p>isOnline: {String(isOnline)}</p> */}
-      <br/><br/>
-      <Button><RefreshCw className="mr-2 h-4 w-4" /> Login with Email</Button>
-      <br/><br/>
+    <main className='min-h-dvh'>
 
-      <Button variant="link"><Link to='app/users'>Users</Link></Button>
+      {/* HEADER */}
+      <header className='flex justify-center items-center gap-3 bg-primary p-4'>
 
-    <Button disabled>
-      <RefreshCw className='mr-2 h-4 w-4 animate-spin' />
-      Please wait
-    </Button>
-      <br/><br/>
-      <Altcha onChange={handleAltchaVerification} debug={false}/>
-    </>
+        <img src='logo/logo-light.png' alt='Balancer’s Logo' width='176' height='60' className='w-36 sm:w-44' />
+
+        <span className='flex-1'></span>
+
+        <Button className='bg-primary hidden sm:flex' onClick={() => openURL(GITHUB_URL)}><Github className='mr-2' /> View on GitHub</Button>
+        <Button size='icon' className='bg-primary sm:hidden' onClick={() => openURL(GITHUB_URL)}><Github /></Button>
+
+        <Link to='/app' className='hidden sm:flex'><Button className='bg-primary'>Go to App <LogIn className='ml-2' /></Button></Link>
+        <Link to='/app' className='sm:hidden'><Button size='icon' className='bg-primary'><LogIn /></Button></Link>
+
+      </header>
+
+
+      {/* HERO SECTION */}
+      <section className='bg-primary h-[425px] sm:h-[550px] lg:h-[625px] xl:h-[700px] flex justify-center items-center shadow-xl'>
+
+        <div className='text-center text-slate-50 p-5'>
+          <h1 className='text-4xl sm:text-5xl font-bold'>Trade like a proffessional consistently</h1>
+
+          <p className='text-lg sm:text-xl mt-5'>Balancer is a cutting-edge, open-source, self-hosted platform that empowers users to automate the "Value Averaging Strategy" for Bitcoin</p>
+        </div>
+
+      </section>
+
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    </main>
   );
 };
 
