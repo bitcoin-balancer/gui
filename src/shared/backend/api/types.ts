@@ -1,8 +1,12 @@
+import { IRequestMethod } from 'fetch-request-browser';
+import { IRecord } from '../../types.ts';
 
 
 /* ************************************************************************************************
  *                                            SERVICE                                             *
  ************************************************************************************************ */
+
+
 
 /**
  * API Service
@@ -19,7 +23,14 @@ type IAPIService = {
   accessJWTChanged: (newAccessJWT: string | undefined) => void;
 
   // actions
-  // ...
+  request: (
+    method: IRequestMethod,
+    path: string,
+    body?: IRecord<unknown>,
+    requiresAuth?: boolean,
+    otpToken?: string,
+    retryDelaySchedule?: number[],
+  ) => Promise<unknown>
 };
 
 

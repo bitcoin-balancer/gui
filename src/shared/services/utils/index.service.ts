@@ -17,6 +17,15 @@ const openURL = (url: string, newTab: boolean = true): void => {
   }
 };
 
+/**
+ * Creates an asynchronous delay that resolves once the provided seconds have passed.
+ * @param seconds
+ * @returns Promise<void>
+ */
+const delay = (seconds: number): Promise<void> => new Promise((resolve) => {
+  setTimeout(resolve, Math.round(seconds * 1000));
+});
+
 
 
 
@@ -26,4 +35,5 @@ const openURL = (url: string, newTab: boolean = true): void => {
  ************************************************************************************************ */
 export {
   openURL,
+  delay,
 };
