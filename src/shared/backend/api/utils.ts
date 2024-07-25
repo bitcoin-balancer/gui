@@ -38,7 +38,7 @@ const __buildRequestHeaders = (
 ): Headers => (new Headers({
   Accept: 'application/json',
   'Content-Type': 'application/json',
-  authorization: accessJWT ?? '',
+  authorization: typeof accessJWT === 'string' ? `Bearer ${accessJWT}` : '',
   'otp-token': otpToken ?? '',
 }));
 
@@ -59,6 +59,7 @@ const buildRequestOptions = (
     method,
     body,
     headers: __buildRequestHeaders(accessJWT, otpToken),
+    credentials: 'include',
   },
   acceptableStatusCodes: [200],
 });

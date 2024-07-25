@@ -48,7 +48,15 @@ const accessJWTServiceFactory = (): IAccessJWTService => {
    * - 4750: if there isn't a record that matches the refreshToken
    */
   const __refreshAccessJWT = async (): Promise<string> => {
-    const response = await sendPOST(buildAPIURL('auth/jwt/refresh-jwt'), undefined, [3, 5, 7]);
+    const response = await sendPOST(
+      buildAPIURL('auth/jwt/refresh-jwt'),
+      {
+        requestOptions: {
+          credentials: 'include',
+        },
+      },
+      [3, 5, 7],
+    );
     if (response.data.success) {
       return response.data.data;
     }

@@ -1,5 +1,8 @@
+import { useEffect } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { useBoundStore } from '../../shared/store/index.store';
+import { AccessJWTService } from '../../shared/backend/api/access-jwt.service.ts';
+import { useBoundStore } from '../../shared/store/index.store.ts';
+import GlobalLoader from '../global-loader/index.component.tsx';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -10,10 +13,39 @@ import { useBoundStore } from '../../shared/store/index.store';
  * Component that serves as the parent of the application itself for authenticated users.
  */
 const App = () => {
+  /* **********************************************************************************************
+   *                                             STATE                                            *
+   ********************************************************************************************** */
   const authenticated = useBoundStore((state) => state.authenticated);
 
-  if (!authenticated) {
+
+
+
+
+  /* **********************************************************************************************
+   *                                         SIDE EFFECTS                                         *
+   ********************************************************************************************** */
+
+  /**
+   * Access JWT
+   * Checks if the user is currently logged in.
+   */
+  useEffect(() => {
+    AccessJWTService.accessJWTChanged(null);
+  }, []);
+
+
+
+
+
+  /* **********************************************************************************************
+   *                                           COMPONENT                                          *
+   ********************************************************************************************** */
+  if (authenticated === false) {
     return <Navigate to='/sign-in' />;
+  }
+  if (authenticated === undefined) {
+    return <GlobalLoader />;
   }
   return (
     <>
