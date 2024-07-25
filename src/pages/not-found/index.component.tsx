@@ -6,7 +6,7 @@ import { Button } from '../../shared/shadcn/components/ui/button';
  ************************************************************************************************ */
 
 /**
- * Not Found
+ * Not Found Component
  * Component in charge of handling errors when users try to access routes that don't exist.
  */
 const NotFound = () => (

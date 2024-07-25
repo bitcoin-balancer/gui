@@ -5,7 +5,7 @@
  ************************************************************************************************ */
 
 /**
- * Users
+ * Users Component
  * Component in charge of creating, updating, deleting and managing users.
  */
 const Users = () => (

@@ -5,7 +5,7 @@
  ************************************************************************************************ */
 
 /**
- * Update Password
+ * Update Password Component
  * Component in charge of enabling users to set the password once their accounts are created or in
  * case they forget it in the future.
  */

@@ -19,7 +19,7 @@ const GITHUB_URL = 'https://github.com/bitcoin-balancer';
  ************************************************************************************************ */
 
 /**
- * Landing
+ * Landing Component
  * Component in charge of showcasing the project's mission, vision and core features.
  */
 const Landing = () => {

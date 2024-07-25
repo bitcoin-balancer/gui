@@ -9,7 +9,7 @@ import { IProps, IStateChangeEvent } from './types.ts';
  ************************************************************************************************ */
 
 /**
- * Altcha
+ * Altcha Component
  * Component in charge of implementing the Altcha Widget and handling its events.
  */
 const Altcha = ({ onChange, debug = false }: IProps) => {

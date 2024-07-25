@@ -32,7 +32,7 @@ import { ClipboardService } from '../../services/clipboard/index.service.ts';
  ************************************************************************************************ */
 
 /**
- * Confirmation Dialog
+ * Confirmation Dialog Component
  * Component in charge of handling the confirmation of an action for any of the supported modes.
  */
 const ConfirmationDialog = () => {

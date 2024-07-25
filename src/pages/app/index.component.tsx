@@ -6,7 +6,7 @@ import { useBoundStore } from '../../shared/store/index.store';
  ************************************************************************************************ */
 
 /**
- * App
+ * App Component
  * Component that serves as the parent of the application itself for authenticated users.
  */
 const App = () => {

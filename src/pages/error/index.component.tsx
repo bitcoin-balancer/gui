@@ -6,7 +6,7 @@ import { Button } from '../../shared/shadcn/components/ui/button.tsx';
  ************************************************************************************************ */
 
 /**
- * Error
+ * Error Component
  * Component in charge of handling errors that can occur when loading lazy loaded routes.
  */
 const Error = () => (

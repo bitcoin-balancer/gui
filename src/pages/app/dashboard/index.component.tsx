@@ -8,7 +8,7 @@ import { Button } from '../../../shared/shadcn/components/ui/button';
 
 
 /**
- * Dashboard
+ * Dashboard Component
  * Component in charge of displaying and managing the market state and trading strategy.
  */
 const Dashboard = () => (
