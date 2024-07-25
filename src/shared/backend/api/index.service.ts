@@ -105,7 +105,9 @@ const apiServiceFactory = (): IAPIService => {
       await delay(30);
       return request(method, path, body, requiresAuth, otpToken, retryDelaySchedule);
     }
-    return undefined;
+
+    // if the request is not going to be retried, throw the error
+    throw new Error(res.error);
   };
 
 

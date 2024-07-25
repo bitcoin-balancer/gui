@@ -1,12 +1,30 @@
-import { FormEvent } from 'react';
-import { Link, Navigate } from 'react-router-dom';
-import { Altcha } from '../../shared/components/altcha/index.component.tsx';
+import { useState } from 'react';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import { Button } from '../../shared/shadcn/components/ui/button';
 import { Input } from '../../shared/shadcn/components/ui/input';
-import { Label } from '../../shared/shadcn/components/ui/label';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '../../shared/shadcn/components/ui/form';
 import { Toaster } from '../../shared/shadcn/components/ui/toaster';
+import { useToast } from '../../shared/shadcn/components/ui/use-toast.ts';
+import { errorToast } from '../../shared/services/utils/index.service.ts';
+import {
+  altchaPayloadValid,
+  nicknameValid,
+  passwordValid,
+} from '../../shared/backend/validations/index.service.ts';
+import { Altcha } from '../../shared/components/altcha/index.component.tsx';
+import { JWTService } from '@/shared/backend/auth/jwt/index.service.ts';
 import { useBoundStore } from '../../shared/store/index.store.ts';
 import ConfirmationDialog from '../../shared/components/confirmation-dialog/index.component.tsx';
+import { IFormInputs } from './types.ts';
+
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -20,9 +38,17 @@ const SignIn = () => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
+  const navigate = useNavigate();
+  const form = useForm<IFormInputs>({
+    defaultValues: {
+      nickname: '',
+      password: '',
+    },
+  });
+  const { toast } = useToast();
+  const [altcha, setAltcha] = useState<string | null | undefined>(undefined);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
   const authenticated = useBoundStore((state) => state.authenticated);
-
 
 
 
@@ -31,18 +57,35 @@ const SignIn = () => {
    *                                        EVENT HANDLERS                                        *
    ********************************************************************************************** */
 
-  const handleAltchaVerification = (payload: string) => {
-    console.log(payload);
-  };
+  /**
+   * Triggers whenever the form is submitted. Prior to displaying the confirmation dialog, it will
+   * validate the altcha solution. If invalid, it will abort the submission.
+   * @param data
+   * @returns void
+   */
+  const onSubmit = (data: IFormInputs): void => {
+    // ensure the altcha payload was provided
+    if (!altchaPayloadValid(altcha)) {
+      setAltcha(null);
+      return;
+    }
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    // display the confirmation dialog
     openConfirmationDialog({
       mode: 'OTP',
       title: 'Confirm Authentication',
       description: 'Sign in to access powerful tools for monitoring, customizing, and enhancing Balancer’s performance.',
       onConfirmation: async (confirmation: string) => {
-        console.log(`In sign-in: ${confirmation}`);
+        try {
+          await JWTService.signIn(
+            data.nickname,
+            data.password,
+            confirmation,
+            altcha,
+          );
+        } catch (e) {
+          toast(errorToast(e, 'Authentication Error'));
+        }
       },
     });
   };
@@ -67,7 +110,7 @@ const SignIn = () => {
           <span className='my-auto'></span>
 
           <blockquote className='text-white self-end'>
-            <p className='text-2xl'> "Bitcoin is a remarkable cryptographic achievement, and the ability to create something that is not duplicable in the digital world has enormous value."</p>
+            <p className='text-2xl'> 'Bitcoin is a remarkable cryptographic achievement, and the ability to create something that is not duplicable in the digital world has enormous value.'</p>
             <p className='text-sm mt-3'>Eric Schmidt, CEO of Google</p>
           </blockquote>
 
@@ -78,40 +121,64 @@ const SignIn = () => {
       <section className='flex-1 self-center p-5 sm:p-10'>
 
         <article className='w-full sm:w-10/12 md:11/12 lg:w-9/12 xl:w-7/12 2xl:w-6/12 mx-auto'>
-          <form onSubmit={handleSubmit} noValidate>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
 
-            <h1 className='text-3xl font-bold text-center'>Sign In</h1>
-            <p className='text-light text-md text-center'>Enter your credentials to log into your account</p>
+              <h1 className='text-3xl font-bold text-center'>Sign In</h1>
+              <p className='text-light text-md text-center'>Enter your credentials to log into your account</p>
 
-            <div className='mt-5'>
-              <Label htmlFor='nickname'>Nickname</Label>
-              <Input
-                id='nickname'
-                type='text'
-                placeholder='Satoshi'
-                autoComplete='false'
+              <FormField
+                control={form.control}
+                name='nickname'
+                render={({ field }) => (
+                  <FormItem className='mt-5'>
+                    <FormLabel>Nickname</FormLabel>
+                    <FormControl>
+                      <Input type='text' placeholder='satoshi' {...field} autoComplete='false' />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+                rules={{
+                  validate: {
+                    required: (value) => (nicknameValid(value) ? true : 'Enter a valid nickname'),
+                  },
+                }}
               />
-            </div>
 
-            <div className='mt-5'>
-              <Label htmlFor='password'>Password</Label>
-              <Input
-                id='password'
-                type='password'
-                placeholder='********'
-                autoComplete='false'
+              <FormField
+                control={form.control}
+                name='password'
+                render={({ field }) => (
+                  <FormItem className='mt-5'>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input type='password' placeholder='********' {...field} autoComplete='false' />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+                rules={{
+                  validate: {
+                    required: (value) => (passwordValid(value) ? true : 'Enter a valid password'),
+                  },
+                }}
               />
-            </div>
 
-            <div className='mt-6'><Altcha onChange={handleAltchaVerification}/></div>
+              <div className='mt-6'>
+                <Altcha onChange={setAltcha} />
+                {altcha === null && <p className='text-error animate-in fade-in duration-500 mt-2 text-sm font-bold'>Prove you're not a robot</p>}
+              </div>
 
-            <Button type='submit' variant='default' className='bg-primary hover:bg-secondary mt-7 w-full'>Sign In</Button>
+              <Button type='submit' disabled={form.formState.isSubmitting} variant='default' className='bg-primary hover:bg-secondary mt-7 w-full'>Sign In</Button>
 
-            <Link to='/update-password'><Button type='button' variant='outline' className='mt-3 w-full'>Update Password</Button></Link>
+              <Button type='button' onClick={() => navigate('/update-password')} disabled={form.formState.isSubmitting} variant='outline' className='mt-3 w-full'>Update Password</Button>
 
-            <p className='text-light text-sm mt-6 text-center'>If this is the first time you are signing into your account, go through the <Link to='/update-password'><strong>"Update Password"</strong></Link> section to set a password on it.</p>
+              <p className='text-light text-sm mt-6 text-center'>If this is the first time you are signing into your account, go through the <Link to='/update-password'><strong>'Update Password'</strong></Link> section to set a password on it.</p>
 
-          </form>
+            </form>
+
+          </Form>
 
         </article>
 

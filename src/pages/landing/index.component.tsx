@@ -23,8 +23,18 @@ const GITHUB_URL = 'https://github.com/bitcoin-balancer';
  * Component in charge of showcasing the project's mission, vision and core features.
  */
 const Landing = () => {
+  /* **********************************************************************************************
+   *                                             STATE                                            *
+   ********************************************************************************************** */
   const navigate = useNavigate();
-  let a = '';
+
+
+
+
+
+  /* **********************************************************************************************
+   *                                           COMPONENT                                          *
+   ********************************************************************************************** */
   return (
     <main className='min-h-dvh animate-in fade-in duration-700'>
 

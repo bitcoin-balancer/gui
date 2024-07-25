@@ -1,8 +1,21 @@
-
+import { decodeError } from 'error-message-utils';
+import { Toast } from '../../shadcn/components/ui/use-toast.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
+
+/**
+ * Builds the props required to display an error toast.
+ * @param error
+ * @param title
+ * @returns Toast
+ */
+const errorToast = (error: unknown, title: string = 'Error'): Toast => ({
+  variant: 'destructive',
+  title,
+  description: decodeError(error).message,
+});
 
 /**
  * Opens an URL in the current or a new tab.
@@ -34,6 +47,7 @@ const delay = (seconds: number): Promise<void> => new Promise((resolve) => {
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export {
+  errorToast,
   openURL,
   delay,
 };
