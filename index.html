@@ -228,9 +228,33 @@
 
     <!-- Google Site Verification -->
     <!-- @TODO -->
+
+    <!-- Loading Screen -->
+    <style>
+      body {
+        margin:0;
+        padding: 0;
+      }
+      .loading-screen {
+        background-color: #0C0C0C;
+        height: 100dvh;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .loading-screen img {
+        width: 200px;
+        height: auto;
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="loading-screen">
+        <img src="logo/logo-light.png" alt="Balancer's Logo" width="200" height="60" />
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

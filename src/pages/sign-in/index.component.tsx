@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Loader2 } from 'lucide-react';
@@ -26,6 +26,7 @@ import { useBoundStore } from '../../shared/store/index.store.ts';
 import GlobalLoader from '../global-loader/index.component.tsx';
 import ConfirmationDialog from '../../shared/components/confirmation-dialog/index.component.tsx';
 import { IFormInputs } from './types.ts';
+import { AccessJWTService } from '@/shared/backend/api/access-jwt.service.ts';
 
 
 /* ************************************************************************************************
@@ -52,6 +53,23 @@ const SignIn = () => {
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const authenticated = useBoundStore((state) => state.authenticated);
+
+
+
+
+
+  /* **********************************************************************************************
+   *                                         SIDE EFFECTS                                         *
+   ********************************************************************************************** */
+
+  /**
+   * Access JWT
+   * Checks if the user is currently logged in.
+   */
+  useEffect(() => {
+    AccessJWTService.accessJWTChanged(null);
+  }, []);
+
 
 
 
@@ -105,7 +123,9 @@ const SignIn = () => {
   if (authenticated) {
     return <Navigate to='/app' />;
   }
-  return <GlobalLoader />;
+  if (authenticated === undefined) {
+    return <GlobalLoader />;
+  }
   return (
     <main className='flex min-h-dvh animate-in fade-in slide-in-from-left duration-500'>
 
