@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Github, LogIn, Menu } from 'lucide-react';
 import { Button } from '../../shared/shadcn/components/ui/button.tsx';
 import { openURL } from '../../shared/services/utils/index.service.ts';
@@ -31,7 +31,7 @@ const Landing = () => {
       {/* HEADER */}
       <header className='flex justify-center items-center gap-3 bg-primary p-4'>
 
-        <img src='logo/logo-light.png' alt='Balancer’s Logo' width='176' height='60' className='w-36 sm:w-44' />
+        <img src='logo/logo-light.png' alt='Balancer’s Logo' width='176' height='60' className='w-36 sm:w-44 md:w-48' />
 
         <span className='flex-1'></span>
 
@@ -41,9 +41,9 @@ const Landing = () => {
 
 
       {/* HERO SECTION */}
-      <section className='bg-primary h-[425px] sm:h-[550px] lg:h-[625px] xl:h-[700px] flex justify-center items-center shadow-xl'>
+      <section className='bg-primary h-[425px] sm:h-[550px] lg:h-[625px] xl:h-[700px] flex justify-center items-center shadow-6'>
 
-        <div className='text-center text-slate-50 p-5'>
+        <div className='text-center text-slate-50 p-5 w-full sm:w-11/12 md:w-10/12 lg:w-9/12 xl:w-8/12 2xl:w-6/12'>
 
           <h1 className='text-4xl sm:text-5xl font-bold'>Trade like a proffessional consistently</h1>
 

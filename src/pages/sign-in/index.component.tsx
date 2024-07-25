@@ -59,7 +59,7 @@ const SignIn = () => {
   return (
     <main className='flex min-h-dvh animate-in fade-in slide-in-from-left duration-500'>
 
-      <section className='hidden md:block flex-1 bg-primary shadow-2xl p-10'>
+      <section className='hidden md:block flex-1 bg-primary shadow-8 p-10'>
 
         <article className='flex flex-col h-full'>
           <Link to='/'><img src='logo/logo-light.png' alt='Balancer Logo' width='192' height='60' className='w-48' /></Link>
