@@ -1,6 +1,8 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Landing from './pages/landing/index.component.tsx';
 import App from './pages/app/index.component.tsx';
+import SignIn from './pages/sign-in/index.component.tsx';
+import UpdatePassword from './pages/update-password/index.component.tsx';
 import Error from './pages/error/index.component.tsx';
 import NotFound from './pages/not-found/index.component.tsx';
 
@@ -21,19 +23,11 @@ const Router = () => {
     },
     {
       path: '/sign-in',
-      // element: <SignIn />,
-      lazy: async () => {
-        const Component = await import('./pages/sign-in/index.component.tsx');
-        return { Component: Component.default };
-      },
+      element: <SignIn />,
     },
     {
       path: '/update-password',
-      // element: <UpdatePassword />,
-      lazy: async () => {
-        const Component = await import('./pages/update-password/index.component.tsx');
-        return { Component: Component.default };
-      },
+      element: <UpdatePassword />,
     },
     {
       path: '/app',

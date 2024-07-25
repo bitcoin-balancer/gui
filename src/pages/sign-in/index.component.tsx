@@ -20,13 +20,13 @@ import {
   nicknameValid,
   passwordValid,
 } from '../../shared/backend/validations/index.service.ts';
+import { AccessJWTService } from '../../shared/backend/api/access-jwt.service.ts';
 import { Altcha } from '../../shared/components/altcha/index.component.tsx';
 import { JWTService } from '@/shared/backend/auth/jwt/index.service.ts';
 import { useBoundStore } from '../../shared/store/index.store.ts';
 import GlobalLoader from '../global-loader/index.component.tsx';
 import ConfirmationDialog from '../../shared/components/confirmation-dialog/index.component.tsx';
 import { IFormInputs } from './types.ts';
-import { AccessJWTService } from '@/shared/backend/api/access-jwt.service.ts';
 
 
 /* ************************************************************************************************
@@ -41,18 +41,13 @@ const SignIn = () => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
+  const authenticated = useBoundStore((state) => state.authenticated);
   const navigate = useNavigate();
-  const form = useForm<IFormInputs>({
-    defaultValues: {
-      nickname: '',
-      password: '',
-    },
-  });
+  const form = useForm<IFormInputs>({ defaultValues: { nickname: '', password: '' } });
   const { toast } = useToast();
   const [altcha, setAltcha] = useState<string | null | undefined>(undefined);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const authenticated = useBoundStore((state) => state.authenticated);
 
 
 
