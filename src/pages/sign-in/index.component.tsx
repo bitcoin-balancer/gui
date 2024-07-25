@@ -23,6 +23,7 @@ import {
 import { Altcha } from '../../shared/components/altcha/index.component.tsx';
 import { JWTService } from '@/shared/backend/auth/jwt/index.service.ts';
 import { useBoundStore } from '../../shared/store/index.store.ts';
+import GlobalLoader from '../global-loader/index.component.tsx';
 import ConfirmationDialog from '../../shared/components/confirmation-dialog/index.component.tsx';
 import { IFormInputs } from './types.ts';
 
@@ -32,7 +33,7 @@ import { IFormInputs } from './types.ts';
  ************************************************************************************************ */
 
 /**
- * Sign In
+ * Sign In Component
  * Component in charge of authenticating users.
  */
 const SignIn = () => {
@@ -104,6 +105,7 @@ const SignIn = () => {
   if (authenticated) {
     return <Navigate to='/app' />;
   }
+  return <GlobalLoader />;
   return (
     <main className='flex min-h-dvh animate-in fade-in slide-in-from-left duration-500'>
 
