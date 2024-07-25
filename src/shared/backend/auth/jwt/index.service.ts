@@ -1,4 +1,4 @@
-import { APIService } from '../../api/index.service';
+import { APIService, AccessJWTService } from '../../api/index.service';
 import { IJWTService, IRefreshTokenRecord } from './types';
 
 /* ************************************************************************************************
@@ -82,7 +82,7 @@ const jwtServiceFactory = (): IJWTService => {
         altchaPayload,
       },
     ) as string;
-    await APIService.accessJWTChanged(accessJWT);
+    await AccessJWTService.accessJWTChanged(accessJWT);
   };
 
 
@@ -103,7 +103,7 @@ const jwtServiceFactory = (): IJWTService => {
       { allDevices },
       true,
     );
-    await APIService.accessJWTChanged(undefined);
+    await AccessJWTService.accessJWTChanged(undefined);
   };
 
 

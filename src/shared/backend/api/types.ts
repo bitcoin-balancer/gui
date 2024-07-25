@@ -3,10 +3,8 @@ import { IRecord } from '../../types.ts';
 
 
 /* ************************************************************************************************
- *                                            SERVICE                                             *
+ *                                           SERVICES                                             *
  ************************************************************************************************ */
-
-
 
 /**
  * API Service
@@ -15,12 +13,6 @@ import { IRecord } from '../../types.ts';
 type IAPIService = {
   // properties
   // ...
-
-  // helpers
-  buildURL: (resourcePath: string) => string;
-
-  // access JWT management
-  accessJWTChanged: (newAccessJWT: string | undefined) => Promise<void>;
 
   // actions
   request: (
@@ -33,6 +25,19 @@ type IAPIService = {
   ) => Promise<unknown>
 };
 
+/**
+ * Access JWT Service
+ * Object in charge of managing the Authentication's Access JWT for API Requests and the
+ * global state.
+ */
+type IAccessJWTService = {
+  // properties
+  current: string | undefined;
+
+  // access JWT management
+  accessJWTChanged: (newAccessJWT: string | null | undefined) => Promise<void>;
+};
+
 
 
 
@@ -41,8 +46,9 @@ type IAPIService = {
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export type {
-  // service
+  // services
   IAPIService,
+  IAccessJWTService,
 
   // types
   // ...

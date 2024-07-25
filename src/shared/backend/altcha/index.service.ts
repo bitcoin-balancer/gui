@@ -1,4 +1,4 @@
-import { APIService } from '../api/index.service.ts';
+import { buildAPIURL } from '../api/index.service.ts';
 import { IAltchaService } from './types.ts';
 
 /* ************************************************************************************************
@@ -16,7 +16,7 @@ const altchaServiceFactory = (): IAltchaService => {
    ********************************************************************************************** */
 
   // the URL used to fetch challenges
-  const __CHALLENGE_URL = APIService.buildURL('altcha');
+  const __CHALLENGE_URL = buildAPIURL('altcha');
 
 
 
