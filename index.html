@@ -244,15 +244,56 @@
         align-items: center;
       }
       .loading-screen img {
-        width: 200px;
+        width: 175px;
         height: auto;
+      }
+
+      /*
+      * Breakpoint Prefix: 2xl
+      */
+      @media (min-width: 1536px) {
+        .loading-screen img {
+          width: 285px;
+        }
+      }
+
+      /*
+      * Breakpoint Prefix: xl
+      */
+      @media (min-width: 1280px) {
+
+      }
+
+      /*
+      * Breakpoint Prefix: lg
+      */
+      @media (min-width: 1024px) {
+        .loading-screen img {
+          width: 256px;
+        }
+      }
+
+      /*
+      * Breakpoint Prefix: md
+      */
+      @media (min-width: 768px) {
+
+      }
+      
+      /*
+      * Breakpoint Prefix: sm
+      */
+      @media (min-width: 640px) {
+        .loading-screen img {
+          width: 225px;
+        }
       }
     </style>
   </head>
   <body>
     <div id="root">
       <div class="loading-screen">
-        <img src="logo/logo-light.png" alt="Balancer's Logo" width="200" height="60" />
+        <img src="logo/logo-light.png" alt="Balancer's Logo" width="175" height="60" />
       </div>
     </div>
     <script type="module" src="/src/main.tsx"></script>
