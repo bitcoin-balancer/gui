@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { Loader2 } from 'lucide-react';
 import { Button } from '../../shared/shadcn/components/ui/button';
 import { Input } from '../../shared/shadcn/components/ui/input';
 import {
@@ -48,6 +49,7 @@ const SignIn = () => {
   const { toast } = useToast();
   const [altcha, setAltcha] = useState<string | null | undefined>(undefined);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const authenticated = useBoundStore((state) => state.authenticated);
 
 
@@ -77,6 +79,7 @@ const SignIn = () => {
       description: 'Sign in to access powerful tools for monitoring, customizing, and enhancing Balancer’s performance.',
       onConfirmation: async (confirmation: string) => {
         try {
+          setIsSubmitting(true);
           await JWTService.signIn(
             data.nickname,
             data.password,
@@ -85,6 +88,8 @@ const SignIn = () => {
           );
         } catch (e) {
           toast(errorToast(e, 'Authentication Error'));
+        } finally {
+          setIsSubmitting(false);
         }
       },
     });
@@ -134,7 +139,7 @@ const SignIn = () => {
                   <FormItem className='mt-5'>
                     <FormLabel>Nickname</FormLabel>
                     <FormControl>
-                      <Input type='text' placeholder='satoshi' {...field} autoComplete='false' />
+                      <Input type='text' placeholder='satoshi' {...field} autoComplete='off' disabled={isSubmitting} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -153,7 +158,7 @@ const SignIn = () => {
                   <FormItem className='mt-5'>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input type='password' placeholder='********' {...field} autoComplete='false' />
+                      <Input type='password' placeholder='********' {...field} autoComplete='off' disabled={isSubmitting} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -165,14 +170,14 @@ const SignIn = () => {
                 }}
               />
 
-              <div className='mt-6'>
+              <div className={`mt-6 ${isSubmitting ? 'opacity-50' : ''}`}>
                 <Altcha onChange={setAltcha} />
                 {altcha === null && <p className='text-error animate-in fade-in duration-500 mt-2 text-sm font-bold'>Prove you're not a robot</p>}
               </div>
 
-              <Button type='submit' disabled={form.formState.isSubmitting} variant='default' className='bg-primary hover:bg-secondary mt-7 w-full'>Sign In</Button>
+              <Button type='submit' disabled={isSubmitting} variant='default' className='bg-primary hover:bg-secondary mt-7 w-full'>{isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Sign In</Button>
 
-              <Button type='button' onClick={() => navigate('/update-password')} disabled={form.formState.isSubmitting} variant='outline' className='mt-3 w-full'>Update Password</Button>
+              <Button type='button' onClick={() => navigate('/update-password')} disabled={isSubmitting} variant='outline' className='mt-3 w-full'>Update Password</Button>
 
               <p className='text-light text-sm mt-6 text-center'>If this is the first time you are signing into your account, go through the <Link to='/update-password'><strong>'Update Password'</strong></Link> section to set a password on it.</p>
 
