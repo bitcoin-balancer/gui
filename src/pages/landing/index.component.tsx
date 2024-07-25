@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import { Github, LogIn } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Github, LogIn, Menu } from 'lucide-react';
 import { Button } from '../../shared/shadcn/components/ui/button.tsx';
 import { openURL } from '../../shared/services/utils/index.service.ts';
 
@@ -23,9 +23,10 @@ const GITHUB_URL = 'https://github.com/bitcoin-balancer';
  * Component in charge of showcasing the project's mission, vision and core features.
  */
 const Landing = () => {
+  const navigate = useNavigate();
   let a = '';
   return (
-    <main className='min-h-dvh animate-in fade-in slide-in-from-top duration-500'>
+    <main className='min-h-dvh animate-in fade-in duration-700'>
 
       {/* HEADER */}
       <header className='flex justify-center items-center gap-3 bg-primary p-4'>
@@ -34,11 +35,7 @@ const Landing = () => {
 
         <span className='flex-1'></span>
 
-        <Button className='bg-primary hover:bg-secondary hidden sm:flex' onClick={() => openURL(GITHUB_URL)}><Github className='mr-2' /> View on GitHub</Button>
-        <Button size='icon' className='bg-primary hover:bg-secondary sm:hidden' onClick={() => openURL(GITHUB_URL)}><Github /></Button>
-
-        <Link to='/app' className='hidden sm:flex'><Button className='bg-primary hover:bg-secondary'>Go to App <LogIn className='ml-2' /></Button></Link>
-        <Link to='/app' className='sm:hidden'><Button size='icon' className='bg-primary hover:bg-secondary'><LogIn /></Button></Link>
+        <Button size='icon' className='bg-primary hover:bg-secondary'><Menu /></Button>
 
       </header>
 
@@ -47,9 +44,21 @@ const Landing = () => {
       <section className='bg-primary h-[425px] sm:h-[550px] lg:h-[625px] xl:h-[700px] flex justify-center items-center shadow-xl'>
 
         <div className='text-center text-slate-50 p-5'>
+
           <h1 className='text-4xl sm:text-5xl font-bold'>Trade like a proffessional consistently</h1>
 
           <p className='text-lg sm:text-xl mt-5'>Balancer is a cutting-edge, open-source, self-hosted platform that empowers users to automate the "Value Averaging Strategy" for Bitcoin</p>
+
+          <div className='flex justify-center items-center mt-10'>
+
+            <Button className='bg-primary hover:bg-secondary hidden sm:flex' size='lg' onClick={() => openURL(GITHUB_URL)}><Github className='mr-2' /> View on GitHub</Button>
+            <Button className='bg-primary hover:bg-secondary sm:hidden' onClick={() => openURL(GITHUB_URL)}><Github className='mr-2' /> GitHub</Button>
+
+            <Button className='bg-primary hover:bg-secondary hidden sm:flex' size='lg' onClick={() => navigate('/app')}><LogIn className='mr-2' /> Go to App</Button>
+            <Button className='bg-primary hover:bg-secondary sm:hidden' onClick={() => navigate('/app')}><LogIn className='mr-2' /> Go to App</Button>
+
+          </div>
+
         </div>
 
       </section>
