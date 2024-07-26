@@ -12,6 +12,7 @@ import { NavService } from '../../shared/services/nav/index.service.ts';
 import { AccessJWTService } from '../../shared/backend/api/access-jwt.service.ts';
 import { useBoundStore } from '../../shared/store/index.store.ts';
 import GlobalLoader from '../global-loader/index.component.tsx';
+import AppInstaller from '../../shared/components/app-installer/index.component.tsx';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -94,6 +95,10 @@ const App = () => {
 
       {/* ROUTER OUTLET */}
       <Outlet />
+
+
+      {/* APP INSTALLER */}
+      <AppInstaller />
 
     </main>
   );
