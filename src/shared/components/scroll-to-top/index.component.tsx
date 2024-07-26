@@ -25,9 +25,9 @@ const ScrollToTop = () => {
    ********************************************************************************************** */
 
   useEffect(() => {
-    window.addEventListener('scroll', () => {
-      setVisible(window.scrollY > 200);
-    });
+    const onScroll = () => setVisible(window.scrollY > 200);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
   });
 
 
