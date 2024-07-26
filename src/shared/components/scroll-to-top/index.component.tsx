@@ -24,6 +24,10 @@ const ScrollToTop = () => {
    *                                         SIDE EFFECTS                                         *
    ********************************************************************************************** */
 
+  /**
+   * Scroll Event Listener
+   * Subscribes to the window's scroll event and shows the button when the user has scrolled down.
+   */
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > 200);
     window.addEventListener('scroll', onScroll);

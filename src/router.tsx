@@ -24,14 +24,17 @@ const Router = () => {
     {
       path: '/sign-in',
       element: <SignIn />,
+      errorElement: <Error />,
     },
     {
       path: '/update-password',
       element: <UpdatePassword />,
+      errorElement: <Error />,
     },
     {
       path: '/app',
       element: <App />,
+      errorElement: <Error />,
       children: [
         {
           index: true,
