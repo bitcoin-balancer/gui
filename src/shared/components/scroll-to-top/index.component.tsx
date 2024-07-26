@@ -43,7 +43,7 @@ const ScrollToTop = () => {
             size='icon'
             onClick={scrollToTop}
             aria-label='Scroll to Top' >
-      <MoveUp color='white' aria-hidden='true'/>
+      <MoveUp color='white' aria-hidden='true' className='w-5 h-5'/>
     </Button>
   );
 };
