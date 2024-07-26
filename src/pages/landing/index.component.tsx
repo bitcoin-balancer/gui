@@ -84,7 +84,7 @@ const Landing = () => {
 
 
 
-      {/* Scroll To Top */}
+      {/* SCROLL TO TOP */}
       <ScrollToTop />
 
     </main>

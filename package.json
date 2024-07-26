@@ -51,7 +51,7 @@
     "altcha": "^0.6.5",
     "api-response-utils": "^1.0.0",
     "bignumber-utils": "^1.0.1",
-    "browser-style-normalizer": "^1.0.5",
+    "browser-style-normalizer": "^1.0.6",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "error-message-utils": "^1.1.1",
@@ -88,9 +88,9 @@
     "jsdom": "^24.1.1",
     "postcss": "^8.4.40",
     "sw-builder": "^1.0.3",
-    "tailwindcss": "^3.4.6",
+    "tailwindcss": "^3.4.7",
     "typescript": "^5.5.4",
-    "vite": "^5.3.4",
+    "vite": "^5.3.5",
     "vitest": "^1.6.0"
   }
 }

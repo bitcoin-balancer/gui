@@ -135,15 +135,15 @@ const ConfirmationDialog = () => {
 
             <InputOTP maxLength={6} value={otpToken} onChange={onOTPTokenChanges} aria-label='One-time password input'>
               <InputOTPGroup>
-                <InputOTPSlot index={0} className='shadow-md ring-1 ring-slate-200' />
-                <InputOTPSlot index={1} className='shadow-md ring-1 ring-slate-200' />
-                <InputOTPSlot index={2} className='shadow-md ring-1 ring-slate-200' />
+                <InputOTPSlot index={0} />
+                <InputOTPSlot index={1} />
+                <InputOTPSlot index={2} />
               </InputOTPGroup>
               <InputOTPSeparator />
               <InputOTPGroup>
-                <InputOTPSlot index={3} className='shadow-md ring-1 ring-slate-200' />
-                <InputOTPSlot index={4} className='shadow-md ring-1 ring-slate-200' />
-                <InputOTPSlot index={5} className='shadow-md ring-1 ring-slate-200' />
+                <InputOTPSlot index={3} />
+                <InputOTPSlot index={4} />
+                <InputOTPSlot index={5} />
               </InputOTPGroup>
             </InputOTP>
 
