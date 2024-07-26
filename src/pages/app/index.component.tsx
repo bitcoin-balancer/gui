@@ -191,32 +191,23 @@ const App = () => {
       <nav className='fixed bottom-0 left-0 border-t border-t-slate-200 flex justify-center items-center w-full md:hidden'>
 
         <Button variant='ghost' size='icon' className='h-14 flex-1 rounded-none' disabled={true}>
-          <div className='flex flex-col justify-center items-center'>
-            <House aria-hidden='true' />
-            <span className='text-xs'>Dashboard</span>
-          </div>
+          <House aria-hidden='true' />
         </Button>
         <Button variant='ghost' size='icon' className='h-14 flex-1 rounded-none'>
-          <div className='flex flex-col justify-center items-center'>
-            <ArrowLeftRight aria-hidden='true' />
-            <span className='text-xs'>Positions</span>
-          </div>
+          <ArrowLeftRight aria-hidden='true' />
         </Button>
         <Button variant='ghost' size='icon' className='h-14 flex-1 rounded-none'>
-          <div className='flex flex-col justify-center items-center relative'>
+          <div className='relative'>
             <Server aria-hidden='true' />
-            <span className='text-xs'>Server</span>
-            <div className="absolute -top-5 -right-5">
+            <div className="absolute -top-6 -right-5">
               <Badge className='bg-primary py-0.5 px-1.5'>9+</Badge>
             </div>
           </div>
         </Button>
         <Button variant='ghost' size='icon' className='h-14 flex-1 rounded-none'>
-          <div className='flex flex-col justify-center items-center'>
-            <SlidersHorizontal aria-hidden='true' />
-            <span className='max-w-16 text-xs text-ellipsis overflow-hidden'>Adjustments</span>
-          </div>
+          <SlidersHorizontal aria-hidden='true' />
         </Button>
+
       </nav>
 
 
