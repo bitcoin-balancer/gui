@@ -31,8 +31,10 @@ const App = () => {
    * Checks if the user is currently logged in.
    */
   useEffect(() => {
-    AccessJWTService.accessJWTChanged(null);
-  }, []);
+    if (authenticated === undefined) {
+      AccessJWTService.accessJWTChanged(null);
+    }
+  }, [authenticated]);
 
 
 

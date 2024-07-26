@@ -1,5 +1,10 @@
 import { useNavigate } from 'react-router-dom';
-import { Github, LogIn, Menu } from 'lucide-react';
+import {
+  Github,
+  LogIn,
+  Menu,
+  ChartCandlestick,
+} from 'lucide-react';
 import { Button } from '../../shared/shadcn/components/ui/button.tsx';
 import { openURL } from '../../shared/services/utils/index.service.ts';
 
@@ -45,6 +50,9 @@ const Landing = () => {
 
         <span className='flex-1'></span>
 
+        <Button className='bg-primary hover:bg-secondary hidden sm:flex' onClick={() => openURL(GITHUB_URL)}><Github className='mr-2' /> View on GitHub</Button>
+        <Button className='bg-primary hover:bg-secondary sm:hidden' size='icon' onClick={() => openURL(GITHUB_URL)}><Github /></Button>
+
         <Button size='icon' className='bg-primary hover:bg-secondary'><Menu /></Button>
 
       </header>
@@ -61,8 +69,8 @@ const Landing = () => {
 
           <div className='flex justify-center items-center mt-10'>
 
-            <Button className='bg-primary hover:bg-secondary hidden sm:flex' size='lg' onClick={() => openURL(GITHUB_URL)}><Github className='mr-2' /> View on GitHub</Button>
-            <Button className='bg-primary hover:bg-secondary sm:hidden' onClick={() => openURL(GITHUB_URL)}><Github className='mr-2' /> GitHub</Button>
+            <Button className='bg-primary hover:bg-secondary hidden sm:flex' size='lg'><ChartCandlestick className='mr-2' /> Learn More</Button>
+            <Button className='bg-primary hover:bg-secondary sm:hidden'><ChartCandlestick className='mr-2' /> Learn More</Button>
 
             <Button className='bg-primary hover:bg-secondary hidden sm:flex' size='lg' onClick={() => navigate('/app')}><LogIn className='mr-2' /> Go to App</Button>
             <Button className='bg-primary hover:bg-secondary sm:hidden' onClick={() => navigate('/app')}><LogIn className='mr-2' /> Go to App</Button>
