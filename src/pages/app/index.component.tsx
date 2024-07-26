@@ -36,7 +36,7 @@ const App = () => {
    ********************************************************************************************** */
   const authenticated = useBoundStore((state) => state.authenticated);
 
-  console.log('here');
+
 
 
 
@@ -78,13 +78,13 @@ const App = () => {
         <span className='flex-1'></span>
 
         {/* TOP NAVIGATION */}
-        <nav className='flex justify-center items-center gap-3'>
+        <nav className='flex justify-center items-center gap-3 md:gap-5'>
 
           {/* MD BUTTONS */}
           <TooltipProvider delayDuration={100}>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant='ghost' className='hidden md:flex lg:hidden' size='lg' aria-label='Dashboard' disabled={true}>
+                <Button variant='ghost' className='hidden md:flex lg:hidden' aria-label='Dashboard' disabled={true}>
                   <House aria-hidden='true' />
                 </Button>
               </TooltipTrigger>
@@ -96,7 +96,7 @@ const App = () => {
           <TooltipProvider delayDuration={100}>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant='ghost' className='hidden md:flex lg:hidden' size='lg' aria-label='Positions'>
+                <Button variant='ghost' className='hidden md:flex lg:hidden' aria-label='Positions'>
                   <ArrowLeftRight aria-hidden='true' />
                 </Button>
               </TooltipTrigger>
@@ -108,9 +108,9 @@ const App = () => {
           <TooltipProvider delayDuration={100}>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant='ghost' className='hidden md:flex lg:hidden relative' size='lg' aria-label='Server'>
+                <Button variant='ghost' className='hidden md:flex lg:hidden relative' aria-label='Server'>
                   <Server aria-hidden='true' />
-                  <div className="absolute -top-2 right-1">
+                  <div className="absolute -top-2 -right-3">
                     <Badge className='bg-primary py-0.5 px-1.5'>9+</Badge>
                   </div>
                 </Button>
@@ -123,7 +123,7 @@ const App = () => {
           <TooltipProvider delayDuration={100}>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant='ghost' className='hidden md:flex lg:hidden' size='lg' aria-label='Adjustments'>
+                <Button variant='ghost' className='hidden md:flex lg:hidden' aria-label='Adjustments'>
                   <SlidersHorizontal aria-hidden='true' />
                 </Button>
               </TooltipTrigger>
@@ -136,19 +136,19 @@ const App = () => {
 
 
           {/* LG BUTTONS */}
-          <Button variant='ghost' className='hidden lg:flex' size='lg' disabled={true}>
+          <Button variant='ghost' className='hidden lg:flex' disabled={true}>
             <House className='mr-2' aria-hidden='true' /> Dashboard
           </Button>
-          <Button variant='ghost' className='hidden lg:flex' size='lg'>
+          <Button variant='ghost' className='hidden lg:flex'>
             <ArrowLeftRight className='mr-2' aria-hidden='true' /> Positions
           </Button>
-          <Button variant='ghost' className='hidden lg:flex relative' size='lg'>
+          <Button variant='ghost' className='hidden lg:flex relative'>
             <Server className='mr-2' aria-hidden='true' /> Server
-            <div className="absolute -top-2 right-1">
+            <div className="absolute -top-2 -right-2">
               <Badge className='bg-primary py-0.5 px-1.5'>9+</Badge>
             </div>
           </Button>
-          <Button variant='ghost' className='hidden lg:flex' size='lg'>
+          <Button variant='ghost' className='hidden lg:flex'>
             <SlidersHorizontal className='mr-2' aria-hidden='true' /> Adjustments
           </Button>
 
@@ -159,7 +159,7 @@ const App = () => {
             <Tooltip>
               <TooltipTrigger asChild>
                 <div>
-                  <Button variant='ghost' className='hidden md:flex' size='lg' aria-label='Menu'>
+                  <Button variant='ghost' className='hidden md:flex' aria-label='Menu'>
                     <Menu aria-hidden='true' />
                   </Button>
                   <Button variant='ghost' className='md:hidden' size='icon' aria-label='Menu'>
