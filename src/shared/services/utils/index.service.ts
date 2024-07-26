@@ -11,24 +11,11 @@ import { Toast } from '../../shadcn/components/ui/use-toast.ts';
  * @param title
  * @returns Toast
  */
-const errorToast = (error: unknown, title: string = 'Error'): Toast => ({
+const buildErrorToast = (error: unknown, title: string = 'Error'): Toast => ({
   variant: 'destructive',
   title,
   description: decodeError(error).message,
 });
-
-/**
- * Opens an URL in the current or a new tab.
- * @param url
- * @param newTab?
- */
-const openURL = (url: string, newTab: boolean = true): void => {
-  if (newTab) {
-    window.open(url, '_blank', 'noopener noreferrer');
-  } else {
-    window.open(url);
-  }
-};
 
 /**
  * Creates an asynchronous delay that resolves once the provided seconds have passed.
@@ -47,7 +34,6 @@ const delay = (seconds: number): Promise<void> => new Promise((resolve) => {
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export {
-  errorToast,
-  openURL,
+  buildErrorToast,
   delay,
 };

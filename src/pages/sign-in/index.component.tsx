@@ -14,12 +14,13 @@ import {
 } from '../../shared/shadcn/components/ui/form';
 import { Toaster } from '../../shared/shadcn/components/ui/toaster';
 import { useToast } from '../../shared/shadcn/components/ui/use-toast.ts';
-import { errorToast } from '../../shared/services/utils/index.service.ts';
+import { buildErrorToast } from '../../shared/services/utils/index.service.ts';
 import {
   altchaPayloadValid,
   nicknameValid,
   passwordValid,
 } from '../../shared/backend/validations/index.service.ts';
+import { NavService } from '../../shared/services/nav/index.service.ts';
 import { AccessJWTService } from '../../shared/backend/api/access-jwt.service.ts';
 import { Altcha } from '../../shared/components/altcha/index.component.tsx';
 import { JWTService } from '../../shared/backend/auth/jwt/index.service.ts';
@@ -103,7 +104,7 @@ const SignIn = () => {
             altcha,
           );
         } catch (e) {
-          toast(errorToast(e, 'Authentication Error'));
+          toast(buildErrorToast(e, 'Authentication Error'));
         } finally {
           setIsSubmitting(false);
         }
@@ -129,7 +130,7 @@ const SignIn = () => {
       <section className='hidden md:block flex-1 bg-primary shadow-8 p-10'>
 
         <article className='flex flex-col h-full'>
-          <Link to='/'><img src='logo/logo-light.png' alt='Balancer Logo' width='192' height='60' className='w-48' /></Link>
+          <Link to={NavService.landing()}><img src='logo/logo-light.png' alt='Balancer Logo' width='192' height='60' className='w-48' /></Link>
 
           <span className='my-auto'></span>
 
@@ -196,9 +197,9 @@ const SignIn = () => {
 
               <Button type='submit' disabled={isSubmitting} variant='default' className='bg-primary hover:bg-secondary mt-7 w-full'>{isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Sign in</Button>
 
-              <Button type='button' onClick={() => navigate('/update-password')} disabled={isSubmitting} variant='outline' className='mt-3 w-full'>Update password</Button>
+              <Button type='button' onClick={() => navigate(NavService.updatePassword())} disabled={isSubmitting} variant='outline' className='mt-3 w-full'>Update password</Button>
 
-              <p className='text-light text-sm mt-6 text-center'>If this is the first time you are signing into your account, go through the <Link to='/update-password'><strong>'Update password'</strong></Link> section to set a password on it</p>
+              <p className='text-light text-sm mt-6 text-center'>If this is the first time you are signing into your account, go through the <Link to={NavService.updatePassword()}><strong>'Update password'</strong></Link> section to set a password on it</p>
 
             </form>
 

@@ -6,18 +6,7 @@ import {
   ChartCandlestick,
 } from 'lucide-react';
 import { Button } from '../../shared/shadcn/components/ui/button.tsx';
-import { openURL } from '../../shared/services/utils/index.service.ts';
-
-/* ************************************************************************************************
- *                                           CONSTANTS                                            *
- ************************************************************************************************ */
-
-// the URL to the project's GitHub Page
-const GITHUB_URL = 'https://github.com/bitcoin-balancer';
-
-
-
-
+import { NavService } from '../../shared/services/nav/index.service.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -50,8 +39,8 @@ const Landing = () => {
 
         <span className='flex-1'></span>
 
-        <Button className='bg-primary hover:bg-secondary hidden sm:flex' onClick={() => openURL(GITHUB_URL)}><Github className='mr-2' /> View on GitHub</Button>
-        <Button className='bg-primary hover:bg-secondary sm:hidden' size='icon' onClick={() => openURL(GITHUB_URL)}><Github /></Button>
+        <Button className='bg-primary hover:bg-secondary hidden sm:flex' onClick={NavService.openGitHubPage}><Github className='mr-2' /> View on GitHub</Button>
+        <Button className='bg-primary hover:bg-secondary sm:hidden' size='icon' onClick={NavService.openGitHubPage}><Github /></Button>
 
         <Button size='icon' className='bg-primary hover:bg-secondary'><Menu /></Button>
 
@@ -72,8 +61,8 @@ const Landing = () => {
             <Button className='bg-primary hover:bg-secondary hidden sm:flex' size='lg'><ChartCandlestick className='mr-2' /> Learn More</Button>
             <Button className='bg-primary hover:bg-secondary sm:hidden'><ChartCandlestick className='mr-2' /> Learn More</Button>
 
-            <Button className='bg-primary hover:bg-secondary hidden sm:flex' size='lg' onClick={() => navigate('/app')}><LogIn className='mr-2' /> Go to App</Button>
-            <Button className='bg-primary hover:bg-secondary sm:hidden' onClick={() => navigate('/app')}><LogIn className='mr-2' /> Go to App</Button>
+            <Button className='bg-primary hover:bg-secondary hidden sm:flex' size='lg' onClick={() => navigate(NavService.dashboard())}><LogIn className='mr-2' /> Go to App</Button>
+            <Button className='bg-primary hover:bg-secondary sm:hidden' onClick={() => navigate(NavService.dashboard())}><LogIn className='mr-2' /> Go to App</Button>
 
           </div>
 

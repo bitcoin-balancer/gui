@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Button } from '../../shared/shadcn/components/ui/button';
+import { NavService } from '../../shared/services/nav/index.service';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -12,7 +13,7 @@ import { Button } from '../../shared/shadcn/components/ui/button';
 const NotFound = () => (
   <>
     <h1 className="text-5xl">Not Found Component</h1>
-    <Link to='/'>
+    <Link to={NavService.landing()}>
       <Button variant='ghost'>Back to landing</Button>
     </Link>
   </>
