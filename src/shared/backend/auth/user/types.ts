@@ -14,13 +14,20 @@ type IUserService = {
 
   // retrievers
   listUsers: () => Promise<IUser[]>;
-  listUserPasswordUpdates: (
-    uid: string,
-    startAtEventTime?: number,
-  ) => Promise<IPasswordUpdate[]>;
+  listUserPasswordUpdates: (uid: string, startAtEventTime?: number) => Promise<IPasswordUpdate[]>;
 
   // user record management
-  // ...
+  createUser: (nickname: string, authority: IAuthority, otpToken: string) => Promise<IUser>;
+  updateNickname: (uid: string, newNickname: string, otpToken: string) => Promise<void>;
+  updateAuthority: (uid: string, newAuthority: IAuthority, otpToken: string) => Promise<void>;
+  updatePassword: (
+    nickname: string,
+    newPassword: string,
+    otpToken: string,
+    altchaPayload: string,
+  ) => Promise<void>;
+  updateOTPSecret: (uid: string, otpToken: string) => Promise<string>;
+  deleteUser: (uid: string, otpToken: string) => Promise<void>;
 };
 
 
