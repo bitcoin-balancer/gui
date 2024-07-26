@@ -99,11 +99,14 @@ const AppInstaller = () => {
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
+  if (!visible) {
+    return <></>;
+  }
   return (
     <button aria-label='Install Application'
             role='alert'
             onClick={installApp}
-            className={`fixed bottom-5 inset-x-0 z-20 w-64 md:w-72 mx-auto text-left bg-white shadow-3 border border-slate-200 hover:bg-gray-200 transition-transform duration-500 ${visible ? 'translate-y-0' : 'translate-y-40'}`}>
+            className='fixed bottom-5 inset-x-0 z-20 w-64 md:w-72 mx-auto text-left bg-white shadow-3 border border-slate-200 hover:bg-gray-200 animate-in fade-in zoom-in duration-500'>
       {/* Progress Bar */}
       <div className='h-1 bg-primary' style={{ width: getProgressBarWidth(remainingTime) }} role='progressbar'></div>
 

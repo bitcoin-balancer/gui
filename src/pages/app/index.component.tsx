@@ -36,7 +36,7 @@ const App = () => {
    ********************************************************************************************** */
   const authenticated = useBoundStore((state) => state.authenticated);
 
-
+  console.log('here');
 
 
 
@@ -68,7 +68,7 @@ const App = () => {
     return <GlobalLoader />;
   }
   return (
-    <main className='animate-in fade-in duration-700'>
+    <main className='animate-in fade-in duration-700 min-h-dvh'>
 
       {/* HEADER */}
       <header className='flex justify-center items-center p-4 border-b border-slate-200'>
@@ -187,22 +187,8 @@ const App = () => {
 
 
 
-      {/* ONLINE STATUS */}
-      <OnlineStatus />
-
-
-
-
-
-      {/* APP INSTALLER */}
-      <AppInstaller />
-
-
-
-
-
       {/* BOTTOM NAVIGATION */}
-      <nav className='fixed bottom-0 left-0 border border-t-slate-200 flex justify-center items-center w-full md:hidden'>
+      <nav className='fixed bottom-0 left-0 border-t border-t-slate-200 flex justify-center items-center w-full md:hidden'>
 
         <Button variant='ghost' size='icon' className='h-14 flex-1 rounded-none' disabled={true}>
           <div className='flex flex-col justify-center items-center'>
@@ -232,6 +218,21 @@ const App = () => {
           </div>
         </Button>
       </nav>
+
+
+
+
+
+      {/* ONLINE STATUS */}
+      <OnlineStatus />
+
+
+
+
+
+      {/* APP INSTALLER */}
+      <AppInstaller />
+
     </main>
   );
 };
