@@ -77,10 +77,11 @@ const App = () => {
 
         <span className='flex-1'></span>
 
+        {/* TOP NAVIGATION */}
         <nav className='flex justify-center items-center gap-3'>
 
           {/* MD BUTTONS */}
-          <TooltipProvider delayDuration={300}>
+          <TooltipProvider delayDuration={100}>
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button variant='ghost' className='hidden md:flex lg:hidden' size='lg' aria-label='Dashboard' disabled={true}>
@@ -92,7 +93,7 @@ const App = () => {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          <TooltipProvider delayDuration={300}>
+          <TooltipProvider delayDuration={100}>
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button variant='ghost' className='hidden md:flex lg:hidden' size='lg' aria-label='Positions'>
@@ -104,12 +105,14 @@ const App = () => {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          <TooltipProvider delayDuration={300}>
+          <TooltipProvider delayDuration={100}>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant='ghost' className='hidden md:flex lg:hidden' size='lg' aria-label='Server'>
+                <Button variant='ghost' className='hidden md:flex lg:hidden relative' size='lg' aria-label='Server'>
                   <Server aria-hidden='true' />
-                  <Badge className='bg-primary -ml-2 text-xs -mt-8 rounded-full py-0.5 px-1.5'>9+</Badge>
+                  <div className="absolute -top-2 right-1">
+                    <Badge className='bg-primary py-0.5 px-1.5'>9+</Badge>
+                  </div>
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
@@ -117,7 +120,7 @@ const App = () => {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          <TooltipProvider delayDuration={300}>
+          <TooltipProvider delayDuration={100}>
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button variant='ghost' className='hidden md:flex lg:hidden' size='lg' aria-label='Adjustments'>
@@ -139,9 +142,11 @@ const App = () => {
           <Button variant='ghost' className='hidden lg:flex' size='lg'>
             <ArrowLeftRight className='mr-2' aria-hidden='true' /> Positions
           </Button>
-          <Button variant='ghost' className='hidden lg:flex' size='lg'>
+          <Button variant='ghost' className='hidden lg:flex relative' size='lg'>
             <Server className='mr-2' aria-hidden='true' /> Server
-            <Badge className='bg-primary text-xs -ml-1 -mt-8 rounded-full py-0.5 px-1.5'>9+</Badge>
+            <div className="absolute -top-2 right-1">
+              <Badge className='bg-primary py-0.5 px-1.5'>9+</Badge>
+            </div>
           </Button>
           <Button variant='ghost' className='hidden lg:flex' size='lg'>
             <SlidersHorizontal className='mr-2' aria-hidden='true' /> Adjustments
@@ -150,12 +155,23 @@ const App = () => {
 
 
           {/* MENU */}
-          <Button variant='ghost' className='hidden md:flex' size='lg' aria-label='Menu'>
-            <Menu aria-hidden='true' />
-          </Button>
-          <Button variant='ghost' className='md:hidden' size='icon' aria-label='Menu'>
-            <Menu aria-hidden='true' />
-          </Button>
+          <TooltipProvider delayDuration={300}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div>
+                  <Button variant='ghost' className='hidden md:flex' size='lg' aria-label='Menu'>
+                    <Menu aria-hidden='true' />
+                  </Button>
+                  <Button variant='ghost' className='md:hidden' size='icon' aria-label='Menu'>
+                    <Menu aria-hidden='true' />
+                  </Button>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Menu</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </nav>
 
       </header>
@@ -181,6 +197,41 @@ const App = () => {
       {/* APP INSTALLER */}
       <AppInstaller />
 
+
+
+
+
+      {/* BOTTOM NAVIGATION */}
+      <nav className='fixed bottom-0 left-0 border border-t-slate-200 flex justify-center items-center w-full md:hidden'>
+
+        <Button variant='ghost' size='icon' className='h-14 flex-1 rounded-none' disabled={true}>
+          <div className='flex flex-col justify-center items-center'>
+            <House aria-hidden='true' />
+            <span className='text-xs'>Dashboard</span>
+          </div>
+        </Button>
+        <Button variant='ghost' size='icon' className='h-14 flex-1 rounded-none'>
+          <div className='flex flex-col justify-center items-center'>
+            <ArrowLeftRight aria-hidden='true' />
+            <span className='text-xs'>Positions</span>
+          </div>
+        </Button>
+        <Button variant='ghost' size='icon' className='h-14 flex-1 rounded-none'>
+          <div className='flex flex-col justify-center items-center relative'>
+            <Server aria-hidden='true' />
+            <span className='text-xs'>Server</span>
+            <div className="absolute -top-5 -right-5">
+              <Badge className='bg-primary py-0.5 px-1.5'>9+</Badge>
+            </div>
+          </div>
+        </Button>
+        <Button variant='ghost' size='icon' className='h-14 flex-1 rounded-none'>
+          <div className='flex flex-col justify-center items-center'>
+            <SlidersHorizontal aria-hidden='true' />
+            <span className='max-w-16 text-xs text-ellipsis overflow-hidden'>Adjustments</span>
+          </div>
+        </Button>
+      </nav>
     </main>
   );
 };
