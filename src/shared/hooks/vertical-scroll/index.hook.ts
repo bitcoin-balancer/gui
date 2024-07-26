@@ -1,20 +1,22 @@
 import { useSyncExternalStore } from 'react';
-import { MediaQueryService } from '../../services/media-query/index.service.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
 
 /**
- * Media Query Breakpoint Hook
- * Subscribes to the active breakpoint based on the Client's screen width.
+ * Vertical Scroll Hook
+ * Subscribes to the Client's Scroll Event.
+ * @returns number
  */
-const useMediaQueryBreakpoint = () => useSyncExternalStore(
+const useVerticalScroll = () => useSyncExternalStore(
   (callback) => {
-    window.addEventListener('resize', callback);
-    return () => window.removeEventListener('resize', callback);
+    window.addEventListener('scroll', callback);
+    return () => {
+      window.removeEventListener('scroll', callback);
+    };
   },
-  () => MediaQueryService.getBreakpoint(window.innerWidth),
+  () => window.scrollY,
 );
 
 
@@ -24,4 +26,4 @@ const useMediaQueryBreakpoint = () => useSyncExternalStore(
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export default useMediaQueryBreakpoint;
+export default useVerticalScroll;

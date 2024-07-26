@@ -5,7 +5,7 @@ import { useSyncExternalStore } from 'react';
  ************************************************************************************************ */
 
 /**
- * Online Status Hooks
+ * Online Status Hook
  * Subscribes to the Client's Internet Connection Status.
  * @returns boolean
  */
