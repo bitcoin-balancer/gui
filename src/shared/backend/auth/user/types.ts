@@ -13,7 +13,11 @@ type IUserService = {
   // ...
 
   // retrievers
-  // ...
+  listUsers: () => Promise<IUser[]>;
+  listUserPasswordUpdates: (
+    uid: string,
+    startAtEventTime?: number,
+  ) => Promise<IPasswordUpdate[]>;
 
   // user record management
   // ...
