@@ -183,7 +183,6 @@ const userServiceFactory = (): IUserService => {
       otpToken,
       altchaPayload,
     },
-    true,
   ) as Promise<void>;
 
   /**

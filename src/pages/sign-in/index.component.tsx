@@ -22,7 +22,7 @@ import {
 } from '../../shared/backend/validations/index.service.ts';
 import { AccessJWTService } from '../../shared/backend/api/access-jwt.service.ts';
 import { Altcha } from '../../shared/components/altcha/index.component.tsx';
-import { JWTService } from '@/shared/backend/auth/jwt/index.service.ts';
+import { JWTService } from '../../shared/backend/auth/jwt/index.service.ts';
 import { useBoundStore } from '../../shared/store/index.store.ts';
 import GlobalLoader from '../global-loader/index.component.tsx';
 import ConfirmationDialog from '../../shared/components/confirmation-dialog/index.component.tsx';
@@ -43,8 +43,8 @@ const SignIn = () => {
    ********************************************************************************************** */
   const authenticated = useBoundStore((state) => state.authenticated);
   const navigate = useNavigate();
-  const form = useForm<IFormInputs>({ defaultValues: { nickname: '', password: '' } });
   const { toast } = useToast();
+  const form = useForm<IFormInputs>({ defaultValues: { nickname: '', password: '' } });
   const [altcha, setAltcha] = useState<string | null | undefined>(undefined);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -133,9 +133,9 @@ const SignIn = () => {
 
           <span className='my-auto'></span>
 
-          <blockquote className='text-white self-end'>
-            <p className='text-2xl'> 'Bitcoin is a remarkable cryptographic achievement, and the ability to create something that is not duplicable in the digital world has enormous value.'</p>
-            <p className='text-sm mt-3'>Eric Schmidt, CEO of Google</p>
+          <blockquote className='text-white'>
+            <p className='text-2xl'>"Bitcoin is a remarkable cryptographic achievement, and the ability to create something that is not duplicable in the digital world has enormous value."</p>
+            <p className='text-sm mt-3'>Eric Schmidt, Former CEO of Google</p>
           </blockquote>
 
         </article>
@@ -148,7 +148,7 @@ const SignIn = () => {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
 
-              <h1 className='text-3xl font-bold text-center'>Sign In</h1>
+              <h1 className='text-3xl font-bold text-center'>Sign in</h1>
               <p className='text-light text-md text-center'>Enter your credentials to log into your account</p>
 
               <FormField
@@ -194,11 +194,11 @@ const SignIn = () => {
                 {altcha === null && <p className='text-error animate-in fade-in duration-500 mt-2 text-sm font-bold'>Prove you're not a robot</p>}
               </div>
 
-              <Button type='submit' disabled={isSubmitting} variant='default' className='bg-primary hover:bg-secondary mt-7 w-full'>{isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Sign In</Button>
+              <Button type='submit' disabled={isSubmitting} variant='default' className='bg-primary hover:bg-secondary mt-7 w-full'>{isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Sign in</Button>
 
-              <Button type='button' onClick={() => navigate('/update-password')} disabled={isSubmitting} variant='outline' className='mt-3 w-full'>Update Password</Button>
+              <Button type='button' onClick={() => navigate('/update-password')} disabled={isSubmitting} variant='outline' className='mt-3 w-full'>Update password</Button>
 
-              <p className='text-light text-sm mt-6 text-center'>If this is the first time you are signing into your account, go through the <Link to='/update-password'><strong>'Update Password'</strong></Link> section to set a password on it.</p>
+              <p className='text-light text-sm mt-6 text-center'>If this is the first time you are signing into your account, go through the <Link to='/update-password'><strong>'Update password'</strong></Link> section to set a password on it</p>
 
             </form>
 
