@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Clipboard } from 'lucide-react';
 import { extractMessage } from 'error-message-utils';
-import { Button } from '../../shadcn/components/ui/button';
+import { Button } from '../../shadcn/components/ui/button.tsx';
 import {
   Dialog,
   DialogContent,
@@ -9,20 +9,20 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '../../shadcn/components/ui/dialog';
+} from '../../shadcn/components/ui/dialog.tsx';
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
-} from '../../shadcn/components/ui/input-otp';
+} from '../../shadcn/components/ui/input-otp.tsx';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '../../shadcn/components/ui/tooltip';
-import { useToast } from '../../shadcn/components/ui/use-toast';
+} from '../../shadcn/components/ui/tooltip.tsx';
+import { useToast } from '../../shadcn/components/ui/use-toast.ts';
 import { useBoundStore } from '../../store/index.store.ts';
 import { otpTokenValid } from '../../backend/validations/index.service.ts';
 import { ClipboardService } from '../../services/clipboard/index.service.ts';

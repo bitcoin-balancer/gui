@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { Button } from '../../shared/shadcn/components/ui/button.tsx';
 import { NavService } from '../../shared/services/nav/index.service.ts';
+import ScrollToTop from '../../shared/components/scroll-to-top/index.component.tsx';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -78,6 +79,9 @@ const Landing = () => {
       <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
       <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
       <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+      {/* Scroll To Top */}
+      <ScrollToTop />
     </main>
   );
 };
