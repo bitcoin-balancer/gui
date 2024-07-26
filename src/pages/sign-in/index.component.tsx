@@ -59,7 +59,7 @@ const SignIn = () => {
 
   /**
    * Access JWT
-   * Checks if the user is currently logged in.
+   * Checks if the user is currently logged in in case authentication has not been initialized.
    */
   useEffect(() => {
     if (authenticated === undefined) {
