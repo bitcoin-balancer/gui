@@ -34,8 +34,8 @@ import { IMainNavigationItem } from './types.ts';
  ************************************************************************************************ */
 
 // the number of ms that will be used by the updater if there is an available update for the app
-const APP_UPDATER_DELAY = 2 * 1000;
-const APP_UPDATER_DURATION = 10 * 1000;
+const APP_UPDATER_DELAY = Math.floor(SWService.registrationDurationSeconds / 2) * 1000;
+const APP_UPDATER_DURATION = 15 * 1000;
 
 
 
