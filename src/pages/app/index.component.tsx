@@ -1,4 +1,4 @@
-import { useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import {
   Link,
   Navigate,
@@ -12,6 +12,12 @@ import {
   Server,
   SlidersHorizontal,
   Menu,
+  EarthLock,
+  Users,
+  Database,
+  ExternalLink,
+  Github,
+  LogOut,
 } from 'lucide-react';
 import { SWService } from 'sw-service';
 import { Button } from '../../shared/shadcn/components/ui/button.tsx';
@@ -20,6 +26,15 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '../../shared/shadcn/com
 import { Toaster } from '../../shared/shadcn/components/ui/toaster';
 import { ToastAction } from '../../shared/shadcn/components/ui/toast';
 import { toast } from '../../shared/shadcn/components/ui/use-toast.ts';
+import { Separator } from '../../shared/shadcn/components/ui/separator.tsx';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '../../shared/shadcn/components/ui/sheet.tsx';
 import { formatBadgeCount } from '../../shared/services/utils/index.service.ts';
 import { NavService } from '../../shared/services/nav/index.service.ts';
 import { AccessJWTService } from '../../shared/backend/api/access-jwt.service.ts';
@@ -53,6 +68,7 @@ const App = () => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
+  const [sidenavOpen, setSidenavOpen ] = useState<boolean>(false);
   const authenticated = useBoundStore((state) => state.authenticated);
   const navigate = useNavigate();
   const { state } = useNavigation();
@@ -158,7 +174,7 @@ const App = () => {
       <header id='app-header' className='flex justify-center items-center border-b border-slate-200'>
         <Tooltip>
           <TooltipTrigger asChild>
-          <Link to={NavService.landing()}><img src='/logo/logo-dark.png' alt='Balancer’s Logo' width='176' height='60' className='w-32 lg:w-36' /></Link>
+            <Link to={NavService.landing()}><img src='/logo/logo-dark.png' alt='Balancer’s Logo' width='176' height='60' className='w-32 lg:w-36' /></Link>
           </TooltipTrigger>
           <TooltipContent>
             <p>v1.0.0</p>
@@ -212,8 +228,8 @@ const App = () => {
 
 
           {/* SIDENAV MENU */}
-          <Tooltip>
-            <TooltipTrigger asChild>
+          <Sheet open={sidenavOpen} onOpenChange={setSidenavOpen}>
+            <SheetTrigger asChild>
               <div>
                 <Button variant='ghost' className='hidden md:flex' aria-label='Side Navigation Menu'>
                   <Menu aria-hidden='true' />
@@ -222,11 +238,52 @@ const App = () => {
                   <Menu aria-hidden='true' />
                 </Button>
               </div>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Menu</p>
-            </TooltipContent>
-          </Tooltip>
+            </SheetTrigger>
+            <SheetContent className='w-64 sm:72 md-80 lg:96 p-4'>
+              <SheetHeader>
+                <SheetTitle className='flex justify-start items-center'>
+
+                  <img src='/logo/logo-dark.png' alt='Balancer’s Logo' width='80' height='30' className='w-20' />
+                  <Badge variant='secondary' className='ml-2'>v1.0.0</Badge>
+
+                </SheetTitle>
+                <SheetDescription className='text-left'>
+
+                  <Button variant='link' className='justify-start p-0 -mt-6 text-light text-xs' onClick={NavService.openGitHubPage}>
+                    0a23ed6 · last month
+                  </Button>
+
+                </SheetDescription>
+              </SheetHeader>
+
+              <nav className='mt-4'>
+
+                <Button variant='ghost' className='w-full justify-start'>
+                    <EarthLock /> <span className='ml-2'>IP address blacklist</span>
+                </Button>
+                <Button variant='ghost' className='w-full justify-start'>
+                    <Users /> <span className='ml-2'>Users</span>
+                </Button>
+                <Button variant='ghost' className='w-full justify-start'>
+                    <Database /> <span className='ml-2'>browserdb</span>
+                </Button>
+
+                <Separator className='my-4' />
+
+                <Button variant='ghost' className='w-full justify-start'>
+                    <ExternalLink /> <span className='ml-2'>Create new instance</span>
+                </Button>
+                <Button variant='ghost' className='w-full justify-start'>
+                    <Github /> <span className='ml-2'>View on GitHub</span>
+                </Button>
+                <Button variant='ghost' className='w-full justify-start'>
+                    <LogOut /> <span className='ml-2'>Sign out</span>
+                </Button>
+              </nav>
+
+            </SheetContent>
+          </Sheet>
+
 
         </nav>
 
