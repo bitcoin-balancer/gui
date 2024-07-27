@@ -3,7 +3,7 @@ import {
   Link,
   Navigate,
   useNavigate,
-  useLocation,
+  useNavigation,
   Outlet,
 } from 'react-router-dom';
 import {
@@ -21,6 +21,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '../../shared/shadcn/components/ui/tooltip.tsx';
+import { formatBadgeCount } from '../../shared/services/utils/index.service.ts';
 import { NavService } from '../../shared/services/nav/index.service.ts';
 import { AccessJWTService } from '../../shared/backend/api/access-jwt.service.ts';
 import { useBoundStore } from '../../shared/store/index.store.ts';
@@ -41,29 +42,6 @@ const TOOLTIP_DELAY = 100;
 
 
 /* ************************************************************************************************
- *                                            HELPERS                                             *
- ************************************************************************************************ */
-
-/**
- * Formats the number that will be inserted in a badge so it doesn't take too much space.
- * @param count
- * @returns string | undefined
- */
-const formatBadgeCount = (count: number): string | undefined => {
-  if (count === 0) {
-    return undefined;
-  }
-  if (count >= 9) {
-    return '9+';
-  }
-  return String(count);
-};
-
-
-
-
-
-/* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
 
@@ -77,7 +55,7 @@ const App = () => {
    ********************************************************************************************** */
   const authenticated = useBoundStore((state) => state.authenticated);
   const navigate = useNavigate();
-  const location = useLocation();
+  const { state } = useNavigation();
 
 
 
@@ -86,35 +64,39 @@ const App = () => {
    *                                       REACTIVE VALUES                                        *
    ********************************************************************************************** */
 
+  // the active URL
+  const { pathname } = window.location;
+
+  // the main navigation buttons located at the top on desktop and at the bottom on mobile devices
   const mainNavigationItems: IMainNavigationItem[] = useMemo(
     () => ([
       {
-        active: NavService.dashboard() === location.pathname,
+        active: NavService.dashboard() === pathname,
         name: 'Dashboard',
         path: NavService.dashboard(),
         icon: <House aria-hidden='true' />,
       },
       {
-        active: NavService.positions() === location.pathname,
+        active: NavService.positions() === pathname,
         name: 'Positions',
         path: NavService.positions(),
         icon: <ArrowLeftRight aria-hidden='true' />,
       },
       {
-        active: NavService.server() === location.pathname,
+        active: NavService.server() === pathname,
         name: 'Server',
         path: NavService.server(),
         icon: <Server aria-hidden='true' />,
         badge: formatBadgeCount(10),
       },
       {
-        active: NavService.adjustments() === location.pathname,
+        active: NavService.adjustments() === pathname,
         name: 'Adjustments',
         path: NavService.adjustments(),
         icon: <SlidersHorizontal aria-hidden='true' />,
       },
     ]),
-    [location],
+    [pathname],
   );
 
 
@@ -149,6 +131,11 @@ const App = () => {
   }
   return (
     <main className='animate-in fade-in duration-700 min-h-dvh'>
+
+      {/* PROGRESS BAR */}
+      {state === 'loading' && <div className="progress-bar fixed top-0 left-0"><div className="progress-bar-value"></div></div>}
+
+
 
       {/* HEADER */}
       <header id='app-header' className='flex justify-center items-center border-b border-slate-200'>
@@ -203,15 +190,15 @@ const App = () => {
 
 
 
-          {/* MENU */}
+          {/* SIDENAV MENU */}
           <TooltipProvider delayDuration={TOOLTIP_DELAY}>
             <Tooltip>
               <TooltipTrigger asChild>
                 <div>
-                  <Button variant='ghost' className='hidden md:flex' aria-label='Menu'>
+                  <Button variant='ghost' className='hidden md:flex' aria-label='Side Navigation Menu'>
                     <Menu aria-hidden='true' />
                   </Button>
-                  <Button variant='ghost' className='md:hidden' size='icon' aria-label='Menu'>
+                  <Button variant='ghost' className='md:hidden' size='icon' aria-label='Side Navigation Menu'>
                     <Menu aria-hidden='true' />
                   </Button>
                 </div>
@@ -221,6 +208,7 @@ const App = () => {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
+
         </nav>
 
       </header>
