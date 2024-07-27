@@ -15,12 +15,7 @@ import {
 } from 'lucide-react';
 import { Button } from '../../shared/shadcn/components/ui/button.tsx';
 import { Badge } from '../../shared/shadcn/components/ui/badge.tsx';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '../../shared/shadcn/components/ui/tooltip.tsx';
+import { Tooltip, TooltipContent, TooltipTrigger } from '../../shared/shadcn/components/ui/tooltip.tsx';
 import { formatBadgeCount } from '../../shared/services/utils/index.service.ts';
 import { NavService } from '../../shared/services/nav/index.service.ts';
 import { AccessJWTService } from '../../shared/backend/api/access-jwt.service.ts';
@@ -29,17 +24,6 @@ import GlobalLoader from '../global-loader/index.component.tsx';
 import AppInstaller from '../../shared/components/app-installer/index.component.tsx';
 import OnlineStatus from '../../shared/components/online-status/index.component.tsx';
 import { IMainNavigationItem } from './types.ts';
-
-/* ************************************************************************************************
- *                                           CONSTANTS                                            *
- ************************************************************************************************ */
-
-// the number of ms a tooltip will wait until being displayed on hover
-const TOOLTIP_DELAY = 100;
-
-
-
-
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -139,8 +123,14 @@ const App = () => {
 
       {/* HEADER */}
       <header id='app-header' className='flex justify-center items-center border-b border-slate-200'>
-
-        <Link to={NavService.landing()}><img src='/logo/logo-dark.png' alt='Balancer’s Logo' width='176' height='60' className='w-32 lg:w-36' /></Link>
+        <Tooltip>
+          <TooltipTrigger asChild>
+          <Link to={NavService.landing()}><img src='/logo/logo-dark.png' alt='Balancer’s Logo' width='176' height='60' className='w-32 lg:w-36' /></Link>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>v1.0.0</p>
+          </TooltipContent>
+        </Tooltip>
 
         <span className='flex-1'></span>
 
@@ -149,27 +139,25 @@ const App = () => {
 
           {/* MD BUTTONS */}
           {mainNavigationItems.map((item, i) => (
-            <TooltipProvider key={i} delayDuration={TOOLTIP_DELAY}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  {
-                  item.badge
-                    ? <Button variant='ghost' className='hidden md:flex lg:hidden relative' aria-label={item.name} onClick={() => navigate(item.path)} disabled={item.active}>
-                        {item.icon}
-                        <div className="absolute -top-2 -right-3">
-                          <Badge className='bg-primary py-0.5 px-1.5'>{item.badge}</Badge>
-                        </div>
-                      </Button>
-                    : <Button variant='ghost' className='hidden md:flex lg:hidden' aria-label={item.name} onClick={() => navigate(item.path)} disabled={item.active}>
-                        {item.icon}
-                      </Button>
-                  }
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{item.name}</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <Tooltip key={i}>
+              <TooltipTrigger asChild>
+                {
+                item.badge
+                  ? <Button variant='ghost' className='hidden md:flex lg:hidden relative' aria-label={item.name} onClick={() => navigate(item.path)} disabled={item.active}>
+                      {item.icon}
+                      <div className="absolute -top-2 -right-3">
+                        <Badge className='bg-primary py-0.5 px-1.5'>{item.badge}</Badge>
+                      </div>
+                    </Button>
+                  : <Button variant='ghost' className='hidden md:flex lg:hidden' aria-label={item.name} onClick={() => navigate(item.path)} disabled={item.active}>
+                      {item.icon}
+                    </Button>
+                }
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{item.name}</p>
+              </TooltipContent>
+            </Tooltip>
           ))}
 
 
@@ -191,23 +179,21 @@ const App = () => {
 
 
           {/* SIDENAV MENU */}
-          <TooltipProvider delayDuration={TOOLTIP_DELAY}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div>
-                  <Button variant='ghost' className='hidden md:flex' aria-label='Side Navigation Menu'>
-                    <Menu aria-hidden='true' />
-                  </Button>
-                  <Button variant='ghost' className='md:hidden' size='icon' aria-label='Side Navigation Menu'>
-                    <Menu aria-hidden='true' />
-                  </Button>
-                </div>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Menu</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div>
+                <Button variant='ghost' className='hidden md:flex' aria-label='Side Navigation Menu'>
+                  <Menu aria-hidden='true' />
+                </Button>
+                <Button variant='ghost' className='md:hidden' size='icon' aria-label='Side Navigation Menu'>
+                  <Menu aria-hidden='true' />
+                </Button>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Menu</p>
+            </TooltipContent>
+          </Tooltip>
 
         </nav>
 
