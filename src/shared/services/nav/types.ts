@@ -21,6 +21,9 @@ type INavService = {
   signIn: () => string;
   updatePassword: () => string;
   dashboard: () => string;
+  positions: () => string;
+  server: () => string;
+  adjustments: () => string;
   users: () => string;
 };
 

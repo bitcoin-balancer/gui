@@ -76,6 +76,24 @@ const navServiceFactory = (): INavService => {
   const dashboard = (): string => '/app';
 
   /**
+   * Builds the path to the positions page.
+   * @returns string
+   */
+  const positions = (): string => '/app/positions';
+
+  /**
+   * Builds the path to the server page.
+   * @returns string
+   */
+  const server = (): string => '/app/server';
+
+  /**
+   * Builds the path to the adjustments page.
+   * @returns string
+   */
+  const adjustments = (): string => '/app/adjustments';
+
+  /**
    * Builds the path to the users page.
    * @returns string
    */
@@ -101,6 +119,9 @@ const navServiceFactory = (): INavService => {
     signIn,
     updatePassword,
     dashboard,
+    positions,
+    server,
+    adjustments,
     users,
   });
 };
