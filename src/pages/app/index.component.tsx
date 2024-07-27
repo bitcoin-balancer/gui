@@ -1,5 +1,11 @@
-import { useEffect } from 'react';
-import { Link, Navigate, Outlet } from 'react-router-dom';
+import { useMemo, useEffect } from 'react';
+import {
+  Link,
+  Navigate,
+  useNavigate,
+  useLocation,
+  Outlet,
+} from 'react-router-dom';
 import {
   House,
   ArrowLeftRight,
@@ -21,6 +27,41 @@ import { useBoundStore } from '../../shared/store/index.store.ts';
 import GlobalLoader from '../global-loader/index.component.tsx';
 import AppInstaller from '../../shared/components/app-installer/index.component.tsx';
 import OnlineStatus from '../../shared/components/online-status/index.component.tsx';
+import { IMainNavigationItem } from './types.ts';
+
+/* ************************************************************************************************
+ *                                           CONSTANTS                                            *
+ ************************************************************************************************ */
+
+// the number of ms a tooltip will wait until being displayed on hover
+const TOOLTIP_DELAY = 100;
+
+
+
+
+
+/* ************************************************************************************************
+ *                                            HELPERS                                             *
+ ************************************************************************************************ */
+
+/**
+ * Formats the number that will be inserted in a badge so it doesn't take too much space.
+ * @param count
+ * @returns string | undefined
+ */
+const formatBadgeCount = (count: number): string | undefined => {
+  if (count === 0) {
+    return undefined;
+  }
+  if (count >= 9) {
+    return '9+';
+  }
+  return String(count);
+};
+
+
+
+
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -35,7 +76,46 @@ const App = () => {
    *                                             STATE                                            *
    ********************************************************************************************** */
   const authenticated = useBoundStore((state) => state.authenticated);
+  const navigate = useNavigate();
+  const location = useLocation();
 
+
+
+
+  /* **********************************************************************************************
+   *                                       REACTIVE VALUES                                        *
+   ********************************************************************************************** */
+
+  const mainNavigationItems: IMainNavigationItem[] = useMemo(
+    () => ([
+      {
+        active: NavService.dashboard() === location.pathname,
+        name: 'Dashboard',
+        path: NavService.dashboard(),
+        icon: <House aria-hidden='true' />,
+      },
+      {
+        active: NavService.positions() === location.pathname,
+        name: 'Positions',
+        path: NavService.positions(),
+        icon: <ArrowLeftRight aria-hidden='true' />,
+      },
+      {
+        active: NavService.server() === location.pathname,
+        name: 'Server',
+        path: NavService.server(),
+        icon: <Server aria-hidden='true' />,
+        badge: formatBadgeCount(10),
+      },
+      {
+        active: NavService.adjustments() === location.pathname,
+        name: 'Adjustments',
+        path: NavService.adjustments(),
+        icon: <SlidersHorizontal aria-hidden='true' />,
+      },
+    ]),
+    [location],
+  );
 
 
 
@@ -73,7 +153,7 @@ const App = () => {
       {/* HEADER */}
       <header id='app-header' className='flex justify-center items-center border-b border-slate-200'>
 
-        <Link to={NavService.landing()}><img src='logo/logo-dark.png' alt='Balancer’s Logo' width='176' height='60' className='w-32 lg:w-36' /></Link>
+        <Link to={NavService.landing()}><img src='/logo/logo-dark.png' alt='Balancer’s Logo' width='176' height='60' className='w-32 lg:w-36' /></Link>
 
         <span className='flex-1'></span>
 
@@ -81,81 +161,50 @@ const App = () => {
         <nav className='flex justify-center items-center gap-3 md:gap-5'>
 
           {/* MD BUTTONS */}
-          <TooltipProvider delayDuration={100}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant='ghost' className='hidden md:flex lg:hidden' aria-label='Dashboard' disabled={true}>
-                  <House aria-hidden='true' />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Dashboard</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <TooltipProvider delayDuration={100}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant='ghost' className='hidden md:flex lg:hidden' aria-label='Positions'>
-                  <ArrowLeftRight aria-hidden='true' />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Positions</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <TooltipProvider delayDuration={100}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant='ghost' className='hidden md:flex lg:hidden relative' aria-label='Server'>
-                  <Server aria-hidden='true' />
-                  <div className="absolute -top-2 -right-3">
-                    <Badge className='bg-primary py-0.5 px-1.5'>9+</Badge>
-                  </div>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Server</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <TooltipProvider delayDuration={100}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant='ghost' className='hidden md:flex lg:hidden' aria-label='Adjustments'>
-                  <SlidersHorizontal aria-hidden='true' />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Adjustments</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          {mainNavigationItems.map((item, i) => (
+            <TooltipProvider key={i} delayDuration={TOOLTIP_DELAY}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  {
+                  item.badge
+                    ? <Button variant='ghost' className='hidden md:flex lg:hidden relative' aria-label={item.name} onClick={() => navigate(item.path)} disabled={item.active}>
+                        {item.icon}
+                        <div className="absolute -top-2 -right-3">
+                          <Badge className='bg-primary py-0.5 px-1.5'>{item.badge}</Badge>
+                        </div>
+                      </Button>
+                    : <Button variant='ghost' className='hidden md:flex lg:hidden' aria-label={item.name} onClick={() => navigate(item.path)} disabled={item.active}>
+                        {item.icon}
+                      </Button>
+                  }
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{item.name}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          ))}
 
 
 
           {/* LG BUTTONS */}
-          <Button variant='ghost' className='hidden lg:flex' disabled={true}>
-            <House className='mr-2' aria-hidden='true' /> Dashboard
-          </Button>
-          <Button variant='ghost' className='hidden lg:flex'>
-            <ArrowLeftRight className='mr-2' aria-hidden='true' /> Positions
-          </Button>
-          <Button variant='ghost' className='hidden lg:flex relative'>
-            <Server className='mr-2' aria-hidden='true' /> Server
-            <div className="absolute -top-2 -right-2">
-              <Badge className='bg-primary py-0.5 px-1.5'>9+</Badge>
-            </div>
-          </Button>
-          <Button variant='ghost' className='hidden lg:flex'>
-            <SlidersHorizontal className='mr-2' aria-hidden='true' /> Adjustments
-          </Button>
+          {mainNavigationItems.map((item, i) => (
+            item.badge
+              ? <Button key={i} variant='ghost' className='hidden lg:flex relative' onClick={() => navigate(item.path)} disabled={item.active}>
+                {item.icon} <span className='ml-2'>{item.name}</span>
+                <div className="absolute -top-2 -right-2">
+                  <Badge className='bg-primary py-0.5 px-1.5'>{item.badge}</Badge>
+                </div>
+              </Button>
+              : <Button key={i} variant='ghost' className='hidden lg:flex' onClick={() => navigate(item.path)} disabled={item.active}>
+                {item.icon} <span className='ml-2'>{item.name}</span>
+              </Button>
+          ))}
 
 
 
           {/* MENU */}
-          <TooltipProvider delayDuration={300}>
+          <TooltipProvider delayDuration={TOOLTIP_DELAY}>
             <Tooltip>
               <TooltipTrigger asChild>
                 <div>
@@ -190,23 +239,20 @@ const App = () => {
       {/* BOTTOM NAVIGATION */}
       <nav className='fixed bottom-0 left-0 z-10 border-t border-t-slate-200 flex justify-center items-center w-full md:hidden'>
 
-        <Button variant='ghost' size='icon' className='h-14 flex-1 rounded-none' disabled={true}>
-          <House aria-hidden='true' />
-        </Button>
-        <Button variant='ghost' size='icon' className='h-14 flex-1 rounded-none'>
-          <ArrowLeftRight aria-hidden='true' />
-        </Button>
-        <Button variant='ghost' size='icon' className='h-14 flex-1 rounded-none'>
-          <div className='relative'>
-            <Server aria-hidden='true' />
-            <div className="absolute -top-5 -right-5">
-              <Badge className='bg-primary py-0.5 px-1.5'>9+</Badge>
-            </div>
-          </div>
-        </Button>
-        <Button variant='ghost' size='icon' className='h-14 flex-1 rounded-none'>
-          <SlidersHorizontal aria-hidden='true' />
-        </Button>
+        {mainNavigationItems.map((item, i) => (
+          item.badge
+            ? <Button key={i} variant='ghost' size='icon' className='h-14 flex-1 rounded-none' aria-label={item.name} onClick={() => navigate(item.path)} disabled={item.active}>
+                <div className='relative'>
+                  {item.icon}
+                  <div className="absolute -top-5 -right-5">
+                    <Badge className='bg-primary py-0.5 px-1.5'>{item.badge}</Badge>
+                  </div>
+                </div>
+              </Button>
+            : <Button key={i} variant='ghost' size='icon' className='h-14 flex-1 rounded-none' aria-label={item.name} onClick={() => navigate(item.path)} disabled={item.active}>
+                {item.icon}
+              </Button>
+        ))}
 
       </nav>
 
