@@ -71,7 +71,7 @@ const App = () => {
     <main className='animate-in fade-in duration-700 min-h-dvh'>
 
       {/* HEADER */}
-      <header className='flex justify-center items-center p-4 border-b border-slate-200'>
+      <header id='app-header' className='flex justify-center items-center border-b border-slate-200'>
 
         <Link to={NavService.landing()}><img src='logo/logo-dark.png' alt='Balancer’s Logo' width='176' height='60' className='w-32 lg:w-36' /></Link>
 
@@ -188,7 +188,7 @@ const App = () => {
 
 
       {/* BOTTOM NAVIGATION */}
-      <nav className='fixed bottom-0 left-0 border-t border-t-slate-200 flex justify-center items-center w-full md:hidden'>
+      <nav className='fixed bottom-0 left-0 z-10 border-t border-t-slate-200 flex justify-center items-center w-full md:hidden'>
 
         <Button variant='ghost' size='icon' className='h-14 flex-1 rounded-none' disabled={true}>
           <House aria-hidden='true' />
@@ -199,7 +199,7 @@ const App = () => {
         <Button variant='ghost' size='icon' className='h-14 flex-1 rounded-none'>
           <div className='relative'>
             <Server aria-hidden='true' />
-            <div className="absolute -top-6 -right-5">
+            <div className="absolute -top-5 -right-5">
               <Badge className='bg-primary py-0.5 px-1.5'>9+</Badge>
             </div>
           </div>

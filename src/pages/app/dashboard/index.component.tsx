@@ -1,5 +1,7 @@
+import { useState, useEffect } from 'react';
 import { JWTService } from '../../../shared/backend/auth/jwt/index.service.ts';
 import { Button } from '../../../shared/shadcn/components/ui/button';
+import PageLoader from '../../../shared/components/page-loader/index.component.tsx';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -11,20 +13,33 @@ import { Button } from '../../../shared/shadcn/components/ui/button';
  * Dashboard Component
  * Component in charge of displaying and managing the market state and trading strategy.
  */
-const Dashboard = () => (
-  <>
-    <h1 className="text-4xl mt-5">Dashboard Component</h1>
-    <Button onClick={() => JWTService.signOut()}>Sign Out</Button>
-    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-  </>
-);
+const Dashboard = () => {
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, []);
+
+  if (loading) {
+    return <PageLoader />;
+  }
+  return (
+    <section className='animate-in fade-in duration-700'>
+      <h1 className="text-4xl mt-5">Dashboard Component</h1>
+      <Button onClick={() => JWTService.signOut()}>Sign Out</Button>
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    </section>
+  );
+};
 
 
 

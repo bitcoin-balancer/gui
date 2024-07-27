@@ -40,6 +40,11 @@
   --altcha-color-text: var(--text-color);
   --altcha-color-error-text: var(--error-color);
   --altcha-max-width: 100%;
+
+
+  /* App Header */
+  --app-header-desktop-height: 75px;
+  --app-header-mobile-height: 65px;
 }
 
 
@@ -128,6 +133,29 @@ a:hover {
 
 
 /* ************************************************************************************************
+ *                                           APP HEADER                                           *
+ ************************************************************************************************ */
+#app-header {
+  height: var(--app-header-mobile-height);
+  padding: 0 10px;
+}
+
+
+
+
+
+/* ************************************************************************************************
+ *                                          PAGE LOADER                                           *
+ ************************************************************************************************ */
+#page-loader {
+  height: calc(100dvh - var(--app-header-mobile-height));
+}
+
+
+
+
+
+/* ************************************************************************************************
  *                                    RESPONSIVE MEDIA QUERIES                                    *
  ************************************************************************************************ */
 
@@ -155,7 +183,20 @@ a:hover {
  * Breakpoint Prefix: lg
  */
 @media (min-width: 1024px) {
+  /*
+   * App Header
+   */
+  #app-header {
+    height: var(--app-header-desktop-height);
+  }
 
+
+  /*
+   * Page Loader
+   */
+  #page-loader {
+    height: calc(100dvh - var(--app-header-desktop-height));
+  }
 }
  
  
