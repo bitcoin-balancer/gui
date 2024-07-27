@@ -12,6 +12,7 @@ import {
   Server,
   SlidersHorizontal,
   Menu,
+  CodeXml,
   EarthLock,
   Users,
   Database,
@@ -27,6 +28,12 @@ import { Toaster } from '../../shared/shadcn/components/ui/toaster';
 import { ToastAction } from '../../shared/shadcn/components/ui/toast';
 import { toast } from '../../shared/shadcn/components/ui/use-toast.ts';
 import { Separator } from '../../shared/shadcn/components/ui/separator.tsx';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '../../shared/shadcn/components/ui/dropdown-menu.tsx';
 import {
   Sheet,
   SheetContent,
@@ -250,7 +257,7 @@ const App = () => {
                 <SheetDescription className='text-left'>
 
                   <Button variant='link' className='justify-start p-0 -mt-6 text-light text-xs' onClick={NavService.openGitHubPage}>
-                    0a23ed6 · last month
+                    <CodeXml className='mr-1 w-4 h-4' /> 0a23ed6 · last month
                   </Button>
 
                 </SheetDescription>
@@ -276,9 +283,19 @@ const App = () => {
                 <Button variant='ghost' className='w-full justify-start'>
                     <Github /> <span className='ml-2'>View on GitHub</span>
                 </Button>
-                <Button variant='ghost' className='w-full justify-start'>
+
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                  <Button variant='ghost' className='w-full justify-start'>
                     <LogOut /> <span className='ml-2'>Sign out</span>
                 </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem>on&nbsp;<strong>this</strong>&nbsp;device</DropdownMenuItem>
+                    <DropdownMenuItem>on&nbsp;<strong>all</strong>&nbsp;devices</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+
               </nav>
 
             </SheetContent>
