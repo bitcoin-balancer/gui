@@ -29,18 +29,27 @@ const navServiceFactory = (): INavService => {
    * Opens an URL in the current or a new tab.
    * @param url
    * @param newTab?
+   * @param noReferrer?
    */
-  const openURL = (url: string, newTab: boolean = true): void => {
+  const openURL = (url: string, newTab: boolean = true, noReferrer: boolean = true): void => {
     if (newTab) {
-      window.open(url, '_blank', 'noopener noreferrer');
+      if (noReferrer) {
+        window.open(url, '_blank', 'noopener noreferrer');
+      } else {
+        window.open(url, '_blank');
+      }
     } else {
       window.open(url);
     }
   };
 
   /**
+   * Opens another Balancer tab.
+   */
+  const createNewInstance = (): void => openURL(window.location.href, true, false);
+
+  /**
    * Opens Balancer's GitHub Page in a new tab.
-   * @returns void
    */
   const openGitHubPage = (): void => openURL(__GITHUB_URL);
 
@@ -94,6 +103,12 @@ const navServiceFactory = (): INavService => {
   const adjustments = (): string => '/app/adjustments';
 
   /**
+   * Builds the path to the IP address blacklist page.
+   * @returns string
+   */
+  const ipBlacklist = (): string => '/app/ip-blacklist';
+
+  /**
    * Builds the path to the users page.
    * @returns string
    */
@@ -112,6 +127,7 @@ const navServiceFactory = (): INavService => {
 
     // external navigation
     openURL,
+    createNewInstance,
     openGitHubPage,
 
     // internal navigation
@@ -122,6 +138,7 @@ const navServiceFactory = (): INavService => {
     positions,
     server,
     adjustments,
+    ipBlacklist,
     users,
   });
 };

@@ -92,8 +92,8 @@ const SignIn = () => {
     // display the confirmation dialog
     openConfirmationDialog({
       mode: 'OTP',
-      title: 'Confirm Authentication',
-      description: 'Sign in to access powerful tools for monitoring, customizing, and enhancing Balancer’s performance.',
+      title: 'Sign in',
+      description: 'Signing in will grant you access to powerful tools for monitoring, customizing, and enhancing Balancer’s performance.',
       onConfirmation: async (confirmation: string) => {
         try {
           setIsSubmitting(true);

@@ -99,7 +99,7 @@ const UpdatePassword = () => {
     // display the confirmation dialog
     openConfirmationDialog({
       mode: 'OTP',
-      title: 'Confirm Password Update',
+      title: 'Update your password',
       description: 'The password will be set on your account, allowing you to sign into the platform safely.',
       onConfirmation: async (confirmation: string) => {
         try {

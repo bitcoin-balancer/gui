@@ -58,6 +58,7 @@ npm run preview
 
 ## @TODO
 
+- [ ] Create the `browserdb` package and use it to implement the request caching system
 - [ ] Create Bitcoin Quotes Component and place it in `sign-in` and `update-password` routes
 - [ ] Allow users to toggle between `light` and `dark` mode
 - [ ] ...

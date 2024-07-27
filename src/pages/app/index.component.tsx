@@ -15,10 +15,10 @@ import {
   CodeXml,
   EarthLock,
   Users,
-  Database,
   ExternalLink,
   Github,
   LogOut,
+  Loader2,
 } from 'lucide-react';
 import { SWService } from 'sw-service';
 import { Button } from '../../shared/shadcn/components/ui/button.tsx';
@@ -42,13 +42,15 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '../../shared/shadcn/components/ui/sheet.tsx';
-import { formatBadgeCount } from '../../shared/services/utils/index.service.ts';
+import { buildErrorToast, formatBadgeCount } from '../../shared/services/utils/index.service.ts';
 import { NavService } from '../../shared/services/nav/index.service.ts';
 import { AccessJWTService } from '../../shared/backend/api/access-jwt.service.ts';
+import { JWTService } from '../../shared/backend/auth/jwt/index.service.ts';
 import { useBoundStore } from '../../shared/store/index.store.ts';
 import GlobalLoader from '../global-loader/index.component.tsx';
 import AppInstaller from '../../shared/components/app-installer/index.component.tsx';
 import OnlineStatus from '../../shared/components/online-status/index.component.tsx';
+import ConfirmationDialog from '../../shared/components/confirmation-dialog/index.component.tsx';
 import { IMainNavigationItem } from './types.ts';
 
 /* ************************************************************************************************
@@ -75,10 +77,12 @@ const App = () => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const [sidenavOpen, setSidenavOpen ] = useState<boolean>(false);
+  const [sidenavOpen, setSidenavOpen] = useState<boolean>(false);
   const authenticated = useBoundStore((state) => state.authenticated);
   const navigate = useNavigate();
-  const { state } = useNavigation();
+  const navigation = useNavigation();
+  const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
+  const [isSigningOut, setIsSigningOut] = useState<boolean>(false);
 
 
 
@@ -158,6 +162,42 @@ const App = () => {
 
 
 
+  /* **********************************************************************************************
+   *                                        EVENT HANDLERS                                        *
+   ********************************************************************************************** */
+
+  /**
+   * Navigates to a route and closes the sidenav menu.
+   * @param route
+   */
+  const navigateFromSidenav = (route: string): void => {
+    setSidenavOpen(false);
+    navigate(route);
+  };
+
+  /**
+   * Prompts the user and if confirmed, it will destroy the current session.
+   * @param allDevices
+   */
+  const signOut = (allDevices: boolean): void => {
+    openConfirmationDialog({
+      mode: 'CLICK',
+      title: 'Sign out',
+      description: `Signing out will log you off from ${allDevices ? 'all your devices' : 'this device'}. Continue?`,
+      onConfirmation: async () => {
+        try {
+          setIsSigningOut(true);
+          await JWTService.signOut(allDevices);
+        } catch (e) {
+          toast(buildErrorToast(e, 'Authentication Error'));
+        } finally {
+          setIsSigningOut(false);
+        }
+      },
+    });
+  };
+
+
 
 
   /* **********************************************************************************************
@@ -173,7 +213,7 @@ const App = () => {
     <main className='animate-in fade-in duration-700 min-h-dvh'>
 
       {/* PROGRESS BAR */}
-      {state === 'loading' && <div className="progress-bar fixed top-0 left-0"><div className="progress-bar-value"></div></div>}
+      {navigation.state === 'loading' && <div className="progress-bar fixed top-0 left-0"><div className="progress-bar-value"></div></div>}
 
 
 
@@ -265,34 +305,36 @@ const App = () => {
 
               <nav className='mt-4'>
 
-                <Button variant='ghost' className='w-full justify-start'>
+                <Button variant='ghost' className='w-full justify-start' onClick={() => navigateFromSidenav(NavService.ipBlacklist())} disabled={pathname === NavService.ipBlacklist()}>
                     <EarthLock /> <span className='ml-2'>IP address blacklist</span>
                 </Button>
-                <Button variant='ghost' className='w-full justify-start'>
+                <Button variant='ghost' className='w-full justify-start' onClick={() => navigateFromSidenav(NavService.users())} disabled={pathname === NavService.users()}>
                     <Users /> <span className='ml-2'>Users</span>
-                </Button>
-                <Button variant='ghost' className='w-full justify-start'>
-                    <Database /> <span className='ml-2'>browserdb</span>
                 </Button>
 
                 <Separator className='my-4' />
 
-                <Button variant='ghost' className='w-full justify-start'>
+                <Button variant='ghost' className='w-full justify-start' onClick={NavService.createNewInstance}>
                     <ExternalLink /> <span className='ml-2'>Create new instance</span>
                 </Button>
-                <Button variant='ghost' className='w-full justify-start'>
+                <Button variant='ghost' className='w-full justify-start' onClick={NavService.openGitHubPage}>
                     <Github /> <span className='ml-2'>View on GitHub</span>
                 </Button>
-
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                  <Button variant='ghost' className='w-full justify-start'>
+                  <Button variant='ghost' className='w-full justify-start' disabled={isSigningOut}>
                     <LogOut /> <span className='ml-2'>Sign out</span>
+                    <span className='flex-1'></span>
+                    {isSigningOut && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
-                    <DropdownMenuItem>on&nbsp;<strong>this</strong>&nbsp;device</DropdownMenuItem>
-                    <DropdownMenuItem>on&nbsp;<strong>all</strong>&nbsp;devices</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => signOut(false)}>
+                      on&nbsp;<strong>this</strong>&nbsp;device
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => signOut(true)}>
+                      on&nbsp;<strong>all</strong>&nbsp;devices
+                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
 
@@ -337,6 +379,11 @@ const App = () => {
 
       </nav>
 
+
+
+
+      {/* CONFIRMATION DIALOG */}
+      <ConfirmationDialog />
 
 
 

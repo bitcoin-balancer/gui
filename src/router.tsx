@@ -65,6 +65,13 @@ const Router = () => {
           },
         },
         {
+          path: 'ip-blacklist',
+          lazy: async () => {
+            const Component = await import('./pages/app/ip-blacklist/index.component.tsx');
+            return { Component: Component.default };
+          },
+        },
+        {
           path: 'users',
           lazy: async () => {
             const Component = await import('./pages/app/users/index.component.tsx');

@@ -13,7 +13,8 @@ type INavService = {
   // ...
 
   // external navigation
-  openURL:(url: string, newTab?: boolean) => void;
+  openURL:(url: string, newTab?: boolean, noReferrer?: boolean) => void;
+  createNewInstance:() => void;
   openGitHubPage:() => void;
 
   // internal navigation
@@ -24,6 +25,7 @@ type INavService = {
   positions: () => string;
   server: () => string;
   adjustments: () => string;
+  ipBlacklist: () => string;
   users: () => string;
 };
 
