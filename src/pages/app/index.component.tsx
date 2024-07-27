@@ -13,9 +13,13 @@ import {
   SlidersHorizontal,
   Menu,
 } from 'lucide-react';
+import { SWService } from 'sw-service';
 import { Button } from '../../shared/shadcn/components/ui/button.tsx';
 import { Badge } from '../../shared/shadcn/components/ui/badge.tsx';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../shared/shadcn/components/ui/tooltip.tsx';
+import { Toaster } from '../../shared/shadcn/components/ui/toaster';
+import { ToastAction } from '../../shared/shadcn/components/ui/toast';
+import { toast } from '../../shared/shadcn/components/ui/use-toast.ts';
 import { formatBadgeCount } from '../../shared/services/utils/index.service.ts';
 import { NavService } from '../../shared/services/nav/index.service.ts';
 import { AccessJWTService } from '../../shared/backend/api/access-jwt.service.ts';
@@ -24,6 +28,18 @@ import GlobalLoader from '../global-loader/index.component.tsx';
 import AppInstaller from '../../shared/components/app-installer/index.component.tsx';
 import OnlineStatus from '../../shared/components/online-status/index.component.tsx';
 import { IMainNavigationItem } from './types.ts';
+
+/* ************************************************************************************************
+ *                                           CONSTANTS                                            *
+ ************************************************************************************************ */
+
+// the number of ms that will be used by the updater if there is an available update for the app
+const APP_UPDATER_DELAY = 2 * 1000;
+const APP_UPDATER_DURATION = 10 * 1000;
+
+
+
+
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -99,6 +115,23 @@ const App = () => {
       AccessJWTService.accessJWTChanged(null);
     }
   }, [authenticated]);
+
+  /**
+   * App Updater
+   * Checks if there is an available update for the app and displays the updater.
+   */
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      // @TODO
+      toast({
+        title: 'Version 1.0.0',
+        description: 'Enjoy the latest innovations, bug fixes, and enhanced security.',
+        action: <ToastAction altText='Update Application' onClick={SWService.updateApp}>Update</ToastAction>,
+        duration: APP_UPDATER_DURATION,
+      });
+    }, APP_UPDATER_DELAY);
+    return () => clearTimeout(timeout);
+  }, []);
 
 
 
@@ -243,6 +276,13 @@ const App = () => {
 
       {/* APP INSTALLER */}
       <AppInstaller />
+
+
+
+
+
+      {/* TOASTER */}
+      <Toaster />
 
     </main>
   );

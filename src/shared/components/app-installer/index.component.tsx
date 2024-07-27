@@ -5,7 +5,7 @@ import { SWService } from 'sw-service';
  *                                           CONSTANTS                                          *
  ********************************************************************************************** */
 
-// the number of seconds the installer can be displayed for
+// the number of ms the installer can be displayed for
 const DURATION: number = 3 * 1000;
 
 // the app's host name
