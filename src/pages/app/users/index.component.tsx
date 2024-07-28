@@ -38,7 +38,7 @@ const Users = () => {
   const a = '';
   return (
     <div className='page-container flex justify-center items-start'>
-      <section className='w-full sm:w-10/12 md:w-9/12 lg:w-8/12 xl:w-7/12 2xl:w-6/12'>
+      <section className='w-full sm:w-10/12 md:w-9/12 lg:w-8/12 xl:w-7/12 2xl:w-5/12'>
         <header className="flex justify-start items-center">
           <h1 className="text-3xl">Users</h1>
 
@@ -102,12 +102,15 @@ const Users = () => {
                 <DropdownMenu>
                   <DropdownMenuTrigger aria-label='User actions menu'><EllipsisVertical aria-hidden='true'/></DropdownMenuTrigger>
                   <DropdownMenuContent>
-                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuLabel>root</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Profile</DropdownMenuItem>
-                    <DropdownMenuItem>Billing</DropdownMenuItem>
-                    <DropdownMenuItem>Team</DropdownMenuItem>
-                    <DropdownMenuItem>Subscription</DropdownMenuItem>
+                    <DropdownMenuItem>Update nickname</DropdownMenuItem>
+                    <DropdownMenuItem>Update authority</DropdownMenuItem>
+                    <DropdownMenuItem>Update OTP secret</DropdownMenuItem>
+                    <DropdownMenuItem>Delete user</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>Display sessions</DropdownMenuItem>
+                    <DropdownMenuItem>Display password updates</DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TableCell>
