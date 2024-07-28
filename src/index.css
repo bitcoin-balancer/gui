@@ -192,7 +192,7 @@ a:hover {
  *                                        PAGE CONTAINER                                          *
  ************************************************************************************************ */
 .page-container {
-  
+  padding: 10px 10px 75px 10px;
 }
 
 
@@ -204,25 +204,37 @@ a:hover {
  ************************************************************************************************ */
 
 /*
- * Breakpoint Prefix: 2xl
+ * Breakpoint Prefix: sm
  */
-@media (min-width: 1536px) {
-
+@media (min-width: 640px) {
+  /*
+   * Page Container
+   */
+  .page-container {
+    padding: 15px 15px 75px 15px;
+  }
 }
+
  
  
- 
- 
+
+
 /*
- * Breakpoint Prefix: xl
+ * Breakpoint Prefix: md
  */
-@media (min-width: 1280px) {
-
+@media (min-width: 768px) {
+  /*
+   * Page Container
+   */
+  .page-container {
+    padding: 15px 15px 15px 15px;
+  }
 }
+
  
  
- 
- 
+
+
 /*
  * Breakpoint Prefix: lg
  */
@@ -242,24 +254,25 @@ a:hover {
     height: calc(100dvh - var(--app-header-desktop-height));
   }
 }
+
  
  
- 
- 
+
+
 /*
- * Breakpoint Prefix: md
+ * Breakpoint Prefix: xl
  */
-@media (min-width: 768px) {
+@media (min-width: 1280px) {
 
 }
- 
- 
- 
- 
- 
+
+
+
+
+
 /*
- * Breakpoint Prefix: sm
+ * Breakpoint Prefix: 2xl
  */
-@media (min-width: 640px) {
+@media (min-width: 1536px) {
 
 }

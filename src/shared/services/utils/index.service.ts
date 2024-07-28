@@ -18,21 +18,6 @@ const buildErrorToast = (error: unknown, title: string = 'Error'): Toast => ({
 });
 
 /**
- * Formats the number that will be inserted in a badge so it doesn't take too much space.
- * @param count
- * @returns string | undefined
- */
-const formatBadgeCount = (count: number): string | undefined => {
-  if (count === 0) {
-    return undefined;
-  }
-  if (count >= 9) {
-    return '9+';
-  }
-  return String(count);
-};
-
-/**
  * Creates an asynchronous delay that resolves once the provided seconds have passed.
  * @param seconds
  * @returns Promise<void>
@@ -50,6 +35,5 @@ const delay = (seconds: number): Promise<void> => new Promise((resolve) => {
  ************************************************************************************************ */
 export {
   buildErrorToast,
-  formatBadgeCount,
   delay,
 };

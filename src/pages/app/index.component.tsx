@@ -42,7 +42,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '../../shared/shadcn/components/ui/sheet.tsx';
-import { buildErrorToast, formatBadgeCount } from '../../shared/services/utils/index.service.ts';
+import { buildErrorToast } from '../../shared/services/utils/index.service.ts';
+import { formatBadgeCount } from '../../shared/services/transformations/index.service.ts';
 import { NavService } from '../../shared/services/nav/index.service.ts';
 import { AccessJWTService } from '../../shared/backend/api/access-jwt.service.ts';
 import { JWTService } from '../../shared/backend/auth/jwt/index.service.ts';
@@ -360,7 +361,7 @@ const App = () => {
 
 
       {/* BOTTOM NAVIGATION */}
-      <nav className='fixed bottom-0 left-0 z-10 border-t border-t-slate-200 flex justify-center items-center w-full md:hidden'>
+      <nav className='fixed bottom-0 left-0 z-10 bg-white border-t border-t-slate-200 flex justify-center items-center w-full md:hidden'>
 
         {mainNavigationItems.map((item, i) => (
           item.badge
