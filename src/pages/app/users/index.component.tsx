@@ -1,4 +1,11 @@
-import { UserPlus, EllipsisVertical } from 'lucide-react';
+import {
+  UserPlus,
+  EllipsisVertical,
+  UserPen,
+  UserMinus,
+  KeyRound,
+  SquareAsterisk,
+} from 'lucide-react';
 import { Button } from '../../../shared/shadcn/components/ui/button.tsx';
 import {
   Tooltip,
@@ -38,7 +45,7 @@ const Users = () => {
   const a = '';
   return (
     <div className='page-container flex justify-center items-start'>
-      <section className='w-full sm:w-10/12 md:w-9/12 lg:w-8/12 xl:w-7/12 2xl:w-5/12'>
+      <section className='w-full sm:w-10/12 md:w-9/12 lg:w-8/12 xl:w-7/12 2xl:w-6/12'>
         <header className="flex justify-start items-center">
           <h1 className="text-3xl">Users</h1>
 
@@ -104,13 +111,13 @@ const Users = () => {
                   <DropdownMenuContent>
                     <DropdownMenuLabel>root</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Update nickname</DropdownMenuItem>
-                    <DropdownMenuItem>Update authority</DropdownMenuItem>
-                    <DropdownMenuItem>Update OTP secret</DropdownMenuItem>
-                    <DropdownMenuItem>Delete user</DropdownMenuItem>
+                    <DropdownMenuItem><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update nickname</DropdownMenuItem>
+                    <DropdownMenuItem><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update authority</DropdownMenuItem>
+                    <DropdownMenuItem><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update OTP secret</DropdownMenuItem>
+                    <DropdownMenuItem><UserMinus aria-hidden='true' className='w-5 h-5 mr-1' /> Delete user</DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Display sessions</DropdownMenuItem>
-                    <DropdownMenuItem>Display password updates</DropdownMenuItem>
+                    <DropdownMenuItem><KeyRound aria-hidden='true' className='w-5 h-5 mr-1' /> Display auth sessions</DropdownMenuItem>
+                    <DropdownMenuItem><SquareAsterisk aria-hidden='true' className='w-5 h-5 mr-1' /> Display password updates</DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TableCell>
