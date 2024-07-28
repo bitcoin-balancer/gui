@@ -127,7 +127,7 @@ const SignIn = () => {
   return (
     <main className='flex min-h-dvh animate-in fade-in slide-in-from-left duration-500'>
 
-      <section className='hidden md:block flex-1 bg-primary shadow-8 p-10'>
+      <aside className='hidden md:block flex-1 bg-primary shadow-8 p-10'>
 
         <article className='flex flex-col h-full'>
           <Link to={NavService.landing()}><img src='logo/logo-light.png' alt='Balancer Logo' width='192' height='60' className='w-48' /></Link>
@@ -141,7 +141,7 @@ const SignIn = () => {
 
         </article>
 
-      </section>
+      </aside>
 
       <section className='flex-1 self-center p-5 sm:p-10'>
 

@@ -222,7 +222,7 @@ const UpdatePassword = () => {
 
 
 
-      <section className='hidden md:block flex-1 bg-primary shadow-8 p-10'>
+      <aside className='hidden md:block flex-1 bg-primary shadow-8 p-10'>
 
         <article className='flex flex-col h-full items-end'>
           <Link to={NavService.landing()}><img src='logo/logo-light.png' alt='Balancer Logo' width='192' height='60' className='w-48' /></Link>
@@ -236,7 +236,7 @@ const UpdatePassword = () => {
 
         </article>
 
-      </section>
+      </aside>
 
 
 
