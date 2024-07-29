@@ -42,7 +42,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '../../shared/shadcn/components/ui/sheet.tsx';
-import { buildErrorToast } from '../../shared/services/utils/index.service.ts';
+import { errorToast } from '../../shared/services/utils/index.service.ts';
 import { formatBadgeCount } from '../../shared/services/transformations/index.service.ts';
 import { NavService } from '../../shared/services/nav/index.service.ts';
 import { AccessJWTService } from '../../shared/backend/api/access-jwt.service.ts';
@@ -143,7 +143,7 @@ const App = () => {
       try {
         await AccessJWTService.accessJWTChanged(null);
       } catch (e) {
-        toast(buildErrorToast(e));
+        errorToast(e);
       }
     };
     if (authenticated === undefined) {
@@ -197,7 +197,7 @@ const App = () => {
           setIsSigningOut(true);
           await JWTService.signOut(allDevices);
         } catch (e) {
-          toast(buildErrorToast(e, 'Authentication Error'));
+          errorToast(e, 'Authentication Error');
         } finally {
           setIsSigningOut(false);
         }

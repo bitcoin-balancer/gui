@@ -40,11 +40,11 @@ const Users = () => {
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
-  if (loading) {
-    return <PageLoader />;
-  }
   if (error) {
     return <PageLoadError error={error} />;
+  }
+  if (loading) {
+    return <PageLoader />;
   }
   return (
     <div className='page-container flex justify-center items-start'>

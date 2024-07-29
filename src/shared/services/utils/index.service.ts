@@ -1,17 +1,17 @@
 import { decodeError } from 'error-message-utils';
-import { Toast } from '../../shadcn/components/ui/use-toast.ts';
+import { toast } from '../../shadcn/components/ui/use-toast.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
 
 /**
- * Builds the props required to display an error toast.
+ * Builds the props and displays an error toast.
  * @param error
- * @param title
+ * @param title?
  * @returns Toast
  */
-const buildErrorToast = (error: unknown, title: string = 'Error'): Toast => ({
+const errorToast = (error: unknown, title: string = 'Error') => toast({
   variant: 'destructive',
   title,
   description: decodeError(error).message,
@@ -34,6 +34,6 @@ const delay = (seconds: number): Promise<void> => new Promise((resolve) => {
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export {
-  buildErrorToast,
+  errorToast,
   delay,
 };

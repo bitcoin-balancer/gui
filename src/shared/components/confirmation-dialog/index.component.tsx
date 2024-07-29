@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Clipboard } from 'lucide-react';
-import { extractMessage } from 'error-message-utils';
 import { Button } from '../../shadcn/components/ui/button.tsx';
 import {
   Dialog,
@@ -22,10 +21,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '../../shadcn/components/ui/tooltip.tsx';
-import { useToast } from '../../shadcn/components/ui/use-toast.ts';
-import { useBoundStore } from '../../store/index.store.ts';
+import { errorToast } from '../../services/utils/index.service.ts';
 import { otpTokenValid } from '../../backend/validations/index.service.ts';
 import { ClipboardService } from '../../services/clipboard/index.service.ts';
+import { useBoundStore } from '../../store/index.store.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -41,7 +40,6 @@ const ConfirmationDialog = () => {
    ********************************************************************************************** */
   const [otpToken, setOTPToken] = useState<string>('');
   const [readingClipboard, setReadingClipboard] = useState<boolean>(false);
-  const { toast } = useToast();
   const isOpen = useBoundStore((state) => state.isConfirmationDialogOpen);
   const config = useBoundStore((state) => state.confirmationDialogConfig);
   const close = useBoundStore((state) => state.closeConfirmationDialog);
@@ -94,7 +92,7 @@ const ConfirmationDialog = () => {
       }
       onOTPTokenChanges(val);
     } catch (e) {
-      toast({ variant: 'destructive', title: 'Clipboard Error', description: extractMessage(e) });
+      errorToast(e, 'Clipboard Error');
     } finally {
       setReadingClipboard(false);
     }

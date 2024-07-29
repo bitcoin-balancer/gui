@@ -13,8 +13,7 @@ import {
   FormMessage,
 } from '../../shared/shadcn/components/ui/form';
 import { Toaster } from '../../shared/shadcn/components/ui/toaster';
-import { toast } from '../../shared/shadcn/components/ui/use-toast.ts';
-import { buildErrorToast } from '../../shared/services/utils/index.service.ts';
+import { errorToast } from '../../shared/services/utils/index.service.ts';
 import {
   altchaPayloadValid,
   nicknameValid,
@@ -66,7 +65,7 @@ const SignIn = () => {
       try {
         await AccessJWTService.accessJWTChanged(null);
       } catch (e) {
-        toast(buildErrorToast(e));
+        errorToast(e);
       }
     };
     if (authenticated === undefined) {
@@ -110,7 +109,7 @@ const SignIn = () => {
             altcha,
           );
         } catch (e) {
-          toast(buildErrorToast(e, 'Authentication Error'));
+          errorToast(e, 'Authentication Error');
         } finally {
           setIsSubmitting(false);
         }
