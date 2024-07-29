@@ -139,8 +139,15 @@ const App = () => {
    * Checks if the user is currently logged in in case authentication has not been initialized.
    */
   useEffect(() => {
+    const loadAuthState = async () => {
+      try {
+        await AccessJWTService.accessJWTChanged(null);
+      } catch (e) {
+        toast(buildErrorToast(e));
+      }
+    };
     if (authenticated === undefined) {
-      AccessJWTService.accessJWTChanged(null);
+      loadAuthState();
     }
   }, [authenticated]);
 

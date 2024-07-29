@@ -13,7 +13,7 @@ import {
   FormMessage,
 } from '../../shared/shadcn/components/ui/form';
 import { Toaster } from '../../shared/shadcn/components/ui/toaster';
-import { useToast } from '../../shared/shadcn/components/ui/use-toast.ts';
+import { toast } from '../../shared/shadcn/components/ui/use-toast.ts';
 import { buildErrorToast } from '../../shared/services/utils/index.service.ts';
 import {
   altchaPayloadValid,
@@ -44,7 +44,6 @@ const UpdatePassword = () => {
    ********************************************************************************************** */
   const authenticated = useBoundStore((state) => state.authenticated);
   const navigate = useNavigate();
-  const { toast } = useToast();
   const form = useForm<IFormInputs>({
     defaultValues: {
       nickname: '',
@@ -70,8 +69,15 @@ const UpdatePassword = () => {
    * Checks if the user is currently logged in in case authentication has not been initialized.
    */
   useEffect(() => {
+    const loadAuthState = async () => {
+      try {
+        await AccessJWTService.accessJWTChanged(null);
+      } catch (e) {
+        toast(buildErrorToast(e));
+      }
+    };
     if (authenticated === undefined) {
-      AccessJWTService.accessJWTChanged(null);
+      loadAuthState();
     }
   }, [authenticated]);
 
