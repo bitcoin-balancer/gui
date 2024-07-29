@@ -1,11 +1,6 @@
 import { UserPlus } from 'lucide-react';
 import { Button } from '../../../shared/shadcn/components/ui/button.tsx';
 import {
-  Tooltip,
-  TooltipTrigger,
-  TooltipContent,
-} from '../../../shared/shadcn/components/ui/tooltip.tsx';
-import {
   Table,
   TableBody,
   TableCaption,
@@ -17,7 +12,10 @@ import { UserService, IUser } from '../../../shared/backend/auth/user/index.serv
 import useAPIRequest from '../../../shared/hooks/api-request/api-request.hook.ts';
 import PageLoader from '../../../shared/components/page-loader/index.component.tsx';
 import PageLoadError from '../../../shared/components/page-load-error/index.component.tsx';
+import { dispatch } from './dispatch.ts';
+import AddUser from './add-user.component.tsx';
 import UserRow from './user-row.component.tsx';
+import { IAction } from './types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -31,7 +29,25 @@ const Users = () => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const { data, loading, error } = useAPIRequest<IUser[]>(UserService.listUsers);
+  const {
+    data,
+    setData,
+    loading,
+    error,
+  } = useAPIRequest<IUser[]>(UserService.listUsers);
+
+
+
+
+  /* **********************************************************************************************
+   *                                        EVENT HANDLERS                                        *
+   ********************************************************************************************** */
+
+  /**
+   * Dispatches an action to the module's reducer.
+   * @param action
+   */
+  const handleDispatch = (action: IAction) => dispatch(action, data, setData);
 
 
 
@@ -54,14 +70,12 @@ const Users = () => {
 
           <span className="flex-1"></span>
 
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button variant='ghost' size='icon' aria-label='Add User'><UserPlus aria-hidden='true' /></Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Add user</p>
-            </TooltipContent>
-          </Tooltip>
+          <AddUser dispatch={handleDispatch}>
+            <div>
+              <Button variant='ghost' size='icon' aria-label='Add User' className='sm:hidden'><UserPlus aria-hidden='true' /></Button>
+              <Button variant='ghost' aria-label='Add User' className='hidden sm:flex'><UserPlus aria-hidden='true' className='mr-2' /> Add user</Button>
+            </div>
+          </AddUser>
 
         </header>
 

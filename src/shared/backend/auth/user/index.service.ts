@@ -266,4 +266,5 @@ export {
 
   // types
   type IUser,
+  type IAuthority,
 };

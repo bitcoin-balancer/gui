@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Loader2 } from 'lucide-react';
-import { Button } from '../../shared/shadcn/components/ui/button';
-import { Input } from '../../shared/shadcn/components/ui/input';
+import { Button } from '../../shared/shadcn/components/ui/button.tsx';
+import { Input } from '../../shared/shadcn/components/ui/input.tsx';
 import {
   Form,
   FormControl,
@@ -11,8 +11,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '../../shared/shadcn/components/ui/form';
-import { Toaster } from '../../shared/shadcn/components/ui/toaster';
+} from '../../shared/shadcn/components/ui/form.tsx';
+import { Toaster } from '../../shared/shadcn/components/ui/toaster.tsx';
 import { errorToast } from '../../shared/services/utils/index.service.ts';
 import {
   altchaPayloadValid,
@@ -200,7 +200,7 @@ const SignIn = () => {
                 {altcha === null && <p className='text-error animate-in fade-in duration-500 mt-2 text-sm font-bold'>Prove you're not a robot</p>}
               </div>
 
-              <Button type='submit' disabled={isSubmitting} variant='default' className='mt-7 w-full'>{isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Sign in</Button>
+              <Button type='submit' disabled={isSubmitting} className='mt-7 w-full'>{isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Sign in</Button>
 
               <Button type='button' onClick={() => navigate(NavService.updatePassword())} disabled={isSubmitting} variant='outline' className='mt-3 w-full'>Update password</Button>
 

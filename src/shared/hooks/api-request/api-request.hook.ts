@@ -48,7 +48,12 @@ const useAPIRequest: IAPIRequestHook = (requestFunction: IRequestFunction, args?
 
 
 
-  return { data, loading, error };
+  return {
+    data,
+    setData,
+    loading,
+    error,
+  };
 };
 
 

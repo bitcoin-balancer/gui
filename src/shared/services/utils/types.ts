@@ -1,22 +1,11 @@
 
 
 /* ************************************************************************************************
- *                                             TYPES                                              *
+ *                                       SORTING UTILITIES                                        *
  ************************************************************************************************ */
 
-// the function that will be invoked by the hook
-type IRequestFunction = (...args: unknown[]) => Promise<unknown>;
-
-// the hook in charge of handling the retrieval, loading and error states
-type IAPIRequestHook = <T>(
-  requestFunction: IRequestFunction,
-  args?: unknown[]
-) => {
-  data: T,
-  setData: (state: T) => void,
-  loading: boolean,
-  error: unknown | undefined,
-};
+// the sort direction that can be applied to a list
+type ISortDirection = 'asc' | 'desc';
 
 
 
@@ -26,6 +15,6 @@ type IAPIRequestHook = <T>(
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export type {
-  IRequestFunction,
-  IAPIRequestHook,
+  // sorting utilities
+  ISortDirection,
 };
