@@ -40,10 +40,10 @@ const Landing = () => {
 
         <span className='flex-1'></span>
 
-        <Button className='bg-primary hover:bg-secondary hidden sm:flex' onClick={NavService.openGitHubPage}><Github className='mr-2' /> View on GitHub</Button>
-        <Button className='bg-primary hover:bg-secondary sm:hidden' size='icon' onClick={NavService.openGitHubPage}><Github /></Button>
+        <Button className='hidden sm:flex' onClick={NavService.openGitHubPage}><Github className='mr-2' /> View on GitHub</Button>
+        <Button className='sm:hidden' size='icon' onClick={NavService.openGitHubPage}><Github /></Button>
 
-        <Button size='icon' className='bg-primary hover:bg-secondary'><Menu /></Button>
+        <Button size='icon'><Menu /></Button>
 
       </header>
 
@@ -59,11 +59,11 @@ const Landing = () => {
 
           <div className='flex justify-center items-center mt-10'>
 
-            <Button className='bg-primary hover:bg-secondary hidden sm:flex' size='lg'><ChartCandlestick className='mr-2' /> Learn more</Button>
-            <Button className='bg-primary hover:bg-secondary sm:hidden'><ChartCandlestick className='mr-2' /> Learn more</Button>
+            <Button className='hidden sm:flex' size='lg'><ChartCandlestick className='mr-2' /> Learn more</Button>
+            <Button className='sm:hidden'><ChartCandlestick className='mr-2' /> Learn more</Button>
 
-            <Button className='bg-primary hover:bg-secondary hidden sm:flex' size='lg' onClick={() => navigate(NavService.dashboard())}><LogIn className='mr-2' /> Go to app</Button>
-            <Button className='bg-primary hover:bg-secondary sm:hidden' onClick={() => navigate(NavService.dashboard())}><LogIn className='mr-2' /> Go to app</Button>
+            <Button className='hidden sm:flex' size='lg' onClick={() => navigate(NavService.dashboard())}><LogIn className='mr-2' /> Go to app</Button>
+            <Button className='sm:hidden' onClick={() => navigate(NavService.dashboard())}><LogIn className='mr-2' /> Go to app</Button>
 
           </div>
 

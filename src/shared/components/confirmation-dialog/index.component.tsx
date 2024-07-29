@@ -178,7 +178,7 @@ const ConfirmationDialog = () => {
             </TooltipProvider>
           }
 
-          <Button type='submit' onClick={() => closeDialog(true)} disabled={config?.mode === 'OTP'} className='bg-primary hover:bg-secondary'>Confirm</Button>
+          <Button type='submit' onClick={() => closeDialog(true)} disabled={config?.mode === 'OTP'}>Confirm</Button>
 
         </DialogFooter>
 

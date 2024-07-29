@@ -19,7 +19,7 @@ const NotFound = () => (
       <p className='mt-5'>We can't seem to find the page you're looking for</p>
 
       <Link to={NavService.landing()}>
-        <Button size='lg' className='mt-5 bg-primary hover:bg-secondary'>Go back</Button>
+        <Button size='lg' className='mt-5'>Go back</Button>
       </Link>
 
     </section>

@@ -39,7 +39,7 @@ const ScrollToTop = () => {
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
-    <Button className={`fixed bottom-5 right-5 z-10 bg-primary hover:bg-secondary rounded-full shadow-5 transition-transform duration-500 ${verticalScroll > 200 ? 'translate-y-0' : 'translate-y-20'}`}
+    <Button className={`fixed bottom-5 right-5 z-10 rounded-full shadow-5 transition-transform duration-500 ${verticalScroll > 200 ? 'translate-y-0' : 'translate-y-20'}`}
             size='icon'
             onClick={scrollToTop}
             aria-label='Scroll to Top' >

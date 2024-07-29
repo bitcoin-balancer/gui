@@ -183,7 +183,7 @@ const UpdatePassword = () => {
                 )}
                 rules={{
                   validate: {
-                    required: (value) => (passwordValid(value) ? true : 'The password must be at least 8 characters long and include at least one lowercase letter, one uppercase letter, one number, and one special character.'),
+                    required: (value) => (passwordValid(value) ? true : 'The password must include a minimum of 8 characters and at least one lowercase letter, one uppercase letter, one number, and one special character.'),
                   },
                 }}
               />
@@ -212,7 +212,7 @@ const UpdatePassword = () => {
                 {altcha === null && <p className='text-error animate-in fade-in duration-500 mt-2 text-sm font-bold'>Prove you're not a robot</p>}
               </div>
 
-              <Button type='submit' disabled={isSubmitting} variant='default' className='bg-primary hover:bg-secondary mt-7 w-full'>{isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Update password</Button>
+              <Button type='submit' disabled={isSubmitting} variant='default' className='mt-7 w-full'>{isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Update password</Button>
 
               <Button type='button' onClick={() => navigate(NavService.signIn())} disabled={isSubmitting} variant='outline' className='mt-3 w-full'>Sign in</Button>
 

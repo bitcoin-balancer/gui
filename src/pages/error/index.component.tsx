@@ -16,7 +16,7 @@ const Error = () => (
 
       <h1 className="text-7xl mt-5">Oops!</h1>
       <p className='mt-5'>There was an error while processing your request. Please refresh the app and try again</p>
-      <Button size='lg' className='mt-5 bg-primary hover:bg-secondary' onClick={SWService.updateApp}>Refresh app</Button>
+      <Button size='lg' className='mt-5' onClick={SWService.updateApp}>Refresh app</Button>
 
     </section>
 
