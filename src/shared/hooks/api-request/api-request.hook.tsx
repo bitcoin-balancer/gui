@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
+import { IAPIRequestHook, IRequestFunction } from './types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -9,11 +10,9 @@ import { useState, useCallback, useEffect } from 'react';
  * Sends requests to the API and handles the responses. It takes a function and an optional list
  * of arguments that will be used to call the function with.
  */
-const useAPIRequest: <T>() => { data: T, loading: boolean, error: unknown | undefined } = (
-  requestFunction: (...args: unknown[]) => Promise<unknown>,
-  args?: unknown[],
-) => {
-  const [data, setData] = useState<ReturnType<typeof requestFunction> | undefined>(undefined);
+const useAPIRequest: IAPIRequestHook = (requestFunction: IRequestFunction, args?: unknown[]) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [data, setData] = useState<any>(undefined);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<unknown | undefined>(undefined);
 

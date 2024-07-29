@@ -59,11 +59,11 @@ const Landing = () => {
 
           <div className='flex justify-center items-center mt-10'>
 
-            <Button className='bg-primary hover:bg-secondary hidden sm:flex' size='lg'><ChartCandlestick className='mr-2' /> Learn More</Button>
-            <Button className='bg-primary hover:bg-secondary sm:hidden'><ChartCandlestick className='mr-2' /> Learn More</Button>
+            <Button className='bg-primary hover:bg-secondary hidden sm:flex' size='lg'><ChartCandlestick className='mr-2' /> Learn more</Button>
+            <Button className='bg-primary hover:bg-secondary sm:hidden'><ChartCandlestick className='mr-2' /> Learn more</Button>
 
-            <Button className='bg-primary hover:bg-secondary hidden sm:flex' size='lg' onClick={() => navigate(NavService.dashboard())}><LogIn className='mr-2' /> Go to App</Button>
-            <Button className='bg-primary hover:bg-secondary sm:hidden' onClick={() => navigate(NavService.dashboard())}><LogIn className='mr-2' /> Go to App</Button>
+            <Button className='bg-primary hover:bg-secondary hidden sm:flex' size='lg' onClick={() => navigate(NavService.dashboard())}><LogIn className='mr-2' /> Go to app</Button>
+            <Button className='bg-primary hover:bg-secondary sm:hidden' onClick={() => navigate(NavService.dashboard())}><LogIn className='mr-2' /> Go to app</Button>
 
           </div>
 

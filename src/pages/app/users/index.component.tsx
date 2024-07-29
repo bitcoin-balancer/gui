@@ -32,7 +32,7 @@ const Users = () => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const { data, loading, error } = useAPIRequest(UserService.listUsers);
+  const { data, loading, error } = useAPIRequest<IUser[]>(UserService.listUsers);
 
   console.log(data);
 
