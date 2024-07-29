@@ -27,6 +27,7 @@ import { TableCell, TableRow } from '../../../shared/shadcn/components/ui/table.
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { formatDate } from '../../../shared/services/transformations/index.service.ts';
 import { IBreakpoint } from '../../../shared/services/media-query/index.service.ts';
+import { ClipboardService } from '@/shared/services/clipboard/index.service.ts';
 import { UserService } from '../../../shared/backend/auth/user/index.service.ts';
 import useMediaQueryBreakpoint from '../../../shared/hooks/media-query-breakpoint/index.hook.ts';
 import { useBoundStore } from '../../../shared/store/index.store.ts';
@@ -84,6 +85,8 @@ const UserRow = memo(({ user, dispatch }: IUserRowProps) => {
 
 
 
+
+
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
    ********************************************************************************************** */
@@ -122,7 +125,7 @@ const UserRow = memo(({ user, dispatch }: IUserRowProps) => {
       <TableCell>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant='ghost' size='sm' className='max-w-20 md:max-w-24 lg:max-w-32 xl:max-w-36 2xl:max-w-40'>
+            <Button variant='ghost' size='sm' className='max-w-20 md:max-w-24 lg:max-w-32 xl:max-w-36 2xl:max-w-40' onClick={() => ClipboardService.writeText(user.uid)}>
               <p className='text-ellipsis overflow-hidden font-bold'>{user.uid}</p>
             </Button>
           </TooltipTrigger>

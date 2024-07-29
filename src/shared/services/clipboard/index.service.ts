@@ -1,3 +1,4 @@
+import { toast } from '../../shadcn/components/ui/use-toast';
 import { IClipboardService } from './types';
 
 /* ************************************************************************************************
@@ -53,9 +54,10 @@ const clipboardServiceFactory = (): IClipboardService => {
    * @throws
    * - NotAllowedError: if writing to the clipboard is not allowed.
    */
-  const writeText = (text: string): Promise<void> => {
+  const writeText = async (text: string): Promise<void> => {
     __validateAvailability();
-    return window.navigator.clipboard.writeText(text);
+    await window.navigator.clipboard.writeText(text);
+    toast({ title: 'Copied to Clipboard', description: text });
   };
 
   /**
@@ -66,7 +68,7 @@ const clipboardServiceFactory = (): IClipboardService => {
    * - NotFoundError: if the clipboard indicates that it contains data that can be represented as a
    * text but is unable to provide a textual representation
    */
-  const readText = async (): Promise<string> => {
+  const readText = (): Promise<string> => {
     __validateAvailability();
     return window.navigator.clipboard.readText();
   };
