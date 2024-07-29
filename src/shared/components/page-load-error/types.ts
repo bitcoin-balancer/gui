@@ -4,14 +4,11 @@
  *                                             TYPES                                              *
  ************************************************************************************************ */
 
-// the function that will be invoked by the hook
-type IRequestFunction = (...args: unknown[]) => Promise<unknown>;
-
-// the hook in charge of handling the retrieval, loading and error states
-type IAPIRequestHook = <T>(
-  requestFunction: IRequestFunction,
-  args?: unknown[]
-) => { data: T, loading: boolean, error: unknown | undefined };
+// the props that can be passed to customize the error component
+type IComponentProps = {
+  // the error that was thrown when retrieving the data
+  error: unknown;
+};
 
 
 
@@ -20,6 +17,5 @@ type IAPIRequestHook = <T>(
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export type {
-  IRequestFunction,
-  IAPIRequestHook,
+  IComponentProps,
 };

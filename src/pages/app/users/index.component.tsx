@@ -16,6 +16,7 @@ import {
 import { UserService, IUser } from '../../../shared/backend/auth/user/index.service.ts';
 import useAPIRequest from '../../../shared/hooks/api-request/api-request.hook.tsx';
 import PageLoader from '../../../shared/components/page-loader/index.component.tsx';
+import PageLoadError from '../../../shared/components/page-load-error/index.component.tsx';
 import UserRow from './user-row.component.tsx';
 
 /* ************************************************************************************************
@@ -44,7 +45,7 @@ const Users = () => {
     return <PageLoader />;
   }
   if (error) {
-    return <p>Error!</p>;
+    return <PageLoadError error={error} />;
   }
   return (
     <div className='page-container flex justify-center items-start'>
