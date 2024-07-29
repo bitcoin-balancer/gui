@@ -249,7 +249,7 @@ const App = () => {
                 ? <Button variant='ghost' className='hidden md:flex lg:hidden relative' aria-label={item.name} onClick={() => navigate(item.path)} disabled={item.active}>
                     {item.icon}
                     <div className="absolute -top-2 -right-3">
-                      <Badge className='bg-primary py-0.5 px-1.5'>{item.badge}</Badge>
+                      <Badge className='py-0.5 px-1.5'>{item.badge}</Badge>
                     </div>
                   </Button>
                 : <Button variant='ghost' className='hidden md:flex lg:hidden' aria-label={item.name} onClick={() => navigate(item.path)} disabled={item.active}>
@@ -271,7 +271,7 @@ const App = () => {
             ? <Button key={i} variant='ghost' className='hidden lg:flex relative' onClick={() => navigate(item.path)} disabled={item.active}>
               {item.icon} <span className='ml-2'>{item.name}</span>
               <div className="absolute -top-2 -right-2">
-                <Badge className='bg-primary py-0.5 px-1.5'>{item.badge}</Badge>
+                <Badge className='py-0.5 px-1.5'>{item.badge}</Badge>
               </div>
             </Button>
             : <Button key={i} variant='ghost' className='hidden lg:flex' onClick={() => navigate(item.path)} disabled={item.active}>
@@ -376,7 +376,7 @@ const App = () => {
                 <div className='relative'>
                   {item.icon}
                   <div className="absolute -top-5 -right-5">
-                    <Badge className='bg-primary py-0.5 px-1.5'>{item.badge}</Badge>
+                    <Badge className='py-0.5 px-1.5'>{item.badge}</Badge>
                   </div>
                 </div>
               </Button>
