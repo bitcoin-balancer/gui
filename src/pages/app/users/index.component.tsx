@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { UserPlus } from 'lucide-react';
 import { Button } from '../../../shared/shadcn/components/ui/button.tsx';
 import {
@@ -47,7 +48,10 @@ const Users = () => {
    * Dispatches an action to the module's reducer.
    * @param action
    */
-  const handleDispatch = (action: IAction) => dispatch(action, data, setData);
+  const handleDispatch = useCallback(
+    (action: IAction) => dispatch(action, data, setData),
+    [data, setData],
+  );
 
 
 

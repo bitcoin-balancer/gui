@@ -22,7 +22,7 @@ import {
 } from '../../../shared/shadcn/components/ui/dialog.tsx';
 import { Button } from '../../../shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '../../../shared/services/utils/index.service.ts';
-import { nicknameValid, authorityValid} from '../../../shared/backend/validations/index.service.ts';
+import { nicknameValid, authorityValid } from '../../../shared/backend/validations/index.service.ts';
 import { UserService, IAuthority } from '../../../shared/backend/auth/user/index.service.ts';
 import { useBoundStore } from '../../../shared/store/index.store.ts';
 import { IAddUserProps, IAddUserInputs } from './types.ts';
@@ -35,10 +35,11 @@ import { IAddUserProps, IAddUserInputs } from './types.ts';
  * Add User Component
  * Component in charge of adding users to Balancer
  */
-const AddUser = ({ children }: IAddUserProps) => {
+const AddUser = ({ children, dispatch }: IAddUserProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
+  const [open, setOpen] = useState(false);
   const form = useForm<IAddUserInputs>({ defaultValues: { nickname: '', authority: '' } });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
@@ -67,9 +68,9 @@ const AddUser = ({ children }: IAddUserProps) => {
           setIsSubmitting(true);
           const authority = Number(data.authority) as IAuthority;
           const user = await UserService.createUser(data.nickname, authority, confirmation);
-          // @TODO
-          console.log('here');
+          dispatch({ type: 'ADD_USER', payload: user });
           form.reset();
+          setOpen(false);
         } catch (e) {
           errorToast(e);
           const { code } = decodeError(e);
@@ -96,7 +97,7 @@ const AddUser = ({ children }: IAddUserProps) => {
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent>
 

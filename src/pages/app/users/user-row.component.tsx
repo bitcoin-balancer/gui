@@ -91,7 +91,7 @@ const UserRow = memo(({ user, busy }: IUserRowProps) => {
         <Tooltip>
           <TooltipTrigger asChild>
             <Button variant='ghost' size='sm' className='max-w-20 md:max-w-24 lg:max-w-32 xl:max-w-36 2xl:max-w-40'>
-              <p className='text-ellipsis overflow-hidden font-bold'>6234ca63-426e-472c-9440-5e0b30640a5f</p>
+              <p className='text-ellipsis overflow-hidden font-bold'>{user.uid}</p>
             </Button>
           </TooltipTrigger>
           <TooltipContent>

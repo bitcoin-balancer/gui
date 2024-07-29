@@ -2,8 +2,16 @@ import { sortRecords } from '../../../shared/services/utils/index.service.ts';
 import { IUser } from '../../../shared/backend/auth/user/index.service.ts';
 import { IAction } from './types';
 
+/* ************************************************************************************************
+ *                                         IMPLEMENTATION                                         *
+ ************************************************************************************************ */
 
-
+/**
+ * Dispatches an action and updates the state so it is in sync with the backend.
+ * @param action
+ * @param state
+ * @param setState
+ */
 const dispatch = (action: IAction, state: IUser[], setState: (state: IUser[]) => void) => {
   switch (action.type) {
     case 'ADD_USER': {
@@ -22,6 +30,11 @@ const dispatch = (action: IAction, state: IUser[], setState: (state: IUser[]) =>
 
 
 
+
+
+/* ************************************************************************************************
+ *                                         MODULE EXPORTS                                         *
+ ************************************************************************************************ */
 export {
   dispatch,
 };
