@@ -19,6 +19,15 @@ const dispatch = (action: IAction, state: IUser[], setState: (state: IUser[]) =>
       setState(newUsers);
       break;
     }
+    case 'UPDATE_NICKNAME': {
+      setState(state.map((user) => {
+        if (user.uid === action.payload.uid) {
+          return { ...user, nickname: action.payload.newNickname };
+        }
+        return user;
+      }));
+      break;
+    }
     case 'DELETE_USER': {
       setState(state.filter((user) => user.uid !== action.payload));
       break;

@@ -77,7 +77,7 @@ const Users = () => {
           <AddUser dispatch={handleDispatch}>
             <div>
               <Button variant='ghost' size='icon' aria-label='Add User' className='sm:hidden'><UserPlus aria-hidden='true' /></Button>
-              <Button variant='ghost' aria-label='Add User' className='hidden sm:flex'><UserPlus aria-hidden='true' className='mr-2' /> Add user</Button>
+              <Button variant='default' aria-label='Add User' className='hidden sm:flex'><UserPlus aria-hidden='true' className='mr-2' /> Add user</Button>
             </div>
           </AddUser>
 

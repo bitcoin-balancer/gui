@@ -32,6 +32,7 @@ import { UserService } from '../../../shared/backend/auth/user/index.service.ts'
 import useMediaQueryBreakpoint from '../../../shared/hooks/media-query-breakpoint/index.hook.ts';
 import { useBoundStore } from '../../../shared/store/index.store.ts';
 import { IUserRowProps } from './types.ts';
+import UpdateNickname from './update-nickname.component.tsx';
 
 /* ************************************************************************************************
  *                                            HELPERS                                             *
@@ -153,7 +154,12 @@ const UserRow = memo(({ user, dispatch }: IUserRowProps) => {
           <DropdownMenuContent>
             <DropdownMenuLabel>{user.nickname}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem disabled={user.authority === 5}><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update nickname</DropdownMenuItem>
+
+            <UpdateNickname uid={user.uid} nickname={user.nickname} dispatch={dispatch}>
+              <DropdownMenuItem disabled={user.authority === 5}><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update nickname</DropdownMenuItem>
+            </UpdateNickname>
+
+
             <DropdownMenuItem disabled={user.authority === 5}><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update authority</DropdownMenuItem>
             <DropdownMenuItem disabled={user.authority === 5}><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update OTP secret</DropdownMenuItem>
             <DropdownMenuItem disabled={user.authority === 5} onClick={deleteUser}><UserMinus aria-hidden='true' className='w-5 h-5 mr-1' /> Delete user</DropdownMenuItem>

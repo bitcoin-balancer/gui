@@ -58,7 +58,7 @@ type IUserRowProps = {
  *                                           ADD USER                                             *
  ************************************************************************************************ */
 
-// the props used by the add user components
+// the props used by the add user component
 type IAddUserProps = PropsWithChildren<{
   dispatch: IDispatchFunc;
 }>;
@@ -67,6 +67,26 @@ type IAddUserProps = PropsWithChildren<{
 type IAddUserInputs = {
   nickname: string;
   authority: IAuthority | '';
+};
+
+
+
+
+
+/* ************************************************************************************************
+ *                                       UPDATE NICKNAME                                          *
+ ************************************************************************************************ */
+
+// the props used by the update nickname component
+type IUpdateNicknameProps = PropsWithChildren<{
+  uid: string;
+  nickname: string;
+  dispatch: IDispatchFunc;
+}>;
+
+// form inputs to update a nickname
+type IUpdateNicknameInputs = {
+  newNickname: string;
 };
 
 
@@ -87,4 +107,8 @@ export type {
   // add user
   IAddUserProps,
   IAddUserInputs,
+
+  // update nickname
+  IUpdateNicknameProps,
+  IUpdateNicknameInputs,
 };
