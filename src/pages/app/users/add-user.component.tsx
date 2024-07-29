@@ -58,7 +58,6 @@ const AddUser = ({ children, dispatch }: IAddUserProps) => {
    * @returns void
    */
   const onSubmit = (data: IAddUserInputs): void => {
-    // display the confirmation dialog
     openConfirmationDialog({
       mode: 'OTP',
       title: 'Add user',

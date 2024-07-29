@@ -24,9 +24,12 @@ import {
   DropdownMenuItem,
 } from '../../../shared/shadcn/components/ui/dropdown-menu.tsx';
 import { TableCell, TableRow } from '../../../shared/shadcn/components/ui/table.tsx';
+import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { formatDate } from '../../../shared/services/transformations/index.service.ts';
 import { IBreakpoint } from '../../../shared/services/media-query/index.service.ts';
+import { UserService } from '../../../shared/backend/auth/user/index.service.ts';
 import useMediaQueryBreakpoint from '../../../shared/hooks/media-query-breakpoint/index.hook.ts';
+import { useBoundStore } from '../../../shared/store/index.store.ts';
 import { IUserRowProps } from './types.ts';
 
 /* ************************************************************************************************
@@ -60,13 +63,13 @@ const formatDateByBreakpoint = (date: number, breakpoint: IBreakpoint): string =
  * User Row Component
  * Component in charge of display the user's details and the actions menu.
  */
-const UserRow = memo(({ user }: IUserRowProps) => {
+const UserRow = memo(({ user, dispatch }: IUserRowProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const [busy, setBusy] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const breakpoint = useMediaQueryBreakpoint();
-
+  const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
 
 
 
@@ -81,13 +84,41 @@ const UserRow = memo(({ user }: IUserRowProps) => {
 
 
 
+  /* **********************************************************************************************
+   *                                        EVENT HANDLERS                                        *
+   ********************************************************************************************** */
+
+  /**
+   * Prompts the user with the confirmation dialog and deletes the selected user.
+   */
+  const deleteUser = () => {
+    openConfirmationDialog({
+      mode: 'OTP',
+      title: 'Delete user',
+      description: 'Once deleted, the user will be unable to interact with the API, and all their sessions will be destroyed.',
+      onConfirmation: async (confirmation: string) => {
+        try {
+          setIsSubmitting(true);
+          await UserService.deleteUser(user.uid, confirmation);
+          dispatch({ type: 'DELETE_USER', payload: user.uid });
+        } catch (e) {
+          errorToast(e);
+        } finally {
+          setIsSubmitting(false);
+        }
+      },
+    });
+  };
+
+
+
 
 
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
-    <TableRow className={`${busy ? 'opacity-50' : ''}`}>
+    <TableRow className={`${isSubmitting ? 'opacity-50' : ''}`}>
       <TableCell>
         <Tooltip>
           <TooltipTrigger asChild>
@@ -112,12 +143,8 @@ const UserRow = memo(({ user }: IUserRowProps) => {
       <TableCell>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant='ghost' size='icon' aria-label='User actions menu' disabled={busy}>
-              {
-                busy
-                  ? <Loader2 className="animate-spin" />
-                  : <EllipsisVertical aria-hidden='true'/>
-              }
+            <Button variant='ghost' size='icon' aria-label='User actions menu' disabled={isSubmitting}>
+              {isSubmitting ? <Loader2 className="animate-spin" /> : <EllipsisVertical aria-hidden='true'/>}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
@@ -126,7 +153,7 @@ const UserRow = memo(({ user }: IUserRowProps) => {
             <DropdownMenuItem disabled={user.authority === 5}><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update nickname</DropdownMenuItem>
             <DropdownMenuItem disabled={user.authority === 5}><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update authority</DropdownMenuItem>
             <DropdownMenuItem disabled={user.authority === 5}><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update OTP secret</DropdownMenuItem>
-            <DropdownMenuItem disabled={user.authority === 5}><UserMinus aria-hidden='true' className='w-5 h-5 mr-1' /> Delete user</DropdownMenuItem>
+            <DropdownMenuItem disabled={user.authority === 5} onClick={deleteUser}><UserMinus aria-hidden='true' className='w-5 h-5 mr-1' /> Delete user</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem><RectangleEllipsis aria-hidden='true' className='w-5 h-5 mr-1' /> Display OTP secret</DropdownMenuItem>
             <DropdownMenuItem><KeyRound aria-hidden='true' className='w-5 h-5 mr-1' /> Display auth sessions</DropdownMenuItem>

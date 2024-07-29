@@ -97,7 +97,7 @@ const Users = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data.map((user) => <UserRow key={user.uid} user={user} busy={false} />)}
+              {data.map((user) => <UserRow key={user.uid} user={user} dispatch={handleDispatch} />)}
             </TableBody>
           </Table>
             : <p className='text-light text-center text-sm mt-5'>No users were found</p>
