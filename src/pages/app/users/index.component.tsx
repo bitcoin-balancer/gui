@@ -14,7 +14,7 @@ import {
   TableRow,
 } from '../../../shared/shadcn/components/ui/table.tsx';
 import { UserService, IUser } from '../../../shared/backend/auth/user/index.service.ts';
-import useAPIRequest from '../../../shared/hooks/api-request/api-request.hook.tsx';
+import useAPIRequest from '../../../shared/hooks/api-request/api-request.hook.ts';
 import PageLoader from '../../../shared/components/page-loader/index.component.tsx';
 import PageLoadError from '../../../shared/components/page-load-error/index.component.tsx';
 import UserRow from './user-row.component.tsx';
@@ -22,8 +22,6 @@ import UserRow from './user-row.component.tsx';
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
-
-
 
 /**
  * Users Component
@@ -35,7 +33,8 @@ const Users = () => {
    ********************************************************************************************** */
   const { data, loading, error } = useAPIRequest<IUser[]>(UserService.listUsers);
 
-  console.log(data);
+
+
 
 
   /* **********************************************************************************************
@@ -66,21 +65,25 @@ const Users = () => {
 
         </header>
 
-        <Table className='mt-5'>
-          <TableCaption>A list of users</TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead>ID</TableHead>
-              <TableHead>Nickname</TableHead>
-              <TableHead>Authority</TableHead>
-              <TableHead>Creation</TableHead>
-              <TableHead>Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <UserRow />
-          </TableBody>
-        </Table>
+        {
+          data.length
+            ? <Table className='mt-5'>
+            <TableCaption>A list of users</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead>ID</TableHead>
+                <TableHead>Nickname</TableHead>
+                <TableHead>Authority</TableHead>
+                <TableHead>Creation</TableHead>
+                <TableHead>Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {data.map((user) => <UserRow key={user.uid} user={user} busy={false} />)}
+            </TableBody>
+          </Table>
+            : <p className='text-light text-center text-sm mt-5'>No users were found</p>
+        }
 
       </section>
     </div>

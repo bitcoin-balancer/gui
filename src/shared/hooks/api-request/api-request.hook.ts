@@ -31,14 +31,13 @@ const useAPIRequest: IAPIRequestHook = (requestFunction: IRequestFunction, args?
     const executeRequest = async () => {
       try {
         const responseData = await buildRequestFunction();
-        setError(undefined);
         if (!ignore) {
           setData(responseData);
+          setLoading(false);
+          setError(undefined);
         }
       } catch (e) {
         setError(e);
-      } finally {
-        setLoading(false);
       }
     };
 

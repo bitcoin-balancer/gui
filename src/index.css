@@ -243,7 +243,7 @@ a:hover {
    * Page Container
    */
   .page-container {
-    padding: 15px 15px 15px 15px;
+    padding: 15px;
   }
 }
 
@@ -269,6 +269,13 @@ a:hover {
   #page-loader {
     height: calc(100dvh - var(--app-header-desktop-height));
   }
+
+  /*
+   * Page Container
+   */
+  .page-container {
+    padding: 20px 15px;
+  }
 }
 
  
@@ -279,7 +286,12 @@ a:hover {
  * Breakpoint Prefix: xl
  */
 @media (min-width: 1280px) {
-
+  /*
+   * Page Container
+   */
+  .page-container {
+    padding: 25px 15px ;
+  }
 }
 
 

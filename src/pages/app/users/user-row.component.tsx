@@ -6,6 +6,7 @@ import {
   RectangleEllipsis,
   KeyRound,
   SquareAsterisk,
+  Loader2,
 } from 'lucide-react';
 import { Button } from '../../../shared/shadcn/components/ui/button.tsx';
 import {
@@ -26,6 +27,7 @@ import { TableCell, TableRow } from '../../../shared/shadcn/components/ui/table.
 import { formatDate } from '../../../shared/services/transformations/index.service.ts';
 import { IBreakpoint } from '../../../shared/services/media-query/index.service.ts';
 import useMediaQueryBreakpoint from '../../../shared/hooks/media-query-breakpoint/index.hook.ts';
+import { IUserRowProps } from './types.ts';
 
 /* ************************************************************************************************
  *                                            HELPERS                                             *
@@ -58,7 +60,7 @@ const formatDateByBreakpoint = (date: number, breakpoint: IBreakpoint): string =
  * User Row Component
  * Component in charge of display the user's details and the actions menu.
  */
-const UserRow = memo(() => {
+const UserRow = memo(({ user, busy }: IUserRowProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
@@ -71,7 +73,10 @@ const UserRow = memo(() => {
   /* **********************************************************************************************
    *                                       REACTIVE VALUES                                        *
    ********************************************************************************************** */
-  const creation = useMemo(() => formatDateByBreakpoint(1721076422954, breakpoint), [breakpoint]);
+  const creation = useMemo(
+    () => formatDateByBreakpoint(user.event_time, breakpoint),
+    [user.event_time, breakpoint],
+  );
 
 
 
@@ -81,7 +86,7 @@ const UserRow = memo(() => {
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
-    <TableRow>
+    <TableRow className={`${busy ? 'opacity-50' : ''}`}>
       <TableCell>
         <Tooltip>
           <TooltipTrigger asChild>
@@ -95,19 +100,27 @@ const UserRow = memo(() => {
         </Tooltip>
       </TableCell>
       <TableCell>
-        <p className='font-bold'>root</p>
+        <p className='font-bold'>{user.nickname}</p>
       </TableCell>
       <TableCell>
-        <Badge variant='secondary'>5</Badge>
+        <Badge variant='secondary'>{user.authority}</Badge>
       </TableCell>
       <TableCell>
         <p>{creation}</p>
       </TableCell>
       <TableCell>
         <DropdownMenu>
-          <DropdownMenuTrigger aria-label='User actions menu'><EllipsisVertical aria-hidden='true'/></DropdownMenuTrigger>
+          <DropdownMenuTrigger asChild>
+            <Button variant='ghost' size='icon' aria-label='User actions menu' disabled={busy}>
+              {
+                busy
+                  ? <Loader2 className="animate-spin" />
+                  : <EllipsisVertical aria-hidden='true'/>
+              }
+            </Button>
+          </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuLabel>root</DropdownMenuLabel>
+            <DropdownMenuLabel>{user.nickname}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update nickname</DropdownMenuItem>
             <DropdownMenuItem><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update authority</DropdownMenuItem>
