@@ -1,3 +1,4 @@
+import { useMemo, memo } from 'react';
 import {
   EllipsisVertical,
   UserPen,
@@ -22,50 +23,85 @@ import {
   DropdownMenuItem,
 } from '../../../shared/shadcn/components/ui/dropdown-menu.tsx';
 import { TableCell, TableRow } from '../../../shared/shadcn/components/ui/table.tsx';
+import { formatDate } from '../../../shared/services/transformations/index.service.ts';
+import { IBreakpoint } from '../../../shared/services/media-query/index.service.ts';
+import useMediaQueryBreakpoint from '../../../shared/hooks/media-query-breakpoint/index.hook.ts';
+
+/* ************************************************************************************************
+ *                                            HELPERS                                             *
+ ************************************************************************************************ */
+
+/**
+ * Formats a date based on the current media query breakpoint.
+ * @param date
+ * @param breakpoint
+ * @returns string
+ */
+const formatDateByBreakpoint = (date: number, breakpoint: IBreakpoint): string => {
+  switch (breakpoint) {
+    case 'xs':
+    case 'sm':
+      return formatDate(date, 'date-short');
+    case 'md':
+      return formatDate(date, 'date-medium');
+    default:
+      return formatDate(date, 'date-long');
+  }
+};
+
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
 
-
-
 /**
  * User Row Component
  * Component in charge of display the user's details and the actions menu.
  */
-const UserRow = () => {
-  const a = '';
+const UserRow = memo(() => {
+  /* **********************************************************************************************
+   *                                             STATE                                            *
+   ********************************************************************************************** */
+  const breakpoint = useMediaQueryBreakpoint();
+
+
+
+
+
+  /* **********************************************************************************************
+   *                                       REACTIVE VALUES                                        *
+   ********************************************************************************************** */
+  const creation = useMemo(() => formatDateByBreakpoint(1721076422954, breakpoint), [breakpoint]);
+
+
+
+
+
+  /* **********************************************************************************************
+   *                                           COMPONENT                                          *
+   ********************************************************************************************** */
   return (
     <TableRow>
       <TableCell>
-        <p className='mr-2 font-bold'>root</p>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant='ghost' size='sm' className='max-w-20 md:max-w-24 lg:max-w-32 xl:max-w-36 2xl:max-w-40'>
+              <p className='text-ellipsis overflow-hidden font-bold'>6234ca63-426e-472c-9440-5e0b30640a5f</p>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Click to copy</p>
+          </TooltipContent>
+        </Tooltip>
+      </TableCell>
+      <TableCell>
+        <p className='font-bold'>root</p>
       </TableCell>
       <TableCell>
         <Badge variant='secondary'>5</Badge>
       </TableCell>
       <TableCell>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button variant='ghost' size='sm' className='max-w-20 md:max-w-24 lg:max-w-32 xl:max-w-36 2xl:max-w-40'>
-              <p className='text-ellipsis overflow-hidden font-normal'>6234ca63-426e-472c-9440-5e0b30640a5f</p>
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Click to copy</p>
-          </TooltipContent>
-        </Tooltip>
-      </TableCell>
-      <TableCell>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button variant='ghost' size='sm' className='max-w-20 md:max-w-24 lg:max-w-32 xl:max-w-36 2xl:max-w-40'>
-              <p className='text-ellipsis overflow-hidden font-normal'>PJWC6KIPJUWHMAKC</p>
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Click to copy</p>
-          </TooltipContent>
-        </Tooltip>
+        <p>{creation}</p>
       </TableCell>
       <TableCell>
         <DropdownMenu>
@@ -86,7 +122,7 @@ const UserRow = () => {
       </TableCell>
     </TableRow>
   );
-};
+});
 
 
 

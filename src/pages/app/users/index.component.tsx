@@ -70,10 +70,10 @@ const Users = () => {
           <TableCaption>A list of users</TableCaption>
           <TableHeader>
             <TableRow>
+              <TableHead>ID</TableHead>
               <TableHead>Nickname</TableHead>
               <TableHead>Authority</TableHead>
-              <TableHead>ID</TableHead>
-              <TableHead>OTP Secret</TableHead>
+              <TableHead>Creation</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>

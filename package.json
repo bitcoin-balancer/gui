@@ -56,6 +56,7 @@
     "browser-style-normalizer": "^1.0.6",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "date-fns": "^3.6.0",
     "error-message-utils": "^1.1.1",
     "fetch-request-browser": "^1.0.2",
     "input-otp": "^1.2.4",
