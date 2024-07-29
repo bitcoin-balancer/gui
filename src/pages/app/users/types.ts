@@ -2,23 +2,6 @@ import { PropsWithChildren } from 'react';
 import { IUser, IAuthority } from '../../../shared/backend/auth/user/index.service.ts';
 
 /* ************************************************************************************************
- *                                           USER ROW                                             *
- ************************************************************************************************ */
-
-// the props that will be passed down to the user row
-type IUserRowProps = {
-  // the user that will be places in the row
-  user: IUser;
-
-  // if enabled, there is an action being performed on the user
-  busy: boolean;
-};
-
-
-
-
-
-/* ************************************************************************************************
  *                                           DISPATCH                                             *
  ************************************************************************************************ */
 
@@ -50,6 +33,24 @@ type IAction = {
   }
 );
 
+// the function used to dispatch actions from children components
+type IDispatchFunc = (action: IAction) => void;
+
+
+
+
+
+/* ************************************************************************************************
+ *                                           USER ROW                                             *
+ ************************************************************************************************ */
+
+// the props that will be passed down to the user row
+type IUserRowProps = {
+  user: IUser;
+  dispatch: IDispatchFunc;
+};
+
+
 
 
 
@@ -59,7 +60,7 @@ type IAction = {
 
 // the props used by the add user components
 type IAddUserProps = PropsWithChildren<{
-  dispatch: (action: IAction) => void;
+  dispatch: IDispatchFunc;
 }>;
 
 // form inputs to add an user
@@ -76,11 +77,12 @@ type IAddUserInputs = {
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export type {
-  // user row
-  IUserRowProps,
-
   // dispatch
   IAction,
+  IDispatchFunc,
+
+  // user row
+  IUserRowProps,
 
   // add user
   IAddUserProps,

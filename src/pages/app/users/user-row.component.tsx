@@ -1,4 +1,4 @@
-import { useMemo, memo } from 'react';
+import { useState, useMemo, memo } from 'react';
 import {
   EllipsisVertical,
   UserPen,
@@ -60,10 +60,11 @@ const formatDateByBreakpoint = (date: number, breakpoint: IBreakpoint): string =
  * User Row Component
  * Component in charge of display the user's details and the actions menu.
  */
-const UserRow = memo(({ user, busy }: IUserRowProps) => {
+const UserRow = memo(({ user }: IUserRowProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
+  const [busy, setBusy] = useState<boolean>(false);
   const breakpoint = useMediaQueryBreakpoint();
 
 
