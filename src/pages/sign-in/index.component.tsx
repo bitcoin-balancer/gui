@@ -165,7 +165,7 @@ const SignIn = () => {
                   <FormItem className='mt-5'>
                     <FormLabel>Nickname</FormLabel>
                     <FormControl>
-                      <Input type='text' placeholder='satoshi' {...field} autoComplete='off' disabled={isSubmitting} />
+                      <Input type='text' placeholder='satoshi' {...field} autoComplete='off' autoFocus disabled={isSubmitting} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
