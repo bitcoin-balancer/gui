@@ -7,9 +7,9 @@ import { useSyncExternalStore } from 'react';
 /**
  * Vertical Scroll Hook
  * Subscribes to the Client's Scroll Event.
- * @returns number
+ * @returns () => number
  */
-const useVerticalScroll = () => useSyncExternalStore(
+const useVerticalScroll: () => number = () => useSyncExternalStore(
   (callback) => {
     window.addEventListener('scroll', callback);
     return () => {

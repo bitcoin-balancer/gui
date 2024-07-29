@@ -2,6 +2,7 @@ import {
   EllipsisVertical,
   UserPen,
   UserMinus,
+  RectangleEllipsis,
   KeyRound,
   SquareAsterisk,
 } from 'lucide-react';
@@ -77,6 +78,7 @@ const UserRow = () => {
             <DropdownMenuItem><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update OTP secret</DropdownMenuItem>
             <DropdownMenuItem><UserMinus aria-hidden='true' className='w-5 h-5 mr-1' /> Delete user</DropdownMenuItem>
             <DropdownMenuSeparator />
+            <DropdownMenuItem><RectangleEllipsis aria-hidden='true' className='w-5 h-5 mr-1' /> Display OTP secret</DropdownMenuItem>
             <DropdownMenuItem><KeyRound aria-hidden='true' className='w-5 h-5 mr-1' /> Display auth sessions</DropdownMenuItem>
             <DropdownMenuItem><SquareAsterisk aria-hidden='true' className='w-5 h-5 mr-1' /> Display password updates</DropdownMenuItem>
           </DropdownMenuContent>

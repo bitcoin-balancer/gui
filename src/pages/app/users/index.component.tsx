@@ -13,6 +13,9 @@ import {
   TableHeader,
   TableRow,
 } from '../../../shared/shadcn/components/ui/table.tsx';
+import { UserService, IUser } from '../../../shared/backend/auth/user/index.service.ts';
+import useAPIRequest from '../../../shared/hooks/api-request/api-request.hook.tsx';
+import PageLoader from '../../../shared/components/page-loader/index.component.tsx';
 import UserRow from './user-row.component.tsx';
 
 /* ************************************************************************************************
@@ -26,7 +29,23 @@ import UserRow from './user-row.component.tsx';
  * Component in charge of creating, updating, deleting and managing users.
  */
 const Users = () => {
-  const a = '';
+  /* **********************************************************************************************
+   *                                             STATE                                            *
+   ********************************************************************************************** */
+  const { data, loading, error } = useAPIRequest(UserService.listUsers);
+
+  console.log(data);
+
+
+  /* **********************************************************************************************
+   *                                           COMPONENT                                          *
+   ********************************************************************************************** */
+  if (loading) {
+    return <PageLoader />;
+  }
+  if (error) {
+    return <p>Error!</p>;
+  }
   return (
     <div className='page-container flex justify-center items-start'>
       <section className='w-full sm:w-10/12 md:w-9/12 lg:w-8/12 xl:w-7/12 2xl:w-6/12'>

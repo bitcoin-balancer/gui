@@ -7,9 +7,9 @@ import { useSyncExternalStore } from 'react';
 /**
  * Online Status Hook
  * Subscribes to the Client's Internet Connection Status.
- * @returns boolean
+ * @returns () => boolean
  */
-const useOnlineStatus = () => useSyncExternalStore(
+const useOnlineStatus: () => boolean = () => useSyncExternalStore(
   (callback) => {
     window.addEventListener('online', callback);
     window.addEventListener('offline', callback);

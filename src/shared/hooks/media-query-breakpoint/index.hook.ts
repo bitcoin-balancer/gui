@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from 'react';
-import { MediaQueryService } from '../../services/media-query/index.service.ts';
+import { IBreakpoint, MediaQueryService } from '../../services/media-query/index.service.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -8,8 +8,9 @@ import { MediaQueryService } from '../../services/media-query/index.service.ts';
 /**
  * Media Query Breakpoint Hook
  * Subscribes to the active breakpoint based on the Client's screen width.
+ * @returns () => IBreakpoint
  */
-const useMediaQueryBreakpoint = () => useSyncExternalStore(
+const useMediaQueryBreakpoint: () => IBreakpoint = () => useSyncExternalStore(
   (callback) => {
     window.addEventListener('resize', callback);
     return () => window.removeEventListener('resize', callback);
