@@ -51,6 +51,10 @@ const AppInstaller = () => {
    *                                         SIDE EFFECTS                                         *
    ********************************************************************************************** */
 
+  /**
+   * App Installer Button
+   * Side effect in charge of displaying the installer for the established duration.
+   */
   useEffect(() => {
     // init the installers duration
     let remaining: number = DURATION;
