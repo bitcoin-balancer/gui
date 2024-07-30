@@ -65,7 +65,7 @@ const UpdateAuthority = ({
     openConfirmationDialog({
       mode: 'OTP',
       title: 'Update authority',
-      description: `The authority for the user ${nickname} will be changed to ${data.newAuthority}.`,
+      description: `${nickname}’s authority will be changed from ${authority} to ${data.newAuthority}`,
       onConfirmation: async (confirmation: string) => {
         try {
           setIsSubmitting(true);
@@ -96,9 +96,9 @@ const UpdateAuthority = ({
       <DialogContent>
 
         <DialogHeader>
-          <DialogTitle>Update authority</DialogTitle>
+          <DialogTitle>Update {nickname}’s authority</DialogTitle>
           <DialogDescription>
-            Set a new authority for the user {nickname} ({uid})
+            The authority will be changed immediately upon submission
           </DialogDescription>
         </DialogHeader>
 
@@ -119,7 +119,7 @@ const UpdateAuthority = ({
                 )}
                 rules={{
                   validate: {
-                    required: (value) => (authorityValid(Number(value), 4) ? true : 'Enter a valid authority'),
+                    required: (value) => (authorityValid(Number(value), 4) ? true : 'Enter a valid authority (1 - 4)'),
                   },
                 }}
               />

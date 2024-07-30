@@ -103,8 +103,7 @@ const DisplayAuthSessions = memo(({
         <DialogHeader>
           <DialogTitle>{nickname}'s Auth Sessions</DialogTitle>
           <DialogDescription>
-            A user may possess several authentication sessions as they can make use of several
-            devices
+            Each record represents a session that is likely to be active
           </DialogDescription>
         </DialogHeader>
 

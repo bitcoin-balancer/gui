@@ -61,7 +61,7 @@ const AddUser = ({ children, dispatch }: IAddUserProps) => {
     openConfirmationDialog({
       mode: 'OTP',
       title: 'Add user',
-      description: 'Once created, the user will have access to the Balancer Platform immediately after setting a password. Double-check the authority before proceeding.',
+      description: `The account ${data.nickname} (${data.authority}) will be created and granted access to Balancer once a password is set`,
       onConfirmation: async (confirmation: string) => {
         try {
           setIsSubmitting(true);
@@ -103,7 +103,7 @@ const AddUser = ({ children, dispatch }: IAddUserProps) => {
         <DialogHeader>
           <DialogTitle>Add user</DialogTitle>
           <DialogDescription>
-          Create a new user with any role and grant them access to the Balancer Platform.
+            The user will be created immediately upon submission
           </DialogDescription>
         </DialogHeader>
 

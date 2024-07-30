@@ -64,7 +64,7 @@ const UpdateNickname = ({
     openConfirmationDialog({
       mode: 'OTP',
       title: 'Update nickname',
-      description: `The user ${nickname}'s nickname will be changed to ${data.newNickname}.`,
+      description: `${nickname}'s nickname will be changed to ${data.newNickname}`,
       onConfirmation: async (confirmation: string) => {
         try {
           setIsSubmitting(true);
@@ -94,9 +94,9 @@ const UpdateNickname = ({
       <DialogContent>
 
         <DialogHeader>
-          <DialogTitle>Update nickname</DialogTitle>
+          <DialogTitle>Update {nickname}’s nickname</DialogTitle>
           <DialogDescription>
-            Set a new nickname for the user {nickname} ({uid})
+            The nickname will be changed immediately upon submission
           </DialogDescription>
         </DialogHeader>
 
@@ -117,7 +117,7 @@ const UpdateNickname = ({
                 )}
                 rules={{
                   validate: {
-                    required: (value) => (nicknameValid(value) ? true : 'Enter a valid nickname'),
+                    required: (value) => (nicknameValid(value) ? true : 'Nicknames can be 2 to 16 characters long and include letters, numbers, hyphens, commas, periods, and underscores.'),
                   },
                 }}
               />

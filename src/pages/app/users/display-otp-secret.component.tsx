@@ -57,7 +57,7 @@ const DisplayOTPSecret = memo(({
   } else {
     content = (
       <>
-        <div className='flex justify-start items-center border border-slate-300 rounded-md p-3 my-2 shadow-md animate-in fade-in duration-700'>
+        <div className='flex justify-start items-center border border-slate-300 rounded-md p-3 mt-2 shadow-md animate-in fade-in duration-700'>
           <KeyRound aria-hidden='true' className='mr-2' /> <p className='text-sm sm:text-md md:text-lg'>{data}</p>
           <span className='flex-1'></span>
 
@@ -70,7 +70,6 @@ const DisplayOTPSecret = memo(({
             </TooltipContent>
           </Tooltip>
         </div>
-        <p className='text-light text-xs text-center'>The OTP Secret is a sensitive piece of data. Make sure to share it with great care</p>
       </>
     );
   }
@@ -81,7 +80,7 @@ const DisplayOTPSecret = memo(({
         <DialogHeader>
           <DialogTitle>{nickname}'s OTP Secret</DialogTitle>
           <DialogDescription>
-            The secret is required to sign in and interact with Balancer.
+            The OTP Secret is a sensitive piece of data. Make sure to share it with great care
           </DialogDescription>
         </DialogHeader>
 

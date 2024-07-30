@@ -106,7 +106,7 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
     openConfirmationDialog({
       mode: 'OTP',
       title: 'Delete user',
-      description: 'Once deleted, the user will be unable to interact with the API, and all their sessions will be destroyed.',
+      description: `${user.nickname}’s account will be removed immediately upon submission`,
       onConfirmation: async (confirmation: string) => {
         try {
           setIsSubmitting(true);
@@ -128,7 +128,7 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
     openConfirmationDialog({
       mode: 'OTP',
       title: 'Update OTP secret',
-      description: 'Once updated, the old OTP secret will be immediately invalidated and the user will need to make use of the new one.',
+      description: `${user.nickname}’s new OTP secret will become available immediately upon submission`,
       onConfirmation: async (confirmation: string) => {
         try {
           setIsSubmitting(true);
