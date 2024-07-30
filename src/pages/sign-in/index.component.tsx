@@ -98,7 +98,7 @@ const SignIn = () => {
     openConfirmationDialog({
       mode: 'OTP',
       title: 'Sign in',
-      description: 'Signing in will grant you access to powerful tools for monitoring, customizing, and enhancing Balancer’s performance.',
+      description: 'Your session will be instantiated immediately upon submission and will last for approximately 30 days',
       onConfirmation: async (confirmation: string) => {
         try {
           setIsSubmitting(true);

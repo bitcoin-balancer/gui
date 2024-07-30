@@ -105,7 +105,7 @@ const UpdatePassword = () => {
     openConfirmationDialog({
       mode: 'OTP',
       title: 'Update your password',
-      description: 'The password will be set on your account, allowing you to sign into the platform safely.',
+      description: 'The new password will be set immediately upon submission',
       onConfirmation: async (confirmation: string) => {
         try {
           setIsSubmitting(true);
@@ -147,7 +147,7 @@ const UpdatePassword = () => {
             <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
 
               <h1 className='text-3xl font-bold text-center'>Update your password</h1>
-              <p className='text-light text-md text-center'>Secure your account with a strong password</p>
+              <p className='text-light text-md text-center'>Set a password you haven't used elsewhere</p>
 
               <FormField
                 control={form.control}
@@ -214,8 +214,6 @@ const UpdatePassword = () => {
               <Button type='submit' disabled={isSubmitting} variant='default' className='mt-7 w-full'>{isSubmitting && <Loader2 className='mr-2 h-4 w-4 animate-spin' />} Update password</Button>
 
               <Button type='button' onClick={() => navigate(NavService.signIn())} disabled={isSubmitting} variant='outline' className='mt-3 w-full'>Sign in</Button>
-
-              <p className='text-light text-sm mt-6 text-center'>Make sure to set a password you haven't used in other applications and that nobody is watching/listening to your keystrokes</p>
 
             </form>
 
