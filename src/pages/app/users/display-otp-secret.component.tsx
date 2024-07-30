@@ -47,7 +47,7 @@ const DisplayOTPSecret = memo(({ open, onOpenChange, uid }: IDisplayOTPSecretPro
   } else {
     content = (
     <>
-      <div className='flex justify-start items-center border border-slate-300 rounded-md px-3 py-3 shadow-md'>
+      <div className='flex justify-start items-center border border-slate-300 rounded-md px-3 py-3 shadow-md animate-in fade-in duration-700'>
         <KeyRound aria-hidden='true' className='mr-2' /> <p className='text-sm sm:text-md md:text-lg'>{data}</p>
         <span className='flex-1'></span>
         <Button variant='ghost' size='icon' onClick={() => ClipboardService.writeText(data)} aria-label='Copy the OTP secret'><Copy aria-hidden='true' /></Button>
