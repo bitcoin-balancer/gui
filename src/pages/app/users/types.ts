@@ -36,6 +36,8 @@ type IAction = {
 // the function used to dispatch actions from children components
 type IDispatchFunc = (action: IAction) => void;
 
+// the function triggered by dialogs when dismissed. It may contain an action to be dispatched
+type IDialogCloseFunc = (action: IAction | false) => void;
 
 
 
@@ -78,11 +80,12 @@ type IAddUserInputs = {
  ************************************************************************************************ */
 
 // the props used by the update nickname component
-type IUpdateNicknameProps = PropsWithChildren<{
+type IUpdateNicknameProps = {
+  open: boolean;
+  onOpenChange: IDialogCloseFunc;
   uid: string;
   nickname: string;
-  dispatch: IDispatchFunc;
-}>;
+};
 
 // form inputs to update a nickname
 type IUpdateNicknameInputs = {

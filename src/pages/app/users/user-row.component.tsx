@@ -1,4 +1,9 @@
-import { useState, useMemo, memo } from 'react';
+import {
+  useState,
+  useMemo,
+  memo,
+  useCallback,
+} from 'react';
 import {
   EllipsisVertical,
   UserPen,
@@ -32,7 +37,7 @@ import { UserService } from '../../../shared/backend/auth/user/index.service.ts'
 import { useMediaQueryBreakpoint } from '../../../shared/hooks/media-query-breakpoint/index.hook.ts';
 import { useBoundStore } from '../../../shared/store/index.store.ts';
 import UpdateNickname from './update-nickname.component.tsx';
-import { IUserRowProps } from './types.ts';
+import { IAction, IUserRowProps } from './types.ts';
 
 /* ************************************************************************************************
  *                                            HELPERS                                             *
@@ -69,8 +74,9 @@ const UserRow = memo(({ user, dispatch }: IUserRowProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const breakpoint = useMediaQueryBreakpoint();
+  const [activeForm, setActiveForm] = useState<string | false>(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
 
 
@@ -114,6 +120,20 @@ const UserRow = memo(({ user, dispatch }: IUserRowProps) => {
     });
   };
 
+  /**
+   * Handles the dismissal of a form dialog that may contain an action. If so, it dispatches it.
+   * @param action
+   */
+  const handleFormDismissal = useCallback(
+    (action: IAction | false) => {
+      if (action) {
+        dispatch(action);
+      }
+      setActiveForm(false);
+    },
+    [dispatch],
+  );
+
 
 
 
@@ -122,55 +142,60 @@ const UserRow = memo(({ user, dispatch }: IUserRowProps) => {
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
-    <TableRow className={`${isSubmitting ? 'opacity-50' : ''}`}>
-      <TableCell>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button variant='ghost' size='sm' className='max-w-20 md:max-w-24 lg:max-w-32 xl:max-w-36 2xl:max-w-40' onClick={() => ClipboardService.writeText(user.uid)}>
-              <p className='text-ellipsis overflow-hidden font-bold'>{user.uid}</p>
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Click to copy</p>
-          </TooltipContent>
-        </Tooltip>
-      </TableCell>
-      <TableCell>
-        <p className='font-bold'>{user.nickname}</p>
-      </TableCell>
-      <TableCell>
-        <Badge variant='secondary'>{user.authority}</Badge>
-      </TableCell>
-      <TableCell>
-        <p>{creation}</p>
-      </TableCell>
-      <TableCell>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant='ghost' size='icon' aria-label='User actions menu' disabled={isSubmitting}>
-              {isSubmitting ? <Loader2 className="animate-spin" /> : <EllipsisVertical aria-hidden='true'/>}
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuLabel>{user.nickname}</DropdownMenuLabel>
-            <DropdownMenuSeparator />
+    <>
+      {/* TABLE ROW */}
+      <TableRow className={`${isSubmitting ? 'opacity-50' : ''}`}>
+        <TableCell>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button variant='ghost' size='sm' className='max-w-20 md:max-w-24 lg:max-w-32 xl:max-w-36 2xl:max-w-40' onClick={() => ClipboardService.writeText(user.uid)}>
+                <p className='text-ellipsis overflow-hidden font-bold'>{user.uid}</p>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Click to copy</p>
+            </TooltipContent>
+          </Tooltip>
+        </TableCell>
+        <TableCell>
+          <p className='font-bold'>{user.nickname}</p>
+        </TableCell>
+        <TableCell>
+          <Badge variant='secondary'>{user.authority}</Badge>
+        </TableCell>
+        <TableCell>
+          <p>{creation}</p>
+        </TableCell>
+        <TableCell>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant='ghost' size='icon' aria-label='User actions menu' disabled={isSubmitting}>
+                {isSubmitting ? <Loader2 className="animate-spin" /> : <EllipsisVertical aria-hidden='true'/>}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>{user.nickname}</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => setActiveForm('nickname')} disabled={user.authority === 5}><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update nickname</DropdownMenuItem>
+              <DropdownMenuItem disabled={user.authority === 5}><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update authority</DropdownMenuItem>
+              <DropdownMenuItem disabled={user.authority === 5}><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update OTP secret</DropdownMenuItem>
+              <DropdownMenuItem disabled={user.authority === 5} onClick={deleteUser}><UserMinus aria-hidden='true' className='w-5 h-5 mr-1' /> Delete user</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem><RectangleEllipsis aria-hidden='true' className='w-5 h-5 mr-1' /> Display OTP secret</DropdownMenuItem>
+              <DropdownMenuItem><KeyRound aria-hidden='true' className='w-5 h-5 mr-1' /> Display auth sessions</DropdownMenuItem>
+              <DropdownMenuItem><SquareAsterisk aria-hidden='true' className='w-5 h-5 mr-1' /> Display password updates</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </TableCell>
+      </TableRow>
 
-            <UpdateNickname uid={user.uid} nickname={user.nickname} dispatch={dispatch}>
-              <DropdownMenuItem disabled={user.authority === 5}><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update nickname</DropdownMenuItem>
-            </UpdateNickname>
 
 
-            <DropdownMenuItem disabled={user.authority === 5}><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update authority</DropdownMenuItem>
-            <DropdownMenuItem disabled={user.authority === 5}><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update OTP secret</DropdownMenuItem>
-            <DropdownMenuItem disabled={user.authority === 5} onClick={deleteUser}><UserMinus aria-hidden='true' className='w-5 h-5 mr-1' /> Delete user</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem><RectangleEllipsis aria-hidden='true' className='w-5 h-5 mr-1' /> Display OTP secret</DropdownMenuItem>
-            <DropdownMenuItem><KeyRound aria-hidden='true' className='w-5 h-5 mr-1' /> Display auth sessions</DropdownMenuItem>
-            <DropdownMenuItem><SquareAsterisk aria-hidden='true' className='w-5 h-5 mr-1' /> Display password updates</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </TableCell>
-    </TableRow>
+
+
+      {/* FORM DIALOGS */}
+      <UpdateNickname open={activeForm === 'nickname'} onOpenChange={handleFormDismissal} uid={user.uid} nickname={user.nickname} />
+    </>
   );
 });
 

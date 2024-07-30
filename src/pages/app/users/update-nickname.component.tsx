@@ -17,7 +17,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
   DialogFooter,
 } from '../../../shared/shadcn/components/ui/dialog.tsx';
 import { Button } from '../../../shared/shadcn/components/ui/button.tsx';
@@ -36,15 +35,14 @@ import { IUpdateNicknameProps, IUpdateNicknameInputs } from './types.ts';
  * Component in charge of updating a user's nickname.
  */
 const UpdateNickname = ({
-  children,
+  open,
+  onOpenChange,
   uid,
   nickname,
-  dispatch,
 }: IUpdateNicknameProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const [open, setOpen] = useState(false);
   const form = useForm<IUpdateNicknameInputs>({ defaultValues: { newNickname: nickname } });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
@@ -71,9 +69,8 @@ const UpdateNickname = ({
         try {
           setIsSubmitting(true);
           await UserService.updateNickname(uid, data.newNickname, confirmation);
-          dispatch({ type: 'UPDATE_NICKNAME', payload: { uid, newNickname: data.newNickname } });
-          form.reset();
-          setOpen(false);
+          onOpenChange({ type: 'UPDATE_NICKNAME', payload: { uid, newNickname: data.newNickname } });
+          form.reset({ newNickname: data.newNickname });
         } catch (e) {
           errorToast(e);
           const { code } = decodeError(e);
@@ -97,14 +94,13 @@ const UpdateNickname = ({
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>{children}</DialogTrigger>
+    <Dialog open={open} onOpenChange={() => onOpenChange(false)}>
       <DialogContent>
 
         <DialogHeader>
           <DialogTitle>Update nickname</DialogTitle>
           <DialogDescription>
-            Set a new nickname for the user {uid}
+            Set a new nickname for the user {nickname} ({uid})
           </DialogDescription>
         </DialogHeader>
 

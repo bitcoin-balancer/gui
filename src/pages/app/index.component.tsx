@@ -227,14 +227,8 @@ const App = () => {
 
       {/* NAV HEADER */}
       <nav id='app-header' className='flex justify-center items-center border-b border-slate-200 gap-3 md:gap-5'>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Link to={NavService.landing()}><img src='/logo/logo-dark.png' alt='Balancer’s Logo' width='176' height='60' className='w-32 lg:w-36' /></Link>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>v1.0.0</p>
-          </TooltipContent>
-        </Tooltip>
+
+        <Link to={NavService.landing()}><img src='/logo/logo-dark.png' alt='Balancer’s Logo' width='176' height='60' className='w-32 lg:w-36' /></Link>
 
         <span className='flex-1'></span>
 
