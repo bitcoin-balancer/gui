@@ -73,12 +73,9 @@ const UpdateNickname = ({
           form.reset({ newNickname: data.newNickname });
         } catch (e) {
           errorToast(e);
-          const { code } = decodeError(e);
-          if (code === 3500) {
-            form.setError('newNickname', { message: `The provided nickname '${data.newNickname}' has an invalid format` });
-          }
-          if (code === 3501) {
-            form.setError('newNickname', { message: `The nickname '${data.newNickname}' is already being used by another user` });
+          const { message, code } = decodeError(e);
+          if (code === 3500 || code === 3501) {
+            form.setError('newNickname', { message });
           }
         } finally {
           setIsSubmitting(false);
@@ -127,7 +124,7 @@ const UpdateNickname = ({
               />
 
               <DialogFooter>
-                <Button type='submit' disabled={isSubmitting} className='mt-7 w-full'>{isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Update nickname</Button>
+                <Button type='submit' disabled={isSubmitting} className='mt-7 w-full'>{isSubmitting && <Loader2 className='mr-2 h-4 w-4 animate-spin' />} Update nickname</Button>
               </DialogFooter>
 
             </form>

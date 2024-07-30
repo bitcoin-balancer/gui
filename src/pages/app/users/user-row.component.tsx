@@ -37,7 +37,8 @@ import { UserService } from '../../../shared/backend/auth/user/index.service.ts'
 import { useMediaQueryBreakpoint } from '../../../shared/hooks/media-query-breakpoint/index.hook.ts';
 import { useBoundStore } from '../../../shared/store/index.store.ts';
 import UpdateNickname from './update-nickname.component.tsx';
-import { IAction, IUserRowProps } from './types.ts';
+import UpdateAuthority from './update-authority.component.tsx';
+import { IUserRowProps, IAction, IDialogName } from './types.ts';
 
 /* ************************************************************************************************
  *                                            HELPERS                                             *
@@ -75,7 +76,7 @@ const UserRow = memo(({ user, dispatch }: IUserRowProps) => {
    *                                             STATE                                            *
    ********************************************************************************************** */
   const breakpoint = useMediaQueryBreakpoint();
-  const [activeForm, setActiveForm] = useState<string | false>(false);
+  const [activeDialog, setActiveDialog] = useState<IDialogName | false>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
 
@@ -129,7 +130,7 @@ const UserRow = memo(({ user, dispatch }: IUserRowProps) => {
       if (action) {
         dispatch(action);
       }
-      setActiveForm(false);
+      setActiveDialog(false);
     },
     [dispatch],
   );
@@ -176,8 +177,8 @@ const UserRow = memo(({ user, dispatch }: IUserRowProps) => {
             <DropdownMenuContent>
               <DropdownMenuLabel>{user.nickname}</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => setActiveForm('nickname')} disabled={user.authority === 5}><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update nickname</DropdownMenuItem>
-              <DropdownMenuItem disabled={user.authority === 5}><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update authority</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setActiveDialog('UPDATE_NICKNAME')} disabled={user.authority === 5}><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update nickname</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setActiveDialog('UPDATE_AUTHORITY')} disabled={user.authority === 5}><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update authority</DropdownMenuItem>
               <DropdownMenuItem disabled={user.authority === 5}><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update OTP secret</DropdownMenuItem>
               <DropdownMenuItem disabled={user.authority === 5} onClick={deleteUser}><UserMinus aria-hidden='true' className='w-5 h-5 mr-1' /> Delete user</DropdownMenuItem>
               <DropdownMenuSeparator />
@@ -194,7 +195,8 @@ const UserRow = memo(({ user, dispatch }: IUserRowProps) => {
 
 
       {/* FORM DIALOGS */}
-      <UpdateNickname open={activeForm === 'nickname'} onOpenChange={handleFormDismissal} uid={user.uid} nickname={user.nickname} />
+      <UpdateNickname open={activeDialog === 'UPDATE_NICKNAME'} onOpenChange={handleFormDismissal} uid={user.uid} nickname={user.nickname} />
+      <UpdateAuthority open={activeDialog === 'UPDATE_AUTHORITY'} onOpenChange={handleFormDismissal} uid={user.uid} nickname={user.nickname} authority={user.authority} />
     </>
   );
 });

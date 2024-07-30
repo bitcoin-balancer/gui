@@ -28,6 +28,15 @@ const dispatch = (action: IAction, state: IUser[], setState: (state: IUser[]) =>
       }));
       break;
     }
+    case 'UPDATE_AUTHORITY': {
+      setState(state.map((user) => {
+        if (user.uid === action.payload.uid) {
+          return { ...user, authority: action.payload.newAuthority };
+        }
+        return user;
+      }));
+      break;
+    }
     case 'DELETE_USER': {
       setState(state.filter((user) => user.uid !== action.payload));
       break;

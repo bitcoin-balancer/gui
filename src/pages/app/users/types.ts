@@ -36,8 +36,19 @@ type IAction = {
 // the function used to dispatch actions from children components
 type IDispatchFunc = (action: IAction) => void;
 
+
+
+
+/* ************************************************************************************************
+ *                                          USER DIALOG                                           *
+ ************************************************************************************************ */
+
+// the names for all the users' dialogs
+type IDialogName = 'UPDATE_NICKNAME' | 'UPDATE_AUTHORITY' | 'UPDATE_OTP_SECRET';
+
 // the function triggered by dialogs when dismissed. It may contain an action to be dispatched
 type IDialogCloseFunc = (action: IAction | false) => void;
+
 
 
 
@@ -97,12 +108,37 @@ type IUpdateNicknameInputs = {
 
 
 /* ************************************************************************************************
+ *                                        UPDATE AUTHORITY                                        *
+ ************************************************************************************************ */
+
+// the props used by the update authority component
+type IUpdateAuthorityProps = {
+  open: boolean;
+  onOpenChange: IDialogCloseFunc;
+  uid: string;
+  nickname: string;
+  authority: IAuthority;
+};
+
+// form inputs to update a nickname
+type IUpdateAuthorityInputs = {
+  newAuthority: IAuthority;
+};
+
+
+
+
+
+/* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export type {
   // dispatch
   IAction,
   IDispatchFunc,
+
+  // user dialog
+  IDialogName,
 
   // user row
   IUserRowProps,
@@ -114,4 +150,8 @@ export type {
   // update nickname
   IUpdateNicknameProps,
   IUpdateNicknameInputs,
+
+  // update authority
+  IUpdateAuthorityProps,
+  IUpdateAuthorityInputs,
 };

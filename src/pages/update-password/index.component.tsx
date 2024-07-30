@@ -211,7 +211,7 @@ const UpdatePassword = () => {
                 {altcha === null && <p className='text-error animate-in fade-in duration-500 mt-2 text-sm font-bold'>Prove you're not a robot</p>}
               </div>
 
-              <Button type='submit' disabled={isSubmitting} variant='default' className='mt-7 w-full'>{isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Update password</Button>
+              <Button type='submit' disabled={isSubmitting} variant='default' className='mt-7 w-full'>{isSubmitting && <Loader2 className='mr-2 h-4 w-4 animate-spin' />} Update password</Button>
 
               <Button type='button' onClick={() => navigate(NavService.signIn())} disabled={isSubmitting} variant='outline' className='mt-3 w-full'>Sign in</Button>
 

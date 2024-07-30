@@ -17,30 +17,34 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
   DialogFooter,
 } from '../../../shared/shadcn/components/ui/dialog.tsx';
 import { Button } from '../../../shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '../../../shared/services/utils/index.service.ts';
-import { nicknameValid, authorityValid } from '../../../shared/backend/validations/index.service.ts';
-import { UserService, IAuthority } from '../../../shared/backend/auth/user/index.service.ts';
+import { authorityValid } from '../../../shared/backend/validations/index.service.ts';
+import { IAuthority, UserService } from '../../../shared/backend/auth/user/index.service.ts';
 import { useBoundStore } from '../../../shared/store/index.store.ts';
-import { IAddUserProps, IAddUserInputs } from './types.ts';
+import { IUpdateAuthorityProps, IUpdateAuthorityInputs } from './types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
 
 /**
- * Add User Component
- * Component in charge of adding users to Balancer
+ * Update Authority Component
+ * Component in charge of updating a user's authority.
  */
-const AddUser = ({ children, dispatch }: IAddUserProps) => {
+const UpdateAuthority = ({
+  open,
+  onOpenChange,
+  uid,
+  nickname,
+  authority,
+}: IUpdateAuthorityProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const [open, setOpen] = useState(false);
-  const form = useForm<IAddUserInputs>({ defaultValues: { nickname: '', authority: '' } });
+  const form = useForm<IUpdateAuthorityInputs>({ defaultValues: { newAuthority: authority } });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
 
@@ -57,30 +61,23 @@ const AddUser = ({ children, dispatch }: IAddUserProps) => {
    * @param data
    * @returns void
    */
-  const onSubmit = (data: IAddUserInputs): void => {
+  const onSubmit = (data: IUpdateAuthorityInputs): void => {
     openConfirmationDialog({
       mode: 'OTP',
-      title: 'Add user',
-      description: 'Once created, the user will have access to the Balancer Platform immediately after setting a password. Double-check the authority before proceeding.',
+      title: 'Update authority',
+      description: `The authority for the user ${nickname} will be changed to ${data.newAuthority}.`,
       onConfirmation: async (confirmation: string) => {
         try {
           setIsSubmitting(true);
-          const authority = Number(data.authority) as IAuthority;
-          const user = await UserService.createUser(data.nickname, authority, confirmation);
-          dispatch({ type: 'ADD_USER', payload: user });
-          form.reset();
-          setOpen(false);
+          const newAuthority = Number(data.newAuthority) as IAuthority;
+          await UserService.updateAuthority(uid, newAuthority, confirmation);
+          onOpenChange({ type: 'UPDATE_AUTHORITY', payload: { uid, newAuthority } });
+          form.reset({ newAuthority });
         } catch (e) {
           errorToast(e);
-          const { code } = decodeError(e);
-          if (code === 3500) {
-            form.setError('nickname', { message: `The provided nickname '${data.nickname}' has an invalid format` });
-          }
-          if (code === 3501) {
-            form.setError('nickname', { message: `The nickname '${data.nickname}' is already being used by another user` });
-          }
+          const { message, code } = decodeError(e);
           if (code === 3505) {
-            form.setError('authority', { message: `The authority must be a number ranging between 1 and 4. Received '${data.authority}'` });
+            form.setError('newAuthority', { message });
           }
         } finally {
           setIsSubmitting(false);
@@ -96,14 +93,13 @@ const AddUser = ({ children, dispatch }: IAddUserProps) => {
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>{children}</DialogTrigger>
+    <Dialog open={open} onOpenChange={() => onOpenChange(false)}>
       <DialogContent>
 
         <DialogHeader>
-          <DialogTitle>Add user</DialogTitle>
+          <DialogTitle>Update authority</DialogTitle>
           <DialogDescription>
-          Create a new user with any role and grant them access to the Balancer Platform.
+            Set a new authority for the user {nickname} ({uid})
           </DialogDescription>
         </DialogHeader>
 
@@ -112,31 +108,12 @@ const AddUser = ({ children, dispatch }: IAddUserProps) => {
 
               <FormField
                 control={form.control}
-                name='nickname'
+                name='newAuthority'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Nickname</FormLabel>
-                    <FormControl>
-                      <Input type='text' placeholder='satoshi' {...field} autoComplete='off' autoFocus disabled={isSubmitting} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-                rules={{
-                  validate: {
-                    required: (value) => (nicknameValid(value) ? true : 'Enter a valid nickname'),
-                  },
-                }}
-              />
-
-              <FormField
-                control={form.control}
-                name='authority'
-                render={({ field }) => (
-                  <FormItem className='mt-5'>
                     <FormLabel>Authority</FormLabel>
                     <FormControl>
-                      <Input type='number' placeholder='3' {...field} autoComplete='off' disabled={isSubmitting} min={1} max={4} />
+                      <Input type='number' placeholder='3' {...field} autoComplete='off' autoFocus disabled={isSubmitting} min={1} max={4} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -149,7 +126,7 @@ const AddUser = ({ children, dispatch }: IAddUserProps) => {
               />
 
               <DialogFooter>
-                <Button type='submit' disabled={isSubmitting} className='mt-7 w-full'>{isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Add user</Button>
+                <Button type='submit' disabled={isSubmitting} className='mt-7 w-full'>{isSubmitting && <Loader2 className='mr-2 h-4 w-4 animate-spin' />} Update authority</Button>
               </DialogFooter>
 
             </form>
@@ -169,4 +146,4 @@ const AddUser = ({ children, dispatch }: IAddUserProps) => {
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export default AddUser;
+export default UpdateAuthority;
