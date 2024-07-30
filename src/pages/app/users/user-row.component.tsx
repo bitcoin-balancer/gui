@@ -39,6 +39,7 @@ import { useMediaQueryBreakpoint } from '../../../shared/hooks/media-query-break
 import { useBoundStore } from '../../../shared/store/index.store.ts';
 import UpdateNickname from './update-nickname.component.tsx';
 import UpdateAuthority from './update-authority.component.tsx';
+import DisplayOTPSecret from './display-otp-secret.component.tsx';
 import { IUserRowProps, IAction, IDialogName } from './types.ts';
 
 /* ************************************************************************************************
@@ -206,7 +207,7 @@ const UserRow = memo(({ user, dispatch }: IUserRowProps) => {
               <DropdownMenuItem onClick={updateOTPSecret} disabled={user.authority === 5}><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update OTP secret</DropdownMenuItem>
               <DropdownMenuItem onClick={deleteUser} disabled={user.authority === 5}><UserMinus aria-hidden='true' className='w-5 h-5 mr-1' /> Delete user</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem><RectangleEllipsis aria-hidden='true' className='w-5 h-5 mr-1' /> Display OTP secret</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setActiveDialog('DISPLAY_OTP_SECRET')}><RectangleEllipsis aria-hidden='true' className='w-5 h-5 mr-1' /> Display OTP secret</DropdownMenuItem>
               <DropdownMenuItem><KeyRound aria-hidden='true' className='w-5 h-5 mr-1' /> Display auth sessions</DropdownMenuItem>
               <DropdownMenuItem><SquareAsterisk aria-hidden='true' className='w-5 h-5 mr-1' /> Display password updates</DropdownMenuItem>
             </DropdownMenuContent>
@@ -221,6 +222,11 @@ const UserRow = memo(({ user, dispatch }: IUserRowProps) => {
       {/* FORM DIALOGS */}
       <UpdateNickname open={activeDialog === 'UPDATE_NICKNAME'} onOpenChange={handleFormDismissal} uid={user.uid} nickname={user.nickname} />
       <UpdateAuthority open={activeDialog === 'UPDATE_AUTHORITY'} onOpenChange={handleFormDismissal} uid={user.uid} nickname={user.nickname} authority={user.authority} />
+
+
+
+      {/* DISPLAY DIALOGS */}
+      <DisplayOTPSecret open={activeDialog === 'DISPLAY_OTP_SECRET'} onOpenChange={handleFormDismissal} uid={user.uid} />
     </>
   );
 });

@@ -44,7 +44,7 @@ type IDispatchFunc = (action: IAction) => void;
  ************************************************************************************************ */
 
 // the names for all the users' dialogs
-type IDialogName = 'UPDATE_NICKNAME' | 'UPDATE_AUTHORITY' | 'UPDATE_OTP_SECRET';
+type IDialogName = 'UPDATE_NICKNAME' | 'UPDATE_AUTHORITY' | 'DISPLAY_OTP_SECRET';
 
 // the function triggered by dialogs when dismissed. It may contain an action to be dispatched
 type IDialogCloseFunc = (action: IAction | false) => void;
@@ -130,6 +130,22 @@ type IUpdateAuthorityInputs = {
 
 
 /* ************************************************************************************************
+ *                                       DISPLAY OTP SECRET                                       *
+ ************************************************************************************************ */
+
+// the props used by the update authority component
+type IDisplayOTPSecretProps = {
+  open: boolean;
+  onOpenChange: IDialogCloseFunc;
+  uid: string;
+};
+
+
+
+
+
+
+/* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export type {
@@ -154,4 +170,7 @@ export type {
   // update authority
   IUpdateAuthorityProps,
   IUpdateAuthorityInputs,
+
+  // display otp secret
+  IDisplayOTPSecretProps,
 };

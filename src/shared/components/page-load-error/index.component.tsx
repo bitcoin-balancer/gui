@@ -28,7 +28,7 @@ const PageLoadError = memo(({ error }: IComponentProps) => {
           <span className='flex-1'></span>
           <Tooltip>
             <TooltipTrigger>
-              <Badge variant='destructive'><p>{code}</p></Badge>
+              <Badge variant='destructive' className='max-w-20'><p className='truncate'>{code}</p></Badge>
             </TooltipTrigger>
             <TooltipContent>
               <p>Error code</p>
