@@ -35,6 +35,7 @@ import { useBoundStore } from '../../../shared/store/index.store.ts';
 import UpdateNickname from './update-nickname.component.tsx';
 import UpdateAuthority from './update-authority.component.tsx';
 import DisplayOTPSecret from './display-otp-secret.component.tsx';
+import DisplayAuthSessions from './display-auth-sessions.component.tsx';
 import { IUserRowProps, IAction, IDialogName } from './types.ts';
 
 /* ************************************************************************************************
@@ -204,7 +205,7 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
               <DropdownMenuItem onClick={deleteUser} disabled={user.authority === 5}><UserMinus aria-hidden='true' className='w-5 h-5 mr-1' /> Delete user</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => setActiveDialog('DISPLAY_OTP_SECRET')}><RectangleEllipsis aria-hidden='true' className='w-5 h-5 mr-1' /> Display OTP secret</DropdownMenuItem>
-              <DropdownMenuItem><KeyRound aria-hidden='true' className='w-5 h-5 mr-1' /> Display auth sessions</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setActiveDialog('DISPLAY_AUTH_SESSIONS')}><KeyRound aria-hidden='true' className='w-5 h-5 mr-1' /> Display auth sessions</DropdownMenuItem>
               <DropdownMenuItem><SquareAsterisk aria-hidden='true' className='w-5 h-5 mr-1' /> Display password updates</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -222,7 +223,8 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
 
 
       {/* DISPLAY DIALOGS */}
-      {activeDialog === 'DISPLAY_OTP_SECRET' && <DisplayOTPSecret open={activeDialog === 'DISPLAY_OTP_SECRET'} onOpenChange={handleFormDismissal} uid={user.uid} />}
+      {activeDialog === 'DISPLAY_OTP_SECRET' && <DisplayOTPSecret open={activeDialog === 'DISPLAY_OTP_SECRET'} onOpenChange={handleFormDismissal} uid={user.uid} nickname={user.nickname} />}
+      {activeDialog === 'DISPLAY_AUTH_SESSIONS' && <DisplayAuthSessions open={activeDialog === 'DISPLAY_AUTH_SESSIONS'} onOpenChange={handleFormDismissal} uid={user.uid} nickname={user.nickname} />}
     </>
   );
 };

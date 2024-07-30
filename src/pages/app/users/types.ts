@@ -44,7 +44,8 @@ type IDispatchFunc = (action: IAction) => void;
  ************************************************************************************************ */
 
 // the names for all the users' dialogs
-type IDialogName = 'UPDATE_NICKNAME' | 'UPDATE_AUTHORITY' | 'DISPLAY_OTP_SECRET';
+type IDialogName = 'UPDATE_NICKNAME' | 'UPDATE_AUTHORITY' | 'DISPLAY_OTP_SECRET'
+| 'DISPLAY_AUTH_SESSIONS';
 
 // the function triggered by dialogs when dismissed. It may contain an action to be dispatched
 type IDialogCloseFunc = (action: IAction | false) => void;
@@ -57,7 +58,7 @@ type IDialogCloseFunc = (action: IAction | false) => void;
  *                                           USER ROW                                             *
  ************************************************************************************************ */
 
-// the props that will be passed down to the user row
+// component props
 type IUserRowProps = {
   user: IUser;
   dispatch: IDispatchFunc;
@@ -71,12 +72,12 @@ type IUserRowProps = {
  *                                           ADD USER                                             *
  ************************************************************************************************ */
 
-// the props used by the add user component
+// component props
 type IAddUserProps = PropsWithChildren<{
   dispatch: IDispatchFunc;
 }>;
 
-// form inputs to add an user
+// form inputs
 type IAddUserInputs = {
   nickname: string;
   authority: IAuthority | '';
@@ -90,7 +91,7 @@ type IAddUserInputs = {
  *                                       UPDATE NICKNAME                                          *
  ************************************************************************************************ */
 
-// the props used by the update nickname component
+// component props
 type IUpdateNicknameProps = {
   open: boolean;
   onOpenChange: IDialogCloseFunc;
@@ -98,7 +99,7 @@ type IUpdateNicknameProps = {
   nickname: string;
 };
 
-// form inputs to update a nickname
+// form inputs
 type IUpdateNicknameInputs = {
   newNickname: string;
 };
@@ -111,7 +112,7 @@ type IUpdateNicknameInputs = {
  *                                        UPDATE AUTHORITY                                        *
  ************************************************************************************************ */
 
-// the props used by the update authority component
+// component props
 type IUpdateAuthorityProps = {
   open: boolean;
   onOpenChange: IDialogCloseFunc;
@@ -120,7 +121,7 @@ type IUpdateAuthorityProps = {
   authority: IAuthority;
 };
 
-// form inputs to update a nickname
+// form inputs
 type IUpdateAuthorityInputs = {
   newAuthority: IAuthority;
 };
@@ -133,11 +134,28 @@ type IUpdateAuthorityInputs = {
  *                                       DISPLAY OTP SECRET                                       *
  ************************************************************************************************ */
 
-// the props used by the update authority component
+// component props
 type IDisplayOTPSecretProps = {
   open: boolean;
   onOpenChange: IDialogCloseFunc;
   uid: string;
+  nickname: string;
+};
+
+
+
+
+
+/* ************************************************************************************************
+ *                                     DISPLAY AUTH SESSIONS                                      *
+ ************************************************************************************************ */
+
+// component props
+type IDisplayAuthSessionsProps = {
+  open: boolean;
+  onOpenChange: IDialogCloseFunc;
+  uid: string;
+  nickname: string;
 };
 
 
@@ -172,4 +190,7 @@ export type {
 
   // display otp secret
   IDisplayOTPSecretProps,
+
+  // display auth sessions
+  IDisplayAuthSessionsProps,
 };

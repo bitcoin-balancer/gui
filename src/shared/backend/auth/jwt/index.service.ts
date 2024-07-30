@@ -143,5 +143,9 @@ const JWTService = jwtServiceFactory();
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export {
+  // service
   JWTService,
+
+  // types
+  type IRefreshTokenRecord,
 };
