@@ -25,7 +25,7 @@ import {
 } from '../../../shared/shadcn/components/ui/dropdown-menu.tsx';
 import { TableCell, TableRow } from '../../../shared/shadcn/components/ui/table.tsx';
 import { toast } from '../../../shared/shadcn/components/ui/use-toast.ts';
-import { errorToast } from '../../../shared/services/utils/index.service.ts';
+import { delay, errorToast } from '../../../shared/services/utils/index.service.ts';
 import { formatDate } from '../../../shared/services/transformations/index.service.ts';
 import { IBreakpoint } from '../../../shared/services/media-query/index.service.ts';
 import { ClipboardService } from '../../../shared/services/clipboard/index.service.ts';
@@ -76,6 +76,7 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
    ********************************************************************************************** */
   const breakpoint = useMediaQueryBreakpoint();
   const [activeDialog, setActiveDialog] = useState<IDialogName | false>(false);
+  const [closingDialog, setClosingDialog] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
 
@@ -153,6 +154,9 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
       if (action) {
         dispatch(action);
       }
+      setClosingDialog(true);
+      await delay(0.25);
+      setClosingDialog(false);
       setActiveDialog(false);
     },
     [dispatch],
@@ -229,14 +233,14 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
 
 
       {/* FORM DIALOGS */}
-      {activeDialog === 'UPDATE_NICKNAME' && <UpdateNickname open={activeDialog === 'UPDATE_NICKNAME'} onOpenChange={handleFormDismissal} uid={user.uid} nickname={user.nickname} />}
-      {activeDialog === 'UPDATE_AUTHORITY' && <UpdateAuthority open={activeDialog === 'UPDATE_AUTHORITY'} onOpenChange={handleFormDismissal} uid={user.uid} nickname={user.nickname} authority={user.authority} />}
+      {activeDialog === 'UPDATE_NICKNAME' && <UpdateNickname open={activeDialog === 'UPDATE_NICKNAME' && !closingDialog} onOpenChange={handleFormDismissal} uid={user.uid} nickname={user.nickname} />}
+      {activeDialog === 'UPDATE_AUTHORITY' && <UpdateAuthority open={activeDialog === 'UPDATE_AUTHORITY' && !closingDialog} onOpenChange={handleFormDismissal} uid={user.uid} nickname={user.nickname} authority={user.authority} />}
 
 
 
       {/* DISPLAY DIALOGS */}
-      {activeDialog === 'DISPLAY_OTP_SECRET' && <DisplayOTPSecret open={activeDialog === 'DISPLAY_OTP_SECRET'} onOpenChange={handleFormDismissal} uid={user.uid} nickname={user.nickname} />}
-      {activeDialog === 'DISPLAY_AUTH_SESSIONS' && <DisplayAuthSessions open={activeDialog === 'DISPLAY_AUTH_SESSIONS'} onOpenChange={handleFormDismissal} uid={user.uid} nickname={user.nickname} />}
+      {activeDialog === 'DISPLAY_OTP_SECRET' && <DisplayOTPSecret open={activeDialog === 'DISPLAY_OTP_SECRET' && !closingDialog} onOpenChange={handleFormDismissal} uid={user.uid} nickname={user.nickname} />}
+      {activeDialog === 'DISPLAY_AUTH_SESSIONS' && <DisplayAuthSessions open={activeDialog === 'DISPLAY_AUTH_SESSIONS' && !closingDialog} onOpenChange={handleFormDismissal} uid={user.uid} nickname={user.nickname} />}
     </>
   );
 };

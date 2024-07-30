@@ -131,19 +131,19 @@ const ConfirmationDialog = () => {
           && <>
             <div className='flex justify-center items-center mt-5'>
 
-            <InputOTP maxLength={6} value={otpToken} onChange={onOTPTokenChanges} aria-label='One-time password input'>
-              <InputOTPGroup>
-                <InputOTPSlot index={0} />
-                <InputOTPSlot index={1} />
-                <InputOTPSlot index={2} />
-              </InputOTPGroup>
-              <InputOTPSeparator />
-              <InputOTPGroup>
-                <InputOTPSlot index={3} />
-                <InputOTPSlot index={4} />
-                <InputOTPSlot index={5} />
-              </InputOTPGroup>
-            </InputOTP>
+              <InputOTP id='otp-confirmation' maxLength={6} value={otpToken} onChange={onOTPTokenChanges} aria-label='One-time password input'>
+                <InputOTPGroup>
+                  <InputOTPSlot index={0} />
+                  <InputOTPSlot index={1} />
+                  <InputOTPSlot index={2} />
+                </InputOTPGroup>
+                <InputOTPSeparator />
+                <InputOTPGroup>
+                  <InputOTPSlot index={3} />
+                  <InputOTPSlot index={4} />
+                  <InputOTPSlot index={5} />
+                </InputOTPGroup>
+              </InputOTP>
 
             </div>
 
