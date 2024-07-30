@@ -72,7 +72,6 @@ const UpdateAuthority = ({
           const newAuthority = Number(data.newAuthority) as IAuthority;
           await UserService.updateAuthority(uid, newAuthority, confirmation);
           onOpenChange({ type: 'UPDATE_AUTHORITY', payload: { uid, newAuthority } });
-          form.reset({ newAuthority });
         } catch (e) {
           errorToast(e);
           const { message, code } = decodeError(e);

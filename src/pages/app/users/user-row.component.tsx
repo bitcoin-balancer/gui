@@ -1,9 +1,4 @@
-import {
-  useState,
-  useMemo,
-  memo,
-  useCallback,
-} from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import {
   EllipsisVertical,
   UserPen,
@@ -73,7 +68,7 @@ const formatDateByBreakpoint = (date: number, breakpoint: IBreakpoint): string =
  * User Row Component
  * Component in charge of display the user's details and the actions menu.
  */
-const UserRow = memo(({ user, dispatch }: IUserRowProps) => {
+const UserRow = ({ user, dispatch }: IUserRowProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
@@ -81,6 +76,7 @@ const UserRow = memo(({ user, dispatch }: IUserRowProps) => {
   const [activeDialog, setActiveDialog] = useState<IDialogName | false>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
+
 
 
 
@@ -151,7 +147,7 @@ const UserRow = memo(({ user, dispatch }: IUserRowProps) => {
    * @param action
    */
   const handleFormDismissal = useCallback(
-    (action: IAction | false) => {
+    async (action: IAction | false) => {
       if (action) {
         dispatch(action);
       }
@@ -220,16 +216,16 @@ const UserRow = memo(({ user, dispatch }: IUserRowProps) => {
 
 
       {/* FORM DIALOGS */}
-      <UpdateNickname open={activeDialog === 'UPDATE_NICKNAME'} onOpenChange={handleFormDismissal} uid={user.uid} nickname={user.nickname} />
-      <UpdateAuthority open={activeDialog === 'UPDATE_AUTHORITY'} onOpenChange={handleFormDismissal} uid={user.uid} nickname={user.nickname} authority={user.authority} />
+      {activeDialog === 'UPDATE_NICKNAME' && <UpdateNickname open={activeDialog === 'UPDATE_NICKNAME'} onOpenChange={handleFormDismissal} uid={user.uid} nickname={user.nickname} />}
+      {activeDialog === 'UPDATE_AUTHORITY' && <UpdateAuthority open={activeDialog === 'UPDATE_AUTHORITY'} onOpenChange={handleFormDismissal} uid={user.uid} nickname={user.nickname} authority={user.authority} />}
 
 
 
       {/* DISPLAY DIALOGS */}
-      <DisplayOTPSecret open={activeDialog === 'DISPLAY_OTP_SECRET'} onOpenChange={handleFormDismissal} uid={user.uid} />
+      {activeDialog === 'DISPLAY_OTP_SECRET' && <DisplayOTPSecret open={activeDialog === 'DISPLAY_OTP_SECRET'} onOpenChange={handleFormDismissal} uid={user.uid} />}
     </>
   );
-});
+};
 
 
 

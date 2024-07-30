@@ -70,7 +70,6 @@ const UpdateNickname = ({
           setIsSubmitting(true);
           await UserService.updateNickname(uid, data.newNickname, confirmation);
           onOpenChange({ type: 'UPDATE_NICKNAME', payload: { uid, newNickname: data.newNickname } });
-          form.reset({ newNickname: data.newNickname });
         } catch (e) {
           errorToast(e);
           const { message, code } = decodeError(e);

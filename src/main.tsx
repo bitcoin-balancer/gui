@@ -18,3 +18,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     </TooltipProvider>
   </React.StrictMode>,
 );
+/* ReactDOM.createRoot(document.getElementById('root')!).render(
+  <TooltipProvider delayDuration={100}>
+  <Router />
+</TooltipProvider>
+); */
