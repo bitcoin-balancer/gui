@@ -28,4 +28,6 @@ const useOnlineStatus: () => boolean = () => useSyncExternalStore(
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export default useOnlineStatus;
+export {
+  useOnlineStatus,
+};

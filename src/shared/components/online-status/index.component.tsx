@@ -1,5 +1,5 @@
 import { Router } from 'lucide-react';
-import useOnlineStatus from '../../hooks/online-status/index.hook';
+import { useOnlineStatus } from '../../hooks/online-status/index.hook';
 
 
 

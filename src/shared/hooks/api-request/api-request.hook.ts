@@ -63,4 +63,6 @@ const useAPIRequest: IAPIRequestHook = (requestFunction: IRequestFunction, args?
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export default useAPIRequest;
+export {
+  useAPIRequest,
+};

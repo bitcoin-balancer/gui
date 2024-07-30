@@ -25,4 +25,6 @@ const useMediaQueryBreakpoint: () => IBreakpoint = () => useSyncExternalStore(
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export default useMediaQueryBreakpoint;
+export {
+  useMediaQueryBreakpoint,
+};

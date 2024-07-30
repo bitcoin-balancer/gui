@@ -26,4 +26,6 @@ const useVerticalScroll: () => number = () => useSyncExternalStore(
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export default useVerticalScroll;
+export {
+  useVerticalScroll,
+};
