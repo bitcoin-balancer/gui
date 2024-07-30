@@ -14,6 +14,7 @@ type IUserService = {
 
   // retrievers
   listUsers: () => Promise<IUser[]>;
+  getOTPSecret: (uid: string) => Promise<string>;
   listUserPasswordUpdates: (uid: string, startAtEventTime?: number) => Promise<IPasswordUpdate[]>;
 
   // user record management

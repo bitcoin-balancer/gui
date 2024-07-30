@@ -42,6 +42,18 @@ const userServiceFactory = (): IUserService => {
   ) as Promise<IUser[]>;
 
   /**
+   * Retrieves the OTP Secret for an user.
+   * @param uid
+   * @returns Promise<string>
+   */
+  const getOTPSecret = (uid: string): Promise<string> => APIService.request(
+    'GET',
+    `auth/user/${uid}/otp-secret`,
+    undefined,
+    true,
+  ) as Promise<string>;
+
+  /**
    * Retrieves the list of password update records for a uid.
    * @param uid
    * @param startAtEventTime?
@@ -56,7 +68,7 @@ const userServiceFactory = (): IUserService => {
     uid: string,
     startAtEventTime?: number,
   ): Promise<IPasswordUpdate[]> => {
-    let urlPath: string = `auth/user/password-updates/${uid}`;
+    let urlPath: string = `auth/user/${uid}/password-updates`;
     if (typeof startAtEventTime === 'number') {
       urlPath += `?startAtEventTime=${startAtEventTime}`;
     }
@@ -232,6 +244,7 @@ const userServiceFactory = (): IUserService => {
 
     // retrievers
     listUsers,
+    getOTPSecret,
     listUserPasswordUpdates,
 
     // user record management
