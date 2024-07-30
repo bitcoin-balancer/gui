@@ -197,7 +197,11 @@ a:hover {
  ************************************************************************************************ */
 #page-loader {
   height: calc(100dvh - var(--app-header-mobile-height));
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 
 
 
@@ -261,7 +265,6 @@ a:hover {
   #app-header {
     height: var(--app-header-desktop-height);
   }
-
 
   /*
    * Page Loader
