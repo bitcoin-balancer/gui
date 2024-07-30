@@ -211,7 +211,7 @@ a:hover {
  *                                        PAGE CONTAINER                                          *
  ************************************************************************************************ */
 .page-container {
-  padding: 10px 10px 75px 10px;
+  padding: 10px 10px 100px 10px;
 }
 
 
@@ -231,7 +231,7 @@ a:hover {
    * Page Container
    */
   .page-container {
-    padding: 15px 15px 75px 15px;
+    padding: 15px 15px 100px 15px;
   }
 }
 

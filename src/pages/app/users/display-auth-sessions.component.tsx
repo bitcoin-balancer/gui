@@ -1,5 +1,4 @@
 import { memo, useMemo } from 'react';
-import { KeyRound, Copy } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -66,8 +65,8 @@ const DisplayAuthSessions = memo(({
     content = <PageLoader variant='dialog' />;
   } else if (data.length) {
     content = (
-      <Table>
-        <TableCaption>A list of your refresh JWTs</TableCaption>
+      <Table className='animate-in fade-in duration-700'>
+        <TableCaption>A list of refresh JWTs</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead>Issuance</TableHead>
@@ -95,7 +94,7 @@ const DisplayAuthSessions = memo(({
       </Table>
     );
   } else {
-    content = <p className='text-light text-sm text-center my-5'>No records were found</p>;
+    content = <p className='text-light text-sm text-center my-5 animate-in fade-in duration-700'>No records were found</p>;
   }
   return (
     <Dialog open={open} onOpenChange={() => onOpenChange(false)}>
@@ -104,7 +103,7 @@ const DisplayAuthSessions = memo(({
         <DialogHeader>
           <DialogTitle>{nickname}'s Auth Sessions</DialogTitle>
           <DialogDescription>
-            An user may posses several authentication sessions as they can make use of any number of
+            A user may possess several authentication sessions as they can make use of several
             devices
           </DialogDescription>
         </DialogHeader>

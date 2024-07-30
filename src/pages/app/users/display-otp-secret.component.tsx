@@ -1,6 +1,11 @@
 import { memo, useMemo } from 'react';
 import { KeyRound, Copy } from 'lucide-react';
 import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from '../../../shared/shadcn/components/ui/tooltip.tsx';
+import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -52,10 +57,18 @@ const DisplayOTPSecret = memo(({
   } else {
     content = (
       <>
-        <div className='flex justify-start items-center border border-slate-300 rounded-md px-3 py-3 shadow-md animate-in fade-in duration-700'>
+        <div className='flex justify-start items-center border border-slate-300 rounded-md p-3 my-2 shadow-md animate-in fade-in duration-700'>
           <KeyRound aria-hidden='true' className='mr-2' /> <p className='text-sm sm:text-md md:text-lg'>{data}</p>
           <span className='flex-1'></span>
-          <Button variant='ghost' size='icon' onClick={() => ClipboardService.writeText(data)} aria-label='Copy the OTP secret'><Copy aria-hidden='true' /></Button>
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button variant='ghost' size='icon' onClick={() => ClipboardService.writeText(data)} aria-label='Copy the OTP secret'><Copy aria-hidden='true' /></Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Click to copy</p>
+            </TooltipContent>
+          </Tooltip>
         </div>
         <p className='text-light text-xs text-center'>The OTP Secret is a sensitive piece of data. Make sure to share it with great care</p>
       </>

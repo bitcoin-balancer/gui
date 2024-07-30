@@ -3,9 +3,9 @@ import {
   EllipsisVertical,
   UserPen,
   UserMinus,
-  RectangleEllipsis,
   KeyRound,
   SquareAsterisk,
+  Fingerprint,
   Loader2,
 } from 'lucide-react';
 import { Button } from '../../../shared/shadcn/components/ui/button.tsx';
@@ -52,8 +52,9 @@ const formatDateByBreakpoint = (date: number, breakpoint: IBreakpoint): string =
   switch (breakpoint) {
     case 'xs':
     case 'sm':
-      return formatDate(date, 'date-short');
     case 'md':
+      return formatDate(date, 'date-short');
+    case 'lg':
       return formatDate(date, 'date-medium');
     default:
       return formatDate(date, 'date-long');
@@ -187,6 +188,18 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
           <Badge variant='secondary'>{user.authority}</Badge>
         </TableCell>
         <TableCell>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button variant='ghost' size='icon' onClick={() => setActiveDialog('DISPLAY_OTP_SECRET')} aria-label='Display OTP secret'>
+                <KeyRound aria-hidden='true' />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Display secret</p>
+            </TooltipContent>
+          </Tooltip>
+        </TableCell>
+        <TableCell>
           <p>{creation}</p>
         </TableCell>
         <TableCell>
@@ -204,8 +217,7 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
               <DropdownMenuItem onClick={updateOTPSecret} disabled={user.authority === 5}><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update OTP secret</DropdownMenuItem>
               <DropdownMenuItem onClick={deleteUser} disabled={user.authority === 5}><UserMinus aria-hidden='true' className='w-5 h-5 mr-1' /> Delete user</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => setActiveDialog('DISPLAY_OTP_SECRET')}><RectangleEllipsis aria-hidden='true' className='w-5 h-5 mr-1' /> Display OTP secret</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setActiveDialog('DISPLAY_AUTH_SESSIONS')}><KeyRound aria-hidden='true' className='w-5 h-5 mr-1' /> Display auth sessions</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setActiveDialog('DISPLAY_AUTH_SESSIONS')}><Fingerprint aria-hidden='true' className='w-5 h-5 mr-1' /> Display auth sessions</DropdownMenuItem>
               <DropdownMenuItem><SquareAsterisk aria-hidden='true' className='w-5 h-5 mr-1' /> Display password updates</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
