@@ -29,6 +29,7 @@ import {
   DropdownMenuItem,
 } from '../../../shared/shadcn/components/ui/dropdown-menu.tsx';
 import { TableCell, TableRow } from '../../../shared/shadcn/components/ui/table.tsx';
+import { toast } from '../../../shared/shadcn/components/ui/use-toast.ts';
 import { errorToast } from '../../../shared/services/utils/index.service.ts';
 import { formatDate } from '../../../shared/services/transformations/index.service.ts';
 import { IBreakpoint } from '../../../shared/services/media-query/index.service.ts';
@@ -122,6 +123,29 @@ const UserRow = memo(({ user, dispatch }: IUserRowProps) => {
   };
 
   /**
+   * Prompts the user with the confirmation dialog and updates the OTP secret for the selected user.
+   */
+  const updateOTPSecret = () => {
+    openConfirmationDialog({
+      mode: 'OTP',
+      title: 'Update OTP secret',
+      description: 'Once updated, the old OTP secret will be immediately invalidated and the user will need to make use of the new one.',
+      onConfirmation: async (confirmation: string) => {
+        try {
+          setIsSubmitting(true);
+          const newSecret = await UserService.updateOTPSecret(user.uid, confirmation);
+          dispatch({ type: 'UPDATE_OTP_SECRET', payload: { uid: user.uid, newOTPSecret: newSecret } });
+          toast({ title: 'OTP secret updated', description: `The OTP secret for ${user.nickname} has been updated successfully.` });
+        } catch (e) {
+          errorToast(e);
+        } finally {
+          setIsSubmitting(false);
+        }
+      },
+    });
+  };
+
+  /**
    * Handles the dismissal of a form dialog that may contain an action. If so, it dispatches it.
    * @param action
    */
@@ -145,7 +169,7 @@ const UserRow = memo(({ user, dispatch }: IUserRowProps) => {
   return (
     <>
       {/* TABLE ROW */}
-      <TableRow className={`${isSubmitting ? 'opacity-50' : ''}`}>
+      <TableRow className={`${isSubmitting ? 'opacity-50' : ''} animate-in fade-in duration-700`}>
         <TableCell>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -179,8 +203,8 @@ const UserRow = memo(({ user, dispatch }: IUserRowProps) => {
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => setActiveDialog('UPDATE_NICKNAME')} disabled={user.authority === 5}><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update nickname</DropdownMenuItem>
               <DropdownMenuItem onClick={() => setActiveDialog('UPDATE_AUTHORITY')} disabled={user.authority === 5}><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update authority</DropdownMenuItem>
-              <DropdownMenuItem disabled={user.authority === 5}><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update OTP secret</DropdownMenuItem>
-              <DropdownMenuItem disabled={user.authority === 5} onClick={deleteUser}><UserMinus aria-hidden='true' className='w-5 h-5 mr-1' /> Delete user</DropdownMenuItem>
+              <DropdownMenuItem onClick={updateOTPSecret} disabled={user.authority === 5}><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update OTP secret</DropdownMenuItem>
+              <DropdownMenuItem onClick={deleteUser} disabled={user.authority === 5}><UserMinus aria-hidden='true' className='w-5 h-5 mr-1' /> Delete user</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem><RectangleEllipsis aria-hidden='true' className='w-5 h-5 mr-1' /> Display OTP secret</DropdownMenuItem>
               <DropdownMenuItem><KeyRound aria-hidden='true' className='w-5 h-5 mr-1' /> Display auth sessions</DropdownMenuItem>

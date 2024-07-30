@@ -37,12 +37,16 @@ const dispatch = (action: IAction, state: IUser[], setState: (state: IUser[]) =>
       }));
       break;
     }
+    case 'UPDATE_OTP_SECRET': {
+      // nothing changes
+      break;
+    }
     case 'DELETE_USER': {
       setState(state.filter((user) => user.uid !== action.payload));
       break;
     }
     default:
-      throw new Error(`The action type '${action.type}' is invalid`);
+      throw new Error(`The action '${JSON.stringify(action)}' is invalid`);
   }
 };
 
