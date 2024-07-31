@@ -1,4 +1,10 @@
-import { useMemo, useState, useCallback, useRef } from 'react';
+import {
+  useMemo,
+  useState,
+  useCallback,
+  useRef,
+} from 'react';
+import { flushSync } from 'react-dom';
 import {
   GlobeLock,
   Pencil,
@@ -109,7 +115,15 @@ const buildDates = (
  * Component in charge of keeping track of potentially malicious IP Addresses.
  */
 const IPBlacklist = () => {
+  /* **********************************************************************************************
+   *                                             REFS                                             *
+   ********************************************************************************************** */
   const rowsRef = useRef<HTMLTableSectionElement | null>(null);
+
+
+
+
+
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
@@ -176,12 +190,16 @@ const IPBlacklist = () => {
     try {
       setLoadingMore(true);
       const nextRecords = await IPBlacklistService.list(LIMIT, data.at(-1)!.id);
-      // const lastChildEl = rowsRef.current?.lastChild();
-      dispatch({ type: 'LOADED_MORE', payload: nextRecords }, data, setData);
-      setHasMore(nextRecords.length >= LIMIT);
-      // rowsRef.current?.querySelector(`#ipb-${data.at(-1)!.id}`)?.scrollTop
-      // lastChildEl.scrollIntoView();
-      // window.scrollTo(0, window.document.documentElement.scrollTop - 10);
+
+      // add the new records to the DOM
+      flushSync(() => {
+        dispatch({ type: 'LOADED_MORE', payload: nextRecords }, data, setData);
+        setHasMore(nextRecords.length >= LIMIT);
+      });
+
+      // scroll to the beginning of the new page
+      const el = rowsRef.current?.querySelector(`#ipb-${data.at(-1)!.id}`) as Element;
+      el.scrollIntoView(true);
     } catch (e) {
       errorToast(e);
     } finally {

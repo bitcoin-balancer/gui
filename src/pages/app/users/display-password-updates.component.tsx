@@ -4,6 +4,7 @@ import {
   useState,
   useRef,
 } from 'react';
+import { flushSync } from 'react-dom';
 import { Loader2 } from 'lucide-react';
 import {
   Dialog,
@@ -58,7 +59,7 @@ const DisplayPasswordUpdates = memo(({
   /* **********************************************************************************************
    *                                             REFS                                             *
    ********************************************************************************************** */
-  const dialogRef = useRef<HTMLDivElement | null>(null);
+  const rowsRef = useRef<HTMLTableSectionElement | null>(null);
 
 
 
@@ -97,9 +98,16 @@ const DisplayPasswordUpdates = memo(({
         LIMIT,
         data.at(-1)!.event_time,
       );
-      setData([...data, ...nextRecords]);
-      setHasMore(nextRecords.length >= LIMIT);
-      dialogRef.current!.scrollTo(0, dialogRef.current!.scrollTop - 100);
+
+      // add the new records to the DOM
+      flushSync(() => {
+        setData([...data, ...nextRecords]);
+        setHasMore(nextRecords.length >= LIMIT);
+      });
+
+      // scroll to the beginning of the new page
+      const el = rowsRef.current?.querySelector(`#pur-${data.at(-1)!.event_time}`) as Element;
+      el.scrollIntoView(true);
     } catch (e) {
       errorToast(e);
     } finally {
@@ -129,9 +137,9 @@ const DisplayPasswordUpdates = memo(({
               <TableHead>Date</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
+          <TableBody ref={rowsRef}>
             {data.map((record, i) => (
-              <TableRow key={record.event_time} className='animate-in fade-in duration-700'>
+              <TableRow key={record.event_time} id={`pur-${record.event_time}`} className='animate-in fade-in duration-700'>
                 <TableCell><p className='text-light'>{i + 1}</p></TableCell>
                 <TableCell>
                   <p className='sm:hidden'>{formatDate(record.event_time, 'datetime-medium')}</p>
@@ -150,7 +158,7 @@ const DisplayPasswordUpdates = memo(({
   }
   return (
     <Dialog open={open} onOpenChange={() => onOpenChange(false)}>
-      <DialogContent ref={dialogRef} className='max-h-dvh overflow-y-auto overflow-x-hidden'>
+      <DialogContent className='max-h-dvh overflow-y-auto overflow-x-hidden'>
 
         <DialogHeader>
           <DialogTitle>{nickname}'s Password Updates</DialogTitle>
