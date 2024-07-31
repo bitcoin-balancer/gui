@@ -1,4 +1,4 @@
-import { APIService } from '../../api/index.service';
+import { APIService } from '../../api/index.service.ts';
 import {
   IUserService,
   IAuthority,
@@ -64,7 +64,7 @@ const userServiceFactory = (): IUserService => {
    * - 3507: if the record doesn't exist in the database
    * - 3508: if the record belongs to the root and has not been explicitly allowed
    * - 3511: if the starting point is provided but it's not a valid unix timestamp
-   * - 3512: if the record limit is larger than the limit
+   * - 3512: if the query limit is larger than the limit
    */
   const listUserPasswordUpdates = (
     uid: string,
