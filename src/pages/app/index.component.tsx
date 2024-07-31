@@ -19,6 +19,7 @@ import {
   Github,
   LogOut,
   Loader2,
+  CloudDownload,
 } from 'lucide-react';
 import { SWService } from 'sw-service';
 import { Button } from '../../shared/shadcn/components/ui/button.tsx';
@@ -159,9 +160,9 @@ const App = () => {
     const timeout = setTimeout(() => {
       // @TODO
       toast({
-        title: 'Version 1.0.0',
+        title: 'Update to v1.0.0',
         description: 'Enjoy the latest innovations, bug fixes, and enhanced security.',
-        action: <ToastAction altText='Update Application' onClick={SWService.updateApp}>Update</ToastAction>,
+        action: <ToastAction altText='Update Application' onClick={SWService.updateApp}><CloudDownload aria-hidden='true' /></ToastAction>,
         duration: APP_UPDATER_DURATION,
       });
     }, APP_UPDATER_DELAY);

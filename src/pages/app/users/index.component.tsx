@@ -13,7 +13,7 @@ import { UserService, IUser } from '../../../shared/backend/auth/user/index.serv
 import { useAPIRequest } from '../../../shared/hooks/api-request/api-request.hook.ts';
 import PageLoader from '../../../shared/components/page-loader/index.component.tsx';
 import PageLoadError from '../../../shared/components/page-load-error/index.component.tsx';
-import { dispatch } from './dispatch.ts';
+import { dispatch } from './reducer.ts';
 import AddUser from './add-user.component.tsx';
 import UserRow from './user-row.component.tsx';
 import { IAction } from './types.ts';

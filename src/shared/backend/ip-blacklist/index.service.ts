@@ -26,7 +26,10 @@ const ipBlacklistServiceFactory = (): IIPBlacklistService => {
    ********************************************************************************************** */
 
   /**
-   * Retrieves the list of existing user records ordered by authority descendingly.
+   * Retrieves a list of IP Blacklist Records from the database. A custom starting point can be
+   * provided in order to paginate through the records.
+   * @param limit
+   * @param startAtID?
    * @returns Promise<IIPBlacklistRecord[]>
    * @throws
    * - 5255: if the starting point is provided and is invalid

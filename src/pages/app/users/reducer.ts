@@ -1,6 +1,6 @@
 import { sortRecords } from '../../../shared/services/utils/index.service.ts';
 import { IUser } from '../../../shared/backend/auth/user/index.service.ts';
-import { IAction } from './types';
+import { IAction } from './types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
