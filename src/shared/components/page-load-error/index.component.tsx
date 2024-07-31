@@ -17,10 +17,10 @@ import { IComponentProps } from './types.ts';
  * Component in charge of displaying an error that was thrown when retrieving data from the API in
  * order to provide the user with feedback and a button to refresh the app.
  */
-const PageLoadError = memo(({ error }: IComponentProps) => {
+const PageLoadError = memo(({ variant = 'page', error }: IComponentProps) => {
   const { message, code } = decodeError(error);
   return (
-    <section className='flex justify-center items-center m-5 sm:m-6 md:m-7 lg:m-8 xl:m-10'>
+    <section className={`flex justify-center items-center ${variant === 'page' ? 'm-5 sm:m-6 md:m-7 lg:m-8 xl:m-10' : ''}`}>
       <Alert variant='destructive' className='max-w-full sm:max-w-96'>
         <AlertTitle className='flex justify-start items-center'>
           <AlertCircle className='h-4 w-4 mr-2' />

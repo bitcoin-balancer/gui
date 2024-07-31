@@ -60,7 +60,7 @@ const DisplayAuthSessions = memo(({
    ********************************************************************************************** */
   let content;
   if (error) {
-    content = <PageLoadError error={error} />;
+    content = <PageLoadError variant='dialog' error={error} />;
   } else if (loading) {
     content = <PageLoader variant='dialog' />;
   } else if (data.length) {

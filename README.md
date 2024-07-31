@@ -62,6 +62,7 @@ npm run preview
 - [ ] Create Bitcoin Quotes Component and place it in `sign-in` and `update-password` routes
 - [ ] Allow users to toggle between `light` and `dark` mode
 - [ ] Make users' list searchable
+- [ ] Make Blacklisted IP addresses searchable
 - [ ] ...
 
 
