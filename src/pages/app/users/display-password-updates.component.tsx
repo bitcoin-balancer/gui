@@ -1,4 +1,10 @@
-import { memo, useMemo } from 'react';
+import {
+  memo,
+  useMemo,
+  useState,
+  useRef,
+} from 'react';
+import { Loader2 } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -15,7 +21,8 @@ import {
   TableHeader,
   TableRow,
 } from '../../../shared/shadcn/components/ui/table.tsx';
-/* import { Button } from '../../../shared/shadcn/components/ui/button.tsx'; */
+import { Button } from '../../../shared/shadcn/components/ui/button.tsx';
+import { errorToast } from '../../../shared/services/utils/index.service.ts';
 import { formatDate } from '../../../shared/services/transformations/index.service.ts';
 import { UserService, IPasswordUpdate } from '../../../shared/backend/auth/user/index.service.ts';
 import { useAPIRequest } from '../../../shared/hooks/api-request/api-request.hook.ts';
@@ -28,7 +35,7 @@ import { IDisplayAuthSessionsProps } from './types.ts';
  ************************************************************************************************ */
 
 // the number of records that will be retrieved at a time
-const __LIMIT = 30;
+const LIMIT = 15;
 
 
 
@@ -49,13 +56,56 @@ const DisplayPasswordUpdates = memo(({
   nickname,
 }: IDisplayAuthSessionsProps) => {
   /* **********************************************************************************************
+   *                                             REFS                                             *
+   ********************************************************************************************** */
+  const dialogRef = useRef<HTMLDivElement | null>(null);
+
+
+
+
+
+  /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const { data, loading, error } = useAPIRequest<IPasswordUpdate[]>(
+  const {
+    data,
+    setData,
+    loading,
+    error,
+  } = useAPIRequest<IPasswordUpdate[]>(
     UserService.listUserPasswordUpdates,
-    useMemo(() => [uid, __LIMIT], [uid]),
+    useMemo(() => [uid, LIMIT], [uid]),
   );
+  const [loadingMore, setLoadingMore] = useState<boolean>(false);
+  const [hasMore, setHasMore] = useState<boolean>(true);
 
+
+
+
+  /* **********************************************************************************************
+   *                                        EVENT HANDLERS                                        *
+   ********************************************************************************************** */
+
+  /**
+   * Loads the next set of records if there are any.
+   */
+  const loadMore = async () => {
+    try {
+      setLoadingMore(true);
+      const nextRecords = await UserService.listUserPasswordUpdates(
+        uid,
+        LIMIT,
+        data.at(-1)!.event_time,
+      );
+      setData([...data, ...nextRecords]);
+      setHasMore(nextRecords.length >= LIMIT);
+      dialogRef.current!.scrollTo(0, dialogRef.current!.scrollTop - 100);
+    } catch (e) {
+      errorToast(e);
+    } finally {
+      setLoadingMore(false);
+    }
+  };
 
 
 
@@ -70,34 +120,37 @@ const DisplayPasswordUpdates = memo(({
     content = <PageLoader variant='dialog' />;
   } else if (data.length) {
     content = (
-      <Table className='animate-in fade-in duration-700'>
-        <TableCaption>A list of password update records</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead>#</TableHead>
-            <TableHead>Date</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {data.map((record, i) => (
-            <TableRow key={record.event_time}>
-              <TableCell><p className='text-light'>{i + 1}</p></TableCell>
-              <TableCell>
-                <p className='sm:hidden'>{formatDate(record.event_time, 'datetime-medium')}</p>
-                <p className='hidden sm:block'>{formatDate(record.event_time, 'datetime-long')}</p>
-              </TableCell>
+      <>
+        <Table className='animate-in fade-in duration-700'>
+          <TableCaption>A list of password update records</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead>#</TableHead>
+              <TableHead>Date</TableHead>
             </TableRow>
-          ))}
+          </TableHeader>
+          <TableBody>
+            {data.map((record, i) => (
+              <TableRow key={record.event_time} className='animate-in fade-in duration-700'>
+                <TableCell><p className='text-light'>{i + 1}</p></TableCell>
+                <TableCell>
+                  <p className='sm:hidden'>{formatDate(record.event_time, 'datetime-medium')}</p>
+                  <p className='hidden sm:block'>{formatDate(record.event_time, 'datetime-long')}</p>
+                </TableCell>
+              </TableRow>
+            ))}
 
-        </TableBody>
-      </Table>
+          </TableBody>
+        </Table>
+        {(hasMore && data.length >= LIMIT) && <Button variant='ghost' className='w-full' onClick={loadMore} disabled={loadingMore}>{loadingMore && <Loader2 className='mr-2 h-4 w-4 animate-spin' />} Load more</Button>}
+      </>
     );
   } else {
     content = <p className='text-light text-sm text-center my-5 animate-in fade-in duration-700'>No records were found</p>;
   }
   return (
     <Dialog open={open} onOpenChange={() => onOpenChange(false)}>
-      <DialogContent className='max-h-dvh overflow-y-auto overflow-x-hidden'>
+      <DialogContent ref={dialogRef} className='max-h-dvh overflow-y-auto overflow-x-hidden'>
 
         <DialogHeader>
           <DialogTitle>{nickname}'s Password Updates</DialogTitle>
