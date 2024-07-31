@@ -25,14 +25,21 @@ import {
   TableHeader,
   TableRow,
 } from '../../../shared/shadcn/components/ui/table.tsx';
+import { IRecord } from '../../../shared/types.ts';
 import { delay, errorToast } from '../../../shared/services/utils/index.service.ts';
 import { formatDate } from '../../../shared/services/transformations/index.service.ts';
-import { IPBlacklistService, IIPBlacklistRecord } from '../../../shared/backend/ip-blacklist/index.service.ts';
+import { IBreakpoint } from '../../../shared/services/media-query/index.service.ts';
+import {
+  IPBlacklistService,
+  IIPBlacklistRecord,
+} from '../../../shared/backend/ip-blacklist/index.service.ts';
 import { useBoundStore } from '../../../shared/store/index.store.ts';
+import { useMediaQueryBreakpoint } from '../../../shared/hooks/media-query-breakpoint/index.hook.ts';
 import { useAPIRequest } from '../../../shared/hooks/api-request/api-request.hook.ts';
+import { dispatch } from './reducer.ts';
 import PageLoader from '../../../shared/components/page-loader/index.component.tsx';
 import PageLoadError from '../../../shared/components/page-load-error/index.component.tsx';
-import { dispatch } from './reducer.ts';
+import RecordForm from './record-form.component.tsx';
 import { IAction } from './types.ts';
 
 /* ************************************************************************************************
@@ -47,10 +54,55 @@ const LIMIT = 15;
 
 
 /* ************************************************************************************************
- *                                         IMPLEMENTATION                                         *
+ *                                            HELPERS                                             *
  ************************************************************************************************ */
 
+/**
+ * Formats a date based on the current media query breakpoint.
+ * @param date
+ * @param breakpoint
+ * @returns string
+ */
+const formatDateByBreakpoint = (date: number, breakpoint: IBreakpoint): string => {
+  switch (breakpoint) {
+    case 'xs':
+    case 'sm':
+    case 'md':
+    case 'lg':
+      return formatDate(date, 'datetime-short');
+    default:
+      return formatDate(date, 'datetime-medium');
+  }
+};
 
+/**
+ * Formats the date for each of the records in state.
+ * @param records
+ * @param breakpoint
+ * @returns IRecord<string>
+ */
+const buildDates = (
+  records: IIPBlacklistRecord[] | undefined,
+  breakpoint: IBreakpoint,
+): IRecord<string> => (
+  Array.isArray(records)
+    ? records.reduce(
+      (previous, current) => ({
+        ...previous,
+        [current.id]: formatDateByBreakpoint(current.event_time, breakpoint),
+      }),
+      {},
+    )
+    : {}
+);
+
+
+
+
+
+/* ************************************************************************************************
+ *                                         IMPLEMENTATION                                         *
+ ************************************************************************************************ */
 
 /**
  * IP Address Blacklist Component
@@ -65,14 +117,25 @@ const IPBlacklist = () => {
     setData,
     loading,
     error,
-  } = useAPIRequest<IIPBlacklistRecord[]>(
-    IPBlacklistService.list,
-    useMemo(() => [LIMIT], []),
-  );
-  const [activeDialog, setActiveDialog] = useState<IDialogName | false>(false);
+  } = useAPIRequest<IIPBlacklistRecord[]>(IPBlacklistService.list, useMemo(() => [LIMIT], []));
+  const breakpoint = useMediaQueryBreakpoint();
+  const [activeDialog, setActiveDialog] = useState<IIPBlacklistRecord | null | false>(false);
   const [closingDialog, setClosingDialog] = useState<boolean>(false);
   const [busyRecord, setBusyRecord] = useState<number | undefined>();
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
+
+
+
+  /* **********************************************************************************************
+   *                                       REACTIVE VALUES                                        *
+   ********************************************************************************************** */
+
+  // the dates for all the records based on the current breakpoint
+  const dates: IRecord<string> = useMemo(
+    () => buildDates(data, breakpoint),
+    [data, breakpoint],
+  );
+
 
 
 
@@ -88,7 +151,7 @@ const IPBlacklist = () => {
     openConfirmationDialog({
       mode: 'OTP',
       title: 'Unregister IP',
-      description: `The IP address ${record.ip} will be removed from the blacklist immediately upon submission`,
+      description: `The address ${record.ip} will be removed from the blacklist immediately upon submission`,
       onConfirmation: async (confirmation: string) => {
         try {
           setBusyRecord(record.id);
@@ -134,66 +197,74 @@ const IPBlacklist = () => {
     return <PageLoader />;
   }
   return (
-    <div className='page-container flex justify-center items-start animate-in fade-in duration-700'>
-      <section className='w-full lg:w-9/12 xl:w-8/12 2xl:w-7/12'>
-        <header className="flex justify-start items-center">
-          <h1 className="text-3xl">IP Blacklist</h1>
+    <>
+      <div className='page-container flex justify-center items-start animate-in fade-in duration-700'>
+        <section className='w-full lg:w-9/12 xl:w-7/12 2xl:w-6/12'>
+          <header className="flex justify-start items-center">
+            <h1 className="text-3xl">IP Blacklist</h1>
 
-          <span className="flex-1"></span>
+            <span className="flex-1"></span>
 
-          <Button size='icon' aria-label='Register IP Address to the blacklist' className='sm:hidden'><GlobeLock aria-hidden='true' /></Button>
-          <Button aria-label='Register IP Address to the blacklist' className='hidden sm:flex'><GlobeLock aria-hidden='true' className='mr-2' /> Register IP</Button>
+            <Button size='icon' aria-label='Register IP Address to the blacklist' className='sm:hidden' onClick={() => setActiveDialog(null)} disabled={typeof busyRecord === 'number'}><GlobeLock aria-hidden='true' /></Button>
+            <Button aria-label='Register IP Address to the blacklist' className='hidden sm:flex' onClick={() => setActiveDialog(null)} disabled={typeof busyRecord === 'number'}><GlobeLock aria-hidden='true' className='mr-2' /> Register IP</Button>
 
-        </header>
+          </header>
 
-        {
-          data.length
-            ? <Table className='mt-5'>
-            <TableCaption>A list of blacklisted IPs</TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead>IP Address</TableHead>
-                <TableHead>Notes</TableHead>
-                <TableHead>Registration</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {data.map((record) => (
-                <TableRow className={`${busyRecord === record.id ? 'opacity-50' : ''} animate-in fade-in duration-700`}>
-                  <TableCell><Badge variant='secondary'>{record.ip}</Badge></TableCell>
-                  <TableCell className='max-w-36'>
-                    {
-                      typeof record.notes === 'string'
-                        ? <p className='truncate'>{record.notes}</p>
-                        : <p className='text-light'>N/A</p>
-                    }
-                  </TableCell>
-                  <TableCell><p>{formatDate(record.event_time, 'datetime-short')}</p></TableCell>
-                  <TableCell>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant='ghost' size='icon' aria-label='IP Blacklist actions menu' disabled={busyRecord === record.id}>
-                        {busyRecord === record.id ? <Loader2 className="animate-spin" /> : <EllipsisVertical aria-hidden='true'/>}
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <DropdownMenuLabel>{record.ip}</DropdownMenuLabel>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem><Pencil aria-hidden='true' className='w-5 h-5 mr-1' /> Update registration</DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => unregisterIP(record)} aria-label='Unregister IP address from the blacklist'><Trash aria-hidden='true' className='w-5 h-5 mr-1' /> Unregister IP</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                  </TableCell>
+          {
+            data.length
+              ? <Table className='mt-5'>
+              <TableCaption>A list of blacklisted IPs</TableCaption>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>IP Address</TableHead>
+                  <TableHead>Notes</TableHead>
+                  <TableHead>Registration</TableHead>
+                  <TableHead>Actions</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-            : <p className='text-light text-center text-sm mt-5'>No records were found</p>
-        }
+              </TableHeader>
+              <TableBody>
+                {data.map((record) => (
+                  <TableRow key={record.id} className={`${busyRecord === record.id ? 'opacity-50' : ''} animate-in fade-in duration-700`}>
+                    <TableCell><Badge variant='secondary' className='max-w-32'><p className='truncate'>{record.ip}</p></Badge></TableCell>
+                    <TableCell className='max-w-36 sm:max-w-48'>
+                      {
+                        typeof record.notes === 'string'
+                          ? <p className='truncate'>{record.notes}</p>
+                          : <p className='text-light'>N/A</p>
+                      }
+                    </TableCell>
+                    <TableCell><p>{dates[record.id]}</p></TableCell>
+                    <TableCell>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant='ghost' size='icon' aria-label='IP Blacklist actions menu' disabled={busyRecord === record.id}>
+                          {busyRecord === record.id ? <Loader2 className="animate-spin" /> : <EllipsisVertical aria-hidden='true'/>}
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <DropdownMenuLabel className='max-w-36'><p className='truncate'>{record.ip}</p></DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem onClick={() => setActiveDialog(record)}><Pencil aria-hidden='true' className='w-5 h-5 mr-1' /> Update registration</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => unregisterIP(record)} aria-label='Unregister IP address from the blacklist'><Trash aria-hidden='true' className='w-5 h-5 mr-1' /> Unregister IP</DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+              : <p className='text-light text-center text-sm mt-5'>No records were found</p>
+          }
 
-      </section>
-    </div>
+        </section>
+      </div>
+
+      {/* FORM DIALOGS */}
+      {
+        activeDialog !== false
+        && <RecordForm open={closingDialog ? false : activeDialog} onOpenChange={handleDispatch} />
+      }
+    </>
   );
 };
 

@@ -27,9 +27,6 @@ type IAction = {
   }
 );
 
-// the function triggered by dialogs when dismissed. It may contain an action to be dispatched
-type IDialogCloseFunc = (action: IAction | false) => void;
-
 
 
 
@@ -40,9 +37,8 @@ type IDialogCloseFunc = (action: IAction | false) => void;
 
 // component props
 type IRecordFormProps = {
-  open: boolean;
-  onOpenChange: IDialogCloseFunc;
-  record: IIPBlacklistRecord | null;
+  open: IIPBlacklistRecord | null | false;
+  onOpenChange: (action: IAction | false) => void;
 };
 
 // form inputs

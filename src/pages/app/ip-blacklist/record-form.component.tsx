@@ -35,16 +35,15 @@ import { IRecordFormProps, IRecordFormInputs } from './types.ts';
  * Record Form Component
  * Component in charge of creating and updating records.
  */
-const RecordForm = ({
-  open,
-  onOpenChange,
-  record,
-}: IRecordFormProps) => {
+const RecordForm = ({ open, onOpenChange }: IRecordFormProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
   const form = useForm<IRecordFormInputs>({
-    defaultValues: { ip: record?.ip ?? '', notes: record?.notes ?? '' },
+    defaultValues: {
+      ip: open ? open.ip : '',
+      notes: open ? open.notes || '' : '',
+    },
   });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
@@ -65,8 +64,8 @@ const RecordForm = ({
   const onSubmit = (data: IRecordFormInputs): void => {
     openConfirmationDialog({
       mode: 'OTP',
-      title: record === null ? 'Register IP' : 'Update Registration',
-      description: record === null
+      title: open === null ? 'Register IP' : 'Update Registration',
+      description: open === null
         ? `The IP address ${data.ip} will be blacklisted immediately upon submission`
         : `The changes will be applied to the IP address ${data.ip} immediately upon submission`,
       onConfirmation: async (confirmation: string) => {
@@ -75,15 +74,15 @@ const RecordForm = ({
 
           // handle the action accordingly
           const notes = data.notes.length === 0 ? undefined : data.notes;
-          if (record === null) {
-            const payload = await IPBlacklistService.registerIP(data.ip, notes, confirmation);
-            onOpenChange({ type: 'REGISTER_IP', payload });
-          } else {
-            await IPBlacklistService.updateIPRegistration(record.id, data.ip, notes, confirmation);
+          if (open) {
+            await IPBlacklistService.updateIPRegistration(open.id, data.ip, notes, confirmation);
             onOpenChange({
               type: 'UPDATE_REGISTRATION',
-              payload: { id: record.id, ip: data.ip, notes },
+              payload: { id: open.id, ip: data.ip, notes },
             });
+          } else {
+            const payload = await IPBlacklistService.registerIP(data.ip, notes, confirmation);
+            onOpenChange({ type: 'REGISTER_IP', payload });
           }
         } catch (e) {
           errorToast(e);
@@ -108,14 +107,14 @@ const RecordForm = ({
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
-    <Dialog open={open} onOpenChange={() => onOpenChange(false)}>
+    <Dialog open={open !== false} onOpenChange={() => onOpenChange(false)}>
 
       <DialogContent className='max-h-dvh overflow-y-auto overflow-x-hidden'>
 
         <DialogHeader>
-          <DialogTitle>{record === null ? 'Register IP' : 'Update registration'}</DialogTitle>
+          <DialogTitle>{open === null ? 'Register IP' : 'Update registration'}</DialogTitle>
           <DialogDescription>
-          {record === null ? 'The IP address will be blacklisted immediately upon submission' : 'The changes will be applied immediately upon submission'}
+          {open === null ? 'The IP address will be blacklisted immediately upon submission' : 'The changes will be applied immediately upon submission'}
           </DialogDescription>
         </DialogHeader>
 
@@ -127,7 +126,7 @@ const RecordForm = ({
                 name='ip'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>IP address (*)</FormLabel>
+                    <FormLabel>IP address</FormLabel>
                     <FormControl>
                       <Input type='text' placeholder='192.0.2.126' {...field} autoComplete='off' autoFocus disabled={isSubmitting} />
                     </FormControl>
@@ -145,23 +144,23 @@ const RecordForm = ({
                 control={form.control}
                 name='notes'
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Notes</FormLabel>
+                  <FormItem className='mt-5'>
+                    <FormLabel>Notes (Optional)</FormLabel>
                     <FormControl>
-                      <Textarea placeholder="Tell us a little bit about yourself" autoComplete='false' {...field} disabled={isSubmitting} />
+                      <Textarea placeholder='Explain why the IP address should not be served by the API' rows={7} autoComplete='false' {...field} disabled={isSubmitting} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
                 rules={{
                   validate: {
-                    required: (value) => (ipNotesValid(value) ? true : 'Enter a valid description of the event or clear the text area'),
+                    required: (value) => (value.length > 0 && !ipNotesValid(value) ? 'Enter a valid description of the event or clear the text area' : true),
                   },
                 }}
               />
 
               <DialogFooter>
-                <Button type='submit' disabled={isSubmitting} className='mt-7 w-full'>{isSubmitting && <Loader2 className='mr-2 h-4 w-4 animate-spin' />} {record === null ? 'Blacklist IP' : 'Update registration'}</Button>
+                <Button type='submit' disabled={isSubmitting} className='mt-7 w-full'>{isSubmitting && <Loader2 className='mr-2 h-4 w-4 animate-spin' />} {open === null ? 'Blacklist IP' : 'Update registration'}</Button>
               </DialogFooter>
 
             </form>
