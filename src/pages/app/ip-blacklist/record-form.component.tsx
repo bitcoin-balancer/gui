@@ -22,6 +22,7 @@ import {
 } from '../../../shared/shadcn/components/ui/dialog.tsx';
 import { Button } from '../../../shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '../../../shared/services/utils/index.service.ts';
+import { formatDate } from '../../../shared/services/transformations/index.service.ts';
 import { ipNotesValid, ipValid } from '../../../shared/backend/validations/index.service.ts';
 import { IPBlacklistService } from '../../../shared/backend/ip-blacklist/index.service.ts';
 import { useBoundStore } from '../../../shared/store/index.store.ts';
@@ -117,6 +118,22 @@ const RecordForm = ({ open, onOpenChange }: IRecordFormProps) => {
           {open === null ? 'The IP address will be blacklisted immediately upon submission' : 'The changes will be applied immediately upon submission'}
           </DialogDescription>
         </DialogHeader>
+
+        {
+          open
+          && <>
+            <div className='flex justify-start items-center'>
+              <p className='text-light text-xs sm:text-sm'>ID</p>
+              <span className='flex-1'></span>
+              <p>{open.id}</p>
+            </div>
+            <div className='flex justify-start items-center'>
+              <p className='text-light text-xs sm:text-sm'>Registration</p>
+              <span className='flex-1'></span>
+              <p className='text-sm sm:text-md'>{formatDate(open.event_time, 'datetime-medium')}</p>
+            </div>
+          </>
+        }
 
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
