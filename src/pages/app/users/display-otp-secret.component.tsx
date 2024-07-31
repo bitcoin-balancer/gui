@@ -75,7 +75,8 @@ const DisplayOTPSecret = memo(({
   }
   return (
     <Dialog open={open} onOpenChange={() => onOpenChange(false)}>
-      <DialogContent>
+
+      <DialogContent className='max-h-dvh overflow-y-auto overflow-x-hidden'>
 
         <DialogHeader>
           <DialogTitle>{nickname}'s OTP Secret</DialogTitle>

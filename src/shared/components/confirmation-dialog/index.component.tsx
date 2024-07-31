@@ -108,7 +108,7 @@ const ConfirmationDialog = () => {
   return (
     <Dialog open={isOpen} onOpenChange={closeDialog}>
 
-      <DialogContent className='sm:max-w-[425px]'>
+      <DialogContent className='max-h-dvh overflow-y-auto overflow-x-hidden'>
 
         {/* DIALOG HEADER */}
         <DialogHeader>

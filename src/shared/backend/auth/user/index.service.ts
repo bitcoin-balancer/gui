@@ -283,4 +283,5 @@ export {
   // types
   type IUser,
   type IAuthority,
+  type IPasswordUpdate,
 };

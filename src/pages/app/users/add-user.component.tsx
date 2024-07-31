@@ -97,8 +97,10 @@ const AddUser = ({ children, dispatch }: IAddUserProps) => {
    ********************************************************************************************** */
   return (
     <Dialog open={open} onOpenChange={setOpen}>
+
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent>
+
+      <DialogContent className='max-h-dvh overflow-y-auto overflow-x-hidden'>
 
         <DialogHeader>
           <DialogTitle>Add user</DialogTitle>

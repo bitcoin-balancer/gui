@@ -45,7 +45,7 @@ type IDispatchFunc = (action: IAction) => void;
 
 // the names for all the users' dialogs
 type IDialogName = 'UPDATE_NICKNAME' | 'UPDATE_AUTHORITY' | 'DISPLAY_OTP_SECRET'
-| 'DISPLAY_AUTH_SESSIONS';
+| 'DISPLAY_AUTH_SESSIONS' | 'DISPLAY_PASSWORD_UPDATES';
 
 // the function triggered by dialogs when dismissed. It may contain an action to be dispatched
 type IDialogCloseFunc = (action: IAction | false) => void;
@@ -163,6 +163,22 @@ type IDisplayAuthSessionsProps = {
 
 
 /* ************************************************************************************************
+ *                                    DISPLAY PASSWORD UPDATES                                    *
+ ************************************************************************************************ */
+
+// component props
+type IDisplayPasswordUpdatesProps = {
+  open: boolean;
+  onOpenChange: IDialogCloseFunc;
+  uid: string;
+  nickname: string;
+};
+
+
+
+
+
+/* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export type {
@@ -193,4 +209,7 @@ export type {
 
   // display auth sessions
   IDisplayAuthSessionsProps,
+
+  // display password updates
+  IDisplayPasswordUpdatesProps,
 };
