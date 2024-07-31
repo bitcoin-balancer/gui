@@ -56,6 +56,7 @@ const userServiceFactory = (): IUserService => {
   /**
    * Retrieves the list of password update records for a uid.
    * @param uid
+   * @param limit
    * @param startAtEventTime?
    * @returns Promise<IPasswordUpdate[]>
    * @throws
@@ -63,14 +64,16 @@ const userServiceFactory = (): IUserService => {
    * - 3507: if the record doesn't exist in the database
    * - 3508: if the record belongs to the root and has not been explicitly allowed
    * - 3511: if the starting point is provided but it's not a valid unix timestamp
+   * - 3512: if the record limit is larger than the limit
    */
   const listUserPasswordUpdates = (
     uid: string,
+    limit: number,
     startAtEventTime?: number,
   ): Promise<IPasswordUpdate[]> => {
-    let urlPath: string = `auth/user/${uid}/password-updates`;
+    let urlPath: string = `auth/user/${uid}/password-updates?limit=${limit}`;
     if (typeof startAtEventTime === 'number') {
-      urlPath += `?startAtEventTime=${startAtEventTime}`;
+      urlPath += `&startAtEventTime=${startAtEventTime}`;
     }
     return APIService.request(
       'GET',
