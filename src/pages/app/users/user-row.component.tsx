@@ -24,7 +24,6 @@ import {
   DropdownMenuItem,
 } from '../../../shared/shadcn/components/ui/dropdown-menu.tsx';
 import { TableCell, TableRow } from '../../../shared/shadcn/components/ui/table.tsx';
-import { toast } from '../../../shared/shadcn/components/ui/use-toast.ts';
 import { delay, errorToast } from '../../../shared/services/utils/index.service.ts';
 import { formatDate } from '../../../shared/services/transformations/index.service.ts';
 import { IBreakpoint } from '../../../shared/services/media-query/index.service.ts';
@@ -135,7 +134,10 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
           setIsSubmitting(true);
           const newSecret = await UserService.updateOTPSecret(user.uid, confirmation);
           dispatch({ type: 'UPDATE_OTP_SECRET', payload: { uid: user.uid, newOTPSecret: newSecret } });
-          toast({ title: 'OTP secret updated', description: `The OTP secret for ${user.nickname} has been updated successfully.` });
+
+          // display the new secret
+          await delay(0.25);
+          setActiveDialog('DISPLAY_OTP_SECRET');
         } catch (e) {
           errorToast(e);
         } finally {
@@ -222,7 +224,7 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
               <DropdownMenuItem onClick={deleteUser} disabled={user.authority === 5}><UserMinus aria-hidden='true' className='w-5 h-5 mr-1' /> Delete user</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => setActiveDialog('DISPLAY_AUTH_SESSIONS')}><Fingerprint aria-hidden='true' className='w-5 h-5 mr-1' /> Display auth sessions</DropdownMenuItem>
-              <DropdownMenuItem><SquareAsterisk aria-hidden='true' className='w-5 h-5 mr-1' /> Display password updates</DropdownMenuItem>
+              <DropdownMenuItem disabled={user.authority === 5}><SquareAsterisk aria-hidden='true' className='w-5 h-5 mr-1' /> Display password updates</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </TableCell>
