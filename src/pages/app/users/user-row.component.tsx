@@ -29,8 +29,8 @@ import { formatDate } from '../../../shared/services/transformations/index.servi
 import { IBreakpoint } from '../../../shared/services/media-query/index.service.ts';
 import { ClipboardService } from '../../../shared/services/clipboard/index.service.ts';
 import { UserService } from '../../../shared/backend/auth/user/index.service.ts';
-import { useMediaQueryBreakpoint } from '../../../shared/hooks/media-query-breakpoint/index.hook.ts';
 import { useBoundStore } from '../../../shared/store/index.store.ts';
+import { useMediaQueryBreakpoint } from '../../../shared/hooks/media-query-breakpoint/index.hook.ts';
 import UpdateNickname from './update-nickname.component.tsx';
 import UpdateAuthority from './update-authority.component.tsx';
 import DisplayOTPSecret from './display-otp-secret.component.tsx';

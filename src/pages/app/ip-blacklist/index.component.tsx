@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from 'react';
+import { useMemo, useState, useCallback } from 'react';
 import {
   GlobeLock,
   Pencil,
@@ -25,12 +25,15 @@ import {
   TableHeader,
   TableRow,
 } from '../../../shared/shadcn/components/ui/table.tsx';
+import { delay, errorToast } from '../../../shared/services/utils/index.service.ts';
+import { formatDate } from '../../../shared/services/transformations/index.service.ts';
 import { IPBlacklistService, IIPBlacklistRecord } from '../../../shared/backend/ip-blacklist/index.service.ts';
+import { useBoundStore } from '../../../shared/store/index.store.ts';
 import { useAPIRequest } from '../../../shared/hooks/api-request/api-request.hook.ts';
 import PageLoader from '../../../shared/components/page-loader/index.component.tsx';
 import PageLoadError from '../../../shared/components/page-load-error/index.component.tsx';
-/* import { dispatch } from './reducer.ts';
-import { IAction } from './types.ts'; */
+import { dispatch } from './reducer.ts';
+import { IAction } from './types.ts';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
@@ -66,6 +69,10 @@ const IPBlacklist = () => {
     IPBlacklistService.list,
     useMemo(() => [LIMIT], []),
   );
+  const [activeDialog, setActiveDialog] = useState<IDialogName | false>(false);
+  const [closingDialog, setClosingDialog] = useState<boolean>(false);
+  const [busyRecord, setBusyRecord] = useState<number | undefined>();
+  const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
 
 
 
@@ -75,13 +82,43 @@ const IPBlacklist = () => {
    ********************************************************************************************** */
 
   /**
+   * Prompts the user with the confirmation dialog and unregisters the IP address.
+   */
+  const unregisterIP = (record: IIPBlacklistRecord) => {
+    openConfirmationDialog({
+      mode: 'OTP',
+      title: 'Unregister IP',
+      description: `The IP address ${record.ip} will be removed from the blacklist immediately upon submission`,
+      onConfirmation: async (confirmation: string) => {
+        try {
+          setBusyRecord(record.id);
+          await IPBlacklistService.unregisterIP(record.id, confirmation);
+          dispatch({ type: 'UNREGISTER_IP', payload: record.id }, data, setData);
+        } catch (e) {
+          errorToast(e);
+        } finally {
+          setBusyRecord(undefined);
+        }
+      },
+    });
+  };
+
+  /**
    * Dispatches an action to the module's reducer.
    * @param action
    */
-  /* const handleDispatch = useCallback(
-    (action: IAction) => dispatch(action, data, setData),
+  const handleDispatch = useCallback(
+    async (action: IAction | false) => {
+      if (action) {
+        dispatch(action, data, setData);
+      }
+      setClosingDialog(true);
+      await delay(0.25);
+      setClosingDialog(false);
+      setActiveDialog(false);
+    },
     [data, setData],
-  ); */
+  );
 
 
 
@@ -122,26 +159,34 @@ const IPBlacklist = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell><Badge variant='secondary'>192.135.15.105</Badge></TableCell>
-                <TableCell className='max-w-24'><p className='truncate'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Totam porro nobis in similique esse veritatis repellat consequuntur, illum neque eius nostrum. Accusamus beatae vero quia consequatur necessitatibus officia. Facilis, architecto.</p></TableCell>
-                <TableCell><p>Wednesday, July 31st, 2024 at 10:59:11 AM</p></TableCell>
-                <TableCell>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant='ghost' size='icon' aria-label='User actions menu' disabled={true}>
-                      {true ? <Loader2 className="animate-spin" /> : <EllipsisVertical aria-hidden='true'/>}
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuLabel>192.135.15.105</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem><Pencil aria-hidden='true' className='w-5 h-5 mr-1' /> Update registration</DropdownMenuItem>
-                    <DropdownMenuItem><Trash aria-hidden='true' className='w-5 h-5 mr-1' /> Unregister IP</DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-                </TableCell>
-              </TableRow>
+              {data.map((record) => (
+                <TableRow className={`${busyRecord === record.id ? 'opacity-50' : ''} animate-in fade-in duration-700`}>
+                  <TableCell><Badge variant='secondary'>{record.ip}</Badge></TableCell>
+                  <TableCell className='max-w-36'>
+                    {
+                      typeof record.notes === 'string'
+                        ? <p className='truncate'>{record.notes}</p>
+                        : <p className='text-light'>N/A</p>
+                    }
+                  </TableCell>
+                  <TableCell><p>{formatDate(record.event_time, 'datetime-short')}</p></TableCell>
+                  <TableCell>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant='ghost' size='icon' aria-label='IP Blacklist actions menu' disabled={busyRecord === record.id}>
+                        {busyRecord === record.id ? <Loader2 className="animate-spin" /> : <EllipsisVertical aria-hidden='true'/>}
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuLabel>{record.ip}</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem><Pencil aria-hidden='true' className='w-5 h-5 mr-1' /> Update registration</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => unregisterIP(record)} aria-label='Unregister IP address from the blacklist'><Trash aria-hidden='true' className='w-5 h-5 mr-1' /> Unregister IP</DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
             : <p className='text-light text-center text-sm mt-5'>No records were found</p>

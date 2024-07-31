@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Loader2 } from 'lucide-react';
 import { decodeError } from 'error-message-utils';
 import { Input } from '../../../shared/shadcn/components/ui/input.tsx';
+import { Textarea } from '../../../shared/shadcn/components/ui/textarea.tsx';
 import {
   Form,
   FormControl,
@@ -17,30 +18,34 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
   DialogFooter,
 } from '../../../shared/shadcn/components/ui/dialog.tsx';
 import { Button } from '../../../shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '../../../shared/services/utils/index.service.ts';
-import { nicknameValid, authorityValid } from '../../../shared/backend/validations/index.service.ts';
-import { UserService, IAuthority } from '../../../shared/backend/auth/user/index.service.ts';
+import { ipNotesValid, ipValid } from '../../../shared/backend/validations/index.service.ts';
+import { IPBlacklistService } from '../../../shared/backend/ip-blacklist/index.service.ts';
 import { useBoundStore } from '../../../shared/store/index.store.ts';
-import { IAddUserProps, IAddUserInputs } from './types.ts';
+import { IRecordFormProps, IRecordFormInputs } from './types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
 
 /**
- * Add User Component
- * Component in charge of adding users to Balancer
+ * Record Form Component
+ * Component in charge of creating and updating records.
  */
-const AddUser = ({ children, dispatch }: IAddUserProps) => {
+const RecordForm = ({
+  open,
+  onOpenChange,
+  record,
+}: IRecordFormProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const [open, setOpen] = useState(false);
-  const form = useForm<IAddUserInputs>({ defaultValues: { nickname: '', authority: '' } });
+  const form = useForm<IRecordFormInputs>({
+    defaultValues: { ip: record?.ip ?? '', notes: record?.notes ?? '' },
+  });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
 
@@ -57,30 +62,37 @@ const AddUser = ({ children, dispatch }: IAddUserProps) => {
    * @param data
    * @returns void
    */
-  const onSubmit = (data: IAddUserInputs): void => {
+  const onSubmit = (data: IRecordFormInputs): void => {
     openConfirmationDialog({
       mode: 'OTP',
-      title: 'Add user',
-      description: `The account ${data.nickname} (${data.authority}) will be created and granted access to Balancer once a password is set`,
+      title: record === null ? 'Register IP' : 'Update Registration',
+      description: record === null
+        ? `The IP address ${data.ip} will be blacklisted immediately upon submission`
+        : `The changes will be applied to the IP address ${data.ip} immediately upon submission`,
       onConfirmation: async (confirmation: string) => {
         try {
           setIsSubmitting(true);
-          const authority = Number(data.authority) as IAuthority;
-          const user = await UserService.createUser(data.nickname, authority, confirmation);
-          dispatch({ type: 'ADD_USER', payload: user });
-          form.reset();
-          setOpen(false);
+
+          // handle the action accordingly
+          const notes = data.notes.length === 0 ? undefined : data.notes;
+          if (record === null) {
+            const payload = await IPBlacklistService.registerIP(data.ip, notes, confirmation);
+            onOpenChange({ type: 'REGISTER_IP', payload });
+          } else {
+            await IPBlacklistService.updateIPRegistration(record.id, data.ip, notes, confirmation);
+            onOpenChange({
+              type: 'UPDATE_REGISTRATION',
+              payload: { id: record.id, ip: data.ip, notes },
+            });
+          }
         } catch (e) {
           errorToast(e);
-          const { code } = decodeError(e);
-          if (code === 3500) {
-            form.setError('nickname', { message: `The provided nickname '${data.nickname}' has an invalid format` });
+          const { message, code } = decodeError(e);
+          if (code === 5250 || code === 5252 || code === 5253) {
+            form.setError('ip', { message });
           }
-          if (code === 3501) {
-            form.setError('nickname', { message: `The nickname '${data.nickname}' is already being used by another user` });
-          }
-          if (code === 3505) {
-            form.setError('authority', { message: `The authority must be a number ranging between 1 and 4. Received '${data.authority}'` });
+          if (code === 5251) {
+            form.setError('notes', { message });
           }
         } finally {
           setIsSubmitting(false);
@@ -96,16 +108,14 @@ const AddUser = ({ children, dispatch }: IAddUserProps) => {
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-
-      <DialogTrigger asChild>{children}</DialogTrigger>
+    <Dialog open={open} onOpenChange={() => onOpenChange(false)}>
 
       <DialogContent className='max-h-dvh overflow-y-auto overflow-x-hidden'>
 
         <DialogHeader>
-          <DialogTitle>Add user</DialogTitle>
+          <DialogTitle>{record === null ? 'Register IP' : 'Update registration'}</DialogTitle>
           <DialogDescription>
-            The user will be created immediately upon submission
+          {record === null ? 'The IP address will be blacklisted immediately upon submission' : 'The changes will be applied immediately upon submission'}
           </DialogDescription>
         </DialogHeader>
 
@@ -114,44 +124,44 @@ const AddUser = ({ children, dispatch }: IAddUserProps) => {
 
               <FormField
                 control={form.control}
-                name='nickname'
+                name='ip'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Nickname</FormLabel>
+                    <FormLabel>IP address (*)</FormLabel>
                     <FormControl>
-                      <Input type='text' placeholder='satoshi' {...field} autoComplete='off' autoFocus disabled={isSubmitting} />
+                      <Input type='text' placeholder='192.0.2.126' {...field} autoComplete='off' autoFocus disabled={isSubmitting} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
                 rules={{
                   validate: {
-                    required: (value) => (nicknameValid(value) ? true : 'Enter a valid nickname'),
+                    required: (value) => (ipValid(value) ? true : 'Enter a valid IP address'),
                   },
                 }}
               />
 
               <FormField
                 control={form.control}
-                name='authority'
+                name='notes'
                 render={({ field }) => (
-                  <FormItem className='mt-5'>
-                    <FormLabel>Authority</FormLabel>
+                  <FormItem>
+                    <FormLabel>Notes</FormLabel>
                     <FormControl>
-                      <Input type='number' placeholder='3' {...field} autoComplete='off' disabled={isSubmitting} min={1} max={4} />
+                      <Textarea placeholder="Tell us a little bit about yourself" autoComplete='false' {...field} disabled={isSubmitting} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
                 rules={{
                   validate: {
-                    required: (value) => (authorityValid(Number(value), 4) ? true : 'Enter a valid authority'),
+                    required: (value) => (ipNotesValid(value) ? true : 'Enter a valid description of the event or clear the text area'),
                   },
                 }}
               />
 
               <DialogFooter>
-                <Button type='submit' disabled={isSubmitting} className='mt-7 w-full'>{isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Add user</Button>
+                <Button type='submit' disabled={isSubmitting} className='mt-7 w-full'>{isSubmitting && <Loader2 className='mr-2 h-4 w-4 animate-spin' />} {record === null ? 'Blacklist IP' : 'Update registration'}</Button>
               </DialogFooter>
 
             </form>
@@ -171,4 +181,4 @@ const AddUser = ({ children, dispatch }: IAddUserProps) => {
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export default AddUser;
+export default RecordForm;

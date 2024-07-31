@@ -1,13 +1,11 @@
 import { IIPBlacklistRecord } from '../../../shared/backend/ip-blacklist/index.service.ts';
 
-
-
 /* ************************************************************************************************
  *                                           DISPATCH                                             *
  ************************************************************************************************ */
 
 // the actions that are dispatched when users are mutated in order to keep the state in sync
-type IActionType = 'REGISTER_IP' | 'UPDATE_REGISTRATION' | 'UNREGISTER_IP';
+type IActionType = 'REGISTER_IP' | 'UPDATE_REGISTRATION' | 'UNREGISTER_IP' | 'LOADED_MORE';
 type IAction = {
   type: IActionType;
 } & (
@@ -23,8 +21,11 @@ type IAction = {
     type: 'UNREGISTER_IP';
     payload: number;
   }
+  | {
+    type: 'LOADED_MORE';
+    payload: IIPBlacklistRecord[];
+  }
 );
-
 
 // the function triggered by dialogs when dismissed. It may contain an action to be dispatched
 type IDialogCloseFunc = (action: IAction | false) => void;
@@ -41,7 +42,7 @@ type IDialogCloseFunc = (action: IAction | false) => void;
 type IRecordFormProps = {
   open: boolean;
   onOpenChange: IDialogCloseFunc;
-  record: IIPBlacklistRecord
+  record: IIPBlacklistRecord | null;
 };
 
 // form inputs

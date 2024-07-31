@@ -34,6 +34,10 @@ const dispatch = (
       setState(state.filter((record) => record.id !== action.payload));
       break;
     }
+    case 'LOADED_MORE': {
+      setState([...state, ...action.payload]);
+      break;
+    }
     default:
       throw new Error(`The action '${JSON.stringify(action)}' is invalid`);
   }
