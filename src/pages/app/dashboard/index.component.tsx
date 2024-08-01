@@ -1,5 +1,16 @@
 import { useState, useEffect } from 'react';
+import { sendGET } from 'fetch-request-browser';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '../../../shared/shadcn/components/ui/card.tsx';
 import PageLoader from '../../../shared/components/page-loader/index.component.tsx';
+import ChartComponent from './chart.component.tsx';
+import { ICandlestick } from './type.ts';
+import { formatDate } from 'date-fns';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -12,29 +23,68 @@ import PageLoader from '../../../shared/components/page-loader/index.component.t
  * Component in charge of displaying and managing the market state and trading strategy.
  */
 const Dashboard = () => {
+  const [candlesticks, setCandlesticks] = useState<ICandlestick[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+    let ignore = false;
+
+    const getCandlesticks = async () => {
+      const response = await fetch('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=15m&limit=128');
+      const data = await response.json();
+      if (!ignore) {
+        setCandlesticks(data.map((candlestick) => ({
+          open: Number(candlestick[1]),
+          high: Number(candlestick[2]),
+          low: Number(candlestick[3]),
+          close: Number(candlestick[4]),
+          time: candlestick[0] / 1000,
+        })));
+        setLoading(false);
+      }
+    };
+
+    getCandlesticks();
+
+    const intervalID = setInterval(() => {
+      getCandlesticks();
+    }, 3000);
+
+    return () => {
+      ignore = true;
+      clearInterval(intervalID);
+    };
   }, []);
 
   if (loading) {
     return <PageLoader />;
   }
   return (
-    <section className='animate-in fade-in duration-700'>
-      <h1 className="text-4xl mt-5">Dashboard Component</h1>
-      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-    </section>
+    <div className='page-container flex justify-center items-start gap-5 animate-in fade-in duration-700'>
+      <section className='w-full lg:w-9/12 xl:w-7/12 2xl:w-8/12'>
+        <Card>
+          <CardHeader>
+            <CardTitle>Card Title</CardTitle>
+            <CardDescription>Card Description</CardDescription>
+          </CardHeader>
+          <CardContent className='h-[500px]'>
+            <ChartComponent data={candlesticks} />
+          </CardContent>
+        </Card>
+      </section>
+
+      <aside className='flex-1'>
+        <Card>
+          <CardHeader>
+            <CardTitle>Card Title</CardTitle>
+            <CardDescription>Card Description</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p>Card Content</p>
+          </CardContent>
+        </Card>
+      </aside>
+    </div>
   );
 };
 

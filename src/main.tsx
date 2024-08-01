@@ -11,15 +11,15 @@ import './index.css';
 SWService.register();
 
 // render the app
-/* ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <TooltipProvider delayDuration={100}>
       <Router />
     </TooltipProvider>
   </React.StrictMode>,
-); */
-ReactDOM.createRoot(document.getElementById('root')!).render(
+);
+/* ReactDOM.createRoot(document.getElementById('root')!).render(
   <TooltipProvider delayDuration={100}>
     <Router />
   </TooltipProvider>,
-);
+); */
