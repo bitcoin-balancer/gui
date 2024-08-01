@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react';
+import { useState, useCallback, Fragment } from 'react';
 import {
   ChartCandlestick,
   Droplet,
@@ -10,6 +10,8 @@ import {
 import { Button } from '../../../shared/shadcn/components/ui/button.tsx';
 import { Separator } from '../../../shared/shadcn/components/ui/separator.tsx';
 import { Card, CardContent } from '../../../shared/shadcn/components/ui/card.tsx';
+import { delay } from '../../../shared/services/utils/index.service.ts';
+import ServerAlarms from './server-alarms.component.tsx';
 import { IFormID, IFormItem } from './types.ts';
 
 /* ************************************************************************************************
@@ -69,41 +71,74 @@ const FORMS: IFormItem[] = [
  * Component in charge of adjusting Balancer's tunable modules.
  */
 const Adjustments = () => {
-  const [loading, setLoading] = useState<boolean>(true);
+  /* **********************************************************************************************
+   *                                             STATE                                            *
+   ********************************************************************************************** */
+  const [activeDialog, setActiveDialog] = useState<IFormID | false>(false);
+  const [closingDialog, setClosingDialog] = useState<boolean>(false);
 
 
+
+
+
+  /* **********************************************************************************************
+   *                                        EVENT HANDLERS                                        *
+   ********************************************************************************************** */
+
+  // handles the closing of a dialog
+  const handleOnOpenChange = useCallback(
+    async () => {
+      setClosingDialog(true);
+      await delay(0.25);
+      setClosingDialog(false);
+      setActiveDialog(false);
+    },
+    [],
+  );
+
+
+
+  /* **********************************************************************************************
+   *                                           COMPONENT                                          *
+   ********************************************************************************************** */
   return (
-    <div className='page-container flex justify-center items-start animate-in fade-in duration-700'>
+    <>
+      <div className='page-container flex justify-center items-start animate-in fade-in duration-700'>
 
-      <section className='w-full md:w-8/12 lg:w-6/12 xl:w-5/12 2xl:w-4/12'>
+        <section className='w-full md:w-8/12 lg:w-6/12 xl:w-5/12 2xl:w-4/12'>
 
-        <header className="flex justify-start items-center">
-          <h1 className="text-2xl md:text-3xl">Adjustments</h1>
+          <header className="flex justify-start items-center">
+            <h1 className="text-2xl md:text-3xl">Adjustments</h1>
 
-          <span className="flex-1"></span>
-        </header>
+            <span className="flex-1"></span>
+          </header>
 
-        <article className='mt-5'>
-          <Card>
-            <CardContent className='p-0'>
-              {FORMS.map((form, i) => (
-                <Fragment key={form.id}>
-                  <Button variant='ghost' className='flex justify-start items-center w-full h-20 text-left'>
-                    {form.icon}
-                    <div className='ml-2 max-w-52 sm:max-w-none'>
-                      <p className='font-bold'>{form.title}</p>
-                      <p className='text-light text-xs truncate'>{form.description}</p>
-                    </div>
-                  </Button>
-                  {(i < FORMS.length - 1) && <Separator />}
-                </Fragment>
-              ))}
-            </CardContent>
-          </Card>
-        </article>
+          <article className='mt-5'>
+            <Card>
+              <CardContent className='p-0'>
+                {FORMS.map((form, i) => (
+                  <Fragment key={form.id}>
+                    <Button variant='ghost' className='flex justify-start items-center w-full h-20 text-left' onClick={() => setActiveDialog(form.id)}>
+                      {form.icon}
+                      <div className='ml-2 max-w-52 sm:max-w-none'>
+                        <p className='font-bold'>{form.title}</p>
+                        <p className='text-light text-xs truncate'>{form.description}</p>
+                      </div>
+                    </Button>
+                    {(i < FORMS.length - 1) && <Separator />}
+                  </Fragment>
+                ))}
+              </CardContent>
+            </Card>
+          </article>
 
-      </section>
-    </div>
+        </section>
+
+      </div>
+
+      {/* FORM DIALOGS */}
+      {activeDialog === 'SERVER_ALARMS' && <ServerAlarms open={activeDialog === 'SERVER_ALARMS' && !closingDialog} onOpenChange={handleOnOpenChange} />}
+    </>
   );
 };
 

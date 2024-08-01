@@ -13,6 +13,11 @@ type IFormItem = {
   icon: JSX.Element;
 };
 
+// the props that will be passed to the form dialogs
+type IFormProps = {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+};
 
 
 
@@ -23,4 +28,5 @@ type IFormItem = {
 export type {
   IFormID,
   IFormItem,
+  IFormProps,
 };

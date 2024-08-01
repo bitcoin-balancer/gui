@@ -118,7 +118,7 @@ const UpdateNickname = ({
                 )}
                 rules={{
                   validate: {
-                    required: (value) => (nicknameValid(value) ? true : 'Nicknames can be 2 to 16 characters long and include letters, numbers, hyphens, commas, periods, and underscores.'),
+                    required: (value) => (nicknameValid(value) ? true : 'Nicknames can be 2 to 16 characters long and include letters, numbers, hyphens, commas, periods, and underscores'),
                   },
                 }}
               />
