@@ -41,7 +41,7 @@ import {
 } from '../../../shared/backend/ip-blacklist/index.service.ts';
 import { useBoundStore } from '../../../shared/store/index.store.ts';
 import { useMediaQueryBreakpoint } from '../../../shared/hooks/media-query-breakpoint/index.hook.ts';
-import { useAPIRequest } from '../../../shared/hooks/api-request/api-request.hook.ts';
+import { useAPIRequest } from '../../../shared/hooks/api-request/index.hook.ts';
 import { dispatch } from './reducer.ts';
 import PageLoader from '../../../shared/components/page-loader/index.component.tsx';
 import PageLoadError from '../../../shared/components/page-load-error/index.component.tsx';

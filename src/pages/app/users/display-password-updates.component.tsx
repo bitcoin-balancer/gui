@@ -26,7 +26,7 @@ import { Button } from '../../../shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '../../../shared/services/utils/index.service.ts';
 import { formatDate } from '../../../shared/services/transformations/index.service.ts';
 import { UserService, IPasswordUpdate } from '../../../shared/backend/auth/user/index.service.ts';
-import { useAPIRequest } from '../../../shared/hooks/api-request/api-request.hook.ts';
+import { useAPIRequest } from '../../../shared/hooks/api-request/index.hook.ts';
 import PageLoadError from '../../../shared/components/page-load-error/index.component.tsx';
 import PageLoader from '../../../shared/components/page-loader/index.component.tsx';
 import { IDisplayAuthSessionsProps } from './types.ts';

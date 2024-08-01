@@ -10,7 +10,7 @@ import {
   TableRow,
 } from '../../../shared/shadcn/components/ui/table.tsx';
 import { UserService, IUser } from '../../../shared/backend/auth/user/index.service.ts';
-import { useAPIRequest } from '../../../shared/hooks/api-request/api-request.hook.ts';
+import { useAPIRequest } from '../../../shared/hooks/api-request/index.hook.ts';
 import PageLoader from '../../../shared/components/page-loader/index.component.tsx';
 import PageLoadError from '../../../shared/components/page-load-error/index.component.tsx';
 import { dispatch } from './reducer.ts';
