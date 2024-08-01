@@ -70,7 +70,7 @@ const Users = () => {
     <div className='page-container flex justify-center items-start animate-in fade-in duration-700'>
       <section className='w-full lg:w-9/12 xl:w-8/12 2xl:w-7/12'>
         <header className="flex justify-start items-center">
-          <h1 className="text-3xl">Users</h1>
+          <h1 className="text-2xl md:text-3xl">Users</h1>
 
           <span className="flex-1"></span>
 

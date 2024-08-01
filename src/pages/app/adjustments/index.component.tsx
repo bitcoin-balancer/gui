@@ -1,40 +1,109 @@
-import { useState, useEffect } from 'react';
-import PageLoader from '../../../shared/components/page-loader/index.component.tsx';
+import { useState, Fragment } from 'react';
+import {
+  ChartCandlestick,
+  Droplet,
+  Bitcoin,
+  Undo2,
+  ArrowLeftRight,
+  Server,
+} from 'lucide-react';
+import { Button } from '../../../shared/shadcn/components/ui/button.tsx';
+import { Separator } from '../../../shared/shadcn/components/ui/separator.tsx';
+import { Card, CardContent } from '../../../shared/shadcn/components/ui/card.tsx';
+import { IFormID, IFormItem } from './types.ts';
+
+/* ************************************************************************************************
+ *                                           CONSTANTS                                            *
+ ************************************************************************************************ */
+
+// the list of forms that comprise the adjustments module
+const FORMS: IFormItem[] = [
+  {
+    id: 'WINDOW',
+    title: 'Window',
+    description: 'Configure the requirements for the window splits to be stateful',
+    icon: <ChartCandlestick aria-hidden='true' />,
+  },
+  {
+    id: 'LIQUIDITY',
+    title: 'Liquidity',
+    description: 'Configure how the order book is processed and the state is calculated',
+    icon: <Droplet aria-hidden='true' />,
+  },
+  {
+    id: 'COINS',
+    title: 'Coins',
+    description: 'Configure the requirements for coins to be stateful as well as the whitelist',
+    icon: <Bitcoin aria-hidden='true' />,
+  },
+  {
+    id: 'REVERSAL',
+    title: 'Reversal',
+    description: 'Configure the requirements for reversal events to be issued',
+    icon: <Undo2 aria-hidden='true' className='rotate-90' />,
+  },
+  {
+    id: 'TRADING_STRATEGY',
+    title: 'Trading strategy',
+    description: 'Configure the way positions are increased and reduced',
+    icon: <ArrowLeftRight aria-hidden='true' />,
+  },
+  {
+    id: 'SERVER_ALARMS',
+    title: 'Server alarms',
+    description: 'Configure the levels at which alarms should be issued',
+    icon: <Server aria-hidden='true' />,
+  },
+];
+
+
+
+
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
 
-
-
 /**
  * Adjustments Component
- * Component in charge of ...
+ * Component in charge of adjusting Balancer's tunable modules.
  */
 const Adjustments = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  }, []);
 
-  if (loading) {
-    return <PageLoader />;
-  }
   return (
-    <section className='animate-in fade-in duration-700'>
-      <h1 className="text-4xl mt-5">Adjustments Component</h1>
-      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-    </section>
+    <div className='page-container flex justify-center items-start animate-in fade-in duration-700'>
+
+      <section className='w-full md:w-8/12 lg:w-6/12 xl:w-5/12 2xl:w-4/12'>
+
+        <header className="flex justify-start items-center">
+          <h1 className="text-2xl md:text-3xl">Adjustments</h1>
+
+          <span className="flex-1"></span>
+        </header>
+
+        <article className='mt-5'>
+          <Card>
+            <CardContent className='p-0'>
+              {FORMS.map((form, i) => (
+                <Fragment key={form.id}>
+                  <Button variant='ghost' className='flex justify-start items-center w-full h-20 text-left'>
+                    {form.icon}
+                    <div className='ml-2 max-w-52 sm:max-w-none'>
+                      <p className='font-bold'>{form.title}</p>
+                      <p className='text-light text-xs truncate'>{form.description}</p>
+                    </div>
+                  </Button>
+                  {(i < FORMS.length - 1) && <Separator />}
+                </Fragment>
+              ))}
+            </CardContent>
+          </Card>
+        </article>
+
+      </section>
+    </div>
   );
 };
 
