@@ -106,8 +106,9 @@ const DisplayPasswordUpdates = memo(({
       });
 
       // scroll to the beginning of the new page
+      // https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
       const el = rowsRef.current?.querySelector(`#pur-${data.at(-1)!.event_time}`) as Element;
-      el.scrollIntoView(true);
+      el.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
     } catch (e) {
       errorToast(e);
     } finally {
