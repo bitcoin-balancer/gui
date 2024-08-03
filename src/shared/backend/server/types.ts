@@ -31,17 +31,14 @@ type IServerService = {
  * will trigger a notification.
  */
 type IAlarmsConfiguration = {
-  // highest acceptable usage% of the drive's space
-  maxFileSystemUsage: number;
+  // highest acceptable load% the CPU
+  maxCPULoad: number;
 
   // highest acceptable usage% of the virtual memory (RAM)
   maxMemoryUsage: number;
 
-  // highest acceptable load% the CPU
-  maxCPULoad: number;
-
-  // highest acceptable temp (celcius degrees) the CPU can experience
-  maxCPUTemperature: number;
+  // highest acceptable usage% of the drive's space
+  maxFileSystemUsage: number;
 };
 
 

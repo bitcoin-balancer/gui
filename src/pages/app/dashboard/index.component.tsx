@@ -10,7 +10,6 @@ import {
 import PageLoader from '../../../shared/components/page-loader/index.component.tsx';
 import ChartComponent from './chart.component.tsx';
 import { ICandlestick } from './type.ts';
-import { formatDate } from 'date-fns';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -30,10 +29,9 @@ const Dashboard = () => {
     let ignore = false;
 
     const getCandlesticks = async () => {
-      const response = await fetch('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=15m&limit=128');
-      const data = await response.json();
+      const { data } = await sendGET('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=15m&limit=128');
       if (!ignore) {
-        setCandlesticks(data.map((candlestick) => ({
+        setCandlesticks(data.map((candlestick: number[]) => ({
           open: Number(candlestick[1]),
           high: Number(candlestick[2]),
           low: Number(candlestick[3]),
@@ -48,7 +46,7 @@ const Dashboard = () => {
 
     const intervalID = setInterval(() => {
       getCandlesticks();
-    }, 3000);
+    }, 2000);
 
     return () => {
       ignore = true;
@@ -60,14 +58,14 @@ const Dashboard = () => {
     return <PageLoader />;
   }
   return (
-    <div className='page-container flex justify-center items-start gap-5 animate-in fade-in duration-700'>
+    <div className='page-container flex flex-col sm:flex-row justify-center items-start gap-5 animate-in fade-in duration-700'>
       <section className='w-full lg:w-9/12 xl:w-7/12 2xl:w-8/12'>
         <Card>
           <CardHeader>
             <CardTitle>Card Title</CardTitle>
             <CardDescription>Card Description</CardDescription>
           </CardHeader>
-          <CardContent className='h-[500px]'>
+          <CardContent>
             <ChartComponent data={candlesticks} />
           </CardContent>
         </Card>

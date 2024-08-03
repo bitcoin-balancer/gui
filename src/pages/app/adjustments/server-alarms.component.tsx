@@ -44,10 +44,9 @@ const ServerAlarms = ({ open, onOpenChange }: IFormProps) => {
   const { data, loading, error } = useAPIRequest<IAlarmsConfiguration>(ServerService.getAlarms);
   const form = useForm<IAlarmsConfiguration>({
     defaultValues: {
-      maxFileSystemUsage: data?.maxFileSystemUsage ?? '',
-      maxMemoryUsage: data?.maxMemoryUsage ?? '',
       maxCPULoad: data?.maxCPULoad ?? '',
-      maxCPUTemperature: data?.maxCPUTemperature ?? '',
+      maxMemoryUsage: data?.maxMemoryUsage ?? '',
+      maxFileSystemUsage: data?.maxFileSystemUsage ?? '',
     },
   });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -63,10 +62,9 @@ const ServerAlarms = ({ open, onOpenChange }: IFormProps) => {
 
   useEffect(() => {
     if (data) {
-      form.setValue('maxFileSystemUsage', data.maxFileSystemUsage);
-      form.setValue('maxMemoryUsage', data.maxMemoryUsage);
       form.setValue('maxCPULoad', data.maxCPULoad);
-      form.setValue('maxCPUTemperature', data.maxCPUTemperature);
+      form.setValue('maxMemoryUsage', data.maxMemoryUsage);
+      form.setValue('maxFileSystemUsage', data.maxFileSystemUsage);
     }
   }, [data, form]);
 
@@ -91,10 +89,9 @@ const ServerAlarms = ({ open, onOpenChange }: IFormProps) => {
           setIsSubmitting(true);
           await ServerService.updateAlarms(
             {
-              maxFileSystemUsage: Number(formData.maxFileSystemUsage),
-              maxMemoryUsage: Number(formData.maxMemoryUsage),
               maxCPULoad: Number(formData.maxCPULoad),
-              maxCPUTemperature: Number(formData.maxCPUTemperature),
+              maxMemoryUsage: Number(formData.maxMemoryUsage),
+              maxFileSystemUsage: Number(formData.maxFileSystemUsage),
             },
             confirmation,
           );
@@ -110,9 +107,6 @@ const ServerAlarms = ({ open, onOpenChange }: IFormProps) => {
           }
           if (code === 8253) {
             form.setError('maxCPULoad', { message });
-          }
-          if (code === 8254) {
-            form.setError('maxCPUTemperature', { message });
           }
         } finally {
           setIsSubmitting(false);
@@ -139,12 +133,12 @@ const ServerAlarms = ({ open, onOpenChange }: IFormProps) => {
 
           <FormField
             control={form.control}
-            name='maxFileSystemUsage'
+            name='maxCPULoad'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Max. File System Usage%</FormLabel>
+                <FormLabel>Max. CPU Load%</FormLabel>
                 <FormControl>
-                  <Input type='number' placeholder='80' {...field} autoComplete='off' disabled={isSubmitting} min={30} max={99} />
+                  <Input type='number' placeholder='75' {...field} autoComplete='off' disabled={isSubmitting} min={30} max={99} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -177,12 +171,12 @@ const ServerAlarms = ({ open, onOpenChange }: IFormProps) => {
 
           <FormField
             control={form.control}
-            name='maxCPULoad'
+            name='maxFileSystemUsage'
             render={({ field }) => (
               <FormItem className='mt-5'>
-                <FormLabel>Max. CPU Load%</FormLabel>
+                <FormLabel>Max. File System Usage%</FormLabel>
                 <FormControl>
-                  <Input type='number' placeholder='75' {...field} autoComplete='off' disabled={isSubmitting} min={30} max={99} />
+                  <Input type='number' placeholder='80' {...field} autoComplete='off' disabled={isSubmitting} min={30} max={99} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -190,25 +184,6 @@ const ServerAlarms = ({ open, onOpenChange }: IFormProps) => {
             rules={{
               validate: {
                 required: (value) => (numberValid(Number(value), 30, 99) ? true : 'Enter a number ranging 30% - 99%'),
-              },
-            }}
-          />
-
-          <FormField
-            control={form.control}
-            name='maxCPUTemperature'
-            render={({ field }) => (
-              <FormItem className='mt-5'>
-                <FormLabel>Max. CPU Temp°</FormLabel>
-                <FormControl>
-                  <Input type='number' placeholder='75' {...field} autoComplete='off' disabled={isSubmitting} min={50} max={90} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-            rules={{
-              validate: {
-                required: (value) => (numberValid(Number(value), 50, 90) ? true : 'Enter a number ranging 50° - 90°'),
               },
             }}
           />

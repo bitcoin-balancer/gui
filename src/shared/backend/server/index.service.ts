@@ -55,7 +55,6 @@ const serverServiceFactory = (): IServerService => {
    * - 8251: if the maxFileSystemUsage is invalid
    * - 8252: if the maxMemoryUsage is invalid
    * - 8253: if the maxCPULoad is invalid
-   * - 8254: if the maxCPUTemperature is invalid
    */
   const updateAlarms = (newConfig: IAlarmsConfiguration, otpToken: string) => APIService.request(
     'PUT',

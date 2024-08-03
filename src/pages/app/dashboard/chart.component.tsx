@@ -1,19 +1,20 @@
-import { createChart } from 'lightweight-charts';
+import { createChart, type IChartApi } from 'lightweight-charts';
 import { useEffect, useRef } from 'react';
 import { ICandlestick } from './type';
 
 const ChartComponent = ({ data }: { data: ICandlestick[] }) => {
+  const chartAPI = useRef<IChartApi | null>(null);
   const chartContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const chart = createChart(
+    chartAPI.current = createChart(
       chartContainerRef.current!,
       {
         layout: {
           textColor: 'black',
         },
         width: chartContainerRef.current!.clientWidth,
-        height: 300,
+        height: 600,
         grid: { horzLines: { visible: false }, vertLines: { visible: false } },
         crosshair: {
           // Change mode from default 'magnet' to 'normal'.
@@ -38,10 +39,10 @@ const ChartComponent = ({ data }: { data: ICandlestick[] }) => {
     );
 
     const handleResize = () => {
-      chart.applyOptions({ width: chartContainerRef.current!.clientWidth });
+      chartAPI.current!.applyOptions({ width: chartContainerRef.current!.clientWidth });
     };
 
-    const candlestickSeries = chart.addCandlestickSeries({
+    const candlestickSeries = chartAPI.current.addCandlestickSeries({
       upColor: '#26a69a',
       downColor: '#ef5350',
       borderVisible: false,
@@ -49,14 +50,15 @@ const ChartComponent = ({ data }: { data: ICandlestick[] }) => {
       wickDownColor: '#ef5350',
     });
 
+    // @ts-ignore
     candlestickSeries.setData(data);
 
-    chart.timeScale().fitContent();
+    chartAPI.current.timeScale().fitContent();
 
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
-      chart.remove();
+      chartAPI.current!.remove();
     };
   }, [data]);
 
