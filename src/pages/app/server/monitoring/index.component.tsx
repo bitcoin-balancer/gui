@@ -1,28 +1,26 @@
 /* import { useMemo } from 'react'; */
-import { Label, Pie, PieChart } from 'recharts';
+/* import { Label, Pie, PieChart } from 'recharts'; */
 import { CodeXml, ExternalLink, Github } from 'lucide-react';
 import { Button } from '../../../../shared/shadcn/components/ui/button.tsx';
 import { Badge } from '../../../../shared/shadcn/components/ui/badge.tsx';
-import {
+/* import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
-} from '../../../../shared/shadcn/components/ui/tooltip.tsx';
-import {
+} from '../../../../shared/shadcn/components/ui/tooltip.tsx'; */
+/* import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from '../../../../shared/shadcn/components/ui/chart.tsx';
+} from '../../../../shared/shadcn/components/ui/chart.tsx'; */
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '../../../../shared/shadcn/components/ui/card.tsx';
-import { ENVIRONMENT } from '../../../../environment/environment.ts';
+/* import { ENVIRONMENT } from '../../../../environment/environment.ts'; */
 import { formatDate } from '../../../../shared/services/transformations/index.service.ts';
 import { NavService } from '../../../../shared/services/nav/index.service.ts';
 import { buildAPIURL } from '../../../../shared/backend/api/index.service.ts';
@@ -30,6 +28,7 @@ import { ServerService, IServerState } from '../../../../shared/backend/server/i
 import { useAPIRequest } from '../../../../shared/hooks/api-request/index.hook.ts';
 import PageLoader from '../../../../shared/components/page-loader/index.component.tsx';
 import PageLoadError from '../../../../shared/components/page-load-error/index.component.tsx';
+import ResourcePieChart from './resource-pie-chart.component.tsx';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
@@ -62,11 +61,10 @@ const Monitoring = () => {
    ********************************************************************************************** */
 
 
-  const chartData = [
+  /* const chartData = [
     { memory: 'active', value: 275, fill: '#0C0C0C' },
     { memory: 'free', value: 200, fill: '#f1f5f9' },
-  ];
-
+  ]; */
 
 
 
@@ -135,69 +133,7 @@ const Monitoring = () => {
               <CardTitle>Memory</CardTitle>
             </CardHeader>
 
-            <ChartContainer className='mx-auto aspect-square max-h-[180px]'
-                            config={{
-                              value: {
-                                label: 'Bytes',
-                              },
-                              active: {
-                                label: 'Active',
-                                color: '#0C0C0C',
-                              },
-                              free: {
-                                label: 'Free',
-                                color: '#f1f5f9',
-                              },
-                            }}>
-                <PieChart>
-                  <ChartTooltip
-                    cursor={false}
-                    content={<ChartTooltipContent hideLabel />}
-                  />
-                  <Pie
-                    data={[
-                      { memory: 'active', value: data.memory.active, fill: '#0C0C0C' },
-                      { memory: 'free', value: data.memory.free, fill: '#f1f5f9' },
-                    ]}
-                    dataKey='value'
-                    nameKey='memory'
-                    innerRadius={60}
-                    strokeWidth={5}
-                  >
-                    <Label
-                      content={({ viewBox }) => {
-                        if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
-                          return (
-                            <text
-                              x={viewBox.cx}
-                              y={viewBox.cy}
-                              textAnchor='middle'
-                              dominantBaseline='middle'
-                            >
-                              <tspan
-                                x={viewBox.cx}
-                                y={viewBox.cy}
-                                className='fill-foreground text-3xl font-bold'
-                              >
-                                {data.memory.usage}
-                              </tspan>
-                              <tspan
-                                x={viewBox.cx}
-                                y={(viewBox.cy || 0) + 24}
-                                className='fill-muted-foreground'
-                              >
-                                Usage%
-                              </tspan>
-                            </text>
-                          );
-                        }
-                        return undefined;
-                      }}
-                    />
-                  </Pie>
-                </PieChart>
-            </ChartContainer>
-
+            <ResourcePieChart className='max-h-[180px]' valueLabel='Usage%' value={data.memory.usage} />
 
           </Card>
 
@@ -206,28 +142,20 @@ const Monitoring = () => {
         <div className='flex flex-col md:flex-row justify-center items-start gap-5 lg:gap-10 mt-5 lg:mt-10'>
           <Card className='w-full'>
             <CardHeader>
-              <CardTitle>Card Title</CardTitle>
-              <CardDescription>Card Description</CardDescription>
+              <CardTitle>CPU</CardTitle>
             </CardHeader>
-            <CardContent>
-              <p>Card Content</p>
-            </CardContent>
-            <CardFooter>
-              <p>Card Footer</p>
-            </CardFooter>
+
+            <ResourcePieChart className='max-h-[180px]' valueLabel='Load%' value={data.cpu.avgLoad > data.cpu.currentLoad ? data.cpu.avgLoad : data.cpu.currentLoad} />
+
           </Card>
 
           <Card className='w-full'>
             <CardHeader>
-              <CardTitle>Card Title</CardTitle>
-              <CardDescription>Card Description</CardDescription>
+              <CardTitle>File system</CardTitle>
             </CardHeader>
-            <CardContent>
-              <p>Card Content</p>
-            </CardContent>
-            <CardFooter>
-              <p>Card Footer</p>
-            </CardFooter>
+
+            <ResourcePieChart className='max-h-[180px]' valueLabel='Usage%' value={data.fileSystem.use} />
+
           </Card>
         </div>
 
