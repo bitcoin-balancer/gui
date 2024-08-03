@@ -1,5 +1,5 @@
 import { APIService } from '../api/index.service.ts';
-import { IServerService, IAlarmsConfiguration } from './types.ts';
+import { IServerService, IAlarmsConfiguration, IServerState } from './types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -23,10 +23,19 @@ const serverServiceFactory = (): IServerService => {
 
 
   /* **********************************************************************************************
-   *                                          RETRIEVERS                                          *
+   *                                            STATE                                             *
    ********************************************************************************************** */
 
-  // ...
+  /**
+   * Retrieves the current state of the server.
+   * @returns Promise<IServerState>
+   */
+  const getState = (): Promise<IServerState> => APIService.request(
+    'GET',
+    'server',
+    undefined,
+    true,
+  ) as Promise<IServerState>;
 
 
 
@@ -40,7 +49,7 @@ const serverServiceFactory = (): IServerService => {
    * Retrieves the server alarms' configuration.
    * @returns Promise<IAlarmsConfiguration>
    */
-  const getAlarms = () => APIService.request(
+  const getAlarms = (): Promise<IAlarmsConfiguration> => APIService.request(
     'GET',
     'server/alarms',
     undefined,
@@ -50,19 +59,22 @@ const serverServiceFactory = (): IServerService => {
   /**
    * Validates and updates the alarms' configuration.
    * @param newConfig
+   * @returns Promise<void>
    * @throws
    * - 8250: if the configuration is not a valid object
    * - 8251: if the maxFileSystemUsage is invalid
    * - 8252: if the maxMemoryUsage is invalid
    * - 8253: if the maxCPULoad is invalid
    */
-  const updateAlarms = (newConfig: IAlarmsConfiguration, otpToken: string) => APIService.request(
-    'PUT',
-    'server/alarms',
-    { newConfig },
-    true,
-    otpToken,
-  ) as Promise<void>;
+  const updateAlarms = (newConfig: IAlarmsConfiguration, otpToken: string): Promise<void> => (
+    APIService.request(
+      'PUT',
+      'server/alarms',
+      { newConfig },
+      true,
+      otpToken,
+    ) as Promise<void>
+  );
 
 
 
@@ -74,6 +86,9 @@ const serverServiceFactory = (): IServerService => {
   return Object.freeze({
     // properties
     // ...
+
+    // state
+    getState,
 
     // alarms configuration
     getAlarms,

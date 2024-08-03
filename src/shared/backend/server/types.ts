@@ -1,4 +1,4 @@
-
+import { INodeEnv } from '../../types.ts';
 
 /* ************************************************************************************************
  *                                            SERVICE                                             *
@@ -12,6 +12,9 @@ type IServerService = {
   // properties
   // ...
 
+  // state
+  getState: () => Promise<IServerState>;
+
   // alarms configuration
   getAlarms: () => Promise<IAlarmsConfiguration>;
   updateAlarms: (newConfig: IAlarmsConfiguration, otpToken: string) => Promise<void>;
@@ -20,9 +23,106 @@ type IServerService = {
 
 
 
+/* ************************************************************************************************
+ *                                             STATE                                              *
+ ************************************************************************************************ */
+
+/**
+ * CPU State
+ * Information regarding the server's CPU state (all values are in %).
+ */
+type ICPUState = {
+  // average load
+  avgLoad: number;
+
+  // CPU load
+  currentLoad: number;
+
+  // CPU load user
+  currentLoadUser: number;
+
+  // CPU load system
+  currentLoadSystem: number;
+};
+
+/**
+ * Memory State
+ * Information regarding the server's virtual memory state (all values are in bytes).
+ */
+type IMemoryState = {
+  // total memory in bytes
+  total: number;
+
+  // not used in bytes
+  free: number;
+
+  // used actively (excl. buffers/cache)
+  active: number;
+
+  // usage% - value populated in the service
+  usage: number;
+};
+
+/**
+ * File System State
+ * Information regarding the server's file system drive state (all values are in bytes).
+ */
+type IFileSystemState = {
+  // name of file system
+  fs: string;
+
+  // type of file system
+  type: string;
+
+  // sizes in bytes
+  size: number;
+
+  // used in bytes
+  used: number;
+
+  // available in bytes
+  available: number;
+
+  // used in %
+  use: number;
+
+  // mount point
+  mount: string;
+};
+
+/**
+ * Server State
+ * The object containing information regarding the server's runtime environment and resources.
+ */
+type IServerState = {
+  // the amount of seconds the server has been running for
+  uptime: number;
+
+  // the environment
+  environment: INodeEnv;
+
+  // the current version of the Balancer platform
+  version: string;
+
+  // the state of the server's core proccessing unit (CPU)
+  cpu: ICPUState;
+
+  // the state of the server's virtual memory (RAM)
+  memory: IMemoryState;
+
+  // the state of the server's hard drive (it will always pick the drive with highest usage%)
+  fileSystem: IFileSystemState;
+
+  // the timestamp in ms of the last time the resources were fetched
+  refetchTime: number;
+};
+
+
+
+
 
 /* ************************************************************************************************
- *                                             TYPES                                              *
+ *                                             ALARMS                                             *
  ************************************************************************************************ */
 
 /**
@@ -52,6 +152,12 @@ export type {
   // service
   IServerService,
 
-  // types
+  // state
+  ICPUState,
+  IMemoryState,
+  IFileSystemState,
+  IServerState,
+
+  // alarms
   IAlarmsConfiguration,
 };
