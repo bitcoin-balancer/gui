@@ -117,5 +117,6 @@ export {
   ServerService,
 
   // types
+  type IServerState,
   type IAlarmsConfiguration,
 };

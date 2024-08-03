@@ -16,6 +16,10 @@ type INavService = {
   openURL:(url: string, newTab?: boolean, noReferrer?: boolean) => void;
   createNewInstance:() => void;
   openGitHubPage:() => void;
+  openGUIRepo:() => void;
+  openGUICommit: (hash: string) => void;
+  openAPIRepo:() => void;
+  openAPICommit: (hash: string) => void;
 
   // internal navigation
   landing: () => string;

@@ -17,7 +17,9 @@ const navServiceFactory = (): INavService => {
   // the URL to the project's GitHub Page
   const __GITHUB_URL = 'https://github.com/bitcoin-balancer';
 
-
+  // the URL for the services' repos
+  const __API_REPO_URL = 'https://github.com/bitcoin-balancer/api';
+  const __GUI_REPO_URL = 'https://github.com/bitcoin-balancer/gui';
 
 
 
@@ -52,6 +54,29 @@ const navServiceFactory = (): INavService => {
    * Opens Balancer's GitHub Page in a new tab.
    */
   const openGitHubPage = (): void => openURL(__GITHUB_URL);
+
+  /**
+   * Opens the GUI's respository page in a new tab.
+   */
+  const openGUIRepo = (): void => openURL(__GUI_REPO_URL);
+
+  /**
+   * Opens the GitHub page for a commit made to the GUI in a new tab.
+   * @param hash
+   */
+  const openGUICommit = (hash: string): void => openURL(`${__GUI_REPO_URL}/commit/${hash}`);
+
+  /**
+   * Opens the API's respository page in a new tab.
+   */
+  const openAPIRepo = (): void => openURL(__API_REPO_URL);
+
+  /**
+   * Opens the GitHub page for a commit made to the API in a new tab.
+   * @param hash
+   */
+  const openAPICommit = (hash: string): void => openURL(`${__API_REPO_URL}/commit/${hash}`);
+
 
 
 
@@ -129,6 +154,10 @@ const navServiceFactory = (): INavService => {
     openURL,
     createNewInstance,
     openGitHubPage,
+    openGUIRepo,
+    openGUICommit,
+    openAPIRepo,
+    openAPICommit,
 
     // internal navigation
     landing,

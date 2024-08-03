@@ -294,13 +294,13 @@ const App = () => {
               <SheetTitle className='flex justify-start items-center'>
 
                 <img src='/logo/logo-dark.png' alt='Balancer’s Logo' width='80' height='30' className='w-20' />
-                <Badge variant='secondary' className='ml-2'>v1.0.0</Badge>
+                <Badge variant='secondary' className='ml-2'>GUI</Badge>
 
               </SheetTitle>
               <SheetDescription className='text-left'>
 
                 <Button variant='link' className='justify-start p-0 -mt-6 text-light text-xs' onClick={NavService.openGitHubPage}>
-                  <CodeXml className='mr-1 w-4 h-4' /> 0a23ed6 · last month
+                  <CodeXml className='mr-1 w-4 h-4' />v1.0.0 · 0a23ed6 · last month
                 </Button>
 
               </SheetDescription>
