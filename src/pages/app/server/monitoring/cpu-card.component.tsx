@@ -28,7 +28,7 @@ import ResourcePieChart from './resource-pie-chart.component.tsx';
 const CPUCard = ({ data }: { data: ICPUState }) => (
   <Card className='w-full'>
     <CardHeader className='flex flex-row justify-start items-center pb-0'>
-      <CardTitle>CPU</CardTitle>
+      <CardTitle className='text-xl'>CPU</CardTitle>
       <span className='flex-1'></span>
       <Dialog>
         <DialogTrigger asChild>

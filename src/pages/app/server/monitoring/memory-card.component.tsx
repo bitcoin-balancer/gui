@@ -29,7 +29,7 @@ import ResourcePieChart from './resource-pie-chart.component.tsx';
 const MemoryCard = ({ data }: { data: IMemoryState }) => (
   <Card className='w-full'>
     <CardHeader className='flex flex-row justify-start items-center pb-0'>
-      <CardTitle>Memory</CardTitle>
+      <CardTitle className='text-xl'>Memory</CardTitle>
       <span className='flex-1'></span>
       <Dialog>
         <DialogTrigger asChild>

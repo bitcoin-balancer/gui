@@ -29,7 +29,7 @@ import ResourcePieChart from './resource-pie-chart.component.tsx';
 const FileSystemCard = ({ data }: { data: IFileSystemState }) => (
   <Card className='w-full'>
     <CardHeader className='flex flex-row justify-start items-center pb-0'>
-      <CardTitle>File System</CardTitle>
+      <CardTitle className='text-xl'>File System</CardTitle>
       <span className='flex-1'></span>
       <Dialog>
         <DialogTrigger asChild>

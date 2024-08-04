@@ -84,7 +84,7 @@ const Server = () => {
 
         <div className='flex-1'>
           {activePage === 'monitoring' && <Monitoring setSidenavOpen={setSidenavOpen} />}
-          {activePage === 'api-errors' && <APIErrors />}
+          {activePage === 'api-errors' && <APIErrors setSidenavOpen={setSidenavOpen} />}
           {activePage === 'database' && <Database setSidenavOpen={setSidenavOpen} />}
         </div>
 
