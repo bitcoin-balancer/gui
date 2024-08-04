@@ -7,6 +7,13 @@
 // the names of existing pages
 type IPageName = 'monitoring' | 'api-errors' | 'database';
 
+// the props for all server components
+type IServerComponentProps = {
+  setSidenavOpen: (value: boolean) => void;
+};
+
+
+
 
 
 /* ************************************************************************************************
@@ -14,4 +21,5 @@ type IPageName = 'monitoring' | 'api-errors' | 'database';
  ************************************************************************************************ */
 export type {
   IPageName,
+  IServerComponentProps,
 };
