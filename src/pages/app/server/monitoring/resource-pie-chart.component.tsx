@@ -1,11 +1,11 @@
 /* import { useMemo } from 'react'; */
 import { Label, Pie, PieChart as PieChartAPI } from 'recharts';
 import {
-  /* ChartConfig, */
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from '../../../../shared/shadcn/components/ui/chart.tsx';
+import { ColorService } from '../../../../shared/services/color/index.service.ts';
 import { IResourcePieChartProps } from './types.ts';
 
 /* ************************************************************************************************
@@ -17,18 +17,19 @@ import { IResourcePieChartProps } from './types.ts';
  * Component in charge of charting the % of a resource that is being used.
  */
 const ResourcePieChart = ({
-  className = 'max-h-[180px]',
+  className = 'max-h-[185px]',
   valueLabel = 'Usage%',
   value,
   total = 100,
 }: IResourcePieChartProps) => (
-  <ChartContainer config={{ value: { label: valueLabel }, active: { label: 'Active', color: '#0C0C0C' }, available: { label: 'Available', color: '#e2e8f0' } }} className={`mx-auto aspect-square ${className}`}>
+  <ChartContainer
+    config={{ value: { label: valueLabel }, active: { label: 'Active', color: ColorService.PRIMARY }, available: { label: 'Available', color: ColorService.SLATE.H200 } }} className={`mx-auto aspect-square ${className}`}>
     <PieChartAPI>
       <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
       <Pie
         data={[
-          { key: 'active', value, fill: '#0C0C0C' },
-          { key: 'available', value: total - value, fill: '#e2e8f0' },
+          { key: 'active', value, fill: ColorService.PRIMARY },
+          { key: 'available', value: total - value, fill: ColorService.SLATE.H200 },
         ]}
         dataKey='value'
         nameKey='key'

@@ -5,7 +5,7 @@
  ************************************************************************************************ */
 
 type IResourcePieChartProps = {
-  className: string;
+  className?: string;
   valueLabel: 'Usage%' | 'Load%';
   value: number;
   total?: number;
