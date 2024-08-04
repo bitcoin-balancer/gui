@@ -6,20 +6,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '../../../../shared/shadcn/components/ui/chart.tsx';
-
-/* ************************************************************************************************
- *                                             TYPES                                              *
- ************************************************************************************************ */
-type IComponentProps = {
-  className: string;
-  valueLabel: 'Usage%' | 'Load%';
-  value: number;
-  total?: number;
-};
-
-
-
-
+import { IResourcePieChartProps } from './types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -34,7 +21,7 @@ const ResourcePieChart = ({
   valueLabel = 'Usage%',
   value,
   total = 100,
-}: IComponentProps) => (
+}: IResourcePieChartProps) => (
   <ChartContainer config={{ value: { label: valueLabel }, active: { label: 'Active', color: '#0C0C0C' }, available: { label: 'Available', color: '#e2e8f0' } }} className={`mx-auto aspect-square ${className}`}>
     <PieChartAPI>
       <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
