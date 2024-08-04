@@ -19,8 +19,6 @@ import { IPageName } from './types.ts';
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
 
-
-
 /**
  * Server Component
  * Component in charge of allowing the user to browse through the sub-components.
@@ -87,7 +85,7 @@ const Server = () => {
         <div className='flex-1'>
           {activePage === 'monitoring' && <Monitoring setSidenavOpen={setSidenavOpen} />}
           {activePage === 'api-errors' && <APIErrors />}
-          {activePage === 'database' && <Database />}
+          {activePage === 'database' && <Database setSidenavOpen={setSidenavOpen} />}
         </div>
 
       </section>
