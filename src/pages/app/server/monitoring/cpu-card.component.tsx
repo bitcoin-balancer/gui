@@ -34,7 +34,7 @@ const CPUCard = ({ data }: { data: ICPUState }) => (
         <DialogTrigger asChild>
           <Button variant='ghost' size='icon'><Ellipsis aria-hidden='true' /></Button>
         </DialogTrigger>
-        <DialogContent>
+        <DialogContent className='max-h-dvh overflow-y-auto overflow-x-hidden'>
           <DialogHeader>
             <DialogTitle>CPU</DialogTitle>
             <DialogDescription>
