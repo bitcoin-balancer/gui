@@ -46,7 +46,7 @@ const Database = memo(({ setSidenavOpen }: IServerComponentProps) => {
   }
   return (
     <div className='page-container flex justify-center items-start animate-in fade-in duration-700'>
-      <section className='w-full lg:w-10/12 xl:w-8/12 2xl:w-7/12'>
+      <section className='w-full md:w-8/12 lg:w-6/12 xl:w-5/12 2xl:w-4/12'>
 
         {/* HEADER */}
         <header className='flex justify-start items-center md:hidden mt-2 mb-5'>
