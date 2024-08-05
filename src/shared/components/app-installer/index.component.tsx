@@ -107,22 +107,56 @@ const AppInstaller = () => {
     return <></>;
   }
   return (
-    <button aria-label='Install Application'
-            role='alert'
-            onClick={installApp}
-            className='fixed bottom-5 inset-x-0 z-20 w-64 md:w-72 mx-auto text-left bg-white shadow-md rounded-md border border-slate-200 hover:bg-gray-200 animate-in fade-in zoom-in duration-500'>
-      {/* Progress Bar */}
-      <div className='h-1 bg-primary rounded-t-md' style={{ width: getProgressBarWidth(remainingTime) }} role='progressbar'></div>
+    <button
+      aria-label='Install Application'
+      role='alert'
+      onClick={installApp}
+      className='fixed bottom-5 inset-x-0 z-20 w-64 md:w-72 mx-auto text-left bg-white shadow-md rounded-md border border-slate-200 hover:bg-gray-200 animate-in fade-in zoom-in duration-500'
+    >
 
-      {/* Content */}
-      <div className='flex justify-start items-center p-3'>
-        <img src='/installer/mobile-installer.png' alt='App Installer Icon' className='w-11 md:hidden' width="44" height="44" />
-        <img src='/installer/desktop-installer.png' alt='App Installer Icon' className='w-11 hidden md:block' width="44" height="44" />
-        <div className='ml-2'>
-          <p className='font-semibold'>Install App</p>
-          <p className='text-slate-500 text-sm'>{APP_URL}</p>
+      {/* **************
+        * PROGRESS BAR *
+        ************** */}
+      <div
+        className='h-1 bg-primary rounded-t-md'
+        style={{ width: getProgressBarWidth(remainingTime) }}
+        role='progressbar'
+      ></div>
+
+
+
+      {/* *********
+        * CONTENT *
+        ********* */}
+      <div
+        className='flex justify-start items-center p-3'
+      >
+        <img
+          src='/installer/mobile-installer.png'
+          alt='App Installer Icon'
+          className='w-11 md:hidden'
+          width="44"
+          height="44"
+        />
+
+        <img
+          src='/installer/desktop-installer.png'
+          alt='App Installer Icon'
+          className='w-11 hidden md:block' width="44" height="44"
+        />
+
+        <div
+          className='ml-2'
+        >
+          <p
+            className='font-semibold'
+          >Install App</p>
+          <p
+            className='text-slate-500 text-sm'
+          >{APP_URL}</p>
         </div>
       </div>
+
     </button>
   );
 };

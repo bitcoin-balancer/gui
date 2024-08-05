@@ -106,11 +106,17 @@ const ConfirmationDialog = () => {
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
-    <Dialog open={isOpen} onOpenChange={closeDialog}>
+    <Dialog
+      open={isOpen}
+      onOpenChange={closeDialog}
+    >
+      <DialogContent
+        className='max-h-dvh overflow-y-auto overflow-x-hidden'
+      >
 
-      <DialogContent className='max-h-dvh overflow-y-auto overflow-x-hidden'>
-
-        {/* DIALOG HEADER */}
+        {/* ***************
+          * DIALOG HEADER *
+          *************** */}
         <DialogHeader>
 
           <DialogTitle>{config?.title || 'Confirm Action'}</DialogTitle>
@@ -120,18 +126,30 @@ const ConfirmationDialog = () => {
 
 
 
-        {/* DIALOG CONTENT */}
+        {/* ****************
+          * DIALOG CONTENT *
+          **************** */}
         {/* @TODO */}
 
 
 
-        {/* OTP TOKEN INPUT */}
+        {/* *****************
+          * OTP TOKEN INPUT *
+          ***************** */}
         {
           config?.mode === 'OTP'
           && <>
-            <div className='flex justify-center items-center mt-5'>
+            <div
+              className='flex justify-center items-center mt-5'
+            >
 
-              <InputOTP id='otp-confirmation' maxLength={6} value={otpToken} onChange={onOTPTokenChanges} aria-label='One-time password input'>
+              <InputOTP
+                id='otp-confirmation'
+                maxLength={6}
+                value={otpToken}
+                onChange={onOTPTokenChanges}
+                aria-label='One-time password input'
+              >
                 <InputOTPGroup>
                   <InputOTPSlot index={0} />
                   <InputOTPSlot index={1} />
@@ -147,27 +165,60 @@ const ConfirmationDialog = () => {
 
             </div>
 
-            <p className='text-light text-center text-xs'>Enter your one-time password</p>
+            <p
+              className='text-light text-center text-xs'
+            >Enter your one-time password</p>
           </>
         }
 
 
+        {/* ***************
+          * DIALOG FOOTER *
+          *************** */}
+        <DialogFooter
+          className='flex mt-5'
+        >
 
-        {/* DIALOG FOOTER */}
-        <DialogFooter className='flex mt-5'>
-
-          <Button type='button' variant='ghost' onClick={closeDialog} className='mt-3 sm:mt-0'>Cancel</Button>
+          <Button
+            type='button'
+            variant='ghost'
+            onClick={closeDialog}
+            className='mt-3 sm:mt-0'
+          >Cancel</Button>
 
           <span className='flex-1'></span>
 
-          {(config?.mode === 'OTP' && ClipboardService.isSupported) && <Button type='button' onClick={pasteOTPToken} disabled={readingClipboard} variant='outline' className='sm:hidden mt-3' aria-label='Paste the one-time password from the system’s clipboard'>Paste</Button>}
+          {
+            (config?.mode === 'OTP' && ClipboardService.isSupported)
+            && <Button
+              type='button'
+              onClick={pasteOTPToken}
+              disabled={readingClipboard}
+              variant='outline'
+              className='sm:hidden mt-3'
+              aria-label='Paste the one-time password from the system’s clipboard'
+            >Paste</Button>
+          }
 
           {
             (config?.mode === 'OTP' && ClipboardService.isSupported)
             && <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button type='button' onClick={pasteOTPToken} disabled={readingClipboard} variant='outline' size='icon' className='hidden sm:flex' aria-label='Paste the one-time password from the system’s clipboard'><Clipboard className='h-4 w-4' aria-hidden='true' /></Button>
+                  <Button
+                    type='button'
+                    onClick={pasteOTPToken}
+                    disabled={readingClipboard}
+                    variant='outline'
+                    size='icon'
+                    className='hidden sm:flex'
+                    aria-label='Paste the one-time password from the system’s clipboard'
+                  >
+                    <Clipboard
+                      className='h-4 w-4'
+                      aria-hidden='true'
+                    />
+                  </Button>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>Paste the one-time password from the system’s clipboard</p>
@@ -176,7 +227,11 @@ const ConfirmationDialog = () => {
             </TooltipProvider>
           }
 
-          <Button type='submit' onClick={() => closeDialog(true)} disabled={config?.mode === 'OTP'}>Confirm</Button>
+          <Button
+            type='submit'
+            onClick={() => closeDialog(true)}
+            disabled={config?.mode === 'OTP'}
+          >Confirm</Button>
 
         </DialogFooter>
 

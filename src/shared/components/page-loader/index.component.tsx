@@ -11,12 +11,20 @@ import { IComponentProps } from './types';
  */
 const PageLoader = ({ variant = 'page' }: IComponentProps) => (
   variant === 'page'
-    ? <div id='page-loader'>
-    <Loader2 className="h-14 w-14 animate-spin" />
-  </div>
-    : <div className='flex justify-center items-center my-10'>
-    <Loader2 className="h-10 w-10 animate-spin" />
-  </div>
+    ? <div
+        id='page-loader'
+      >
+        <Loader2
+          className='h-14 w-14 animate-spin'
+        />
+      </div>
+    : <div
+        className='flex justify-center items-center my-10'
+      >
+        <Loader2
+          className='h-10 w-10 animate-spin'
+        />
+      </div>
 );
 
 
