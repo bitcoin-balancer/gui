@@ -1,0 +1,74 @@
+import { APIService } from '../api/index.service.ts';
+import { IDataJoinService, IAppEssentials } from './types.ts';
+
+/* ************************************************************************************************
+ *                                         IMPLEMENTATION                                         *
+ ************************************************************************************************ */
+
+/**
+ * Data Join Service Factory
+ * Generates the object in charge of combining multiple data sources into one in order to reduce the
+ * number of requests.
+ * @returns IDataJoinService
+ */
+const dataJoinServiceFactory = (): IDataJoinService => {
+  /* **********************************************************************************************
+   *                                          PROPERTIES                                          *
+   ********************************************************************************************** */
+
+  // ...
+
+
+
+
+
+  /* **********************************************************************************************
+   *                                          RETRIEVERS                                          *
+   ********************************************************************************************** */
+
+  /**
+   * Retrieves the App Essentials object for the currently authenticated user.
+   * @returns Promise<IAppEssentials>
+   */
+  const getAppEssentials = (): Promise<IAppEssentials> => APIService.request(
+    'GET',
+    'data-join/app-essentials',
+    undefined,
+    true,
+  ) as Promise<IAppEssentials>;
+
+
+
+
+
+  /* **********************************************************************************************
+   *                                         MODULE BUILD                                         *
+   ********************************************************************************************** */
+  return Object.freeze({
+    // properties
+    // ...
+
+    // retrievers
+    getAppEssentials,
+  });
+};
+
+
+
+
+
+/* ************************************************************************************************
+ *                                        GLOBAL INSTANCE                                         *
+ ************************************************************************************************ */
+const DataJoinService = dataJoinServiceFactory();
+
+
+
+
+
+/* ************************************************************************************************
+ *                                         MODULE EXPORTS                                         *
+ ************************************************************************************************ */
+export {
+  DataJoinService,
+};
