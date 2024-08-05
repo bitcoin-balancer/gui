@@ -13,7 +13,7 @@ import { IAPIErrorProps } from './types.ts';
  * API Error Component
  * Component in charge of displaying all the information regarding an error.
  */
-const APIError = memo(({ id, data, setActiveDialog }: IAPIErrorProps) => {
+const APIError = memo(({ id, data, openDialog }: IAPIErrorProps) => {
   /* **********************************************************************************************
    *                                       REACTIVE VALUES                                        *
    ********************************************************************************************** */
@@ -33,7 +33,7 @@ const APIError = memo(({ id, data, setActiveDialog }: IAPIErrorProps) => {
       id={id}
       variant='ghost'
       className='w-full justify-left items-center text-left h-auto py-5 px-3 text-wrap' aria-label='Display API Error'
-      onClick={() => setActiveDialog(data)}>
+      onClick={openDialog}>
 
       <div>
         <p className='font-bold max-w-44 sm:max-w-96 xl:max-w-[500px] truncate'>{data.origin}</p>

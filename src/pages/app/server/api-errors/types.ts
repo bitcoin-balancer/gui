@@ -7,7 +7,7 @@ import { IAPIError } from '../../../../shared/backend/api-error/index.service.ts
 type IAPIErrorProps = {
   id: string,
   data: IAPIError,
-  setActiveDialog: (value: IAPIError) => void,
+  openDialog: () => void,
 };
 
 
@@ -20,8 +20,8 @@ type IAPIErrorProps = {
 
 type IAPIErrorDialogProps = {
   open: boolean;
-  record: IAPIError;
   onOpenChange: (value: boolean) => void;
+  record: IAPIError
 };
 
 

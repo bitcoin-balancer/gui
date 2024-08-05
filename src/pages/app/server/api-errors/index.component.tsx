@@ -59,12 +59,15 @@ const APIErrors = memo(({ setSidenavOpen }: IServerComponentProps) => {
     loading,
     error,
   } = useAPIRequest<IAPIError[]>(APIErrorService.list, useMemo(() => [LIMIT], []));
-  const [activeDialog, setActiveDialog] = useState<IAPIError | null | false>(false);
+  const [activeDialog, setActiveDialog] = useState<{ open: boolean, record?: IAPIError }>({
+    open: false,
+  });
   const [closingDialog, setClosingDialog] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [loadingMore, setLoadingMore] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
+
 
 
 
@@ -103,7 +106,7 @@ const APIErrors = memo(({ setSidenavOpen }: IServerComponentProps) => {
       setClosingDialog(true);
       await delay(0.25);
       setClosingDialog(false);
-      setActiveDialog(false);
+      setActiveDialog({ open: false, record: undefined });
     },
     [],
   );
@@ -174,7 +177,7 @@ const APIErrors = memo(({ setSidenavOpen }: IServerComponentProps) => {
                   ? <>
                       {data.map((record, i) => (
                         <Fragment key={record.id}>
-                          <APIError id={`aer-${record.id}`} data={record} setActiveDialog={setActiveDialog} />
+                          <APIError id={`aer-${record.id}`} data={record} openDialog={() => setActiveDialog({ open: true, record })} />
                           {i < data.length - 1 && <Separator />}
                         </Fragment>
                       ))}
@@ -190,10 +193,11 @@ const APIErrors = memo(({ setSidenavOpen }: IServerComponentProps) => {
 
       {/* ERROR DIALOG */}
       {
-        activeDialog !== false
+        activeDialog.record !== undefined
         && <APIErrorDialog
-          open={closingDialog ? false : activeDialog}
-          onOpenChange={handleOnOpenChange} />
+            open={closingDialog ? false : activeDialog.open}
+            record={activeDialog.record}
+            onOpenChange={handleOnOpenChange} />
       }
     </>
   );
