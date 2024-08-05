@@ -138,16 +138,33 @@ const UpdatePassword = () => {
     return <GlobalLoader />;
   }
   return (
-    <main className='flex min-h-dvh animate-in fade-in slide-in-from-right duration-500'>
+    <main
+      className='flex min-h-dvh animate-in fade-in slide-in-from-right duration-500'
+    >
 
-      <section className='flex-1 self-center p-5 sm:p-10'>
+      {/* ******
+        * FORM *
+        ****** */}
+      <section
+        className='flex-1 self-center p-5 sm:p-10'
+      >
 
-        <article className='w-full sm:w-10/12 md:11/12 lg:w-9/12 xl:w-7/12 2xl:w-6/12 mx-auto'>
+        <article
+          className='w-full sm:w-10/12 md:11/12 lg:w-9/12 xl:w-7/12 2xl:w-6/12 mx-auto'
+        >
+
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              noValidate
+            >
 
-              <h1 className='text-3xl font-bold text-center'>Update your password</h1>
-              <p className='text-light text-md text-center'>Set a password you haven't used elsewhere</p>
+              <h1
+                className='text-3xl font-bold text-center'
+              >Update your password</h1>
+              <p
+                className='text-light text-md text-center'
+              >Set a password you haven't used elsewhere</p>
 
               <FormField
                 control={form.control}
@@ -156,7 +173,13 @@ const UpdatePassword = () => {
                   <FormItem className='mt-5'>
                     <FormLabel>Nickname</FormLabel>
                     <FormControl>
-                      <Input type='text' placeholder='nakamoto' {...field} autoComplete='off' disabled={isSubmitting} />
+                      <Input
+                        type='text'
+                        placeholder='nakamoto'
+                        {...field}
+                        autoComplete='off'
+                        disabled={isSubmitting}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -175,7 +198,13 @@ const UpdatePassword = () => {
                   <FormItem className='mt-5'>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input type='password' placeholder='********' {...field} autoComplete='off' disabled={isSubmitting} />
+                      <Input
+                        type='password'
+                        placeholder='********'
+                        {...field}
+                        autoComplete='off'
+                        disabled={isSubmitting}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -194,7 +223,13 @@ const UpdatePassword = () => {
                   <FormItem className='mt-5'>
                     <FormLabel>Confirm password</FormLabel>
                     <FormControl>
-                      <Input type='password' placeholder='********' {...field} autoComplete='off' disabled={isSubmitting} />
+                      <Input
+                        type='password'
+                        placeholder='********'
+                        {...field}
+                        autoComplete='off'
+                        disabled={isSubmitting}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -206,17 +241,41 @@ const UpdatePassword = () => {
                 }}
               />
 
-              <div className={`mt-6 ${isSubmitting ? 'opacity-50' : ''}`}>
-                <Altcha onChange={setAltcha} />
-                {altcha === null && <p className='text-error animate-in fade-in duration-500 mt-2 text-sm font-bold'>Prove you're not a robot</p>}
+              <div
+                className={`mt-6 ${isSubmitting ? 'opacity-50' : ''}`}
+              >
+                <Altcha
+                  onChange={setAltcha}
+                />
+                {
+                  altcha === null
+                  && <p
+                    className='text-error animate-in fade-in duration-500 mt-2 text-sm font-bold'
+                  >Prove you're not a robot</p>}
               </div>
 
-              <Button type='submit' disabled={isSubmitting} variant='default' className='mt-7 w-full'>{isSubmitting && <Loader2 className='mr-2 h-4 w-4 animate-spin' />} Update password</Button>
+              <Button
+                type='submit'
+                disabled={isSubmitting}
+                variant='default'
+                className='mt-7 w-full'
+              >
+                {
+                  isSubmitting
+                  && <Loader2
+                    className='mr-2 h-4 w-4 animate-spin'
+                  />} Update password
+              </Button>
 
-              <Button type='button' onClick={() => navigate(NavService.signIn())} disabled={isSubmitting} variant='outline' className='mt-3 w-full'>Sign in</Button>
+              <Button
+                type='button'
+                onClick={() => navigate(NavService.signIn())}
+                disabled={isSubmitting}
+                variant='outline'
+                className='mt-3 w-full'
+              >Sign in</Button>
 
             </form>
-
           </Form>
 
         </article>
@@ -225,16 +284,42 @@ const UpdatePassword = () => {
 
 
 
-      <aside className='hidden md:block flex-1 bg-primary shadow-8 p-10'>
+      {/* *******
+        * QUOTE *
+        ******* */}
+      <aside
+        className='hidden md:block flex-1 bg-primary shadow-8 p-10'
+      >
 
-        <article className='flex flex-col h-full items-end'>
-          <Link to={NavService.landing()}><img src='logo/logo-light.png' alt='Balancer Logo' width='192' height='60' className='w-48' /></Link>
+        <article
+          className='flex flex-col h-full items-end'
+        >
+          <Link
+            to={NavService.landing()}
+          >
+            <img
+              src='logo/logo-light.png'
+              alt='Balancer Logo'
+              width='192'
+              height='60'
+              className='w-48'
+            />
+          </Link>
 
           <span className='my-auto'></span>
 
-          <blockquote className='text-white text-right'>
-            <p className='text-2xl'>“We have elected to put our money and faith in a mathematical framework that is free of politics and human error.“</p>
-            <p className='text-sm mt-3'>Tyler Winklevoss, co-CEO of Gemini</p>
+          <blockquote
+            className='text-white text-right'
+          >
+            <p
+              className='text-2xl'
+            >
+              “We have elected to put our money and faith in a mathematical framework that is free
+              of politics and human error.“
+            </p>
+            <p
+              className='text-sm mt-3'
+            >Tyler Winklevoss, co-CEO of Gemini</p>
           </blockquote>
 
         </article>
@@ -243,14 +328,16 @@ const UpdatePassword = () => {
 
 
 
-      {/* CONFIRMATION DIALOG */}
+      {/* *********************
+        * CONFIRMATION DIALOG *
+        ******************** */}
       <ConfirmationDialog />
 
 
 
-
-
-      {/* TOASTR */}
+      {/* ********
+        * TOASTR *
+        ******** */}
       <Toaster />
 
     </main>
