@@ -43,7 +43,7 @@ const APIErrorDialog = ({ open, onOpenChange, record }: IAPIErrorDialogProps) =>
       <DialogContent className='max-h-dvh overflow-y-auto overflow-x-hidden max-w-[500px]'>
 
         <DialogHeader>
-          <DialogTitle className='flex justify-start items-center'>
+          <DialogTitle className='flex justify-center sm:justify-start items-center'>
             API Error
             <a
               className='ml-2'

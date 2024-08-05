@@ -160,7 +160,7 @@ const APIErrors = memo(({ setSidenavOpen }: IServerComponentProps) => {
             <span className='flex-1'></span>
 
             <Button onClick={deleteAll} disabled={isSubmitting || data.length === 0} className='hidden sm:flex'>
-              <Trash aria-hidden='true' /> Delete all
+              <Trash aria-hidden='true' className='mr-2' /> Delete all
             </Button>
             <Button onClick={deleteAll} disabled={isSubmitting || data.length === 0} className='sm:hidden' size='icon' aria-label='Delete all of the API Errors'>
               <Trash aria-hidden='true' />
@@ -170,23 +170,20 @@ const APIErrors = memo(({ setSidenavOpen }: IServerComponentProps) => {
 
 
           {/* CONTENT */}
-          <Card>
-            <CardContent ref={rowsRef} className='p-0'>
-              {
-                data.length > 0
-                  ? <>
-                      {data.map((record, i) => (
-                        <Fragment key={record.id}>
-                          <APIError id={`aer-${record.id}`} data={record} openDialog={() => setActiveDialog({ open: true, record })} />
-                          {i < data.length - 1 && <Separator />}
-                        </Fragment>
-                      ))}
-                    </>
-                  : <p className='text-light text-center text-sm mt-5'>No records were found</p>
-              }
-            </CardContent>
-          </Card>
-
+          {
+            data.length > 0
+              ? <Card>
+              <CardContent ref={rowsRef} className='p-0'>
+                {data.map((record, i) => (
+                  <Fragment key={record.id}>
+                    <APIError id={`aer-${record.id}`} data={record} openDialog={() => setActiveDialog({ open: true, record })} />
+                    {i < data.length - 1 && <Separator />}
+                  </Fragment>
+                ))}
+              </CardContent>
+            </Card>
+              : <p className='text-light text-center text-sm mt-5'>No records were found</p>
+          }
           {(hasMore && data.length >= LIMIT) && <Button variant='ghost' className='w-full' onClick={loadMore} disabled={loadingMore}>{loadingMore && <Loader2 className='mr-2 h-4 w-4 animate-spin' />} Load more</Button>}
         </section>
       </div>
