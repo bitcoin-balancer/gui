@@ -1,7 +1,8 @@
-import { useMemo } from 'react';
+import { useMemo, memo } from 'react';
 import { decodeError } from 'error-message-utils';
 import { Button } from '../../../../shared/shadcn/components/ui/button.tsx';
 import { Badge } from '../../../../shared/shadcn/components/ui/badge.tsx';
+import { formatDate } from '../../../../shared/services/transformations/index.service.ts';
 import { IAPIErrorProps } from './types.ts';
 
 /* ************************************************************************************************
@@ -12,7 +13,7 @@ import { IAPIErrorProps } from './types.ts';
  * API Error Component
  * Component in charge of displaying all the information regarding an error.
  */
-const APIError = ({ id, data, setActiveDialog }: IAPIErrorProps) => {
+const APIError = memo(({ id, data, setActiveDialog }: IAPIErrorProps) => {
   /* **********************************************************************************************
    *                                       REACTIVE VALUES                                        *
    ********************************************************************************************** */
@@ -36,16 +37,18 @@ const APIError = ({ id, data, setActiveDialog }: IAPIErrorProps) => {
 
       <div>
         <p className='font-bold max-w-44 sm:max-w-96 xl:max-w-[500px] truncate'>{data.origin}</p>
-        <p className='text-light text-sm'>{message}</p>
+        <p className='text-light text-sm mt-1'>{message}</p>
+        <p className='text-light text-xs font-normal hidden sm:block mt-1'>{formatDate(data.event_time, 'datetime-long')}</p>
+        <p className='text-light text-xs font-normal sm:hidden mt-1'>{formatDate(data.event_time, 'datetime-medium')}</p>
       </div>
 
       <span className='flex-1'></span>
 
-      <Badge variant='destructive' className='max-w-20'><p className='truncate'>{code}</p></Badge>
+      <Badge variant='destructive' className='max-w-20 self-start'><p className='truncate'>{code}</p></Badge>
 
     </Button>
   );
-};
+});
 
 
 
