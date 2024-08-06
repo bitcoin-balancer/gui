@@ -78,6 +78,13 @@ const Router = () => {
             return { Component: Component.default };
           },
         },
+        {
+          path: 'platform-update',
+          lazy: async () => {
+            const Component = await import('@/pages/app/platform-update/index.component.tsx');
+            return { Component: Component.default };
+          },
+        },
       ],
     },
     {

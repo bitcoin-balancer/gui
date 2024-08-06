@@ -139,6 +139,12 @@ const navServiceFactory = (): INavService => {
    */
   const users = (): string => '/app/users';
 
+  /**
+   * Builds the path to the platform update page.
+   * @returns string
+   */
+  const platformUpdate = (): string => '/app/platform-update';
+
 
 
 
@@ -169,6 +175,7 @@ const navServiceFactory = (): INavService => {
     adjustments,
     ipBlacklist,
     users,
+    platformUpdate,
   });
 };
 

@@ -31,6 +31,7 @@ type INavService = {
   adjustments: () => string;
   ipBlacklist: () => string;
   users: () => string;
+  platformUpdate: () => string;
 };
 
 

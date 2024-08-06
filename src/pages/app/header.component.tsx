@@ -5,6 +5,7 @@ import {
   CodeXml,
   EarthLock,
   Users,
+  CloudDownload,
   ExternalLink,
   Github,
   LogOut,
@@ -28,6 +29,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/shared/shadcn/components/ui/sheet.tsx';
+import { ENVIRONMENT } from '@/environment/environment';
 import { JWTService } from '@/shared/backend/auth/jwt/index.service.ts';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { NavService } from '@/shared/services/nav/index.service.ts';
@@ -49,6 +51,7 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
   const [sidenavOpen, setSidenavOpen] = useState<boolean>(false);
   const navigate = useNavigate();
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
+  const version = useBoundStore((state) => state.version!);
   const [isSigningOut, setIsSigningOut] = useState<boolean>(false);
 
 
@@ -252,7 +255,10 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
               >
                 <CodeXml
                   className='mr-1 w-4 h-4'
-                />v1.0.0 · 0a23ed6 · last month
+                />
+                <p
+                  className='max-w-48 truncate'
+                >v1.0.0 · 0a23ed6 · last month</p>
               </Button>
             </SheetDescription>
           </SheetHeader>
@@ -271,6 +277,23 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
               onClick={() => navigateFromSidenav(NavService.users())}
               disabled={pathname === NavService.users()}
             ><Users /> <span className='ml-2'>Users</span></Button>
+            <Button
+              variant='ghost'
+              className='w-full justify-start'
+              onClick={() => navigateFromSidenav(NavService.platformUpdate())}
+              disabled={pathname === NavService.platformUpdate()}
+            >
+              <CloudDownload /> <span className='ml-2'>Platform update</span>
+              <span className='flex-1'></span>
+              {
+                (
+                  ENVIRONMENT.version !== version.gui.latest.version
+                  || version.api.running !== version.api.latest.version
+                ) && <Badge
+                  className='text-xs py-0.5 px-1.5'
+                >1</Badge>
+              }
+            </Button>
 
             <Separator className='my-4' />
 
