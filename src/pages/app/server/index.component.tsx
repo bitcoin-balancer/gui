@@ -64,6 +64,9 @@ const Server = () => {
         className='flex justify-center items-start animate-in fade-in duration-700'
       >
 
+      {/* **********************
+        * DESKTOP SIDENAV MENU *
+        ********************** */}
         {
           (breakpoint === 'md' || breakpoint === 'lg' || breakpoint === 'xl' || breakpoint === '2xl')
           && <aside
@@ -130,7 +133,11 @@ const Server = () => {
 
       </section>
 
-      {/* SIDENAV MENU */}
+
+
+      {/* *********************
+        * MOBILE SIDENAV MENU *
+        ********************* */}
       {
         (breakpoint === 'xs' || breakpoint === 'sm')
         && <Sheet

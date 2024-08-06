@@ -256,13 +256,13 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
                 )
                   ? <Button
                     variant='link'
-                    className='justify-start p-0 -mt-6 text-light text-xs'
+                    className='justify-start p-0 -mt-6 text-light text-xs hover:opacity-70'
                     onClick={() => NavService.openGUICommit(version.gui.latest.sha)}
                   >
                     <CodeXml
                       className='mr-1 w-4 h-4'
                     />
-                    <p className='max-w-48 text-ellipsis overflow-hidden hover:opacity-70'>
+                    <p className='max-w-48 text-ellipsis overflow-hidden'>
                       v{version.gui.latest.version}&nbsp;·&nbsp;
                       {version.gui.latest.sha.slice(0, 7)}&nbsp;·&nbsp;
                       {formatRelative(version.gui.latest.eventTime, new Date())}
