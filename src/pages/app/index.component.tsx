@@ -1,5 +1,10 @@
 import { useMemo, useEffect } from 'react';
-import { Navigate, useNavigation, Outlet } from 'react-router-dom';
+import {
+  Navigate,
+  useNavigation,
+  Outlet,
+  useNavigate,
+} from 'react-router-dom';
 import {
   House,
   ArrowLeftRight,
@@ -11,19 +16,19 @@ import { SWService } from 'sw-service';
 import { Toaster } from '@/shared/shadcn/components/ui/toaster';
 import { ToastAction } from '@/shared/shadcn/components/ui/toast';
 import { toast } from '@/shared/shadcn/components/ui/use-toast.ts';
-import { ENVIRONMENT } from '@/environment/environment.ts';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { formatBadgeCount } from '@/shared/services/transformations/index.service.ts';
 import { NavService } from '@/shared/services/nav/index.service.ts';
 import { AccessJWTService } from '@/shared/backend/api/access-jwt.service.ts';
+import { VersionService } from '@/shared/backend/version/index.service.ts';
 import { DataJoinService } from '@/shared/backend/data-join/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import AppInstaller from '@/shared/components/app-installer/index.component.tsx';
 import OnlineStatus from '@/shared/components/online-status/index.component.tsx';
 import ConfirmationDialog from '@/shared/components/confirmation-dialog/index.component.tsx';
 import GlobalLoader from '@/pages/global-loader/index.component.tsx';
-import Header from '@/pages/app/header.component';
-import MobileTabs from '@/pages/app/mobile-tabs.component';
+import Header from '@/pages/app/header.component.tsx';
+import MobileTabs from '@/pages/app/mobile-tabs.component.tsx';
 import { IMainNavigationItem } from '@/pages/app/types.ts';
 
 /* ************************************************************************************************
@@ -58,6 +63,7 @@ const App = () => {
   const unreadAPIErrors = useBoundStore((state) => state.unreadAPIErrors);
   const setAppEssentials = useBoundStore((state) => state.setAppEssentials);
   const navigation = useNavigation();
+  const navigate = useNavigate();
 
 
 
@@ -163,19 +169,23 @@ const App = () => {
   useEffect(() => {
     let timeout: NodeJS.Timeout | undefined;
     if (version) {
-      if (ENVIRONMENT.version !== version.gui.latest.version) {
+      if (VersionService.getAvailableUpdates(version) !== null) {
         timeout = setTimeout(() => {
           toast({
-            title: `Update to v${version.gui.latest.version}`,
+            title: 'Update available',
             description: 'Enjoy the latest innovations, bug fixes, and enhanced security.',
-            action: <ToastAction altText='Update Application' onClick={SWService.updateApp}><CloudDownload aria-hidden='true' /></ToastAction>,
+            action:
+              <ToastAction
+                altText='Update platform'
+                onClick={() => navigate(NavService.platformUpdate())}
+              ><CloudDownload aria-hidden='true' /></ToastAction>,
             duration: APP_UPDATER_DURATION,
           });
         }, APP_UPDATER_DELAY);
       }
     }
     return () => clearTimeout(timeout);
-  }, [version]);
+  }, [version, navigate]);
 
 
 
