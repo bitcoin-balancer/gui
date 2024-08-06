@@ -1,5 +1,5 @@
-import { APIService } from '../api/index.service.ts';
-import { IDatabaseService, IDatabaseSummary } from './types.ts';
+import { APIService } from '@/shared/backend/api/index.service.ts';
+import { IDatabaseService, IDatabaseSummary } from '@/shared/backend/database/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

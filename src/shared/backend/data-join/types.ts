@@ -1,5 +1,5 @@
-import { IUser } from '../auth/user/index.service.ts';
-import { IVersion } from '../version/index.service.ts';
+import { IUser } from '@/shared/backend/auth/user/index.service.ts';
+import { IVersion } from '@/shared/backend/version/index.service.ts';
 
 /* ************************************************************************************************
  *                                            SERVICE                                             *

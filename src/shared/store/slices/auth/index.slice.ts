@@ -1,5 +1,5 @@
 import { StateCreator } from 'zustand';
-import { IAuthenticatedSlice } from './types';
+import { IAuthenticatedSlice } from '@/shared/store/slices/auth/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

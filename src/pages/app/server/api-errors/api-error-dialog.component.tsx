@@ -7,11 +7,11 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '../../../../shared/shadcn/components/ui/dialog.tsx';
-import { Tooltip, TooltipContent, TooltipTrigger } from '../../../../shared/shadcn/components/ui/tooltip.tsx';
-import { formatDate } from '../../../../shared/services/transformations/index.service.ts';
-import { ClipboardService } from '../../../../shared/services/clipboard/index.service.ts';
-import { IAPIErrorDialogProps } from './types.ts';
+} from '@/shared/shadcn/components/ui/dialog.tsx';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/shadcn/components/ui/tooltip.tsx';
+import { formatDate } from '@/shared/services/transformations/index.service.ts';
+import { ClipboardService } from '@/shared/services/clipboard/index.service.ts';
+import { IAPIErrorDialogProps } from '@/pages/app/server/api-errors/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

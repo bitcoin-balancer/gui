@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { IAPIRequestHook, IRequestFunction } from './types.ts';
+import { IAPIRequestHook, IRequestFunction } from '@/shared/hooks/api-request/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

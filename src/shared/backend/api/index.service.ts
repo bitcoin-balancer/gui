@@ -6,11 +6,11 @@ import {
   send,
 } from 'fetch-request-browser';
 import { IAPIResponse } from 'api-response-utils';
-import { IRecord } from '../../types.ts';
-import { delay } from '../../services/utils/index.service.ts';
-import { buildAPIURL, buildRequestOptions } from './utils.ts';
-import { AccessJWTService } from './access-jwt.service.ts';
-import { IAPIService } from './types.ts';
+import { IRecord } from '@/shared/types.ts';
+import { delay } from '@/shared/services/utils/index.service.ts';
+import { buildAPIURL, buildRequestOptions } from '@/shared/backend/api/utils.ts';
+import { AccessJWTService } from '@/shared/backend/api/access-jwt.service.ts';
+import { IAPIService } from '@/shared/backend/api/types.ts';
 
 
 /* ************************************************************************************************

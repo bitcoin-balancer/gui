@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Loader2 } from 'lucide-react';
-import { Button } from '../../shared/shadcn/components/ui/button.tsx';
-import { Input } from '../../shared/shadcn/components/ui/input.tsx';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
+import { Input } from '@/shared/shadcn/components/ui/input.tsx';
 import {
   Form,
   FormControl,
@@ -11,22 +11,22 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '../../shared/shadcn/components/ui/form.tsx';
-import { Toaster } from '../../shared/shadcn/components/ui/toaster.tsx';
-import { errorToast } from '../../shared/services/utils/index.service.ts';
+} from '@/shared/shadcn/components/ui/form.tsx';
+import { Toaster } from '@/shared/shadcn/components/ui/toaster.tsx';
+import { errorToast } from '@/shared/services/utils/index.service.ts';
 import {
   altchaPayloadValid,
   nicknameValid,
   passwordValid,
-} from '../../shared/backend/validations/index.service.ts';
-import { NavService } from '../../shared/services/nav/index.service.ts';
-import { AccessJWTService } from '../../shared/backend/api/access-jwt.service.ts';
-import { Altcha } from '../../shared/components/altcha/index.component.tsx';
-import { JWTService } from '../../shared/backend/auth/jwt/index.service.ts';
-import { useBoundStore } from '../../shared/store/index.store.ts';
-import GlobalLoader from '../global-loader/index.component.tsx';
-import ConfirmationDialog from '../../shared/components/confirmation-dialog/index.component.tsx';
-import { IFormInputs } from './types.ts';
+} from '@/shared/backend/validations/index.service.ts';
+import { NavService } from '@/shared/services/nav/index.service.ts';
+import { AccessJWTService } from '@/shared/backend/api/access-jwt.service.ts';
+import { Altcha } from '@/shared/components/altcha/index.component.tsx';
+import { JWTService } from '@/shared/backend/auth/jwt/index.service.ts';
+import { useBoundStore } from '@/shared/store/index.store.ts';
+import GlobalLoader from '@/pages/global-loader/index.component.tsx';
+import ConfirmationDialog from '@/shared/components/confirmation-dialog/index.component.tsx';
+import { IFormInputs } from '@/pages/sign-in/types.ts';
 
 
 /* ************************************************************************************************

@@ -8,13 +8,9 @@ import {
   Fingerprint,
   Loader2,
 } from 'lucide-react';
-import { Button } from '../../../shared/shadcn/components/ui/button.tsx';
-import {
-  Tooltip,
-  TooltipTrigger,
-  TooltipContent,
-} from '../../../shared/shadcn/components/ui/tooltip.tsx';
-import { Badge } from '../../../shared/shadcn/components/ui/badge.tsx';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
+import { Tooltip, TooltipTrigger, TooltipContent } from '@/shared/shadcn/components/ui/tooltip.tsx';
+import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -22,21 +18,21 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuItem,
-} from '../../../shared/shadcn/components/ui/dropdown-menu.tsx';
-import { TableCell, TableRow } from '../../../shared/shadcn/components/ui/table.tsx';
-import { delay, errorToast } from '../../../shared/services/utils/index.service.ts';
-import { formatDate } from '../../../shared/services/transformations/index.service.ts';
-import { IBreakpoint } from '../../../shared/services/media-query/index.service.ts';
-import { ClipboardService } from '../../../shared/services/clipboard/index.service.ts';
-import { UserService } from '../../../shared/backend/auth/user/index.service.ts';
-import { useBoundStore } from '../../../shared/store/index.store.ts';
-import { useMediaQueryBreakpoint } from '../../../shared/hooks/media-query-breakpoint/index.hook.ts';
-import UpdateNickname from './update-nickname.component.tsx';
-import UpdateAuthority from './update-authority.component.tsx';
-import DisplayOTPSecret from './display-otp-secret.component.tsx';
-import DisplayAuthSessions from './display-auth-sessions.component.tsx';
-import DisplayPasswordUpdates from './display-password-updates.component.tsx';
-import { IUserRowProps, IAction, IDialogName } from './types.ts';
+} from '@/shared/shadcn/components/ui/dropdown-menu.tsx';
+import { TableCell, TableRow } from '@/shared/shadcn/components/ui/table.tsx';
+import { delay, errorToast } from '@/shared/services/utils/index.service.ts';
+import { formatDate } from '@/shared/services/transformations/index.service.ts';
+import { IBreakpoint } from '@/shared/services/media-query/index.service.ts';
+import { ClipboardService } from '@/shared/services/clipboard/index.service.ts';
+import { UserService } from '@/shared/backend/auth/user/index.service.ts';
+import { useBoundStore } from '@/shared/store/index.store.ts';
+import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
+import UpdateNickname from '@/pages/app/users/update-nickname.component.tsx';
+import UpdateAuthority from '@/pages/app/users/update-authority.component.tsx';
+import DisplayOTPSecret from '@/pages/app/users/display-otp-secret.component.tsx';
+import DisplayAuthSessions from '@/pages/app/users/display-auth-sessions.component.tsx';
+import DisplayPasswordUpdates from '@/pages/app/users/display-password-updates.component.tsx';
+import { IUserRowProps, IAction, IDialogName } from '@/pages/app/users/types.ts';
 
 /* ************************************************************************************************
  *                                            HELPERS                                             *

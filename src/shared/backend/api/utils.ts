@@ -1,8 +1,7 @@
 import { decodeError } from 'error-message-utils';
 import { IOptions, IRequestMethod } from 'fetch-request-browser';
-import { IRecord } from '../../types.ts';
-import { ENVIRONMENT } from '../../../environment/environment.ts';
-
+import { IRecord } from '@/shared/types.ts';
+import { ENVIRONMENT } from '@/environment/environment.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -14,10 +13,7 @@ import { ENVIRONMENT } from '../../../environment/environment.ts';
  * @param error
  * @returns boolean
  */
-const needsNewSession = (error: unknown): boolean => {
-  const { code } = decodeError(error);
-  return code === 4252;
-};
+const needsNewSession = (error: unknown): boolean => decodeError(error).code === 4252;
 
 /**
  * Builds the URL that will be used to interact with an API's Resource.

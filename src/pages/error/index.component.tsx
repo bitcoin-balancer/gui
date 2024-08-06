@@ -1,7 +1,7 @@
 import { useRouteError } from 'react-router-dom';
 import { extractMessage } from 'error-message-utils';
 import { SWService } from 'sw-service';
-import { Button } from '../../shared/shadcn/components/ui/button.tsx';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

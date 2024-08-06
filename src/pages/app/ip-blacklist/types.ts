@@ -1,4 +1,4 @@
-import { IIPBlacklistRecord } from '../../../shared/backend/ip-blacklist/index.service.ts';
+import { IIPBlacklistRecord } from '@/shared/backend/ip-blacklist/index.service.ts';
 
 /* ************************************************************************************************
  *                                           DISPATCH                                             *

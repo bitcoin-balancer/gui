@@ -1,11 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { SWService } from 'sw-service';
-import {
-  TooltipProvider,
-} from './shared/shadcn/components/ui/tooltip.tsx';
-import Router from './router.tsx';
-import './index.css';
+import { TooltipProvider } from '@/shared/shadcn/components/ui/tooltip.tsx';
+import Router from '@/router.tsx';
+import '@/index.css';
 
 // register the Service Worker
 SWService.register();

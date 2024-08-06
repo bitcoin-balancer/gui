@@ -1,13 +1,13 @@
 
 import { CodeXml, ExternalLink, Github } from 'lucide-react';
-import { Button } from '../../../../shared/shadcn/components/ui/button.tsx';
-import { Badge } from '../../../../shared/shadcn/components/ui/badge.tsx';
-import { Card, CardContent } from '../../../../shared/shadcn/components/ui/card.tsx';
-import { ENVIRONMENT } from '../../../../environment/environment.ts';
-import { formatDate } from '../../../../shared/services/transformations/index.service.ts';
-import { NavService } from '../../../../shared/services/nav/index.service.ts';
-import { buildAPIURL } from '../../../../shared/backend/api/utils.ts';
-import { IServerState } from '../../../../shared/backend/server/types.ts';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
+import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
+import { Card, CardContent } from '@/shared/shadcn/components/ui/card.tsx';
+import { ENVIRONMENT } from '@/environment/environment.ts';
+import { formatDate } from '@/shared/services/transformations/index.service.ts';
+import { NavService } from '@/shared/services/nav/index.service.ts';
+import { buildAPIURL } from '@/shared/backend/api/utils.ts';
+import { IServerState } from '@/shared/backend/server/types.ts';
 
 
 /* ************************************************************************************************

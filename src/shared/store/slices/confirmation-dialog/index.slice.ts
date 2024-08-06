@@ -1,5 +1,5 @@
 import { StateCreator } from 'zustand';
-import { IConfirmationDialogConfig, IConfirmationDialogSlice } from './types';
+import { IConfirmationDialogConfig, IConfirmationDialogSlice } from '@/shared/store/slices/confirmation-dialog/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

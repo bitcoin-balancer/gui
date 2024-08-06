@@ -1,4 +1,4 @@
-import { INodeEnv } from '../../types.ts';
+import { INodeEnv } from '@/shared/types.ts';
 
 /* ************************************************************************************************
  *                                            SERVICE                                             *

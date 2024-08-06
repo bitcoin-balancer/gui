@@ -1,5 +1,5 @@
 import { Loader2 } from 'lucide-react';
-import { IComponentProps } from './types';
+import { IComponentProps } from '@/shared/components/page-loader/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { UserPlus } from 'lucide-react';
-import { Button } from '../../../shared/shadcn/components/ui/button.tsx';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import {
   Table,
   TableBody,
@@ -8,15 +8,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '../../../shared/shadcn/components/ui/table.tsx';
-import { UserService, IUser } from '../../../shared/backend/auth/user/index.service.ts';
-import { useAPIRequest } from '../../../shared/hooks/api-request/index.hook.ts';
-import PageLoader from '../../../shared/components/page-loader/index.component.tsx';
-import PageLoadError from '../../../shared/components/page-load-error/index.component.tsx';
+} from '@/shared/shadcn/components/ui/table.tsx';
+import { UserService, IUser } from '@/shared/backend/auth/user/index.service.ts';
+import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts';
+import PageLoader from '@/shared/components/page-loader/index.component.tsx';
+import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import { dispatch } from './reducer.ts';
-import AddUser from './add-user.component.tsx';
-import UserRow from './user-row.component.tsx';
-import { IAction } from './types.ts';
+import AddUser from '@/pages/app/users/add-user.component.tsx';
+import UserRow from '@/pages/app/users/user-row.component.tsx';
+import { IAction } from '@/pages/app/users/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

@@ -1,5 +1,5 @@
-import { objectValid } from '../../../backend/validations/index.service.ts';
-import { type IAppEssentials } from '../../../backend/data-join/index.service.ts';
+import { objectValid } from '@/shared/backend/validations/index.service.ts';
+import { type IAppEssentials } from '@/shared/backend/data-join/index.service.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

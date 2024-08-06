@@ -1,4 +1,4 @@
-import { IRecord } from '../../types.ts';
+import { IRecord } from '@/shared/types.ts';
 
 /* ************************************************************************************************
  *                                            SERVICE                                             *

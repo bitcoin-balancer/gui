@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import { IDateFormat } from './types.ts';
+import { IDateFormat } from '@/shared/services/transformations/types.ts';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *

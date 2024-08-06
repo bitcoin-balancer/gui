@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Loader2 } from 'lucide-react';
 import { decodeError } from 'error-message-utils';
-import { Input } from '../../../shared/shadcn/components/ui/input.tsx';
-import { Textarea } from '../../../shared/shadcn/components/ui/textarea.tsx';
+import { Input } from '@/shared/shadcn/components/ui/input.tsx';
+import { Textarea } from '@/shared/shadcn/components/ui/textarea.tsx';
 import {
   Form,
   FormControl,
@@ -11,7 +11,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '../../../shared/shadcn/components/ui/form.tsx';
+} from '@/shared/shadcn/components/ui/form.tsx';
 import {
   Dialog,
   DialogContent,
@@ -19,14 +19,14 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from '../../../shared/shadcn/components/ui/dialog.tsx';
-import { Button } from '../../../shared/shadcn/components/ui/button.tsx';
-import { errorToast } from '../../../shared/services/utils/index.service.ts';
-import { formatDate } from '../../../shared/services/transformations/index.service.ts';
-import { ipNotesValid, ipValid } from '../../../shared/backend/validations/index.service.ts';
-import { IPBlacklistService } from '../../../shared/backend/ip-blacklist/index.service.ts';
-import { useBoundStore } from '../../../shared/store/index.store.ts';
-import { IRecordFormProps, IRecordFormInputs } from './types.ts';
+} from '@/shared/shadcn/components/ui/dialog.tsx';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
+import { errorToast } from '@/shared/services/utils/index.service.ts';
+import { formatDate } from '@/shared/services/transformations/index.service.ts';
+import { ipNotesValid, ipValid } from '@/shared/backend/validations/index.service.ts';
+import { IPBlacklistService } from '@/shared/backend/ip-blacklist/index.service.ts';
+import { useBoundStore } from '@/shared/store/index.store.ts';
+import { IRecordFormProps, IRecordFormInputs } from '@/pages/app/ip-blacklist/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

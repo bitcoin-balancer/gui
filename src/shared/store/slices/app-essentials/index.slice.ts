@@ -1,9 +1,9 @@
 import { StateCreator } from 'zustand';
-import { IVersion } from '../../../backend/version/index.service.ts';
-import { type IUser } from '../../../backend/auth/user/index.service.ts';
-import type { IAppEssentials, ICompactAppEssentials } from '../../../backend/data-join/index.service.ts';
-import { isAppEssentialsObject } from './utils.ts';
-import { type IAppEssentialsSlice } from './types.ts';
+import { IVersion } from '@/shared/backend/version/index.service.ts';
+import { type IUser } from '@/shared/backend/auth/user/index.service.ts';
+import type { IAppEssentials, ICompactAppEssentials } from '@/shared/backend/data-join/index.service.ts';
+import { isAppEssentialsObject } from '@/shared/store/slices/app-essentials/utils.ts';
+import { type IAppEssentialsSlice } from '@/shared/store/slices/app-essentials/types.ts';
 
 /* ************************************************************************************************
  *                                       STATE CALCULATORS                                        *

@@ -6,16 +6,14 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '../../../shared/shadcn/components/ui/card.tsx';
-import PageLoader from '../../../shared/components/page-loader/index.component.tsx';
-import ChartComponent from './chart.component.tsx';
-import { ICandlestick } from './type.ts';
+} from '@/shared/shadcn/components/ui/card.tsx';
+import PageLoader from '@/shared/components/page-loader/index.component.tsx';
+import ChartComponent from '@/pages/app/dashboard/chart.component.tsx';
+import { ICandlestick } from '@/pages/app/dashboard/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
-
-
 
 /**
  * Dashboard Component

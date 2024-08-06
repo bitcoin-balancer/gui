@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import PageLoader from '../../../shared/components/page-loader/index.component.tsx';
+import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Loader2 } from 'lucide-react';
 import { decodeError } from 'error-message-utils';
-import { Input } from '../../../shared/shadcn/components/ui/input.tsx';
+import { Input } from '@/shared/shadcn/components/ui/input.tsx';
 import {
   Form,
   FormControl,
@@ -10,7 +10,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '../../../shared/shadcn/components/ui/form.tsx';
+} from '@/shared/shadcn/components/ui/form.tsx';
 import {
   Dialog,
   DialogContent,
@@ -19,13 +19,13 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogFooter,
-} from '../../../shared/shadcn/components/ui/dialog.tsx';
-import { Button } from '../../../shared/shadcn/components/ui/button.tsx';
-import { errorToast } from '../../../shared/services/utils/index.service.ts';
-import { nicknameValid, authorityValid } from '../../../shared/backend/validations/index.service.ts';
-import { UserService, IAuthority } from '../../../shared/backend/auth/user/index.service.ts';
-import { useBoundStore } from '../../../shared/store/index.store.ts';
-import { IAddUserProps, IAddUserInputs } from './types.ts';
+} from '@/shared/shadcn/components/ui/dialog.tsx';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
+import { errorToast } from '@/shared/services/utils/index.service.ts';
+import { nicknameValid, authorityValid } from '@/shared/backend/validations/index.service.ts';
+import { UserService, IAuthority } from '@/shared/backend/auth/user/index.service.ts';
+import { useBoundStore } from '@/shared/store/index.store.ts';
+import { IAddUserProps, IAddUserInputs } from '@/pages/app/users/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

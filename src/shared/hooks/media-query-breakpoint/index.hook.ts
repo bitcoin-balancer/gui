@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from 'react';
-import { IBreakpoint, MediaQueryService } from '../../services/media-query/index.service.ts';
+import { IBreakpoint, MediaQueryService } from '@/shared/services/media-query/index.service.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

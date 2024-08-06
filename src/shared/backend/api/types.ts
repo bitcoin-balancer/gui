@@ -1,5 +1,5 @@
 import { IRequestMethod } from 'fetch-request-browser';
-import { IRecord } from '../../types.ts';
+import { IRecord } from '@/shared/types.ts';
 
 
 /* ************************************************************************************************

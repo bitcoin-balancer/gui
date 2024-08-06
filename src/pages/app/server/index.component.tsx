@@ -1,19 +1,19 @@
 import { useState } from 'react';
 import { ChartNoAxesColumn, Bug, Database as DatabaseIcon } from 'lucide-react';
-import { Button } from '../../../shared/shadcn/components/ui/button.tsx';
-import { Badge } from '../../../shared/shadcn/components/ui/badge.tsx';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
+import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from '../../../shared/shadcn/components/ui/sheet.tsx';
-import { useMediaQueryBreakpoint } from '../../../shared/hooks/media-query-breakpoint/index.hook.ts';
-import Monitoring from './monitoring/index.component.tsx';
-import APIErrors from './api-errors/index.component.tsx';
-import Database from './database/index.component.tsx';
-import { IPageName } from './types.ts';
+} from '@/shared/shadcn/components/ui/sheet.tsx';
+import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
+import Monitoring from '@/pages/app/server/monitoring/index.component.tsx';
+import APIErrors from '@/pages/app/server/api-errors/index.component.tsx';
+import Database from '@/pages/app/server/database/index.component.tsx';
+import { IPageName } from '@/pages/app/server/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

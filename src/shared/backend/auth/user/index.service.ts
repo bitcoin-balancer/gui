@@ -1,10 +1,10 @@
-import { APIService } from '../../api/index.service.ts';
+import { APIService } from '@/shared/backend/api/index.service.ts';
 import {
   IUserService,
   IAuthority,
   IUser,
   IPasswordUpdate,
-} from './types';
+} from '@/shared/backend/auth/user/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

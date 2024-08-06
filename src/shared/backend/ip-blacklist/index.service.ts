@@ -1,5 +1,5 @@
-import { APIService } from '../api/index.service.ts';
-import { IIPBlacklistService, IIPBlacklistRecord } from './types.ts';
+import { APIService } from '@/shared/backend/api/index.service.ts';
+import { IIPBlacklistService, IIPBlacklistRecord } from '@/shared/backend/ip-blacklist/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

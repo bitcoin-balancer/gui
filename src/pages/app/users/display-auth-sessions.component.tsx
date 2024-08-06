@@ -5,7 +5,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '../../../shared/shadcn/components/ui/dialog.tsx';
+} from '@/shared/shadcn/components/ui/dialog.tsx';
 import {
   Table,
   TableBody,
@@ -14,20 +14,16 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '../../../shared/shadcn/components/ui/table.tsx';
-import {
-  Tooltip,
-  TooltipTrigger,
-  TooltipContent,
-} from '../../../shared/shadcn/components/ui/tooltip.tsx';
-import { Button } from '../../../shared/shadcn/components/ui/button.tsx';
-import { ClipboardService } from '../../../shared/services/clipboard/index.service.ts';
-import { formatDate } from '../../../shared/services/transformations/index.service.ts';
-import { JWTService, IRefreshTokenRecord } from '../../../shared/backend/auth/jwt/index.service.ts';
-import { useAPIRequest } from '../../../shared/hooks/api-request/index.hook.ts';
-import PageLoadError from '../../../shared/components/page-load-error/index.component.tsx';
-import PageLoader from '../../../shared/components/page-loader/index.component.tsx';
-import { IDisplayAuthSessionsProps } from './types.ts';
+} from '@/shared/shadcn/components/ui/table.tsx';
+import { Tooltip, TooltipTrigger, TooltipContent } from '@/shared/shadcn/components/ui/tooltip.tsx';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
+import { ClipboardService } from '@/shared/services/clipboard/index.service.ts';
+import { formatDate } from '@/shared/services/transformations/index.service.ts';
+import { JWTService, IRefreshTokenRecord } from '@/shared/backend/auth/jwt/index.service.ts';
+import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts';
+import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
+import PageLoader from '@/shared/components/page-loader/index.component.tsx';
+import { IDisplayAuthSessionsProps } from '@/pages/app/users/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

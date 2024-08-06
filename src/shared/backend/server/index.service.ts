@@ -1,5 +1,5 @@
-import { APIService } from '../api/index.service.ts';
-import { IServerService, IAlarmsConfiguration, IServerState } from './types.ts';
+import { APIService } from '@/shared/backend/api/index.service.ts';
+import { IServerService, IAlarmsConfiguration, IServerState } from '@/shared/backend/server/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

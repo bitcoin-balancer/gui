@@ -1,15 +1,15 @@
 import { memo } from 'react';
 import { Menu } from 'lucide-react';
-import { Button } from '../../../../shared/shadcn/components/ui/button.tsx';
-import { ServerService, IServerState } from '../../../../shared/backend/server/index.service.ts';
-import { useAPIRequest } from '../../../../shared/hooks/api-request/index.hook.ts';
-import PageLoader from '../../../../shared/components/page-loader/index.component.tsx';
-import PageLoadError from '../../../../shared/components/page-load-error/index.component.tsx';
-import APICard from './api-card.component.tsx';
-import MemoryCard from './memory-card.component.tsx';
-import CPUCard from './cpu-card.component.tsx';
-import FileSystemCard from './file-system-card.component.tsx';
-import { IServerComponentProps } from '../types.ts';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
+import { ServerService, IServerState } from '@/shared/backend/server/index.service.ts';
+import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts';
+import PageLoader from '@/shared/components/page-loader/index.component.tsx';
+import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
+import { IServerComponentProps } from '@/pages/app/server/types.ts';
+import APICard from '@/pages/app/server/monitoring/api-card.component.tsx';
+import MemoryCard from '@/pages/app/server/monitoring/memory-card.component.tsx';
+import CPUCard from '@/pages/app/server/monitoring/cpu-card.component.tsx';
+import FileSystemCard from '@/pages/app/server/monitoring/file-system-card.component.tsx';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

@@ -5,9 +5,9 @@ import {
   Menu,
   ChartCandlestick,
 } from 'lucide-react';
-import { Button } from '../../shared/shadcn/components/ui/button.tsx';
-import { NavService } from '../../shared/services/nav/index.service.ts';
-import ScrollToTop from '../../shared/components/scroll-to-top/index.component.tsx';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
+import { NavService } from '@/shared/services/nav/index.service.ts';
+import ScrollToTop from '@/shared/components/scroll-to-top/index.component.tsx';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

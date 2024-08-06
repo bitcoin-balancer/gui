@@ -1,4 +1,4 @@
-import { IVersionService, IVersion } from './types.ts';
+import { IVersionService, IVersion } from '@/shared/backend/version/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

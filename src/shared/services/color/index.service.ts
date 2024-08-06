@@ -1,4 +1,4 @@
-import { IColorService } from './types.ts';
+import { IColorService } from '@/shared/services/color/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

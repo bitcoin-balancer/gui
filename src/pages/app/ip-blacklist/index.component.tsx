@@ -12,8 +12,8 @@ import {
   Loader2,
   EllipsisVertical,
 } from 'lucide-react';
-import { Button } from '../../../shared/shadcn/components/ui/button.tsx';
-import { Badge } from '../../../shared/shadcn/components/ui/badge.tsx';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
+import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -21,7 +21,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuItem,
-} from '../../../shared/shadcn/components/ui/dropdown-menu.tsx';
+} from '@/shared/shadcn/components/ui/dropdown-menu.tsx';
 import {
   Table,
   TableBody,
@@ -30,23 +30,20 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '../../../shared/shadcn/components/ui/table.tsx';
-import { IRecord } from '../../../shared/types.ts';
-import { delay, errorToast } from '../../../shared/services/utils/index.service.ts';
-import { formatDate } from '../../../shared/services/transformations/index.service.ts';
-import { IBreakpoint } from '../../../shared/services/media-query/index.service.ts';
-import {
-  IPBlacklistService,
-  IIPBlacklistRecord,
-} from '../../../shared/backend/ip-blacklist/index.service.ts';
-import { useBoundStore } from '../../../shared/store/index.store.ts';
-import { useMediaQueryBreakpoint } from '../../../shared/hooks/media-query-breakpoint/index.hook.ts';
-import { useAPIRequest } from '../../../shared/hooks/api-request/index.hook.ts';
-import { dispatch } from './reducer.ts';
-import PageLoader from '../../../shared/components/page-loader/index.component.tsx';
-import PageLoadError from '../../../shared/components/page-load-error/index.component.tsx';
-import RecordForm from './record-form.component.tsx';
-import { IAction } from './types.ts';
+} from '@/shared/shadcn/components/ui/table.tsx';
+import { IRecord } from '@/shared/types.ts';
+import { delay, errorToast } from '@/shared/services/utils/index.service.ts';
+import { formatDate } from '@/shared/services/transformations/index.service.ts';
+import { IBreakpoint } from '@/shared/services/media-query/index.service.ts';
+import { IPBlacklistService, IIPBlacklistRecord } from '@/shared/backend/ip-blacklist/index.service.ts';
+import { useBoundStore } from '@/shared/store/index.store.ts';
+import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
+import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts';
+import PageLoader from '@/shared/components/page-loader/index.component.tsx';
+import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
+import { dispatch } from '@/pages/app/ip-blacklist/reducer.ts';
+import RecordForm from '@/pages/app/ip-blacklist/record-form.component.tsx';
+import { IAction } from '@/pages/app/ip-blacklist/types.ts';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *

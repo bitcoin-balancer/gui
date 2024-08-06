@@ -1,7 +1,7 @@
 import { encodeError, decodeError } from 'error-message-utils';
-import { toast } from '../../shadcn/components/ui/use-toast.ts';
-import { IRecord } from '../../types.ts';
-import { ISortDirection } from './types.ts';
+import { toast } from '@/shared/shadcn/components/ui/use-toast.ts';
+import { IRecord } from '@/shared/types.ts';
+import { ISortDirection } from '@/shared/services/utils/types.ts';
 
 /* ************************************************************************************************
  *                                         TOAST HELPERS                                          *

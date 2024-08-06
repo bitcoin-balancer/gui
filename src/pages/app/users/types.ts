@@ -1,5 +1,5 @@
 import { PropsWithChildren } from 'react';
-import { IUser, IAuthority } from '../../../shared/backend/auth/user/index.service.ts';
+import { IUser, IAuthority } from '@/shared/backend/auth/user/index.service.ts';
 
 /* ************************************************************************************************
  *                                           DISPATCH                                             *

@@ -1,19 +1,19 @@
 import { memo } from 'react';
 import { Menu } from 'lucide-react';
-import { Button } from '../../../../shared/shadcn/components/ui/button.tsx';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from '../../../../shared/shadcn/components/ui/tabs.tsx';
-import { DatabaseService, IDatabaseSummary } from '../../../../shared/backend/database/index.service.ts';
-import { useAPIRequest } from '../../../../shared/hooks/api-request/index.hook.ts';
-import PageLoader from '../../../../shared/components/page-loader/index.component.tsx';
-import PageLoadError from '../../../../shared/components/page-load-error/index.component.tsx';
-import GeneralCard from './general-card.component.tsx';
-import TablesCard from './tables-card.component.tsx';
-import { IServerComponentProps } from '../types.ts';
+} from '@/shared/shadcn/components/ui/tabs.tsx';
+import { DatabaseService, IDatabaseSummary } from '@/shared/backend/database/index.service.ts';
+import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts';
+import PageLoader from '@/shared/components/page-loader/index.component.tsx';
+import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
+import { IServerComponentProps } from '@/pages/app/server/types.ts';
+import GeneralCard from '@/pages/app/server/database/general-card.component.tsx';
+import TablesCard from '@/pages/app/server/database/tables-card.component.tsx';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

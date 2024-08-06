@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Clipboard } from 'lucide-react';
-import { Button } from '../../shadcn/components/ui/button.tsx';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import {
   Dialog,
   DialogContent,
@@ -8,23 +8,23 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '../../shadcn/components/ui/dialog.tsx';
+} from '@/shared/shadcn/components/ui/dialog.tsx';
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
-} from '../../shadcn/components/ui/input-otp.tsx';
+} from '@/shared/shadcn/components/ui/input-otp.tsx';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '../../shadcn/components/ui/tooltip.tsx';
-import { errorToast } from '../../services/utils/index.service.ts';
-import { otpTokenValid } from '../../backend/validations/index.service.ts';
-import { ClipboardService } from '../../services/clipboard/index.service.ts';
-import { useBoundStore } from '../../store/index.store.ts';
+} from '@/shared/shadcn/components/ui/tooltip.tsx';
+import { errorToast } from '@/shared/services/utils/index.service.ts';
+import { otpTokenValid } from '@/shared/backend/validations/index.service.ts';
+import { ClipboardService } from '@/shared/services/clipboard/index.service.ts';
+import { useBoundStore } from '@/shared/store/index.store.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

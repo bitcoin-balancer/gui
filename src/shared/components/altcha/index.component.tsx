@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 import { useEffect } from 'react';
 import 'altcha';
-import { AltchaService } from '../../backend/altcha/index.service.ts';
-import { IProps, IStateChangeEvent } from './types.ts';
+import { AltchaService } from '@/shared/backend/altcha/index.service.ts';
+import { IProps, IStateChangeEvent } from '@/shared/components/altcha/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

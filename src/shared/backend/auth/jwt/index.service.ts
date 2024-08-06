@@ -1,5 +1,5 @@
-import { APIService, AccessJWTService } from '../../api/index.service.ts';
-import { IJWTService, IRefreshTokenRecord } from './types.ts';
+import { APIService, AccessJWTService } from '@/shared/backend/api/index.service.ts';
+import { IJWTService, IRefreshTokenRecord } from '@/shared/backend/auth/jwt/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

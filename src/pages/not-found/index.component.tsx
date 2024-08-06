@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { Button } from '../../shared/shadcn/components/ui/button';
-import { NavService } from '../../shared/services/nav/index.service';
+import { Button } from '@/shared/shadcn/components/ui/button';
+import { NavService } from '@/shared/services/nav/index.service';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

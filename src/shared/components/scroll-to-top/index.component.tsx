@@ -1,6 +1,6 @@
 import { MoveUp } from 'lucide-react';
-import { Button } from '../../shadcn/components/ui/button.tsx';
-import { useVerticalScroll } from '../../hooks/vertical-scroll/index.hook.ts';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
+import { useVerticalScroll } from '@/shared/hooks/vertical-scroll/index.hook.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

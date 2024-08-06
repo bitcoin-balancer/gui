@@ -1,8 +1,8 @@
 import { sendPOST } from 'fetch-request-browser';
-import { jwtValid } from '../validations/index.service.ts';
-import { useBoundStore } from '../../store/index.store.ts';
-import { buildAPIURL, needsNewSession } from './utils.ts';
-import { IAccessJWTService } from './types.ts';
+import { jwtValid } from '@/shared/backend/validations/index.service.ts';
+import { useBoundStore } from '@/shared/store/index.store.ts';
+import { buildAPIURL, needsNewSession } from '@/shared/backend/api/utils.ts';
+import { IAccessJWTService } from '@/shared/backend/api/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

@@ -1,7 +1,6 @@
 import { isInteger } from 'bignumber-utils';
-import { IRecord } from '../../types.js';
-import { IAuthority } from '../auth/user/types.js';
-
+import { IRecord } from '@/shared/types.ts';
+import { IAuthority } from '@/shared/backend/auth/user/index.service.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

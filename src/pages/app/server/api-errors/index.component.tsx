@@ -8,18 +8,18 @@ import {
 } from 'react';
 import { flushSync } from 'react-dom';
 import { Menu, Trash, Loader2 } from 'lucide-react';
-import { Button } from '../../../../shared/shadcn/components/ui/button.tsx';
-import { Card, CardContent } from '../../../../shared/shadcn/components/ui/card.tsx';
-import { Separator } from '../../../../shared/shadcn/components/ui/separator.tsx';
-import { delay, errorToast } from '../../../../shared/services/utils/index.service.ts';
-import { APIErrorService, IAPIError } from '../../../../shared/backend/api-error/index.service.ts';
-import { useBoundStore } from '../../../../shared/store/index.store.ts';
-import { useAPIRequest } from '../../../../shared/hooks/api-request/index.hook.ts';
-import PageLoader from '../../../../shared/components/page-loader/index.component.tsx';
-import PageLoadError from '../../../../shared/components/page-load-error/index.component.tsx';
-import APIError from './api-error.component.tsx';
-import { IServerComponentProps } from '../types.ts';
-import APIErrorDialog from './api-error-dialog.component.tsx';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
+import { Card, CardContent } from '@/shared/shadcn/components/ui/card.tsx';
+import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
+import { delay, errorToast } from '@/shared/services/utils/index.service.ts';
+import { APIErrorService, IAPIError } from '@/shared/backend/api-error/index.service.ts';
+import { useBoundStore } from '@/shared/store/index.store.ts';
+import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts';
+import PageLoader from '@/shared/components/page-loader/index.component.tsx';
+import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
+import { IServerComponentProps } from '@/pages/app/server/types.ts';
+import APIError from '@/pages/app/server/api-errors/api-error.component.tsx';
+import APIErrorDialog from '@/pages/app/server/api-errors/api-error-dialog.component.tsx';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *

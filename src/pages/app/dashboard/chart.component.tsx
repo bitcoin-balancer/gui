@@ -1,6 +1,6 @@
-import { createChart, type IChartApi } from 'lightweight-charts';
 import { useEffect, useRef } from 'react';
-import { ICandlestick } from './type';
+import { createChart, type IChartApi } from 'lightweight-charts';
+import { ICandlestick } from '@/pages/app/dashboard/types.ts';
 
 const ChartComponent = ({ data }: { data: ICandlestick[] }) => {
   const chartAPI = useRef<IChartApi | null>(null);

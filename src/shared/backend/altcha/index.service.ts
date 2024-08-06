@@ -1,5 +1,5 @@
-import { buildAPIURL } from '../api/index.service.ts';
-import { IAltchaService } from './types.ts';
+import { buildAPIURL } from '@/shared/backend/api/index.service.ts';
+import { IAltchaService } from '@/shared/backend/altcha/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

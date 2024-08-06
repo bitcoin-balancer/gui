@@ -1,5 +1,5 @@
-import { APIService } from '../api/index.service.ts';
-import { IDataJoinService, IAppEssentials, ICompactAppEssentials } from './types.ts';
+import { APIService } from '@/shared/backend/api/index.service.ts';
+import { IDataJoinService, IAppEssentials, ICompactAppEssentials } from '@/shared/backend/data-join/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

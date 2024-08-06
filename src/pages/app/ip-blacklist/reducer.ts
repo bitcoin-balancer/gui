@@ -1,5 +1,5 @@
-import { IIPBlacklistRecord } from '../../../shared/backend/ip-blacklist/index.service.ts';
-import { IAction } from './types.ts';
+import { IIPBlacklistRecord } from '@/shared/backend/ip-blacklist/index.service.ts';
+import { IAction } from '@/pages/app/ip-blacklist/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

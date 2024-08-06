@@ -1,4 +1,4 @@
-import { INavService } from './types.ts';
+import { INavService } from '@/shared/services/nav/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

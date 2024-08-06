@@ -3,9 +3,9 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from '../../../../shared/shadcn/components/ui/chart.tsx';
-import { ColorService } from '../../../../shared/services/color/index.service.ts';
-import { IResourcePieChartProps } from './types.ts';
+} from '@/shared/shadcn/components/ui/chart.tsx';
+import { ColorService } from '@/shared/services/color/index.service.ts';
+import { IResourcePieChartProps } from '@/pages/app/server/monitoring/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

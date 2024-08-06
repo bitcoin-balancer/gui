@@ -1,9 +1,5 @@
 import { Router } from 'lucide-react';
-import { useOnlineStatus } from '../../hooks/online-status/index.hook';
-
-
-
-
+import { useOnlineStatus } from '@/shared/hooks/online-status/index.hook';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -26,11 +22,9 @@ const OnlineStatus = () => {
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
-  if (isOnline) {
-    return <></>;
-  }
   return (
-    <div
+    !isOnline
+    && <div
       aria-label='Experiencing Network Issuess'
       role='alert'
       className='fixed bottom-5 left-0 inset-x-0 z-20 w-64 mx-auto text-left bg-white shadow-md rounded-md border border-slate-200 p-3 animate-in fade-in zoom-in duration-500'

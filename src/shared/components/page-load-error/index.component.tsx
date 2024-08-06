@@ -2,11 +2,11 @@ import { memo } from 'react';
 import { AlertCircle } from 'lucide-react';
 import { decodeError } from 'error-message-utils';
 import { SWService } from 'sw-service';
-import { Alert, AlertDescription, AlertTitle } from '../../shadcn/components/ui/alert.tsx';
-import { Tooltip, TooltipTrigger, TooltipContent } from '../../shadcn/components/ui/tooltip.tsx';
-import { Badge } from '../../shadcn/components/ui/badge.tsx';
-import { Button } from '../../shadcn/components/ui/button.tsx';
-import { IComponentProps } from './types.ts';
+import { Alert, AlertDescription, AlertTitle } from '@/shared/shadcn/components/ui/alert.tsx';
+import { Tooltip, TooltipTrigger, TooltipContent } from '@/shared/shadcn/components/ui/tooltip.tsx';
+import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
+import { IComponentProps } from '@/shared/components/page-load-error/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

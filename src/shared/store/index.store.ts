@@ -1,8 +1,8 @@
 import { create } from 'zustand';
-import { createAuthenticatedSlice } from './slices/auth/index.slice.ts';
-import { createConfirmationDialogSlice } from './slices/confirmation-dialog/index.slice.ts';
-import { createAppEssentialsSlice } from './slices/app-essentials/index.slice.ts';
-import { IBoundStore } from './types.ts';
+import { createAuthenticatedSlice } from '@/shared/store/slices/auth/index.slice.ts';
+import { createConfirmationDialogSlice } from '@/shared/store/slices/confirmation-dialog/index.slice.ts';
+import { createAppEssentialsSlice } from '@/shared/store/slices/app-essentials/index.slice.ts';
+import { IBoundStore } from '@/shared/store/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

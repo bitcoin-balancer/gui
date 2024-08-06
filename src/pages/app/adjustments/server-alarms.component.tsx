@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Loader2 } from 'lucide-react';
 import { decodeError } from 'error-message-utils';
-import { Input } from '../../../shared/shadcn/components/ui/input.tsx';
+import { Input } from '@/shared/shadcn/components/ui/input.tsx';
 import {
   Form,
   FormControl,
@@ -10,7 +10,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '../../../shared/shadcn/components/ui/form.tsx';
+} from '@/shared/shadcn/components/ui/form.tsx';
 import {
   Dialog,
   DialogContent,
@@ -18,15 +18,15 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from '../../../shared/shadcn/components/ui/dialog.tsx';
-import { Button } from '../../../shared/shadcn/components/ui/button.tsx';
-import { errorToast } from '../../../shared/services/utils/index.service.ts';
-import { numberValid } from '../../../shared/backend/validations/index.service.ts';
+} from '@/shared/shadcn/components/ui/dialog.tsx';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
+import { errorToast } from '@/shared/services/utils/index.service.ts';
+import { numberValid } from '@/shared/backend/validations/index.service.ts';
 import { ServerService, IAlarmsConfiguration } from '@/shared/backend/server/index.service.ts';
-import { useBoundStore } from '../../../shared/store/index.store.ts';
-import { useAPIRequest } from '../../../shared/hooks/api-request/index.hook.ts';
-import PageLoadError from '../../../shared/components/page-load-error/index.component.tsx';
-import PageLoader from '../../../shared/components/page-loader/index.component.tsx';
+import { useBoundStore } from '@/shared/store/index.store.ts';
+import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts';
+import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
+import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import { IFormProps } from './types.ts';
 
 /* ************************************************************************************************

@@ -1,11 +1,11 @@
 import { Ellipsis } from 'lucide-react';
-import { Button } from '../../../../shared/shadcn/components/ui/button.tsx';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from '../../../../shared/shadcn/components/ui/card.tsx';
+} from '@/shared/shadcn/components/ui/card.tsx';
 import {
   Dialog,
   DialogContent,
@@ -13,10 +13,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '../../../../shared/shadcn/components/ui/dialog.tsx';
-import { IMemoryState } from '../../../../shared/backend/server/types.ts';
-import { formatFileSize } from '../../../../shared/services/transformations/index.service.ts';
-import ResourcePieChart from './resource-pie-chart.component.tsx';
+} from '@/shared/shadcn/components/ui/dialog.tsx';
+import { IMemoryState } from '@/shared/backend/server/types.ts';
+import { formatFileSize } from '@/shared/services/transformations/index.service.ts';
+import ResourcePieChart from '@/pages/app/server/monitoring/resource-pie-chart.component.tsx';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

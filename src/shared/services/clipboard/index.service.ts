@@ -1,5 +1,5 @@
-import { toast } from '../../shadcn/components/ui/use-toast';
-import { IClipboardService } from './types';
+import { toast } from '@/shared/shadcn/components/ui/use-toast';
+import { IClipboardService } from '@/shared/services/clipboard/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

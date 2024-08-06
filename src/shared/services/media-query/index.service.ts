@@ -1,4 +1,4 @@
-import { IMediaQueryService, IBreakpoint } from './types';
+import { IMediaQueryService, IBreakpoint } from '@/shared/services/media-query/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

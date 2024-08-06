@@ -1,5 +1,5 @@
-import { APIService } from '../api/index.service.ts';
-import { IAPIErrorService, IAPIError } from './types.ts';
+import { APIService } from '@/shared/backend/api/index.service.ts';
+import { IAPIErrorService, IAPIError } from '@/shared/backend/api-error/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

@@ -22,19 +22,19 @@ import {
   CloudDownload,
 } from 'lucide-react';
 import { SWService } from 'sw-service';
-import { Button } from '../../shared/shadcn/components/ui/button.tsx';
-import { Badge } from '../../shared/shadcn/components/ui/badge.tsx';
-import { Tooltip, TooltipContent, TooltipTrigger } from '../../shared/shadcn/components/ui/tooltip.tsx';
-import { Toaster } from '../../shared/shadcn/components/ui/toaster';
-import { ToastAction } from '../../shared/shadcn/components/ui/toast';
-import { toast } from '../../shared/shadcn/components/ui/use-toast.ts';
-import { Separator } from '../../shared/shadcn/components/ui/separator.tsx';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
+import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/shadcn/components/ui/tooltip.tsx';
+import { Toaster } from '@/shared/shadcn/components/ui/toaster';
+import { ToastAction } from '@/shared/shadcn/components/ui/toast';
+import { toast } from '@/shared/shadcn/components/ui/use-toast.ts';
+import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '../../shared/shadcn/components/ui/dropdown-menu.tsx';
+} from '@/shared/shadcn/components/ui/dropdown-menu.tsx';
 import {
   Sheet,
   SheetContent,
@@ -42,20 +42,20 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '../../shared/shadcn/components/ui/sheet.tsx';
-import { ENVIRONMENT } from '../../environment/environment.ts';
-import { errorToast } from '../../shared/services/utils/index.service.ts';
-import { formatBadgeCount } from '../../shared/services/transformations/index.service.ts';
-import { NavService } from '../../shared/services/nav/index.service.ts';
-import { AccessJWTService } from '../../shared/backend/api/access-jwt.service.ts';
-import { JWTService } from '../../shared/backend/auth/jwt/index.service.ts';
-import { DataJoinService } from '../../shared/backend/data-join/index.service.ts';
-import { useBoundStore } from '../../shared/store/index.store.ts';
-import GlobalLoader from '../global-loader/index.component.tsx';
-import AppInstaller from '../../shared/components/app-installer/index.component.tsx';
-import OnlineStatus from '../../shared/components/online-status/index.component.tsx';
-import ConfirmationDialog from '../../shared/components/confirmation-dialog/index.component.tsx';
-import { IMainNavigationItem } from './types.ts';
+} from '@/shared/shadcn/components/ui/sheet.tsx';
+import { ENVIRONMENT } from '@/environment/environment.ts';
+import { errorToast } from '@/shared/services/utils/index.service.ts';
+import { formatBadgeCount } from '@/shared/services/transformations/index.service.ts';
+import { NavService } from '@/shared/services/nav/index.service.ts';
+import { AccessJWTService } from '@/shared/backend/api/access-jwt.service.ts';
+import { JWTService } from '@/shared/backend/auth/jwt/index.service.ts';
+import { DataJoinService } from '@/shared/backend/data-join/index.service.ts';
+import { useBoundStore } from '@/shared/store/index.store.ts';
+import AppInstaller from '@/shared/components/app-installer/index.component.tsx';
+import OnlineStatus from '@/shared/components/online-status/index.component.tsx';
+import ConfirmationDialog from '@/shared/components/confirmation-dialog/index.component.tsx';
+import GlobalLoader from '@/pages/global-loader/index.component.tsx';
+import { IMainNavigationItem } from '@/pages/app/types.ts';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
@@ -171,6 +171,7 @@ const App = () => {
     const __refetchEssentials = async (retryDelaySchedule: number[]): Promise<void> => {
       try {
         setAppEssentials(await DataJoinService.getAppEssentials());
+        console.log('Refetched App Essentials');
         return undefined;
       } catch (e) {
         if (!retryDelaySchedule.length) {

@@ -1,24 +1,20 @@
 import { memo, useMemo } from 'react';
 import { KeyRound, Copy } from 'lucide-react';
-import {
-  Tooltip,
-  TooltipTrigger,
-  TooltipContent,
-} from '../../../shared/shadcn/components/ui/tooltip.tsx';
+import { Tooltip, TooltipTrigger, TooltipContent } from '@/shared/shadcn/components/ui/tooltip.tsx';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '../../../shared/shadcn/components/ui/dialog.tsx';
-import { Button } from '../../../shared/shadcn/components/ui/button.tsx';
-import { ClipboardService } from '../../../shared/services/clipboard/index.service.ts';
-import { UserService } from '../../../shared/backend/auth/user/index.service.ts';
-import { useAPIRequest } from '../../../shared/hooks/api-request/index.hook.ts';
-import PageLoadError from '../../../shared/components/page-load-error/index.component.tsx';
-import PageLoader from '../../../shared/components/page-loader/index.component.tsx';
-import { IDisplayOTPSecretProps } from './types.ts';
+} from '@/shared/shadcn/components/ui/dialog.tsx';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
+import { ClipboardService } from '@/shared/services/clipboard/index.service.ts';
+import { UserService } from '@/shared/backend/auth/user/index.service.ts';
+import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts';
+import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
+import PageLoader from '@/shared/components/page-loader/index.component.tsx';
+import { IDisplayOTPSecretProps } from '@/pages/app/users/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

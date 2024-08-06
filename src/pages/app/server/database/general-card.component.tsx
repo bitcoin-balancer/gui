@@ -3,9 +3,9 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from '../../../../shared/shadcn/components/ui/card.tsx';
-import { formatFileSize } from '../../../../shared/services/transformations/index.service.ts';
-import { IDatabaseSummary } from '../../../../shared/backend/database/types.ts';
+} from '@/shared/shadcn/components/ui/card.tsx';
+import { formatFileSize } from '@/shared/services/transformations/index.service.ts';
+import { IDatabaseSummary } from '@/shared/backend/database/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

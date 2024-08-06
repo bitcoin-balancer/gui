@@ -1,6 +1,6 @@
-import { IVersion } from '../../../backend/version/index.service.ts';
-import { IUser } from '../../../backend/auth/user/index.service.ts';
-import { IAppEssentials, ICompactAppEssentials } from '../../../backend/data-join/index.service.ts';
+import { IVersion } from '@/shared/backend/version/index.service.ts';
+import { IUser } from '@/shared/backend/auth/user/index.service.ts';
+import { IAppEssentials, ICompactAppEssentials } from '@/shared/backend/data-join/index.service.ts';
 
 /* ************************************************************************************************
  *                                             TYPES                                              *
