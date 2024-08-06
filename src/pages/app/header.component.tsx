@@ -1,3 +1,4 @@
+import { formatRelative } from 'date-fns';
 import { memo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
@@ -248,18 +249,36 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
             <SheetDescription
               className='text-left'
             >
-              <Button
-                variant='link'
-                className='justify-start p-0 -mt-6 text-light text-xs'
-                onClick={NavService.openGitHubPage}
-              >
-                <CodeXml
-                  className='mr-1 w-4 h-4'
-                />
-                <p
-                  className='max-w-48 truncate'
-                >v1.0.0 · 0a23ed6 · last month</p>
-              </Button>
+              {
+                (
+                  ENVIRONMENT.version === version.gui.latest.version
+                  && version.api.running === version.api.latest.version
+                )
+                  ? <Button
+                    variant='link'
+                    className='justify-start p-0 -mt-6 text-light text-xs'
+                    onClick={() => NavService.openGUICommit(version.gui.latest.sha)}
+                  >
+                    <CodeXml
+                      className='mr-1 w-4 h-4'
+                    />
+                    <p className='max-w-48 text-ellipsis overflow-hidden hover:opacity-70'>
+                      v{version.gui.latest.version}&nbsp;·&nbsp;
+                      {version.gui.latest.sha.slice(0, 7)}&nbsp;·&nbsp;
+                      {formatRelative(version.gui.latest.eventTime, new Date())}
+                    </p>
+                  </Button>
+                  : <Button
+                    variant='link'
+                    className='justify-start p-0 -mt-6 text-light text-xs'
+                    onClick={() => navigateFromSidenav(NavService.platformUpdate())}
+                  >
+                    <CodeXml
+                      className='mr-1 w-4 h-4'
+                    />
+                    <p>Update available</p>
+                  </Button>
+              }
             </SheetDescription>
           </SheetHeader>
 
