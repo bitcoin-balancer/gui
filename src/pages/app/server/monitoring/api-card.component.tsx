@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { formatRelative } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import { CodeXml, ExternalLink, Github } from 'lucide-react';
@@ -6,7 +7,8 @@ import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import { Card, CardContent } from '@/shared/shadcn/components/ui/card.tsx';
 import { ENVIRONMENT } from '@/environment/environment.ts';
 import { buildAPIURL } from '@/shared/backend/api/utils.ts';
-import { IServerState } from '@/shared/backend/server/types.ts';
+import { VersionService } from '@/shared/backend/version/index.service.ts';
+import { IServerState } from '@/shared/backend/server/index.service.ts';
 import { formatDate } from '@/shared/services/transformations/index.service.ts';
 import { NavService } from '@/shared/services/nav/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
@@ -42,6 +44,17 @@ const APICard = ({ data }: { data: IServerState }) => {
 
 
   /* **********************************************************************************************
+   *                                       REACTIVE VALUES                                        *
+   ********************************************************************************************** */
+
+  // available service updates
+  const availableUpdates = useMemo(() => VersionService.getAvailableUpdates(version), [version]);
+
+
+
+
+
+  /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
@@ -71,10 +84,7 @@ const APICard = ({ data }: { data: IServerState }) => {
             className='text-left'>
 
               {
-                (
-                  ENVIRONMENT.version === version.gui.latest.version
-                  && version.api.running === version.api.latest.version
-                )
+                availableUpdates === null
                   ? <Button
                     variant='link'
                     className='justify-start p-0 -mt-1 text-light text-xs hover:opacity-70'

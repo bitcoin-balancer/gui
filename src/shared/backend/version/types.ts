@@ -12,8 +12,8 @@ type IVersionService = {
   // properties
   // ...
 
-  // initializer
-  // ...
+  // helpers
+  getAvailableUpdates: (version: IVersion) => IAvailableUpdates;
 };
 
 
@@ -108,6 +108,13 @@ type IVersion = {
   refetchTime: number;
 };
 
+/**
+ * Available Updates
+ * Updates can affect one or both services. The API can be updated by simply executing the
+ * down-build-up action in the remote while the GUI may need to be updated via the Service Worker.
+ */
+type IAvailableUpdates = 'GUI' | 'API' | 'BOTH' | null;
+
 
 
 
@@ -125,4 +132,5 @@ export type {
   ICommitRecord,
   IServiceVersion,
   IVersion,
+  IAvailableUpdates,
 };

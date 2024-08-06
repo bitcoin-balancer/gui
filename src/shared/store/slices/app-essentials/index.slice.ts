@@ -33,6 +33,16 @@ const __onNewCompactAppEssentials = (
 const __onNewAppEssentials = (payload: IAppEssentials): IAppEssentials => ({
   serverTime: payload.serverTime,
   version: payload.version,
+  /* version: {
+    gui: {
+      ...payload.version.gui,
+    },
+    api: {
+      ...payload.version.api,
+      running: '1.0.1',
+    },
+    refetchTime: 0,
+  }, */
   unreadAPIErrors: payload.unreadAPIErrors,
   user: payload.user,
 });

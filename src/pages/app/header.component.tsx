@@ -1,5 +1,5 @@
 import { formatRelative } from 'date-fns';
-import { memo, useState } from 'react';
+import { memo, useState, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Menu,
@@ -30,8 +30,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/shared/shadcn/components/ui/sheet.tsx';
-import { ENVIRONMENT } from '@/environment/environment';
 import { JWTService } from '@/shared/backend/auth/jwt/index.service.ts';
+import { VersionService } from '@/shared/backend/version/index.service';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { NavService } from '@/shared/services/nav/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
@@ -54,6 +54,17 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
   const version = useBoundStore((state) => state.version!);
   const [isSigningOut, setIsSigningOut] = useState<boolean>(false);
+
+
+
+
+
+  /* **********************************************************************************************
+   *                                       REACTIVE VALUES                                        *
+   ********************************************************************************************** */
+
+  // available service updates
+  const availableUpdates = useMemo(() => VersionService.getAvailableUpdates(version), [version]);
 
 
 
@@ -250,10 +261,7 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
               className='text-left'
             >
               {
-                (
-                  ENVIRONMENT.version === version.gui.latest.version
-                  && version.api.running === version.api.latest.version
-                )
+                availableUpdates === null
                   ? <Button
                     variant='link'
                     className='justify-start p-0 -mt-6 text-light text-xs hover:opacity-70'
@@ -305,12 +313,10 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
               <CloudDownload /> <span className='ml-2'>Platform update</span>
               <span className='flex-1'></span>
               {
-                (
-                  ENVIRONMENT.version !== version.gui.latest.version
-                  || version.api.running !== version.api.latest.version
-                ) && <Badge
+                availableUpdates !== null
+                && <Badge
                   className='text-xs py-0.5 px-1.5'
-                >1</Badge>
+                >{availableUpdates === 'BOTH' ? 2 : 1}</Badge>
               }
             </Button>
 
