@@ -9,10 +9,10 @@ import { IMainNavigationItem } from '@/pages/app/types.ts';
  ************************************************************************************************ */
 
 /**
- * Bottom Navigation
+ * Mobile Tabs
  * Component in charge of providing navigation capabilities for mobile.
  */
-const BottomNavigation = memo(({ items }: { items: IMainNavigationItem[] }) => {
+const MobileTabs = memo(({ items }: { items: IMainNavigationItem[] }) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
@@ -73,4 +73,4 @@ const BottomNavigation = memo(({ items }: { items: IMainNavigationItem[] }) => {
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export default BottomNavigation;
+export default MobileTabs;
