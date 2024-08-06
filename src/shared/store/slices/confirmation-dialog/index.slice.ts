@@ -7,7 +7,7 @@ import { IConfirmationDialogConfig, IConfirmationDialogSlice } from './types';
 
 /**
  * Confirmation Dialog Slice
- * Slice in charge of managing the state of the confirmation dialog.
+ * Creates the slice in charge of managing the state of the confirmation dialog.
  */
 const createConfirmationDialogSlice: StateCreator<IConfirmationDialogSlice> = (
   set,

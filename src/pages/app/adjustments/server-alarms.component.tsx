@@ -129,7 +129,10 @@ const ServerAlarms = ({ open, onOpenChange }: IFormProps) => {
   } else {
     content = (
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          noValidate
+        >
 
           <FormField
             control={form.control}
@@ -138,7 +141,15 @@ const ServerAlarms = ({ open, onOpenChange }: IFormProps) => {
               <FormItem>
                 <FormLabel>Max. CPU Load%</FormLabel>
                 <FormControl>
-                  <Input type='number' placeholder='75' {...field} autoComplete='off' disabled={isSubmitting} min={30} max={99} />
+                  <Input
+                    type='number'
+                    placeholder='75'
+                    {...field}
+                    autoComplete='off'
+                    disabled={isSubmitting}
+                    min={30}
+                    max={99}
+                    />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -157,7 +168,15 @@ const ServerAlarms = ({ open, onOpenChange }: IFormProps) => {
               <FormItem className='mt-5'>
                 <FormLabel>Max. Memory Usage%</FormLabel>
                 <FormControl>
-                  <Input type='number' placeholder='75' {...field} autoComplete='off' disabled={isSubmitting} min={30} max={99} />
+                  <Input
+                    type='number'
+                    placeholder='75'
+                    {...field}
+                    autoComplete='off'
+                    disabled={isSubmitting}
+                    min={30}
+                    max={99}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -176,7 +195,15 @@ const ServerAlarms = ({ open, onOpenChange }: IFormProps) => {
               <FormItem className='mt-5'>
                 <FormLabel>Max. File System Usage%</FormLabel>
                 <FormControl>
-                  <Input type='number' placeholder='80' {...field} autoComplete='off' disabled={isSubmitting} min={30} max={99} />
+                  <Input
+                    type='number'
+                    placeholder='80'
+                    {...field}
+                    autoComplete='off'
+                    disabled={isSubmitting}
+                    min={30}
+                    max={99}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -189,7 +216,18 @@ const ServerAlarms = ({ open, onOpenChange }: IFormProps) => {
           />
 
           <DialogFooter>
-            <Button type='submit' disabled={isSubmitting} className='mt-7 w-full'>{isSubmitting && <Loader2 className='mr-2 h-4 w-4 animate-spin' />} Update configuration</Button>
+            <Button
+              type='submit'
+              disabled={isSubmitting}
+              className='mt-7 w-full'
+            >
+              {
+                isSubmitting
+                && <Loader2
+                  className='mr-2 h-4 w-4 animate-spin'
+                />
+              } Update configuration
+            </Button>
           </DialogFooter>
 
         </form>
@@ -198,9 +236,14 @@ const ServerAlarms = ({ open, onOpenChange }: IFormProps) => {
     );
   }
   return (
-    <Dialog open={open} onOpenChange={() => onOpenChange(false)}>
+    <Dialog
+      open={open}
+      onOpenChange={onOpenChange}
+    >
 
-      <DialogContent className='max-h-dvh overflow-y-auto overflow-x-hidden'>
+      <DialogContent
+        className='max-h-dvh overflow-y-auto overflow-x-hidden'
+      >
 
         <DialogHeader>
           <DialogTitle>Update Alarms</DialogTitle>

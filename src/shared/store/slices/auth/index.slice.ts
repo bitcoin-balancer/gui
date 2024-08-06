@@ -7,7 +7,7 @@ import { IAuthenticatedSlice } from './types';
 
 /**
  * Authenticated Slice
- * Slice in charge of managing the state of the user's authentication.
+ * Creates the slice in charge of managing the state of the user's authentication.
  */
 const createAuthenticatedSlice: StateCreator<IAuthenticatedSlice> = (
   set,

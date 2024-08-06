@@ -1,5 +1,5 @@
 import { APIService } from '../api/index.service.ts';
-import { IDataJoinService, IAppEssentials } from './types.ts';
+import { IDataJoinService, IAppEssentials, ICompactAppEssentials } from './types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -70,5 +70,10 @@ const DataJoinService = dataJoinServiceFactory();
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export {
+  // service
   DataJoinService,
+
+  // types
+  type IAppEssentials,
+  type ICompactAppEssentials,
 };

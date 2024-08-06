@@ -58,8 +58,13 @@ const Dashboard = () => {
     return <PageLoader />;
   }
   return (
-    <div className='page-container flex flex-col sm:flex-row justify-center items-start gap-5 animate-in fade-in duration-700'>
-      <section className='w-full lg:w-9/12 xl:w-7/12 2xl:w-8/12'>
+    <div
+      className='page-container flex flex-col sm:flex-row justify-center items-start gap-5 animate-in fade-in duration-700'
+    >
+
+      <section
+        className='w-full lg:w-9/12 xl:w-7/12 2xl:w-8/12'
+      >
         <Card>
           <CardHeader>
             <CardTitle>Card Title</CardTitle>
@@ -71,7 +76,9 @@ const Dashboard = () => {
         </Card>
       </section>
 
-      <aside className='flex-1'>
+      <aside
+        className='flex-1'
+      >
         <Card>
           <CardHeader>
             <CardTitle>Card Title</CardTitle>
@@ -82,6 +89,7 @@ const Dashboard = () => {
           </CardContent>
         </Card>
       </aside>
+
     </div>
   );
 };

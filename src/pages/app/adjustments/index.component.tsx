@@ -103,26 +103,47 @@ const Adjustments = () => {
    ********************************************************************************************** */
   return (
     <>
-      <div className='page-container flex justify-center items-start animate-in fade-in duration-700'>
+      <div
+        className='page-container flex justify-center items-start animate-in fade-in duration-700'
+      >
 
-        <section className='w-full md:w-8/12 lg:w-6/12 xl:w-5/12 2xl:w-4/12'>
+        <section
+          className='w-full md:w-8/12 lg:w-6/12 xl:w-5/12 2xl:w-4/12'
+        >
 
-          <header className="flex justify-start items-center">
-            <h1 className="text-2xl md:text-3xl">Adjustments</h1>
-
+          <header
+            className='flex justify-start items-center'
+          >
+            <h1
+              className='text-2xl md:text-3xl'
+            >Adjustments</h1>
             <span className="flex-1"></span>
           </header>
 
-          <article className='mt-5'>
+          <article
+            className='mt-5'
+          >
             <Card>
-              <CardContent className='p-0'>
+              <CardContent
+                className='p-0'
+              >
                 {FORMS.map((form, i) => (
                   <Fragment key={form.id}>
-                    <Button variant='ghost' className='flex justify-start items-center w-full h-20 text-left' onClick={() => setActiveDialog(form.id)}>
+                    <Button
+                      variant='ghost'
+                      className='flex justify-start items-center w-full h-20 text-left'
+                      onClick={() => setActiveDialog(form.id)}
+                    >
                       {form.icon}
-                      <div className='ml-2 max-w-52 sm:max-w-none'>
-                        <p className='font-bold'>{form.title}</p>
-                        <p className='text-light text-xs truncate'>{form.description}</p>
+                      <div
+                        className='ml-2 max-w-52 sm:max-w-none'
+                      >
+                        <p
+                          className='font-bold'
+                        >{form.title}</p>
+                        <p
+                          className='text-light text-xs truncate'
+                        >{form.description}</p>
                       </div>
                     </Button>
                     {(i < FORMS.length - 1) && <Separator />}
@@ -136,8 +157,17 @@ const Adjustments = () => {
 
       </div>
 
-      {/* FORM DIALOGS */}
-      {activeDialog === 'SERVER_ALARMS' && <ServerAlarms open={activeDialog === 'SERVER_ALARMS' && !closingDialog} onOpenChange={handleOnOpenChange} />}
+
+
+      {/* ***************
+        * FORM DIALOGS *
+        *************** */}
+      {
+        activeDialog === 'SERVER_ALARMS'
+        && <ServerAlarms
+          open={activeDialog === 'SERVER_ALARMS' && !closingDialog}
+          onOpenChange={handleOnOpenChange}
+        />}
     </>
   );
 };
