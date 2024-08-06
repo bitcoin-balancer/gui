@@ -58,6 +58,9 @@ const formatDateByBreakpoint = (date: number, breakpoint: IBreakpoint): string =
 };
 
 
+
+
+
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
@@ -170,13 +173,27 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
    ********************************************************************************************** */
   return (
     <>
-      {/* TABLE ROW */}
-      <TableRow className={`${isSubmitting ? 'opacity-50' : ''} animate-in fade-in duration-700`}>
+      {/* ***********
+        * TABLE ROW *
+        *********** */}
+      <TableRow
+        className={`${isSubmitting ? 'opacity-50' : ''} animate-in fade-in duration-700`}
+      >
+        {/* *****
+          * UID *
+          ***** */}
         <TableCell>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant='ghost' size='sm' className='max-w-20 md:max-w-24 lg:max-w-32 xl:max-w-36 2xl:max-w-40' onClick={() => ClipboardService.writeText(user.uid)}>
-                <p className='text-ellipsis overflow-hidden font-bold'>{user.uid}</p>
+              <Button
+                variant='ghost'
+                size='sm'
+                className='max-w-20 md:max-w-24 lg:max-w-32 xl:max-w-36 2xl:max-w-40'
+                onClick={() => ClipboardService.writeText(user.uid)}
+              >
+                <p
+                  className='text-ellipsis overflow-hidden font-bold'
+                >{user.uid}</p>
               </Button>
             </TooltipTrigger>
             <TooltipContent>
@@ -184,16 +201,33 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
             </TooltipContent>
           </Tooltip>
         </TableCell>
+
+        {/* **********
+          * NICKNAME *
+          ********** */}
         <TableCell>
           <p className='font-bold'>{user.nickname}</p>
         </TableCell>
+
+        {/* ***********
+          * AUTHORITY *
+          *********** */}
         <TableCell>
           <Badge variant='secondary'>{user.authority}</Badge>
         </TableCell>
+
+        {/* ************
+          * OTP SECRET *
+          ************ */}
         <TableCell>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant='ghost' size='icon' onClick={() => setActiveDialog('DISPLAY_OTP_SECRET')} aria-label='Display OTP secret'>
+              <Button
+                variant='ghost'
+                size='icon'
+                onClick={() => setActiveDialog('DISPLAY_OTP_SECRET')}
+                aria-label='Display OTP secret'
+              >
                 <KeyRound aria-hidden='true' />
               </Button>
             </TooltipTrigger>
@@ -202,26 +236,90 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
             </TooltipContent>
           </Tooltip>
         </TableCell>
+
+        {/* **********
+          * CREATION *
+          ********** */}
         <TableCell>
           <p>{creation}</p>
         </TableCell>
+
+        {/* *********
+          * ACTIONS *
+          ********* */}
         <TableCell>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant='ghost' size='icon' aria-label='User actions menu' disabled={isSubmitting}>
-                {isSubmitting ? <Loader2 className="animate-spin" /> : <EllipsisVertical aria-hidden='true'/>}
+              <Button
+                variant='ghost'
+                size='icon'
+                aria-label='User actions menu'
+                disabled={isSubmitting}
+              >
+                {
+                  isSubmitting
+                    ? <Loader2 className='animate-spin' />
+                    : <EllipsisVertical aria-hidden='true'/>
+                }
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuLabel>{user.nickname}</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => setActiveDialog('UPDATE_NICKNAME')} disabled={user.authority === 5}><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update nickname</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setActiveDialog('UPDATE_AUTHORITY')} disabled={user.authority === 5}><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update authority</DropdownMenuItem>
-              <DropdownMenuItem onClick={updateOTPSecret} disabled={user.authority === 5}><UserPen aria-hidden='true' className='w-5 h-5 mr-1' /> Update OTP secret</DropdownMenuItem>
-              <DropdownMenuItem onClick={deleteUser} disabled={user.authority === 5}><UserMinus aria-hidden='true' className='w-5 h-5 mr-1' /> Delete user</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => setActiveDialog('UPDATE_NICKNAME')}
+                disabled={user.authority === 5}
+              >
+                <UserPen
+                  aria-hidden='true'
+                  className='w-5 h-5 mr-1'
+                /> Update nickname
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => setActiveDialog('UPDATE_AUTHORITY')}
+                disabled={user.authority === 5}
+              >
+                <UserPen
+                  aria-hidden='true'
+                  className='w-5 h-5 mr-1'
+                /> Update authority
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={updateOTPSecret}
+                disabled={user.authority === 5}
+              >
+                <UserPen
+                  aria-hidden='true'
+                  className='w-5 h-5 mr-1'
+                /> Update OTP secret
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={deleteUser}
+                disabled={user.authority === 5}
+              >
+                <UserMinus
+                  aria-hidden='true'
+                  className='w-5 h-5 mr-1'
+                /> Delete user
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => setActiveDialog('DISPLAY_AUTH_SESSIONS')}><Fingerprint aria-hidden='true' className='w-5 h-5 mr-1' /> Display auth sessions</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setActiveDialog('DISPLAY_PASSWORD_UPDATES')} disabled={user.authority === 5}><SquareAsterisk aria-hidden='true' className='w-5 h-5 mr-1' /> Display password updates</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => setActiveDialog('DISPLAY_AUTH_SESSIONS')}
+              >
+                <Fingerprint
+                  aria-hidden='true'
+                  className='w-5 h-5 mr-1'
+                /> Display auth sessions
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => setActiveDialog('DISPLAY_PASSWORD_UPDATES')}
+                disabled={user.authority === 5}
+              >
+                <SquareAsterisk
+                  aria-hidden='true'
+                  className='w-5 h-5 mr-1'
+                /> Display password updates
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </TableCell>
@@ -230,17 +328,61 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
 
 
 
+      {/* **************
+        * FORM DIALOGS *
+        ************** */}
+      {
+        activeDialog === 'UPDATE_NICKNAME'
+        && <UpdateNickname
+          open={activeDialog === 'UPDATE_NICKNAME' && !closingDialog}
+          onOpenChange={handleFormDismissal}
+          uid={user.uid}
+          nickname={user.nickname}
+        />
+      }
+      {
+        activeDialog === 'UPDATE_AUTHORITY'
+        && <UpdateAuthority
+          open={activeDialog === 'UPDATE_AUTHORITY' && !closingDialog}
+          onOpenChange={handleFormDismissal}
+          uid={user.uid}
+          nickname={user.nickname}
+          authority={user.authority}
+        />
+      }
 
-      {/* FORM DIALOGS */}
-      {activeDialog === 'UPDATE_NICKNAME' && <UpdateNickname open={activeDialog === 'UPDATE_NICKNAME' && !closingDialog} onOpenChange={handleFormDismissal} uid={user.uid} nickname={user.nickname} />}
-      {activeDialog === 'UPDATE_AUTHORITY' && <UpdateAuthority open={activeDialog === 'UPDATE_AUTHORITY' && !closingDialog} onOpenChange={handleFormDismissal} uid={user.uid} nickname={user.nickname} authority={user.authority} />}
 
 
-
-      {/* DISPLAY DIALOGS */}
-      {activeDialog === 'DISPLAY_OTP_SECRET' && <DisplayOTPSecret open={activeDialog === 'DISPLAY_OTP_SECRET' && !closingDialog} onOpenChange={handleFormDismissal} uid={user.uid} nickname={user.nickname} />}
-      {activeDialog === 'DISPLAY_AUTH_SESSIONS' && <DisplayAuthSessions open={activeDialog === 'DISPLAY_AUTH_SESSIONS' && !closingDialog} onOpenChange={handleFormDismissal} uid={user.uid} nickname={user.nickname} />}
-      {activeDialog === 'DISPLAY_PASSWORD_UPDATES' && <DisplayPasswordUpdates open={activeDialog === 'DISPLAY_PASSWORD_UPDATES' && !closingDialog} onOpenChange={handleFormDismissal} uid={user.uid} nickname={user.nickname} />}
+      {/* *****************
+        * DISPLAY DIALOGS *
+        ***************** */}
+      {
+        activeDialog === 'DISPLAY_OTP_SECRET'
+        && <DisplayOTPSecret
+          open={activeDialog === 'DISPLAY_OTP_SECRET' && !closingDialog}
+          onOpenChange={handleFormDismissal}
+          uid={user.uid}
+          nickname={user.nickname}
+        />
+      }
+      {
+        activeDialog === 'DISPLAY_AUTH_SESSIONS'
+        && <DisplayAuthSessions
+          open={activeDialog === 'DISPLAY_AUTH_SESSIONS' && !closingDialog}
+          onOpenChange={handleFormDismissal}
+          uid={user.uid}
+          nickname={user.nickname}
+        />
+      }
+      {
+        activeDialog === 'DISPLAY_PASSWORD_UPDATES'
+        && <DisplayPasswordUpdates
+          open={activeDialog === 'DISPLAY_PASSWORD_UPDATES' && !closingDialog}
+          onOpenChange={handleFormDismissal}
+          uid={user.uid}
+          nickname={user.nickname}
+        />
+      }
     </>
   );
 };

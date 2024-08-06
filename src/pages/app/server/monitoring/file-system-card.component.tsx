@@ -27,15 +27,26 @@ import ResourcePieChart from '@/pages/app/server/monitoring/resource-pie-chart.c
  * Component in charge of displaying information regarding the current state of the File System.
  */
 const FileSystemCard = ({ data }: { data: IFileSystemState }) => (
-  <Card className='w-full'>
-    <CardHeader className='flex flex-row justify-start items-center pb-0'>
-      <CardTitle className='text-xl'>File System</CardTitle>
+  <Card
+    className='w-full'
+  >
+    <CardHeader
+      className='flex flex-row justify-start items-center pb-0'
+    >
+      <CardTitle
+        className='text-xl'
+      >File System</CardTitle>
       <span className='flex-1'></span>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant='ghost' size='icon'><Ellipsis aria-hidden='true' /></Button>
+          <Button
+            variant='ghost'
+            size='icon'
+          ><Ellipsis aria-hidden='true' /></Button>
         </DialogTrigger>
-        <DialogContent className='max-h-dvh overflow-y-auto overflow-x-hidden'>
+        <DialogContent
+          className='max-h-dvh overflow-y-auto overflow-x-hidden'
+        >
           <DialogHeader>
             <DialogTitle>File System</DialogTitle>
             <DialogDescription>
@@ -43,33 +54,57 @@ const FileSystemCard = ({ data }: { data: IFileSystemState }) => (
             </DialogDescription>
           </DialogHeader>
 
-          <div className='flex justify-center items-center'>
-            <p className='text-light text-sm'>FS</p>
+          <div
+            className='flex justify-center items-center'
+          >
+            <p
+              className='text-light text-sm'
+            >FS</p>
             <span className='flex-1'></span>
             <p>{data.fs}</p>
           </div>
-          <div className='flex justify-center items-center'>
-            <p className='text-light text-sm'>Mount</p>
+          <div
+            className='flex justify-center items-center'
+          >
+            <p
+              className='text-light text-sm'
+            >Mount</p>
             <span className='flex-1'></span>
             <p>{data.mount}</p>
           </div>
-          <div className='flex justify-center items-center'>
-            <p className='text-light text-sm'>Type</p>
+          <div
+            className='flex justify-center items-center'
+          >
+            <p
+              className='text-light text-sm'
+            >Type</p>
             <span className='flex-1'></span>
             <p>{data.type}</p>
           </div>
-          <div className='flex justify-center items-center'>
-            <p className='text-light text-sm'>Size</p>
+          <div
+            className='flex justify-center items-center'
+          >
+            <p
+              className='text-light text-sm'
+            >Size</p>
             <span className='flex-1'></span>
             <p><strong>{formatFileSize(data.size)}</strong></p>
           </div>
-          <div className='flex justify-center items-center'>
-            <p className='text-light text-sm'>Used</p>
+          <div
+            className='flex justify-center items-center'
+          >
+            <p
+              className='text-light text-sm'
+            >Used</p>
             <span className='flex-1'></span>
             <p>{formatFileSize(data.used)}</p>
           </div>
-          <div className='flex justify-center items-center'>
-            <p className='text-light text-sm'>Available</p>
+          <div
+            className='flex justify-center items-center'
+          >
+            <p
+              className='text-light text-sm'
+            >Available</p>
             <span className='flex-1'></span>
             <p>{formatFileSize(data.available)}</p>
           </div>
@@ -78,7 +113,10 @@ const FileSystemCard = ({ data }: { data: IFileSystemState }) => (
     </CardHeader>
 
     <CardContent>
-      <ResourcePieChart valueLabel='Usage%' value={data.use} />
+      <ResourcePieChart
+        valueLabel='Usage%'
+        value={data.use}
+      />
     </CardContent>
 
   </Card>

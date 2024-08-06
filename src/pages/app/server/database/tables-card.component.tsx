@@ -45,12 +45,17 @@ const TablesCard = ({ data }: { data: IDatabaseSummary }) => {
       <CardContent className='p-0'>
         {data.tables.map((item, i) => (
           <Fragment key={item.name}>
-            <div className='flex justify-start items-center py-4 px-2' style={{
-              background: `linear-gradient(90deg, ${ColorService.SLATE.H100} ${percentageRepresentations[i]}%, #FFFFFF ${percentageRepresentations[i]}%)`,
-            }}>
+            <div
+              className='flex justify-start items-center py-4 px-2'
+              style={{
+                background: `linear-gradient(90deg, ${ColorService.SLATE.H100} ${percentageRepresentations[i]}%, #FFFFFF ${percentageRepresentations[i]}%)`,
+              }}
+            >
               <p>{item.name}</p>
               <span className='flex-1'></span>
-              <p className='text-light text-sm'>{formatFileSize(item.size)}</p>
+              <p
+                className='text-light text-sm'
+              >{formatFileSize(item.size)}</p>
             </div>
             {(i < data.tables.length - 1) && <Separator />}
           </Fragment>

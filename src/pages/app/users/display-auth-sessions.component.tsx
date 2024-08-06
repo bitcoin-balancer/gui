@@ -61,7 +61,9 @@ const DisplayAuthSessions = memo(({
     content = <PageLoader variant='dialog' />;
   } else if (data.length) {
     content = (
-      <Table className='animate-in fade-in duration-700'>
+      <Table
+        className='animate-in fade-in duration-700'
+      >
         <TableCaption>A list of refresh JWTs</TableCaption>
         <TableHeader>
           <TableRow>
@@ -76,7 +78,14 @@ const DisplayAuthSessions = memo(({
               <TableCell>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button variant='ghost' className='max-w-24 sm:max-w-44 md:max-w-52' onClick={() => ClipboardService.writeText(record.token)}><p className='truncate font-normal'>{record.token}</p></Button>
+                    <Button
+                      variant='ghost'
+                      className='max-w-24 sm:max-w-44 md:max-w-52'
+                      onClick={() => ClipboardService.writeText(record.token)}>
+                        <p
+                          className='truncate font-normal'
+                        >{record.token}</p>
+                    </Button>
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>Click to copy</p>
@@ -90,12 +99,19 @@ const DisplayAuthSessions = memo(({
       </Table>
     );
   } else {
-    content = <p className='text-light text-sm text-center my-5 animate-in fade-in duration-700'>No records were found</p>;
+    content = <p
+      className='text-light text-sm text-center my-5 animate-in fade-in duration-700'
+    >No records were found</p>;
   }
   return (
-    <Dialog open={open} onOpenChange={() => onOpenChange(false)}>
+    <Dialog
+      open={open}
+      onOpenChange={() => onOpenChange(false)}
+    >
 
-      <DialogContent className='max-h-dvh overflow-y-auto overflow-x-hidden'>
+      <DialogContent
+        className='max-h-dvh overflow-y-auto overflow-x-hidden'
+      >
 
         <DialogHeader>
           <DialogTitle>{nickname}'s Auth Sessions</DialogTitle>

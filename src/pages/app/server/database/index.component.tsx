@@ -46,35 +46,61 @@ const Database = memo(({ setSidenavOpen }: IServerComponentProps) => {
   }
   return (
     <div className='page-container flex justify-center items-start animate-in fade-in duration-700'>
+
       <section className='w-full md:w-8/12 lg:w-6/12 xl:w-5/12 2xl:w-4/12'>
 
-        {/* HEADER */}
-        <header className='flex justify-start items-center md:hidden mt-2 mb-5'>
-          <Button variant='ghost' size='icon' className='mr-2' onClick={() => setSidenavOpen(true)} aria-label='Open Side Navigation'><Menu aria-hidden='true' /></Button>
-          <h1 className='text-2xl md:text-3xl font-bold'>Database</h1>
+        {/* ********
+          * HEADER *
+          ******** */}
+        <header
+          className='flex justify-start items-center md:hidden mt-2 mb-5'
+        >
+          <Button
+            variant='ghost'
+            size='icon'
+            className='mr-2'
+            onClick={() => setSidenavOpen(true)}
+            aria-label='Open Side Navigation'
+          ><Menu aria-hidden='true' /></Button>
+          <h1
+            className='text-2xl md:text-3xl font-bold'
+          >Database</h1>
         </header>
 
 
 
-        {/* CONTENT */}
-        <Tabs defaultValue='general' className='w-full'>
-          <TabsList className='grid w-full grid-cols-2'>
+        {/* *********
+          * CONTENT *
+          ********* */}
+        <Tabs
+          defaultValue='general'
+          className='w-full'
+        >
+          <TabsList
+            className='grid w-full grid-cols-2'
+          >
             <TabsTrigger value='general'>General</TabsTrigger>
             <TabsTrigger value='tables'>Tables</TabsTrigger>
           </TabsList>
 
-          {/* GENERAL */}
+          {/* *********
+            * GENERAL *
+            ********* */}
           <TabsContent value='general'>
             <GeneralCard data={data} />
           </TabsContent>
 
-          {/* TABLES */}
+
+          {/* ********
+            * TABLES *
+            ******** */}
           <TabsContent value='tables'>
             <TablesCard data={data} />
           </TabsContent>
         </Tabs>
 
       </section>
+
     </div>
   );
 });

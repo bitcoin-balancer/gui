@@ -38,12 +38,19 @@ const APIErrorDialog = ({ open, onOpenChange, record }: IAPIErrorDialogProps) =>
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog
+      open={open}
+      onOpenChange={onOpenChange}
+    >
 
-      <DialogContent className='max-h-dvh overflow-y-auto overflow-x-hidden max-w-[500px]'>
+      <DialogContent
+        className='max-h-dvh overflow-y-auto overflow-x-hidden max-w-[500px]'
+      >
 
         <DialogHeader>
-          <DialogTitle className='flex justify-center sm:justify-start items-center'>
+          <DialogTitle
+            className='flex justify-center sm:justify-start items-center'
+          >
             API Error
             <a
               className='ml-2'
@@ -59,28 +66,43 @@ const APIErrorDialog = ({ open, onOpenChange, record }: IAPIErrorDialogProps) =>
         </DialogHeader>
 
 
-        <div className='flex justify-center items-center'>
-          <p className='text-light text-sm'>
-              Date
-          </p>
+        <div
+          className='flex justify-center items-center'
+        >
+          <p
+            className='text-light text-sm'
+          >Date</p>
           <span className='flex-1'></span>
           <p>{formatDate(record.event_time, 'datetime-medium')}</p>
         </div>
 
-        <div className='flex justify-center items-center mt-2'>
-          <p className='text-light text-sm'>ID</p>
+        <div
+          className='flex justify-center items-center mt-2'
+        >
+          <p
+            className='text-light text-sm'
+          >ID</p>
           <span className='flex-1'></span>
           <p>{record.id}</p>
         </div>
 
         {
           typeof record.uid === 'string'
-          && <div className='flex justify-center items-center mt-2'>
-            <p className='text-light text-sm'>UID</p>
+          && <div
+            className='flex justify-center items-center mt-2'
+          >
+            <p
+              className='text-light text-sm'
+            >UID</p>
             <span className='flex-1'></span>
             <Tooltip>
-              <TooltipTrigger onClick={() => ClipboardService.writeText(record.uid!)} tabIndex={-1}>
-                <p className='max-w-44 sm:max-w-96 xl:max-w-[400px] truncate'>{record.uid}</p>
+              <TooltipTrigger
+                onClick={() => ClipboardService.writeText(record.uid!)}
+                tabIndex={-1}
+              >
+                <p
+                  className='max-w-44 sm:max-w-96 xl:max-w-[400px] truncate'
+                >{record.uid}</p>
               </TooltipTrigger>
               <TooltipContent>
                 <p>{record.uid}</p>
@@ -91,12 +113,21 @@ const APIErrorDialog = ({ open, onOpenChange, record }: IAPIErrorDialogProps) =>
 
         {
           typeof record.uid === 'string'
-          && <div className='flex justify-center items-center mt-2'>
-            <p className='text-light text-sm'>IP address</p>
+          && <div
+            className='flex justify-center items-center mt-2'
+          >
+            <p
+              className='text-light text-sm'
+            >IP address</p>
             <span className='flex-1'></span>
             <Tooltip>
-              <TooltipTrigger onClick={() => ClipboardService.writeText(record.ip!)} tabIndex={-1}>
-                <p className='max-w-44 sm:max-w-96 xl:max-w-[400px] truncate'>{record.ip}</p>
+              <TooltipTrigger
+                onClick={() => ClipboardService.writeText(record.ip!)}
+                tabIndex={-1}
+              >
+                <p
+                  className='max-w-44 sm:max-w-96 xl:max-w-[400px] truncate'
+                >{record.ip}</p>
               </TooltipTrigger>
               <TooltipContent>
                 <p>{record.ip}</p>
@@ -105,12 +136,18 @@ const APIErrorDialog = ({ open, onOpenChange, record }: IAPIErrorDialogProps) =>
           </div>
         }
 
-        <div className='flex justify-center items-center mt-2'>
-          <p className='text-light text-sm'>Origin</p>
+        <div
+          className='flex justify-center items-center mt-2'
+        >
+          <p
+            className='text-light text-sm'
+          >Origin</p>
           <span className='flex-1'></span>
           <Tooltip>
             <TooltipTrigger tabIndex={-1}>
-              <p className='max-w-44 sm:max-w-96 xl:max-w-[400px] truncate'>{record.origin}</p>
+              <p
+                className='max-w-44 sm:max-w-96 xl:max-w-[400px] truncate'
+              >{record.origin}</p>
             </TooltipTrigger>
             <TooltipContent>
               <p>{record.origin}</p>
@@ -118,28 +155,45 @@ const APIErrorDialog = ({ open, onOpenChange, record }: IAPIErrorDialogProps) =>
           </Tooltip>
         </div>
 
-        <div className='flex justify-center items-center mt-2'>
-          <p className='text-light text-sm'>Code</p>
+        <div
+          className='flex justify-center items-center mt-2'
+        >
+          <p
+            className='text-light text-sm'
+          >Code</p>
           <span className='flex-1'></span>
           <p><strong>{code}</strong></p>
         </div>
 
-        <div className='flex flex-col sm:flex-row justify-start items-start mt-2'>
-          <p className='text-light text-sm min-w-24'>Message</p>
+        <div
+          className='flex flex-col sm:flex-row justify-start items-start mt-2'
+        >
+          <p
+            className='text-light text-sm min-w-24'
+          >Message</p>
           <span className='flex-1'></span>
-          <p className='mt-2 sm:mt-0 text-right'>{message}</p>
+          <p
+            className='mt-2 sm:mt-0 text-right'
+          >{message}</p>
         </div>
 
         {
           record.args !== null
-          && <div className='mt-2 overflow-x-auto'>
-            <p className='text-light text-sm'>Args</p>
-            <div className='mt-2'>
-              <pre className='text-sm'>
+          && <div
+            className='mt-2 overflow-x-auto'
+          >
+            <p
+              className='text-light text-sm'
+            >Args</p>
+            <div
+              className='mt-2'
+            >
+              <pre
+                className='text-sm'
+              >
                 {JSON.stringify(record.args, null, 2)}
               </pre>
             </div>
-            <span className='flex-1'></span>
           </div>
         }
 

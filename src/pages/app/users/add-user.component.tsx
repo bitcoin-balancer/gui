@@ -96,11 +96,16 @@ const AddUser = ({ children, dispatch }: IAddUserProps) => {
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={open}
+      onOpenChange={setOpen}
+    >
 
       <DialogTrigger asChild>{children}</DialogTrigger>
 
-      <DialogContent className='max-h-dvh overflow-y-auto overflow-x-hidden'>
+      <DialogContent
+        className='max-h-dvh overflow-y-auto overflow-x-hidden'
+      >
 
         <DialogHeader>
           <DialogTitle>Add user</DialogTitle>
@@ -110,7 +115,10 @@ const AddUser = ({ children, dispatch }: IAddUserProps) => {
         </DialogHeader>
 
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              noValidate
+            >
 
               <FormField
                 control={form.control}
@@ -119,7 +127,14 @@ const AddUser = ({ children, dispatch }: IAddUserProps) => {
                   <FormItem>
                     <FormLabel>Nickname</FormLabel>
                     <FormControl>
-                      <Input type='text' placeholder='satoshi' {...field} autoComplete='off' autoFocus disabled={isSubmitting} />
+                      <Input
+                        type='text'
+                        placeholder='satoshi'
+                        {...field}
+                        autoComplete='off'
+                        autoFocus
+                        disabled={isSubmitting}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -138,7 +153,15 @@ const AddUser = ({ children, dispatch }: IAddUserProps) => {
                   <FormItem className='mt-5'>
                     <FormLabel>Authority</FormLabel>
                     <FormControl>
-                      <Input type='number' placeholder='3' {...field} autoComplete='off' disabled={isSubmitting} min={1} max={4} />
+                      <Input
+                        type='number'
+                        placeholder='3'
+                        {...field}
+                        autoComplete='off'
+                        disabled={isSubmitting}
+                        min={1}
+                        max={4}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -151,11 +174,20 @@ const AddUser = ({ children, dispatch }: IAddUserProps) => {
               />
 
               <DialogFooter>
-                <Button type='submit' disabled={isSubmitting} className='mt-7 w-full'>{isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Add user</Button>
+                <Button
+                  type='submit'
+                  disabled={isSubmitting}
+                  className='mt-7 w-full'
+                >
+                  {
+                    isSubmitting
+                    && <Loader2
+                      className='mr-2 h-4 w-4 animate-spin'
+                    />} Add user
+                </Button>
               </DialogFooter>
 
             </form>
-
           </Form>
 
       </DialogContent>

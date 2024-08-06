@@ -22,9 +22,18 @@ const ResourcePieChart = ({
   total = 100,
 }: IResourcePieChartProps) => (
   <ChartContainer
-    config={{ value: { label: valueLabel }, active: { label: 'Active', color: ColorService.PRIMARY }, available: { label: 'Available', color: ColorService.SLATE.H200 } }} className={`mx-auto aspect-square ${className}`}>
+    config={{
+      value: { label: valueLabel },
+      active: { label: 'Active', color: ColorService.PRIMARY },
+      available: { label: 'Available', color: ColorService.SLATE.H200 },
+    }}
+    className={`mx-auto aspect-square ${className}`}
+  >
     <PieChartAPI>
-      <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+      <ChartTooltip
+        cursor={false}
+        content={<ChartTooltipContent hideLabel />}
+      />
       <Pie
         data={[
           { key: 'active', value, fill: ColorService.PRIMARY },
@@ -35,34 +44,35 @@ const ResourcePieChart = ({
         innerRadius={60}
         strokeWidth={5}
         >
-        <Label content={({ viewBox }) => {
-          if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
-            return (
-                <text
-                  x={viewBox.cx}
-                  y={viewBox.cy}
-                  textAnchor='middle'
-                  dominantBaseline='middle'
-                >
-                  <tspan
+        <Label
+          content={({ viewBox }) => {
+            if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
+              return (
+                  <text
                     x={viewBox.cx}
                     y={viewBox.cy}
-                    className='fill-foreground text-3xl font-bold'
+                    textAnchor='middle'
+                    dominantBaseline='middle'
                   >
-                    {value}
-                  </tspan>
-                  <tspan
-                    x={viewBox.cx}
-                    y={(viewBox.cy || 0) + 24}
-                    className='fill-muted-foreground'
-                  >
-                    {valueLabel}
-                  </tspan>
-                </text>
-            );
-          }
-          return undefined;
-        }}
+                    <tspan
+                      x={viewBox.cx}
+                      y={viewBox.cy}
+                      className='fill-foreground text-3xl font-bold'
+                    >
+                      {value}
+                    </tspan>
+                    <tspan
+                      x={viewBox.cx}
+                      y={(viewBox.cy || 0) + 24}
+                      className='fill-muted-foreground'
+                    >
+                      {valueLabel}
+                    </tspan>
+                  </text>
+              );
+            }
+            return undefined;
+          }}
         />
       </Pie>
     </PieChartAPI>

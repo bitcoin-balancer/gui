@@ -39,19 +39,40 @@ const Monitoring = memo(({ setSidenavOpen }: IServerComponentProps) => {
     return <PageLoader />;
   }
   return (
-    <div className='page-container flex justify-center items-start animate-in fade-in duration-700'>
-      <section className='w-full lg:w-10/12 xl:w-8/12 2xl:w-7/12'>
+    <div
+      className='page-container flex justify-center items-start animate-in fade-in duration-700'
+    >
 
-        {/* HEADER */}
-        <header className='flex justify-start items-center md:hidden mt-2 mb-5'>
-          <Button variant='ghost' size='icon' className='mr-2' onClick={() => setSidenavOpen(true)} aria-label='Open Side Navigation'><Menu aria-hidden='true' /></Button>
-          <h1 className='text-2xl md:text-3xl font-bold'>Monitoring</h1>
+      <section
+        className='w-full lg:w-10/12 xl:w-8/12 2xl:w-7/12'
+      >
+
+        {/* ********
+          * HEADER *
+          ******** */}
+        <header
+          className='flex justify-start items-center md:hidden mt-2 mb-5'
+        >
+          <Button
+            variant='ghost'
+            size='icon'
+            className='mr-2'
+            onClick={() => setSidenavOpen(true)}
+            aria-label='Open Side Navigation'
+          ><Menu aria-hidden='true' /></Button>
+          <h1
+            className='text-2xl md:text-3xl font-bold'
+          >Monitoring</h1>
         </header>
 
 
 
-        {/* FIRST ROW */}
-        <div className='flex flex-col md:flex-row justify-center items-start gap-5 lg:gap-10 2xl:gap-15'>
+        {/* ***********
+          * FIRST ROW *
+          *********** */}
+        <div
+          className='flex flex-col md:flex-row justify-center items-start gap-5 lg:gap-10 2xl:gap-15'
+        >
 
           {/* API CARD */}
           <APICard data={data} />
@@ -62,9 +83,12 @@ const Monitoring = memo(({ setSidenavOpen }: IServerComponentProps) => {
         </div>
 
 
-
-        {/* SECOND ROW */}
-        <div className='flex flex-col md:flex-row justify-center items-start gap-5 lg:gap-10 2xl:gap-15 mt-5 lg:mt-10 2xl:mt-15'>
+        {/* ************
+          * SECOND ROW *
+          ************ */}
+        <div
+          className='flex flex-col md:flex-row justify-center items-start gap-5 lg:gap-10 2xl:gap-15 mt-5 lg:mt-10 2xl:mt-15'
+        >
 
           {/* CPU CARD */}
           <CPUCard data={data.cpu} />
@@ -75,6 +99,7 @@ const Monitoring = memo(({ setSidenavOpen }: IServerComponentProps) => {
         </div>
 
       </section>
+
     </div>
   );
 });

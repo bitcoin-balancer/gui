@@ -150,45 +150,105 @@ const APIErrors = memo(({ setSidenavOpen }: IServerComponentProps) => {
   }
   return (
     <>
-      <div className='page-container flex justify-center items-start animate-in fade-in duration-700'>
-        <section className='w-full lg:w-11/12 xl:w-10/12 2xl:w-9/12'>
+      <div
+        className='page-container flex justify-center items-start animate-in fade-in duration-700'
+      >
+        <section
+          className='w-full lg:w-11/12 xl:w-10/12 2xl:w-9/12'
+        >
 
-          {/* HEADER */}
-          <header className='flex justify-start items-center mt-2 mb-5'>
-            <Button variant='ghost' size='icon' className='mr-2 md:hidden' onClick={() => setSidenavOpen(true)} aria-label='Open Side Navigation'><Menu aria-hidden='true' /></Button>
-            <h1 className='text-2xl md:text-3xl font-bold'>API Errors</h1>
+          {/* ********
+            * HEADER *
+            ******** */}
+          <header
+            className='flex justify-start items-center mt-2 mb-5'
+          >
+            <Button
+              variant='ghost'
+              size='icon'
+              className='mr-2 md:hidden'
+              onClick={() => setSidenavOpen(true)}
+              aria-label='Open Side Navigation'
+            ><Menu aria-hidden='true' /></Button>
+
+            <h1
+              className='text-2xl md:text-3xl font-bold'
+            >API Errors</h1>
             <span className='flex-1'></span>
 
-            <Button onClick={deleteAll} disabled={isSubmitting || data.length === 0} className='hidden sm:flex'>
-              <Trash aria-hidden='true' className='mr-2' /> Delete all
-            </Button>
-            <Button onClick={deleteAll} disabled={isSubmitting || data.length === 0} className='sm:hidden' size='icon' aria-label='Delete all of the API Errors'>
-              <Trash aria-hidden='true' />
-            </Button>
+            <Button
+              onClick={deleteAll}
+              disabled={isSubmitting || data.length === 0}
+              className='hidden sm:flex'
+            ><Trash aria-hidden='true' className='mr-2' /> Delete all</Button>
+            <Button
+              onClick={deleteAll}
+              disabled={isSubmitting || data.length === 0}
+              className='sm:hidden'
+              size='icon'
+              aria-label='Delete all of the API Errors'
+            ><Trash aria-hidden='true' /></Button>
           </header>
 
 
 
-          {/* CONTENT */}
+          {/* *********
+            * CONTENT *
+            ********* */}
           {
             data.length > 0
               ? <Card>
-              <CardContent ref={rowsRef} className='p-0'>
+              <CardContent
+                ref={rowsRef}
+                className='p-0'
+              >
                 {data.map((record, i) => (
                   <Fragment key={record.id}>
-                    <APIError id={`aer-${record.id}`} data={record} openDialog={() => setActiveDialog({ open: true, record })} />
+                    <APIError
+                      id={`aer-${record.id}`}
+                      data={record}
+                      openDialog={() => setActiveDialog({ open: true, record })}
+                    />
                     {i < data.length - 1 && <Separator />}
                   </Fragment>
                 ))}
               </CardContent>
             </Card>
-              : <p className='text-light text-center text-sm mt-5'>No records were found</p>
+              : <p
+                className='text-light text-center text-sm mt-5'
+              >No records were found</p>
           }
-          {(hasMore && data.length >= LIMIT) && <Button variant='ghost' className='w-full' onClick={loadMore} disabled={loadingMore}>{loadingMore && <Loader2 className='mr-2 h-4 w-4 animate-spin' />} Load more</Button>}
+
+
+
+          {/* ******************
+            * LOAD MORE BUTTON *
+            ****************** */}
+          {
+            (hasMore && data.length >= LIMIT)
+            && <Button
+              variant='ghost'
+              className='w-full'
+              onClick={loadMore}
+              disabled={loadingMore}
+            >
+              {
+                loadingMore
+                && <Loader2
+                  className='mr-2 h-4 w-4 animate-spin'
+                />} Load more
+            </Button>
+          }
         </section>
       </div>
 
-      {/* ERROR DIALOG */}
+
+
+
+
+      {/* **************
+        * ERROR DIALOG *
+        ************** */}
       {
         activeDialog.record !== undefined
         && <APIErrorDialog

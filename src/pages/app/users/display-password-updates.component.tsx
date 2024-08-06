@@ -130,7 +130,9 @@ const DisplayPasswordUpdates = memo(({
   } else if (data.length) {
     content = (
       <>
-        <Table className='animate-in fade-in duration-700'>
+        <Table
+          className='animate-in fade-in duration-700'
+        >
           <TableCaption>A list of password update records</TableCaption>
           <TableHeader>
             <TableRow>
@@ -140,26 +142,59 @@ const DisplayPasswordUpdates = memo(({
           </TableHeader>
           <TableBody ref={rowsRef}>
             {data.map((record, i) => (
-              <TableRow key={record.event_time} id={`pur-${record.event_time}`} className='animate-in fade-in duration-700'>
-                <TableCell><p className='text-light'>{i + 1}</p></TableCell>
+              <TableRow
+                key={record.event_time}
+                id={`pur-${record.event_time}`}
+                className='animate-in fade-in duration-700'
+              >
                 <TableCell>
-                  <p className='sm:hidden'>{formatDate(record.event_time, 'datetime-medium')}</p>
-                  <p className='hidden sm:block'>{formatDate(record.event_time, 'datetime-long')}</p>
+                  <p
+                    className='text-light'
+                  >{i + 1}</p>
+                </TableCell>
+                <TableCell>
+                  <p
+                    className='sm:hidden'
+                  >{formatDate(record.event_time, 'datetime-medium')}</p>
+                  <p
+                    className='hidden sm:block'
+                  >{formatDate(record.event_time, 'datetime-long')}</p>
                 </TableCell>
               </TableRow>
             ))}
 
           </TableBody>
         </Table>
-        {(hasMore && data.length >= LIMIT) && <Button variant='ghost' className='w-full' onClick={loadMore} disabled={loadingMore}>{loadingMore && <Loader2 className='mr-2 h-4 w-4 animate-spin' />} Load more</Button>}
+        {
+          (hasMore && data.length >= LIMIT)
+          && <Button
+            variant='ghost'
+            className='w-full'
+            onClick={loadMore}
+            disabled={loadingMore}
+          >
+            {
+              loadingMore
+              && <Loader2
+                className='mr-2 h-4 w-4 animate-spin'
+              />} Load more
+          </Button>
+        }
       </>
     );
   } else {
-    content = <p className='text-light text-sm text-center my-5 animate-in fade-in duration-700'>No records were found</p>;
+    content = <p
+      className='text-light text-sm text-center my-5 animate-in fade-in duration-700'
+    >No records were found</p>;
   }
   return (
-    <Dialog open={open} onOpenChange={() => onOpenChange(false)}>
-      <DialogContent className='max-h-dvh overflow-y-auto overflow-x-hidden'>
+    <Dialog
+      open={open}
+      onOpenChange={() => onOpenChange(false)}
+    >
+      <DialogContent
+        className='max-h-dvh overflow-y-auto overflow-x-hidden'
+      >
 
         <DialogHeader>
           <DialogTitle>{nickname}'s Password Updates</DialogTitle>

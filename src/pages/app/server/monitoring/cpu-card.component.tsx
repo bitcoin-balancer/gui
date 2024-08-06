@@ -26,15 +26,26 @@ import ResourcePieChart from '@/pages/app/server/monitoring/resource-pie-chart.c
  * Component in charge of displaying information regarding the current state of the CPU.
  */
 const CPUCard = ({ data }: { data: ICPUState }) => (
-  <Card className='w-full'>
-    <CardHeader className='flex flex-row justify-start items-center pb-0'>
-      <CardTitle className='text-xl'>CPU</CardTitle>
+  <Card
+    className='w-full'
+  >
+    <CardHeader
+      className='flex flex-row justify-start items-center pb-0'
+    >
+      <CardTitle
+        className='text-xl'
+      >CPU</CardTitle>
       <span className='flex-1'></span>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant='ghost' size='icon'><Ellipsis aria-hidden='true' /></Button>
+          <Button
+            variant='ghost'
+            size='icon'
+          ><Ellipsis aria-hidden='true' /></Button>
         </DialogTrigger>
-        <DialogContent className='max-h-dvh overflow-y-auto overflow-x-hidden'>
+        <DialogContent
+          className='max-h-dvh overflow-y-auto overflow-x-hidden'
+        >
           <DialogHeader>
             <DialogTitle>CPU</DialogTitle>
             <DialogDescription>
@@ -42,23 +53,39 @@ const CPUCard = ({ data }: { data: ICPUState }) => (
             </DialogDescription>
           </DialogHeader>
 
-          <div className='flex justify-center items-center'>
-            <p className='text-light text-sm'>Average Load</p>
+          <div
+            className='flex justify-center items-center'
+          >
+            <p
+              className='text-light text-sm'
+            >Average Load</p>
             <span className='flex-1'></span>
             <p>{data.avgLoad}%</p>
           </div>
-          <div className='flex justify-center items-center'>
-            <p className='text-light text-sm'>Current Load</p>
+          <div
+            className='flex justify-center items-center'
+          >
+            <p
+              className='text-light text-sm'
+            >Current Load</p>
             <span className='flex-1'></span>
             <p><strong>{data.currentLoad}%</strong></p>
           </div>
-          <div className='flex justify-center items-center'>
-            <p className='text-light text-sm'>Current Load (User)</p>
+          <div
+            className='flex justify-center items-center'
+          >
+            <p
+              className='text-light text-sm'
+            >Current Load (User)</p>
             <span className='flex-1'></span>
             <p>{data.currentLoadUser}%</p>
           </div>
-          <div className='flex justify-center items-center'>
-            <p className='text-light text-sm'>Current Load (System)</p>
+          <div
+            className='flex justify-center items-center'
+          >
+            <p
+              className='text-light text-sm'
+            >Current Load (System)</p>
             <span className='flex-1'></span>
             <p>{data.currentLoadSystem}%</p>
           </div>
@@ -67,7 +94,10 @@ const CPUCard = ({ data }: { data: ICPUState }) => (
     </CardHeader>
 
     <CardContent>
-      <ResourcePieChart valueLabel='Load%' value={data.avgLoad > data.currentLoad ? data.avgLoad : data.currentLoad} />
+      <ResourcePieChart
+        valueLabel='Load%'
+        value={data.avgLoad > data.currentLoad ? data.avgLoad : data.currentLoad}
+      />
     </CardContent>
 
   </Card>

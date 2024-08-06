@@ -57,26 +57,58 @@ const Server = () => {
    ********************************************************************************************** */
   return (
     <>
-      <section className='flex justify-center items-start animate-in fade-in duration-700'>
+      <section
+        className='flex justify-center items-start animate-in fade-in duration-700'
+      >
 
         {
           (breakpoint === 'md' || breakpoint === 'lg' || breakpoint === 'xl' || breakpoint === '2xl')
-          && <aside className='md:w-56 xl:w-64 pl-3 pt-3'>
+          && <aside
+            className='md:w-56 xl:w-64 pl-3 pt-3'
+          >
             <header>
-              <h1 className='text-lg font-bold'>Server</h1>
+              <h1
+                className='text-lg font-bold'
+              >Server</h1>
             </header>
 
-            <nav className='mt-3'>
-              <Button variant='ghost' className='w-full justify-start' onClick={() => setActivePage('monitoring')} disabled={activePage === 'monitoring'}>
-                  <ChartNoAxesColumn aria-hidden='true' className='mr-2' /> Monitoring
+            <nav
+              className='mt-3'
+            >
+              <Button
+                variant='ghost'
+                className='w-full justify-start'
+                onClick={() => setActivePage('monitoring')}
+                disabled={activePage === 'monitoring'}
+              >
+                  <ChartNoAxesColumn
+                    aria-hidden='true'
+                    className='mr-2'
+                  /> Monitoring
                 </Button>
-              <Button variant='ghost' className='w-full justify-start' onClick={() => setActivePage('api-errors')} disabled={activePage === 'api-errors'}>
-                <Bug aria-hidden='true' className='mr-2' /> API Errors
+              <Button
+                variant='ghost'
+                className='w-full justify-start'
+                onClick={() => setActivePage('api-errors')}
+                disabled={activePage === 'api-errors'}
+              >
+                <Bug
+                  aria-hidden='true'
+                  className='mr-2'
+                /> API Errors
                 <span className='flex-1'></span>
                 <Badge variant='destructive'>99+</Badge>
               </Button>
-              <Button variant='ghost' className='w-full justify-start' onClick={() => setActivePage('database')} disabled={activePage === 'database'}>
-                <DatabaseIcon aria-hidden='true' className='mr-2' /> Database
+              <Button
+                variant='ghost'
+                className='w-full justify-start'
+                onClick={() => setActivePage('database')}
+                disabled={activePage === 'database'}
+              >
+                <DatabaseIcon
+                  aria-hidden='true'
+                  className='mr-2'
+                /> Database
               </Button>
             </nav>
           </aside>
@@ -93,26 +125,58 @@ const Server = () => {
       {/* SIDENAV MENU */}
       {
         (breakpoint === 'xs' || breakpoint === 'sm')
-        && <Sheet open={sidenavOpen} onOpenChange={setSidenavOpen}>
+        && <Sheet
+          open={sidenavOpen}
+          onOpenChange={setSidenavOpen}
+        >
 
-          <SheetContent className='w-64 sm:72 md-80 lg:96 p-4' side='left'>
+          <SheetContent
+            className='w-64 sm:72 md-80 lg:96 p-4'
+            side='left'
+          >
 
             <SheetHeader>
               <SheetTitle>Server</SheetTitle>
               <SheetDescription>Components that comprise the API</SheetDescription>
             </SheetHeader>
 
-            <nav className='mt-3'>
-              <Button variant='ghost' className='w-full justify-start' onClick={() => navigateFromSidenav('monitoring')} disabled={activePage === 'monitoring'}>
-                  <ChartNoAxesColumn aria-hidden='true' className='mr-2' /> Monitoring
+            <nav
+              className='mt-3'
+            >
+              <Button
+                variant='ghost'
+                className='w-full justify-start'
+                onClick={() => navigateFromSidenav('monitoring')}
+                disabled={activePage === 'monitoring'}
+              >
+                  <ChartNoAxesColumn
+                    aria-hidden='true'
+                    className='mr-2'
+                  /> Monitoring
                 </Button>
-              <Button variant='ghost' className='w-full justify-start' onClick={() => navigateFromSidenav('api-errors')} disabled={activePage === 'api-errors'}>
-                <Bug aria-hidden='true' className='mr-2' /> API Errors
+              <Button
+                variant='ghost'
+                className='w-full justify-start'
+                onClick={() => navigateFromSidenav('api-errors')}
+                disabled={activePage === 'api-errors'}
+              >
+                <Bug
+                  aria-hidden='true'
+                  className='mr-2'
+                /> API Errors
                 <span className='flex-1'></span>
                 <Badge variant='destructive'>99+</Badge>
               </Button>
-              <Button variant='ghost' className='w-full justify-start' onClick={() => navigateFromSidenav('database')} disabled={activePage === 'database'}>
-                <DatabaseIcon aria-hidden='true' className='mr-2' /> Database
+              <Button
+                variant='ghost'
+                className='w-full justify-start'
+                onClick={() => navigateFromSidenav('database')}
+                disabled={activePage === 'database'}
+              >
+                <DatabaseIcon
+                  aria-hidden='true'
+                  className='mr-2'
+                /> Database
               </Button>
             </nav>
 

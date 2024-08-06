@@ -53,13 +53,27 @@ const DisplayOTPSecret = memo(({
   } else {
     content = (
       <>
-        <div className='flex justify-start items-center border border-slate-300 rounded-md p-3 mt-2 shadow-md animate-in fade-in duration-700'>
-          <KeyRound aria-hidden='true' className='mr-2' /> <p className='text-sm sm:text-md md:text-lg'>{data}</p>
+        <div
+          className='flex justify-start items-center border border-slate-300 rounded-md p-3 mt-2 shadow-md animate-in fade-in duration-700'
+        >
+          <KeyRound
+            aria-hidden='true'
+            className='mr-2'
+          />
+          <p
+            className='text-sm sm:text-md md:text-lg'
+          >{data}</p>
+
           <span className='flex-1'></span>
 
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant='ghost' size='icon' onClick={() => ClipboardService.writeText(data)} aria-label='Copy the OTP secret'><Copy aria-hidden='true' /></Button>
+              <Button
+                variant='ghost'
+                size='icon'
+                onClick={() => ClipboardService.writeText(data)}
+                aria-label='Copy the OTP secret'
+              ><Copy aria-hidden='true' /></Button>
             </TooltipTrigger>
             <TooltipContent>
               <p>Click to copy</p>
@@ -70,9 +84,14 @@ const DisplayOTPSecret = memo(({
     );
   }
   return (
-    <Dialog open={open} onOpenChange={() => onOpenChange(false)}>
+    <Dialog
+      open={open}
+      onOpenChange={() => onOpenChange(false)}
+    >
 
-      <DialogContent className='max-h-dvh overflow-y-auto overflow-x-hidden'>
+      <DialogContent
+        className='max-h-dvh overflow-y-auto overflow-x-hidden'
+      >
 
         <DialogHeader>
           <DialogTitle>{nickname}'s OTP Secret</DialogTitle>

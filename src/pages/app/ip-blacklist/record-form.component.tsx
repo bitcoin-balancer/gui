@@ -108,29 +108,47 @@ const RecordForm = ({ open, onOpenChange }: IRecordFormProps) => {
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
-    <Dialog open={open !== false} onOpenChange={() => onOpenChange(false)}>
+    <Dialog
+      open={open !== false}
+      onOpenChange={() => onOpenChange(false)}>
 
-      <DialogContent className='max-h-dvh overflow-y-auto overflow-x-hidden'>
+      <DialogContent
+        className='max-h-dvh overflow-y-auto overflow-x-hidden'
+      >
 
         <DialogHeader>
           <DialogTitle>{open === null ? 'Register IP' : 'Update registration'}</DialogTitle>
           <DialogDescription>
-          {open === null ? 'The IP address will be blacklisted immediately upon submission' : 'The changes will be applied immediately upon submission'}
+            {
+              open === null
+                ? 'The IP address will be blacklisted immediately upon submission'
+                : 'The changes will be applied immediately upon submission'
+            }
           </DialogDescription>
         </DialogHeader>
 
         {
           open
           && <>
-            <div className='flex justify-start items-center'>
-              <p className='text-light text-xs sm:text-sm'>ID</p>
+            <div
+              className='flex justify-start items-center'
+            >
+              <p
+                className='text-light text-xs sm:text-sm'
+              >ID</p>
               <span className='flex-1'></span>
               <p>{open.id}</p>
             </div>
-            <div className='flex justify-start items-center'>
-              <p className='text-light text-xs sm:text-sm'>Registration</p>
+            <div
+              className='flex justify-start items-center'
+            >
+              <p
+                className='text-light text-xs sm:text-sm'
+              >Registration</p>
               <span className='flex-1'></span>
-              <p className='text-sm sm:text-md'>{formatDate(open.event_time, 'datetime-medium')}</p>
+              <p
+                className='text-sm sm:text-md'
+              >{formatDate(open.event_time, 'datetime-medium')}</p>
             </div>
           </>
         }
@@ -145,7 +163,14 @@ const RecordForm = ({ open, onOpenChange }: IRecordFormProps) => {
                   <FormItem>
                     <FormLabel>IP address</FormLabel>
                     <FormControl>
-                      <Input type='text' placeholder='192.0.2.126' {...field} autoComplete='off' autoFocus disabled={isSubmitting} />
+                      <Input
+                        type='text'
+                        placeholder='192.0.2.126'
+                        {...field}
+                        autoComplete='off'
+                        autoFocus
+                        disabled={isSubmitting}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -164,7 +189,13 @@ const RecordForm = ({ open, onOpenChange }: IRecordFormProps) => {
                   <FormItem className='mt-5'>
                     <FormLabel>Notes (Optional)</FormLabel>
                     <FormControl>
-                      <Textarea placeholder='Explain why the IP address should not be served by the API' rows={7} autoComplete='false' {...field} disabled={isSubmitting} />
+                      <Textarea
+                        placeholder='Explain why the IP address should not be served by the API'
+                        rows={7}
+                        autoComplete='false'
+                        {...field}
+                        disabled={isSubmitting}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -177,11 +208,20 @@ const RecordForm = ({ open, onOpenChange }: IRecordFormProps) => {
               />
 
               <DialogFooter>
-                <Button type='submit' disabled={isSubmitting} className='mt-7 w-full'>{isSubmitting && <Loader2 className='mr-2 h-4 w-4 animate-spin' />} {open === null ? 'Blacklist IP' : 'Update registration'}</Button>
+                <Button
+                  type='submit'
+                  disabled={isSubmitting}
+                  className='mt-7 w-full'
+                >
+                  {
+                    isSubmitting
+                    && <Loader2
+                      className='mr-2 h-4 w-4 animate-spin'
+                    />} {open === null ? 'Blacklist IP' : 'Update registration'}
+                </Button>
               </DialogFooter>
 
             </form>
-
           </Form>
 
       </DialogContent>

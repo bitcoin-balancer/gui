@@ -90,9 +90,14 @@ const UpdateNickname = ({
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
-    <Dialog open={open} onOpenChange={() => onOpenChange(false)}>
+    <Dialog
+      open={open}
+      onOpenChange={() => onOpenChange(false)}
+    >
 
-      <DialogContent className='max-h-dvh overflow-y-auto overflow-x-hidden'>
+      <DialogContent
+        className='max-h-dvh overflow-y-auto overflow-x-hidden'
+      >
 
         <DialogHeader>
           <DialogTitle>Update {nickname}’s nickname</DialogTitle>
@@ -102,7 +107,10 @@ const UpdateNickname = ({
         </DialogHeader>
 
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              noValidate
+            >
 
               <FormField
                 control={form.control}
@@ -111,7 +119,14 @@ const UpdateNickname = ({
                   <FormItem>
                     <FormLabel>Nickname</FormLabel>
                     <FormControl>
-                      <Input type='text' placeholder='satoshi' {...field} autoComplete='off' autoFocus disabled={isSubmitting} />
+                      <Input
+                        type='text'
+                        placeholder='satoshi'
+                        {...field}
+                        autoComplete='off'
+                        autoFocus
+                        disabled={isSubmitting}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -124,11 +139,20 @@ const UpdateNickname = ({
               />
 
               <DialogFooter>
-                <Button type='submit' disabled={isSubmitting} className='mt-7 w-full'>{isSubmitting && <Loader2 className='mr-2 h-4 w-4 animate-spin' />} Update nickname</Button>
+                <Button
+                  type='submit'
+                  disabled={isSubmitting}
+                  className='mt-7 w-full'
+                >
+                  {
+                    isSubmitting
+                    && <Loader2
+                      className='mr-2 h-4 w-4 animate-spin'
+                    />} Update nickname
+                </Button>
               </DialogFooter>
 
             </form>
-
           </Form>
 
       </DialogContent>

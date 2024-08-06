@@ -92,9 +92,14 @@ const UpdateAuthority = ({
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
-    <Dialog open={open} onOpenChange={() => onOpenChange(false)}>
+    <Dialog
+      open={open}
+      onOpenChange={() => onOpenChange(false)}
+    >
 
-      <DialogContent className='max-h-dvh overflow-y-auto overflow-x-hidden'>
+      <DialogContent
+        className='max-h-dvh overflow-y-auto overflow-x-hidden'
+      >
 
         <DialogHeader>
           <DialogTitle>Update {nickname}’s authority</DialogTitle>
@@ -104,7 +109,10 @@ const UpdateAuthority = ({
         </DialogHeader>
 
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              noValidate
+            >
 
               <FormField
                 control={form.control}
@@ -113,7 +121,16 @@ const UpdateAuthority = ({
                   <FormItem>
                     <FormLabel>Authority</FormLabel>
                     <FormControl>
-                      <Input type='number' placeholder='3' {...field} autoComplete='off' autoFocus disabled={isSubmitting} min={1} max={4} />
+                      <Input
+                        type='number'
+                        placeholder='3'
+                        {...field}
+                        autoComplete='off'
+                        autoFocus
+                        disabled={isSubmitting}
+                        min={1}
+                        max={4}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -126,11 +143,21 @@ const UpdateAuthority = ({
               />
 
               <DialogFooter>
-                <Button type='submit' disabled={isSubmitting} className='mt-7 w-full'>{isSubmitting && <Loader2 className='mr-2 h-4 w-4 animate-spin' />} Update authority</Button>
+                <Button
+                  type='submit'
+                  disabled={isSubmitting}
+                  className='mt-7 w-full'
+                >
+                  {
+                    isSubmitting
+                    && <Loader2
+                      className='mr-2 h-4 w-4 animate-spin'
+                    />
+                  } Update authority
+                </Button>
               </DialogFooter>
 
             </form>
-
           </Form>
 
       </DialogContent>
