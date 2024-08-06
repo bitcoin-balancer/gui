@@ -1,7 +1,7 @@
 import { StateCreator } from 'zustand';
 import { IVersion } from '../../../backend/version/index.service.ts';
 import { type IUser } from '../../../backend/auth/user/index.service.ts';
-import { type IAppEssentials, type ICompactAppEssentials } from '../../../backend/data-join/index.service.ts';
+import type { IAppEssentials, ICompactAppEssentials } from '../../../backend/data-join/index.service.ts';
 import { isAppEssentialsObject } from './utils.ts';
 import { type IAppEssentialsSlice } from './types.ts';
 

@@ -43,11 +43,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '../../shared/shadcn/components/ui/sheet.tsx';
+import { ENVIRONMENT } from '../../environment/environment.ts';
 import { errorToast } from '../../shared/services/utils/index.service.ts';
 import { formatBadgeCount } from '../../shared/services/transformations/index.service.ts';
 import { NavService } from '../../shared/services/nav/index.service.ts';
 import { AccessJWTService } from '../../shared/backend/api/access-jwt.service.ts';
 import { JWTService } from '../../shared/backend/auth/jwt/index.service.ts';
+import { DataJoinService } from '../../shared/backend/data-join/index.service.ts';
 import { useBoundStore } from '../../shared/store/index.store.ts';
 import GlobalLoader from '../global-loader/index.component.tsx';
 import AppInstaller from '../../shared/components/app-installer/index.component.tsx';
@@ -58,6 +60,9 @@ import { IMainNavigationItem } from './types.ts';
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
  ************************************************************************************************ */
+
+// the app essentials will be refetched every APP_ESSENTIALS_REFETCH_FREQUENCY minutes
+const APP_ESSENTIALS_REFETCH_FREQUENCY = 2;
 
 // the number of ms that will be used by the updater if there is an available update for the app
 const APP_UPDATER_DELAY = Math.floor(SWService.registrationDurationSeconds / 2) * 1000;
@@ -81,10 +86,14 @@ const App = () => {
    ********************************************************************************************** */
   const [sidenavOpen, setSidenavOpen] = useState<boolean>(false);
   const authenticated = useBoundStore((state) => state.authenticated);
+  const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
+  const version = useBoundStore((state) => state.version);
+  const unreadAPIErrors = useBoundStore((state) => state.unreadAPIErrors);
+  const setAppEssentials = useBoundStore((state) => state.setAppEssentials);
   const navigate = useNavigate();
   const navigation = useNavigation();
-  const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
   const [isSigningOut, setIsSigningOut] = useState<boolean>(false);
+
 
 
 
@@ -116,7 +125,7 @@ const App = () => {
         name: 'Server',
         path: NavService.server(),
         icon: <Server aria-hidden='true' />,
-        badge: formatBadgeCount(10),
+        badge: typeof unreadAPIErrors === 'number' ? formatBadgeCount(unreadAPIErrors) : '0',
       },
       {
         active: NavService.adjustments() === pathname,
@@ -125,8 +134,9 @@ const App = () => {
         icon: <SlidersHorizontal aria-hidden='true' />,
       },
     ]),
-    [pathname],
+    [pathname, unreadAPIErrors],
   );
+
 
 
 
@@ -153,21 +163,56 @@ const App = () => {
   }, [authenticated]);
 
   /**
+   * App Essentials
+   * If the user is authenticated it fetches the app essentials and keeps doing so.
+   */
+  useEffect(() => {
+    // fetches the app essentials persistently
+    const __refetchEssentials = async (retryDelaySchedule: number[]): Promise<void> => {
+      try {
+        setAppEssentials(await DataJoinService.getAppEssentials());
+        return undefined;
+      } catch (e) {
+        if (!retryDelaySchedule.length) {
+          throw e;
+        }
+        return __refetchEssentials(retryDelaySchedule.slice(1));
+      }
+    };
+
+    // initializes the interval that will keep the essentials synced with the server
+    let interval: NodeJS.Timeout | undefined;
+    if (authenticated) {
+      __refetchEssentials([5, 15, 25]);
+      interval = setInterval(async () => {
+        await __refetchEssentials([5, 15, 25]);
+      }, (APP_ESSENTIALS_REFETCH_FREQUENCY * 60) * 1000);
+    }
+    return () => clearInterval(interval);
+  }, [authenticated, setAppEssentials]);
+
+  /**
    * App Updater
    * Checks if there is an available update for the app and displays the updater.
    */
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      // @TODO
-      toast({
-        title: 'Update to v1.0.0',
-        description: 'Enjoy the latest innovations, bug fixes, and enhanced security.',
-        action: <ToastAction altText='Update Application' onClick={SWService.updateApp}><CloudDownload aria-hidden='true' /></ToastAction>,
-        duration: APP_UPDATER_DURATION,
-      });
-    }, APP_UPDATER_DELAY);
+    let timeout: NodeJS.Timeout | undefined;
+    if (version) {
+      if (ENVIRONMENT.version !== version.gui.latest.version) {
+        timeout = setTimeout(() => {
+          toast({
+            title: `Update to v${version.gui.latest.version}`,
+            description: 'Enjoy the latest innovations, bug fixes, and enhanced security.',
+            action: <ToastAction altText='Update Application' onClick={SWService.updateApp}><CloudDownload aria-hidden='true' /></ToastAction>,
+            duration: APP_UPDATER_DURATION,
+          });
+        }, APP_UPDATER_DELAY);
+      }
+    }
     return () => clearTimeout(timeout);
-  }, []);
+  }, [version]);
+
+
 
 
 
@@ -215,7 +260,7 @@ const App = () => {
   if (authenticated === false) {
     return <Navigate to={NavService.signIn()} />;
   }
-  if (authenticated === undefined) {
+  if (authenticated === undefined || unreadAPIErrors === undefined || version === undefined) {
     return <GlobalLoader />;
   }
   return (
