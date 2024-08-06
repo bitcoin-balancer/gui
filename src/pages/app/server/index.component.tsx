@@ -9,7 +9,9 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/shared/shadcn/components/ui/sheet.tsx';
+import { formatBadgeCount } from '@/shared/services/transformations/index.service.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
+import { useBoundStore } from '@/shared/store/index.store.ts';
 import Monitoring from '@/pages/app/server/monitoring/index.component.tsx';
 import APIErrors from '@/pages/app/server/api-errors/index.component.tsx';
 import Database from '@/pages/app/server/database/index.component.tsx';
@@ -30,6 +32,7 @@ const Server = () => {
   const [sidenavOpen, setSidenavOpen] = useState<boolean>(false);
   const [activePage, setActivePage] = useState<IPageName>('monitoring');
   const breakpoint = useMediaQueryBreakpoint();
+  const unreadAPIErrors = useBoundStore((state) => state.unreadAPIErrors!);
 
 
 
@@ -97,7 +100,12 @@ const Server = () => {
                   className='mr-2'
                 /> API Errors
                 <span className='flex-1'></span>
-                <Badge variant='destructive'>99+</Badge>
+                {
+                  unreadAPIErrors > 0
+                  && <Badge
+                    variant='destructive'
+                  >{formatBadgeCount(unreadAPIErrors, 99)}</Badge>
+                }
               </Button>
               <Button
                 variant='ghost'
@@ -165,7 +173,12 @@ const Server = () => {
                   className='mr-2'
                 /> API Errors
                 <span className='flex-1'></span>
-                <Badge variant='destructive'>99+</Badge>
+                {
+                  unreadAPIErrors > 0
+                  && <Badge
+                    variant='destructive'
+                  >{formatBadgeCount(unreadAPIErrors, 99)}</Badge>
+                }
               </Button>
               <Button
                 variant='ghost'

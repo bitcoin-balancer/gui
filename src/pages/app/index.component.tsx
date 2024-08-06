@@ -31,7 +31,7 @@ import { IMainNavigationItem } from '@/pages/app/types.ts';
  ************************************************************************************************ */
 
 // the app essentials will be refetched every APP_ESSENTIALS_REFETCH_FREQUENCY minutes
-const APP_ESSENTIALS_REFETCH_FREQUENCY = 0.1;
+const APP_ESSENTIALS_REFETCH_FREQUENCY = 2;
 
 // the number of ms that will be used by the updater if there is an available update for the app
 const APP_UPDATER_DELAY = Math.floor(SWService.registrationDurationSeconds / 2) * 1000;
@@ -136,7 +136,6 @@ const App = () => {
     const __refetchEssentials = async (retryDelaySchedule: number[]): Promise<void> => {
       try {
         setAppEssentials(await DataJoinService.getAppEssentials());
-        console.log('Refetched App Essentials');
         return undefined;
       } catch (e) {
         if (!retryDelaySchedule.length) {
@@ -208,12 +207,10 @@ const App = () => {
 
 
 
-      {/* ************
-        * NAV HEADER *
-        ************ */}
+      {/* ********
+        * HEADER *
+        ******** */}
       <Header items={mainNavigationItems} pathname={pathname} />
-
-
 
 
 
@@ -226,13 +223,10 @@ const App = () => {
 
 
 
-
       {/* *************
         * MOBILE TABS *
         ************* */}
       <MobileTabs items={mainNavigationItems} />
-
-
 
 
 
