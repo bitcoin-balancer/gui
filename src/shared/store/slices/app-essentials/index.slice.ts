@@ -1,26 +1,9 @@
 import { StateCreator } from 'zustand';
-import { objectValid } from '../../../backend/validations/index.service.ts';
 import { IVersion } from '../../../backend/version/index.service.ts';
-import { IUser } from '../../../backend/auth/user/index.service.ts';
-import { IAppEssentials, ICompactAppEssentials } from '../../../backend/data-join/types.ts';
-import { IAppEssentialsSlice } from './types.ts';
-
-/* ************************************************************************************************
- *                                            HELPERS                                             *
- ************************************************************************************************ */
-
-/**
- * Checks if a given payload is a complete App Essentials object.
- * @param payload
- * @returns boolean
- */
-const __isAppEssentialsObject = (payload: unknown): payload is IAppEssentials => (
-  objectValid(payload) && typeof payload.serverTime === 'number'
-);
-
-
-
-
+import { type IUser } from '../../../backend/auth/user/index.service.ts';
+import { type IAppEssentials, type ICompactAppEssentials } from '../../../backend/data-join/index.service.ts';
+import { isAppEssentialsObject } from './utils.ts';
+import { type IAppEssentialsSlice } from './types.ts';
 
 /* ************************************************************************************************
  *                                       STATE CALCULATORS                                        *
@@ -64,7 +47,7 @@ const __calculateNewState = (
   currentState: IAppEssentialsSlice,
   payload: IAppEssentials | ICompactAppEssentials,
 ): IAppEssentials => {
-  if (__isAppEssentialsObject(payload)) {
+  if (isAppEssentialsObject(payload)) {
     return __onNewAppEssentials(payload);
   }
   return __onNewCompactAppEssentials(currentState, payload);
