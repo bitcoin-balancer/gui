@@ -160,10 +160,38 @@ const PlatformUpdate = () => {
           <DialogHeader>
             <DialogTitle>Update platform</DialogTitle>
             <DialogDescription>
-              Current state of the server's Core Processing Unit (CPU)
+              Enjoy the latest innovations, bug fixes, and enhanced security
             </DialogDescription>
           </DialogHeader>
 
+          <p>
+            1. Navigate to the Balancer CLI directory:
+          </p>
+
+          <code
+            className='p-5 bg-slate-900 text-slate-50 rounded-lg'
+          >$ cd balancer/cli</code>
+
+          <p className='mt-3'>2. Start the Balancer CLI:</p>
+
+          <code
+            className='p-5 bg-slate-900 text-slate-50 rounded-lg'
+          >$ npm start</code>
+
+          <p className='mt-3'>
+            3. Select the <strong>"Docker Compose"</strong> menu and execute the following action:
+          </p>
+
+          <code
+            className='p-5 bg-slate-900 text-slate-50 rounded-lg'
+          >down-build-up</code>
+
+          <p
+            className='text-light text-sm'
+          >
+            The action will pull the latest images from the registry (Docker Hub), build them,
+            (re)create and start the containers.
+          </p>
 
         </DialogContent>
       </Dialog>

@@ -4,7 +4,7 @@ import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/shadcn/components/ui/tooltip.tsx';
 import { formatDate } from '@/shared/services/transformations/index.service.ts';
-import { NavService } from '@/shared/services/nav/index.service';
+import { NavService } from '@/shared/services/nav/index.service.ts';
 import { IServiceComponentProps } from '@/pages/app/platform-update/types.ts';
 
 
