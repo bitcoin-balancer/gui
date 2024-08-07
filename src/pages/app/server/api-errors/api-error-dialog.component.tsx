@@ -9,6 +9,7 @@ import {
   DialogTitle,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/shadcn/components/ui/tooltip.tsx';
+import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import { formatDate } from '@/shared/services/transformations/index.service.ts';
 import { ClipboardService } from '@/shared/services/clipboard/index.service.ts';
 import { IAPIErrorDialogProps } from '@/pages/app/server/api-errors/types.ts';
@@ -145,9 +146,14 @@ const APIErrorDialog = ({ open, onOpenChange, record }: IAPIErrorDialogProps) =>
           <span className='flex-1'></span>
           <Tooltip>
             <TooltipTrigger tabIndex={-1}>
-              <p
+              <Badge
+                variant='secondary'
                 className='max-w-44 sm:max-w-96 xl:max-w-[400px] truncate'
-              >{record.origin}</p>
+              >
+                <p
+                  className='truncate'
+                >{record.origin}</p>
+              </Badge>
             </TooltipTrigger>
             <TooltipContent>
               <p>{record.origin}</p>
@@ -162,7 +168,14 @@ const APIErrorDialog = ({ open, onOpenChange, record }: IAPIErrorDialogProps) =>
             className='text-light text-sm'
           >Code</p>
           <span className='flex-1'></span>
-          <p><strong>{code}</strong></p>
+          <Badge
+            variant='destructive'
+            className='max-w-44 sm:max-w-96 xl:max-w-[400px]'
+          >
+            <p
+              className='truncate'
+            >{code}</p>
+          </Badge>
         </div>
 
         <div
