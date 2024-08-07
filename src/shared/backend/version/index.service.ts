@@ -1,5 +1,10 @@
 import { ENVIRONMENT } from '@/environment/environment.ts';
-import { IVersionService, IVersion, IAvailableUpdates } from '@/shared/backend/version/types.ts';
+import {
+  IVersionService,
+  IVersion,
+  IServiceVersion,
+  IAvailableUpdates,
+} from '@/shared/backend/version/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -84,4 +89,6 @@ export {
 
   // types
   type IVersion,
+  type IServiceVersion,
+  type IAvailableUpdates,
 };

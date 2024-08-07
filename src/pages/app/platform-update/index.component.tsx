@@ -9,7 +9,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/shadcn/compone
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { VersionService } from '@/shared/backend/version/index.service.ts';
 import { formatDate } from '@/shared/services/transformations/index.service.ts';
-import { NavService } from '@/shared/services/nav/index.service';
+import { NavService } from '@/shared/services/nav/index.service.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -49,7 +49,9 @@ const PlatformUpdate = () => {
    * @param service
    */
   const handleUpdateService = (service: 'GUI' | 'API'): void => {
-
+    if (service === 'GUI' && availableUpdates === 'GUI') {
+      SWService.updateApp();
+    }
   };
 
 
@@ -69,7 +71,17 @@ const PlatformUpdate = () => {
           className='w-full sm:w-8/12 md:w-6/12 lg:w-5/12 xl:w-4/12 2xl:w-3/12'
         >
 
-          <h1 className="text-2xl md:text-3xl">Platform update</h1>
+          <h1
+            className='text-2xl md:text-3xl'
+          >Platform update</h1>
+          <p
+            className='text-light text-sm mt-2'
+            >
+              If you run into issues when updating the services, try
+              <Button
+                variant='link'
+                className='p-0 m-0 ml-1 text-light'>"Re-building the images"</Button>
+            </p>
 
 
           <Card className='mt-5'>
@@ -89,7 +101,9 @@ const PlatformUpdate = () => {
                   className='flex justify-start items-center'
                 >
 
-                  <div className='max-w-[70%] sm:max-w-[65%]'>
+                  <div
+                    className='max-w-[70%] sm:max-w-[65%]'
+                  >
                     <div
                       className='flex justify-start items-center'
                     >
@@ -128,7 +142,7 @@ const PlatformUpdate = () => {
                   <span className='flex-1'></span>
 
                   {
-                    availableUpdates === null
+                    (availableUpdates !== 'GUI' && availableUpdates !== 'BOTH')
                       ? <Tooltip>
                         <TooltipTrigger className='flex justify-start text-success text-sm'>
                           <BadgeCheck
@@ -137,7 +151,7 @@ const PlatformUpdate = () => {
                           /> <span className='hidden sm:inline'>Up to date</span>
                         </TooltipTrigger>
                         <TooltipContent>
-                          <p>Your platform is up to date</p>
+                          <p>The GUI service is up to date</p>
                         </TooltipContent>
                       </Tooltip>
                       : <Button
@@ -145,7 +159,10 @@ const PlatformUpdate = () => {
                         aria-label='Update application'
                         onClick={() => handleUpdateService('GUI')}
                       >
-                        <CloudDownload aria-hidden='true' /> <span className='ml-2 hidden sm:inline'>Update</span>
+                        <CloudDownload aria-hidden='true' />
+                        <span
+                          className='ml-2 hidden sm:inline'
+                        >Update</span>
                       </Button>
                   }
                 </div>
@@ -162,7 +179,9 @@ const PlatformUpdate = () => {
                   className='flex justify-start items-center'
                 >
 
-                  <div>
+                  <div
+                    className='max-w-[70%] sm:max-w-[65%]'
+                  >
                     <div
                       className='flex justify-start items-center'
                     >
@@ -188,7 +207,9 @@ const PlatformUpdate = () => {
                       <CodeXml
                           className='mr-1 w-4 h-4'
                       />
-                      <p>
+                      <p
+                        className='truncate'
+                      >
                         v{version.api.latest.version}&nbsp;·&nbsp;
                         {version.api.latest.sha.slice(0, 7)}&nbsp;·&nbsp;
                         {formatDate(version.api.latest.eventTime, 'date-short')}
@@ -198,7 +219,30 @@ const PlatformUpdate = () => {
 
                   <span className='flex-1'></span>
 
-
+                  {
+                    (availableUpdates !== 'API' && availableUpdates !== 'BOTH')
+                      ? <Tooltip>
+                        <TooltipTrigger className='flex justify-start text-success text-sm'>
+                          <BadgeCheck
+                            aria-hidden='true'
+                            className='mr-1 w-5 h-5'
+                          /> <span className='hidden sm:inline'>Up to date</span>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>The API service is up to date</p>
+                        </TooltipContent>
+                      </Tooltip>
+                      : <Button
+                        variant='ghost'
+                        aria-label='Update API'
+                        onClick={() => handleUpdateService('API')}
+                      >
+                        <CloudDownload aria-hidden='true' />
+                        <span
+                          className='ml-2 hidden sm:inline'
+                        >Update</span>
+                      </Button>
+                  }
                 </div>
 
               </div>
