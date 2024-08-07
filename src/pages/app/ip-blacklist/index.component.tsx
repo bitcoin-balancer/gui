@@ -250,7 +250,7 @@ const IPBlacklist = () => {
           >
             <h1
               className='text-2xl md:text-3xl'
-            >IP Blacklist</h1>
+            >IP blacklist</h1>
 
             <span className='flex-1'></span>
 

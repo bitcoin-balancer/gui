@@ -88,6 +88,7 @@ body {
  */
 a:hover {
   text-decoration: underline;
+  text-underline-offset: 4px;
   opacity: 0.9;
 }
 
