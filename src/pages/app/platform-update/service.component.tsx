@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { CodeXml, CloudDownload, BadgeCheck } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
@@ -15,7 +16,7 @@ import { IServiceComponentProps } from '@/pages/app/platform-update/types.ts';
  * Service Component
  * Component in charge of displaying the current release state for a service.
  */
-const Service = ({
+const Service = memo(({
   service,
   version,
   availableUpdates,
@@ -90,7 +91,7 @@ const Service = ({
         </Button>
     }
   </article>
-);
+));
 
 
 
