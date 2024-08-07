@@ -180,20 +180,11 @@ const APIErrorDialog = ({ open, onOpenChange, record }: IAPIErrorDialogProps) =>
         {
           record.args !== null
           && <div
-            className='mt-2 overflow-x-auto'
+            className='mt-2 overflow-x-auto p-5 rounded-lg bg-slate-900 text-slate-50 text-sm'
           >
-            <p
-              className='text-light text-sm'
-            >Args</p>
-            <div
-              className='mt-2'
-            >
-              <pre
-                className='text-sm'
-              >
-                {JSON.stringify(record.args, null, 2)}
-              </pre>
-            </div>
+            <pre>
+              {JSON.stringify(record.args, null, 2)}
+            </pre>
           </div>
         }
 

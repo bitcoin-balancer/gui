@@ -1,11 +1,8 @@
 import { useState, useMemo, useCallback } from 'react';
-import { CodeXml, CloudDownload, BadgeCheck } from 'lucide-react';
 import { SWService } from 'sw-service';
 import { Card, CardContent } from '@/shared/shadcn/components/ui/card.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
-import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/shadcn/components/ui/tooltip.tsx';
 import {
   Dialog,
   DialogHeader,
@@ -15,8 +12,6 @@ import {
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { VersionService } from '@/shared/backend/version/index.service.ts';
-import { formatDate } from '@/shared/services/transformations/index.service.ts';
-import { NavService } from '@/shared/services/nav/index.service.ts';
 import Service from '@/pages/app/platform-update/service.component.tsx';
 import { IServiceName } from '@/pages/app/platform-update/types.ts';
 
@@ -179,7 +174,8 @@ const PlatformUpdate = () => {
           >$ npm start</code>
 
           <p className='mt-3'>
-            3. Select the <strong>"Docker Compose"</strong> menu and execute the following action:
+            3. Select the <strong>"Docker Compose"</strong> menu and execute the following action
+            on the <strong>remote host</strong>:
           </p>
 
           <code
