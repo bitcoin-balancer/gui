@@ -151,7 +151,7 @@ const APIErrorDialog = ({ open, onOpenChange, record }: IAPIErrorDialogProps) =>
                 className='max-w-44 sm:max-w-96 xl:max-w-[400px] truncate'
               >
                 <p
-                  className='truncate'
+                  className='truncate text-sm'
                 >{record.origin}</p>
               </Badge>
             </TooltipTrigger>

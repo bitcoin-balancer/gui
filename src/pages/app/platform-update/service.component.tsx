@@ -46,7 +46,11 @@ const Service = memo(({
       </div>
 
       <a
-        href={NavService.buildGUICommitURL(version.sha)}
+        href={
+          service === 'GUI'
+            ? NavService.buildGUICommitURL(version.sha)
+            : NavService.buildAPICommitURL(version.sha)
+        }
         target='_blank'
         rel='noopener noreferrer'
         className='flex justify-start items-center mt-2 text-sm text-light'

@@ -1,17 +1,16 @@
 import { useMemo } from 'react';
-import { formatRelative } from 'date-fns';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { CodeXml, ExternalLink, Github } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import { Card, CardContent } from '@/shared/shadcn/components/ui/card.tsx';
 import { ENVIRONMENT } from '@/environment/environment.ts';
+import { useBoundStore } from '@/shared/store/index.store.ts';
 import { buildAPIURL } from '@/shared/backend/api/utils.ts';
 import { VersionService } from '@/shared/backend/version/index.service.ts';
 import { IServerState } from '@/shared/backend/server/index.service.ts';
 import { formatDate } from '@/shared/services/transformations/index.service.ts';
 import { NavService } from '@/shared/services/nav/index.service.ts';
-import { useBoundStore } from '@/shared/store/index.store.ts';
 
 
 /* ************************************************************************************************
@@ -36,7 +35,6 @@ const APICard = ({ data }: { data: IServerState }) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const navigate = useNavigate();
   const version = useBoundStore((state) => state.version!);
 
 
@@ -64,7 +62,9 @@ const APICard = ({ data }: { data: IServerState }) => {
       <div
         className='flex justify-start items-start p-6'
       >
-        <div>
+        <div
+          className='max-w-[75%] sm:max-w-[70%]'
+        >
           <div
             className='flex justify-start items-center'
           >
@@ -82,33 +82,34 @@ const APICard = ({ data }: { data: IServerState }) => {
           </div>
           <div
             className='text-left'>
-
               {
                 availableUpdates === null
-                  ? <Button
-                    variant='link'
-                    className='justify-start p-0 -mt-1 text-light text-xs hover:opacity-70'
-                    onClick={() => NavService.openAPICommit(version.api.latest.sha)}
-                  >
-                    <CodeXml
-                      className='mr-1 w-4 h-4'
-                    />
-                    <p className='max-w-40 sm:max-w-48 text-ellipsis overflow-hidden'>
-                      v{version.api.latest.version}&nbsp;·&nbsp;
-                      {version.api.latest.sha.slice(0, 7)}&nbsp;·&nbsp;
-                      {formatRelative(version.api.latest.eventTime, new Date())}
-                    </p>
-                  </Button>
-                  : <Button
-                    variant='link'
-                    className='justify-start p-0 -mt-1 text-light text-xs'
-                    onClick={() => navigate(NavService.platformUpdate())}
+                  ? <a
+                      href={NavService.buildAPICommitURL(version.api.latest.sha)}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='flex justify-start items-center mt-2 text-sm text-light'
+                    >
+                      <CodeXml
+                          className='mr-1 w-4 h-4'
+                      />
+                      <p
+                        className='truncate'
+                      >
+                        v{version.api.latest.version}&nbsp;·&nbsp;
+                        {version.api.latest.sha.slice(0, 7)}&nbsp;·&nbsp;
+                        {formatDate(version.api.latest.eventTime, 'date-short')}
+                      </p>
+                    </a>
+                  : <Link
+                    className='flex justify-start items-center text-light text-sm mt-2'
+                    to={NavService.platformUpdate()}
                   >
                     <CodeXml
                       className='mr-1 w-4 h-4'
                     />
                     <p>Update available</p>
-                  </Button>
+                  </Link>
               }
 
           </div>

@@ -1,4 +1,3 @@
-import { formatRelative } from 'date-fns';
 import { memo, useState, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
@@ -30,11 +29,12 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/shared/shadcn/components/ui/sheet.tsx';
+import { useBoundStore } from '@/shared/store/index.store.ts';
 import { JWTService } from '@/shared/backend/auth/jwt/index.service.ts';
 import { VersionService } from '@/shared/backend/version/index.service';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
+import { formatDate } from '@/shared/services/transformations/index.service.ts';
 import { NavService } from '@/shared/services/nav/index.service.ts';
-import { useBoundStore } from '@/shared/store/index.store.ts';
 import { IMainNavigationItem } from '@/pages/app/types.ts';
 
 /* ************************************************************************************************
@@ -259,33 +259,38 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
 
             <SheetDescription
               className='text-left'
+              asChild
             >
               {
                 availableUpdates === null
-                  ? <Button
-                    variant='link'
-                    className='justify-start p-0 -mt-6 text-light text-xs hover:opacity-70'
-                    onClick={() => NavService.openGUICommit(version.gui.latest.sha)}
-                  >
-                    <CodeXml
-                      className='mr-1 w-4 h-4'
-                    />
-                    <p className='max-w-48 text-ellipsis overflow-hidden'>
-                      v{version.gui.latest.version}&nbsp;·&nbsp;
-                      {version.gui.latest.sha.slice(0, 7)}&nbsp;·&nbsp;
-                      {formatRelative(version.gui.latest.eventTime, new Date())}
-                    </p>
-                  </Button>
+                  ? <a
+                      href={NavService.buildGUICommitURL(version.gui.latest.sha)}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='flex justify-start items-center text-light'
+                    >
+                      <CodeXml
+                          className='mr-1 w-4 h-4'
+                      />
+                      <p
+                        className='truncate max-w-[85%]'
+                      >
+                        v{version.gui.latest.version}&nbsp;·&nbsp;
+                        {version.gui.latest.sha.slice(0, 7)}&nbsp;·&nbsp;
+                        {formatDate(version.gui.latest.eventTime, 'date-short')}
+                      </p>
+                    </a>
                   : <Button
-                    variant='link'
-                    className='justify-start p-0 -mt-6 text-light text-xs'
-                    onClick={() => navigateFromSidenav(NavService.platformUpdate())}
-                  >
-                    <CodeXml
-                      className='mr-1 w-4 h-4'
-                    />
-                    <p>Update available</p>
-                  </Button>
+                      variant='link'
+                      className='justify-start p-0 min-h-0 text-light text-sm'
+                      onClick={() => navigateFromSidenav(NavService.platformUpdate())}
+                      style={{ marginTop: '-2px' }}
+                    >
+                      <CodeXml
+                        className='mr-1 w-4 h-4'
+                      />
+                      <p>Update available</p>
+                    </Button>
               }
             </SheetDescription>
           </SheetHeader>
