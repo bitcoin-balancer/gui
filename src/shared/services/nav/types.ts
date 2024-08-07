@@ -12,6 +12,10 @@ type INavService = {
   // properties
   // ...
 
+  // external urls builder
+  buildGUICommitURL: (hash: string) => string;
+  buildAPICommitURL: (hash: string) => string;
+
   // external navigation
   openURL:(url: string, newTab?: boolean, noReferrer?: boolean) => void;
   createNewInstance:() => void;

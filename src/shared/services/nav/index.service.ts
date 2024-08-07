@@ -23,6 +23,30 @@ const navServiceFactory = (): INavService => {
 
 
 
+
+
+  /* **********************************************************************************************
+   *                                     EXTERNAL URLS BUILDER                                    *
+   ********************************************************************************************** */
+
+  /**
+   * Builds the URL for a commit from the GUI's repository.
+   * @param hash
+   * @returns string
+   */
+  const buildGUICommitURL = (hash: string): string => `${__GUI_REPO_URL}/commit/${hash}`;
+
+  /**
+   * Builds the URL for a commit from the API's repository.
+   * @param hash
+   * @returns string
+   */
+  const buildAPICommitURL = (hash: string): string => `${__API_REPO_URL}/commit/${hash}`;
+
+
+
+
+
   /* **********************************************************************************************
    *                                      EXTERNAL NAVIGATION                                     *
    ********************************************************************************************** */
@@ -64,7 +88,7 @@ const navServiceFactory = (): INavService => {
    * Opens the GitHub page for a commit made to the GUI in a new tab.
    * @param hash
    */
-  const openGUICommit = (hash: string): void => openURL(`${__GUI_REPO_URL}/commit/${hash}`);
+  const openGUICommit = (hash: string): void => openURL(buildGUICommitURL(hash));
 
   /**
    * Opens the API's respository page in a new tab.
@@ -75,7 +99,7 @@ const navServiceFactory = (): INavService => {
    * Opens the GitHub page for a commit made to the API in a new tab.
    * @param hash
    */
-  const openAPICommit = (hash: string): void => openURL(`${__API_REPO_URL}/commit/${hash}`);
+  const openAPICommit = (hash: string): void => openURL(buildAPICommitURL(hash));
 
 
 
@@ -155,6 +179,10 @@ const navServiceFactory = (): INavService => {
   return Object.freeze({
     // properties
     // ...
+
+    // external urls builder
+    buildGUICommitURL,
+    buildAPICommitURL,
 
     // external navigation
     openURL,
