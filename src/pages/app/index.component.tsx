@@ -172,10 +172,16 @@ const App = () => {
     if (authenticated) {
       const socket = io(ENVIRONMENT.apiURL, {
         path: '/stream/',
+        transports: ['websocket', 'polling'], // most users possess high end devices
         withCredentials: true,
       });
       socket.on('connect', () => {
         console.log('connect', socket.id); // x8WIv7-mJelg7on_ALbx
+        console.log('transport', socket.io.engine.transport.name);
+      });
+
+      socket.on('upgrade', () => {
+        console.log('upgrade', socket.io.engine.transport.name);
       });
 
       socket.on('connect_error', (error) => {

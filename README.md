@@ -58,11 +58,31 @@ npm run preview
 
 ## @TODO
 
-- [ ] Create the `browserdb` package and use it to implement the request caching system
-- [ ] Create Bitcoin Quotes Component and place it in `sign-in` and `update-password` routes
+### High Priority
+
+When running a build action from the CLI, the images are built and pushed to the registry so that they can be pulled by new users or those who wish to keep their Balancer platform up-to-date.
+
+This distribution strategy makes it unviable to hard-code the `apiURL` in the `environment.production.ts` file as it will be pushed inside of the image, prohibiting users from pointing their GUIs to their APIs.
+
+Once the correct approach has been chosen, find a way to derive the API's URL based on the GUI's URL.
+
+**Bonus**: figure out how to properly configure the `nginx.conf/connect-src` property so the GUI can only interact with the API via any domain.
+
+
+
+### Medium Priority
+
+- [ ] ...
+
+
+
+### Low Priority
+
+- [ ] Create the `browserdb` package and use it to implement the request caching system`update-password` routes
 - [ ] Allow users to toggle between `light` and `dark` mode
-- [ ] Make users' list searchable
-- [ ] Make Blacklisted IP addresses searchable
+- [ ] Make the users' list searchable
+- [ ] Make the Blacklisted IP addresses searchable
+- [ ] Create Bitcoin Quotes Component and place it in `sign-in` and `update-password`
 - [ ] ...
 
 
