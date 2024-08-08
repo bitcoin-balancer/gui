@@ -295,7 +295,7 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
             </SheetDescription>
           </SheetHeader>
 
-          <nav className='mt-4'>
+          <nav className='mt-6'>
 
             <Button
               variant='ghost'

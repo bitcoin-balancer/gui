@@ -1,3 +1,4 @@
+import { io } from 'socket.io-client';
 import { useMemo, useEffect } from 'react';
 import {
   Navigate,
@@ -14,15 +15,16 @@ import {
 } from 'lucide-react';
 import { SWService } from 'sw-service';
 import { Toaster } from '@/shared/shadcn/components/ui/toaster';
-import { ToastAction } from '@/shared/shadcn/components/ui/toast';
+import { ToastAction } from '@/shared/shadcn/components/ui/toast.tsx';
 import { toast } from '@/shared/shadcn/components/ui/use-toast.ts';
-import { errorToast } from '@/shared/services/utils/index.service.ts';
-import { formatBadgeCount } from '@/shared/services/transformations/index.service.ts';
-import { NavService } from '@/shared/services/nav/index.service.ts';
+import { ENVIRONMENT } from '@/environment/environment.ts';
+import { useBoundStore } from '@/shared/store/index.store.ts';
 import { AccessJWTService } from '@/shared/backend/api/access-jwt.service.ts';
 import { VersionService } from '@/shared/backend/version/index.service.ts';
 import { DataJoinService } from '@/shared/backend/data-join/index.service.ts';
-import { useBoundStore } from '@/shared/store/index.store.ts';
+import { errorToast } from '@/shared/services/utils/index.service.ts';
+import { formatBadgeCount } from '@/shared/services/transformations/index.service.ts';
+import { NavService } from '@/shared/services/nav/index.service.ts';
 import AppInstaller from '@/shared/components/app-installer/index.component.tsx';
 import OnlineStatus from '@/shared/components/online-status/index.component.tsx';
 import ConfirmationDialog from '@/shared/components/confirmation-dialog/index.component.tsx';
@@ -161,6 +163,40 @@ const App = () => {
     }
     return () => clearInterval(interval);
   }, [authenticated, setAppEssentials]);
+
+  /**
+   * Compact App Essentials
+   * ...
+   */
+  useEffect(() => {
+    if (authenticated) {
+      const socket = io(ENVIRONMENT.apiURL, {
+        path: '/stream/',
+        withCredentials: true,
+      });
+      socket.on('connect', () => {
+        console.log('connect', socket.id); // x8WIv7-mJelg7on_ALbx
+      });
+
+      socket.on('connect_error', (error) => {
+        if (socket.active) {
+          console.log('temporary failure, the socket will automatically try to reconnect');
+        } else {
+          // the connection was denied by the server
+          // in that case, `socket.connect()` must be manually called in order to reconnect
+          console.log(error.message);
+        }
+      });
+
+      socket.on('compact_app_essentials', (payload) => {
+        console.log(payload);
+      });
+
+      socket.on('disconnect', () => {
+        console.log('disconnect', socket.id); // undefined
+      });
+    }
+  }, [authenticated]);
 
   /**
    * App Updater
