@@ -38,9 +38,12 @@ const APIError = memo(({ id, data, openDialog }: IAPIErrorProps) => {
     >
 
       <div>
-        <p
-          className='font-bold max-w-44 sm:max-w-96 xl:max-w-[500px] truncate'
-        >{data.origin}</p>
+        <Badge
+          variant='secondary'
+          className='max-w-44 sm:max-w-96 xl:max-w-[500px]'
+        >
+          <p className='truncate text-sm'>{data.origin}</p>
+        </Badge>
         <p
           className='text-light text-sm mt-1'
         >{message}</p>

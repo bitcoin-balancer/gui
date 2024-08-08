@@ -172,7 +172,10 @@ const App = () => {
     if (authenticated) {
       const socket = io(ENVIRONMENT.apiURL, {
         path: '/stream/',
-        transports: ['websocket', 'polling'], // most users possess high end devices
+        // transports: ['websocket', 'polling'], // most users possess high end devices
+        transports: ['polling', 'websocket'],
+        upgrade: true,
+        rememberUpgrade: true,
         withCredentials: true,
       });
       socket.on('connect', () => {
@@ -180,7 +183,7 @@ const App = () => {
         console.log('transport', socket.io.engine.transport.name);
       });
 
-      socket.on('upgrade', () => {
+      socket.io.engine.once('upgrade', () => {
         console.log('upgrade', socket.io.engine.transport.name);
       });
 
