@@ -27,7 +27,7 @@ const Service = memo(({
   >
 
     <div
-      className='max-w-[70%] sm:max-w-[65%]'
+      className='max-w-[77%] sm:max-w-[70%]'
     >
       <div
         className='flex justify-start items-center'
@@ -56,7 +56,7 @@ const Service = memo(({
         className='flex justify-start items-center mt-2 text-sm text-light'
       >
         <CodeXml
-            className='mr-1 w-4 h-4'
+            className='mr-1 w-4 h-4 min-w-5'
         />
         <p
           className='truncate'

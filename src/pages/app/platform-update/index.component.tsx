@@ -83,16 +83,19 @@ const PlatformUpdate = () => {
           <h1
             className='text-2xl md:text-3xl'
           >Platform update</h1>
-          <p
-            className='text-light text-sm mt-2'
+          {
+            availableUpdates !== null
+            && <p
+              className='text-light text-sm mt-2'
             >
-              If you run into issues when updating the services, try
-              <Button
-                variant='link'
-                className='p-0 m-0 ml-1 text-light'
-                onClick={() => setOpen(true)}
-              >"Re-building the images"</Button>
+                If you run into issues when updating the services, try
+                <Button
+                  variant='link'
+                  className='p-0 m-0 ml-1 text-light'
+                  onClick={() => setOpen(true)}
+                >"Re-building the images"</Button>
             </p>
+          }
 
 
           <Card className='mt-5'>
