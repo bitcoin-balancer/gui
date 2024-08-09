@@ -154,7 +154,7 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
                 >
                   {item.icon}
                   <div
-                    className='absolute -top-2 -right-3'
+                    className='absolute -top-2 -right-2'
                   >
                     <Badge
                       className='py-0.5 px-1.5'
