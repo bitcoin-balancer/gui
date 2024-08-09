@@ -172,11 +172,11 @@ const App = () => {
     if (authenticated) {
       const socket = io(ENVIRONMENT.apiURL, {
         path: '/stream/',
-        // transports: ['websocket', 'polling'], // most users possess high end devices
+        // transports: ['websocket', 'polling'], // most users possess high-end/modern devices
         transports: ['polling', 'websocket'],
-        upgrade: true,
-        rememberUpgrade: true,
         withCredentials: true,
+        // upgrade: true,
+        // rememberUpgrade: true,
       });
       socket.on('connect', () => {
         console.log('connect', socket.id); // x8WIv7-mJelg7on_ALbx

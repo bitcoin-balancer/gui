@@ -7,5 +7,9 @@
     "/logo",
     "/index.html"
   ],
-  "excludeFilesFromPrecache": []
+  "excludeFilesFromPrecache": [],
+  "excludeMIMETypesFromCache": [
+    "application/json",
+    "text/plain"
+  ]
 }
