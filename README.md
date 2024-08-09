@@ -60,14 +60,7 @@ npm run preview
 
 ### High Priority
 
-When running a build action from the CLI, the images are built and pushed to the registry so that they can be pulled by new users or those who wish to keep their Balancer platform up-to-date.
-
-This distribution strategy makes it unviable to hard-code the `apiURL` in the `environment.production.ts` file as it will be pushed inside of the image, prohibiting users from pointing their GUIs to their APIs.
-
-Once the correct approach has been chosen, find a way to derive the API's URL based on the GUI's URL.
-
-**Bonus**: figure out how to properly configure the `nginx.conf/connect-src` property so the GUI can only interact with the API via any domain.
-
+- [ ] ...
 
 
 ### Medium Priority

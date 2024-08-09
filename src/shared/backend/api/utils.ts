@@ -8,13 +8,29 @@ import { ENVIRONMENT } from '@/environment/environment.ts';
  ************************************************************************************************ */
 
 /**
+ * Extracts the domain name based on a given hostname (www-less url).
+ * @param hostname
+ * @returns string
+ */
+const __getDomainName = (hostname: string): string => {
+  const parts = hostname.split('.');
+  if (parts.length === 2) {
+    return hostname;
+  }
+  return parts.slice(1).join('.');
+};
+
+/**
  * Builds the API's base path based on the environment and the window's location.
  * @returns string
  */
 const __buildAPIBaseURL = (): string => {
   if (ENVIRONMENT.production) {
-    const url = window.location;
-    return `${url.protocol}//`;
+    const www = window.location.hostname.includes('www') ? 'www.' : '';
+    const domain = www.length > 0
+      ? __getDomainName(window.location.hostname.substring(window.location.hostname.indexOf('.') + 1))
+      : __getDomainName(window.location.hostname);
+    return `${window.location.protocol}//${www}balancerapi.${domain}`;
   }
   return 'http://localhost:5075';
 };
@@ -51,7 +67,7 @@ const needsNewSession = (error: unknown): boolean => decodeError(error).code ===
  * @param resourcePath
  * @returns string
  */
-const buildAPIURL = (resourcePath: string): string => `${ENVIRONMENT.apiURL}/${resourcePath}`;
+const buildAPIURL = (resourcePath: string): string => `${__BASE_URL}/${resourcePath}`;
 
 /**
  * Builds the Headers that will be used to send a request to the API.
@@ -99,6 +115,10 @@ const buildRequestOptions = (
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export {
+  // helpers
+  __buildAPIBaseURL,
+
+  // implementation
   needsNewSession,
   buildAPIURL,
   buildRequestOptions,

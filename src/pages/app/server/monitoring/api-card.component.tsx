@@ -94,7 +94,7 @@ const APICard = ({ data }: { data: IServerState }) => {
                           className='mr-1 w-4 h-4'
                       />
                       <p
-                        className='truncate'
+                        className='truncate text-sm'
                       >
                         v{version.api.latest.version}&nbsp;·&nbsp;
                         {version.api.latest.sha.slice(0, 7)}&nbsp;·&nbsp;

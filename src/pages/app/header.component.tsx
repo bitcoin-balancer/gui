@@ -273,7 +273,7 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
                           className='mr-1 w-4 h-4'
                       />
                       <p
-                        className='truncate max-w-[85%]'
+                        className='truncate max-w-[85%] text-sm'
                       >
                         v{version.gui.latest.version}&nbsp;·&nbsp;
                         {version.gui.latest.sha.slice(0, 7)}&nbsp;·&nbsp;
