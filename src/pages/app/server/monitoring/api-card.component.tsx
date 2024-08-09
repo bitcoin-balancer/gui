@@ -4,7 +4,6 @@ import { CodeXml, ExternalLink, Github } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import { Card, CardContent } from '@/shared/shadcn/components/ui/card.tsx';
-import { ENVIRONMENT } from '@/environment/environment.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { buildAPIURL } from '@/shared/backend/api/utils.ts';
 import { VersionService } from '@/shared/backend/version/index.service.ts';
@@ -149,7 +148,7 @@ const APICard = ({ data }: { data: IServerState }) => {
           >
             <p
               className='max-w-36 lg:max-w-44 xl:max-w-none truncate'
-            >{ENVIRONMENT.apiURL}</p>
+            >{buildAPIURL('')}</p>
             <ExternalLink
               aria-hidden='true'
               className='w-4 h-4 ml-1'

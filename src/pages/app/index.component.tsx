@@ -17,9 +17,9 @@ import { SWService } from 'sw-service';
 import { Toaster } from '@/shared/shadcn/components/ui/toaster';
 import { ToastAction } from '@/shared/shadcn/components/ui/toast.tsx';
 import { toast } from '@/shared/shadcn/components/ui/use-toast.ts';
-import { ENVIRONMENT } from '@/environment/environment.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { AccessJWTService } from '@/shared/backend/api/access-jwt.service.ts';
+import { buildAPIURL } from '@/shared/backend/api/index.service.ts';
 import { VersionService } from '@/shared/backend/version/index.service.ts';
 import { DataJoinService } from '@/shared/backend/data-join/index.service.ts';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
@@ -170,7 +170,7 @@ const App = () => {
    */
   useEffect(() => {
     if (authenticated) {
-      const socket = io(ENVIRONMENT.apiURL, {
+      const socket = io(buildAPIURL(''), {
         path: '/stream/',
         transports: ['websocket', 'polling'], // default is: ['polling', 'websocket']
         withCredentials: true,

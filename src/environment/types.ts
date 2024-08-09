@@ -15,9 +15,6 @@ type IEnvironment = {
 
   // the current version of the GUI
   version: string;
-
-  // the base URL to the RESTful API
-  apiURL: string;
 };
 
 

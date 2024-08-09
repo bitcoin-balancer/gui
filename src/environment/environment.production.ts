@@ -6,7 +6,6 @@ import { IEnvironment } from './types';
 const ENVIRONMENT: IEnvironment = {
   production: true,
   version: '(package.json).version',
-  apiURL: 'https://balancerapi.jesusgraterol.dev',
 };
 
 
