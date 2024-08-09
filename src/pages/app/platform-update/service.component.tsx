@@ -27,7 +27,7 @@ const Service = memo(({
   >
 
     <div
-      className='max-w-[77%] sm:max-w-[70%]'
+      className='max-w-[75%] sm:max-w-[70%]'
     >
       <div
         className='flex justify-start items-center'

@@ -4,6 +4,37 @@ import { IRecord } from '@/shared/types.ts';
 import { ENVIRONMENT } from '@/environment/environment.ts';
 
 /* ************************************************************************************************
+ *                                            HELPERS                                             *
+ ************************************************************************************************ */
+
+/**
+ * Builds the API's base path based on the environment and the window's location.
+ * @returns string
+ */
+const __buildAPIBaseURL = (): string => {
+  if (ENVIRONMENT.production) {
+    const url = window.location;
+    return `${url.protocol}//`;
+  }
+  return 'http://localhost:5075';
+};
+
+
+
+
+
+/* ************************************************************************************************
+ *                                           CONSTANTS                                            *
+ ************************************************************************************************ */
+
+// the API's base url that's used to build route paths
+const __BASE_URL = __buildAPIBaseURL();
+
+
+
+
+
+/* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
 
