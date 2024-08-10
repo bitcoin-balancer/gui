@@ -23,6 +23,7 @@ import { JWTService, IRefreshTokenRecord } from '@/shared/backend/auth/jwt/index
 import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
+import NoRecords from '@/shared/components/no-records/index.component.tsx';
 import { IDisplayAuthSessionsProps } from '@/pages/app/users/types.ts';
 
 /* ************************************************************************************************
@@ -99,9 +100,7 @@ const DisplayAuthSessions = memo(({
       </Table>
     );
   } else {
-    content = <p
-      className='text-light text-sm text-center my-5 animate-in fade-in duration-700'
-    >No records were found</p>;
+    content = <NoRecords />;
   }
   return (
     <Dialog

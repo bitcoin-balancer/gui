@@ -17,6 +17,7 @@ import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
+import NoRecords from '@/shared/components/no-records/index.component.tsx';
 import { IServerComponentProps } from '@/pages/app/server/types.ts';
 import APIError from '@/pages/app/server/api-errors/api-error.component.tsx';
 import APIErrorDialog from '@/pages/app/server/api-errors/api-error-dialog.component.tsx';
@@ -214,9 +215,7 @@ const APIErrors = memo(({ setSidenavOpen }: IServerComponentProps) => {
                 ))}
               </CardContent>
             </Card>
-              : <p
-                className='text-light text-center text-sm mt-5'
-              >No records were found</p>
+              : <NoRecords />
           }
 
 

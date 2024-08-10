@@ -41,6 +41,7 @@ import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/i
 import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
+import NoRecords from '@/shared/components/no-records/index.component.tsx';
 import { dispatch } from '@/pages/app/ip-blacklist/reducer.ts';
 import RecordForm from '@/pages/app/ip-blacklist/record-form.component.tsx';
 import { IAction } from '@/pages/app/ip-blacklist/types.ts';
@@ -390,9 +391,7 @@ const IPBlacklist = () => {
                     </Button>
                   }
               </>
-              : <p
-                className='text-light text-center text-sm mt-5'
-              >No records were found</p>
+              : <NoRecords />
           }
 
         </section>

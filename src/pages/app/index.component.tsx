@@ -195,7 +195,7 @@ const App = () => {
       });
 
       socket.on('compact_app_essentials', (payload) => {
-        console.log(payload);
+        /* console.log(payload); */
       });
 
       socket.on('disconnect', () => {
