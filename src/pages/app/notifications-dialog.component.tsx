@@ -22,6 +22,7 @@ import { formatDate } from '@/shared/services/transformations/index.service.ts';
 import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
+import NoRecords from '@/shared/components/no-records/index.component.tsx';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
@@ -95,7 +96,6 @@ const NotificationsDialog = ({
       });
 
       // scroll to the beginning of the new page
-      // https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
       const el = rowsRef.current?.querySelector(`#nd-${data.at(-1)!.id}`) as Element;
       el.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
     } catch (e) {
@@ -169,9 +169,7 @@ const NotificationsDialog = ({
       </>
     );
   } else {
-    content = <p
-      className='text-light text-sm text-center my-5 animate-in fade-in duration-700'
-    >No records were found</p>;
+    content = <NoRecords />;
   }
   return (
     <Dialog
