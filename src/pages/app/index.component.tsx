@@ -120,7 +120,7 @@ const App = () => {
 
   /**
    * Access JWT
-   * Checks if the user is currently logged in in case authentication has not been initialized.
+   * Checks if the user is currently logged in, in case authentication has not been initialized.
    */
   useEffect(() => {
     const loadAuthState = async () => {

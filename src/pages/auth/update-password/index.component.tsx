@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useForm, useWatch } from 'react-hook-form';
 import { Loader2 } from 'lucide-react';
-import { Button } from '@/shared/shadcn/components/ui/button.tsx';
-import { Input } from '@/shared/shadcn/components/ui/input.tsx';
+import { Button } from '@/shared/shadcn/components/ui/button';
+import { Input } from '@/shared/shadcn/components/ui/input';
 import {
   Form,
   FormControl,
@@ -11,8 +11,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/shared/shadcn/components/ui/form.tsx';
-import { Toaster } from '@/shared/shadcn/components/ui/toaster.tsx';
+} from '@/shared/shadcn/components/ui/form';
+import { Toaster } from '@/shared/shadcn/components/ui/toaster';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import {
   altchaPayloadValid,
@@ -20,58 +20,37 @@ import {
   passwordValid,
 } from '@/shared/backend/validations/index.service.ts';
 import { NavService } from '@/shared/services/nav/index.service.ts';
-import { AccessJWTService } from '@/shared/backend/api/access-jwt.service.ts';
 import { Altcha } from '@/shared/components/altcha/index.component.tsx';
-import { JWTService } from '@/shared/backend/auth/jwt/index.service.ts';
+import { UserService } from '@/shared/backend/auth/user/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
-import GlobalLoader from '@/pages/global-loader/index.component.tsx';
 import ConfirmationDialog from '@/shared/components/confirmation-dialog/index.component.tsx';
-import { IFormInputs } from '@/pages/sign-in/types.ts';
-
+import { IFormInputs } from '@/pages/auth/update-password/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
 
 /**
- * Sign In Component
- * Component in charge of authenticating users.
+ * Update Password Component
+ * Component in charge of enabling users to set the password once their accounts are created or in
+ * case they forget it in the future.
  */
-const SignIn = () => {
+const UpdatePassword = () => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const authenticated = useBoundStore((state) => state.authenticated);
   const navigate = useNavigate();
-  const form = useForm<IFormInputs>({ defaultValues: { nickname: '', password: '' } });
+  const form = useForm<IFormInputs>({
+    defaultValues: {
+      nickname: '',
+      newPassword: '',
+      confirmNewPassword: '',
+    },
+  });
+  const newPassword = useWatch({ control: form.control, name: 'newPassword' });
   const [altcha, setAltcha] = useState<string | null | undefined>(undefined);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-
-
-
-
-
-  /* **********************************************************************************************
-   *                                         SIDE EFFECTS                                         *
-   ********************************************************************************************** */
-
-  /**
-   * Access JWT
-   * Checks if the user is currently logged in in case authentication has not been initialized.
-   */
-  useEffect(() => {
-    const loadAuthState = async () => {
-      try {
-        await AccessJWTService.accessJWTChanged(null);
-      } catch (e) {
-        errorToast(e);
-      }
-    };
-    if (authenticated === undefined) {
-      loadAuthState();
-    }
-  }, [authenticated]);
 
 
 
@@ -97,19 +76,20 @@ const SignIn = () => {
     // display the confirmation dialog
     openConfirmationDialog({
       mode: 'OTP',
-      title: 'Sign in',
-      description: 'Your session will be instantiated immediately upon submission and will last for approximately 30 days',
+      title: 'Update your password',
+      description: 'The new password will be set immediately upon submission',
       onConfirmation: async (confirmation: string) => {
         try {
           setIsSubmitting(true);
-          await JWTService.signIn(
+          await UserService.updatePassword(
             data.nickname,
-            data.password,
+            data.newPassword,
             confirmation,
             altcha,
           );
+          navigate(NavService.signIn());
         } catch (e) {
-          errorToast(e, 'Authentication Error');
+          errorToast(e, 'Password Update Error');
         } finally {
           setIsSubmitting(false);
         }
@@ -123,60 +103,10 @@ const SignIn = () => {
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
-  if (authenticated) {
-    return <Navigate to='/app' />;
-  }
-  if (authenticated === undefined) {
-    return <GlobalLoader />;
-  }
   return (
     <main
-      className='flex min-h-dvh animate-in fade-in slide-in-from-left duration-500'
+      className='flex min-h-dvh animate-in fade-in slide-in-from-right duration-500'
     >
-
-      {/* *******
-        * QUOTE *
-        ******* */}
-      <aside
-        className='hidden md:block flex-1 bg-primary shadow-8 p-10'
-      >
-
-        <article
-          className='flex flex-col h-full'
-        >
-          <Link
-            to={NavService.landing()}
-          >
-            <img
-              src='logo/logo-light.png'
-              alt='Balancer Logo'
-              width='192'
-              height='60'
-              className='w-48'
-            />
-          </Link>
-
-          <span className='my-auto'></span>
-
-          <blockquote
-            className='text-white'
-          >
-            <p
-              className='text-2xl'
-            >
-              "Bitcoin is a remarkable cryptographic achievement, and the ability to create
-              something that is not duplicable in the digital world has enormous value."
-            </p>
-            <p
-              className='text-sm mt-3'
-            >Eric Schmidt, Former CEO of Google</p>
-          </blockquote>
-
-        </article>
-
-      </aside>
-
-
 
       {/* ******
         * FORM *
@@ -197,10 +127,10 @@ const SignIn = () => {
 
               <h1
                 className='text-3xl font-bold text-center'
-              >Sign in</h1>
+              >Update your password</h1>
               <p
                 className='text-light text-md text-center'
-              >Enter your credentials to log into your account</p>
+              >Set a password you haven't used elsewhere</p>
 
               <FormField
                 control={form.control}
@@ -211,10 +141,9 @@ const SignIn = () => {
                     <FormControl>
                       <Input
                         type='text'
-                        placeholder='satoshi'
+                        placeholder='nakamoto'
                         {...field}
                         autoComplete='off'
-                        autoFocus
                         disabled={isSubmitting}
                       />
                     </FormControl>
@@ -230,7 +159,7 @@ const SignIn = () => {
 
               <FormField
                 control={form.control}
-                name='password'
+                name='newPassword'
                 render={({ field }) => (
                   <FormItem className='mt-5'>
                     <FormLabel>Password</FormLabel>
@@ -248,7 +177,32 @@ const SignIn = () => {
                 )}
                 rules={{
                   validate: {
-                    required: (value) => (passwordValid(value) ? true : 'Enter a valid password'),
+                    required: (value) => (passwordValid(value) ? true : 'The password must include a minimum of 8 characters and at least one lowercase letter, one uppercase letter, one number, and one special character.'),
+                  },
+                }}
+              />
+
+              <FormField
+                control={form.control}
+                name='confirmNewPassword'
+                render={({ field }) => (
+                  <FormItem className='mt-5'>
+                    <FormLabel>Confirm password</FormLabel>
+                    <FormControl>
+                      <Input
+                        type='password'
+                        placeholder='********'
+                        {...field}
+                        autoComplete='off'
+                        disabled={isSubmitting}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+                rules={{
+                  validate: {
+                    required: (value) => (newPassword === value ? true : 'The passwords don’t match'),
                   },
                 }}
               />
@@ -269,30 +223,23 @@ const SignIn = () => {
               <Button
                 type='submit'
                 disabled={isSubmitting}
+                variant='default'
                 className='mt-7 w-full'
               >
                 {
                   isSubmitting
                   && <Loader2
                     className='mr-2 h-4 w-4 animate-spin'
-                  />} Sign in
+                  />} Update password
               </Button>
 
               <Button
                 type='button'
-                onClick={() => navigate(NavService.updatePassword())}
+                onClick={() => navigate(NavService.signIn())}
                 disabled={isSubmitting}
                 variant='outline'
                 className='mt-3 w-full'
-              >Update password</Button>
-
-              <p
-                className='text-light text-sm mt-6 text-center'
-              >
-                If this is the first time you are signing into your account, go through the
-                <Link className='mx-1' to={NavService.updatePassword()}><strong>"Update password"</strong></Link>
-                section to set a password on it
-              </p>
+              >Sign in</Button>
 
             </form>
           </Form>
@@ -300,6 +247,50 @@ const SignIn = () => {
         </article>
 
       </section>
+
+
+
+      {/* *******
+        * QUOTE *
+        ******* */}
+      <aside
+        className='hidden md:block flex-1 bg-primary shadow-8 p-10'
+      >
+
+        <article
+          className='flex flex-col h-full items-end'
+        >
+          <Link
+            to={NavService.landing()}
+          >
+            <img
+              src='/logo/logo-light.png'
+              alt='Balancer Logo'
+              width='192'
+              height='60'
+              className='w-48'
+            />
+          </Link>
+
+          <span className='my-auto'></span>
+
+          <blockquote
+            className='text-white text-right'
+          >
+            <p
+              className='text-2xl'
+            >
+              “We have elected to put our money and faith in a mathematical framework that is free
+              of politics and human error.“
+            </p>
+            <p
+              className='text-sm mt-3'
+            >Tyler Winklevoss, co-CEO of Gemini</p>
+          </blockquote>
+
+        </article>
+
+      </aside>
 
 
 
@@ -326,4 +317,4 @@ const SignIn = () => {
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export default SignIn;
+export default UpdatePassword;

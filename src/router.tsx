@@ -1,8 +1,9 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Landing from '@/pages/landing/index.component.tsx';
 import App from '@/pages/app/index.component.tsx';
-import SignIn from '@/pages/sign-in/index.component.tsx';
-import UpdatePassword from '@/pages/update-password/index.component.tsx';
+import Auth from './pages/auth/index.component.tsx';
+import SignIn from '@/pages/auth/sign-in/index.component.tsx';
+import UpdatePassword from '@/pages/auth/update-password/index.component.tsx';
 import Error from '@/pages/error/index.component.tsx';
 import NotFound from '@/pages/not-found/index.component.tsx';
 
@@ -22,14 +23,19 @@ const Router = () => {
       errorElement: <Error />,
     },
     {
-      path: '/sign-in',
-      element: <SignIn />,
+      path: '/auth',
+      element: <Auth />,
       errorElement: <Error />,
-    },
-    {
-      path: '/update-password',
-      element: <UpdatePassword />,
-      errorElement: <Error />,
+      children: [
+        {
+          path: 'sign-in',
+          element: <SignIn />,
+        },
+        {
+          path: 'update-password',
+          element: <UpdatePassword />,
+        },
+      ],
     },
     {
       path: '/app',

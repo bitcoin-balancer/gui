@@ -119,13 +119,13 @@ const navServiceFactory = (): INavService => {
    * Builds the path to the sign-in page.
    * @returns string
    */
-  const signIn = (): string => '/sign-in';
+  const signIn = (): string => '/auth/sign-in';
 
   /**
    * Builds the path to the update-password page.
    * @returns string
    */
-  const updatePassword = (): string => '/update-password';
+  const updatePassword = (): string => '/auth/update-password';
 
   /**
    * Builds the path to the dashboard page.
