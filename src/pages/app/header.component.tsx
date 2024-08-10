@@ -157,7 +157,7 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
               {
                 item.badge
                 && <div
-                  className='absolute -top-2 -right-2'
+                  className={`absolute -top-2 ${item.badge === '9+' ? '-right-3' : '-right-2'}`}
                 >
                   <Badge
                     className='py-0.5 px-1.5'
@@ -188,7 +188,7 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
           {
             item.badge
             && <div
-              className='absolute -top-2 -right-2'
+              className={`absolute -top-2 ${item.badge === '9+' ? '-right-3' : '-right-2'}`}
             >
               <Badge
                 className='py-0.5 px-1.5'

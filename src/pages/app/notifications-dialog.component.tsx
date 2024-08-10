@@ -14,13 +14,14 @@ import {
   DialogTitle,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
+import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
+import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
-// import { formatDate } from '@/shared/services/transformations/index.service.ts';
 import { NotificationService, INotification } from '@/shared/backend/notification/index.service.ts';
+import { formatDate } from '@/shared/services/transformations/index.service.ts';
 import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
-import { Separator } from '@/shared/shadcn/components/ui/separator';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
@@ -121,11 +122,32 @@ const NotificationsDialog = ({
         <div ref={rowsRef}>
           {data.map((record, i) => (
             <Fragment key={record.id}>
-              <article id={`nd-${record.id}`}>
-                <p>{record.sender}</p>
-                <p>{record.title}</p>
+              <article
+                id={`nd-${record.id}`}
+              >
+                <div
+                  className='flex justify-start items-center'
+                >
+                  <p
+                    className='font-bold'
+                  >{record.title}</p>
+                  <span className='flex-1'></span>
+                  <Badge
+                    className='text-xs max-w-24 sm:max-w-40'
+                  >
+                    <p
+                      className='truncate'
+                    >{record.sender}</p>
+                  </Badge>
+                </div>
+                <p
+                  className='text-sm  mt-1'
+                >{record.description}</p>
+                <p
+                  className='text-xs text-light'
+                >{formatDate(record.event_time, 'datetime-medium')}</p>
               </article>
-              {i < data.length - 1 && <Separator className='py-2' />}
+              {i < data.length - 1 && <Separator className='my-8' />}
             </Fragment>
           ))}
         </div>

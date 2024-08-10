@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react';
+import { memo, useMemo, useState } from 'react';
 import {
   Bell,
   BellRing,
@@ -7,7 +7,59 @@ import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/shared/shadcn/components/ui/tooltip.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
-import { formatBadgeCount } from '@/shared/services/transformations/index.service';
+import { delay } from '@/shared/services/utils/index.service.ts';
+import { formatBadgeCount } from '@/shared/services/transformations/index.service.ts';
+import NotificationsDialog from '@/pages/app/notifications-dialog.component.tsx';
+
+/* ************************************************************************************************
+ *                                            HELPERS                                             *
+ ************************************************************************************************ */
+
+/**
+ * Builds the button's icon and badge based on the media breakpoint and the number of notifications.
+ * @param unreadNotifications
+ * @param size
+ * @returns { icon: JSX.Element, badge: JSX.Element | null }
+ */
+const getComponentElements = (
+  unreadNotifications: string | undefined,
+  size: 'icon' | 'default',
+): { icon: JSX.Element, badge: JSX.Element | null } => {
+  // init values
+  let icon: JSX.Element = <Bell aria-hidden='true' />;
+  let badgeClassName: string = '';
+
+  // proceed if there are unread notifications
+  if (unreadNotifications) {
+    // set the icon
+    icon = <BellRing aria-hidden='true' />;
+
+    // set the spacing based on the number of unread notifications and the size of the btn
+    if (unreadNotifications === '9+') {
+      badgeClassName = size === 'icon' ? '-right-5' : '-right-3';
+    } else {
+      badgeClassName = size === 'icon' ? '-right-4' : '-right-2';
+    }
+  }
+
+  // finally, return the elements
+  return {
+    icon,
+    badge: unreadNotifications !== undefined
+      ? <div
+          className={`absolute -top-2 ${badgeClassName}`}
+        >
+          <Badge
+            className='py-0.5 px-1.5'
+          >{unreadNotifications}</Badge>
+        </div>
+      : null,
+  };
+};
+
+
+
+
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -15,12 +67,15 @@ import { formatBadgeCount } from '@/shared/services/transformations/index.servic
 
 /**
  * Notifications Button Component
- * Component in charge of ...
+ * Component in charge of showing the number of unread notifications as well as displaying the
+ * dialog.
  */
 const NotificationsButton = memo(({ size }: { size: 'icon' | 'default' }) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
+  const [open, setOpen] = useState<boolean>(false);
+  const [closingDialog, setClosingDialog] = useState<boolean>(false);
   const unreadNotifications = useBoundStore((state) => state.unreadNotifications!);
 
 
@@ -42,18 +97,27 @@ const NotificationsButton = memo(({ size }: { size: 'icon' | 'default' }) => {
 
 
   /* **********************************************************************************************
+   *                                        EVENT HANDLERS                                        *
+   ********************************************************************************************** */
+
+  /**
+   * Closes the dialog smoothly.
+   */
+  const closeDialog = async (): Promise<void> => {
+    setClosingDialog(true);
+    await delay(0.25);
+    setClosingDialog(false);
+    setOpen(false);
+  };
+
+
+
+
+
+  /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
-  const icon = unreadNotifications > 0 ? <BellRing aria-hidden='true' /> : <Bell aria-hidden='true' />;
-  const badge = unreadNotifications > 0
-    ? <div
-      className={`absolute ${size === 'icon' ? '-top-2 -right-4' : '-top-2 -right-2'}`}
-    >
-      <Badge
-        className='py-0.5 px-1.5'
-      >{unreadNotificationsString}</Badge>
-    </div>
-    : null;
+  const { icon, badge } = getComponentElements(unreadNotificationsString, size);
   return (
     <>
       <Tooltip>
@@ -63,6 +127,7 @@ const NotificationsButton = memo(({ size }: { size: 'icon' | 'default' }) => {
             className={`relative ${size === 'icon' && unreadNotifications > 0 ? 'mr-2' : ''}`}
             aria-label='Display notification'
             size={size}
+            onClick={() => setOpen(true)}
           >
             {icon}
             {badge}
@@ -72,6 +137,18 @@ const NotificationsButton = memo(({ size }: { size: 'icon' | 'default' }) => {
           <p>Notifications</p>
         </TooltipContent>
       </Tooltip>
+
+
+      {/* **********************
+        * NOTIFICATIONS DIALOG *
+        ********************** */}
+      {
+        open
+        && <NotificationsDialog
+          open={open && !closingDialog}
+          onOpenChange={closeDialog}
+        />
+      }
     </>
   );
 });

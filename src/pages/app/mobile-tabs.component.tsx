@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '@/shared/shadcn/components/ui/button';
-import { Badge } from '@/shared/shadcn/components/ui/badge';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
+import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import { IMainNavigationItem } from '@/pages/app/types.ts';
 
 /* ************************************************************************************************
@@ -42,7 +42,7 @@ const MobileTabs = memo(({ items }: { items: IMainNavigationItem[] }) => {
           <div className='relative'>
             {item.icon}
             <div
-              className='absolute -top-5 -right-5'
+              className={`absolute -top-5 ${item.badge === '9+' ? '-right-6' : '-right-5'}`}
             >
               <Badge
                 className='py-0.5 px-1.5'
