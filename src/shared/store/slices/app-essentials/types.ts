@@ -17,6 +17,9 @@ type IAppEssentialsSlice = {
   // the current version of the platform
   version: IVersion | undefined;
 
+  // the number of unread notifications
+  unreadNotifications: number | undefined;
+
   // the number of unread errors
   unreadAPIErrors: number | undefined;
 

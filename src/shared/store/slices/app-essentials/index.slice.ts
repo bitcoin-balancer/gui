@@ -21,6 +21,7 @@ const __onNewCompactAppEssentials = (
 ): IAppEssentials => ({
   serverTime: <number>currentState.serverTime,
   version: <IVersion>currentState.version,
+  unreadNotifications: payload.unreadNotifications,
   unreadAPIErrors: payload.unreadAPIErrors,
   user: <IUser>currentState.user,
 });
@@ -43,6 +44,7 @@ const __onNewAppEssentials = (payload: IAppEssentials): IAppEssentials => ({
     },
     refetchTime: 0,
   }, */
+  unreadNotifications: payload.unreadNotifications,
   unreadAPIErrors: payload.unreadAPIErrors,
   user: payload.user,
 });
@@ -80,6 +82,7 @@ const createAppEssentialsSlice: StateCreator<IAppEssentialsSlice> = (
 ) => ({
   serverTime: undefined,
   version: undefined,
+  unreadNotifications: undefined,
   unreadAPIErrors: undefined,
   user: undefined,
   setAppEssentials: (payload: IAppEssentials | ICompactAppEssentials) => set(
