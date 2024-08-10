@@ -3,9 +3,9 @@ import {
   useMemo,
   useState,
   useRef,
+  useCallback,
 } from 'react';
 import { flushSync } from 'react-dom';
-import { Loader2 } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -22,7 +22,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/shared/shadcn/components/ui/table.tsx';
-import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { formatDate } from '@/shared/services/transformations/index.service.ts';
 import { UserService, IPasswordUpdate } from '@/shared/backend/auth/user/index.service.ts';
@@ -30,6 +29,7 @@ import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import NoRecords from '@/shared/components/no-records/index.component.tsx';
+import LoadMoreButton from '@/shared/components/load-more-button/index.component.tsx';
 import { IDisplayAuthSessionsProps } from '@/pages/app/users/types.ts';
 
 /* ************************************************************************************************
@@ -91,31 +91,35 @@ const DisplayPasswordUpdates = memo(({
   /**
    * Loads the next set of records if there are any.
    */
-  const loadMore = async () => {
-    try {
-      setLoadingMore(true);
-      const nextRecords = await UserService.listUserPasswordUpdates(
-        uid,
-        LIMIT,
-        data.at(-1)!.event_time,
-      );
+  const loadMore = useCallback(
+    async () => {
+      try {
+        setLoadingMore(true);
+        const nextRecords = await UserService.listUserPasswordUpdates(
+          uid,
+          LIMIT,
+          data.at(-1)!.event_time,
+        );
 
-      // add the new records to the DOM
-      flushSync(() => {
-        setData([...data, ...nextRecords]);
-        setHasMore(nextRecords.length >= LIMIT);
-      });
+        // add the new records to the DOM
+        flushSync(() => {
+          setData([...data, ...nextRecords]);
+          setHasMore(nextRecords.length >= LIMIT);
+        });
 
-      // scroll to the beginning of the new page
-      // https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
-      const el = rowsRef.current?.querySelector(`#pur-${data.at(-1)!.event_time}`) as Element;
-      el.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
-    } catch (e) {
-      errorToast(e);
-    } finally {
-      setLoadingMore(false);
-    }
-  };
+        // scroll to the beginning of the new page
+        // https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
+        const el = rowsRef.current?.querySelector(`#pur-${data.at(-1)!.event_time}`) as Element;
+        el.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
+      } catch (e) {
+        errorToast(e);
+      } finally {
+        setLoadingMore(false);
+      }
+    },
+    [data, setData, uid],
+  );
+
 
 
 
@@ -168,18 +172,10 @@ const DisplayPasswordUpdates = memo(({
         </Table>
         {
           (hasMore && data.length >= LIMIT)
-          && <Button
-            variant='ghost'
-            className='w-full'
-            onClick={loadMore}
-            disabled={loadingMore}
-          >
-            {
-              loadingMore
-              && <Loader2
-                className='mr-2 h-4 w-4 animate-spin'
-              />} Load more
-          </Button>
+          && <LoadMoreButton
+            loadMore={loadMore}
+            loadingMore={loadingMore}
+          />
         }
       </>
     );
