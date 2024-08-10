@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ChartNoAxesColumn, Bug, Database as DatabaseIcon } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
@@ -33,6 +33,21 @@ const Server = () => {
   const [activePage, setActivePage] = useState<IPageName>('monitoring');
   const breakpoint = useMediaQueryBreakpoint();
   const unreadAPIErrors = useBoundStore((state) => state.unreadAPIErrors!);
+
+
+
+
+
+  /* **********************************************************************************************
+   *                                         SIDE EFFECTS                                         *
+   ********************************************************************************************** */
+
+  // activates the 'api-errors' page automatically if there are errors
+  useEffect(() => {
+    if (unreadAPIErrors > 0) {
+      setActivePage('api-errors');
+    }
+  }, [unreadAPIErrors]);
 
 
 
