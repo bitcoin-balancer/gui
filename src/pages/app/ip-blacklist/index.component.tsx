@@ -42,6 +42,7 @@ import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import NoRecords from '@/shared/components/no-records/index.component.tsx';
+import LoadMoreButton from '@/shared/components/load-more-button/index.component.tsx';
 import { dispatch } from '@/pages/app/ip-blacklist/reducer.ts';
 import RecordForm from '@/pages/app/ip-blacklist/record-form.component.tsx';
 import { IAction } from '@/pages/app/ip-blacklist/types.ts';
@@ -184,26 +185,29 @@ const IPBlacklist = () => {
   /**
    * Loads the next set of records if there are any.
    */
-  const loadMore = async () => {
-    try {
-      setLoadingMore(true);
-      const nextRecords = await IPBlacklistService.list(LIMIT, data.at(-1)!.id);
+  const loadMore = useCallback(
+    async () => {
+      try {
+        setLoadingMore(true);
+        const nextRecords = await IPBlacklistService.list(LIMIT, data.at(-1)!.id);
 
-      // add the new records to the DOM
-      flushSync(() => {
-        dispatch({ type: 'LOADED_MORE', payload: nextRecords }, data, setData);
-        setHasMore(nextRecords.length >= LIMIT);
-      });
+        // add the new records to the DOM
+        flushSync(() => {
+          dispatch({ type: 'LOADED_MORE', payload: nextRecords }, data, setData);
+          setHasMore(nextRecords.length >= LIMIT);
+        });
 
-      // scroll to the beginning of the new page
-      const el = rowsRef.current?.querySelector(`#ipb-${data.at(-1)!.id}`) as Element;
-      el.scrollIntoView(true);
-    } catch (e) {
-      errorToast(e);
-    } finally {
-      setLoadingMore(false);
-    }
-  };
+        // scroll to the beginning of the new page
+        const el = rowsRef.current?.querySelector(`#ipb-${data.at(-1)!.id}`) as Element;
+        el.scrollIntoView(true);
+      } catch (e) {
+        errorToast(e);
+      } finally {
+        setLoadingMore(false);
+      }
+    },
+    [data, setData],
+  );
 
   /**
    * Dispatches an action to the module's reducer.
@@ -377,18 +381,10 @@ const IPBlacklist = () => {
                     ****************** */}
                   {
                     (hasMore && data.length >= LIMIT)
-                    && <Button
-                      variant='ghost'
-                      className='w-full'
-                      onClick={loadMore}
-                      disabled={loadingMore}
-                    >
-                      {
-                        loadingMore
-                        && <Loader2
-                          className='mr-2 h-4 w-4 animate-spin'
-                        />} Load more
-                    </Button>
+                    && <LoadMoreButton
+                      loadMore={loadMore}
+                      loadingMore={loadingMore}
+                    />
                   }
               </>
               : <NoRecords />
