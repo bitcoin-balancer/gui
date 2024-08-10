@@ -35,6 +35,8 @@ import { VersionService } from '@/shared/backend/version/index.service';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { formatDate } from '@/shared/services/transformations/index.service.ts';
 import { NavService } from '@/shared/services/nav/index.service.ts';
+import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
+import NotificationsButton from './notifications-button.component.tsx';
 import { IMainNavigationItem } from '@/pages/app/types.ts';
 
 /* ************************************************************************************************
@@ -49,6 +51,7 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
+  const breakpoint = useMediaQueryBreakpoint();
   const [sidenavOpen, setSidenavOpen] = useState<boolean>(false);
   const navigate = useNavigate();
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
@@ -143,34 +146,25 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
       {items.map((item, i) => (
         <Tooltip key={i}>
           <TooltipTrigger asChild>
-            {
-              item.badge
-                ? <Button
-                  variant='ghost'
-                  className='hidden md:flex lg:hidden relative'
-                  aria-label={item.name}
-                  onClick={() => navigate(item.path)}
-                  disabled={item.active}
+            <Button
+              variant='ghost'
+              className='hidden md:flex lg:hidden relative'
+              aria-label={item.name}
+              onClick={() => navigate(item.path)}
+              disabled={item.active}
+            >
+              {item.icon}
+              {
+                item.badge
+                && <div
+                  className='absolute -top-2 -right-2'
                 >
-                  {item.icon}
-                  <div
-                    className='absolute -top-2 -right-2'
-                  >
-                    <Badge
-                      className='py-0.5 px-1.5'
-                    >{item.badge}</Badge>
-                  </div>
-                </Button>
-                : <Button
-                  variant='ghost'
-                  className='hidden md:flex lg:hidden'
-                  aria-label={item.name}
-                  onClick={() => navigate(item.path)}
-                  disabled={item.active}
-                >
-                  {item.icon}
-                </Button>
-            }
+                  <Badge
+                    className='py-0.5 px-1.5'
+                  >{item.badge}</Badge>
+                </div>
+              }
+            </Button>
           </TooltipTrigger>
           <TooltipContent>
             <p>{item.name}</p>
@@ -183,33 +177,32 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
       {/* **************
         * LG BUTTONS *
         ************** */}
-      {items.map((item, i) => (item.badge
-        ? <Button
+      {items.map((item, i) => (
+        <Button
           key={i}
           variant='ghost'
-          className='hidden
-          lg:flex relative'
+          className='hidden lg:flex relative'
           onClick={() => navigate(item.path)} disabled={item.active}
         >
           {item.icon} <span className='ml-2'>{item.name}</span>
-          <div
-            className='absolute -top-2 -right-2'
-          >
-            <Badge
-              className='py-0.5 px-1.5'
-            >{item.badge}</Badge>
-          </div>
-        </Button>
-        : <Button
-          key={i}
-          variant='ghost'
-          className='hidden lg:flex'
-          onClick={() => navigate(item.path)}
-          disabled={item.active}
-        >
-          {item.icon} <span className='ml-2'>{item.name}</span>
+          {
+            item.badge
+            && <div
+              className='absolute -top-2 -right-2'
+            >
+              <Badge
+                className='py-0.5 px-1.5'
+              >{item.badge}</Badge>
+            </div>
+          }
         </Button>
       ))}
+
+
+      {/* ***************
+        * NOTIFICATIONS *
+        *************** */}
+      <NotificationsButton size={breakpoint === 'xs' || breakpoint === 'sm' ? 'icon' : 'default'} />
 
 
 
@@ -225,14 +218,8 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
           <div>
             <Button
               variant='ghost'
-              className='hidden md:flex'
               aria-label='Side Navigation Menu'
-            ><Menu aria-hidden='true' /></Button>
-            <Button
-              variant='ghost'
-              className='md:hidden'
-              size='icon'
-              aria-label='Side Navigation Menu'
+              size={breakpoint === 'xs' || breakpoint === 'sm' ? 'icon' : 'default'}
             ><Menu aria-hidden='true' /></Button>
           </div>
         </SheetTrigger>
