@@ -95,9 +95,7 @@ const UpdateNickname = ({
       onOpenChange={() => onOpenChange(false)}
     >
 
-      <DialogContent
-        className='max-h-dvh overflow-y-auto overflow-x-hidden'
-      >
+      <DialogContent>
 
         <DialogHeader>
           <DialogTitle>Update {nickname}’s nickname</DialogTitle>

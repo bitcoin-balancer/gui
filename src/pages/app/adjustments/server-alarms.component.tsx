@@ -241,9 +241,7 @@ const ServerAlarms = ({ open, onOpenChange }: IFormProps) => {
       onOpenChange={onOpenChange}
     >
 
-      <DialogContent
-        className='max-h-dvh overflow-y-auto overflow-x-hidden'
-      >
+      <DialogContent>
 
         <DialogHeader>
           <DialogTitle>Update Alarms</DialogTitle>

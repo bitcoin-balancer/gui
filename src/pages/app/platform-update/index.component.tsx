@@ -152,9 +152,7 @@ const PlatformUpdate = () => {
         open={open}
         onOpenChange={setOpen}
       >
-        <DialogContent
-          className='max-h-dvh overflow-y-auto overflow-x-hidden'
-        >
+        <DialogContent>
           <DialogHeader>
             <DialogTitle>Update platform</DialogTitle>
             <DialogDescription>

@@ -112,9 +112,7 @@ const RecordForm = ({ open, onOpenChange }: IRecordFormProps) => {
       open={open !== false}
       onOpenChange={() => onOpenChange(false)}>
 
-      <DialogContent
-        className='max-h-dvh overflow-y-auto overflow-x-hidden'
-      >
+      <DialogContent>
 
         <DialogHeader>
           <DialogTitle>{open === null ? 'Register IP' : 'Update registration'}</DialogTitle>

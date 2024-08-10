@@ -110,9 +110,7 @@ const ConfirmationDialog = () => {
       open={isOpen}
       onOpenChange={closeDialog}
     >
-      <DialogContent
-        className='max-h-dvh overflow-y-auto overflow-x-hidden'
-      >
+      <DialogContent>
 
         {/* ***************
           * DIALOG HEADER *

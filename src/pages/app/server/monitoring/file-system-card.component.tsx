@@ -44,9 +44,7 @@ const FileSystemCard = ({ data }: { data: IFileSystemState }) => (
             size='icon'
           ><Ellipsis aria-hidden='true' /></Button>
         </DialogTrigger>
-        <DialogContent
-          className='max-h-dvh overflow-y-auto overflow-x-hidden'
-        >
+        <DialogContent>
           <DialogHeader>
             <DialogTitle>File System</DialogTitle>
             <DialogDescription>

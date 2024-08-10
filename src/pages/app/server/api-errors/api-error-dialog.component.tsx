@@ -45,7 +45,7 @@ const APIErrorDialog = ({ open, onOpenChange, record }: IAPIErrorDialogProps) =>
     >
 
       <DialogContent
-        className='max-h-dvh overflow-y-auto overflow-x-hidden max-w-[500px]'
+        className='max-w-[500px]'
       >
 
         <DialogHeader>

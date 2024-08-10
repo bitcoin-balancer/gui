@@ -192,9 +192,7 @@ const DisplayPasswordUpdates = memo(({
       open={open}
       onOpenChange={() => onOpenChange(false)}
     >
-      <DialogContent
-        className='max-h-dvh overflow-y-auto overflow-x-hidden'
-      >
+      <DialogContent>
 
         <DialogHeader>
           <DialogTitle>{nickname}'s Password Updates</DialogTitle>

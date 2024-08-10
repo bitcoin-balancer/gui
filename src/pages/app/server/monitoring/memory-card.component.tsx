@@ -44,9 +44,7 @@ const MemoryCard = ({ data }: { data: IMemoryState }) => (
             size='icon'
           ><Ellipsis aria-hidden='true' /></Button>
         </DialogTrigger>
-        <DialogContent
-          className='max-h-dvh overflow-y-auto overflow-x-hidden'
-        >
+        <DialogContent>
           <DialogHeader>
             <DialogTitle>Memory</DialogTitle>
             <DialogDescription>
