@@ -85,10 +85,7 @@ const NotificationsDialog = ({
     async () => {
       try {
         setLoadingMore(true);
-        const nextRecords = await NotificationService.list(
-          LIMIT,
-          data.at(-1)!.id,
-        );
+        const nextRecords = await NotificationService.list(LIMIT, data.at(-1)!.id);
 
         // add the new records to the DOM
         flushSync(() => {
