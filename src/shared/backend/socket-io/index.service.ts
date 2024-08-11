@@ -5,6 +5,7 @@ import { extractMessage } from 'error-message-utils';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { buildAPIURL } from '../api/index.service.ts';
 import { ISocketIOService, ISocket, ITransport } from './types.ts';
+import { errorToast } from '@/shared/services/utils/index.service.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -29,7 +30,6 @@ const socketIOServiceFactory = (): ISocketIOService => {
   // the options that will be used to instantiate the socket connection
   const __CONFIG: Partial<ManagerOptions & SocketOptions> = {
     path: '/stream/',
-    transports: ['websocket', 'polling'], // default is: ['polling', 'websocket']
     withCredentials: true,
   };
 
@@ -73,6 +73,7 @@ const socketIOServiceFactory = (): ISocketIOService => {
       if (__DEBUG) console.log(`socket.connect_error -> temporary failure, will try to reconnect from: ${msg}`);
     } else {
       if (__DEBUG) console.log(`socket.connect_error -> unable to connect (fatal): ${msg}`);
+      errorToast(msg, 'Socket Connection Error');
     }
   };
 
@@ -100,10 +101,10 @@ const socketIOServiceFactory = (): ISocketIOService => {
     (authenticated) => {
       if (authenticated) {
         __socket = io(__API_URL, __CONFIG);
-        __socket.on('connect', () => __onConnect);
-        __socket.io.engine.once('upgrade', () => __onUpgrade);
+        __socket.on('connect', __onConnect);
+        __socket.io.engine.once('upgrade', __onUpgrade);
         __socket.on('connect_error', __onConnectError);
-        __socket.on('disconnect', () => __onDisconnect);
+        __socket.on('disconnect', __onDisconnect);
       } else if (authenticated === false) {
         __connected = false;
         if (__socket) {
