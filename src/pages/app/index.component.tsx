@@ -1,4 +1,3 @@
-import { io } from 'socket.io-client';
 import { useMemo, useEffect } from 'react';
 import {
   Navigate,
@@ -19,9 +18,9 @@ import { ToastAction } from '@/shared/shadcn/components/ui/toast.tsx';
 import { toast } from '@/shared/shadcn/components/ui/use-toast.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { AccessJWTService } from '@/shared/backend/api/access-jwt.service.ts';
-import { buildAPIURL } from '@/shared/backend/api/index.service.ts';
+import { SocketIOService } from '@/shared/backend/socket-io/index.service.ts';
 import { VersionService } from '@/shared/backend/version/index.service.ts';
-import { DataJoinService } from '@/shared/backend/data-join/index.service.ts';
+import { DataJoinService, ICompactAppEssentials } from '@/shared/backend/data-join/index.service.ts';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { formatBadgeCount } from '@/shared/services/transformations/index.service.ts';
 import { NavService } from '@/shared/services/nav/index.service.ts';
@@ -169,7 +168,7 @@ const App = () => {
    * ...
    */
   useEffect(() => {
-    if (authenticated) {
+    /* if (authenticated) {
       const socket = io(buildAPIURL(''), {
         path: '/stream/',
         transports: ['websocket', 'polling'], // default is: ['polling', 'websocket']
@@ -195,13 +194,25 @@ const App = () => {
       });
 
       socket.on('compact_app_essentials', (payload) => {
-        /* console.log(payload); */
+        console.log(payload);
       });
 
       socket.on('disconnect', () => {
         console.log('disconnect', socket.id); // undefined
       });
+    } */
+    const listener = (payload: ICompactAppEssentials): void => {
+      console.log(payload);
+    };
+    if (authenticated) {
+      SocketIOService.socket.on('compact_app_essentials', listener);
     }
+
+    return () => {
+      if (SocketIOService.socket) {
+        SocketIOService.socket.off('compact_app_essentials', listener);
+      }
+    };
   }, [authenticated]);
 
   /**
