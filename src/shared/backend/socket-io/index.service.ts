@@ -3,9 +3,14 @@
 import { io, type ManagerOptions, type SocketOptions } from 'socket.io-client';
 import { extractMessage } from 'error-message-utils';
 import { useBoundStore } from '@/shared/store/index.store.ts';
-import { buildAPIURL } from '../api/index.service.ts';
-import { ISocketIOService, ISocket, ITransport } from './types.ts';
+import { buildAPIURL } from '@/shared/backend/api/index.service.ts';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
+import {
+  ISocketIOService,
+  ISocket,
+  ITransport,
+  IEventName,
+} from '@/shared/backend/socket-io/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -164,5 +169,5 @@ export {
   SocketIOService,
 
   // types
-  // ...
+  type IEventName,
 };

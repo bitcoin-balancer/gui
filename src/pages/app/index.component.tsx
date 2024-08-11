@@ -18,12 +18,12 @@ import { ToastAction } from '@/shared/shadcn/components/ui/toast.tsx';
 import { toast } from '@/shared/shadcn/components/ui/use-toast.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { AccessJWTService } from '@/shared/backend/api/access-jwt.service.ts';
-import { SocketIOService } from '@/shared/backend/socket-io/index.service.ts';
 import { VersionService } from '@/shared/backend/version/index.service.ts';
-import { DataJoinService, ICompactAppEssentials } from '@/shared/backend/data-join/index.service.ts';
+import { DataJoinService } from '@/shared/backend/data-join/index.service.ts';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { formatBadgeCount } from '@/shared/services/transformations/index.service.ts';
 import { NavService } from '@/shared/services/nav/index.service.ts';
+import { useSocketEvent } from '@/shared/hooks/socket-event/index.component.ts';
 import AppInstaller from '@/shared/components/app-installer/index.component.tsx';
 import OnlineStatus from '@/shared/components/online-status/index.component.tsx';
 import ConfirmationDialog from '@/shared/components/confirmation-dialog/index.component.tsx';
@@ -63,6 +63,7 @@ const App = () => {
   const version = useBoundStore((state) => state.version);
   const unreadAPIErrors = useBoundStore((state) => state.unreadAPIErrors);
   const setAppEssentials = useBoundStore((state) => state.setAppEssentials);
+  const compactAppEssentials = useSocketEvent('compact_app_essentials');
   const navigation = useNavigation();
   const navigate = useNavigate();
 
@@ -165,55 +166,13 @@ const App = () => {
 
   /**
    * Compact App Essentials
-   * ...
+   * Subscribes to the socket event and keeps the local state in sync with the server.
    */
   useEffect(() => {
-    /* if (authenticated) {
-      const socket = io(buildAPIURL(''), {
-        path: '/stream/',
-        transports: ['websocket', 'polling'], // default is: ['polling', 'websocket']
-        withCredentials: true,
-      });
-      socket.on('connect', () => {
-        console.log('connect', socket.id); // x8WIv7-mJelg7on_ALbx
-        console.log('transport', socket.io.engine.transport.name);
-      });
-
-      socket.io.engine.once('upgrade', () => {
-        console.log('upgrade', socket.io.engine.transport.name);
-      });
-
-      socket.on('connect_error', (error) => {
-        if (socket.active) {
-          console.log('temporary failure, the socket will automatically try to reconnect');
-        } else {
-          // the connection was denied by the server
-          // in that case, `socket.connect()` must be manually called in order to reconnect
-          console.log(error.message);
-        }
-      });
-
-      socket.on('compact_app_essentials', (payload) => {
-        console.log(payload);
-      });
-
-      socket.on('disconnect', () => {
-        console.log('disconnect', socket.id); // undefined
-      });
-    } */
-    const listener = (payload: ICompactAppEssentials): void => {
-      console.log(payload);
-    };
-    if (authenticated) {
-      SocketIOService.socket.on('compact_app_essentials', listener);
+    if (compactAppEssentials) {
+      setAppEssentials(compactAppEssentials);
     }
-
-    return () => {
-      if (SocketIOService.socket) {
-        SocketIOService.socket.off('compact_app_essentials', listener);
-      }
-    };
-  }, [authenticated]);
+  }, [compactAppEssentials, setAppEssentials]);
 
   /**
    * App Updater
