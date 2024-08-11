@@ -22,7 +22,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/shared/shadcn/components/ui/table.tsx';
-import { errorToast } from '@/shared/services/utils/index.service.ts';
+import { errorToast, scrollChildIntoView } from '@/shared/services/utils/index.service.ts';
 import { formatDate } from '@/shared/services/transformations/index.service.ts';
 import { UserService, IPasswordUpdate } from '@/shared/backend/auth/user/index.service.ts';
 import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts';
@@ -108,9 +108,7 @@ const DisplayPasswordUpdates = memo(({
         });
 
         // scroll to the beginning of the new page
-        // https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
-        const el = rowsRef.current?.querySelector(`#pur-${data.at(-1)!.event_time}`) as Element;
-        el.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
+        scrollChildIntoView(rowsRef.current!, `#pur-${data.at(-1)!.event_time}`);
       } catch (e) {
         errorToast(e);
       } finally {

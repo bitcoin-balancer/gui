@@ -15,7 +15,7 @@ import {
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
-import { errorToast } from '@/shared/services/utils/index.service.ts';
+import { errorToast, scrollChildIntoView } from '@/shared/services/utils/index.service.ts';
 import { NotificationService, INotification } from '@/shared/backend/notification/index.service.ts';
 import { formatDate } from '@/shared/services/transformations/index.service.ts';
 import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts';
@@ -97,8 +97,7 @@ const NotificationsDialog = ({
         });
 
         // scroll to the beginning of the new page
-        const el = rowsRef.current?.querySelector(`#nd-${data.at(-1)!.id}`) as Element;
-        el.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
+        scrollChildIntoView(rowsRef.current!, `#nd-${data.at(-1)!.id}`);
       } catch (e) {
         errorToast(e);
       } finally {

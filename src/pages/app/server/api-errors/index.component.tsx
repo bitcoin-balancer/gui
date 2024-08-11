@@ -11,7 +11,7 @@ import { Menu, Trash } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Card, CardContent } from '@/shared/shadcn/components/ui/card.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
-import { delay, errorToast } from '@/shared/services/utils/index.service.ts';
+import { delay, errorToast, scrollChildIntoView } from '@/shared/services/utils/index.service.ts';
 import { APIErrorService, IAPIError } from '@/shared/backend/api-error/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts';
@@ -129,8 +129,7 @@ const APIErrors = memo(({ setSidenavOpen }: IServerComponentProps) => {
         });
 
         // scroll to the beginning of the new page
-        const el = rowsRef.current?.querySelector(`#aer-${data.at(-1)!.id}`) as Element;
-        el.scrollIntoView(true);
+        scrollChildIntoView(rowsRef.current!, `#aer-${data.at(-1)!.id}`);
       } catch (e) {
         errorToast(e);
       } finally {

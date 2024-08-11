@@ -32,7 +32,7 @@ import {
   TableRow,
 } from '@/shared/shadcn/components/ui/table.tsx';
 import { IRecord } from '@/shared/types.ts';
-import { delay, errorToast } from '@/shared/services/utils/index.service.ts';
+import { delay, errorToast, scrollChildIntoView } from '@/shared/services/utils/index.service.ts';
 import { formatDate } from '@/shared/services/transformations/index.service.ts';
 import { IBreakpoint } from '@/shared/services/media-query/index.service.ts';
 import { IPBlacklistService, IIPBlacklistRecord } from '@/shared/backend/ip-blacklist/index.service.ts';
@@ -198,8 +198,7 @@ const IPBlacklist = () => {
         });
 
         // scroll to the beginning of the new page
-        const el = rowsRef.current?.querySelector(`#ipb-${data.at(-1)!.id}`) as Element;
-        el.scrollIntoView(true);
+        scrollChildIntoView(rowsRef.current!, `#ipb-${data.at(-1)!.id}`);
       } catch (e) {
         errorToast(e);
       } finally {

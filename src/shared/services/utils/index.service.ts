@@ -4,6 +4,28 @@ import { IRecord } from '@/shared/types.ts';
 import { ISortDirection } from '@/shared/services/utils/types.ts';
 
 /* ************************************************************************************************
+ *                                          DOM HELPERS                                           *
+ ************************************************************************************************ */
+
+/**
+ * Scrolls a child element into the view. The top of the visible area of the scrollable ancestor.
+ * https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
+ * @param parentEl
+ * @param childID
+ */
+const scrollChildIntoView = (
+  parentEl: HTMLDivElement | HTMLTableSectionElement,
+  childID: string,
+): void => {
+  const el = parentEl.querySelector(childID) as Element;
+  el.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
+};
+
+
+
+
+
+/* ************************************************************************************************
  *                                         TOAST HELPERS                                          *
  ************************************************************************************************ */
 
@@ -118,6 +140,9 @@ const delay = (seconds: number): Promise<void> => new Promise((resolve) => {
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export {
+  // dom helpers
+  scrollChildIntoView,
+
   // toast helpers
   errorToast,
 
