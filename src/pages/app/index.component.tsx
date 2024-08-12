@@ -170,7 +170,7 @@ const App = () => {
    */
   useEffect(() => {
     if (compactAppEssentials) {
-      console.log(compactAppEssentials);
+      /* console.log(compactAppEssentials); */
       setAppEssentials(compactAppEssentials);
     }
   }, [compactAppEssentials, setAppEssentials]);

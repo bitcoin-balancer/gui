@@ -2,12 +2,12 @@
 import { IHTMLElement, IRecord } from '@/shared/types.ts';
 
 /* ************************************************************************************************
- *                                              HOOK                                              *
+ *                                             TYPES                                              *
  ************************************************************************************************ */
 
 /**
  * Sort Func
- * The sort function used to keep records in order when refetching or loading more records.
+ * The sort function used to keep records in order when loading more records.
  */
 type ISortFunc =
   (<T extends string | number>(a: T, b: T) => number)
@@ -45,7 +45,7 @@ type IAPIFetchConfig = {
   // appends records to the list when loaded. If disabled, it will prepend the records instead
   appendNextRecords?: boolean;
 
-  // the sort func that will be applied to records when the data is refetched and has been paginated
+  // the sort func that will be applied when loading more records
   sortFunc?: ISortFunc;
 };
 
@@ -72,46 +72,11 @@ type IAPIFetchHook = <T>(config: IAPIFetchConfig) => {
 
 
 /* ************************************************************************************************
- *                                            REDUCER                                             *
- ************************************************************************************************ */
-
-/**
- * Action Type
- * The actions that can take place within the hook.
- */
-/* type IActionType = 'INITIAL_DATA' | 'MORE_DATA' | 'REFETCHED_DATA';
-type IAction<T> = {
-  type: IActionType;
-  data: T | T[];
-} & (
-  | {
-    type: 'INITIAL_DATA';
-  }
-  | {
-    type: 'MORE_DATA';
-    data: T[];
-    appendNextRecords: boolean | undefined;
-    sortFunc: ISortFunc | undefined;
-  } | {
-    type: 'REFETCHED_DATA';
-    sortFunc: ISortFunc | undefined;
-  }
-); */
-
-
-
-
-/* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export type {
-  // hook
   ISortFunc,
   IAPIFetchFunction,
   IAPIFetchConfig,
   IAPIFetchHook,
-
-  // reducer
-  /* IActionType,
-  IAction, */
 };

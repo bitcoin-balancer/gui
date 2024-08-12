@@ -16,7 +16,7 @@ const useAPIRequest: IAPIRequestHook = (requestFunction: IRequestFunction, args?
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<unknown | undefined>(undefined);
 
-
+  console.log('In useAPIRequest');
 
   const buildRequestFunction = useCallback(
     () => (args === undefined ? requestFunction() : requestFunction(...args)),

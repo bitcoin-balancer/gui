@@ -1,8 +1,14 @@
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect } from 'react';
+import {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+} from 'react';
 import { flushSync } from 'react-dom';
-import { errorToast, scrollChildIntoView } from '@/shared/services/utils/index.service.ts';
 import { IHTMLElement } from '@/shared/types.ts';
+import { errorToast, scrollChildIntoView } from '@/shared/services/utils/index.service.ts';
 import { executeFetchFunc, hasMoreRecords } from '@/shared/hooks/api-fetch/utils.ts';
 import {
   IAPIFetchConfig,
@@ -10,6 +16,17 @@ import {
   IAPIFetchFunction,
   ISortFunc,
 } from '@/shared/hooks/api-fetch/types.ts';
+
+/* ************************************************************************************************
+ *                                           CONSTANTS                                            *
+ ************************************************************************************************ */
+
+// if enabled, it will print logs on the console
+const DEBUG = true;
+
+
+
+
 
 /* ************************************************************************************************
  *                                            HELPERS                                             *
@@ -60,21 +77,23 @@ const useAPIFetch: IAPIFetchHook = <T>({
   appendNextRecords = true,
   sortFunc,
 }: IAPIFetchConfig) => {
-  const [data, setData] = useState<T | any>(undefined);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<Error | undefined>(undefined);
-  const [hasMore, setHasMore] = useState<boolean>(false);
-  const [loadingMore, setLoadingMore] = useState<boolean>(false);
+  /* **********************************************************************************************
+   *                                             REFS                                             *
+   ********************************************************************************************** */
+  const refetchInterval = useRef<NodeJS.Timeout | undefined>(undefined);
+
 
 
 
 
   /* **********************************************************************************************
-   *                                       REACTIVE VALUES                                        *
+   *                                             STATE                                            *
    ********************************************************************************************** */
-
-  // ...
-  console.log('In useAPIFetch');
+  const [data, setData] = useState<T | any>(undefined);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<Error | undefined>(undefined);
+  const [hasMore, setHasMore] = useState<boolean>(false);
+  const [loadingMore, setLoadingMore] = useState<boolean>(false);
 
 
 
@@ -93,7 +112,7 @@ const useAPIFetch: IAPIFetchHook = <T>({
     const fetchInitialData = async () => {
       try {
         const res = await executeFetchFunc<T>(fetchFunc);
-        console.log('useAPIFetch.fetchInitialData', res);
+        if (DEBUG) console.log('useAPIFetch.fetchInitialData', res);
         if (!ignore) {
           setData(res);
           setLoading(false);
@@ -110,6 +129,25 @@ const useAPIFetch: IAPIFetchHook = <T>({
     return () => { ignore = true; };
   }, [fetchFunc, queryLimit]);
 
+  /**
+   * Refetches the data every refetchFrequency seconds.
+   */
+  useEffect(() => {
+    const interval = refetchInterval.current;
+    if (!interval && typeof refetchFrequency === 'number') {
+      refetchInterval.current = setInterval(async () => {
+        try {
+          const res = await executeFetchFunc<T>(fetchFunc);
+          if (DEBUG) console.log('useAPIFetch.refetchInterval', res);
+          setData(res);
+        } catch (e) {
+          errorToast(e, 'Refetch Error');
+        }
+      }, refetchFrequency * 1000);
+    }
+    return () => clearInterval(interval);
+  }, [refetchFrequency, fetchFunc, sortFunc]);
+
 
 
 
@@ -125,33 +163,36 @@ const useAPIFetch: IAPIFetchHook = <T>({
    * @param lastElementID?
    * @returns Promise<void>
    */
-  const loadMore = async (
-    func: IAPIFetchFunction,
-    parentEl?: IHTMLElement,
-    lastElementID?: string,
-  ): Promise<void> => {
-    try {
-      setLoadingMore(true);
-      const res = await executeFetchFunc<T>(func);
-      console.log('useAPIFetch.loadMore', res);
+  const loadMore = useCallback(
+    async (
+      func: IAPIFetchFunction,
+      parentEl?: IHTMLElement,
+      lastElementID?: string,
+    ): Promise<void> => {
+      try {
+        setLoadingMore(true);
+        const res = await executeFetchFunc<T>(func);
+        if (DEBUG) console.log('useAPIFetch.loadMore', res);
 
-      // apply the changes based on the config
-      if (parentEl) {
-        flushSync(() => {
+        // apply the changes based on the config
+        if (parentEl) {
+          flushSync(() => {
+            setData(__onMoreData(data, res, sortFunc, appendNextRecords));
+          });
+          scrollChildIntoView(parentEl, lastElementID!);
+        } else {
           setData(__onMoreData(data, res, sortFunc, appendNextRecords));
-        });
-        scrollChildIntoView(parentEl, lastElementID!);
-      } else {
-        setData(__onMoreData(data, res, sortFunc, appendNextRecords));
-      }
+        }
 
-      setHasMore(hasMoreRecords(res, queryLimit));
-    } catch (e) {
-      errorToast(e, 'Refetch Error');
-    } finally {
-      setLoadingMore(false);
-    }
-  };
+        setHasMore(hasMoreRecords(res, queryLimit));
+      } catch (e) {
+        errorToast(e);
+      } finally {
+        setLoadingMore(false);
+      }
+    },
+    [data, queryLimit, appendNextRecords, sortFunc],
+  );
 
 
 

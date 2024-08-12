@@ -125,12 +125,6 @@ const IPBlacklist = () => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  /* const {
-    data,
-    setData,
-    loading,
-    error,
-  } = useAPIRequest<IIPBlacklistRecord[]>(IPBlacklistService.list, useMemo(() => [LIMIT], [])); */
   const {
     data,
     setData,
@@ -143,6 +137,7 @@ const IPBlacklist = () => {
     () => ({
       fetchFunc: { func: IPBlacklistService.list, args: [LIMIT] },
       queryLimit: LIMIT,
+      refetchFrequency: 5,
     }),
     [],
   ));
