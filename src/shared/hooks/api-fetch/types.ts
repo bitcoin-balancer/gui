@@ -54,8 +54,8 @@ type IAPIFetchConfig = {
  * The hook in charge of handling the retrieval, loading and error states
  */
 type IAPIFetchHook = <T>(config: IAPIFetchConfig) => {
-  data: T | T[];
-  // setData: (state: T) => void;
+  data: T;
+  setData: (state: T) => void;
   loading: boolean;
   error: Error | undefined;
   hasMore: boolean;
@@ -79,7 +79,7 @@ type IAPIFetchHook = <T>(config: IAPIFetchConfig) => {
  * Action Type
  * The actions that can take place within the hook.
  */
-type IActionType = 'INITIAL_DATA' | 'MORE_DATA' | 'REFETCHED_DATA';
+/* type IActionType = 'INITIAL_DATA' | 'MORE_DATA' | 'REFETCHED_DATA';
 type IAction<T> = {
   type: IActionType;
   data: T | T[];
@@ -96,7 +96,7 @@ type IAction<T> = {
     type: 'REFETCHED_DATA';
     sortFunc: ISortFunc | undefined;
   }
-);
+); */
 
 
 
@@ -106,11 +106,12 @@ type IAction<T> = {
  ************************************************************************************************ */
 export type {
   // hook
+  ISortFunc,
   IAPIFetchFunction,
   IAPIFetchConfig,
   IAPIFetchHook,
 
   // reducer
-  IActionType,
-  IAction,
+  /* IActionType,
+  IAction, */
 };

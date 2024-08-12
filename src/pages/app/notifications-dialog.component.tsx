@@ -128,7 +128,7 @@ const NotificationsDialog = ({
                   className='flex justify-start items-center'
                 >
                   <p
-                    className='font-bold'
+                    className='font-medium'
                   >{record.title}</p>
                   <span className='flex-1'></span>
                   <Badge

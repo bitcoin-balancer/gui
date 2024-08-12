@@ -1,14 +1,48 @@
-import { useReducer, useState, useEffect } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState, useEffect } from 'react';
+import { flushSync } from 'react-dom';
 import { errorToast, scrollChildIntoView } from '@/shared/services/utils/index.service.ts';
 import { IHTMLElement } from '@/shared/types.ts';
 import { executeFetchFunc, hasMoreRecords } from '@/shared/hooks/api-fetch/utils.ts';
-import { reducer } from '@/shared/hooks/api-fetch/reducer.ts';
 import {
   IAPIFetchConfig,
   IAPIFetchHook,
   IAPIFetchFunction,
-  IAction,
+  ISortFunc,
 } from '@/shared/hooks/api-fetch/types.ts';
+
+/* ************************************************************************************************
+ *                                            HELPERS                                             *
+ ************************************************************************************************ */
+
+/**
+ * Handles the update of the state when more records are loaded.
+ * @param records
+ * @param nextRecords
+ * @param sortFunc
+ * @param appendNextRecords
+ * @returns T
+ */
+const __onMoreData = <T>(
+  records: T,
+  nextRecords: T,
+  sortFunc: ISortFunc | undefined,
+  appendNextRecords: boolean | undefined,
+): T => {
+  // prioritize the sortFunc if it was provided
+  if (typeof sortFunc === 'function') {
+    return [...records as any[], nextRecords].sort(sortFunc) as T;
+  }
+
+  // otherwise, append or prepend the data
+  return appendNextRecords
+    ? [...records as any[], ...nextRecords as any[]] as T
+    : [...nextRecords as any[], ...records as any[]] as T;
+};
+
+
+
+
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -26,8 +60,7 @@ const useAPIFetch: IAPIFetchHook = <T>({
   appendNextRecords = true,
   sortFunc,
 }: IAPIFetchConfig) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [data, dispatch] = <[T | any, (action: IAction<T>) => void]>useReducer(reducer, undefined);
+  const [data, setData] = useState<T | any>(undefined);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | undefined>(undefined);
   const [hasMore, setHasMore] = useState<boolean>(false);
@@ -42,6 +75,40 @@ const useAPIFetch: IAPIFetchHook = <T>({
 
   // ...
   console.log('In useAPIFetch');
+
+
+
+
+
+  /* **********************************************************************************************
+   *                                         SIDE EFFECTS                                         *
+   ********************************************************************************************** */
+
+  /**
+   * Fetches the initial data and sets the state.
+   */
+  useEffect(() => {
+    let ignore = false;
+
+    const fetchInitialData = async () => {
+      try {
+        const res = await executeFetchFunc<T>(fetchFunc);
+        console.log('useAPIFetch.fetchInitialData', res);
+        if (!ignore) {
+          setData(res);
+          setLoading(false);
+          setError(undefined);
+          setHasMore(hasMoreRecords(res, queryLimit));
+        }
+      } catch (e) {
+        setError(e as Error);
+      }
+    };
+
+    fetchInitialData();
+
+    return () => { ignore = true; };
+  }, [fetchFunc, queryLimit]);
 
 
 
@@ -66,14 +133,16 @@ const useAPIFetch: IAPIFetchHook = <T>({
     try {
       setLoadingMore(true);
       const res = await executeFetchFunc<T>(func);
-      dispatch({
-        type: 'MORE_DATA',
-        data: res,
-        appendNextRecords,
-        sortFunc,
-      });
+      console.log('useAPIFetch.loadMore', res);
+
+      // apply the changes based on the config
       if (parentEl) {
+        flushSync(() => {
+          setData(__onMoreData(data, res, sortFunc, appendNextRecords));
+        });
         scrollChildIntoView(parentEl, lastElementID!);
+      } else {
+        setData(__onMoreData(data, res, sortFunc, appendNextRecords));
       }
 
       setHasMore(hasMoreRecords(res, queryLimit));
@@ -89,44 +158,11 @@ const useAPIFetch: IAPIFetchHook = <T>({
 
 
   /* **********************************************************************************************
-   *                                         SIDE EFFECTS                                         *
-   ********************************************************************************************** */
-
-  /**
-   * Fetches the initial data and sets the state.
-   */
-  useEffect(() => {
-    let ignore = false;
-
-    const fetchInitialData = async () => {
-      try {
-        const res = await executeFetchFunc<T>(fetchFunc);
-        console.log('useAPIFetch.fetchInitialData', res);
-        if (!ignore) {
-          dispatch({ type: 'INITIAL_DATA', data: res });
-          setLoading(false);
-          setError(undefined);
-          setHasMore(hasMoreRecords(res, queryLimit));
-        }
-      } catch (e) {
-        setError(e as Error);
-      }
-    };
-
-    fetchInitialData();
-
-    return () => { ignore = true; };
-  }, [fetchFunc, queryLimit, dispatch]);
-
-
-
-
-
-  /* **********************************************************************************************
    *                                         HOOK EXPORTS                                         *
    ********************************************************************************************** */
   return {
     data,
+    setData,
     loading,
     error,
     hasMore,

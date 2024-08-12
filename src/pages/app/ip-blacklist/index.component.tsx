@@ -4,7 +4,6 @@ import {
   useCallback,
   useRef,
 } from 'react';
-import { flushSync } from 'react-dom';
 import {
   GlobeLock,
   Pencil,
@@ -32,14 +31,13 @@ import {
   TableRow,
 } from '@/shared/shadcn/components/ui/table.tsx';
 import { IRecord } from '@/shared/types.ts';
-import { delay, errorToast, scrollChildIntoView } from '@/shared/services/utils/index.service.ts';
+import { delay, errorToast } from '@/shared/services/utils/index.service.ts';
 import { formatDate } from '@/shared/services/transformations/index.service.ts';
 import { IBreakpoint } from '@/shared/services/media-query/index.service.ts';
 import { IPBlacklistService, IIPBlacklistRecord } from '@/shared/backend/ip-blacklist/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
-/* import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts'; */
-import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook';
+import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import NoRecords from '@/shared/components/no-records/index.component.tsx';
@@ -138,6 +136,9 @@ const IPBlacklist = () => {
     setData,
     loading,
     error,
+    hasMore,
+    loadMore,
+    loadingMore,
   } = useAPIFetch<IIPBlacklistRecord[]>(useMemo(
     () => ({
       fetchFunc: { func: IPBlacklistService.list, args: [LIMIT] },
@@ -149,8 +150,6 @@ const IPBlacklist = () => {
   const [activeDialog, setActiveDialog] = useState<IIPBlacklistRecord | null | false>(false);
   const [closingDialog, setClosingDialog] = useState<boolean>(false);
   const [busyRecord, setBusyRecord] = useState<number | undefined>();
-  const [loadingMore, setLoadingMore] = useState<boolean>(false);
-  const [hasMore, setHasMore] = useState<boolean>(true);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
 
 
@@ -194,32 +193,6 @@ const IPBlacklist = () => {
       },
     });
   };
-
-  /**
-   * Loads the next set of records if there are any.
-   */
-  const loadMore = useCallback(
-    async () => {
-      try {
-        setLoadingMore(true);
-        const nextRecords = await IPBlacklistService.list(LIMIT, data.at(-1)!.id);
-
-        // add the new records to the DOM
-        flushSync(() => {
-          dispatch({ type: 'LOADED_MORE', payload: nextRecords }, data, setData);
-          setHasMore(nextRecords.length >= LIMIT);
-        });
-
-        // scroll to the beginning of the new page
-        scrollChildIntoView(rowsRef.current!, `#ipb-${data.at(-1)!.id}`);
-      } catch (e) {
-        errorToast(e);
-      } finally {
-        setLoadingMore(false);
-      }
-    },
-    [data, setData],
-  );
 
   /**
    * Dispatches an action to the module's reducer.
@@ -392,9 +365,13 @@ const IPBlacklist = () => {
                     * LOAD MORE BUTTON *
                     ****************** */}
                   {
-                    (hasMore && data.length >= LIMIT)
+                    hasMore
                     && <LoadMoreButton
-                      loadMore={loadMore}
+                      loadMore={() => loadMore(
+                        { func: IPBlacklistService.list, args: [LIMIT, data.at(-1)!.id] },
+                        rowsRef.current!,
+                        `#ipb-${data.at(-1)!.id}`,
+                      )}
                       loadingMore={loadingMore}
                     />
                   }

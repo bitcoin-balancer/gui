@@ -2,19 +2,22 @@
 /* eslint-disable no-console */
 import { IAction } from '@/shared/hooks/api-fetch/types.ts';
 
-
-
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
-const reducer = <T>(state: T | T[], action: IAction<T>): T | T[] => {
+const dispatch = <T>(
+  action: IAction<T>,
+  state: T | T[],
+  setState: (newState: T | T[]) => void,
+): void => {
   switch (action.type) {
     /**
      * INITIAL_DATA
      * Fired when the data is initially loaded. The state goes from undefined to T.
      */
     case 'INITIAL_DATA':
-      return action.data;
+      setState(action.data);
+      break;
 
 
     /**
@@ -24,13 +27,17 @@ const reducer = <T>(state: T | T[], action: IAction<T>): T | T[] => {
     case 'MORE_DATA':
       // prioritize the sortFunc if it was provided
       if (typeof action.sortFunc === 'function') {
-        return [...state as any[], action.data].sort(action.sortFunc);
+        setState([...state as any[], action.data].sort(action.sortFunc));
+        break;
       }
 
       // otherwise, append or prepend the data
-      return action.appendNextRecords
-        ? [...state as T[], ...action.data]
-        : [...action.data, ...state as T[]];
+      setState(
+        action.appendNextRecords
+          ? [...state as T[], ...action.data]
+          : [...action.data, ...state as T[]],
+      );
+      break;
 
 
 
@@ -47,7 +54,8 @@ const reducer = <T>(state: T | T[], action: IAction<T>): T | T[] => {
       }
 
       // otherwise, update the state as is
-      return action.data;
+      setState(action.data);
+      break;
 
     // invalid action type
     default:
@@ -64,5 +72,5 @@ const reducer = <T>(state: T | T[], action: IAction<T>): T | T[] => {
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export {
-  reducer,
+  dispatch,
 };
