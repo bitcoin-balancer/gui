@@ -100,7 +100,7 @@ const sortPrimitives = (
  * Sorts a list of record values by key based on their type and a sort direction.
  * @param key
  * @param direction
- * @returns <T extends string | number>(a: T, b: T): number
+ * @returns <T extends IRecord<unknown>>(a: T, b: T): number
  */
 const sortRecords = (
   key: string,

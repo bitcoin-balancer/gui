@@ -38,7 +38,8 @@ import { IBreakpoint } from '@/shared/services/media-query/index.service.ts';
 import { IPBlacklistService, IIPBlacklistRecord } from '@/shared/backend/ip-blacklist/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
-import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts';
+/* import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts'; */
+import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import NoRecords from '@/shared/components/no-records/index.component.tsx';
@@ -126,12 +127,24 @@ const IPBlacklist = () => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
+  /* const {
+    data,
+    setData,
+    loading,
+    error,
+  } = useAPIRequest<IIPBlacklistRecord[]>(IPBlacklistService.list, useMemo(() => [LIMIT], [])); */
   const {
     data,
     setData,
     loading,
     error,
-  } = useAPIRequest<IIPBlacklistRecord[]>(IPBlacklistService.list, useMemo(() => [LIMIT], []));
+  } = useAPIFetch<IIPBlacklistRecord[]>(useMemo(
+    () => ({
+      fetchFunc: { func: IPBlacklistService.list, args: [LIMIT] },
+      queryLimit: LIMIT,
+    }),
+    [],
+  ));
   const breakpoint = useMediaQueryBreakpoint();
   const [activeDialog, setActiveDialog] = useState<IIPBlacklistRecord | null | false>(false);
   const [closingDialog, setClosingDialog] = useState<boolean>(false);
