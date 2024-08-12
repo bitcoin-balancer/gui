@@ -67,11 +67,11 @@ const getNavIcon = (status: ISocketIOStatus): JSX.Element => {
     return status.transport === 'websocket'
       ? <CheckCheck
         aria-hidden='true'
-        className='text-success'
+        className='text-success w-5 h-5'
       />
       : <Check
         aria-hidden='true'
-        className='text-green-700'
+        className='text-green-700 w-5 h-5'
       />;
   }
   return status.hasSocketInstance
