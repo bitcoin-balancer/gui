@@ -109,7 +109,7 @@ const socketIOServiceFactory = (): ISocketIOService => {
       if (authenticated) {
         __socket = io(__API_URL, __CONFIG);
         __socket.on('connect', __onConnect);
-        __socket.io.engine.once('upgrade', __onUpgrade);
+        __socket.io.engine.on('upgrade', __onUpgrade);
         __socket.on('connect_error', __onConnectError);
         __socket.on('disconnect', __onDisconnect);
       } else if (authenticated === false) {
@@ -172,4 +172,5 @@ export {
 
   // types
   type IEventName,
+  type ITransport,
 };

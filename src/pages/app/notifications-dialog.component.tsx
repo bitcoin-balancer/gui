@@ -132,6 +132,7 @@ const NotificationsDialog = ({
                   >{record.title}</p>
                   <span className='flex-1'></span>
                   <Badge
+                    variant='secondary'
                     className='text-xs max-w-24 sm:max-w-40'
                   >
                     <p

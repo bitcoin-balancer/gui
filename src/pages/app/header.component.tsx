@@ -36,7 +36,8 @@ import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { formatDate } from '@/shared/services/transformations/index.service.ts';
 import { NavService } from '@/shared/services/nav/index.service.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
-import NotificationsButton from './notifications-button.component.tsx';
+import SocketIOStatus from '@/pages/app/socket-io-status.component.tsx';
+import NotificationsButton from '@/pages/app/notifications-button.component.tsx';
 import { IMainNavigationItem } from '@/pages/app/types.ts';
 
 /* ************************************************************************************************
@@ -311,6 +312,10 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
                 >{availableUpdates === 'BOTH' ? 2 : 1}</Badge>
               }
             </Button>
+
+            <Separator className='my-4' />
+
+            <SocketIOStatus />
 
             <Separator className='my-4' />
 
