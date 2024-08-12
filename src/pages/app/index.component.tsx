@@ -24,12 +24,12 @@ import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { formatBadgeCount } from '@/shared/services/transformations/index.service.ts';
 import { NavService } from '@/shared/services/nav/index.service.ts';
 import { useSocketEvent } from '@/shared/hooks/socket-event/index.component.ts';
-import AppInstaller from '@/shared/components/app-installer/index.component.tsx';
-import OnlineStatus from '@/shared/components/online-status/index.component.tsx';
 import ConfirmationDialog from '@/shared/components/confirmation-dialog/index.component.tsx';
 import GlobalLoader from '@/pages/global-loader/index.component.tsx';
 import Header from '@/pages/app/header.component.tsx';
 import MobileTabs from '@/pages/app/mobile-tabs.component.tsx';
+import OnlineStatus from '@/pages/app/online-status.component.tsx';
+import AppInstaller from '@/pages/app/app-installer.component.tsx';
 import { IMainNavigationItem } from '@/pages/app/types.ts';
 
 /* ************************************************************************************************
@@ -170,6 +170,7 @@ const App = () => {
    */
   useEffect(() => {
     if (compactAppEssentials) {
+      console.log(compactAppEssentials);
       setAppEssentials(compactAppEssentials);
     }
   }, [compactAppEssentials, setAppEssentials]);

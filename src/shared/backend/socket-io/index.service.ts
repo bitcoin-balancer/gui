@@ -61,6 +61,7 @@ const socketIOServiceFactory = (): ISocketIOService => {
   const __onConnect = (): void => {
     __connected = true;
     __transport = <ITransport>__socket.io.engine.transport.name;
+    __connectionError = undefined;
     if (__DEBUG) console.log(`socket.connect -> ${__transport}`);
   };
 
@@ -72,8 +73,9 @@ const socketIOServiceFactory = (): ISocketIOService => {
 
   // 'connect_error' fired upon connection failure.
   const __onConnectError = (error: Error): void => {
-    __connected = false;
     const msg = extractMessage(error);
+    __connected = false;
+    __connectionError = msg;
     if (__socket.active) {
       if (__DEBUG) console.log(`socket.connect_error -> temporary failure, will try to reconnect from: ${msg}`);
     } else {
