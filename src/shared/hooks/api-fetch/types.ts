@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { IRecord } from '@/shared/types.ts';
-
+import { IHTMLElement, IRecord } from '@/shared/types.ts';
 
 /* ************************************************************************************************
- *                                             TYPES                                              *
+ *                                              HOOK                                              *
  ************************************************************************************************ */
 
-// the sort function used to keep records in order when refetching or loading more records
+/**
+ * Sort Func
+ * The sort function used to keep records in order when refetching or loading more records.
+ */
 type ISortFunc =
   (<T extends string | number>(a: T, b: T) => number)
   | (<T extends IRecord<unknown>>(a: T, b: T) => number);
@@ -18,15 +20,18 @@ type ISortFunc =
 type IAPIFetchFunctionReference = (...args: any[]) => Promise<any>;
 
 /**
- * API Fetcher Function
- * Object containing the reference to the request function and its args (if any)
+ * Fetch Function
+ * Object containing the reference to the request function and its args (if any).
  */
 type IAPIFetchFunction = {
   func: IAPIFetchFunctionReference;
   args?: any[];
 };
 
-// the configuration that will be used
+/**
+ * Configuration
+ * The configuration object that will instruct how to load and paginate data.
+ */
 type IAPIFetchConfig = {
   // the function that will be invoked to load the initial data
   fetchFunc: IAPIFetchFunction;
@@ -44,14 +49,21 @@ type IAPIFetchConfig = {
   sortFunc?: ISortFunc;
 };
 
-
-// the hook in charge of handling the retrieval, loading and error states
+/**
+ * API Fetch Hook
+ * The hook in charge of handling the retrieval, loading and error states
+ */
 type IAPIFetchHook = <T>(config: IAPIFetchConfig) => {
-  data: T;
-  setData: (state: T) => void;
+  data: T | T[];
+  // setData: (state: T) => void;
   loading: boolean;
-  error: unknown | undefined;
+  error: Error | undefined;
   hasMore: boolean;
+  loadMore: (
+    func: IAPIFetchFunction,
+    parentEl?: IHTMLElement,
+    lastElementID?: string,
+  ) => Promise<void>;
   loadingMore: boolean;
 };
 
@@ -60,10 +72,45 @@ type IAPIFetchHook = <T>(config: IAPIFetchConfig) => {
 
 
 /* ************************************************************************************************
+ *                                            REDUCER                                             *
+ ************************************************************************************************ */
+
+/**
+ * Action Type
+ * The actions that can take place within the hook.
+ */
+type IActionType = 'INITIAL_DATA' | 'MORE_DATA' | 'REFETCHED_DATA';
+type IAction<T> = {
+  type: IActionType;
+  data: T | T[];
+} & (
+  | {
+    type: 'INITIAL_DATA';
+  }
+  | {
+    type: 'MORE_DATA';
+    data: T[];
+    appendNextRecords: boolean | undefined;
+    sortFunc: ISortFunc | undefined;
+  } | {
+    type: 'REFETCHED_DATA';
+    sortFunc: ISortFunc | undefined;
+  }
+);
+
+
+
+
+/* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export type {
+  // hook
   IAPIFetchFunction,
   IAPIFetchConfig,
   IAPIFetchHook,
+
+  // reducer
+  IActionType,
+  IAction,
 };

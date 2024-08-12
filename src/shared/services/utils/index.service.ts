@@ -1,6 +1,6 @@
 import { encodeError, decodeError } from 'error-message-utils';
 import { toast } from '@/shared/shadcn/components/ui/use-toast.ts';
-import { IRecord } from '@/shared/types.ts';
+import { IHTMLElement, IRecord } from '@/shared/types.ts';
 import { ISortDirection } from '@/shared/services/utils/types.ts';
 
 /* ************************************************************************************************
@@ -13,10 +13,7 @@ import { ISortDirection } from '@/shared/services/utils/types.ts';
  * @param parentEl
  * @param childID
  */
-const scrollChildIntoView = (
-  parentEl: HTMLDivElement | HTMLTableSectionElement,
-  childID: string,
-): void => {
+const scrollChildIntoView = (parentEl: IHTMLElement, childID: string): void => {
   const el = parentEl.querySelector(childID) as Element;
   el.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
 };

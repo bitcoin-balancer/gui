@@ -1,6 +1,14 @@
-import { useState, useCallback, useMemo, useEffect } from 'react';
-import { executeFetchFunc } from '@/shared/hooks/api-fetch/utils.ts';
-import { IAPIFetchConfig, IAPIFetchHook, IAPIFetchFunction } from '@/shared/hooks/api-fetch/types.ts';
+import { useReducer, useState, useEffect } from 'react';
+import { errorToast, scrollChildIntoView } from '@/shared/services/utils/index.service.ts';
+import { IHTMLElement } from '@/shared/types.ts';
+import { executeFetchFunc, hasMoreRecords } from '@/shared/hooks/api-fetch/utils.ts';
+import { reducer } from '@/shared/hooks/api-fetch/reducer.ts';
+import {
+  IAPIFetchConfig,
+  IAPIFetchHook,
+  IAPIFetchFunction,
+  IAction,
+} from '@/shared/hooks/api-fetch/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -11,7 +19,7 @@ import { IAPIFetchConfig, IAPIFetchHook, IAPIFetchFunction } from '@/shared/hook
  * Sends requests to the API and handles the responses. It takes a function and an optional list
  * of arguments that will be used to call the function with.
  */
-const useAPIFetch: IAPIFetchHook = ({
+const useAPIFetch: IAPIFetchHook = <T>({
   fetchFunc,
   refetchFrequency,
   queryLimit,
@@ -19,9 +27,9 @@ const useAPIFetch: IAPIFetchHook = ({
   sortFunc,
 }: IAPIFetchConfig) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [data, setData] = useState<any>(undefined);
+  const [data, dispatch] = <[T | any, (action: IAction<T>) => void]>useReducer(reducer, undefined);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<unknown | undefined>(undefined);
+  const [error, setError] = useState<Error | undefined>(undefined);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [loadingMore, setLoadingMore] = useState<boolean>(false);
 
@@ -33,16 +41,49 @@ const useAPIFetch: IAPIFetchHook = ({
    ********************************************************************************************** */
 
   // ...
+  console.log('In useAPIFetch');
+
+
+
 
 
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
    ********************************************************************************************** */
 
+  /**
+   * Loads the next set of records and updates the state.
+   * @param func
+   * @param parentEl
+   * @param lastElementID?
+   * @returns Promise<void>
+   */
+  const loadMore = async (
+    func: IAPIFetchFunction,
+    parentEl?: IHTMLElement,
+    lastElementID?: string,
+  ): Promise<void> => {
+    try {
+      setLoadingMore(true);
+      const res = await executeFetchFunc<T>(func);
+      dispatch({
+        type: 'MORE_DATA',
+        data: res,
+        appendNextRecords,
+        sortFunc,
+      });
+      if (parentEl) {
+        scrollChildIntoView(parentEl, lastElementID!);
+      }
 
-  const loadMore = async (func: IAPIFetchFunction, lastElementID: string): Promise<void> => {
-
+      setHasMore(hasMoreRecords(res, queryLimit));
+    } catch (e) {
+      errorToast(e, 'Refetch Error');
+    } finally {
+      setLoadingMore(false);
+    }
   };
+
 
 
 
@@ -51,30 +92,31 @@ const useAPIFetch: IAPIFetchHook = ({
    *                                         SIDE EFFECTS                                         *
    ********************************************************************************************** */
 
+  /**
+   * Fetches the initial data and sets the state.
+   */
   useEffect(() => {
     let ignore = false;
 
     const fetchInitialData = async () => {
       try {
-        const res = await executeFetchFunc(fetchFunc);
+        const res = await executeFetchFunc<T>(fetchFunc);
         console.log('useAPIFetch.fetchInitialData', res);
         if (!ignore) {
-          setData(res);
+          dispatch({ type: 'INITIAL_DATA', data: res });
           setLoading(false);
           setError(undefined);
-          if (queryLimit) {
-            setHasMore(Array.isArray(res) && res.length >= queryLimit);
-          }
+          setHasMore(hasMoreRecords(res, queryLimit));
         }
       } catch (e) {
-        setError(e);
+        setError(e as Error);
       }
     };
 
     fetchInitialData();
 
     return () => { ignore = true; };
-  }, [fetchFunc, queryLimit]);
+  }, [fetchFunc, queryLimit, dispatch]);
 
 
 
@@ -85,7 +127,6 @@ const useAPIFetch: IAPIFetchHook = ({
    ********************************************************************************************** */
   return {
     data,
-    setData,
     loading,
     error,
     hasMore,

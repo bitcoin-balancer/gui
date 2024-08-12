@@ -1,29 +1,8 @@
-import { IAPIFetchConfig, IAPIFetchFunction } from '@/shared/hooks/api-fetch/types.ts';
+import { IAPIFetchFunction } from '@/shared/hooks/api-fetch/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
-
-/**
- * Builds the configuration based on a partial object.
- * @param config
- * @returns IAPIFetchConfig
- */
-const buildConfig = (config: Partial<IAPIFetchConfig>): IAPIFetchConfig => {
-  if (
-    typeof config.refetchFrequency === 'number'
-    && typeof config.queryLimit === 'number'
-    && config.sortFunc === undefined
-  ) {
-    throw new Error('If a list of records can be paginated and refetched, you must provide the sorting function.');
-  }
-  return {
-    fetchFunc: config.fetchFunc!,
-    refetchFrequency: config.refetchFrequency,
-    queryLimit: config.queryLimit,
-    sortFunc: config.sortFunc,
-  };
-};
 
 /**
  * Executes a given fetch function asynchronously.
@@ -37,6 +16,17 @@ const executeFetchFunc = <T>(fetchFunction: IAPIFetchFunction): Promise<T> => {
   return fetchFunction.func();
 };
 
+/**
+ * Checks if a data source has more records that can be retrieved.
+ * @param data
+ * @param queryLimit
+ * @returns boolean
+ */
+const hasMoreRecords = (data: unknown, queryLimit: number | undefined): boolean => (
+  typeof queryLimit === 'number' && Array.isArray(data) && data.length >= queryLimit
+);
+
+
 
 
 
@@ -44,6 +34,6 @@ const executeFetchFunc = <T>(fetchFunction: IAPIFetchFunction): Promise<T> => {
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export {
-  buildConfig,
   executeFetchFunc,
+  hasMoreRecords,
 };

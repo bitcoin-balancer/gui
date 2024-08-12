@@ -19,7 +19,8 @@ type IRecord<T> = {
   [key: string]: T;
 };
 
-
+// the possible instances of HTML elements
+type IHTMLElement = HTMLDivElement | HTMLTableSectionElement;
 
 
 
@@ -29,4 +30,5 @@ type IRecord<T> = {
 export type {
   INodeEnv,
   IRecord,
+  IHTMLElement,
 };
