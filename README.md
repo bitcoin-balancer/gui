@@ -71,7 +71,7 @@ npm run preview
 
 ### Low Priority
 
-- [ ] Create the `browserdb` package and use it to implement the request caching system`update-password` routes
+- [ ] Create the `browserdb` package and use it to implement the request caching system
 - [ ] Allow users to toggle between `light` and `dark` mode
 - [ ] Make the users' list searchable
 - [ ] Make the Blacklisted IP addresses searchable
