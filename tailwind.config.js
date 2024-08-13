@@ -22,7 +22,14 @@ module.exports = {
         secondary: '#1d1c1c',
         success: '#1B5E20',
         error: '#B71C1C',
-        light: '#64748b'
+        light: '#64748b',
+        stateless: '#94a3b8',
+        'increase-0': '#14b8a6',
+        'increase-1': '#0f766e',
+        'increase-2': '#134e4a',
+        'decrease-0': '#f87171',
+        'decrease-1': '#dc2626',
+        'decrease-2': '#7f1d1d',
       },
       keyframes: {
         "accordion-down": {

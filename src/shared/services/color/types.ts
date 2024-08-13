@@ -19,6 +19,9 @@ type IColorService = {
 
   // tailwind palettes
   SLATE: ITailwindPalette;
+
+  // state colors
+  
 };
 
 

@@ -27,6 +27,15 @@
   --light-text-color: #64748b;
 
 
+  /* State Colors */
+  --stateless-color: #94a3b8;
+  --increase-0-color: #14b8a6;
+  --increase-1-color: #0f766e;
+  --increase-2-color: #134e4a;
+  --decrease-0-color: #f87171;
+  --decrease-1-color: #dc2626;
+  --decrease-2-color: #7f1d1d;
+
 
   /* Font */
   --font-size: 16px;
