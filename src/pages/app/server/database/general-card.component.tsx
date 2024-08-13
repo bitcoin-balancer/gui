@@ -1,9 +1,12 @@
+import { useMemo } from 'react';
+import { calculateSum } from 'bignumber-utils';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
 } from '@/shared/shadcn/components/ui/card.tsx';
+import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import { formatFileSize } from '@/shared/services/transformations/index.service.ts';
 import { IDatabaseSummary } from '@/shared/backend/database/types.ts';
 
@@ -15,55 +18,89 @@ import { IDatabaseSummary } from '@/shared/backend/database/types.ts';
  * General Card Component
  * Component in charge of displaying general information regarding the database.
  */
-const GeneralCard = ({ data }: { data: IDatabaseSummary }) => (
-  <Card>
-    <CardHeader>
-      <CardTitle
-        className='text-center text-base font-normal'
-      >{data.version}</CardTitle>
-    </CardHeader>
-    <CardContent>
-      <div
-        className='flex justify-center items-center'
-      >
-        <p
-          className='text-light text-sm'
-        >Name</p>
-        <span className='flex-1'></span>
-        <p>{data.name}</p>
-      </div>
+const GeneralCard = ({ data }: { data: IDatabaseSummary }) => {
+  /* **********************************************************************************************
+   *                                       REACTIVE VALUES                                        *
+   ********************************************************************************************** */
 
-      <div
-        className='flex justify-center items-center mt-5'
-      >
-        <p
-          className='text-light text-sm'
-        >Port</p>
-        <span className='flex-1'></span>
-        <p>{data.port}</p>
-      </div>
+  // the size of all the tables combined
+  const tablesSize = useMemo(
+    () => formatFileSize(calculateSum(data.tables.map((table) => table.size))),
+    [data.tables],
+  );
 
-      <div
-        className='flex justify-center items-center mt-5'
-      >
-        <p
-          className='text-light text-sm'
-        >Tables</p>
-        <span className='flex-1'></span>
-        <p>{data.tables.length}</p>
-      </div>
-      <div
-        className='flex justify-center items-center mt-5'
-      >
-        <p
-          className='text-light text-sm'
-        >Size</p>
-        <span className='flex-1'></span>
-        <p>{formatFileSize(data.size)}</p>
-      </div>
-    </CardContent>
-  </Card>
-);
+
+
+  /* **********************************************************************************************
+   *                                           COMPONENT                                          *
+   ********************************************************************************************** */
+  return (
+    <Card className='animate-in fade-in duration-700'>
+      <CardHeader>
+        <CardTitle
+          className='text-center text-base font-normal'
+        >{data.version}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div
+          className='flex justify-center items-center'
+        >
+          <p
+            className='text-light text-sm'
+          >Name</p>
+          <span className='flex-1'></span>
+          <Badge
+            className='text-sm'
+            variant='secondary'
+          >{data.name}</Badge>
+        </div>
+
+        <div
+          className='flex justify-center items-center mt-5'
+        >
+          <p
+            className='text-light text-sm'
+          >Port</p>
+          <span className='flex-1'></span>
+          <Badge
+            className='text-sm'
+            variant='secondary'
+          >{data.port}</Badge>
+        </div>
+
+        <div
+          className='flex justify-center items-center mt-5'
+        >
+          <p
+            className='text-light text-sm'
+          >Tables</p>
+          <span className='flex-1'></span>
+          <p>{data.tables.length}</p>
+        </div>
+
+        <div
+          className='flex justify-center items-center mt-5'
+        >
+          <p
+            className='text-light text-sm'
+          >Tables' size</p>
+          <span className='flex-1'></span>
+          <p>{tablesSize}</p>
+        </div>
+
+        <div
+          className='flex justify-center items-center mt-5'
+        >
+          <p
+            className='text-light text-sm'
+          >Database Size</p>
+          <span className='flex-1'></span>
+          <p><strong>{formatFileSize(data.size)}</strong></p>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
 
 
 

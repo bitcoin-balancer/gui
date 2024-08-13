@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { Menu } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import {
@@ -8,7 +8,7 @@ import {
   TabsTrigger,
 } from '@/shared/shadcn/components/ui/tabs.tsx';
 import { DatabaseService, IDatabaseSummary } from '@/shared/backend/database/index.service.ts';
-import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts';
+import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import { IServerComponentProps } from '@/pages/app/server/types.ts';
@@ -27,9 +27,16 @@ const Database = memo(({ setSidenavOpen }: IServerComponentProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const { data, loading, error } = useAPIRequest<IDatabaseSummary>(
-    DatabaseService.getDatabaseSummary,
-  );
+  const {
+    data,
+    loading,
+    error,
+  } = useAPIFetch<IDatabaseSummary>(useMemo(
+    () => ({
+      fetchFunc: { func: DatabaseService.getDatabaseSummary },
+    }),
+    [],
+  ));
 
 
 
