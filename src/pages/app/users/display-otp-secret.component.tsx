@@ -11,7 +11,7 @@ import {
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { ClipboardService } from '@/shared/services/clipboard/index.service.ts';
 import { UserService } from '@/shared/backend/auth/user/index.service.ts';
-import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts';
+import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import { IDisplayOTPSecretProps } from '@/pages/app/users/types.ts';
@@ -33,10 +33,12 @@ const DisplayOTPSecret = memo(({
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const { data, loading, error } = useAPIRequest<string>(
-    UserService.getOTPSecret,
-    useMemo(() => [uid], [uid]),
-  );
+  const { data, loading, error } = useAPIFetch<string>(useMemo(
+    () => ({
+      fetchFunc: { func: UserService.getOTPSecret, args: [uid] },
+    }),
+    [uid],
+  ));
 
 
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Loader2 } from 'lucide-react';
 import { decodeError } from 'error-message-utils';
@@ -24,7 +24,7 @@ import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { numberValid } from '@/shared/backend/validations/index.service.ts';
 import { ServerService, IAlarmsConfiguration } from '@/shared/backend/server/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
-import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts';
+import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import { IFormProps } from './types.ts';
@@ -41,7 +41,12 @@ const ServerAlarms = ({ open, onOpenChange }: IFormProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const { data, loading, error } = useAPIRequest<IAlarmsConfiguration>(ServerService.getAlarms);
+  const { data, loading, error } = useAPIFetch<IAlarmsConfiguration>(useMemo(
+    () => ({
+      fetchFunc: { func: ServerService.getAlarms },
+    }),
+    [],
+  ));
   const form = useForm<IAlarmsConfiguration>({
     defaultValues: {
       maxCPULoad: data?.maxCPULoad ?? '',

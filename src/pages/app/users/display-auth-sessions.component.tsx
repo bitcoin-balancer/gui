@@ -20,7 +20,7 @@ import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { ClipboardService } from '@/shared/services/clipboard/index.service.ts';
 import { formatDate } from '@/shared/services/transformations/index.service.ts';
 import { JWTService, IRefreshTokenRecord } from '@/shared/backend/auth/jwt/index.service.ts';
-import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts';
+import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import NoRecords from '@/shared/components/no-records/index.component.tsx';
@@ -43,11 +43,12 @@ const DisplayAuthSessions = memo(({
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const { data, loading, error } = useAPIRequest<IRefreshTokenRecord[]>(
-    JWTService.listRecords,
-    useMemo(() => [uid], [uid]),
-  );
-
+  const { data, loading, error } = useAPIFetch<IRefreshTokenRecord[]>(useMemo(
+    () => ({
+      fetchFunc: { func: JWTService.listRecords, args: [uid] },
+    }),
+    [uid],
+  ));
 
 
 

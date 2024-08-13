@@ -1,11 +1,4 @@
-import {
-  memo,
-  useMemo,
-  useState,
-  useRef,
-  useCallback,
-} from 'react';
-import { flushSync } from 'react-dom';
+import { memo, useMemo, useRef } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -22,10 +15,9 @@ import {
   TableHeader,
   TableRow,
 } from '@/shared/shadcn/components/ui/table.tsx';
-import { errorToast, scrollChildIntoView } from '@/shared/services/utils/index.service.ts';
 import { formatDate } from '@/shared/services/transformations/index.service.ts';
 import { UserService, IPasswordUpdate } from '@/shared/backend/auth/user/index.service.ts';
-import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts';
+import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import NoRecords from '@/shared/components/no-records/index.component.tsx';
@@ -71,52 +63,18 @@ const DisplayPasswordUpdates = memo(({
    ********************************************************************************************** */
   const {
     data,
-    setData,
     loading,
     error,
-  } = useAPIRequest<IPasswordUpdate[]>(
-    UserService.listUserPasswordUpdates,
-    useMemo(() => [uid, LIMIT], [uid]),
-  );
-  const [loadingMore, setLoadingMore] = useState<boolean>(false);
-  const [hasMore, setHasMore] = useState<boolean>(true);
-
-
-
-
-  /* **********************************************************************************************
-   *                                        EVENT HANDLERS                                        *
-   ********************************************************************************************** */
-
-  /**
-   * Loads the next set of records if there are any.
-   */
-  const loadMore = useCallback(
-    async () => {
-      try {
-        setLoadingMore(true);
-        const nextRecords = await UserService.listUserPasswordUpdates(
-          uid,
-          LIMIT,
-          data.at(-1)!.event_time,
-        );
-
-        // add the new records to the DOM
-        flushSync(() => {
-          setData([...data, ...nextRecords]);
-          setHasMore(nextRecords.length >= LIMIT);
-        });
-
-        // scroll to the beginning of the new page
-        scrollChildIntoView(rowsRef.current!, `#pur-${data.at(-1)!.event_time}`);
-      } catch (e) {
-        errorToast(e);
-      } finally {
-        setLoadingMore(false);
-      }
-    },
-    [data, setData, uid],
-  );
+    hasMore,
+    loadMore,
+    loadingMore,
+  } = useAPIFetch<IPasswordUpdate[]>(useMemo(
+    () => ({
+      fetchFunc: { func: UserService.listUserPasswordUpdates, args: [uid, LIMIT] },
+      queryLimit: LIMIT,
+    }),
+    [uid],
+  ));
 
 
 
@@ -148,7 +106,6 @@ const DisplayPasswordUpdates = memo(({
               <TableRow
                 key={record.event_time}
                 id={`pur-${record.event_time}`}
-                className='animate-in fade-in duration-700'
               >
                 <TableCell>
                   <p
@@ -171,7 +128,14 @@ const DisplayPasswordUpdates = memo(({
         {
           (hasMore && data.length >= LIMIT)
           && <LoadMoreButton
-            loadMore={loadMore}
+            loadMore={() => loadMore(
+              {
+                func: UserService.listUserPasswordUpdates,
+                args: [uid, LIMIT, data.at(-1)!.event_time],
+              },
+              rowsRef.current!,
+              `pur-${data.at(-1)!.event_time}`,
+            )}
             loadingMore={loadingMore}
           />
         }
