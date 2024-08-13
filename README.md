@@ -56,34 +56,6 @@ npm run preview
 
 <br/>
 
-## @TODO
-
-### High Priority
-
-- [ ] ...
-
-
-### Medium Priority
-
-- [ ] ...
-
-
-
-### Low Priority
-
-- [ ] Create the `browserdb` package and use it to implement the request caching system
-- [ ] Allow users to toggle between `light` and `dark` mode
-- [ ] Make the users' list searchable
-- [ ] Make the Blacklisted IP addresses searchable
-- [ ] Create Bitcoin Quotes Component and place it in `sign-in` and `update-password`
-- [ ] ...
-
-
-
-
-
-<br/>
-
 ## Tests
 
 ```bash
