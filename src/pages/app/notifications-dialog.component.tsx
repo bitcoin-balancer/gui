@@ -1,11 +1,4 @@
-import {
-  useMemo,
-  useState,
-  useRef,
-  Fragment,
-  useCallback,
-} from 'react';
-import { flushSync } from 'react-dom';
+import { useMemo, useRef, Fragment } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -15,10 +8,9 @@ import {
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
-import { errorToast, scrollChildIntoView } from '@/shared/services/utils/index.service.ts';
 import { NotificationService, INotification } from '@/shared/backend/notification/index.service.ts';
 import { formatDate } from '@/shared/services/transformations/index.service.ts';
-import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts';
+import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import NoRecords from '@/shared/components/no-records/index.component.tsx';
@@ -61,48 +53,19 @@ const NotificationsDialog = ({
    ********************************************************************************************** */
   const {
     data,
-    setData,
     loading,
     error,
-  } = useAPIRequest<INotification[]>(
-    NotificationService.list,
-    useMemo(() => [LIMIT], []),
-  );
-  const [loadingMore, setLoadingMore] = useState<boolean>(false);
-  const [hasMore, setHasMore] = useState<boolean>(true);
+    hasMore,
+    loadMore,
+    loadingMore,
+  } = useAPIFetch<INotification[]>(useMemo(
+    () => ({
+      fetchFunc: { func: NotificationService.list, args: [LIMIT] },
+      queryLimit: LIMIT,
+    }),
+    [],
+  ));
 
-
-
-
-  /* **********************************************************************************************
-   *                                        EVENT HANDLERS                                        *
-   ********************************************************************************************** */
-
-  /**
-   * Loads the next set of records if there are any.
-   */
-  const loadMore = useCallback(
-    async () => {
-      try {
-        setLoadingMore(true);
-        const nextRecords = await NotificationService.list(LIMIT, data.at(-1)!.id);
-
-        // add the new records to the DOM
-        flushSync(() => {
-          setData([...data, ...nextRecords]);
-          setHasMore(nextRecords.length >= LIMIT);
-        });
-
-        // scroll to the beginning of the new page
-        scrollChildIntoView(rowsRef.current!, `#nd-${data.at(-1)!.id}`);
-      } catch (e) {
-        errorToast(e);
-      } finally {
-        setLoadingMore(false);
-      }
-    },
-    [data, setData],
-  );
 
 
 
@@ -154,7 +117,11 @@ const NotificationsDialog = ({
         {
           (hasMore && data.length >= LIMIT)
           && <LoadMoreButton
-            loadMore={loadMore}
+            loadMore={() => loadMore(
+              { func: NotificationService.list, args: [LIMIT, data.at(-1)!.id] },
+              rowsRef.current!,
+              `nd-${data.at(-1)!.id}`,
+            )}
             loadingMore={loadingMore}
           />
         }

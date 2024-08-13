@@ -116,7 +116,7 @@ const useAPIFetch: IAPIFetchHook = <T>({
 
         setHasMore(hasMoreRecords(res, queryLimit));
       } catch (e) {
-        errorToast(e);
+        errorToast(e, 'Fetch Error');
       } finally {
         setLoadingMore(false);
       }

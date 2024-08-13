@@ -14,7 +14,7 @@ import { ISortDirection } from '@/shared/services/utils/types.ts';
  * @param childID
  */
 const scrollChildIntoView = (parentEl: IHTMLElement, childID: string): void => {
-  const el = parentEl.querySelector(childID) as Element;
+  const el = parentEl.querySelector(`#${childID}`) as Element;
   el.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
 };
 

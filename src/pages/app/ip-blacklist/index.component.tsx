@@ -137,7 +137,6 @@ const IPBlacklist = () => {
     () => ({
       fetchFunc: { func: IPBlacklistService.list, args: [LIMIT] },
       queryLimit: LIMIT,
-      refetchFrequency: 5,
     }),
     [],
   ));
@@ -275,7 +274,7 @@ const IPBlacklist = () => {
                         <TableRow
                           key={record.id}
                           id={`ipb-${record.id}`}
-                          className={`${busyRecord === record.id ? 'opacity-50' : ''} animate-in fade-in duration-700`}
+                          className={`${busyRecord === record.id ? 'opacity-50' : ''} animate-in fade-in duration-500`}
                         >
                           {/* ************
                             * IP ADDRESS *
@@ -365,7 +364,7 @@ const IPBlacklist = () => {
                       loadMore={() => loadMore(
                         { func: IPBlacklistService.list, args: [LIMIT, data.at(-1)!.id] },
                         rowsRef.current!,
-                        `#ipb-${data.at(-1)!.id}`,
+                        `ipb-${data.at(-1)!.id}`,
                       )}
                       loadingMore={loadingMore}
                     />
