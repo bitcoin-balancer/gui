@@ -1,4 +1,4 @@
-
+import { IState } from '@/shared/backend/market-state/index.service.ts';
 
 /* ************************************************************************************************
  *                                            SERVICE                                             *
@@ -21,7 +21,14 @@ type IColorService = {
   SLATE: ITailwindPalette;
 
   // state colors
-  
+  STATELESS: string;
+  INCREASE_0: string;
+  INCREASE_1: string;
+  INCREASE_2: string;
+  DECREASE_0: string;
+  DECREASE_1: string;
+  DECREASE_2: string;
+  STATE: IStateColors;
 };
 
 
@@ -39,6 +46,10 @@ type ITailwindPalette = {
   [key in ITailwindPaletteHue]: string;
 };
 
+// each state has its own color based on the intensity
+type IStateColors = {
+  [key in IState]: string;
+};
 
 
 
@@ -53,4 +64,5 @@ export type {
   // types
   ITailwindPaletteHue,
   ITailwindPalette,
+  IStateColors,
 };
