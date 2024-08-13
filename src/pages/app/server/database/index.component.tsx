@@ -27,11 +27,7 @@ const Database = memo(({ setSidenavOpen }: IServerComponentProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const {
-    data,
-    loading,
-    error,
-  } = useAPIFetch<IDatabaseSummary>(useMemo(
+  const { data, loading, error } = useAPIFetch<IDatabaseSummary>(useMemo(
     () => ({
       fetchFunc: { func: DatabaseService.getDatabaseSummary },
     }),

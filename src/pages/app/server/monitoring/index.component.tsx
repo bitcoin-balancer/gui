@@ -1,8 +1,8 @@
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { Menu } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { ServerService, IServerState } from '@/shared/backend/server/index.service.ts';
-import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts';
+import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import { IServerComponentProps } from '@/pages/app/server/types.ts';
@@ -23,8 +23,13 @@ const Monitoring = memo(({ setSidenavOpen }: IServerComponentProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const { data, loading, error } = useAPIRequest<IServerState>(ServerService.getState);
-
+  const { data, loading, error } = useAPIFetch<IServerState>(useMemo(
+    () => ({
+      fetchFunc: { func: ServerService.getState },
+      refetchFrequency: 35,
+    }),
+    [],
+  ));
 
 
 
