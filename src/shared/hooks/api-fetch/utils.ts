@@ -1,4 +1,5 @@
-import { IAPIFetchFunction } from '@/shared/hooks/api-fetch/types.ts';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { IAPIFetchFunction, ISortFunc } from '@/shared/hooks/api-fetch/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -26,6 +27,32 @@ const hasMoreRecords = (data: unknown, queryLimit: number | undefined): boolean 
   typeof queryLimit === 'number' && Array.isArray(data) && data.length >= queryLimit
 );
 
+/**
+ * Fires when the loadMore function is invoked. It merges the current data with the new data that
+ * was just retrieved from the API.
+ * @param records
+ * @param nextRecords
+ * @param sortFunc
+ * @param appendNextRecords
+ * @returns T
+ */
+const onMoreData = <T>(
+  records: T,
+  nextRecords: T,
+  sortFunc: ISortFunc | undefined,
+  appendNextRecords: boolean | undefined,
+): T => {
+  // prioritize the sortFunc if it was provided
+  if (typeof sortFunc === 'function') {
+    return [...records as any[], nextRecords].sort(sortFunc) as T;
+  }
+
+  // otherwise, append or prepend the data
+  return appendNextRecords
+    ? [...records as any[], ...nextRecords as any[]] as T
+    : [...nextRecords as any[], ...records as any[]] as T;
+};
+
 
 
 
@@ -36,4 +63,5 @@ const hasMoreRecords = (data: unknown, queryLimit: number | undefined): boolean 
 export {
   executeFetchFunc,
   hasMoreRecords,
+  onMoreData,
 };

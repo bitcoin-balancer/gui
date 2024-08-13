@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   useState,
   useEffect,
@@ -9,13 +8,8 @@ import {
 import { flushSync } from 'react-dom';
 import { IHTMLElement } from '@/shared/types.ts';
 import { errorToast, scrollChildIntoView } from '@/shared/services/utils/index.service.ts';
-import { executeFetchFunc, hasMoreRecords } from '@/shared/hooks/api-fetch/utils.ts';
-import {
-  IAPIFetchConfig,
-  IAPIFetchHook,
-  IAPIFetchFunction,
-  ISortFunc,
-} from '@/shared/hooks/api-fetch/types.ts';
+import { executeFetchFunc, hasMoreRecords, onMoreData } from '@/shared/hooks/api-fetch/utils.ts';
+import { IAPIFetchConfig, IAPIFetchHook, IAPIFetchFunction } from '@/shared/hooks/api-fetch/types.ts';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
@@ -23,39 +17,6 @@ import {
 
 // if enabled, it will print logs on the console
 const DEBUG = true;
-
-
-
-
-
-/* ************************************************************************************************
- *                                            HELPERS                                             *
- ************************************************************************************************ */
-
-/**
- * Handles the update of the state when more records are loaded.
- * @param records
- * @param nextRecords
- * @param sortFunc
- * @param appendNextRecords
- * @returns T
- */
-const __onMoreData = <T>(
-  records: T,
-  nextRecords: T,
-  sortFunc: ISortFunc | undefined,
-  appendNextRecords: boolean | undefined,
-): T => {
-  // prioritize the sortFunc if it was provided
-  if (typeof sortFunc === 'function') {
-    return [...records as any[], nextRecords].sort(sortFunc) as T;
-  }
-
-  // otherwise, append or prepend the data
-  return appendNextRecords
-    ? [...records as any[], ...nextRecords as any[]] as T
-    : [...nextRecords as any[], ...records as any[]] as T;
-};
 
 
 
@@ -89,11 +50,58 @@ const useAPIFetch: IAPIFetchHook = <T>({
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<T | any>(undefined);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | undefined>(undefined);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [loadingMore, setLoadingMore] = useState<boolean>(false);
+
+
+
+
+
+  /* **********************************************************************************************
+   *                                        EVENT HANDLERS                                        *
+   ********************************************************************************************** */
+
+  /**
+   * Loads the next set of records and updates the state.
+   * @param func
+   * @param parentEl
+   * @param lastElementID?
+   * @returns Promise<void>
+   */
+  const loadMore = useCallback(
+    async (
+      func: IAPIFetchFunction,
+      parentEl?: IHTMLElement,
+      lastElementID?: string,
+    ): Promise<void> => {
+      try {
+        setLoadingMore(true);
+        const res = await executeFetchFunc<T>(func);
+        if (DEBUG) console.log('useAPIFetch.loadMore', res);
+
+        // apply the changes based on the config
+        if (parentEl) {
+          flushSync(() => {
+            setData(onMoreData(data, res, sortFunc, appendNextRecords));
+          });
+          scrollChildIntoView(parentEl, lastElementID!);
+        } else {
+          setData(onMoreData(data, res, sortFunc, appendNextRecords));
+        }
+
+        setHasMore(hasMoreRecords(res, queryLimit));
+      } catch (e) {
+        errorToast(e);
+      } finally {
+        setLoadingMore(false);
+      }
+    },
+    [data, queryLimit, appendNextRecords, sortFunc],
+  );
 
 
 
@@ -147,52 +155,6 @@ const useAPIFetch: IAPIFetchHook = <T>({
     }
     return () => clearInterval(interval);
   }, [refetchFrequency, fetchFunc, sortFunc]);
-
-
-
-
-
-  /* **********************************************************************************************
-   *                                        EVENT HANDLERS                                        *
-   ********************************************************************************************** */
-
-  /**
-   * Loads the next set of records and updates the state.
-   * @param func
-   * @param parentEl
-   * @param lastElementID?
-   * @returns Promise<void>
-   */
-  const loadMore = useCallback(
-    async (
-      func: IAPIFetchFunction,
-      parentEl?: IHTMLElement,
-      lastElementID?: string,
-    ): Promise<void> => {
-      try {
-        setLoadingMore(true);
-        const res = await executeFetchFunc<T>(func);
-        if (DEBUG) console.log('useAPIFetch.loadMore', res);
-
-        // apply the changes based on the config
-        if (parentEl) {
-          flushSync(() => {
-            setData(__onMoreData(data, res, sortFunc, appendNextRecords));
-          });
-          scrollChildIntoView(parentEl, lastElementID!);
-        } else {
-          setData(__onMoreData(data, res, sortFunc, appendNextRecords));
-        }
-
-        setHasMore(hasMoreRecords(res, queryLimit));
-      } catch (e) {
-        errorToast(e);
-      } finally {
-        setLoadingMore(false);
-      }
-    },
-    [data, queryLimit, appendNextRecords, sortFunc],
-  );
 
 
 
