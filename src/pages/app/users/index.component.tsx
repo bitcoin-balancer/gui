@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { UserPlus } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import {
@@ -10,7 +10,7 @@ import {
   TableRow,
 } from '@/shared/shadcn/components/ui/table.tsx';
 import { UserService, IUser } from '@/shared/backend/auth/user/index.service.ts';
-import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts';
+import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import { dispatch } from './reducer.ts';
@@ -35,8 +35,12 @@ const Users = () => {
     setData,
     loading,
     error,
-  } = useAPIRequest<IUser[]>(UserService.listUsers);
-
+  } = useAPIFetch<IUser[]>(useMemo(
+    () => ({
+      fetchFunc: { func: UserService.listUsers },
+    }),
+    [],
+  ));
 
 
 
