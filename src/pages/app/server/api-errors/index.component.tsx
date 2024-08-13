@@ -6,15 +6,14 @@ import {
   Fragment,
   useCallback,
 } from 'react';
-import { flushSync } from 'react-dom';
-import { Menu, Trash } from 'lucide-react';
+import { Menu, Trash, RefreshCcw } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Card, CardContent } from '@/shared/shadcn/components/ui/card.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
-import { delay, errorToast, scrollChildIntoView } from '@/shared/services/utils/index.service.ts';
+import { delay, errorToast } from '@/shared/services/utils/index.service.ts';
 import { APIErrorService, IAPIError } from '@/shared/backend/api-error/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
-import { useAPIRequest } from '@/shared/hooks/api-request/index.hook.ts';
+import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import NoRecords from '@/shared/components/no-records/index.component.tsx';
@@ -60,14 +59,23 @@ const APIErrors = memo(({ setSidenavOpen }: IServerComponentProps) => {
     setData,
     loading,
     error,
-  } = useAPIRequest<IAPIError[]>(APIErrorService.list, useMemo(() => [LIMIT], []));
+    refetchData,
+    refetching,
+    hasMore,
+    loadMore,
+    loadingMore,
+  } = useAPIFetch<IAPIError[]>(useMemo(
+    () => ({
+      fetchFunc: { func: APIErrorService.list, args: [LIMIT] },
+      queryLimit: LIMIT,
+    }),
+    [],
+  ));
   const [activeDialog, setActiveDialog] = useState<{ open: boolean, record?: IAPIError }>({
     open: false,
   });
   const [closingDialog, setClosingDialog] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [loadingMore, setLoadingMore] = useState<boolean>(false);
-  const [hasMore, setHasMore] = useState<boolean>(true);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
 
 
@@ -113,32 +121,6 @@ const APIErrors = memo(({ setSidenavOpen }: IServerComponentProps) => {
     [],
   );
 
-  /**
-   * Loads the next set of records if there are any.
-   */
-  const loadMore = useCallback(
-    async () => {
-      try {
-        setLoadingMore(true);
-        const nextRecords = await APIErrorService.list(LIMIT, data.at(-1)!.id);
-
-        // add the new records to the DOM
-        flushSync(() => {
-          setData([...data, ...nextRecords]);
-          setHasMore(nextRecords.length >= LIMIT);
-        });
-
-        // scroll to the beginning of the new page
-        scrollChildIntoView(rowsRef.current!, `#aer-${data.at(-1)!.id}`);
-      } catch (e) {
-        errorToast(e);
-      } finally {
-        setLoadingMore(false);
-      }
-    },
-    [data, setData],
-  );
-
 
 
 
@@ -181,13 +163,22 @@ const APIErrors = memo(({ setSidenavOpen }: IServerComponentProps) => {
             <span className='flex-1'></span>
 
             <Button
+              variant='ghost'
+              size='icon'
+              disabled={refetching}
+              onClick={refetchData}
+              className='mr-2'
+              aria-label='Refetch the API Errors'
+            ><RefreshCcw aria-hidden='true' /></Button>
+
+            <Button
               onClick={deleteAll}
-              disabled={isSubmitting || data.length === 0}
+              disabled={isSubmitting || data.length === 0 || refetching}
               className='hidden sm:flex'
             ><Trash aria-hidden='true' className='mr-2' /> Delete all</Button>
             <Button
               onClick={deleteAll}
-              disabled={isSubmitting || data.length === 0}
+              disabled={isSubmitting || data.length === 0 || refetching}
               className='sm:hidden'
               size='icon'
               aria-label='Delete all of the API Errors'
@@ -229,7 +220,11 @@ const APIErrors = memo(({ setSidenavOpen }: IServerComponentProps) => {
           {
             (hasMore && data.length >= LIMIT)
             && <LoadMoreButton
-              loadMore={loadMore}
+              loadMore={() => loadMore(
+                { func: APIErrorService.list, args: [LIMIT, data.at(-1)!.id] },
+                rowsRef.current!,
+                `aer-${data.at(-1)!.id}`,
+              )}
               loadingMore={loadingMore}
             />
           }
