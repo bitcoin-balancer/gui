@@ -54,6 +54,7 @@ const useAPIFetch: IAPIFetchHook = <T>({
   const [data, setData] = useState<T | any>(undefined);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | undefined>(undefined);
+  const [refetching, setRefetching] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [loadingMore, setLoadingMore] = useState<boolean>(false);
 
@@ -64,6 +65,26 @@ const useAPIFetch: IAPIFetchHook = <T>({
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
    ********************************************************************************************** */
+
+  /**
+   * Refetches the initial data and sets the state a new.
+   * @returns Promise<void>
+   */
+  const refetchData = useCallback(
+    async (): Promise<void> => {
+      try {
+        setRefetching(true);
+        const res = await executeFetchFunc<T>(fetchFunc);
+        if (DEBUG) console.log('useAPIFetch.refetchData', res);
+        setData(res);
+      } catch (e) {
+        errorToast(e, 'Refetch Error');
+      } finally {
+        setRefetching(false);
+      }
+    },
+    [fetchFunc],
+  );
 
   /**
    * Loads the next set of records and updates the state.
@@ -106,7 +127,6 @@ const useAPIFetch: IAPIFetchHook = <T>({
 
 
 
-
   /* **********************************************************************************************
    *                                         SIDE EFFECTS                                         *
    ********************************************************************************************** */
@@ -143,18 +163,12 @@ const useAPIFetch: IAPIFetchHook = <T>({
   useEffect(() => {
     const interval = refetchInterval.current;
     if (!interval && typeof refetchFrequency === 'number') {
-      refetchInterval.current = setInterval(async () => {
-        try {
-          const res = await executeFetchFunc<T>(fetchFunc);
-          if (DEBUG) console.log('useAPIFetch.refetchInterval', res);
-          setData(res);
-        } catch (e) {
-          errorToast(e, 'Refetch Error');
-        }
+      refetchInterval.current = setInterval(() => {
+        refetchData();
       }, refetchFrequency * 1000);
     }
     return () => clearInterval(interval);
-  }, [refetchFrequency, fetchFunc, sortFunc]);
+  }, [refetchFrequency, refetchData]);
 
 
 
@@ -168,6 +182,8 @@ const useAPIFetch: IAPIFetchHook = <T>({
     setData,
     loading,
     error,
+    refetchData,
+    refetching,
     hasMore,
     loadMore,
     loadingMore,

@@ -58,6 +58,8 @@ type IAPIFetchHook = <T>(config: IAPIFetchConfig) => {
   setData: (state: T) => void;
   loading: boolean;
   error: Error | undefined;
+  refetchData: () => Promise<void>;
+  refetching: boolean;
   hasMore: boolean;
   loadMore: (
     func: IAPIFetchFunction,
