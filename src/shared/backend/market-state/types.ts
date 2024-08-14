@@ -21,11 +21,7 @@ type IMarketStateService = {
  *                                             TYPES                                              *
  ************************************************************************************************ */
 
-/**
- * State
- * ...
- */
-type IState = -2 | -1 | 0 | 1 | 2;
+// ...
 
 
 
@@ -38,5 +34,5 @@ export type {
   IMarketStateService,
 
   // types
-  IState,
+  // ...
 };

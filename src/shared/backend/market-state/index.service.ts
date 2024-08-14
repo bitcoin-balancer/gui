@@ -1,4 +1,5 @@
-import { IMarketStateService, IState } from '@/shared/backend/market-state/types.ts';
+import { IState } from '@/shared/backend/market-state/shared/types.ts';
+import { IMarketStateService } from '@/shared/backend/market-state/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
