@@ -8,7 +8,7 @@ import { IColorService, IStateColors } from '@/shared/services/color/types.ts';
  * Color Service Factory
  * Generates the object in charge of providing all the colors used by the app to components and
  * services.
- * @returns ISomeService
+ * @returns IColorService
  */
 const colorServiceFactory = (): IColorService => {
   /* **********************************************************************************************

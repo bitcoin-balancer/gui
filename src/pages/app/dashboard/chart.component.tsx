@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { createChart, type IChartApi } from 'lightweight-charts';
+import { ColorService } from '@/shared/services/color/index.service.ts';
 import { ICandlestick } from '@/pages/app/dashboard/types.ts';
 
 const ChartComponent = ({ data }: { data: ICandlestick[] }) => {
@@ -12,6 +13,7 @@ const ChartComponent = ({ data }: { data: ICandlestick[] }) => {
       {
         layout: {
           textColor: 'black',
+          attributionLogo: true,
         },
         width: chartContainerRef.current!.clientWidth,
         height: 600,
@@ -24,15 +26,15 @@ const ChartComponent = ({ data }: { data: ICandlestick[] }) => {
           // Vertical crosshair line (showing Date in Label)
           vertLine: {
             width: 1,
-            color: '#0C0C0c',
+            color: ColorService.PRIMARY,
             style: 3,
-            labelBackgroundColor: '#0C0C0c',
+            labelBackgroundColor: ColorService.PRIMARY,
           },
 
           // Horizontal crosshair line (showing Price in Label)
           horzLine: {
-            color: '#0C0C0C',
-            labelBackgroundColor: '#0C0C0C',
+            color: ColorService.PRIMARY,
+            labelBackgroundColor: ColorService.PRIMARY,
           },
         },
       },
@@ -43,11 +45,11 @@ const ChartComponent = ({ data }: { data: ICandlestick[] }) => {
     };
 
     const candlestickSeries = chartAPI.current.addCandlestickSeries({
-      upColor: '#26a69a',
-      downColor: '#ef5350',
+      upColor: ColorService.INCREASE_1, // trading view:'#26a69a'
+      downColor: ColorService.DECREASE_1, // trading view:'#ef5350'
       borderVisible: false,
-      wickUpColor: '#26a69a',
-      wickDownColor: '#ef5350',
+      wickUpColor: ColorService.INCREASE_1, // trading view:'#26a69a'
+      wickDownColor: ColorService.DECREASE_1, // trading view:'#ef5350'
     });
 
     // @ts-ignore
