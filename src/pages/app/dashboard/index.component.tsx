@@ -27,7 +27,7 @@ const Dashboard = () => {
     let ignore = false;
 
     const getCandlesticks = async () => {
-      const { data } = await sendGET('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=15m&limit=128');
+      const { data } = await sendGET('https://data-api.binance.vision/api/v3/klines?symbol=BTCUSDT&interval=15m&limit=128');
       if (!ignore) {
         setCandlesticks(data.map((candlestick: number[]) => ({
           open: Number(candlestick[1]),

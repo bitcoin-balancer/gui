@@ -150,7 +150,7 @@ const AppInstaller = () => {
         >
           <p
             className='font-semibold'
-          >Install App</p>
+          >Install app</p>
           <p
             className='text-slate-500 text-sm'
           >{APP_URL}</p>
