@@ -1,5 +1,6 @@
 import { Time } from 'lightweight-charts';
 import { ICompactCandlestickRecords } from '@/shared/backend/candlestick/index.service.ts';
+import { IState } from '@/shared/backend/market-state/index.service.ts';
 
 /* ************************************************************************************************
  *                                             TYPES                                              *
@@ -15,6 +16,9 @@ type IComponentProps = {
 
   // the records to render
   data: ICompactCandlestickRecords;
+
+  // the current state of the module
+  state?: IState;
 };
 
 /**

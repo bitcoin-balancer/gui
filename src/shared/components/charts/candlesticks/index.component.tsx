@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { createChart, type IChartApi } from 'lightweight-charts';
-import { ColorService } from '@/shared/services/color/index.service.ts';
-import { toBars, buildChartOptions } from '@/shared/components/charts/candlesticks/utils.ts';
+import { toBars, buildChartOptions, getBarColorsByState } from '@/shared/components/charts/candlesticks/utils.ts';
 import { IComponentProps } from '@/shared/components/charts/candlesticks/types.ts';
 
 /* ************************************************************************************************
@@ -12,7 +11,7 @@ import { IComponentProps } from '@/shared/components/charts/candlesticks/types.t
  * Candlesticks Component
  * Component in charge of rendering a Candlesticks Chart.
  */
-const Candlesticks = ({ height, data }: IComponentProps) => {
+const Candlesticks = ({ height, data, state }: IComponentProps) => {
   /* **********************************************************************************************
    *                                             REFS                                             *
    ********************************************************************************************** */
@@ -35,13 +34,13 @@ const Candlesticks = ({ height, data }: IComponentProps) => {
     );
 
 
-
+    const { upColor, downColor } = getBarColorsByState(state);
     const candlestickSeries = chartAPI.current.addCandlestickSeries({
-      upColor: ColorService.INCREASE_1, // trading view:'#26a69a'
-      downColor: ColorService.DECREASE_1, // trading view:'#ef5350'
+      upColor, // trading view:'#26a69a'
+      downColor, // trading view:'#ef5350'
       borderVisible: false,
-      wickUpColor: ColorService.INCREASE_1, // trading view:'#26a69a'
-      wickDownColor: ColorService.DECREASE_1, // trading view:'#ef5350'
+      wickUpColor: upColor, // trading view:'#26a69a'
+      wickDownColor: downColor, // trading view:'#ef5350'
     });
 
     const candlesticks = toBars(data);
@@ -64,7 +63,7 @@ const Candlesticks = ({ height, data }: IComponentProps) => {
       window.removeEventListener('resize', handleResize);
       chartAPI.current!.remove();
     };
-  }, [height, data]);
+  }, [height, data, state]);
 
 
 

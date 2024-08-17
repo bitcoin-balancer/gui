@@ -78,7 +78,11 @@ const Dashboard = () => {
             <CardDescription>Card Description</CardDescription>
           </CardHeader>
           <CardContent>
-            <Candlesticks height={600} data={marketState.windowState.window} />
+            <Candlesticks
+              height={600}
+              data={marketState.windowState.window}
+              state={marketState.windowState.splitStates.s100.state}
+            />
           </CardContent>
         </Card>
       </section>
