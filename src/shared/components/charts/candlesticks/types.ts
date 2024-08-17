@@ -62,6 +62,9 @@ type IChartAPIRef = {
   api: () => IChartApi;
 
   //
+  series: () => ICandlestickSeriesAPI;
+
+  //
   onSeriesChanges: (newData: ICompactCandlestickRecords) => void;
 };
 

@@ -1,5 +1,3 @@
-/* import { useState, useEffect } from 'react';
-import { sendGET } from 'fetch-request-browser'; */
 import {
   Card,
   CardContent,
@@ -10,7 +8,6 @@ import {
 import { useBoundStore } from '@/shared/store/index.store';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import Candlesticks from '@/shared/components/charts/candlesticks/index.component.tsx';
-/* import { ICandlestick } from '@/pages/app/dashboard/types.ts'; */
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -25,37 +22,9 @@ const Dashboard = () => {
    *                                             STATE                                            *
    ********************************************************************************************** */
   const marketState = useBoundStore((state) => state.marketState!);
-  /* const [candlesticks, setCandlesticks] = useState<ICandlestick[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
 
-  useEffect(() => {
-    let ignore = false;
 
-    const getCandlesticks = async () => {
-      const { data } = await sendGET('https://data-api.binance.vision/api/v3/klines?symbol=BTCUSDT&interval=15m&limit=128');
-      if (!ignore) {
-        setCandlesticks(data.map((candlestick: number[]) => ({
-          open: Number(candlestick[1]),
-          high: Number(candlestick[2]),
-          low: Number(candlestick[3]),
-          close: Number(candlestick[4]),
-          time: candlestick[0] / 1000,
-        })));
-        setLoading(false);
-      }
-    };
 
-    getCandlesticks();
-
-    const intervalID = setInterval(() => {
-      getCandlesticks();
-    }, 2000);
-
-    return () => {
-      ignore = true;
-      clearInterval(intervalID);
-    };
-  }, []); */
 
 
   /* **********************************************************************************************

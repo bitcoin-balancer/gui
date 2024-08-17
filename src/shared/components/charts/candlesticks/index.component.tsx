@@ -1,12 +1,7 @@
 import { useRef, useLayoutEffect, useEffect } from 'react';
 import { createChart, UTCTimestamp, type IChartApi } from 'lightweight-charts';
 import { toBars, buildChartOptions, getBarColorsByState } from '@/shared/components/charts/candlesticks/utils.ts';
-import {
-  IComponentProps,
-  IChartAPIRef,
-  ICandlestickBar,
-  ICandlestickSeriesAPI,
-} from '@/shared/components/charts/candlesticks/types.ts';
+import { IComponentProps, IChartAPIRef, ICandlestickSeriesAPI } from '@/shared/components/charts/candlesticks/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -26,7 +21,7 @@ const Candlesticks = ({ height, data, state }: IComponentProps) => {
     __api: undefined,
     __series: undefined,
 
-    // init (only once) and return the instance of the Chart API
+    // inits (only once) and returns the instance of the Chart API
     api(): IChartApi {
       if (!this.__api) {
         this.__api = createChart(
@@ -38,9 +33,8 @@ const Candlesticks = ({ height, data, state }: IComponentProps) => {
       return this.__api;
     },
 
-    // init (only once) and apply the data changes to the chart
-    onSeriesChanges(newData): void {
-      // init the series if it hasn't been
+    // inits (only once) and returns the instance of the Series API
+    series(): ICandlestickSeriesAPI {
       if (!this.__series) {
         const { upColor, downColor } = getBarColorsByState(state);
         this.__series = this.api().addCandlestickSeries({
@@ -51,16 +45,21 @@ const Candlesticks = ({ height, data, state }: IComponentProps) => {
           wickDownColor: downColor,
         });
       }
+      return this.__series;
+    },
 
-      // init / update the data
-      const seriesData = this.__series.data();
+    // applies the data changes to the chart
+    onSeriesChanges(newData): void {
+      const series = this.series();
+      const seriesData = this.series().data();
       if (!seriesData.length) {
-        this.__series.setData(toBars(newData));
+        // init the bars
+        series.setData(toBars(newData));
       } else if (
         seriesData[seriesData.length - 1].time !== newData.id[newData.id.length - 1] / 1000
       ) {
         // update the most recent bar
-        this.__series.update({
+        series.update({
           time: newData.id[newData.id.length - 2] / 1000 as UTCTimestamp,
           open: newData.open[newData.id.length - 2],
           high: newData.high[newData.id.length - 2],
@@ -69,7 +68,7 @@ const Candlesticks = ({ height, data, state }: IComponentProps) => {
         });
 
         // add the new bar
-        this.__series.update({
+        series.update({
           time: newData.id[newData.id.length - 1] / 1000 as UTCTimestamp,
           open: newData.open[newData.id.length - 1],
           high: newData.high[newData.id.length - 1],
@@ -77,7 +76,8 @@ const Candlesticks = ({ height, data, state }: IComponentProps) => {
           close: newData.close[newData.id.length - 1],
         });
       } else {
-        this.__series.update({
+        // update current bar
+        series.update({
           time: newData.id[newData.id.length - 1] / 1000 as UTCTimestamp,
           open: newData.open[newData.id.length - 1],
           high: newData.high[newData.id.length - 1],
@@ -87,7 +87,6 @@ const Candlesticks = ({ height, data, state }: IComponentProps) => {
       }
     },
   });
-  /* const chartAPI = useRef<IChartApi | null>(null); */
 
 
 
@@ -112,51 +111,24 @@ const Candlesticks = ({ height, data, state }: IComponentProps) => {
   }, [height]);
 
   /**
+   * Fires whenever the state changes and set the appropriate bar colors.
+   */
+  useEffect(() => {
+    const { upColor, downColor } = getBarColorsByState(state);
+    chartAPIRef.current.series().applyOptions({
+      upColor,
+      downColor,
+      wickUpColor: upColor,
+      wickDownColor: downColor,
+    });
+  }, [state]);
+
+  /**
    * Fires whenever the data changes, keeping the local state synced.
    */
   useEffect(() => {
     chartAPIRef.current.onSeriesChanges(data);
   }, [data]);
-
-
-
-  /* useEffect(() => {
-    chartAPI.current = createChart(
-      chartContainerRef.current!,
-      buildChartOptions(chartContainerRef.current!, height),
-    );
-
-
-    const { upColor, downColor } = getBarColorsByState(state);
-    const candlestickSeries = chartAPI.current.addCandlestickSeries({
-      upColor, // trading view:'#26a69a'
-      downColor, // trading view:'#ef5350'
-      borderVisible: false,
-      wickUpColor: upColor, // trading view:'#26a69a'
-      wickDownColor: downColor, // trading view:'#ef5350'
-    });
-
-    const candlesticks = toBars(data);
-
-
-    candlestickSeries.setData(candlesticks);
-
-    chartAPI.current.timeScale().fitContent();
-
-    // resize management
-    const handleResize = () => {
-      chartAPI.current!.applyOptions({ width: chartContainerRef.current!.clientWidth });
-    };
-    window.addEventListener('resize', handleResize);
-
-
-
-    // clean up
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      chartAPI.current!.remove();
-    };
-  }, [height, data, state]); */
 
 
 
