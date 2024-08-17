@@ -3,6 +3,7 @@
   "template": "base",
   "includeToPrecache": [
     "/assets",
+    "/exchanges",
     "/installer",
     "/logo",
     "/index.html"

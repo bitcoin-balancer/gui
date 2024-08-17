@@ -10,7 +10,7 @@ import {
   Github,
   LogOut,
   Loader2,
-  PlaneLanding,
+  FlaskConical,
 } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
@@ -331,7 +331,7 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
               className='w-full justify-start'
               onClick={() => navigateFromSidenav(NavService.landing())}
               disabled={pathname === NavService.landing()}
-            ><PlaneLanding /> <span className='ml-2'>Landing page</span></Button>
+            ><FlaskConical /> <span className='ml-2'>About the project</span></Button>
             <Button
               variant='ghost'
               className='w-full justify-start'
