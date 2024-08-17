@@ -210,7 +210,7 @@ const App = () => {
   if (authenticated === false) {
     return <Navigate to={NavService.signIn()} />;
   }
-  if (authenticated === undefined || unreadAPIErrors === undefined || version === undefined) {
+  if (authenticated === undefined || version === undefined) {
     return <GlobalLoader />;
   }
   return (
