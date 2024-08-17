@@ -10,6 +10,7 @@ import {
   Github,
   LogOut,
   Loader2,
+  PlaneLanding,
 } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
@@ -256,6 +257,7 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
                       target='_blank'
                       rel='noopener noreferrer'
                       className='flex justify-start items-center text-light'
+                      style={{ marginTop: 3 }}
                     >
                       <CodeXml
                           className='mr-1 w-4 h-4'
@@ -272,7 +274,7 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
                       variant='link'
                       className='justify-start p-0 min-h-0 text-light text-sm'
                       onClick={() => navigateFromSidenav(NavService.platformUpdate())}
-                      style={{ marginTop: '-2px' }}
+                      style={{ marginTop: '-3px' }}
                     >
                       <CodeXml
                         className='mr-1 w-4 h-4'
@@ -324,6 +326,12 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
               className='w-full justify-start'
               onClick={NavService.createNewInstance}
             ><ExternalLink /> <span className='ml-2'>Create new instance</span></Button>
+            <Button
+              variant='ghost'
+              className='w-full justify-start'
+              onClick={() => navigateFromSidenav(NavService.landing())}
+              disabled={pathname === NavService.landing()}
+            ><PlaneLanding /> <span className='ml-2'>Landing page</span></Button>
             <Button
               variant='ghost'
               className='w-full justify-start'

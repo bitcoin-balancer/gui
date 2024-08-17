@@ -53,7 +53,8 @@ const Service = memo(({
         }
         target='_blank'
         rel='noopener noreferrer'
-        className='flex justify-start items-center mt-2 text-sm text-light'
+        className='flex justify-start items-center mt-2 text-sm text-light p-0'
+        style={{ marginTop: 3 }}
       >
         <CodeXml
             className='mr-1 w-4 h-4 min-w-5'

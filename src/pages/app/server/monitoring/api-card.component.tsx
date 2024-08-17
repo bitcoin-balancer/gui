@@ -87,7 +87,8 @@ const APICard = ({ data }: { data: IServerState }) => {
                       href={NavService.buildAPICommitURL(version.api.latest.sha)}
                       target='_blank'
                       rel='noopener noreferrer'
-                      className='flex justify-start items-center mt-2 text-sm text-light'
+                      className='flex justify-start items-center mt-2 text-sm text-light p-0'
+                      style={{ marginTop: 3 }}
                     >
                       <CodeXml
                           className='mr-1 w-4 h-4'
@@ -101,7 +102,7 @@ const APICard = ({ data }: { data: IServerState }) => {
                       </p>
                     </a>
                   : <Link
-                    className='flex justify-start items-center text-light text-sm mt-2'
+                    className='flex justify-start items-center text-light text-sm mt-1'
                     to={NavService.platformUpdate()}
                   >
                     <CodeXml
