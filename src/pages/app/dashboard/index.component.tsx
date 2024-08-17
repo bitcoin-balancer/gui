@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { sendGET } from 'fetch-request-browser';
+/* import { useState, useEffect } from 'react';
+import { sendGET } from 'fetch-request-browser'; */
 import {
   Card,
   CardContent,
@@ -7,9 +7,10 @@ import {
   CardHeader,
   CardTitle,
 } from '@/shared/shadcn/components/ui/card.tsx';
+import { useBoundStore } from '@/shared/store/index.store';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
-import ChartComponent from '@/pages/app/dashboard/chart.component.tsx';
-import { ICandlestick } from '@/pages/app/dashboard/types.ts';
+import Candlesticks from '@/shared/components/charts/candlesticks/index.component.tsx';
+/* import { ICandlestick } from '@/pages/app/dashboard/types.ts'; */
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -20,7 +21,11 @@ import { ICandlestick } from '@/pages/app/dashboard/types.ts';
  * Component in charge of displaying and managing the market state and trading strategy.
  */
 const Dashboard = () => {
-  const [candlesticks, setCandlesticks] = useState<ICandlestick[]>([]);
+  /* **********************************************************************************************
+   *                                             STATE                                            *
+   ********************************************************************************************** */
+  const marketState = useBoundStore((state) => state.marketState!);
+  /* const [candlesticks, setCandlesticks] = useState<ICandlestick[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -50,9 +55,13 @@ const Dashboard = () => {
       ignore = true;
       clearInterval(intervalID);
     };
-  }, []);
+  }, []); */
 
-  if (loading) {
+
+  /* **********************************************************************************************
+   *                                           COMPONENT                                          *
+   ********************************************************************************************** */
+  if (marketState === undefined) {
     return <PageLoader />;
   }
   return (
@@ -65,11 +74,11 @@ const Dashboard = () => {
       >
         <Card>
           <CardHeader>
-            <CardTitle>Card Title</CardTitle>
+            <CardTitle>Window</CardTitle>
             <CardDescription>Card Description</CardDescription>
           </CardHeader>
           <CardContent>
-            <ChartComponent data={candlesticks} />
+            <Candlesticks height={600} data={marketState.windowState.window} />
           </CardContent>
         </Card>
       </section>

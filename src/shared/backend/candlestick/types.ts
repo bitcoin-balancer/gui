@@ -12,7 +12,7 @@ type ICandlestickService = {
   // properties
   // ...
 
-  // sync
+  // helpers
   syncRecords: (
     oldVal: ICompactCandlestickRecords,
     newVal: ICompactCandlestickRecords,

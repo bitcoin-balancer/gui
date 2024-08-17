@@ -21,7 +21,7 @@ const candlestickServiceFactory = (): ICandlestickService => {
 
 
   /* **********************************************************************************************
-   *                                             SYNC                                             *
+   *                                           HELPERS                                            *
    ********************************************************************************************** */
 
   /**
@@ -85,7 +85,7 @@ const candlestickServiceFactory = (): ICandlestickService => {
     // properties
     // ...
 
-    // sync
+    // helpers
     syncRecords,
   });
 };
