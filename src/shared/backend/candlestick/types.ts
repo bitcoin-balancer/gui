@@ -1,18 +1,18 @@
-import { IWindowState } from '@/shared/backend/market-state/window/index.service.ts';
+
 
 /* ************************************************************************************************
  *                                            SERVICE                                             *
  ************************************************************************************************ */
 
 /**
- * Market State Service
- * Object in charge of interacting with the market state module and provide a series of utility
- * functions.
+ * Candlestick Service
+ * Object in charge of providing utility functions to manage candlestic bars.
  */
-type IMarketStateService = {
+type ICandlestickService = {
   // properties
   // ...
 };
+
 
 
 
@@ -22,15 +22,38 @@ type IMarketStateService = {
  ************************************************************************************************ */
 
 /**
- * Market State
- * The object containing the up-to-date state for all Market State's submodules.
+ * Candlestick Record
+ * The Kline object containing historical values in OHLC format.
  */
-type IMarketState = {
-  // the state of the window module
-  windowState: IWindowState;
+type ICandlestickRecord = {
+  // open time (ms) - e.g. 1638122400000
+  id: number;
 
-  // ...
+  // open value - e.g. 53896.36
+  open: number;
+
+  // high value - e.g. 54186.17
+  high: number;
+
+  // low value - e.g. 53256.64
+  low: number;
+
+  // close value - e.g. 54108.99
+  close: number;
 };
+
+/**
+ * Compact Candlestick Records
+ * The object containing a compact representation of a series of candlesticks.
+ */
+type ICompactCandlestickRecords = {
+  id: number[];
+  open: number[];
+  high: number[];
+  low: number[];
+  close: number[];
+};
+
 
 
 
@@ -40,8 +63,9 @@ type IMarketState = {
  ************************************************************************************************ */
 export type {
   // service
-  IMarketStateService,
+  ICandlestickService,
 
-  // types
-  IMarketState,
+  // candlestick
+  ICandlestickRecord,
+  ICompactCandlestickRecords,
 };

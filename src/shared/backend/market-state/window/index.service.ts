@@ -1,17 +1,16 @@
-import { IState } from '@/shared/backend/market-state/shared/types.ts';
-import { IMarketStateService, IMarketState } from '@/shared/backend/market-state/types.ts';
+import { IWindowService, IWindowState } from './types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
 
 /**
- * Market State Factory
- * Generates the object in charge of interacting with the market state module and provide a series
- * of utility functions.
- * @returns IMarketStateService
+ * Window Service Factory
+ * Generates the object in charge of keeping Balancer in sync with the market's candlesticks and
+ * calculating its state.
+ * @returns IWindowService
  */
-const marketStateServiceFactory = (): IMarketStateService => {
+const windowServiceFactory = (): IWindowService => {
   /* **********************************************************************************************
    *                                          PROPERTIES                                          *
    ********************************************************************************************** */
@@ -52,7 +51,7 @@ const marketStateServiceFactory = (): IMarketStateService => {
 /* ************************************************************************************************
  *                                        GLOBAL INSTANCE                                         *
  ************************************************************************************************ */
-const MarketStateService = marketStateServiceFactory();
+const WindowService = windowServiceFactory();
 
 
 
@@ -63,9 +62,8 @@ const MarketStateService = marketStateServiceFactory();
  ************************************************************************************************ */
 export {
   // service
-  MarketStateService,
+  WindowService,
 
   // types
-  type IState,
-  type IMarketState,
+  type IWindowState,
 };

@@ -1,17 +1,15 @@
-import { IState } from '@/shared/backend/market-state/shared/types.ts';
-import { IMarketStateService, IMarketState } from '@/shared/backend/market-state/types.ts';
+import { ICandlestickService, ICompactCandlestickRecords } from './types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
 
 /**
- * Market State Factory
- * Generates the object in charge of interacting with the market state module and provide a series
- * of utility functions.
- * @returns IMarketStateService
+ * Candlestick Service Factory
+ * Generates the object in charge of providing utility functions to manage candlestic bars.
+ * @returns ICandlestickService
  */
-const marketStateServiceFactory = (): IMarketStateService => {
+const candlestickServiceFactory = (): ICandlestickService => {
   /* **********************************************************************************************
    *                                          PROPERTIES                                          *
    ********************************************************************************************** */
@@ -52,7 +50,7 @@ const marketStateServiceFactory = (): IMarketStateService => {
 /* ************************************************************************************************
  *                                        GLOBAL INSTANCE                                         *
  ************************************************************************************************ */
-const MarketStateService = marketStateServiceFactory();
+const CandlestickService = candlestickServiceFactory();
 
 
 
@@ -63,9 +61,8 @@ const MarketStateService = marketStateServiceFactory();
  ************************************************************************************************ */
 export {
   // service
-  MarketStateService,
+  CandlestickService,
 
   // types
-  type IState,
-  type IMarketState,
+  type ICompactCandlestickRecords,
 };

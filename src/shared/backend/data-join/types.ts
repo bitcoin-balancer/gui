@@ -1,5 +1,7 @@
 import { IUser } from '@/shared/backend/auth/user/index.service.ts';
 import { IVersion } from '@/shared/backend/version/index.service.ts';
+import { IExchangeConfig } from '@/shared/backend/exchange/index.service.ts';
+import { IMarketState } from '@/shared/backend/market-state/index.service.ts';
 
 /* ************************************************************************************************
  *                                            SERVICE                                             *
@@ -46,8 +48,11 @@ type IAppEssentials = {
   // the object of the user who is currently logged in
   user: IUser;
 
+  // the configuration that will be used when interacting with exchanges
+  exchangeConfig: IExchangeConfig;
+
   // the current state of the market
-  // ...
+  marketState: IMarketState;
 
   // the active position record (if any)
   // ...
@@ -65,7 +70,7 @@ type ICompactAppEssentials = {
   unreadAPIErrors: number;
 
   // the current state of the market
-  // ...
+  marketState: IMarketState;
 
   // the active position record (if any)
   // ...

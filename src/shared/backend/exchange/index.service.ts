@@ -1,4 +1,4 @@
-import { IExchangeService, IExchangeConfig } from './types.ts';
+import { IExchangeService, IExchangeConfig, ICandlestickInterval } from './types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -64,4 +64,5 @@ export {
 
   // types
   type IExchangeConfig,
+  type ICandlestickInterval,
 };
