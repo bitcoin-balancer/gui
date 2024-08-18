@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { CircleHelp, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { decodeError } from 'error-message-utils';
 import { SWService } from 'sw-service';
 import { Input } from '@/shared/shadcn/components/ui/input.tsx';
@@ -16,7 +16,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
   FormDescription,
 } from '@/shared/shadcn/components/ui/form.tsx';
@@ -28,7 +27,6 @@ import {
   DialogTitle,
   DialogFooter,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/shadcn/components/ui/tooltip.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { numberValid } from '@/shared/backend/validations/index.service.ts';
@@ -37,6 +35,7 @@ import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
+import FormLabelWithMoreInfo from '@/shared/components/form-label-with-more-info/index.component.tsx';
 import { IFormProps } from './types.ts';
 
 /* ************************************************************************************************
@@ -67,7 +66,6 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
     },
   });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const openInfoDialog = useBoundStore((state) => state.openInfoDialog);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
 
 
@@ -172,27 +170,10 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
             name='refetchFrequency'
             render={({ field }) => (
               <FormItem>
-                <FormLabel className='flex justify-start items-center'>
-                  Re-fetch frequency (seconds)
-                  <span className='flex-1'></span>
-                  <Tooltip>
-                    <TooltipTrigger
-                      className='w-5 h-5'
-                      type='button'
-                      aria-label='View more information'
-                      onClick={() => openInfoDialog({
-                        title: 'Re-fetch frequency (seconds)',
-                        content: 'The interval at which the pricing data is re-fetched from the exchange.',
-                      })}
-                    >
-                      <CircleHelp
-                        className='w-5 h-5'
-                        aria-hidden='true'
-                      />
-                    </TooltipTrigger>
-                    <TooltipContent side='left'><p>More info</p></TooltipContent>
-                  </Tooltip>
-                </FormLabel>
+                <FormLabelWithMoreInfo
+                  value='Re-fetch frequency (seconds)'
+                  description='The interval at which the pricing data is re-fetched from the exchange.'
+                />
                 <FormControl>
                   <Input
                     type='number'
@@ -220,27 +201,10 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
             name='size'
             render={({ field }) => (
               <FormItem className='mt-5'>
-                <FormLabel className='flex justify-start items-center'>
-                  Window size
-                  <span className='flex-1'></span>
-                  <Tooltip>
-                    <TooltipTrigger
-                      className='w-5 h-5'
-                      type='button'
-                      aria-label='View more information'
-                      onClick={() => openInfoDialog({
-                        title: 'Window size',
-                        content: 'The number of candlestick bars that comprise the window.',
-                      })}
-                    >
-                      <CircleHelp
-                        className='w-5 h-5'
-                        aria-hidden='true'
-                      />
-                    </TooltipTrigger>
-                    <TooltipContent side='left'><p>More info</p></TooltipContent>
-                  </Tooltip>
-                </FormLabel>
+                <FormLabelWithMoreInfo
+                  value='Window size'
+                  description='The number of candlestick bars that comprise the window.'
+                />
                 <FormControl>
                   <Input
                     type='number'
@@ -268,27 +232,10 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
             name='interval'
             render={({ field }) => (
               <FormItem className='mt-5'>
-                <FormLabel className='flex justify-start items-center'>
-                  Interval
-                  <span className='flex-1'></span>
-                  <Tooltip>
-                    <TooltipTrigger
-                      className='w-5 h-5'
-                      type='button'
-                      aria-label='View more information'
-                      onClick={() => openInfoDialog({
-                        title: 'Interval',
-                        content: 'The amount of time contained by each candlestick bar.',
-                      })}
-                    >
-                      <CircleHelp
-                        className='w-5 h-5'
-                        aria-hidden='true'
-                      />
-                    </TooltipTrigger>
-                    <TooltipContent side='left'><p>More info</p></TooltipContent>
-                  </Tooltip>
-                </FormLabel>
+                <FormLabelWithMoreInfo
+                  value='Interval'
+                  description='The amount of time contained by each candlestick bar.'
+                />
                 <FormControl>
                   <Select
                     onValueChange={field.onChange}
@@ -326,32 +273,15 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
             name='requirement'
             render={({ field }) => (
               <FormItem className='mt-5'>
-                <FormLabel className='flex justify-start items-center'>
-                  State requirement%
-                  <span className='flex-1'></span>
-                  <Tooltip>
-                    <TooltipTrigger
-                      className='w-5 h-5'
-                      type='button'
-                      aria-label='View more information'
-                      onClick={() => openInfoDialog({
-                        title: 'State requirement%',
-                        content: [
-                          'The percentage change in Bitcoin\'s price needed to mark a window split as "stateful". ',
-                          'The possible states for this requirement are:',
-                          ' 1: increasing',
-                          '-1: decreasing',
-                        ],
-                      })}
-                    >
-                      <CircleHelp
-                        className='w-5 h-5'
-                        aria-hidden='true'
-                      />
-                    </TooltipTrigger>
-                    <TooltipContent side='left'><p>More info</p></TooltipContent>
-                  </Tooltip>
-                </FormLabel>
+                <FormLabelWithMoreInfo
+                  value='State requirement%'
+                  description={[
+                    'The percentage change in Bitcoin\'s price needed to mark a window split as "stateful". ',
+                    'The possible states for this requirement are:',
+                    ' 1: increasing',
+                    '-1: decreasing',
+                  ]}
+                />
                 <FormControl>
                   <Input
                     type='number'
@@ -379,32 +309,15 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
             name='strongRequirement'
             render={({ field }) => (
               <FormItem className='mt-5'>
-                <FormLabel className='flex justify-start items-center'>
-                  Strong state requirement%
-                  <span className='flex-1'></span>
-                  <Tooltip>
-                    <TooltipTrigger
-                      className='w-5 h-5'
-                      type='button'
-                      aria-label='View more information'
-                      onClick={() => openInfoDialog({
-                        title: 'Strong state requirement%',
-                        content: [
-                          'The percentage change in Bitcoin\'s price needed to mark a window split as "stateful". ',
-                          'The possible states for this requirement are:',
-                          ' 2: strongly increasing',
-                          '-2: strongly decreasing',
-                        ],
-                      })}
-                    >
-                      <CircleHelp
-                        className='w-5 h-5'
-                        aria-hidden='true'
-                      />
-                    </TooltipTrigger>
-                    <TooltipContent side='left'><p>More info</p></TooltipContent>
-                  </Tooltip>
-                </FormLabel>
+                <FormLabelWithMoreInfo
+                  value='Strong state requirement%'
+                  description={[
+                    'The percentage change in Bitcoin\'s price needed to mark a window split as "stateful". ',
+                    'The possible states for this requirement are:',
+                    ' 2: increasing',
+                    '-2: decreasing',
+                  ]}
+                />
                 <FormControl>
                   <Input
                     type='number'

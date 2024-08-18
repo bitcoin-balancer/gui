@@ -10,7 +10,7 @@
  */
 type IComponentProps = {
   // the input's label
-  label: string;
+  value: string;
 
   // the content that will be passed to the info-dialog
   description: string | string[];
