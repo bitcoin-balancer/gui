@@ -199,7 +199,7 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
             control={form.control}
             name='size'
             render={({ field }) => (
-              <FormItem className='mt-7'>
+              <FormItem className='mt-5'>
                 <FormLabel>Window size</FormLabel>
                 <FormControl>
                   <Input
@@ -229,7 +229,7 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
             control={form.control}
             name='interval'
             render={({ field }) => (
-              <FormItem className='mt-7'>
+              <FormItem className='mt-5'>
                 <FormLabel>Interval</FormLabel>
                 <FormControl>
                   <Select
@@ -269,7 +269,7 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
             control={form.control}
             name='requirement'
             render={({ field }) => (
-              <FormItem className='mt-7'>
+              <FormItem className='mt-5'>
                 <FormLabel>State requirement%</FormLabel>
                 <FormControl>
                   <Input
@@ -299,7 +299,7 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
             control={form.control}
             name='strongRequirement'
             render={({ field }) => (
-              <FormItem className='mt-7'>
+              <FormItem className='mt-5'>
                 <FormLabel>Strong state requirement%</FormLabel>
                 <FormControl>
                   <Input
@@ -358,7 +358,7 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
         <DialogHeader>
           <DialogTitle>Update Window</DialogTitle>
           <DialogDescription>
-            If any of the server's components exceed these values, a notification will be sent
+            The changes will be applied immediately upon submission
           </DialogDescription>
         </DialogHeader>
 
