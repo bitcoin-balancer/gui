@@ -14,6 +14,10 @@ import { IState, ISplitStates } from '@/shared/backend/market-state/shared/types
 type IWindowService = {
   // properties
   // ...
+
+  // configuration
+  getConfig: () => Promise<IWindowConfig>;
+  updateAlarms: (newConfig: IWindowConfig, otpToken: string) => Promise<void>;
 };
 
 
