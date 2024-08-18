@@ -7,7 +7,7 @@ import {
 } from '@/shared/shadcn/components/ui/card.tsx';
 import { useBoundStore } from '@/shared/store/index.store';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
-import Candlesticks from '@/shared/components/charts/candlesticks/index.component.tsx';
+import CandlestickChart from '@/shared/components/charts/candlestick-chart/index.component.tsx';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -47,10 +47,10 @@ const Dashboard = () => {
             <CardDescription>Card Description</CardDescription>
           </CardHeader>
           <CardContent>
-            <Candlesticks
+            <CandlestickChart
               height={600}
               data={marketState.windowState.window}
-              state={marketState.windowState.splitStates.s100.state}
+              state={marketState.windowState.state}
             />
           </CardContent>
         </Card>

@@ -1,17 +1,25 @@
 import { useRef, useLayoutEffect, useEffect } from 'react';
 import { createChart, UTCTimestamp, type IChartApi } from 'lightweight-charts';
-import { toBars, buildChartOptions, getBarColorsByState } from '@/shared/components/charts/candlesticks/utils.ts';
-import { IComponentProps, IChartAPIRef, ICandlestickSeriesAPI } from '@/shared/components/charts/candlesticks/types.ts';
+import {
+  toBars,
+  buildChartOptions,
+  getBarColorsByState,
+} from '@/shared/components/charts/candlestick-chart/utils.ts';
+import {
+  IComponentProps,
+  IChartAPIRef,
+  ICandlestickSeriesAPI,
+} from '@/shared/components/charts/candlestick-chart/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
 
 /**
- * Candlesticks Component
+ * Candlestick Chart Component
  * Component in charge of rendering a Candlesticks Chart.
  */
-const Candlesticks = ({ height, data, state }: IComponentProps) => {
+const CandlestickChart = ({ height, data, state }: IComponentProps) => {
   /* **********************************************************************************************
    *                                             REFS                                             *
    ********************************************************************************************** */
@@ -127,9 +135,7 @@ const Candlesticks = ({ height, data, state }: IComponentProps) => {
   /**
    * Fires whenever the data changes, keeping the local state synced.
    */
-  useEffect(() => {
-    chartAPIRef.current.onSeriesChanges(data);
-  }, [data]);
+  useEffect(() => { chartAPIRef.current.onSeriesChanges(data); }, [data]);
 
 
 
@@ -148,4 +154,4 @@ const Candlesticks = ({ height, data, state }: IComponentProps) => {
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export default Candlesticks;
+export default CandlestickChart;
