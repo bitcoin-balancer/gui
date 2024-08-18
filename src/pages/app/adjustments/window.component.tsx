@@ -243,6 +243,7 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
                     defaultValue={field.value}
                     value={field.value}
                     disabled={isSubmitting}
+                    name='intervalSelect'
                   >
                     <SelectTrigger id='intervalSelect'>
                       <SelectValue placeholder='Select one option' />
