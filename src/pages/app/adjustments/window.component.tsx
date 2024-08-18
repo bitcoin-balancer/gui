@@ -235,6 +235,7 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
                 <FormLabelWithMoreInfo
                   value='Interval'
                   description='The amount of time contained by each candlestick bar.'
+                  htmlFor='intervalSelect'
                 />
                 <FormControl>
                   <Select
@@ -243,7 +244,7 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
                     value={field.value}
                     disabled={isSubmitting}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger id='intervalSelect'>
                       <SelectValue placeholder='Select one option' />
                     </SelectTrigger>
                     <SelectContent>

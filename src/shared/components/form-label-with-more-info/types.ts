@@ -14,6 +14,9 @@ type IComponentProps = {
 
   // the content that will be passed to the info-dialog
   description: string | string[];
+
+  // other props
+  [key: string]: unknown;
 };
 
 

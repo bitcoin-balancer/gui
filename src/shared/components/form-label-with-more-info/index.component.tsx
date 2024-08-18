@@ -12,7 +12,7 @@ import { IComponentProps } from '@/shared/components/form-label-with-more-info/t
  * Form Label With More Info Component
  * Component in charge of exposing a form label that has a dedicated more info dialog.
  */
-const FormLabelWithMoreInfo = ({ value, description }: IComponentProps) => {
+const FormLabelWithMoreInfo = ({ value, description, ...rest }: IComponentProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
@@ -26,7 +26,7 @@ const FormLabelWithMoreInfo = ({ value, description }: IComponentProps) => {
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
-    <FormLabel className='flex justify-start items-center'>
+    <FormLabel className='flex justify-start items-center' {...rest}>
       {value}
       <span className='flex-1'></span>
       <Tooltip>
