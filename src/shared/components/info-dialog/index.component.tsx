@@ -40,7 +40,7 @@ const InfoDialog = () => {
       onOpenChange={closeDialog}
     >
       <DialogContent
-        className='max-w-[250px] sm:max-w-[330px]'
+        className='max-w-[250px] sm:max-w-[330px] max-h-[85dvh] sm:max-h-[70dvh]'
       >
 
         {/* ***************

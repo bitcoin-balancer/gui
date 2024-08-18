@@ -182,11 +182,7 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
                       aria-label='View more information'
                       onClick={() => openInfoDialog({
                         title: 'Re-fetch frequency (seconds)',
-                        content: [
-                          'The interval at which the pricing data is re-fetched from the exchange',
-                          'The interval at which the pricing data is re-fetched from the exchange',
-                          'The interval at which the pricing data is re-fetched from the exchange',
-                        ],
+                        content: 'The interval at which the pricing data is re-fetched from the exchange.',
                       })}
                     >
                       <CircleHelp
@@ -208,9 +204,7 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
                     max={60}
                     />
                 </FormControl>
-                <FormDescription>
-                  The interval at which the pricing data is re-fetched from the exchange
-                </FormDescription>
+                <FormDescription>Refresh interval</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -226,7 +220,27 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
             name='size'
             render={({ field }) => (
               <FormItem className='mt-5'>
-                <FormLabel>Window size</FormLabel>
+                <FormLabel className='flex justify-start items-center'>
+                  Window size
+                  <span className='flex-1'></span>
+                  <Tooltip>
+                    <TooltipTrigger
+                      className='w-5 h-5'
+                      type='button'
+                      aria-label='View more information'
+                      onClick={() => openInfoDialog({
+                        title: 'Window size',
+                        content: 'The number of candlestick bars that comprise the window.',
+                      })}
+                    >
+                      <CircleHelp
+                        className='w-5 h-5'
+                        aria-hidden='true'
+                      />
+                    </TooltipTrigger>
+                    <TooltipContent side='left'><p>More info</p></TooltipContent>
+                  </Tooltip>
+                </FormLabel>
                 <FormControl>
                   <Input
                     type='number'
@@ -238,9 +252,7 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
                     max={512}
                     />
                 </FormControl>
-                <FormDescription>
-                  The number of candlestick bars that comprise the window
-                </FormDescription>
+                <FormDescription>Candlestick bars</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -256,7 +268,27 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
             name='interval'
             render={({ field }) => (
               <FormItem className='mt-5'>
-                <FormLabel>Interval</FormLabel>
+                <FormLabel className='flex justify-start items-center'>
+                  Interval
+                  <span className='flex-1'></span>
+                  <Tooltip>
+                    <TooltipTrigger
+                      className='w-5 h-5'
+                      type='button'
+                      aria-label='View more information'
+                      onClick={() => openInfoDialog({
+                        title: 'Interval',
+                        content: 'The amount of time contained by each candlestick bar.',
+                      })}
+                    >
+                      <CircleHelp
+                        className='w-5 h-5'
+                        aria-hidden='true'
+                      />
+                    </TooltipTrigger>
+                    <TooltipContent side='left'><p>More info</p></TooltipContent>
+                  </Tooltip>
+                </FormLabel>
                 <FormControl>
                   <Select
                     onValueChange={field.onChange}
@@ -278,9 +310,7 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
                     </SelectContent>
                   </Select>
                 </FormControl>
-                <FormDescription>
-                  The amount of time contained by each candlestick bar
-                </FormDescription>
+                <FormDescription>Candlestick bar duration</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -296,7 +326,32 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
             name='requirement'
             render={({ field }) => (
               <FormItem className='mt-5'>
-                <FormLabel>State requirement%</FormLabel>
+                <FormLabel className='flex justify-start items-center'>
+                  State requirement%
+                  <span className='flex-1'></span>
+                  <Tooltip>
+                    <TooltipTrigger
+                      className='w-5 h-5'
+                      type='button'
+                      aria-label='View more information'
+                      onClick={() => openInfoDialog({
+                        title: 'State requirement%',
+                        content: [
+                          'The percentage change in Bitcoin\'s price needed to mark a window split as "stateful". ',
+                          'The possible states for this requirement are:',
+                          ' 1: increasing',
+                          '-1: decreasing',
+                        ],
+                      })}
+                    >
+                      <CircleHelp
+                        className='w-5 h-5'
+                        aria-hidden='true'
+                      />
+                    </TooltipTrigger>
+                    <TooltipContent side='left'><p>More info</p></TooltipContent>
+                  </Tooltip>
+                </FormLabel>
                 <FormControl>
                   <Input
                     type='number'
@@ -308,9 +363,7 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
                     max={100}
                     />
                 </FormControl>
-                <FormDescription>
-                  The price% change required in a window split to be stateful (1 | -1)
-                </FormDescription>
+                <FormDescription>Bitcoin's price% change</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -326,7 +379,32 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
             name='strongRequirement'
             render={({ field }) => (
               <FormItem className='mt-5'>
-                <FormLabel>Strong state requirement%</FormLabel>
+                <FormLabel className='flex justify-start items-center'>
+                  Strong state requirement%
+                  <span className='flex-1'></span>
+                  <Tooltip>
+                    <TooltipTrigger
+                      className='w-5 h-5'
+                      type='button'
+                      aria-label='View more information'
+                      onClick={() => openInfoDialog({
+                        title: 'Strong state requirement%',
+                        content: [
+                          'The percentage change in Bitcoin\'s price needed to mark a window split as "stateful". ',
+                          'The possible states for this requirement are:',
+                          ' 2: strongly increasing',
+                          '-2: strongly decreasing',
+                        ],
+                      })}
+                    >
+                      <CircleHelp
+                        className='w-5 h-5'
+                        aria-hidden='true'
+                      />
+                    </TooltipTrigger>
+                    <TooltipContent side='left'><p>More info</p></TooltipContent>
+                  </Tooltip>
+                </FormLabel>
                 <FormControl>
                   <Input
                     type='number'
@@ -338,9 +416,7 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
                     max={100}
                     />
                 </FormControl>
-                <FormDescription>
-                  The price% change required in a window split to have a strong state (2 | -2)
-                </FormDescription>
+                <FormDescription>Bitcoin's price% change</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
