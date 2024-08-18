@@ -50,7 +50,7 @@ const windowServiceFactory = (): IWindowService => {
    * - 21505: if the size of the window is an invalid integer
    * - 21506: if the interval is not supported
    */
-  const updateAlarms = (newConfig: IWindowConfig, otpToken: string): Promise<void> => (
+  const updateConfig = (newConfig: IWindowConfig, otpToken: string): Promise<void> => (
     APIService.request(
       'PUT',
       'market-state/window/config',
@@ -73,7 +73,7 @@ const windowServiceFactory = (): IWindowService => {
 
     // configuration
     getConfig,
-    updateAlarms,
+    updateConfig,
   });
 };
 

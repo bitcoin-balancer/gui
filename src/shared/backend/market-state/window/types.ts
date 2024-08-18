@@ -17,7 +17,7 @@ type IWindowService = {
 
   // configuration
   getConfig: () => Promise<IWindowConfig>;
-  updateAlarms: (newConfig: IWindowConfig, otpToken: string) => Promise<void>;
+  updateConfig: (newConfig: IWindowConfig, otpToken: string) => Promise<void>;
 };
 
 
