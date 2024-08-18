@@ -24,6 +24,7 @@ import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { formatBadgeCount } from '@/shared/services/transformations/index.service.ts';
 import { NavService } from '@/shared/services/nav/index.service.ts';
 import { useSocketEvent } from '@/shared/hooks/socket-event/index.component.ts';
+import InfoDialog from '@/shared/components/info-dialog/index.component.tsx';
 import ConfirmationDialog from '@/shared/components/confirmation-dialog/index.component.tsx';
 import GlobalLoader from '@/pages/global-loader/index.component.tsx';
 import Header from '@/pages/app/header.component.tsx';
@@ -250,6 +251,13 @@ const App = () => {
         * MOBILE TABS *
         ************* */}
       <MobileTabs items={mainNavigationItems} />
+
+
+
+      {/* *************
+        * INFO DIALOG *
+        ************* */}
+      <InfoDialog />
 
 
 

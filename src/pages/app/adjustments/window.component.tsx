@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Loader2 } from 'lucide-react';
+import { CircleHelp, Loader2 } from 'lucide-react';
 import { decodeError } from 'error-message-utils';
 import { SWService } from 'sw-service';
 import { Input } from '@/shared/shadcn/components/ui/input.tsx';
@@ -28,6 +28,7 @@ import {
   DialogTitle,
   DialogFooter,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/shadcn/components/ui/tooltip.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { numberValid } from '@/shared/backend/validations/index.service.ts';
@@ -66,6 +67,7 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
     },
   });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const openInfoDialog = useBoundStore((state) => state.openInfoDialog);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
 
 
@@ -170,7 +172,31 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
             name='refetchFrequency'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Re-fetch frequency (seconds)</FormLabel>
+                <FormLabel className='flex justify-start items-center'>
+                  Re-fetch frequency (seconds)
+                  <span className='flex-1'></span>
+                  <Tooltip>
+                    <TooltipTrigger
+                      className='w-5 h-5'
+                      type='button'
+                      aria-label='View more information'
+                      onClick={() => openInfoDialog({
+                        title: 'Re-fetch frequency (seconds)',
+                        content: [
+                          'The interval at which the pricing data is re-fetched from the exchange',
+                          'The interval at which the pricing data is re-fetched from the exchange',
+                          'The interval at which the pricing data is re-fetched from the exchange',
+                        ],
+                      })}
+                    >
+                      <CircleHelp
+                        className='w-5 h-5'
+                        aria-hidden='true'
+                      />
+                    </TooltipTrigger>
+                    <TooltipContent side='left'><p>More info</p></TooltipContent>
+                  </Tooltip>
+                </FormLabel>
                 <FormControl>
                   <Input
                     type='number'
