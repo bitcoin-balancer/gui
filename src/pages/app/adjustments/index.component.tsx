@@ -11,6 +11,7 @@ import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import { Card, CardContent } from '@/shared/shadcn/components/ui/card.tsx';
 import { delay } from '@/shared/services/utils/index.service.ts';
+import Window from '@/pages/app/adjustments/window.component.tsx';
 import ServerAlarms from '@/pages/app/adjustments/server-alarms.component.tsx';
 import { IFormID, IFormItem } from '@/pages/app/adjustments/types.ts';
 
@@ -167,7 +168,15 @@ const Adjustments = () => {
         && <ServerAlarms
           open={activeDialog === 'SERVER_ALARMS' && !closingDialog}
           onOpenChange={handleOnOpenChange}
-        />}
+        />
+      }
+      {
+        activeDialog === 'WINDOW'
+        && <Window
+          open={activeDialog === 'WINDOW' && !closingDialog}
+          onOpenChange={handleOnOpenChange}
+        />
+      }
     </>
   );
 };

@@ -2,7 +2,15 @@ import { useState, useMemo, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Loader2 } from 'lucide-react';
 import { decodeError } from 'error-message-utils';
+import { SWService } from 'sw-service';
 import { Input } from '@/shared/shadcn/components/ui/input.tsx';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/shared/shadcn/components/ui/select.tsx';
 import {
   Form,
   FormControl,
@@ -23,7 +31,7 @@ import {
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { numberValid } from '@/shared/backend/validations/index.service.ts';
-import { ServerService, IAlarmsConfiguration } from '@/shared/backend/server/index.service.ts';
+import { WindowService, IWindowConfig } from '@/shared/backend/market-state/window/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
@@ -35,24 +43,26 @@ import { IFormProps } from './types.ts';
  ************************************************************************************************ */
 
 /**
- * Server Alarms Component
- * Component in charge of updating the alarms' configuration.
+ * Window Component
+ * Component in charge of updating the window's configuration.
  */
-const ServerAlarms = ({ open, onOpenChange }: IFormProps) => {
+const Window = ({ open, onOpenChange }: IFormProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const { data, loading, error } = useAPIFetch<IAlarmsConfiguration>(useMemo(
+  const { data, loading, error } = useAPIFetch<IWindowConfig>(useMemo(
     () => ({
-      fetchFunc: { func: ServerService.getAlarms },
+      fetchFunc: { func: WindowService.getConfig },
     }),
     [],
   ));
-  const form = useForm<IAlarmsConfiguration>({
+  const form = useForm<IWindowConfig>({
     defaultValues: {
-      maxCPULoad: data?.maxCPULoad ?? '',
-      maxMemoryUsage: data?.maxMemoryUsage ?? '',
-      maxFileSystemUsage: data?.maxFileSystemUsage ?? '',
+      refetchFrequency: data?.refetchFrequency ?? '',
+      size: data?.size ?? '',
+      interval: data?.interval ?? '',
+      requirement: data?.requirement ?? '',
+      strongRequirement: data?.strongRequirement ?? '',
     },
   });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -68,9 +78,11 @@ const ServerAlarms = ({ open, onOpenChange }: IFormProps) => {
 
   useEffect(() => {
     if (data) {
-      form.setValue('maxCPULoad', data.maxCPULoad);
-      form.setValue('maxMemoryUsage', data.maxMemoryUsage);
-      form.setValue('maxFileSystemUsage', data.maxFileSystemUsage);
+      form.setValue('refetchFrequency', data.refetchFrequency);
+      form.setValue('size', data.size);
+      form.setValue('interval', data.interval);
+      form.setValue('requirement', data.requirement);
+      form.setValue('strongRequirement', data.strongRequirement);
     }
   }, [data, form]);
 
@@ -87,34 +99,45 @@ const ServerAlarms = ({ open, onOpenChange }: IFormProps) => {
    * @param formData
    * @returns void
    */
-  const onSubmit = (formData: IAlarmsConfiguration): void => {
+  const onSubmit = (formData: IWindowConfig): void => {
     openConfirmationDialog({
       mode: 'OTP',
-      title: 'Update alarms',
-      description: 'The new configuration will be applied immediately upon submission',
+      title: 'Update window\'s configuration',
+      description: 'The new configuration will be applied immediately upon submission. Moreover, the app will be refreshed automatically in order to prevent discrepancies',
       onConfirmation: async (confirmation: string) => {
         try {
           setIsSubmitting(true);
-          await ServerService.updateAlarms(
+          await WindowService.updateConfig(
             {
-              maxCPULoad: Number(formData.maxCPULoad),
-              maxMemoryUsage: Number(formData.maxMemoryUsage),
-              maxFileSystemUsage: Number(formData.maxFileSystemUsage),
+              refetchFrequency: Number(formData.refetchFrequency),
+              size: Number(formData.size),
+              interval: formData.interval,
+              requirement: Number(formData.requirement),
+              strongRequirement: Number(formData.strongRequirement),
             },
             confirmation,
           );
           onOpenChange(false);
+          setTimeout(() => {
+            SWService.updateApp();
+          }, 2000);
         } catch (e) {
           errorToast(e);
           const { message, code } = decodeError(e);
-          if (code === 8251) {
-            form.setError('maxFileSystemUsage', { message });
+          if (code === 21501) {
+            form.setError('refetchFrequency', { message });
           }
-          if (code === 8252) {
-            form.setError('maxMemoryUsage', { message });
+          if (code === 21505) {
+            form.setError('size', { message });
           }
-          if (code === 8253) {
-            form.setError('maxCPULoad', { message });
+          if (code === 21506) {
+            form.setError('interval', { message });
+          }
+          if (code === 21502 || code === 21504) {
+            form.setError('requirement', { message });
+          }
+          if (code === 21503) {
+            form.setError('strongRequirement', { message });
           }
         } finally {
           setIsSubmitting(false);
@@ -144,87 +167,165 @@ const ServerAlarms = ({ open, onOpenChange }: IFormProps) => {
 
           <FormField
             control={form.control}
-            name='maxCPULoad'
+            name='refetchFrequency'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Max. CPU load%</FormLabel>
+                <FormLabel>Re-fetch frequency (seconds)</FormLabel>
                 <FormControl>
                   <Input
                     type='number'
-                    placeholder='75'
+                    placeholder='2.5'
                     {...field}
                     autoComplete='off'
                     disabled={isSubmitting}
-                    min={30}
-                    max={99}
+                    min={2.5}
+                    max={60}
                     />
                 </FormControl>
-                <FormDescription>Core processing unit</FormDescription>
+                <FormDescription>
+                  The interval at which the pricing data is re-fetched from the exchange
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
             rules={{
               validate: {
-                required: (value) => (numberValid(Number(value), 30, 99) ? true : 'Enter a number ranging 30% - 99%'),
+                required: (value) => (numberValid(Number(value), 2.5, 60) ? true : 'Enter a number ranging 2.5 - 60'),
               },
             }}
           />
 
           <FormField
             control={form.control}
-            name='maxMemoryUsage'
+            name='size'
             render={({ field }) => (
-              <FormItem className='mt-5'>
-                <FormLabel>Max. memory usage%</FormLabel>
+              <FormItem className='mt-7'>
+                <FormLabel>Window size</FormLabel>
                 <FormControl>
                   <Input
                     type='number'
-                    placeholder='75'
+                    placeholder='128'
                     {...field}
                     autoComplete='off'
                     disabled={isSubmitting}
-                    min={30}
-                    max={99}
-                  />
+                    min={128}
+                    max={512}
+                    />
                 </FormControl>
-                <FormDescription>Random access memory</FormDescription>
+                <FormDescription>
+                  The number of candlestick bars that comprise the window
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
             rules={{
               validate: {
-                required: (value) => (numberValid(Number(value), 30, 99) ? true : 'Enter a number ranging 30% - 99%'),
+                required: (value) => (numberValid(Number(value), 128, 512) ? true : 'Enter a number ranging 128 - 512'),
               },
             }}
           />
 
           <FormField
             control={form.control}
-            name='maxFileSystemUsage'
+            name='interval'
             render={({ field }) => (
-              <FormItem className='mt-5'>
-                <FormLabel>Max. file system usage%</FormLabel>
+              <FormItem className='mt-7'>
+                <FormLabel>Interval</FormLabel>
                 <FormControl>
-                  <Input
-                    type='number'
-                    placeholder='80'
-                    {...field}
-                    autoComplete='off'
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                    value={field.value}
                     disabled={isSubmitting}
-                    min={30}
-                    max={99}
-                  />
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder='Select one option' />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value='1m'>1 minute</SelectItem>
+                      <SelectItem value='5m'>5 minutes</SelectItem>
+                      <SelectItem value='15m'>15 minutes</SelectItem>
+                      <SelectItem value='30m'>30 minutes</SelectItem>
+                      <SelectItem value='1h'>1 hour</SelectItem>
+                      <SelectItem value='1d'>1 day</SelectItem>
+                      <SelectItem value='1w'>1 week</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </FormControl>
-                <FormDescription>Storage device</FormDescription>
+                <FormDescription>
+                  The amount of time contained by each candlestick bar
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
             rules={{
               validate: {
-                required: (value) => (numberValid(Number(value), 30, 99) ? true : 'Enter a number ranging 30% - 99%'),
+                required: (value) => (value.length ? true : 'Select a valid interval'),
               },
             }}
           />
+
+          <FormField
+            control={form.control}
+            name='requirement'
+            render={({ field }) => (
+              <FormItem className='mt-7'>
+                <FormLabel>State requirement%</FormLabel>
+                <FormControl>
+                  <Input
+                    type='number'
+                    placeholder='0.025'
+                    {...field}
+                    autoComplete='off'
+                    disabled={isSubmitting}
+                    min={0.01}
+                    max={100}
+                    />
+                </FormControl>
+                <FormDescription>
+                  The price% change required in a window split to be stateful (1 | -1)
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+            rules={{
+              validate: {
+                required: (value) => (numberValid(Number(value), 0.01, 100) ? true : 'Enter a number ranging 0.01% - 100%'),
+              },
+            }}
+          />
+
+          <FormField
+            control={form.control}
+            name='strongRequirement'
+            render={({ field }) => (
+              <FormItem className='mt-7'>
+                <FormLabel>Strong state requirement%</FormLabel>
+                <FormControl>
+                  <Input
+                    type='number'
+                    placeholder='0.85'
+                    {...field}
+                    autoComplete='off'
+                    disabled={isSubmitting}
+                    min={0.01}
+                    max={100}
+                    />
+                </FormControl>
+                <FormDescription>
+                  The price% change required in a window split to have a strong state (2 | -2)
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+            rules={{
+              validate: {
+                required: (value) => (numberValid(Number(value), 0.01, 100) ? true : 'Enter a number ranging 0.01% - 100%'),
+              },
+            }}
+          />
+
+
 
           <DialogFooter>
             <Button
@@ -255,7 +356,7 @@ const ServerAlarms = ({ open, onOpenChange }: IFormProps) => {
       <DialogContent>
 
         <DialogHeader>
-          <DialogTitle>Update alarms</DialogTitle>
+          <DialogTitle>Update Window</DialogTitle>
           <DialogDescription>
             If any of the server's components exceed these values, a notification will be sent
           </DialogDescription>
@@ -276,4 +377,4 @@ const ServerAlarms = ({ open, onOpenChange }: IFormProps) => {
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export default ServerAlarms;
+export default Window;
