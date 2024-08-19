@@ -39,7 +39,7 @@ const SplitTileButton = memo(({ id, split, displayWindowDialog }: ISplitTileButt
       >
         {splitChange}
       </TooltipTrigger>
-      <TooltipContent><p>Split: {MarketStateService.SPLIT_NAMES[id]}</p></TooltipContent>
+      <TooltipContent><p>{MarketStateService.SPLIT_NAMES[id]} of the dataset</p></TooltipContent>
     </Tooltip>
   );
 });

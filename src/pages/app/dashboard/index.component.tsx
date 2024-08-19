@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { prettifyValue } from 'bignumber-utils';
 import {
   Card,
   CardContent,
@@ -7,6 +9,25 @@ import {
 import { useBoundStore } from '@/shared/store/index.store';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import WindowState from '@/pages/app/dashboard/window/index.component.tsx';
+
+/* ************************************************************************************************
+ *                                            HELPERS                                             *
+ ************************************************************************************************ */
+
+/**
+ * Builds the string that will be shown in Balancer's tab (title bar).
+ * @param price
+ * @param change
+ * @returns string
+ */
+const buildDocumentTitle = (price: number, change: number): string => `
+  ${prettifyValue(price, { processing: { decimalPlaces: 0 }, format: { prefix: '$' } })} 
+  ${prettifyValue(change, { processing: { decimalPlaces: 1 }, format: { suffix: '%' } })}
+`;
+
+
+
+
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -21,6 +42,29 @@ const Dashboard = () => {
    *                                             STATE                                            *
    ********************************************************************************************** */
   const marketState = useBoundStore((state) => state.marketState!);
+
+
+
+
+
+  /* **********************************************************************************************
+   *                                         SIDE EFFECTS                                         *
+   ********************************************************************************************** */
+
+  /**
+   * Sets the Bitcoin's price and price change% as the document's title.
+   */
+  useEffect(() => {
+    if (marketState) {
+      document.title = buildDocumentTitle(
+        marketState.windowState.window.close[marketState.windowState.window.close.length - 1],
+        marketState.windowState.splitStates.s100.change,
+      );
+    }
+    return () => {
+      document.title = 'Balancer';
+    };
+  }, [marketState]);
 
 
 
