@@ -35,6 +35,7 @@ const FormLabelWithMoreInfo = ({ value, description, ...rest }: IComponentProps)
           type='button'
           aria-label='View more information'
           onClick={() => openInfoDialog({ title: value, content: description })}
+          tabIndex={-1}
         >
           <CircleHelp
             className='w-5 h-5'

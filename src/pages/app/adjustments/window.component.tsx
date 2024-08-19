@@ -36,7 +36,7 @@ import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import FormLabelWithMoreInfo from '@/shared/components/form-label-with-more-info/index.component.tsx';
-import { IFormProps } from './types.ts';
+import { IFormProps } from '@/pages/app/adjustments/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -66,6 +66,7 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
     },
   });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const exchangeConfig = useBoundStore((state) => state.exchangeConfig!);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
 
 
@@ -165,11 +166,25 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
           noValidate
         >
 
+          <div className='flex justify-start items-center'>
+            <p
+              className='text-sm font-medium'
+            >Exchange</p>
+            <span className='flex-1'></span>
+            <img
+              src={`/exchanges/${exchangeConfig.window}.png`}
+              alt={`Logo of the Exchange being used by the Window Module (${exchangeConfig.window})`}
+              height={435}
+              width={90}
+              className='max-h-6'
+            />
+          </div>
+
           <FormField
             control={form.control}
             name='refetchFrequency'
             render={({ field }) => (
-              <FormItem>
+              <FormItem className='mt-7'>
                 <FormLabelWithMoreInfo
                   value='Re-fetch frequency (seconds)'
                   description='The interval at which the pricing data is re-fetched from the exchange.'
@@ -200,7 +215,7 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
             control={form.control}
             name='size'
             render={({ field }) => (
-              <FormItem className='mt-5'>
+              <FormItem className='mt-7'>
                 <FormLabelWithMoreInfo
                   value='Window size'
                   description='The number of candlestick bars that comprise the window.'
@@ -231,7 +246,7 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
             control={form.control}
             name='interval'
             render={({ field }) => (
-              <FormItem className='mt-5'>
+              <FormItem className='mt-7'>
                 <FormLabelWithMoreInfo
                   value='Interval'
                   description='The amount of time contained by each candlestick bar.'
@@ -274,7 +289,7 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
             control={form.control}
             name='requirement'
             render={({ field }) => (
-              <FormItem className='mt-5'>
+              <FormItem className='mt-7'>
                 <FormLabelWithMoreInfo
                   value='State requirement%'
                   description={[
@@ -310,7 +325,7 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
             control={form.control}
             name='strongRequirement'
             render={({ field }) => (
-              <FormItem className='mt-5'>
+              <FormItem className='mt-7'>
                 <FormLabelWithMoreInfo
                   value='Strong state requirement%'
                   description={[

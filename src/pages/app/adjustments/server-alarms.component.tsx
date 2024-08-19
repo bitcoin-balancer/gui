@@ -174,7 +174,7 @@ const ServerAlarms = ({ open, onOpenChange }: IFormProps) => {
             control={form.control}
             name='maxMemoryUsage'
             render={({ field }) => (
-              <FormItem className='mt-5'>
+              <FormItem className='mt-7'>
                 <FormLabel>Max. memory usage%</FormLabel>
                 <FormControl>
                   <Input
@@ -202,7 +202,7 @@ const ServerAlarms = ({ open, onOpenChange }: IFormProps) => {
             control={form.control}
             name='maxFileSystemUsage'
             render={({ field }) => (
-              <FormItem className='mt-5'>
+              <FormItem className='mt-7'>
                 <FormLabel>Max. file system usage%</FormLabel>
                 <FormControl>
                   <Input
