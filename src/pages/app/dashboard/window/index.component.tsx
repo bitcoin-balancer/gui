@@ -173,6 +173,7 @@ const WindowState = ({ windowState }: IComponentProps) => {
           height={580}
           data={windowState.window}
           state={windowState.state}
+          prettifyY={true}
         />
       </CardContent>
     </Card>

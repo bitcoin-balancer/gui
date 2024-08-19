@@ -24,6 +24,9 @@ type IComponentProps = {
 
   // the current state of the module
   state?: IState;
+
+  // if enabled, it will format the prices displayed in the chart to integers like '$59,108'
+  prettifyY?: boolean;
 };
 
 /**

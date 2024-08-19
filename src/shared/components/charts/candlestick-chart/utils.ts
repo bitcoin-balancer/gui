@@ -1,9 +1,9 @@
 import { UTCTimestamp, ChartOptions, DeepPartial } from 'lightweight-charts';
+import { prettifyValue } from 'bignumber-utils';
 import { ICompactCandlestickRecords } from '@/shared/backend/candlestick/index.service.ts';
 import { IState } from '@/shared/backend/market-state/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
 import { ICandlestickBar } from '@/shared/components/charts/candlestick-chart/types.ts';
-
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -28,11 +28,13 @@ const toBars = (records: ICompactCandlestickRecords): ICandlestickBar[] => recor
  * Builds the essential options for creating a candlesticks chart.
  * @param chartContainerEl
  * @param height
+ * @param prettifyY
  * @returns DeepPartial<ChartOptions>
  */
 const buildChartOptions = (
   chartContainerEl: HTMLDivElement,
   height: number,
+  prettifyY: boolean | undefined,
 ): DeepPartial<ChartOptions> => ({
   layout: {
     textColor: 'black',
@@ -41,6 +43,11 @@ const buildChartOptions = (
   width: chartContainerEl.clientWidth,
   height,
   grid: { horzLines: { visible: false }, vertLines: { visible: false } },
+  localization: {
+    priceFormatter: prettifyY
+      ? (val: number) => prettifyValue(val, { processing: { decimalPlaces: 0 }, format: { prefix: '$' } })
+      : undefined,
+  },
   crosshair: {
     // change mode from default 'magnet' to 'normal'.
     // allows the crosshair to move freely without snapping to datapoints

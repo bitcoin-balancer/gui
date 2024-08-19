@@ -19,7 +19,12 @@ import {
  * Candlestick Chart Component
  * Component in charge of rendering a Candlesticks Chart.
  */
-const CandlestickChart = ({ height, data, state }: IComponentProps) => {
+const CandlestickChart = ({
+  height,
+  data,
+  state,
+  prettifyY,
+}: IComponentProps) => {
   /* **********************************************************************************************
    *                                             REFS                                             *
    ********************************************************************************************** */
@@ -34,7 +39,7 @@ const CandlestickChart = ({ height, data, state }: IComponentProps) => {
       if (!this.__api) {
         this.__api = createChart(
           chartContainerRef.current!,
-          buildChartOptions(chartContainerRef.current!, height),
+          buildChartOptions(chartContainerRef.current!, height, prettifyY),
         );
         this.__api.timeScale().fitContent();
       }
