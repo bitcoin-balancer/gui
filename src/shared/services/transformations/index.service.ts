@@ -47,6 +47,10 @@ const formatDate = (date: string | number | Date, dateFormat: IDateFormat): stri
       return format(date, 'PPP');
     case 'date-long':
       return format(date, 'PPPP');
+    case 'time-short':
+      return format(date, 'p');
+    case 'time-medium':
+      return format(date, 'pp');
     case 'datetime-short':
       return format(date, 'dd/LL/yyyy, pp');
     case 'datetime-medium':

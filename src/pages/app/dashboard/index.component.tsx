@@ -34,7 +34,7 @@ const Dashboard = () => {
   }
   return (
     <div
-      className='page-container flex flex-col sm:flex-row justify-center items-start gap-5 animate-in fade-in duration-700'
+      className='page-container flex flex-col lg:flex-row justify-center items-start gap-5 animate-in fade-in duration-700'
     >
 
       <section
