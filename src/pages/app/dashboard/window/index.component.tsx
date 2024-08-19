@@ -7,6 +7,7 @@ import {
   CardTitle,
 } from '@/shared/shadcn/components/ui/card.tsx';
 import { formatDate } from '@/shared/services/transformations/index.service.ts';
+import StateIcon from '@/shared/components/state-icon/index.component.tsx';
 import CandlestickChart from '@/shared/components/charts/candlestick-chart/index.component.tsx';
 import { IComponentProps } from '@/pages/app/dashboard/window/types.ts';
 
@@ -70,7 +71,10 @@ const WindowState = ({ windowState }: IComponentProps) => {
     <Card>
       <CardHeader className='flex flex-col sm:flex-row justify-start items-start'>
         <div>
-          <CardTitle>Window</CardTitle>
+          <CardTitle className='flex justify-start items-center gap-2'>
+            Window
+            <StateIcon state={windowState.state} />
+          </CardTitle>
           <CardDescription>{currentBar}</CardDescription>
         </div>
         <span className='flex-1'></span>

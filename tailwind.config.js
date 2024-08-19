@@ -23,7 +23,7 @@ module.exports = {
         success: '#1B5E20',
         error: '#B71C1C',
         light: '#64748b',
-        stateless: '#94a3b8',
+        stateless: '#64748b',
         'increase-0': '#14b8a6',
         'increase-1': '#0f766e',
         'increase-2': '#134e4a',

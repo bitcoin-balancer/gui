@@ -39,7 +39,7 @@ const colorServiceFactory = (): IColorService => {
   };
 
   // state colors
-  const STATELESS = '#94a3b8';
+  const STATELESS = '#64748b';
   const INCREASE_0 = '#14b8a6';
   const INCREASE_1 = '#0f766e';
   const INCREASE_2 = '#134e4a';
