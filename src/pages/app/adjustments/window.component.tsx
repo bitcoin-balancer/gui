@@ -331,8 +331,8 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
                   description={[
                     'The percentage change in Bitcoin\'s price needed to mark a window split as "stateful". ',
                     'The possible states for this requirement are:',
-                    ' 2: increasing',
-                    '-2: decreasing',
+                    ' 2: increasing strongly',
+                    '-2: decreasing strongly',
                   ]}
                 />
                 <FormControl>

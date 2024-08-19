@@ -42,9 +42,15 @@ const Dashboard = () => {
         className='w-full lg:w-8/12 xl:w-8/12 2xl:w-9/12'
       >
         <Card>
-          <CardHeader>
-            <CardTitle>Window</CardTitle>
-            <CardDescription>Card Description</CardDescription>
+          <CardHeader className='flex flex-col sm:flex-row justify-start items-start'>
+            <div>
+              <CardTitle>Window</CardTitle>
+              <CardDescription>Card Description</CardDescription>
+            </div>
+            <span className='flex-1'></span>
+            <div className='grid grid-cols-4 gap-2'>
+
+            </div>
           </CardHeader>
           <CardContent>
             <CandlestickChart
@@ -61,8 +67,7 @@ const Dashboard = () => {
       >
         <Card>
           <CardHeader>
-            <CardTitle>Card Title</CardTitle>
-            <CardDescription>Card Description</CardDescription>
+            <CardTitle>Position</CardTitle>
           </CardHeader>
           <CardContent>
             <p>Card Content</p>

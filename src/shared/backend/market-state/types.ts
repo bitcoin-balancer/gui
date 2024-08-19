@@ -1,3 +1,4 @@
+import { IState, ISplitStateID } from '@/shared/backend/market-state/shared/types.ts';
 import { IWindowState } from '@/shared/backend/market-state/window/index.service.ts';
 
 /* ************************************************************************************************
@@ -11,6 +12,10 @@ import { IWindowState } from '@/shared/backend/market-state/window/index.service
  */
 type IMarketStateService = {
   // properties
+  STATE_NAMES: IStateNames;
+  SPLITS: ISplitStateID[];
+  SPLIT_NAMES: ISplitNames;
+
   // ...
 };
 
@@ -36,6 +41,30 @@ type IMarketState = {
 
 
 /* ************************************************************************************************
+ *                                         GUI SPECIFIC                                           *
+ ************************************************************************************************ */
+
+/**
+ * State Names
+ * ...
+ */
+type IStateNames = {
+  [key in IState]: string
+};
+
+/**
+ * Split Names
+ * ...
+ */
+type ISplitNames = {
+  [key in ISplitStateID]: string;
+};
+
+
+
+
+
+/* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export type {
@@ -44,4 +73,8 @@ export type {
 
   // types
   IMarketState,
+
+  // gui specific
+  IStateNames,
+  ISplitNames,
 };
