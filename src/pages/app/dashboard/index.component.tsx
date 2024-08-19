@@ -1,13 +1,12 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from '@/shared/shadcn/components/ui/card.tsx';
 import { useBoundStore } from '@/shared/store/index.store';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
-import CandlestickChart from '@/shared/components/charts/candlestick-chart/index.component.tsx';
+import WindowState from '@/pages/app/dashboard/window/index.component.tsx';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -41,25 +40,12 @@ const Dashboard = () => {
       <section
         className='w-full lg:w-8/12 xl:w-8/12 2xl:w-9/12'
       >
-        <Card>
-          <CardHeader className='flex flex-col sm:flex-row justify-start items-start'>
-            <div>
-              <CardTitle>Window</CardTitle>
-              <CardDescription>Card Description</CardDescription>
-            </div>
-            <span className='flex-1'></span>
-            <div className='grid grid-cols-4 gap-2'>
-
-            </div>
-          </CardHeader>
-          <CardContent>
-            <CandlestickChart
-              height={600}
-              data={marketState.windowState.window}
-              state={marketState.windowState.state}
-            />
-          </CardContent>
-        </Card>
+        {/* **************
+          * WINDOW STATE *
+          ************** */}
+        <WindowState
+          windowState={marketState.windowState}
+        />
       </section>
 
       <aside
