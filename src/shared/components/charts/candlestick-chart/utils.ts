@@ -48,6 +48,13 @@ const buildChartOptions = (
       ? (val: number) => prettifyValue(val, { processing: { decimalPlaces: 0 }, format: { prefix: '$' } })
       : undefined,
   },
+  timeScale: {
+    borderColor: ColorService.PRIMARY,
+    timeVisible: true,
+  },
+  rightPriceScale: {
+    borderColor: ColorService.PRIMARY,
+  },
   crosshair: {
     // change mode from default 'magnet' to 'normal'.
     // allows the crosshair to move freely without snapping to datapoints
