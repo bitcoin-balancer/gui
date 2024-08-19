@@ -125,9 +125,9 @@ const WindowState = ({ windowState }: IComponentProps) => {
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
-    <Card>
+    <Card className='border-none shadow-none md:border-solid md:shadow-sm'>
       <CardHeader
-        className='flex flex-col md:flex-row justify-start space-y-0'
+        className='space-y-0 p-0 mt-3 md:p-6 md:mt-0 flex flex-col md:flex-row justify-start'
       >
         <Tooltip>
           <TooltipTrigger
@@ -166,9 +166,11 @@ const WindowState = ({ windowState }: IComponentProps) => {
           ))}
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent
+        className='p-0 pt-5 md:p-6 md:pt-0'
+      >
         <CandlestickChart
-          height={600}
+          height={580}
           data={windowState.window}
           state={windowState.state}
         />

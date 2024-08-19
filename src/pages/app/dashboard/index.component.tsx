@@ -6,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/shared/shadcn/components/ui/card.tsx';
+import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import { useBoundStore } from '@/shared/store/index.store';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import WindowState from '@/pages/app/dashboard/window/index.component.tsx';
@@ -21,8 +22,8 @@ import WindowState from '@/pages/app/dashboard/window/index.component.tsx';
  * @returns string
  */
 const buildDocumentTitle = (price: number, change: number): string => `
-  ${prettifyValue(price, { processing: { decimalPlaces: 0 }, format: { prefix: '$' } })} 
-  ${prettifyValue(change, { processing: { decimalPlaces: 1 }, format: { suffix: '%' } })}
+  ${prettifyValue(price, { processing: { decimalPlaces: 0 }, format: { prefix: '$' } })}
+  ${change > 0 ? '+' : ''}${prettifyValue(change, { processing: { decimalPlaces: 1 }, format: { suffix: '%' } })}
 `;
 
 
@@ -93,13 +94,59 @@ const Dashboard = () => {
       </section>
 
       <aside
-        className='flex-1'
+        className='flex-1 w-full'
       >
-        <Card>
-          <CardHeader>
+
+        <Separator className='my-10 md:hidden' />
+
+        {/* **********
+          * POSITION *
+          ********** */}
+        <Card className='border-none shadow-none md:border-solid md:shadow-sm'>
+          <CardHeader
+            className='space-y-0 p-0 md:p-6'
+          >
             <CardTitle>Position</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent
+            className='p-0 pt-5 md:p-6 md:pt-0'
+          >
+            <p>Card Content</p>
+          </CardContent>
+        </Card>
+
+        <Separator className='my-10 md:hidden' />
+
+        {/* ************
+          * INDICATORS *
+          ************ */}
+        <Card className='border-none shadow-none md:border-solid md:shadow-sm md:mt-6'>
+          <CardHeader
+            className='space-y-0 p-0 md:p-6'
+          >
+            <CardTitle>Indicators</CardTitle>
+          </CardHeader>
+          <CardContent
+            className='p-0 pt-5 md:p-6 md:pt-0'
+          >
+            <p>Card Content</p>
+          </CardContent>
+        </Card>
+
+        <Separator className='my-10 md:hidden' />
+
+        {/* *******
+          * COINS *
+          ******* */}
+        <Card className='border-none shadow-none md:border-solid md:shadow-sm md:mt-6'>
+          <CardHeader
+            className='space-y-0 p-0 md:p-6'
+          >
+            <CardTitle>Coins</CardTitle>
+          </CardHeader>
+          <CardContent
+            className='p-0 pt-5 md:p-6 md:pt-0'
+          >
             <p>Card Content</p>
           </CardContent>
         </Card>
