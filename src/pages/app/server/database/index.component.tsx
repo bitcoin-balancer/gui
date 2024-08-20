@@ -56,7 +56,7 @@ const Database = memo(({ setSidenavOpen }: IServerComponentProps) => {
           * HEADER *
           ******** */}
         <header
-          className='flex justify-start items-center md:hidden mt-2 mb-5'
+          className='flex justify-start items-center md:hidden mb-5'
         >
           <Button
             variant='ghost'
@@ -66,7 +66,7 @@ const Database = memo(({ setSidenavOpen }: IServerComponentProps) => {
             aria-label='Open Side Navigation'
           ><Menu aria-hidden='true' /></Button>
           <h1
-            className='text-2xl md:text-3xl font-bold'
+            className='text-2xl font-semibold leading-none tracking-tight'
           >Database</h1>
         </header>
 

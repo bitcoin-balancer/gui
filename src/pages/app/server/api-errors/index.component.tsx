@@ -158,7 +158,7 @@ const APIErrors = memo(({ setSidenavOpen }: IServerComponentProps) => {
             * HEADER *
             ******** */}
           <header
-            className='flex justify-start items-center mt-2 mb-5'
+            className='flex justify-start items-center mb-5'
           >
             <Button
               variant='ghost'
@@ -169,7 +169,7 @@ const APIErrors = memo(({ setSidenavOpen }: IServerComponentProps) => {
             ><Menu aria-hidden='true' /></Button>
 
             <h1
-              className='text-2xl md:text-3xl font-bold'
+              className='text-2xl font-semibold leading-none tracking-tight'
             >API Errors</h1>
             <span className='flex-1'></span>
 
