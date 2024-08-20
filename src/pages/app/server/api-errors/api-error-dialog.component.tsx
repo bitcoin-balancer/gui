@@ -186,7 +186,7 @@ const APIErrorDialog = ({ open, onOpenChange, record }: IAPIErrorDialogProps) =>
           >Message</p>
           <span className='flex-1'></span>
           <p
-            className='mt-2 sm:mt-0 text-right'
+            className='mt-2 sm:mt-0 text-right break-all'
           >{message}</p>
         </div>
 

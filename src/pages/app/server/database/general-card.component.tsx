@@ -38,7 +38,7 @@ const GeneralCard = ({ data }: { data: IDatabaseSummary }) => {
     <Card className='animate-in fade-in duration-700'>
       <CardHeader>
         <CardTitle
-          className='text-center text-base font-normal'
+          className='text-center text-base font-normal break-all'
         >{data.version}</CardTitle>
       </CardHeader>
       <CardContent>

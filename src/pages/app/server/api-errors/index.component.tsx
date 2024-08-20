@@ -241,7 +241,7 @@ const APIErrors = memo(({ setSidenavOpen }: IServerComponentProps) => {
               ? <Card>
               <CardContent
                 ref={rowsRef}
-                className='p-0'
+                className='pt-0 md:p-0'
               >
                 {data.map((record, i) => (
                   <Fragment key={record.id}>

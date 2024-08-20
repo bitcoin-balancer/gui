@@ -42,7 +42,7 @@ const TablesCard = ({ data }: { data: IDatabaseSummary }) => {
    ********************************************************************************************** */
   return (
     <Card className='animate-in fade-in duration-700'>
-      <CardContent className='p-0'>
+      <CardContent className='pt-0 md:p-0'>
         {data.tables.map((item, i) => (
           <Fragment key={item.name}>
             <div

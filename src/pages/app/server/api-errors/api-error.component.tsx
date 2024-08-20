@@ -45,7 +45,7 @@ const APIError = memo(({ id, data, openDialog }: IAPIErrorProps) => {
           <p className='truncate text-sm'>{data.origin}</p>
         </Badge>
         <p
-          className='text-light text-sm mt-1'
+          className='text-light text-sm mt-1 break-all'
         >{message}</p>
         <p
           className='text-light text-xs font-normal hidden sm:block mt-1'
