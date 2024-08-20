@@ -272,7 +272,7 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
               >
                 <UserPen
                   aria-hidden='true'
-                  className='w-5 h-5 mr-1'
+                  className='w-4 h-4 mr-1'
                 /> Update nickname
               </DropdownMenuItem>
               <DropdownMenuItem
@@ -281,7 +281,7 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
               >
                 <UserPen
                   aria-hidden='true'
-                  className='w-5 h-5 mr-1'
+                  className='w-4 h-4 mr-1'
                 /> Update authority
               </DropdownMenuItem>
               <DropdownMenuItem
@@ -290,7 +290,7 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
               >
                 <UserPen
                   aria-hidden='true'
-                  className='w-5 h-5 mr-1'
+                  className='w-4 h-4 mr-1'
                 /> Update OTP secret
               </DropdownMenuItem>
               <DropdownMenuItem
@@ -299,7 +299,7 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
               >
                 <UserMinus
                   aria-hidden='true'
-                  className='w-5 h-5 mr-1'
+                  className='w-4 h-4 mr-1'
                 /> Delete user
               </DropdownMenuItem>
               <DropdownMenuSeparator />
@@ -308,7 +308,7 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
               >
                 <Fingerprint
                   aria-hidden='true'
-                  className='w-5 h-5 mr-1'
+                  className='w-4 h-4 mr-1'
                 /> Display auth sessions
               </DropdownMenuItem>
               <DropdownMenuItem
@@ -317,7 +317,7 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
               >
                 <SquareAsterisk
                   aria-hidden='true'
-                  className='w-5 h-5 mr-1'
+                  className='w-4 h-4 mr-1'
                 /> Display password updates
               </DropdownMenuItem>
             </DropdownMenuContent>

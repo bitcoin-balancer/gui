@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { UserPlus } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
+import { Card, CardContent } from '@/shared/shadcn/components/ui/card.tsx';
 import {
   Table,
   TableBody,
@@ -16,6 +17,7 @@ import PageLoadError from '@/shared/components/page-load-error/index.component.t
 import { dispatch } from './reducer.ts';
 import AddUser from '@/pages/app/users/add-user.component.tsx';
 import UserRow from '@/pages/app/users/user-row.component.tsx';
+import NoRecords from '@/shared/components/no-records/index.component.tsx';
 import { IAction } from '@/pages/app/users/types.ts';
 
 /* ************************************************************************************************
@@ -83,7 +85,7 @@ const Users = () => {
           className='flex justify-start items-center'
         >
           <h1
-            className='text-2xl md:text-3xl'
+            className='text-2xl font-semibold leading-none tracking-tight'
           >Users</h1>
 
           <span className="flex-1"></span>
@@ -118,25 +120,39 @@ const Users = () => {
 
         {
           data.length
-            ? <Table className='mt-5'>
-            <TableCaption>A list of users</TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead>ID</TableHead>
-                <TableHead>Nickname</TableHead>
-                <TableHead>Authority</TableHead>
-                <TableHead>OTP Secret</TableHead>
-                <TableHead>Creation</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {data.map((user) => <UserRow key={user.uid} user={user} dispatch={handleDispatch} />)}
-            </TableBody>
-          </Table>
-            : <p
-              className='text-light text-center text-sm mt-5'
-            >No users were found</p>
+            ? <Card className='md:mt-5'>
+              <CardContent
+                className='pt-0 md:p-0 md:mb-5'
+              >
+                <Table>
+                  <TableCaption>A list of users</TableCaption>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>ID</TableHead>
+                      <TableHead>Nickname</TableHead>
+                      <TableHead>Authority</TableHead>
+                      <TableHead>OTP Secret</TableHead>
+                      <TableHead>Creation</TableHead>
+                      <TableHead>Actions</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {
+                      data.map(
+                        (user) => (
+                          <UserRow
+                            key={user.uid}
+                            user={user}
+                            dispatch={handleDispatch}
+                          />
+                        ),
+                      )
+                    }
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+            : <NoRecords />
         }
 
       </section>
