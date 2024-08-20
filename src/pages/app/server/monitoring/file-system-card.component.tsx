@@ -14,6 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
+import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import { IFileSystemState } from '@/shared/backend/server/types.ts';
 import { formatFileSize } from '@/shared/services/transformations/index.service.ts';
 import ResourcePieChart from '@/pages/app/server/monitoring/resource-pie-chart.component.tsx';
@@ -28,7 +29,7 @@ import ResourcePieChart from '@/pages/app/server/monitoring/resource-pie-chart.c
  */
 const FileSystemCard = ({ data }: { data: IFileSystemState }) => (
   <Card
-    className='w-full'
+    className='flex-1 w-full'
   >
     <CardHeader
       className='flex flex-row justify-start items-center pb-0'
@@ -44,7 +45,7 @@ const FileSystemCard = ({ data }: { data: IFileSystemState }) => (
             size='icon'
           ><Ellipsis aria-hidden='true' /></Button>
         </DialogTrigger>
-        <DialogContent>
+        <DialogContent className='max-w-[350px]'>
           <DialogHeader>
             <DialogTitle>File System</DialogTitle>
             <DialogDescription>
@@ -59,7 +60,7 @@ const FileSystemCard = ({ data }: { data: IFileSystemState }) => (
               className='text-light text-sm'
             >FS</p>
             <span className='flex-1'></span>
-            <p>{data.fs}</p>
+            <Badge variant='secondary'>{data.fs}</Badge>
           </div>
           <div
             className='flex justify-center items-center'
@@ -68,7 +69,7 @@ const FileSystemCard = ({ data }: { data: IFileSystemState }) => (
               className='text-light text-sm'
             >Mount</p>
             <span className='flex-1'></span>
-            <p>{data.mount}</p>
+            <Badge variant='secondary'>{data.mount}</Badge>
           </div>
           <div
             className='flex justify-center items-center'
@@ -77,7 +78,7 @@ const FileSystemCard = ({ data }: { data: IFileSystemState }) => (
               className='text-light text-sm'
             >Type</p>
             <span className='flex-1'></span>
-            <p>{data.type}</p>
+            <Badge variant='secondary'>{data.type}</Badge>
           </div>
           <div
             className='flex justify-center items-center'

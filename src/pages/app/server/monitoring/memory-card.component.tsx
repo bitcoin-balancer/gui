@@ -28,7 +28,7 @@ import ResourcePieChart from '@/pages/app/server/monitoring/resource-pie-chart.c
  */
 const MemoryCard = ({ data }: { data: IMemoryState }) => (
   <Card
-    className='w-full'
+    className='flex-1 w-full'
   >
     <CardHeader
       className='flex flex-row justify-start items-center pb-0'
@@ -44,7 +44,7 @@ const MemoryCard = ({ data }: { data: IMemoryState }) => (
             size='icon'
           ><Ellipsis aria-hidden='true' /></Button>
         </DialogTrigger>
-        <DialogContent>
+        <DialogContent className='max-w-[350px]'>
           <DialogHeader>
             <DialogTitle>Memory</DialogTitle>
             <DialogDescription>

@@ -83,7 +83,7 @@ const Monitoring = memo(({ setSidenavOpen }: IServerComponentProps) => {
           {/* API CARD */}
           <APICard data={data} />
 
-          <Separator className='my-10 md:hidden' />
+          <Separator className='my-7 md:hidden' />
 
           {/* MEMORY CARD */}
           <MemoryCard data={data.memory} />
@@ -98,12 +98,12 @@ const Monitoring = memo(({ setSidenavOpen }: IServerComponentProps) => {
           className='flex flex-col md:flex-row justify-center items-start gap-5 lg:gap-10 2xl:gap-15 mt-5 lg:mt-10 2xl:mt-15'
         >
 
-          <Separator className='my-10 md:hidden' />
+          <Separator className='my-7 md:hidden' />
 
           {/* CPU CARD */}
           <CPUCard data={data.cpu} />
 
-          <Separator className='my-10 md:hidden' />
+          <Separator className='my-7 md:hidden' />
 
           {/* FILESYSTEM CARD */}
           <FileSystemCard data={data.fileSystem} />

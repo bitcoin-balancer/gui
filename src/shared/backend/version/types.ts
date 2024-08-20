@@ -14,6 +14,7 @@ type IVersionService = {
 
   // helpers
   getAvailableUpdates: (version: IVersion) => IAvailableUpdates;
+  buildLastCommitText: (service: IServiceVersion) => string;
 };
 
 

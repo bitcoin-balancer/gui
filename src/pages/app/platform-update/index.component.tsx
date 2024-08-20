@@ -101,7 +101,7 @@ const PlatformUpdate = () => {
           <Card className='mt-5'>
 
             <CardContent
-              className='p-0'
+              className='md:p-0'
             >
 
               <div

@@ -267,7 +267,7 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
                       >
                         v{version.gui.latest.version}&nbsp;·&nbsp;
                         {version.gui.latest.sha.slice(0, 7)}&nbsp;·&nbsp;
-                        {formatDate(version.gui.latest.eventTime, 'date-short')}
+                        {formatDate(version.gui.latest.eventTime, 'date-short')}asdasdasdasdasdasdasdasdasdasd
                       </p>
                     </a>
                   : <Button
@@ -279,7 +279,7 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
                       <CodeXml
                         className='mr-1 w-4 h-4'
                       />
-                      <p>Update available</p>
+                      <p className='truncate max-w-[85%]'>Update availableasdasdasdasdasdasdasdasdasdasd</p>
                     </Button>
               }
             </SheetDescription>

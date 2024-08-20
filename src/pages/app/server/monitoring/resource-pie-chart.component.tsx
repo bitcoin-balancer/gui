@@ -16,7 +16,7 @@ import { IResourcePieChartProps } from '@/pages/app/server/monitoring/types.ts';
  * Component in charge of charting the % of a resource that is being used.
  */
 const ResourcePieChart = ({
-  className = 'max-h-[192px]',
+  className = 'max-h-[187px]',
   valueLabel = 'Usage%',
   value,
   total = 100,

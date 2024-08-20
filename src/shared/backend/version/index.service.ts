@@ -1,4 +1,5 @@
 import { ENVIRONMENT } from '@/environment/environment.ts';
+import { formatDate } from '@/shared/services/transformations/index.service.ts';
 import {
   IVersionService,
   IVersion,
@@ -52,6 +53,14 @@ const versionServiceFactory = (): IVersionService => {
     return null;
   };
 
+  /**
+   * Builds the text that will be used to show the user information regarding the running version.
+   * @param service
+   * @returns string
+   */
+  const buildLastCommitText = (service: IServiceVersion): string => (
+    `v${service.version} · ${service.sha.slice(0, 7)} · ${formatDate(service.eventTime, 'date-short')}`
+  );
 
 
 
@@ -64,6 +73,7 @@ const versionServiceFactory = (): IVersionService => {
 
     // helpers
     getAvailableUpdates,
+    buildLastCommitText,
   });
 };
 

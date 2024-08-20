@@ -47,6 +47,12 @@ const APICard = ({ data }: { data: IServerState }) => {
   // available service updates
   const availableUpdates = useMemo(() => VersionService.getAvailableUpdates(version), [version]);
 
+  // info regarding the running version
+  const lastCommit = useMemo(
+    () => VersionService.buildLastCommitText(version.api.latest),
+    [version.api.latest],
+  );
+
 
 
 
@@ -56,14 +62,12 @@ const APICard = ({ data }: { data: IServerState }) => {
    ********************************************************************************************** */
   return (
     <Card
-      className='w-full py-2'
+      className='flex-1 w-full py-2'
     >
       <div
-        className='flex justify-start items-start p-6'
+        className='flex justify-start items-start p-0 md:p-6'
       >
-        <div
-          className='max-w-[75%] sm:max-w-[70%]'
-        >
+        <div>
           <div
             className='flex justify-start items-center'
           >
@@ -79,8 +83,7 @@ const APICard = ({ data }: { data: IServerState }) => {
               className='ml-2'
             >API</Badge>
           </div>
-          <div
-            className='text-left'>
+          <div>
               {
                 availableUpdates === null
                   ? <a
@@ -95,11 +98,7 @@ const APICard = ({ data }: { data: IServerState }) => {
                       />
                       <p
                         className='truncate text-sm'
-                      >
-                        v{version.api.latest.version}&nbsp;·&nbsp;
-                        {version.api.latest.sha.slice(0, 7)}&nbsp;·&nbsp;
-                        {formatDate(version.api.latest.eventTime, 'date-short')}
-                      </p>
+                      >{lastCommit}</p>
                     </a>
                   : <Link
                     className='flex justify-start items-center text-light text-sm mt-1'
@@ -108,13 +107,15 @@ const APICard = ({ data }: { data: IServerState }) => {
                     <CodeXml
                       className='mr-1 w-4 h-4'
                     />
-                    <p>Update available</p>
+                    <p className='truncate'>Update available</p>
                   </Link>
               }
 
           </div>
         </div>
+
         <span className='flex-1'></span>
+
         <Button
           variant='ghost'
           size='icon'
@@ -123,7 +124,7 @@ const APICard = ({ data }: { data: IServerState }) => {
         ><Github aria-hidden='true' /></Button>
       </div>
 
-      <CardContent>
+      <CardContent className='w-full'>
         <div
           className='flex justify-start items-center'
         >
@@ -134,7 +135,7 @@ const APICard = ({ data }: { data: IServerState }) => {
           <p>{Math.ceil((data.uptime / 60) / 60)} hours</p>
         </div>
         <div
-          className='flex justify-start items-center mt-4'
+          className='flex justify-start items-center mt-6'
         >
           <p
             className='text-light text-sm'
@@ -148,7 +149,7 @@ const APICard = ({ data }: { data: IServerState }) => {
             aria-label='Open the API on a new tab'
           >
             <p
-              className='max-w-36 lg:max-w-44 xl:max-w-none truncate'
+              className='max-w-48 md:max-w-32 lg:max-w-52 truncate'
             >{buildAPIURL('')}</p>
             <ExternalLink
               aria-hidden='true'
@@ -157,23 +158,23 @@ const APICard = ({ data }: { data: IServerState }) => {
           </a>
         </div>
         <div
-          className='flex justify-start items-center mt-4'
+          className='flex justify-start items-center mt-6'
         >
           <p
             className='text-light text-sm'
           >Environment</p>
           <span className='flex-1'></span>
-          <p>{data.environment}</p>
+          <Badge variant='secondary'>{data.environment}</Badge>
         </div>
         <div
-          className='flex justify-start items-center mt-4 text-ellipsis overflow-hidden'
+          className='flex justify-start items-center mt-5 text-ellipsis overflow-hidden'
         >
           <p
             className='text-light text-sm'
           >Last scan</p>
           <span className='flex-1'></span>
           <p
-            className='max-w-32 lg:max-w-44 xl:max-w-none truncate'
+            className='max-w-48 md:max-w-32 lg:max-w-48 truncate'
           >{formatDate(data.refetchTime, 'datetime-short')}</p>
         </div>
       </CardContent>
