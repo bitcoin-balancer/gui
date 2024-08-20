@@ -34,7 +34,6 @@ import { useBoundStore } from '@/shared/store/index.store.ts';
 import { JWTService } from '@/shared/backend/auth/jwt/index.service.ts';
 import { VersionService } from '@/shared/backend/version/index.service';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
-import { formatDate } from '@/shared/services/transformations/index.service.ts';
 import { NavService } from '@/shared/services/nav/index.service.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
 import SocketIOStatus from '@/pages/app/socket-io-status.component.tsx';
@@ -70,6 +69,12 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
 
   // available service updates
   const availableUpdates = useMemo(() => VersionService.getAvailableUpdates(version), [version]);
+
+  // info regarding the running version
+  const lastCommit = useMemo(
+    () => VersionService.buildLastCommitText(version.api.latest),
+    [version.api.latest],
+  );
 
 
 
@@ -264,11 +269,7 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
                       />
                       <p
                         className='truncate max-w-[85%] text-sm'
-                      >
-                        v{version.gui.latest.version}&nbsp;·&nbsp;
-                        {version.gui.latest.sha.slice(0, 7)}&nbsp;·&nbsp;
-                        {formatDate(version.gui.latest.eventTime, 'date-short')}asdasdasdasdasdasdasdasdasdasd
-                      </p>
+                      >{lastCommit}</p>
                     </a>
                   : <Button
                       variant='link'
@@ -279,7 +280,7 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
                       <CodeXml
                         className='mr-1 w-4 h-4'
                       />
-                      <p className='truncate max-w-[85%]'>Update availableasdasdasdasdasdasdasdasdasdasd</p>
+                      <p className='truncate max-w-[85%]'>Update available</p>
                     </Button>
               }
             </SheetDescription>
