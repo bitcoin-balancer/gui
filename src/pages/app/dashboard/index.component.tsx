@@ -102,15 +102,11 @@ const Dashboard = () => {
         {/* **********
           * POSITION *
           ********** */}
-        <Card className='border-none shadow-none md:border-solid md:shadow-sm'>
-          <CardHeader
-            className='space-y-0 p-0 md:p-6'
-          >
+        <Card className='md:mt-2.5 lg:mt-0'>
+          <CardHeader>
             <CardTitle>Position</CardTitle>
           </CardHeader>
-          <CardContent
-            className='p-0 pt-5 md:p-6 md:pt-0'
-          >
+          <CardContent>
             <p>Card Content</p>
           </CardContent>
         </Card>
@@ -120,15 +116,11 @@ const Dashboard = () => {
         {/* ************
           * INDICATORS *
           ************ */}
-        <Card className='border-none shadow-none md:border-solid md:shadow-sm md:mt-6'>
-          <CardHeader
-            className='space-y-0 p-0 md:p-6'
-          >
+        <Card className='md:mt-7'>
+          <CardHeader>
             <CardTitle>Indicators</CardTitle>
           </CardHeader>
-          <CardContent
-            className='p-0 pt-5 md:p-6 md:pt-0'
-          >
+          <CardContent>
             <p>Card Content</p>
           </CardContent>
         </Card>
@@ -138,15 +130,11 @@ const Dashboard = () => {
         {/* *******
           * COINS *
           ******* */}
-        <Card className='border-none shadow-none md:border-solid md:shadow-sm md:mt-6'>
-          <CardHeader
-            className='space-y-0 p-0 md:p-6'
-          >
+        <Card className='md:mt-7'>
+          <CardHeader>
             <CardTitle>Coins</CardTitle>
           </CardHeader>
-          <CardContent
-            className='p-0 pt-5 md:p-6 md:pt-0'
-          >
+          <CardContent>
             <p>Card Content</p>
           </CardContent>
         </Card>
