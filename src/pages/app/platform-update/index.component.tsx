@@ -81,7 +81,7 @@ const PlatformUpdate = () => {
         >
 
           <h1
-            className='text-2xl md:text-3xl'
+            className='text-2xl font-semibold leading-none tracking-tight'
           >Platform update</h1>
           {
             availableUpdates !== null
@@ -98,7 +98,7 @@ const PlatformUpdate = () => {
           }
 
 
-          <Card className='mt-5'>
+          <Card className='md:mt-5'>
 
             <CardContent
               className='md:p-0'
