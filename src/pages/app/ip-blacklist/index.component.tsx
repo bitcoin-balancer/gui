@@ -30,6 +30,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/shared/shadcn/components/ui/table.tsx';
+import { Card, CardContent } from '@/shared/shadcn/components/ui/card.tsx';
 import { IRecord } from '@/shared/types.ts';
 import { delay, errorToast } from '@/shared/services/utils/index.service.ts';
 import { formatDate } from '@/shared/services/transformations/index.service.ts';
@@ -233,7 +234,7 @@ const IPBlacklist = () => {
             className='flex justify-start items-center'
           >
             <h1
-              className='text-2xl md:text-3xl'
+              className='text-2xl font-semibold leading-none tracking-tight'
             >IP blacklist</h1>
 
             <span className='flex-1'></span>
@@ -269,101 +270,107 @@ const IPBlacklist = () => {
           {
             data.length
               ? <>
-                  <Table className='mt-5'>
-                    <TableCaption>A list of blacklisted IPs</TableCaption>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>IP Address</TableHead>
-                        <TableHead>Notes</TableHead>
-                        <TableHead>Registration</TableHead>
-                        <TableHead>Actions</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody ref={rowsRef}>
-                      {data.map((record) => (
-                        <TableRow
-                          key={record.id}
-                          id={`ipb-${record.id}`}
-                          className={`${busyRecord === record.id ? 'opacity-50' : ''} animate-in fade-in duration-500`}
-                        >
-                          {/* ************
-                            * IP ADDRESS *
-                            ************ */}
-                          <TableCell>
-                            <Badge
-                              variant='secondary'
-                              className='max-w-32'
-                            ><p className='truncate'>{record.ip}</p></Badge>
-                          </TableCell>
+                  <Card className='md:mt-5'>
+                    <CardContent
+                      className='pt-0 md:p-0 md:mb-5'
+                    >
+                      <Table>
+                        <TableCaption>A list of blacklisted IPs</TableCaption>
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead>IP Address</TableHead>
+                            <TableHead>Notes</TableHead>
+                            <TableHead>Registration</TableHead>
+                            <TableHead>Actions</TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody ref={rowsRef}>
+                          {data.map((record) => (
+                            <TableRow
+                              key={record.id}
+                              id={`ipb-${record.id}`}
+                              className={`${busyRecord === record.id ? 'opacity-50' : ''} animate-in fade-in duration-500`}
+                            >
+                              {/* ************
+                                * IP ADDRESS *
+                                ************ */}
+                              <TableCell>
+                                <Badge
+                                  variant='secondary'
+                                  className='max-w-32'
+                                ><p className='truncate'>{record.ip}</p></Badge>
+                              </TableCell>
 
-                          {/* *******
-                            * NOTES *
-                            ******* */}
-                          <TableCell
-                            className='max-w-36 sm:max-w-48'
-                          >
-                            {
-                              typeof record.notes === 'string'
-                                ? <p className='truncate'>{record.notes}</p>
-                                : <p className='text-light'>N/A</p>
-                            }
-                          </TableCell>
-
-                          {/* ******
-                            * DATE *
-                            ****** */}
-                          <TableCell><p>{dates[record.id]}</p></TableCell>
-
-
-                          {/* *********
-                            * ACTIONS *
-                            ********* */}
-                          <TableCell>
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <Button
-                                variant='ghost'
-                                size='icon'
-                                aria-label='IP Blacklist actions menu'
-                                disabled={busyRecord === record.id}
+                              {/* *******
+                                * NOTES *
+                                ******* */}
+                              <TableCell
+                                className='max-w-36 sm:max-w-48'
                               >
                                 {
-                                  busyRecord === record.id
-                                    ? <Loader2 className='animate-spin' />
-                                    : <EllipsisVertical aria-hidden='true'/>
+                                  typeof record.notes === 'string'
+                                    ? <p className='truncate'>{record.notes}</p>
+                                    : <p className='text-light'>N/A</p>
                                 }
-                              </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent>
-                              <DropdownMenuLabel
-                                className='max-w-36'
-                              ><p className='truncate'>{record.ip}</p>
-                              </DropdownMenuLabel>
-                              <DropdownMenuSeparator />
-                              <DropdownMenuItem
-                                onClick={() => setActiveDialog(record)}
-                              >
-                                  <Pencil
-                                    aria-hidden='true'
-                                    className='w-5 h-5 mr-1'
-                                  /> Update registration
-                              </DropdownMenuItem>
-                              <DropdownMenuItem
-                                onClick={() => unregisterIP(record)}
-                                aria-label='Unregister IP address from the blacklist'
-                              >
-                                <Trash
-                                  aria-hidden='true'
-                                  className='w-5 h-5 mr-1'
-                                /> Unregister IP
-                              </DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
+                              </TableCell>
+
+                              {/* ******
+                                * DATE *
+                                ****** */}
+                              <TableCell><p>{dates[record.id]}</p></TableCell>
+
+
+                              {/* *********
+                                * ACTIONS *
+                                ********* */}
+                              <TableCell>
+                              <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                  <Button
+                                    variant='ghost'
+                                    size='icon'
+                                    aria-label='IP Blacklist actions menu'
+                                    disabled={busyRecord === record.id}
+                                  >
+                                    {
+                                      busyRecord === record.id
+                                        ? <Loader2 className='animate-spin' />
+                                        : <EllipsisVertical aria-hidden='true'/>
+                                    }
+                                  </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent>
+                                  <DropdownMenuLabel
+                                    className='max-w-36'
+                                  ><p className='truncate'>{record.ip}</p>
+                                  </DropdownMenuLabel>
+                                  <DropdownMenuSeparator />
+                                  <DropdownMenuItem
+                                    onClick={() => setActiveDialog(record)}
+                                  >
+                                      <Pencil
+                                        aria-hidden='true'
+                                        className='w-4 h-4 mr-1'
+                                      /> Update registration
+                                  </DropdownMenuItem>
+                                  <DropdownMenuItem
+                                    onClick={() => unregisterIP(record)}
+                                    aria-label='Unregister IP address from the blacklist'
+                                  >
+                                    <Trash
+                                      aria-hidden='true'
+                                      className='w-4 h-4 mr-1'
+                                    /> Unregister IP
+                                  </DropdownMenuItem>
+                                </DropdownMenuContent>
+                              </DropdownMenu>
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </CardContent>
+                  </Card>
 
                   {/* ******************
                     * LOAD MORE BUTTON *

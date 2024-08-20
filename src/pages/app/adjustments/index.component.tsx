@@ -116,7 +116,7 @@ const Adjustments = () => {
             className='flex justify-start items-center'
           >
             <h1
-              className='text-2xl md:text-3xl'
+              className='text-2xl font-semibold leading-none tracking-tight'
             >Adjustments</h1>
             <span className="flex-1"></span>
           </header>
@@ -126,7 +126,7 @@ const Adjustments = () => {
           >
             <Card>
               <CardContent
-                className='p-0'
+                className='pt-0 md:p-0'
               >
                 {FORMS.map((form, i) => (
                   <Fragment key={form.id}>
