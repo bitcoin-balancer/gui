@@ -96,11 +96,21 @@ const Users = () => {
                 size='icon'
                 aria-label='Add User'
                 className='sm:hidden'
-              ><UserPlus aria-hidden='true' /></Button>
+              >
+                <UserPlus
+                  aria-hidden='true'
+                  className='w-5 h-5'
+                />
+              </Button>
               <Button
                 aria-label='Add User'
                 className='hidden sm:flex'
-                ><UserPlus aria-hidden='true' className='mr-2' /> Add user</Button>
+                >
+                  <UserPlus
+                    aria-hidden='true'
+                    className='w-5 h-5 mr-2'
+                  /> Add user
+                </Button>
             </div>
           </AddUser>
 

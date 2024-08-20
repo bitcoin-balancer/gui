@@ -134,7 +134,10 @@ const SocketIOStatus = memo(() => {
         className='w-full justify-start'
         onClick={() => setOpen(true)}
       >
-        <HardDriveDownload /> <span className='ml-2'>Socket.io</span>
+        <HardDriveDownload
+          aria-hidden='true'
+          className='w-5 h-5 mr-2'
+        /> Socket.io
         <span className='flex-1'></span>
         {icon}
       </Button>

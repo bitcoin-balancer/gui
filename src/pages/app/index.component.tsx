@@ -86,26 +86,26 @@ const App = () => {
         active: NavService.dashboard() === pathname,
         name: 'Dashboard',
         path: NavService.dashboard(),
-        icon: <House aria-hidden='true' />,
+        icon: <House className='w-5 h-5' aria-hidden='true' />,
       },
       {
         active: NavService.positions() === pathname,
         name: 'Positions',
         path: NavService.positions(),
-        icon: <ArrowLeftRight aria-hidden='true' />,
+        icon: <ArrowLeftRight className='w-5 h-5' aria-hidden='true' />,
       },
       {
         active: NavService.server() === pathname,
         name: 'Server',
         path: NavService.server(),
-        icon: <Server aria-hidden='true' />,
+        icon: <Server className='w-5 h-5' aria-hidden='true' />,
         badge: typeof unreadAPIErrors === 'number' ? formatBadgeCount(unreadAPIErrors) : '0',
       },
       {
         active: NavService.adjustments() === pathname,
         name: 'Adjustments',
         path: NavService.adjustments(),
-        icon: <SlidersHorizontal aria-hidden='true' />,
+        icon: <SlidersHorizontal className='w-5 h-5' aria-hidden='true' />,
       },
     ]),
     [pathname, unreadAPIErrors],
@@ -192,7 +192,12 @@ const App = () => {
               <ToastAction
                 altText='Update platform'
                 onClick={() => navigate(NavService.platformUpdate())}
-              ><CloudDownload aria-hidden='true' /></ToastAction>,
+              >
+                <CloudDownload
+                  aria-hidden='true'
+                  className='w-5 h-5'
+                />
+              </ToastAction>,
             duration: APP_UPDATER_DURATION,
           });
         }, APP_UPDATER_DELAY);

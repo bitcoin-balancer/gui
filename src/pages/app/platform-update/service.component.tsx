@@ -84,16 +84,31 @@ const Service = memo(({
             <p>The {service} service is up to date</p>
           </TooltipContent>
         </Tooltip>
-        : <Button
-          variant='ghost'
-          aria-label='Update application'
-          onClick={() => updateService(service)}
-        >
-          <CloudDownload aria-hidden='true' />
-          <span
-            className='ml-2 hidden sm:inline'
-          >Update</span>
-        </Button>
+        : <>
+          <Button
+            className='sm:hidden'
+            variant='ghost'
+            size='icon'
+            aria-label='Update application'
+            onClick={() => updateService(service)}
+          >
+            <CloudDownload
+              aria-hidden='true'
+              className='w-5 h-5'
+            />
+          </Button>
+          <Button
+            className='hidden sm:flex'
+            variant='ghost'
+            aria-label='Update application'
+            onClick={() => updateService(service)}
+          >
+            <CloudDownload
+              aria-hidden='true'
+              className='w-5 h-5 mr-2'
+            /> Update
+          </Button>
+        </>
     }
   </article>
 ));

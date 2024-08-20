@@ -244,13 +244,23 @@ const IPBlacklist = () => {
               className='sm:hidden'
               onClick={() => setActiveDialog(null)}
               disabled={typeof busyRecord === 'number'}
-            ><GlobeLock aria-hidden='true' /></Button>
+            >
+              <GlobeLock
+                aria-hidden='true'
+                className='w-5 h-5'
+              />
+            </Button>
             <Button
               aria-label='Register IP Address to the blacklist'
               className='hidden sm:flex'
               onClick={() => setActiveDialog(null)}
               disabled={typeof busyRecord === 'number'}
-            ><GlobeLock aria-hidden='true' className='mr-2' /> Register IP</Button>
+            >
+              <GlobeLock
+                aria-hidden='true'
+                className='w-5 h-5 mr-2'
+              /> Register IP
+            </Button>
           </header>
 
         {/* *******

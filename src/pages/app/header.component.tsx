@@ -222,7 +222,7 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
               variant='ghost'
               aria-label='Side Navigation Menu'
               size={breakpoint === 'xs' || breakpoint === 'sm' ? 'icon' : 'default'}
-            ><Menu aria-hidden='true' /></Button>
+            ><Menu className='w-5 h-5' aria-hidden='true' /></Button>
           </div>
         </SheetTrigger>
 
@@ -292,20 +292,31 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
               className='w-full justify-start'
               onClick={() => navigateFromSidenav(NavService.ipBlacklist())}
               disabled={pathname === NavService.ipBlacklist()}
-            ><EarthLock /> <span className='ml-2'>IP address blacklist</span></Button>
+            >
+              <EarthLock
+                aria-hidden='true'
+                className='w-5 h-5 mr-2'
+              /> IP address blacklist</Button>
             <Button
               variant='ghost'
               className='w-full justify-start'
               onClick={() => navigateFromSidenav(NavService.users())}
               disabled={pathname === NavService.users()}
-            ><Users /> <span className='ml-2'>Users</span></Button>
+            >
+              <Users
+                aria-hidden='true'
+                className='w-5 h-5 mr-2'
+              /> Users</Button>
             <Button
               variant='ghost'
               className='w-full justify-start'
               onClick={() => navigateFromSidenav(NavService.platformUpdate())}
               disabled={pathname === NavService.platformUpdate()}
             >
-              <CloudDownload /> <span className='ml-2'>Platform update</span>
+              <CloudDownload
+                aria-hidden='true'
+                className='w-5 h-5 mr-2'
+              /> Platform update
               <span className='flex-1'></span>
               {
                 availableUpdates !== null
@@ -325,18 +336,30 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
               variant='ghost'
               className='w-full justify-start'
               onClick={NavService.createNewInstance}
-            ><ExternalLink /> <span className='ml-2'>Create new instance</span></Button>
+            >
+              <ExternalLink
+                aria-hidden='true'
+                className='w-5 h-5 mr-2'
+              /> Create new instance</Button>
             <Button
               variant='ghost'
               className='w-full justify-start'
               onClick={() => navigateFromSidenav(NavService.landing())}
               disabled={pathname === NavService.landing()}
-            ><FlaskConical /> <span className='ml-2'>About the project</span></Button>
+            >
+              <FlaskConical
+                aria-hidden='true'
+                className='w-5 h-5 mr-2'
+              /> About the project</Button>
             <Button
               variant='ghost'
               className='w-full justify-start'
               onClick={NavService.openGitHubPage}
-            ><Github /> <span className='ml-2'>View on GitHub</span></Button>
+            >
+              <Github
+                aria-hidden='true'
+                className='w-5 h-5 mr-2'
+              /> View on GitHub</Button>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
               <Button
@@ -344,7 +367,10 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
                 className='w-full justify-start'
                 disabled={isSigningOut}
               >
-                <LogOut /> <span className='ml-2'>Sign out</span>
+                <LogOut
+                aria-hidden='true'
+                className='w-5 h-5 mr-2'
+              /> Sign out
                 <span className='flex-1'></span>
                 {
                   isSigningOut

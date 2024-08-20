@@ -26,7 +26,7 @@ const getComponentElements = (
   size: 'icon' | 'default',
 ): { icon: JSX.Element, badge: JSX.Element | null } => {
   // init values
-  let icon: JSX.Element = <Bell aria-hidden='true' />;
+  let icon: JSX.Element = <Bell className='w-5 h-5' aria-hidden='true' />;
   let badgeClassName: string = '';
 
   // proceed if there are unread notifications

@@ -6,9 +6,20 @@ import {
   Fragment,
   useCallback,
 } from 'react';
-import { Menu, Trash, RefreshCcw } from 'lucide-react';
+import {
+  Menu,
+  Trash,
+  RefreshCcw,
+  EllipsisVertical,
+} from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Card, CardContent } from '@/shared/shadcn/components/ui/card.tsx';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/shared/shadcn/components/ui/dropdown-menu.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import { delay, errorToast } from '@/shared/services/utils/index.service.ts';
 import { APIErrorService, IAPIError } from '@/shared/backend/api-error/index.service.ts';
@@ -162,27 +173,62 @@ const APIErrors = memo(({ setSidenavOpen }: IServerComponentProps) => {
             >API Errors</h1>
             <span className='flex-1'></span>
 
+            {/* *****************
+              * DESKTOP ACTIONS *
+              ***************** */}
             <Button
-              variant='ghost'
-              size='icon'
+              variant='outline'
               disabled={refetching}
               onClick={refetchData}
-              className='mr-2'
+              className='mr-2 hidden sm:flex'
               aria-label='Refetch the API Errors'
-            ><RefreshCcw aria-hidden='true' /></Button>
-
+            >
+              <RefreshCcw
+                aria-hidden='true'
+                className='w-4 h-4 mr-2'
+              /> Refresh
+            </Button>
             <Button
               onClick={deleteAll}
               disabled={isSubmitting || data.length === 0 || refetching}
               className='hidden sm:flex'
-            ><Trash aria-hidden='true' className='mr-2' /> Delete all</Button>
-            <Button
-              onClick={deleteAll}
-              disabled={isSubmitting || data.length === 0 || refetching}
-              className='sm:hidden'
-              size='icon'
-              aria-label='Delete all of the API Errors'
-            ><Trash aria-hidden='true' /></Button>
+            >
+              <Trash
+                aria-hidden='true'
+                className='w-4 h-4 mr-2'
+              /> Delete all
+            </Button>
+
+            {/* ****************
+              * MOBILE ACTIONS *
+              **************** */}
+            <DropdownMenu>
+              <DropdownMenuTrigger
+                className='sm:hidden'
+                disabled={isSubmitting || refetching}
+              ><EllipsisVertical aria-hidden='true'/></DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem
+                  onClick={refetchData}
+                  aria-label='Refetch the API Errors'
+                >
+                  <RefreshCcw
+                    aria-hidden='true'
+                    className='w-4 h-4 mr-2'
+                  /> Refresh
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={deleteAll}
+                  disabled={data.length === 0}
+                  aria-label='Delete all of the API Errors'
+                >
+                  <Trash
+                    aria-hidden='true'
+                    className='w-4 h-4 mr-2'
+                  /> Delete all
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </header>
 
 
