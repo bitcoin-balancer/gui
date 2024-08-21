@@ -1,4 +1,4 @@
-import { IState, ISplitStateID } from '@/shared/backend/market-state/shared/types.ts';
+import { IState, ISplitStateID, ISplitStateItem } from '@/shared/backend/market-state/shared/types.ts';
 import { IWindowState } from '@/shared/backend/market-state/window/index.service.ts';
 
 /* ************************************************************************************************
@@ -15,8 +15,13 @@ type IMarketStateService = {
   STATE_NAMES: IStateNames;
   SPLITS: ISplitStateID[];
   SPLIT_NAMES: ISplitNames;
+  SPLIT_VALUES: ISplitValues;
 
-  // ...
+  // helpers
+  applySplit: (
+    series: number[] | ISplitStateItem[],
+    splitID: ISplitStateID,
+  ) => number[] | ISplitStateItem[];
 };
 
 
@@ -46,7 +51,7 @@ type IMarketState = {
 
 /**
  * State Names
- * ...
+ * The readable names given to each supported state. For example: 'Increasing', 'Decreasing', etc...
  */
 type IStateNames = {
   [key in IState]: string
@@ -54,12 +59,19 @@ type IStateNames = {
 
 /**
  * Split Names
- * ...
+ * The names of the splits. For example: 's100' -> '100%'
  */
 type ISplitNames = {
   [key in ISplitStateID]: string;
 };
 
+/**
+ * Split Values
+ * The numeric value used to apply a split to a sequence of values.
+ */
+type ISplitValues = {
+  [key in ISplitStateID]: number;
+};
 
 
 
@@ -77,4 +89,5 @@ export type {
   // gui specific
   IStateNames,
   ISplitNames,
+  ISplitValues,
 };

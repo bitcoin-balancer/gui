@@ -1,9 +1,10 @@
-import { IState, ISplitStateID } from '@/shared/backend/market-state/shared/types.ts';
+import { IState, ISplitStateID, ISplitStateItem } from '@/shared/backend/market-state/shared/types.ts';
 import {
   IMarketStateService,
   IMarketState,
   IStateNames,
   ISplitNames,
+  ISplitValues,
 } from '@/shared/backend/market-state/types.ts';
 
 /* ************************************************************************************************
@@ -45,17 +46,39 @@ const marketStateServiceFactory = (): IMarketStateService => {
     s2: '2%',
   };
 
+  // object containing all supported splits and their values
+  const SPLIT_VALUES: ISplitValues = {
+    s100: 1,
+    s75: 0.75,
+    s50: 0.5,
+    s25: 0.25,
+    s15: 0.15,
+    s10: 0.1,
+    s5: 0.05,
+    s2: 0.02,
+  };
+
 
 
 
 
   /* **********************************************************************************************
-   *                                            ACTIONS                                           *
+   *                                            HELPERS                                           *
    ********************************************************************************************** */
 
-  const someAction = () => {
-    // ...
-  };
+  /**
+   * Applies a split by ID to a series and returns it.
+   * @param series
+   * @param splitID
+   * @returns number[] | ISplitStateItem[]
+   */
+  const applySplit = (
+    series: number[] | ISplitStateItem[],
+    splitID: ISplitStateID,
+  ): number[] | ISplitStateItem[] => (
+    series.slice(series.length - Math.ceil(series.length * SPLIT_VALUES[splitID]))
+  );
+
 
 
 
@@ -68,9 +91,10 @@ const marketStateServiceFactory = (): IMarketStateService => {
     STATE_NAMES,
     SPLITS,
     SPLIT_NAMES,
+    SPLIT_VALUES,
 
-    // actions
-    someAction,
+    // helpers
+    applySplit,
   });
 };
 

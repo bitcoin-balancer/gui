@@ -35,7 +35,7 @@ const SplitTileButton = memo(({ id, split, displayWindowDialog }: ISplitTileButt
     <Tooltip>
       <TooltipTrigger
         onClick={() => displayWindowDialog(id)}
-        className={`text-white text-xs sm:text-sm py-2 px-0 sm:px-2 ${ColorService.getBackgroundClassByState(split.state)} hover:opacity-80`}
+        className={`text-white text-xs sm:text-sm py-2 px-0 sm:px-2 font-semibold ${ColorService.getBackgroundClassByState(split.state)} hover:opacity-80`}
       >
         {splitChange}
       </TooltipTrigger>
