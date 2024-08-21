@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from 'react';
+import { useMemo, useCallback, useState } from 'react';
 import {
   Card,
   CardContent,
@@ -8,12 +8,14 @@ import {
 } from '@/shared/shadcn/components/ui/card.tsx';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/shared/shadcn/components/ui/tooltip.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
+import { ISplitStateID } from '@/shared/backend/market-state/shared/types.ts';
 import { MarketStateService } from '@/shared/backend/market-state/index.service.ts';
 import { formatDate } from '@/shared/services/transformations/index.service.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
 import StateIcon from '@/shared/components/state-icon/index.component.tsx';
 import SplitTileButton from '@/pages/app/dashboard/window/split-tile-button.component.tsx';
 import CandlestickChart from '@/shared/components/charts/candlestick-chart/index.component.tsx';
+import WindowSplitStatesDialog, { IWindowStateDialogData } from './window-split-states-dialog/index.component.tsx';
 import { IComponentProps } from '@/pages/app/dashboard/window/types.ts';
 
 /* ************************************************************************************************
@@ -36,7 +38,7 @@ const WindowState = ({ windowState }: IComponentProps) => {
    ********************************************************************************************** */
   const breakpoint = useMediaQueryBreakpoint();
   const openInfoDialog = useBoundStore((state) => state.openInfoDialog);
-
+  const [activeDialog, setActiveDialog] = useState<IWindowStateDialogData | undefined>(undefined);
 
 
 
@@ -62,6 +64,8 @@ const WindowState = ({ windowState }: IComponentProps) => {
    *                                         SIDE EFFECTS                                         *
    ********************************************************************************************** */
 
+  // ...
+
 
 
 
@@ -71,11 +75,19 @@ const WindowState = ({ windowState }: IComponentProps) => {
    ********************************************************************************************** */
 
   /**
-   * Displays the window module dialog.
+   * Opens the window state dialog an activates the split ID.
+   * @param id
    */
-  const displayWindowDialog = useCallback(
-    (): void => {
+  const openWindowStateDialog = (id: ISplitStateID): void => {
+    setActiveDialog({ activeID: id, windowState });
+  };
 
+  /**
+   * Closes the window state dialog.
+   */
+  const closeWindowStateDialog = useCallback(
+    (): void => {
+      setActiveDialog(undefined);
     },
     [],
   );
@@ -125,58 +137,76 @@ const WindowState = ({ windowState }: IComponentProps) => {
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
-    <Card>
-      <CardHeader
-        className='flex flex-col md:flex-row justify-start'
-      >
-        <Tooltip>
-          <TooltipTrigger
-            onClick={displayWindowInfo}
-            aria-label='Display information about how the Window Module works'
-            className='flex flex-row justify-start items-center md:flex-col md:justify-start md:items-start'
-          >
-            <CardTitle
-              className='flex justify-start items-center gap-2'
-            >
-              Window
-              <StateIcon state={windowState.state} />
-            </CardTitle>
-
-            <span className='flex-1 md:hidden'></span>
-
-            <CardDescription>{currentBar}</CardDescription>
-          </TooltipTrigger>
-          <TooltipContent><p>More info</p></TooltipContent>
-        </Tooltip>
-
-        <span
-          className='flex-1 hidden md:inline'
-        ></span>
-
-        <div
-          className='grid grid-cols-4 gap-1 pt-3 md:pt-0 w-full md:w-7/12 xl:w-6/12 2xl:w-5/12'
+    <>
+      {/* *******************
+        * WINDOW STATE CARD *
+        ******************* */}
+      <Card>
+        <CardHeader
+          className='flex flex-col md:flex-row justify-start'
         >
-          {MarketStateService.SPLITS.map((split) => (
-            <SplitTileButton
-              key={split}
-              id={split}
-              split={windowState.splitStates[split]}
-              displayWindowDialog={displayWindowDialog}
-            />
-          ))}
-        </div>
-      </CardHeader>
-      <CardContent
-        className='pt-5 md:pt-0'
-      >
-        <CandlestickChart
-          height={580}
-          data={windowState.window}
-          state={windowState.state}
-          prettifyY={true}
+          <Tooltip>
+            <TooltipTrigger
+              onClick={displayWindowInfo}
+              aria-label='Display information about how the Window Module works'
+              className='flex flex-row justify-start items-center md:flex-col md:justify-start md:items-start'
+            >
+              <CardTitle
+                className='flex justify-start items-center gap-2'
+              >
+                Window
+                <StateIcon state={windowState.state} />
+              </CardTitle>
+
+              <span className='flex-1 md:hidden'></span>
+
+              <CardDescription>{currentBar}</CardDescription>
+            </TooltipTrigger>
+            <TooltipContent><p>More info</p></TooltipContent>
+          </Tooltip>
+
+          <span
+            className='flex-1 hidden md:inline'
+          ></span>
+
+          <div
+            className='grid grid-cols-4 gap-1 pt-3 md:pt-0 w-full md:w-7/12 xl:w-6/12 2xl:w-5/12'
+          >
+            {MarketStateService.SPLITS.map((split) => (
+              <SplitTileButton
+                key={split}
+                id={split}
+                split={windowState.splitStates[split]}
+                displayWindowDialog={() => openWindowStateDialog(split)}
+              />
+            ))}
+          </div>
+        </CardHeader>
+        <CardContent
+          className='pt-5 md:pt-0'
+        >
+          <CandlestickChart
+            height={580}
+            data={windowState.window}
+            state={windowState.state}
+            prettifyY={true}
+          />
+        </CardContent>
+      </Card>
+
+
+
+      {/* *********************
+        * WINDOW STATE DIALOG *
+        ********************* */}
+      {
+        activeDialog !== undefined
+        && <WindowSplitStatesDialog
+          data={activeDialog}
+          closeDialog={closeWindowStateDialog}
         />
-      </CardContent>
-    </Card>
+      }
+    </>
   );
 };
 
