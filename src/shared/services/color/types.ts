@@ -11,6 +11,7 @@ import { IState } from '@/shared/backend/market-state/index.service.ts';
 type IColorService = {
   // theme colors
   PRIMARY: string;
+  PRIMARY_RGB: string;
   SECONDARY: string;
   SUCCESS: string;
   ERROR: string;
@@ -29,6 +30,7 @@ type IColorService = {
   DECREASE_1: string;
   DECREASE_2: string;
   STATE: IStateColors;
+  STATE_RGB: IStateColors;
 
   // state helpers
   getBackgroundClassByState: (state: IState) => string;

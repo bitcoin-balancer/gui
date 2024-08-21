@@ -4,7 +4,6 @@ import {
   toSeriesItems,
   buildChartOptions,
   getColorByState,
-  /* getBarColorsByState, */
 } from '@/shared/components/charts/line-chart/utils.ts';
 import {
   IComponentProps,

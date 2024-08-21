@@ -18,6 +18,7 @@ const colorServiceFactory = (): IColorService => {
 
   // theme colors
   const PRIMARY = '#0C0C0C';
+  const PRIMARY_RGB = '12, 12, 12';
   const SECONDARY = '#1d1c1c';
   const SUCCESS = '#1B5E20';
   const ERROR = '#B71C1C';
@@ -53,6 +54,13 @@ const colorServiceFactory = (): IColorService => {
     0: STATELESS,
     1: INCREASE_1,
     2: INCREASE_2,
+  };
+  const STATE_RGB: IStateColors = {
+    '-2': '127, 29, 29',
+    '-1': '220, 38, 38',
+    0: '100, 116, 139',
+    1: '15, 118, 110',
+    2: '19, 78, 74',
   };
 
 
@@ -92,6 +100,7 @@ const colorServiceFactory = (): IColorService => {
   return Object.freeze({
     // theme colors
     PRIMARY,
+    PRIMARY_RGB,
     SECONDARY,
     SUCCESS,
     ERROR,
@@ -110,6 +119,7 @@ const colorServiceFactory = (): IColorService => {
     DECREASE_1,
     DECREASE_2,
     STATE,
+    STATE_RGB,
 
     // state helpers
     getBackgroundClassByState,

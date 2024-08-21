@@ -90,7 +90,17 @@ const __getLineChartColor = (
 const __getAreaChartColor = (
   state: IState | undefined,
 ): DeepPartial<AreaStyleOptions & SeriesOptionsCommon> => (
-  { lineColor: '#2962FF', topColor: '#2962FF', bottomColor: 'rgba(41, 98, 255, 0.28)' }
+  state === undefined
+    ? {
+      lineColor: ColorService.PRIMARY,
+      topColor: ColorService.PRIMARY,
+      bottomColor: `rgba(${ColorService.PRIMARY_RGB}, 0.28)`,
+    }
+    : {
+      lineColor: ColorService.STATE[state],
+      topColor: ColorService.STATE[state],
+      bottomColor: `rgba(${ColorService.STATE_RGB[state]}, 0.28)`,
+    }
 );
 const getColorByState = (
   kind: IChartKind,
@@ -98,6 +108,7 @@ const getColorByState = (
 ): DeepPartial<(LineStyleOptions | AreaStyleOptions) & SeriesOptionsCommon> => (
   kind === 'line' ? __getLineChartColor(state) : __getAreaChartColor(state)
 );
+
 
 
 
