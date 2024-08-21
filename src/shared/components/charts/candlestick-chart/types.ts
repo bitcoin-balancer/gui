@@ -55,21 +55,23 @@ type ICandlestickSeriesAPI = ISeriesApi<SeriesType, HorzScaleItem>;
  */
 
 type IChartAPIRef = {
-  //
+  // the instance of the chart
   __api: IChartApi | undefined;
 
-  //
+  // the instance of the series
   __series: ISeriesApi<'Candlestick'> | undefined;
 
-  //
+  // instantiates (only once) and returns the chart instance
   api: () => IChartApi;
 
-  //
+  // instantiates (only once) and returns the series instance
   series: () => ICandlestickSeriesAPI;
 
-  //
+  // fires whenever new data comes into existance
   onSeriesChanges: (newData: ICompactCandlestickRecords) => void;
 };
+
+
 
 
 
