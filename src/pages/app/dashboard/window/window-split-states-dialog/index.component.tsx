@@ -26,6 +26,7 @@ import {
 } from '@/shared/services/transformers/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
 import StateIcon from '@/shared/components/state-icon/index.component.tsx';
+import LineChart from '@/shared/components/charts/line-chart/index.component.tsx';
 import {
   IComponentProps,
   IWindowStateDialogData,
@@ -213,7 +214,14 @@ const WindowSplitStatesDialog = memo(({
         {/* *******
           * CHART *
           ******* */}
-
+        <LineChart
+          key={activeSplitID}
+          kind='line'
+          height={400}
+          data={activeSplit}
+          state={windowState.splitStates[activeSplitID].state}
+          prettifyY={true}
+        />
 
 
       </DialogContent>

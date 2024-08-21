@@ -1,25 +1,26 @@
 import { useRef, useLayoutEffect, useEffect } from 'react';
 import { createChart, UTCTimestamp, IChartApi } from 'lightweight-charts';
 import {
-  toBars,
+  toSeriesItems,
   buildChartOptions,
-  getBarColorsByState,
-} from '@/shared/components/charts/candlestick-chart/utils.ts';
+  /* getBarColorsByState, */
+} from '@/shared/components/charts/line-chart/utils.ts';
 import {
   IComponentProps,
   IChartAPIRef,
-  ICandlestickSeriesAPI,
-} from '@/shared/components/charts/candlestick-chart/types.ts';
+  ILineSeriesAPI,
+} from '@/shared/components/charts/line-chart/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
 
 /**
- * Candlestick Chart Component
+ * Line Chart Component
  * Component in charge of rendering a Candlesticks Chart.
  */
-const CandlestickChart = ({
+const LineChart = ({
+  kind = 'line',
   height,
   data,
   state,
@@ -47,16 +48,18 @@ const CandlestickChart = ({
     },
 
     // inits (only once) and returns the instance of the Series API
-    series(): ICandlestickSeriesAPI {
+    series(): ILineSeriesAPI {
       if (!this.__series) {
-        const { upColor, downColor } = getBarColorsByState(state);
-        this.__series = this.api().addCandlestickSeries({
-          upColor,
-          downColor,
-          borderVisible: false,
-          wickUpColor: upColor,
-          wickDownColor: downColor,
-        });
+        // const { upColor, downColor } = getBarColorsByState(state);
+        if (kind === 'line') {
+          this.__series = this.api().addLineSeries({ color: '#2962FF' });
+        } else {
+          this.__series = this.api().addAreaSeries({
+            lineColor: '#2962FF',
+            topColor: '#2962FF',
+            bottomColor: 'rgba(41, 98, 255, 0.28)',
+          });
+        }
       }
       return this.__series;
     },
@@ -67,35 +70,26 @@ const CandlestickChart = ({
       const seriesData = this.series().data();
       if (!seriesData.length) {
         // init the bars
-        series.setData(toBars(newData));
+        series.setData(toSeriesItems(newData));
       } else if (
-        seriesData[seriesData.length - 1].time !== newData.id[newData.id.length - 1] / 1000
+        seriesData[seriesData.length - 1].time !== newData[newData.length - 1].x / 1000
       ) {
-        // update the most recent bar
+        // update the most recent item
         series.update({
-          time: newData.id[newData.id.length - 2] / 1000 as UTCTimestamp,
-          open: newData.open[newData.id.length - 2],
-          high: newData.high[newData.id.length - 2],
-          low: newData.low[newData.id.length - 2],
-          close: newData.close[newData.id.length - 2],
+          time: newData[newData.length - 2].x / 1000 as UTCTimestamp,
+          value: newData[newData.length - 2].y,
         });
 
-        // add the new bar
+        // add the new item
         series.update({
-          time: newData.id[newData.id.length - 1] / 1000 as UTCTimestamp,
-          open: newData.open[newData.id.length - 1],
-          high: newData.high[newData.id.length - 1],
-          low: newData.low[newData.id.length - 1],
-          close: newData.close[newData.id.length - 1],
+          time: newData[newData.length - 1].x / 1000 as UTCTimestamp,
+          value: newData[newData.length - 1].y,
         });
       } else {
-        // update current bar
+        // update current item
         series.update({
-          time: newData.id[newData.id.length - 1] / 1000 as UTCTimestamp,
-          open: newData.open[newData.id.length - 1],
-          high: newData.high[newData.id.length - 1],
-          low: newData.low[newData.id.length - 1],
-          close: newData.close[newData.id.length - 1],
+          time: newData[newData.length - 1].x / 1000 as UTCTimestamp,
+          value: newData[newData.length - 1].y,
         });
       }
     },
@@ -128,13 +122,8 @@ const CandlestickChart = ({
    * Fires whenever the state changes and set the appropriate bar colors.
    */
   useEffect(() => {
-    const { upColor, downColor } = getBarColorsByState(state);
-    chartAPIRef.current.series().applyOptions({
-      upColor,
-      downColor,
-      wickUpColor: upColor,
-      wickDownColor: downColor,
-    });
+    // const { upColor, downColor } = getBarColorsByState(state);
+    chartAPIRef.current.series().applyOptions({ color: '#2962FF' });
   }, [state]);
 
   /**
@@ -159,4 +148,4 @@ const CandlestickChart = ({
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export default CandlestickChart;
+export default LineChart;

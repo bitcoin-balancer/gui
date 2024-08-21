@@ -8,7 +8,7 @@ import {
 } from '@/shared/shadcn/components/ui/card.tsx';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/shared/shadcn/components/ui/tooltip.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
-import { MarketStateService, type ISplitStateID } from '@/shared/backend/market-state/index.service.ts';
+import { MarketStateService, ISplitStateID } from '@/shared/backend/market-state/index.service.ts';
 import { formatDate } from '@/shared/services/transformers/index.service.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
 import StateIcon from '@/shared/components/state-icon/index.component.tsx';
