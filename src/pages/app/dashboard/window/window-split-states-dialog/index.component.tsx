@@ -169,7 +169,7 @@ const WindowSplitStatesDialog = memo(({
     >
 
       <DialogContent
-        className='max-w-[700px]'
+        className='max-w-[900px]'
       >
 
         {/* ***************
