@@ -15,12 +15,18 @@ import {
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { ICompactCandlestickRecords } from '@/shared/backend/candlestick/index.service.ts';
-import { ISplitStateID, ISplitStateItem } from '@/shared/backend/market-state/shared/types.ts';
-import { MarketStateService } from '@/shared/backend/market-state/index.service.ts';
+import {
+  MarketStateService,
+  type ISplitStateID,
+  type ISplitStateItem,
+} from '@/shared/backend/market-state/index.service.ts';
 import { formatDate } from '@/shared/services/transformations/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
-import StateIcon from '@/shared/components/state-icon/index.component.ts';
-import { IComponentProps, IWindowStateDialogData } from '@/pages/app/dashboard/window/window-split-states-dialog/types.ts';
+import StateIcon from '@/shared/components/state-icon/index.component.tsx';
+import {
+  IComponentProps,
+  IWindowStateDialogData,
+} from '@/pages/app/dashboard/window/window-split-states-dialog/types.ts';
 
 /* ************************************************************************************************
  *                                            HELPERS                                             *

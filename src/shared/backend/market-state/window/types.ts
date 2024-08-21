@@ -1,6 +1,6 @@
 import { ICompactCandlestickRecords } from '@/shared/backend/candlestick/index.service.ts';
 import { ICandlestickInterval } from '@/shared/backend/exchange/index.service.ts';
-import { IState, ISplitStates } from '@/shared/backend/market-state/shared/types.ts';
+import { IState, ISplitStates } from '@/shared/backend/market-state/index.service.ts';
 
 /* ************************************************************************************************
  *                                            SERVICE                                             *

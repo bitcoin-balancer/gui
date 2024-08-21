@@ -1,6 +1,10 @@
-import { IState, ISplitStateID, ISplitStateItem } from '@/shared/backend/market-state/shared/types.ts';
 import {
   IMarketStateService,
+  IState,
+  ISplitStateID,
+  ISplitStateItem,
+  ISplitStateResult,
+  ISplitStates,
   IMarketState,
   IStateNames,
   ISplitNames,
@@ -120,5 +124,9 @@ export {
 
   // types
   type IState,
+  type ISplitStateID,
+  type ISplitStateItem,
+  type ISplitStateResult,
+  type ISplitStates,
   type IMarketState,
 };

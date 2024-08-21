@@ -1,4 +1,4 @@
-import { ISplitStateID } from '@/shared/backend/market-state/shared/types.ts';
+import { ISplitStateID } from '@/shared/backend/market-state/index.service.ts';
 import { IWindowState } from '@/shared/backend/market-state/window/index.service.ts';
 
 /* ************************************************************************************************

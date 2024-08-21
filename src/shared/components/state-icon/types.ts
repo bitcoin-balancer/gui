@@ -1,4 +1,4 @@
-import { IState } from '@/shared/backend/market-state/shared/types.ts';
+import { IState } from '@/shared/backend/market-state/index.service.ts';
 
 /* ************************************************************************************************
  *                                             TYPES                                              *
