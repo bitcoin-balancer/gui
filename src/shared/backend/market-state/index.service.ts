@@ -9,6 +9,7 @@ import {
   IStateNames,
   ISplitNames,
   ISplitValues,
+  ISplitPercentageChanges,
 } from '@/shared/backend/market-state/types.ts';
 
 /* ************************************************************************************************
@@ -129,4 +130,5 @@ export {
   type ISplitStateResult,
   type ISplitStates,
   type IMarketState,
+  type ISplitPercentageChanges,
 };

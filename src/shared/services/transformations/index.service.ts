@@ -1,4 +1,10 @@
 import { format } from 'date-fns';
+import { processValue, prettifyValue } from 'bignumber-utils';
+import {
+  ISplitPercentageChanges,
+  ISplitStateID,
+  ISplitStates,
+} from '@/shared/backend/market-state/index.service.ts';
 import { IDateFormat } from '@/shared/services/transformations/types.ts';
 
 /* ************************************************************************************************
@@ -93,6 +99,41 @@ const formatFileSize = (value: unknown, precision: number = 1): string => {
   return '0 B';
 };
 
+/**
+ * Turns a percentage change value into a readable string.
+ * @param value
+ * @param decimalPlaces?
+ * @returns string
+ */
+const formatPercentageChange = (value: number, decimalPlaces: number = 2): string => (
+  `${value > 0 ? '+' : ''}${processValue(value, { decimalPlaces })}%`
+);
+
+/**
+ * Prettifies a dollar amount and returns the string representation.
+ * @param value
+ * @param decimalPlaces?
+ * @returns string
+ */
+const formatDollarAmount = (value: number, decimalPlaces: number = 2): string => (
+  prettifyValue(value, { processing: { decimalPlaces }, format: { prefix: '$' } })
+);
+
+/**
+ * Prettifies the values in a split states object and returns them.
+ * @param splitStates
+ * @returns ISplitPercentageChanges
+ */
+const formatSplitStateChanges = (splitStates: ISplitStates): ISplitPercentageChanges => (
+  Object.keys(splitStates).reduce(
+    (prev, current) => ({
+      ...prev,
+      [current]: formatPercentageChange(splitStates[current as ISplitStateID].change, 1),
+    }),
+    {} as ISplitPercentageChanges,
+  )
+);
+
 
 
 
@@ -104,4 +145,7 @@ export {
   formatBadgeCount,
   formatDate,
   formatFileSize,
+  formatPercentageChange,
+  formatDollarAmount,
+  formatSplitStateChanges,
 };

@@ -1,7 +1,7 @@
 import { memo, useMemo } from 'react';
-import { processValue } from 'bignumber-utils';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/shared/shadcn/components/ui/tooltip.tsx';
 import { MarketStateService } from '@/shared/backend/market-state/index.service.ts';
+import { formatPercentageChange } from '@/shared/services/transformations/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
 import { ISplitTileButtonProps } from '@/pages/app/dashboard/window/types.ts';
 
@@ -19,10 +19,10 @@ const SplitTileButton = memo(({ id, split, displayWindowDialog }: ISplitTileButt
    ********************************************************************************************** */
 
   // the change% experienced by the split
-  const splitChange = useMemo(
-    () => `${split.change > 0 ? '+' : ''}${processValue(split.change, { decimalPlaces: 1 })}%`,
-    [split.change],
-  );
+  const splitChange = useMemo(() => formatPercentageChange(split.change, 1), [split.change]);
+
+  // determines the background class that will be applied on the button based on the state
+  const bgClass = useMemo(() => ColorService.getBackgroundClassByState(split.state), [split.state]);
 
 
 
@@ -35,7 +35,7 @@ const SplitTileButton = memo(({ id, split, displayWindowDialog }: ISplitTileButt
     <Tooltip>
       <TooltipTrigger
         onClick={() => displayWindowDialog(id)}
-        className={`text-white text-xs sm:text-sm py-2 px-0 sm:px-2 font-semibold ${ColorService.getBackgroundClassByState(split.state)} hover:opacity-80`}
+        className={`text-white text-xs sm:text-sm py-2 px-0 sm:px-2 font-semibold ${bgClass} hover:opacity-80`}
       >
         {splitChange}
       </TooltipTrigger>

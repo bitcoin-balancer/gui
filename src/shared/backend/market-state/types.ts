@@ -158,6 +158,14 @@ type ISplitValues = {
   [key in ISplitStateID]: number;
 };
 
+/**
+ * Split Percentage Changes
+ * The prettified string that shows the percentage change experienced in a single split.
+ */
+type ISplitPercentageChanges = {
+  [key in ISplitStateID]: string;
+};
+
 
 
 
@@ -187,4 +195,5 @@ export type {
   IStateNames,
   ISplitNames,
   ISplitValues,
+  ISplitPercentageChanges,
 };

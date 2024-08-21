@@ -5,7 +5,6 @@ import {
   useCallback,
   useMemo,
 } from 'react';
-import { prettifyValue, processValue } from 'bignumber-utils';
 import {
   Dialog,
   DialogContent,
@@ -20,7 +19,11 @@ import {
   type ISplitStateID,
   type ISplitStateItem,
 } from '@/shared/backend/market-state/index.service.ts';
-import { formatDate } from '@/shared/services/transformations/index.service.ts';
+import {
+  formatDate,
+  formatDollarAmount,
+  formatSplitStateChanges,
+} from '@/shared/services/transformations/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
 import StateIcon from '@/shared/components/state-icon/index.component.tsx';
 import {
@@ -44,12 +47,6 @@ const transformCompactCandlestickRecords = (
   [] as ISplitStateItem[],
 );
 
-/**
- * Prettifies a split state change.
- * @param change
- * @returns string
- */
-const prettifySplitChange = (change: number): string => `${change > 0 ? '+' : ''}${processValue(change, { decimalPlaces: 1 })}`;
 
 
 
@@ -84,13 +81,7 @@ const WindowSplitStatesDialog = memo(({
 
   // the percentage change experienced by each split
   const splitChanges = useMemo(
-    () => MarketStateService.SPLITS.reduce(
-      (prev, current) => ({
-        ...prev,
-        [current]: prettifySplitChange(windowState.splitStates[current].change),
-      }),
-      {} as { [key in ISplitStateID]: string },
-    ),
+    () => formatSplitStateChanges(windowState.splitStates),
     [windowState.splitStates],
   );
 
@@ -126,15 +117,12 @@ const WindowSplitStatesDialog = memo(({
     openInfoDialog({
       title: 'Window State',
       content: [
-        'DATE RANGE',
+        `DATE RANGE (${windowState.window.id.length} bars)`,
         `${formatDate(windowState.window.id[0], 'datetime-medium')}`,
         `${formatDate(windowState.window.id.at(-1)!, 'datetime-medium')}`,
         '-----',
-        'NUMBER OF ITEMS',
-        `${windowState.window.id.length}`,
-        '-----',
         'CURRENT PRICE',
-        `${prettifyValue(windowState.window.close.at(-1)!, { format: { prefix: '$' } })}`,
+        formatDollarAmount(windowState.window.close.at(-1)!),
       ],
     });
   };
@@ -215,7 +203,7 @@ const WindowSplitStatesDialog = memo(({
               className={` py-2 px-0 sm:px-2 ${ColorService.getBackgroundClassByState(windowState.splitStates[split].state)} ${activeSplitID === split ? 'opacity-60' : 'hover:opacity-80'}`}
               disabled={activeSplitID === split}
             >
-              <p className='text-white text-sm font-semibold'>{splitChanges[split]}%</p>
+              <p className='text-white text-sm font-semibold'>{splitChanges[split]}</p>
               <p className='text-white text-xs font-bold'>{MarketStateService.SPLIT_NAMES[split]}</p>
             </button>
           ))}
