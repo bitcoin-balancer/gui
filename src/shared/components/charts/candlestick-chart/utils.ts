@@ -1,7 +1,7 @@
-import { UTCTimestamp, ChartOptions, DeepPartial } from 'lightweight-charts';
+import { ChartOptions, DeepPartial } from 'lightweight-charts';
 import { ICompactCandlestickRecords } from '@/shared/backend/candlestick/index.service.ts';
 import { IState } from '@/shared/backend/market-state/index.service.ts';
-import { formatDollarAmount } from '@/shared/services/transformers/index.service.ts';
+import { formatDollarAmount, toLocalTime } from '@/shared/services/transformers/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
 import { ICandlestickBar } from '@/shared/components/charts/candlestick-chart/types.ts';
 
@@ -16,7 +16,7 @@ import { ICandlestickBar } from '@/shared/components/charts/candlestick-chart/ty
  */
 const toBars = (records: ICompactCandlestickRecords): ICandlestickBar[] => records.id.map(
   (value, idx) => ({
-    time: value / 1000 as UTCTimestamp,
+    time: toLocalTime(value),
     open: records.open[idx],
     high: records.high[idx],
     low: records.low[idx],

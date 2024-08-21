@@ -1,5 +1,6 @@
 import { useRef, useLayoutEffect, useEffect } from 'react';
 import { createChart, UTCTimestamp, IChartApi } from 'lightweight-charts';
+import { toLocalTime } from '@/shared/services/transformers/index.service.ts';
 import {
   toBars,
   buildChartOptions,
@@ -69,11 +70,11 @@ const CandlestickChart = ({
         // init the bars
         series.setData(toBars(newData));
       } else if (
-        seriesData[seriesData.length - 1].time !== newData.id[newData.id.length - 1] / 1000
+        seriesData[seriesData.length - 1].time !== toLocalTime(newData.id[newData.id.length - 1])
       ) {
         // update the most recent bar
         series.update({
-          time: newData.id[newData.id.length - 2] / 1000 as UTCTimestamp,
+          time: toLocalTime(newData.id[newData.id.length - 2]),
           open: newData.open[newData.id.length - 2],
           high: newData.high[newData.id.length - 2],
           low: newData.low[newData.id.length - 2],
@@ -82,7 +83,7 @@ const CandlestickChart = ({
 
         // add the new bar
         series.update({
-          time: newData.id[newData.id.length - 1] / 1000 as UTCTimestamp,
+          time: toLocalTime(newData.id[newData.id.length - 1]),
           open: newData.open[newData.id.length - 1],
           high: newData.high[newData.id.length - 1],
           low: newData.low[newData.id.length - 1],
@@ -91,7 +92,7 @@ const CandlestickChart = ({
       } else {
         // update current bar
         series.update({
-          time: newData.id[newData.id.length - 1] / 1000 as UTCTimestamp,
+          time: toLocalTime(newData.id[newData.id.length - 1]),
           open: newData.open[newData.id.length - 1],
           high: newData.high[newData.id.length - 1],
           low: newData.low[newData.id.length - 1],

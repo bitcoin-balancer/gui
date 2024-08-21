@@ -1,4 +1,5 @@
 import { format } from 'date-fns';
+import { UTCTimestamp } from 'lightweight-charts';
 import { processValue, prettifyValue } from 'bignumber-utils';
 import {
   ISplitPercentageChanges,
@@ -134,7 +135,25 @@ const formatSplitStateChanges = (splitStates: ISplitStates): ISplitPercentageCha
   )
 );
 
-
+/**
+ * In order for the charts to make use of the local time instead of UTC, the timestamps need to be
+ * processed as lightweight-charts doesn't support timezones.
+ * https://tradingview.github.io/lightweight-charts/docs/time-zones#date-solution
+ * @param originalTime
+ * @returns UTCTimestamp
+ */
+const toLocalTime = (originalTime: number): UTCTimestamp => {
+  const d = new Date(originalTime);
+  return Date.UTC(
+    d.getFullYear(),
+    d.getMonth(),
+    d.getDate(),
+    d.getHours(),
+    d.getMinutes(),
+    d.getSeconds(),
+    d.getMilliseconds(),
+  ) / 1000 as UTCTimestamp;
+};
 
 
 
@@ -148,4 +167,5 @@ export {
   formatPercentageChange,
   formatDollarAmount,
   formatSplitStateChanges,
+  toLocalTime,
 };
