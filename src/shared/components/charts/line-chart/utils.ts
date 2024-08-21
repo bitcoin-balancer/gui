@@ -1,5 +1,4 @@
 import {
-  UTCTimestamp,
   ChartOptions,
   DeepPartial,
   LineStyleOptions,
@@ -7,7 +6,7 @@ import {
   SeriesOptionsCommon,
 } from 'lightweight-charts';
 import { ISplitStateItem, IState } from '@/shared/backend/market-state/index.service.ts';
-import { formatDollarAmount } from '@/shared/services/transformers/index.service.ts';
+import { formatDollarAmount, toLocalTime } from '@/shared/services/transformers/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
 import { IChartKind, ISeriesItem } from '@/shared/components/charts/line-chart/types.ts';
 
@@ -22,7 +21,7 @@ import { IChartKind, ISeriesItem } from '@/shared/components/charts/line-chart/t
  */
 const toSeriesItems = (items: ISplitStateItem[]): ISeriesItem[] => items.map(
   (value) => ({
-    time: value.x / 1000 as UTCTimestamp,
+    time: toLocalTime(value.x),
     value: value.y,
   }),
 );

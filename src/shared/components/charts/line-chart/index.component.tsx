@@ -1,5 +1,6 @@
 import { useRef, useLayoutEffect, useEffect } from 'react';
-import { createChart, UTCTimestamp, IChartApi } from 'lightweight-charts';
+import { createChart, IChartApi } from 'lightweight-charts';
+import { toLocalTime } from '@/shared/services/transformers/index.service.ts';
 import {
   toSeriesItems,
   buildChartOptions,
@@ -68,23 +69,23 @@ const LineChart = ({
         // init the bars
         series.setData(toSeriesItems(newData));
       } else if (
-        seriesData[seriesData.length - 1].time !== newData[newData.length - 1].x / 1000
+        seriesData[seriesData.length - 1].time !== toLocalTime(newData[newData.length - 1].x)
       ) {
         // update the most recent item
         series.update({
-          time: newData[newData.length - 2].x / 1000 as UTCTimestamp,
+          time: toLocalTime(newData[newData.length - 2].x),
           value: newData[newData.length - 2].y,
         });
 
         // add the new item
         series.update({
-          time: newData[newData.length - 1].x / 1000 as UTCTimestamp,
+          time: toLocalTime(newData[newData.length - 1].x),
           value: newData[newData.length - 1].y,
         });
       } else {
         // update current item
         series.update({
-          time: newData[newData.length - 1].x / 1000 as UTCTimestamp,
+          time: toLocalTime(newData[newData.length - 1].x),
           value: newData[newData.length - 1].y,
         });
       }
