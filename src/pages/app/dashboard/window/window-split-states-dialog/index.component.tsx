@@ -7,8 +7,10 @@ import {
   DialogTitle,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
+import { formatDate } from '@/shared/services/transformations/index.service.ts';
 import StateIcon from '@/shared/components/state-icon/index.component';
 import { IComponentProps, IWindowStateDialogData } from '@/pages/app/dashboard/window/window-split-states-dialog/types.ts';
+import { prettifyValue } from 'bignumber-utils';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -18,7 +20,10 @@ import { IComponentProps, IWindowStateDialogData } from '@/pages/app/dashboard/w
  * Window Split States Dialog Component
  * Component in charge of displaying additional information regarding each of the window splits.
  */
-const WindowSplitStatesDialog = memo(({ data, closeDialog }: IComponentProps) => {
+const WindowSplitStatesDialog = memo(({
+  data: { activeID, windowState },
+  closeDialog,
+}: IComponentProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
@@ -38,10 +43,17 @@ const WindowSplitStatesDialog = memo(({ data, closeDialog }: IComponentProps) =>
    */
   const displayWindowInfo = (): void => {
     openInfoDialog({
-      title: 'Window',
-      description: 'The Window Module employs a dynamic moving window that analyzes candlestick data to identify market trends.',
+      title: 'Window State',
       content: [
-        '...',
+        'DATE RANGE',
+        `${formatDate(windowState.window.id[0], 'datetime-medium')}`,
+        `${formatDate(windowState.window.id.at(-1)!, 'datetime-medium')}`,
+        '-----',
+        'NUMBER OF ITEMS',
+        `${windowState.window.id.length}`,
+        '-----',
+        'CURRENT PRICE',
+        `${prettifyValue(windowState.window.close.at(-1)!, { format: { prefix: '$' } })}`,
       ],
     });
   };
@@ -55,6 +67,7 @@ const WindowSplitStatesDialog = memo(({ data, closeDialog }: IComponentProps) =>
       closeDialog();
     }, 250);
   };
+
 
 
 
@@ -81,7 +94,7 @@ const WindowSplitStatesDialog = memo(({ data, closeDialog }: IComponentProps) =>
             Window State
             <StateIcon
               className='ml-2'
-              state={data.windowState.state}
+              state={windowState.state}
             />
             </button>
           </DialogTitle>

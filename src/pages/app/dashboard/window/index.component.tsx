@@ -78,9 +78,9 @@ const WindowState = ({ windowState }: IComponentProps) => {
    * Opens the window state dialog an activates the split ID.
    * @param id
    */
-  const openWindowStateDialog = (id: ISplitStateID): void => {
-    setActiveDialog({ activeID: id, windowState });
-  };
+  const openWindowStateDialog = (id: ISplitStateID): void => (
+    setActiveDialog({ activeID: id, windowState })
+  );
 
   /**
    * Closes the window state dialog.
