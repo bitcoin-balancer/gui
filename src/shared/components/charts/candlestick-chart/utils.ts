@@ -1,7 +1,7 @@
 import { UTCTimestamp, ChartOptions, DeepPartial } from 'lightweight-charts';
-import { prettifyValue } from 'bignumber-utils';
 import { ICompactCandlestickRecords } from '@/shared/backend/candlestick/index.service.ts';
 import { IState } from '@/shared/backend/market-state/index.service.ts';
+import { formatDollarAmount } from '@/shared/services/transformers/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
 import { ICandlestickBar } from '@/shared/components/charts/candlestick-chart/types.ts';
 
@@ -44,9 +44,7 @@ const buildChartOptions = (
   height,
   grid: { horzLines: { visible: false }, vertLines: { visible: false } },
   localization: {
-    priceFormatter: prettifyY
-      ? (val: number) => prettifyValue(val, { processing: { decimalPlaces: 0 }, format: { prefix: '$' } })
-      : undefined,
+    priceFormatter: prettifyY ? (val: number) => formatDollarAmount(val, 0) : undefined,
   },
   timeScale: {
     borderColor: ColorService.PRIMARY,
