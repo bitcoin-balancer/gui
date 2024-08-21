@@ -10,6 +10,7 @@ import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import { useBoundStore } from '@/shared/store/index.store';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import WindowState from '@/pages/app/dashboard/window/index.component.tsx';
+import Position from '@/pages/app/dashboard/position/index.component.tsx';
 
 /* ************************************************************************************************
  *                                            HELPERS                                             *
@@ -102,14 +103,7 @@ const Dashboard = () => {
         {/* **********
           * POSITION *
           ********** */}
-        <Card className='md:mt-2.5 lg:mt-0'>
-          <CardHeader>
-            <CardTitle>Position</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p>Card Content</p>
-          </CardContent>
-        </Card>
+        <Position />
 
         <Separator className='my-10 md:hidden' />
 
