@@ -1,4 +1,11 @@
-import { UTCTimestamp, ChartOptions, DeepPartial } from 'lightweight-charts';
+import {
+  UTCTimestamp,
+  ChartOptions,
+  DeepPartial,
+  LineStyleOptions,
+  AreaStyleOptions,
+  SeriesOptionsCommon,
+} from 'lightweight-charts';
 import { ISplitStateItem, IState } from '@/shared/backend/market-state/index.service.ts';
 import { formatDollarAmount } from '@/shared/services/transformers/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
@@ -71,20 +78,26 @@ const buildChartOptions = (
 });
 
 /**
- * Determines the up and down color based on the current state of the market state module.
+ * Determines the color object to be applied to the chart based on its kind and the current state.
  * @param state
- * @returns { upColor: string, downColor: string }
+ * @returns ILineChartColor
  */
-/* const getBarColorsByState = (state: IState | undefined): { upColor: string, downColor: string } => {
-  if (state === 2) {
-    return { upColor: ColorService.INCREASE_2, downColor: ColorService.INCREASE_0 };
-  }
-  if (state === -2) {
-    return { upColor: ColorService.DECREASE_2, downColor: ColorService.DECREASE_0 };
-  }
-  return { upColor: ColorService.INCREASE_1, downColor: ColorService.DECREASE_1 };
-}; */
-
+const __getLineChartColor = (
+  state: IState | undefined,
+): DeepPartial<LineStyleOptions & SeriesOptionsCommon> => (
+  { color: state === undefined ? ColorService.PRIMARY : ColorService.STATE[state] }
+);
+const __getAreaChartColor = (
+  state: IState | undefined,
+): DeepPartial<AreaStyleOptions & SeriesOptionsCommon> => (
+  { lineColor: '#2962FF', topColor: '#2962FF', bottomColor: 'rgba(41, 98, 255, 0.28)' }
+);
+const getColorByState = (
+  kind: IChartKind,
+  state: IState | undefined,
+): DeepPartial<(LineStyleOptions | AreaStyleOptions) & SeriesOptionsCommon> => (
+  kind === 'line' ? __getLineChartColor(state) : __getAreaChartColor(state)
+);
 
 
 
@@ -95,5 +108,5 @@ const buildChartOptions = (
 export {
   toSeriesItems,
   buildChartOptions,
-  /* getBarColorsByState, */
+  getColorByState,
 };

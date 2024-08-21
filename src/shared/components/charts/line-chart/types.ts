@@ -84,6 +84,7 @@ type IChartAPIRef = {
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export type {
+  IChartKind,
   IComponentProps,
   ISeriesItem,
   ILineSeriesAPI,

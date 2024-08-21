@@ -3,6 +3,7 @@ import { createChart, UTCTimestamp, IChartApi } from 'lightweight-charts';
 import {
   toSeriesItems,
   buildChartOptions,
+  getColorByState,
   /* getBarColorsByState, */
 } from '@/shared/components/charts/line-chart/utils.ts';
 import {
@@ -52,13 +53,9 @@ const LineChart = ({
       if (!this.__series) {
         // const { upColor, downColor } = getBarColorsByState(state);
         if (kind === 'line') {
-          this.__series = this.api().addLineSeries({ color: '#2962FF' });
+          this.__series = this.api().addLineSeries(getColorByState(kind, state));
         } else {
-          this.__series = this.api().addAreaSeries({
-            lineColor: '#2962FF',
-            topColor: '#2962FF',
-            bottomColor: 'rgba(41, 98, 255, 0.28)',
-          });
+          this.__series = this.api().addAreaSeries(getColorByState(kind, state));
         }
       }
       return this.__series;
@@ -122,9 +119,8 @@ const LineChart = ({
    * Fires whenever the state changes and set the appropriate bar colors.
    */
   useEffect(() => {
-    // const { upColor, downColor } = getBarColorsByState(state);
-    chartAPIRef.current.series().applyOptions({ color: '#2962FF' });
-  }, [state]);
+    chartAPIRef.current.series().applyOptions(getColorByState(kind, state));
+  }, [kind, state]);
 
   /**
    * Fires whenever the data changes, keeping the local state synced.

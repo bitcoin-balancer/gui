@@ -25,6 +25,7 @@ import {
   formatSplitStateChanges,
 } from '@/shared/services/transformers/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
+import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
 import StateIcon from '@/shared/components/state-icon/index.component.tsx';
 import LineChart from '@/shared/components/charts/line-chart/index.component.tsx';
 import {
@@ -68,6 +69,7 @@ const WindowSplitStatesDialog = memo(({
    *                                             STATE                                            *
    ********************************************************************************************** */
   const [isOpen, setIsOpen] = useState<boolean>(true);
+  const breakpoint = useMediaQueryBreakpoint();
   const [activeSplitID, setActiveSplitID] = useState<ISplitStateID>(activeID);
   const [activeSplit, setActiveSplit] = useState<ISplitStateItem[]>([]);
   const openInfoDialog = useBoundStore((state) => state.openInfoDialog);
@@ -195,7 +197,7 @@ const WindowSplitStatesDialog = memo(({
           * SPLIT TILES *
           ************* */}
         <div
-          className='grid grid-cols-4 gap-1 pt-3 md:pt-0 w-full'
+          className='grid grid-cols-4 gap-1 w-full'
         >
           {MarketStateService.SPLITS.map((split) => (
             <button
@@ -214,14 +216,16 @@ const WindowSplitStatesDialog = memo(({
         {/* *******
           * CHART *
           ******* */}
-        <LineChart
-          key={activeSplitID}
-          kind='line'
-          height={400}
-          data={activeSplit}
-          state={windowState.splitStates[activeSplitID].state}
-          prettifyY={true}
-        />
+        <div className='max-w-full'>
+          <LineChart
+            key={activeSplitID}
+            kind='line'
+            height={breakpoint === 'xs' || breakpoint === 'sm' ? 350 : 450}
+            data={activeSplit}
+            state={windowState.splitStates[activeSplitID].state}
+            prettifyY={true}
+          />
+        </div>
 
 
       </DialogContent>
