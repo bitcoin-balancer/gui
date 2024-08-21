@@ -8,7 +8,7 @@ import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/shared/shadcn/components/ui/tooltip.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { delay } from '@/shared/services/utils/index.service.ts';
-import { formatBadgeCount } from '@/shared/services/transformations/index.service.ts';
+import { formatBadgeCount } from '@/shared/services/transformers/index.service.ts';
 import NotificationsDialog from '@/pages/app/notifications-dialog.component.tsx';
 
 /* ************************************************************************************************

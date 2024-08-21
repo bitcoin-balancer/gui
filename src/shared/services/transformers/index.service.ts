@@ -5,7 +5,7 @@ import {
   ISplitStateID,
   ISplitStates,
 } from '@/shared/backend/market-state/index.service.ts';
-import { IDateFormat } from '@/shared/services/transformations/types.ts';
+import { IDateFormat } from '@/shared/services/transformers/types.ts';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *

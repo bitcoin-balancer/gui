@@ -21,7 +21,7 @@ import {
 } from '@/shared/shadcn/components/ui/dropdown-menu.tsx';
 import { TableCell, TableRow } from '@/shared/shadcn/components/ui/table.tsx';
 import { delay, errorToast } from '@/shared/services/utils/index.service.ts';
-import { formatDate } from '@/shared/services/transformations/index.service.ts';
+import { formatDate } from '@/shared/services/transformers/index.service.ts';
 import { IBreakpoint } from '@/shared/services/media-query/index.service.ts';
 import { ClipboardService } from '@/shared/services/clipboard/index.service.ts';
 import { UserService } from '@/shared/backend/auth/user/index.service.ts';

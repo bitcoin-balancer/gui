@@ -9,7 +9,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/shared/shadcn/components/ui/sheet.tsx';
-import { formatBadgeCount } from '@/shared/services/transformations/index.service.ts';
+import { formatBadgeCount } from '@/shared/services/transformers/index.service.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import Monitoring from '@/pages/app/server/monitoring/index.component.tsx';

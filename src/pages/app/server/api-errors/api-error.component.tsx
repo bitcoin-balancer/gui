@@ -2,7 +2,7 @@ import { useMemo, memo } from 'react';
 import { decodeError } from 'error-message-utils';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
-import { formatDate } from '@/shared/services/transformations/index.service.ts';
+import { formatDate } from '@/shared/services/transformers/index.service.ts';
 import { IAPIErrorProps } from '@/pages/app/server/api-errors/types.ts';
 
 /* ************************************************************************************************

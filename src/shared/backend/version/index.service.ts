@@ -1,5 +1,5 @@
 import { ENVIRONMENT } from '@/environment/environment.ts';
-import { formatDate } from '@/shared/services/transformations/index.service.ts';
+import { formatDate } from '@/shared/services/transformers/index.service.ts';
 import {
   IVersionService,
   IVersion,

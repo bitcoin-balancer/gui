@@ -21,7 +21,7 @@ import { AccessJWTService } from '@/shared/backend/api/access-jwt.service.ts';
 import { VersionService } from '@/shared/backend/version/index.service.ts';
 import { DataJoinService } from '@/shared/backend/data-join/index.service.ts';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
-import { formatBadgeCount } from '@/shared/services/transformations/index.service.ts';
+import { formatBadgeCount } from '@/shared/services/transformers/index.service.ts';
 import { NavService } from '@/shared/services/nav/index.service.ts';
 import { useSocketEvent } from '@/shared/hooks/socket-event/index.component.ts';
 import InfoDialog from '@/shared/components/info-dialog/index.component.tsx';

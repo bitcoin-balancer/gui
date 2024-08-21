@@ -10,7 +10,7 @@ import {
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/shadcn/components/ui/tooltip.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
-import { formatDate } from '@/shared/services/transformations/index.service.ts';
+import { formatDate } from '@/shared/services/transformers/index.service.ts';
 import { ClipboardService } from '@/shared/services/clipboard/index.service.ts';
 import { IAPIErrorDialogProps } from '@/pages/app/server/api-errors/types.ts';
 

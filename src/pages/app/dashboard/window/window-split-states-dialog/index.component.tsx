@@ -23,7 +23,7 @@ import {
   formatDate,
   formatDollarAmount,
   formatSplitStateChanges,
-} from '@/shared/services/transformations/index.service.ts';
+} from '@/shared/services/transformers/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
 import StateIcon from '@/shared/components/state-icon/index.component.tsx';
 import {

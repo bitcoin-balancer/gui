@@ -18,7 +18,7 @@ import {
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/shared/shadcn/components/ui/tooltip.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { ClipboardService } from '@/shared/services/clipboard/index.service.ts';
-import { formatDate } from '@/shared/services/transformations/index.service.ts';
+import { formatDate } from '@/shared/services/transformers/index.service.ts';
 import { JWTService, IRefreshTokenRecord } from '@/shared/backend/auth/jwt/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';

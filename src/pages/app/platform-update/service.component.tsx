@@ -7,7 +7,6 @@ import { VersionService } from '@/shared/backend/version/index.service.ts';
 import { NavService } from '@/shared/services/nav/index.service.ts';
 import { IServiceComponentProps } from '@/pages/app/platform-update/types.ts';
 
-
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */

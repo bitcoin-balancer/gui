@@ -22,7 +22,7 @@ import {
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
-import { formatDate } from '@/shared/services/transformations/index.service.ts';
+import { formatDate } from '@/shared/services/transformers/index.service.ts';
 import { ipNotesValid, ipValid } from '@/shared/backend/validations/index.service.ts';
 import { IPBlacklistService } from '@/shared/backend/ip-blacklist/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';

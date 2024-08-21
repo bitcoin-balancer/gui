@@ -9,7 +9,7 @@ import {
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import { NotificationService, INotification } from '@/shared/backend/notification/index.service.ts';
-import { formatDate } from '@/shared/services/transformations/index.service.ts';
+import { formatDate } from '@/shared/services/transformers/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';

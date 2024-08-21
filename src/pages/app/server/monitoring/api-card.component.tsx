@@ -8,7 +8,7 @@ import { useBoundStore } from '@/shared/store/index.store.ts';
 import { buildAPIURL } from '@/shared/backend/api/utils.ts';
 import { VersionService } from '@/shared/backend/version/index.service.ts';
 import { IServerState } from '@/shared/backend/server/index.service.ts';
-import { formatDate } from '@/shared/services/transformations/index.service.ts';
+import { formatDate } from '@/shared/services/transformers/index.service.ts';
 import { NavService } from '@/shared/services/nav/index.service.ts';
 
 

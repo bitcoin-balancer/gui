@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from '@/shared/shadcn/components/ui/card.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
-import { formatFileSize } from '@/shared/services/transformations/index.service.ts';
+import { formatFileSize } from '@/shared/services/transformers/index.service.ts';
 import { IDatabaseSummary } from '@/shared/backend/database/types.ts';
 
 /* ************************************************************************************************

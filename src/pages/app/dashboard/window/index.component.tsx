@@ -9,7 +9,7 @@ import {
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/shared/shadcn/components/ui/tooltip.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { MarketStateService, type ISplitStateID } from '@/shared/backend/market-state/index.service.ts';
-import { formatDate } from '@/shared/services/transformations/index.service.ts';
+import { formatDate } from '@/shared/services/transformers/index.service.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
 import StateIcon from '@/shared/components/state-icon/index.component.tsx';
 import SplitTileButton from '@/pages/app/dashboard/window/split-tile-button.component.tsx';

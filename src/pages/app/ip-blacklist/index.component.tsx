@@ -33,7 +33,7 @@ import {
 import { Card, CardContent } from '@/shared/shadcn/components/ui/card.tsx';
 import { IRecord } from '@/shared/types.ts';
 import { delay, errorToast } from '@/shared/services/utils/index.service.ts';
-import { formatDate } from '@/shared/services/transformations/index.service.ts';
+import { formatDate } from '@/shared/services/transformers/index.service.ts';
 import { IBreakpoint } from '@/shared/services/media-query/index.service.ts';
 import { IPBlacklistService, IIPBlacklistRecord } from '@/shared/backend/ip-blacklist/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';

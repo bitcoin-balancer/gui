@@ -15,7 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/shared/shadcn/components/ui/table.tsx';
-import { formatDate } from '@/shared/services/transformations/index.service.ts';
+import { formatDate } from '@/shared/services/transformers/index.service.ts';
 import { UserService, IPasswordUpdate } from '@/shared/backend/auth/user/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';

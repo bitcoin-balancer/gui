@@ -16,7 +16,7 @@ import {
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import { IFileSystemState } from '@/shared/backend/server/types.ts';
-import { formatFileSize } from '@/shared/services/transformations/index.service.ts';
+import { formatFileSize } from '@/shared/services/transformers/index.service.ts';
 import ResourcePieChart from '@/pages/app/server/monitoring/resource-pie-chart.component.tsx';
 
 /* ************************************************************************************************
