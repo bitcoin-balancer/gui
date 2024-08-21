@@ -1,4 +1,10 @@
-import { useMemo, useCallback, useState } from 'react';
+import {
+  useMemo,
+  useCallback,
+  useState,
+  useRef,
+  useEffect,
+} from 'react';
 import {
   Card,
   CardContent,
@@ -10,12 +16,42 @@ import { Tooltip, TooltipTrigger, TooltipContent } from '@/shared/shadcn/compone
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { MarketStateService, ISplitStateID } from '@/shared/backend/market-state/index.service.ts';
 import { formatDate } from '@/shared/services/transformers/index.service.ts';
+import { IBreakpoint } from '@/shared/services/media-query/index.service.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
 import StateIcon from '@/shared/components/state-icon/index.component.tsx';
 import SplitTileButton from '@/pages/app/dashboard/window/split-tile-button.component.tsx';
 import CandlestickChart from '@/shared/components/charts/candlestick-chart/index.component.tsx';
 import WindowSplitStatesDialog, { IWindowStateDialogData } from './window-split-states-dialog/index.component.tsx';
 import { IComponentProps } from '@/pages/app/dashboard/window/types.ts';
+
+/* ************************************************************************************************
+ *                                           CONSTANTS                                            *
+ ************************************************************************************************ */
+
+// the height of the mobile chart in pixels
+const MOBILE_CHART_HEIGHT = 350;
+
+
+
+
+
+/* ************************************************************************************************
+ *                                            HELPERS                                             *
+ ************************************************************************************************ */
+
+/**
+ * Prettifies the current bar's timestamp.
+ * @param openTime
+ * @param breakpoint
+ * @returns string
+ */
+const formatCurrentBarOpenTime = (openTime: number, breakpoint: IBreakpoint): string => formatDate(
+  openTime,
+  breakpoint === 'xs' || breakpoint === 'sm' ? 'time-medium' : 'datetime-medium',
+);
+
+
+
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -29,6 +65,9 @@ const WindowState = ({ windowState }: IComponentProps) => {
   /* **********************************************************************************************
    *                                             REFS                                             *
    ********************************************************************************************** */
+  const chartContainerRef = useRef<HTMLDivElement | null>(null);
+
+
 
 
 
@@ -36,8 +75,10 @@ const WindowState = ({ windowState }: IComponentProps) => {
    *                                             STATE                                            *
    ********************************************************************************************** */
   const breakpoint = useMediaQueryBreakpoint();
+  const [chartHeight, setChartHeight] = useState<number>();
   const openInfoDialog = useBoundStore((state) => state.openInfoDialog);
   const [activeDialog, setActiveDialog] = useState<IWindowStateDialogData | undefined>(undefined);
+
 
 
 
@@ -48,9 +89,9 @@ const WindowState = ({ windowState }: IComponentProps) => {
 
   // the opening time of the current bar
   const currentBar = useMemo(
-    () => formatDate(
+    () => formatCurrentBarOpenTime(
       windowState.window.id[windowState.window.id.length - 1],
-      breakpoint === 'xs' || breakpoint === 'sm' ? 'time-medium' : 'datetime-medium',
+      breakpoint,
     ),
     [breakpoint, windowState.window.id],
   );
@@ -63,7 +104,16 @@ const WindowState = ({ windowState }: IComponentProps) => {
    *                                         SIDE EFFECTS                                         *
    ********************************************************************************************** */
 
-  // ...
+  /**
+   * Calculates the height of the chart based on the size of the card.
+   */
+  useEffect(() => {
+    if (breakpoint === 'xs' || breakpoint === 'sm') {
+      setChartHeight(MOBILE_CHART_HEIGHT);
+    } else {
+      setChartHeight(chartContainerRef.current!.clientHeight);
+    }
+  }, [breakpoint]);
 
 
 
@@ -140,7 +190,7 @@ const WindowState = ({ windowState }: IComponentProps) => {
       {/* *******************
         * WINDOW STATE CARD *
         ******************* */}
-      <Card>
+      <Card className='h-full flex flex-col'>
         <CardHeader
           className='flex flex-col md:flex-row justify-start'
         >
@@ -182,14 +232,18 @@ const WindowState = ({ windowState }: IComponentProps) => {
           </div>
         </CardHeader>
         <CardContent
-          className='pt-5 md:pt-0'
+          ref={chartContainerRef}
+          className='pt-5 md:pb-0 md:pt-0 flex-1'
         >
-          <CandlestickChart
-            height={580}
-            data={windowState.window}
-            state={windowState.state}
-            prettifyY={true}
-          />
+          {
+            chartHeight !== undefined
+            && <CandlestickChart
+              height={chartHeight}
+              data={windowState.window}
+              state={windowState.state}
+              prettifyY={true}
+            />
+          }
         </CardContent>
       </Card>
 

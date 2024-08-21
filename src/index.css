@@ -216,7 +216,6 @@ a:hover {
 
 
 
-
 /* ************************************************************************************************
  *                                        PAGE CONTAINER                                          *
  ************************************************************************************************ */
@@ -224,6 +223,23 @@ a:hover {
   padding: 20px 10px 100px 10px;
 }
 
+
+
+
+
+/* ************************************************************************************************
+ *                                           DASHBOARD                                            *
+ ************************************************************************************************ */
+.dashboard-container {
+
+}
+
+/**
+ * Window
+ */
+.dashboard-container .window {
+
+}
 
 
 
@@ -258,6 +274,14 @@ a:hover {
    */
   .page-container {
     padding: 20px;
+  }
+
+  /*
+   * Dashboard
+   */
+   .dashboard-container .window {
+    /* 100dvh - appHeader - pageContainerPadding */
+    height: calc((100dvh - var(--app-header-desktop-height) - 40px));
   }
 }
 
@@ -304,6 +328,14 @@ a:hover {
    */
   .page-container {
     padding: 25px 15px ;
+  }
+
+  /*
+   * Dashboard
+   */
+   .dashboard-container .window {
+    /* 100dvh - appHeader - pageContainerPadding */
+    height: calc((100dvh - var(--app-header-desktop-height) - 50px));
   }
 }
 

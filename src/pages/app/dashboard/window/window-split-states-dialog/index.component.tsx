@@ -216,16 +216,14 @@ const WindowSplitStatesDialog = memo(({
         {/* *******
           * CHART *
           ******* */}
-        <div className='max-w-full'>
-          <LineChart
-            key={activeSplitID}
-            kind='area'
-            height={breakpoint === 'xs' || breakpoint === 'sm' ? 350 : 450}
-            data={activeSplit}
-            state={windowState.splitStates[activeSplitID].state}
-            prettifyY={true}
-          />
-        </div>
+        <LineChart
+          key={activeSplitID}
+          kind='area'
+          height={breakpoint === 'xs' || breakpoint === 'sm' ? 350 : 450}
+          data={activeSplit}
+          state={windowState.splitStates[activeSplitID].state}
+          prettifyY={true}
+        />
 
 
       </DialogContent>

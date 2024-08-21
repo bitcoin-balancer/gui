@@ -79,11 +79,11 @@ const Dashboard = () => {
   }
   return (
     <div
-      className='page-container flex flex-col lg:flex-row justify-center items-start gap-5 animate-in fade-in duration-700'
+      className='dashboard-container page-container flex flex-col lg:flex-row justify-center items-start gap-5 animate-in fade-in duration-700'
     >
 
       <section
-        className='w-full lg:w-8/12 xl:w-8/12 2xl:w-9/12'
+        className='window w-full lg:w-8/12 xl:w-8/12 2xl:w-9/12'
       >
         {/* **************
           * WINDOW STATE *
