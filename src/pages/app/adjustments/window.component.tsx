@@ -187,7 +187,11 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
               <FormItem className='mt-7'>
                 <FormLabelWithMoreInfo
                   value='Re-fetch frequency (seconds)'
-                  description='The interval at which the pricing data is re-fetched from the exchange.'
+                  description={[
+                    'The interval at which the pricing data is re-fetched from the exchange.',
+                    '-----',
+                    'When using Kraken, ensure your request frequency respects their strict rate limits.  Setting a value larger than 10 seconds for your request interval is recommended to avoid hitting rate limits and ensure smooth operation.',
+                  ]}
                 />
                 <FormControl>
                   <Input
