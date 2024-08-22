@@ -1,4 +1,9 @@
-import { memo, useMemo, useState } from 'react';
+import {
+  memo,
+  useCallback,
+  useMemo,
+  useState,
+} from 'react';
 import {
   Bell,
   BellRing,
@@ -103,12 +108,15 @@ const NotificationsButton = memo(({ size }: { size: 'icon' | 'default' }) => {
   /**
    * Closes the dialog smoothly.
    */
-  const closeDialog = async (): Promise<void> => {
-    setClosingDialog(true);
-    await delay(0.25);
-    setClosingDialog(false);
-    setOpen(false);
-  };
+  const closeDialog = useCallback(
+    async (): Promise<void> => {
+      setClosingDialog(true);
+      await delay(0.25);
+      setClosingDialog(false);
+      setOpen(false);
+    },
+    [],
+  );
 
 
 
@@ -147,6 +155,7 @@ const NotificationsButton = memo(({ size }: { size: 'icon' | 'default' }) => {
         && <NotificationsDialog
           open={open && !closingDialog}
           onOpenChange={closeDialog}
+          unreadCount={unreadNotifications}
         />
       }
     </>

@@ -38,14 +38,15 @@ const LIMIT = 15;
 const NotificationsDialog = ({
   open,
   onOpenChange,
-}: { open: boolean, onOpenChange: (open: boolean) => void }) => {
+  unreadCount,
+}: { open: boolean, onOpenChange: (open: boolean) => void, unreadCount: number }) => {
   /* **********************************************************************************************
    *                                             REFS                                             *
    ********************************************************************************************** */
   const rowsRef = useRef<HTMLDivElement | null>(null);
 
 
-
+  console.log('In NotificationsDialog');
 
 
   /* **********************************************************************************************
@@ -86,6 +87,7 @@ const NotificationsDialog = ({
             <Fragment key={record.id}>
               <article
                 id={`nd-${record.id}`}
+                className={`py-8 px-6 first:pt-5 ${i < unreadCount ? 'bg-slate-100' : ''}`}
               >
                 <div
                   className='flex justify-start items-center'
@@ -110,7 +112,7 @@ const NotificationsDialog = ({
                   className='text-xs text-light mt-1'
                 >{formatDate(record.event_time, 'datetime-medium')}</p>
               </article>
-              {i < data.length - 1 && <Separator className='my-8' />}
+              {i < data.length - 1 && <Separator />}
             </Fragment>
           ))}
         </div>
@@ -135,9 +137,9 @@ const NotificationsDialog = ({
       open={open}
       onOpenChange={() => onOpenChange(false)}
     >
-      <DialogContent>
+      <DialogContent className='p-0'>
 
-        <DialogHeader>
+        <DialogHeader className='p-6 pb-0'>
           <DialogTitle>Notifications</DialogTitle>
           <DialogDescription>
             Events broadcasted by the Balancer API
