@@ -59,6 +59,14 @@ const Position = () => {
             <p className='text-light text-xs'>~2,205.75 USDT</p>
           </div>
 
+          {/* *********
+            * REDUCED *
+            ********* */}
+          <div>
+            <p>783.61 USDT</p>
+            <p className='text-light text-xs'>REDUCED</p>
+          </div>
+
           {/* ******
             * GAIN *
             ****** */}
@@ -73,14 +81,6 @@ const Position = () => {
           <div>
             <p>$61,588.55</p>
             <p className='text-light text-xs'>ENTRY</p>
-          </div>
-
-          {/* *********
-            * REDUCED *
-            ********* */}
-          <div>
-            <p>783.61 USDT</p>
-            <p className='text-light text-xs'>REDUCED</p>
           </div>
 
         </CardContent>

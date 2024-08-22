@@ -44,9 +44,10 @@ const NotificationsDialog = ({
    *                                             REFS                                             *
    ********************************************************************************************** */
   const rowsRef = useRef<HTMLDivElement | null>(null);
+  const unreadRef = useRef<number>(unreadCount);
 
 
-  console.log('In NotificationsDialog');
+
 
 
   /* **********************************************************************************************
@@ -87,7 +88,7 @@ const NotificationsDialog = ({
             <Fragment key={record.id}>
               <article
                 id={`nd-${record.id}`}
-                className={`py-8 px-6 first:pt-5 ${i < unreadCount ? 'bg-slate-100' : ''}`}
+                className={`py-8 px-6 first:pt-5 ${i < unreadRef.current ? 'bg-slate-100' : ''}`}
               >
                 <div
                   className='flex justify-start items-center'
