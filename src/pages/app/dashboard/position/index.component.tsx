@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { EllipsisVertical } from 'lucide-react';
 import {
   Card,
@@ -23,7 +24,8 @@ import {
  * Component in charge of displaying information regarding the active position (if any)
  */
 // eslint-disable-next-line arrow-body-style
-const Position = () => {
+const Position = memo(() => {
+  console.log('In Position');
   return (
     <>
       <Card className='md:mt-2.5 lg:mt-0'>
@@ -49,21 +51,21 @@ const Position = () => {
             </DropdownMenu>
           </CardTitle>
         </CardHeader>
-        <CardContent className='grid grid-cols-2 gap-4 text-center'>
+        <CardContent className='grid grid-cols-2 gap-x-4 gap-y-6 text-center'>
 
           {/* ******
             * SIZE *
             ****** */}
           <div>
             <p>0.0361 BTC</p>
-            <p className='text-light text-xs'>~2,205.75 USDT</p>
+            <p className='text-light text-xs'>~2,205 USDT</p>
           </div>
 
           {/* *********
             * REDUCED *
             ********* */}
           <div>
-            <p>783.61 USDT</p>
+            <p>783 USDT</p>
             <p className='text-light text-xs'>REDUCED</p>
           </div>
 
@@ -79,7 +81,7 @@ const Position = () => {
             * ENTRY *
             ******* */}
           <div>
-            <p>$61,588.55</p>
+            <p>$61,588</p>
             <p className='text-light text-xs'>ENTRY</p>
           </div>
 
@@ -87,7 +89,7 @@ const Position = () => {
       </Card>
     </>
   );
-};
+});
 
 
 

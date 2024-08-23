@@ -88,7 +88,7 @@ const NotificationsDialog = ({
             <Fragment key={record.id}>
               <article
                 id={`nd-${record.id}`}
-                className={`py-8 px-6 first:pt-5 ${i < unreadRef.current ? 'bg-slate-100' : ''}`}
+                className={`py-8 px-6 first:pt-5 ${i < unreadRef.current ? 'bg-slate-50' : ''}`}
               >
                 <div
                   className='flex justify-start items-center'
