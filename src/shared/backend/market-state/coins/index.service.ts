@@ -48,6 +48,7 @@ const coinsServiceFactory = (): ICoinsService => {
    * - 23504: if the strong state requirement is invalid
    * - 23505: if the whitelisted symbols is an invalid array
    * - 23506: if any of the whitelisted symbols is invalid
+   * - 23507: if the limit is invalid
    */
   const updateConfig = (newConfig: ICoinsConfig, otpToken: string): Promise<void> => (
     APIService.request(
