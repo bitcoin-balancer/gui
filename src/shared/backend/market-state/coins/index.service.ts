@@ -1,5 +1,13 @@
 import { APIService } from '../../api/index.service.ts';
-import { ICoinsService, ICoinsConfig } from './types.ts';
+import {
+  ICoinsService,
+  ICoinsConfig,
+  ICoinStateAsset,
+  ICoinState,
+  ICoinsState,
+  ISemiCompactCoinState,
+  ICompactCoinState,
+} from './types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -16,6 +24,48 @@ const coinsServiceFactory = (): ICoinsService => {
    ********************************************************************************************** */
 
   // ...
+
+
+
+
+
+  /* **********************************************************************************************
+   *                                          RETRIEVERS                                          *
+   ********************************************************************************************** */
+
+  /**
+   * Retrieves the state object for a coin based on an asset.
+   * @param asset
+   * @param symbol
+   * @returns Promise<ICoinState>
+   * @throws
+   * - 23508: if the state asset is invalid
+   * - 23510: if the symbol is not in the asset's statesBySymbol object
+   */
+  const getStateForSymbol = (
+    asset: ICoinStateAsset,
+    symbol: string,
+  ): Promise<ICoinState> => APIService.request(
+    'GET',
+    `market-state/coins/state/${asset}/${symbol}`,
+    undefined,
+    true,
+  ) as Promise<ICoinState>;
+
+  /**
+   * Retrieves the semi-compact state for an asset.
+   * @param asset
+   * @throws
+   * - 23508: if the state asset is invalid
+   */
+  const getSemiCompactStateForAsset = (
+    asset: ICoinStateAsset,
+  ): Promise<ICoinsState<ISemiCompactCoinState>> => APIService.request(
+    'GET',
+    `market-state/coins/state/${asset}`,
+    undefined,
+    true,
+  ) as Promise<ICoinsState<ISemiCompactCoinState>>;
 
 
 
@@ -49,6 +99,7 @@ const coinsServiceFactory = (): ICoinsService => {
    * - 23505: if the whitelisted symbols is an invalid array
    * - 23506: if any of the whitelisted symbols is invalid
    * - 23507: if the limit is invalid
+   * - 23509: if the whitelist doesn't include the base asset
    */
   const updateConfig = (newConfig: ICoinsConfig, otpToken: string): Promise<void> => (
     APIService.request(
@@ -70,6 +121,10 @@ const coinsServiceFactory = (): ICoinsService => {
   return Object.freeze({
     // properties
     // ...
+
+    // retrievers
+    getStateForSymbol,
+    getSemiCompactStateForAsset,
 
     // configuration
     getConfig,
@@ -98,6 +153,10 @@ export {
   CoinsService,
 
   // types
-  // type ICoinsState,
+  type ICoinStateAsset,
+  type ICoinState,
+  type ISemiCompactCoinState,
+  type ICompactCoinState,
+  type ICoinsState,
   type ICoinsConfig,
 };

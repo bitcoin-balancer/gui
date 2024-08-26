@@ -1,16 +1,11 @@
 import {
-  IMarketStateService,
-  IState,
+  ISplitNames,
   ISplitStateID,
   ISplitStateItem,
-  ISplitStateResult,
-  ISplitStates,
-  IMarketState,
-  IStateNames,
-  ISplitNames,
   ISplitValues,
-  ISplitPercentageChanges,
-} from '@/shared/backend/market-state/types.ts';
+  IStateNames,
+} from '@/shared/backend/market-state/shared/types.ts';
+import { IMarketStateService, IMarketState } from '@/shared/backend/market-state/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -124,11 +119,5 @@ export {
   MarketStateService,
 
   // types
-  type IState,
-  type ISplitStateID,
-  type ISplitStateItem,
-  type ISplitStateResult,
-  type ISplitStates,
   type IMarketState,
-  type ISplitPercentageChanges,
 };

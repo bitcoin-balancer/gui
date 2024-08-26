@@ -1,4 +1,4 @@
-import { IState } from '@/shared/backend/market-state/index.service';
+import { IState } from '@/shared/backend/market-state/shared/types.ts';
 import { IColorService, IStateColors } from '@/shared/services/color/types.ts';
 
 /* ************************************************************************************************

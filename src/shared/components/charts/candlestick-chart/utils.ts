@@ -1,6 +1,6 @@
 import { ChartOptions, DeepPartial } from 'lightweight-charts';
 import { ICompactCandlestickRecords } from '@/shared/backend/candlestick/index.service.ts';
-import { IState } from '@/shared/backend/market-state/index.service.ts';
+import { IState } from '@/shared/backend/market-state/shared/types.ts';
 import { formatDollarAmount, toLocalTime } from '@/shared/services/transformers/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
 import { ICandlestickBar } from '@/shared/components/charts/candlestick-chart/types.ts';

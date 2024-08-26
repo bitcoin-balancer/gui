@@ -1,6 +1,7 @@
 import { memo, useMemo } from 'react';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/shared/shadcn/components/ui/tooltip.tsx';
-import { ISplitStateID, MarketStateService } from '@/shared/backend/market-state/index.service.ts';
+import { ISplitStateID } from '@/shared/backend/market-state/shared/types.ts';
+import { MarketStateService } from '@/shared/backend/market-state/index.service.ts';
 import { formatPercentageChange } from '@/shared/services/transformers/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
 import { ISplitTileButtonProps } from '@/pages/app/dashboard/window/types.ts';

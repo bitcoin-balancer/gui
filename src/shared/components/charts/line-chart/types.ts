@@ -4,7 +4,7 @@ import {
   ISeriesApi,
   SeriesType,
 } from 'lightweight-charts';
-import { IState, ISplitStateItem } from '@/shared/backend/market-state/index.service.ts';
+import { IState, ISplitStateItem } from '@/shared/backend/market-state/shared/types.ts';
 
 /* ************************************************************************************************
  *                                             TYPES                                              *

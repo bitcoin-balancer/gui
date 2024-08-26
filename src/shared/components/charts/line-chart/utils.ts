@@ -5,7 +5,7 @@ import {
   AreaStyleOptions,
   SeriesOptionsCommon,
 } from 'lightweight-charts';
-import { ISplitStateItem, IState } from '@/shared/backend/market-state/index.service.ts';
+import { ISplitStateItem, IState } from '@/shared/backend/market-state/shared/types.ts';
 import { formatDollarAmount, toLocalTime } from '@/shared/services/transformers/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
 import { IChartKind, ISeriesItem } from '@/shared/components/charts/line-chart/types.ts';

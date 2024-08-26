@@ -5,7 +5,7 @@ import {
   ISplitPercentageChanges,
   ISplitStateID,
   ISplitStates,
-} from '@/shared/backend/market-state/index.service.ts';
+} from '@/shared/backend/market-state/shared/types.ts';
 import { IDateFormat } from '@/shared/services/transformers/types.ts';
 
 /* ************************************************************************************************

@@ -5,7 +5,7 @@ import {
   SeriesType,
 } from 'lightweight-charts';
 import { ICompactCandlestickRecords } from '@/shared/backend/candlestick/index.service.ts';
-import { IState } from '@/shared/backend/market-state/index.service.ts';
+import { IState } from '@/shared/backend/market-state/shared/types.ts';
 
 /* ************************************************************************************************
  *                                             TYPES                                              *

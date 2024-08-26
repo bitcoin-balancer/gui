@@ -1,5 +1,5 @@
-import { APIService } from '../../api/index.service.ts';
-import { IWindowService, IWindowState, IWindowConfig } from './types.ts';
+import { APIService } from '@/shared/backend/api/index.service.ts';
+import { IWindowService, IWindowState, IWindowConfig } from '@/shared/backend/market-state/window/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

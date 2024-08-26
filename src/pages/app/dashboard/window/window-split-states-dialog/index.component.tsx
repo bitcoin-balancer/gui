@@ -14,11 +14,8 @@ import {
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { ICompactCandlestickRecords } from '@/shared/backend/candlestick/index.service.ts';
-import {
-  MarketStateService,
-  type ISplitStateID,
-  type ISplitStateItem,
-} from '@/shared/backend/market-state/index.service.ts';
+import { ISplitStateID, ISplitStateItem } from '@/shared/backend/market-state/shared/types.ts';
+import { MarketStateService } from '@/shared/backend/market-state/index.service.ts';
 import {
   formatDate,
   formatDollarAmount,
