@@ -200,7 +200,7 @@ const WindowSplitStatesDialog = memo(({
             <button
               key={split}
               onClick={() => activateSplit(split)}
-              className={` py-2 px-0 sm:px-2 ${ColorService.getBackgroundClassByState(windowState.splitStates[split].state)} ${activeSplitID === split ? 'opacity-60' : 'hover:opacity-80'}`}
+              className={` py-2 px-0 sm:px-2 ${ColorService.STATE_TW_CLASS_NAME[windowState.splitStates[split].state]} ${activeSplitID === split ? 'opacity-60' : 'hover:opacity-80'}`}
               disabled={activeSplitID === split}
             >
               <p className='text-white text-sm font-semibold'>{splitChanges[split]}</p>

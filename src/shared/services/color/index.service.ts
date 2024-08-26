@@ -1,4 +1,3 @@
-import { IState } from '@/shared/backend/market-state/shared/types.ts';
 import { IColorService, IStateColors } from '@/shared/services/color/types.ts';
 
 /* ************************************************************************************************
@@ -62,6 +61,20 @@ const colorServiceFactory = (): IColorService => {
     1: '15, 118, 110',
     2: '19, 78, 74',
   };
+  const STATE_CLASS_NAME: IStateColors = {
+    '-2': 'decrease-2',
+    '-1': 'decrease-1',
+    0: 'stateless',
+    1: 'increase-1',
+    2: 'increase-2',
+  };
+  const STATE_TW_CLASS_NAME: IStateColors = {
+    '-2': 'bg-decrease-2',
+    '-1': 'bg-decrease-1',
+    0: 'bg-stateless',
+    1: 'bg-increase-1',
+    2: 'bg-increase-2',
+  };
 
 
 
@@ -71,25 +84,7 @@ const colorServiceFactory = (): IColorService => {
    *                                        STATE HELPERS                                         *
    ********************************************************************************************** */
 
-  /**
-   * Retrieves the CSS Background class to be applied to an element based on a state.
-   * @param state
-   * @returns string
-   */
-  const getBackgroundClassByState = (state: IState): string => {
-    switch (state) {
-      case 2:
-        return 'bg-increase-2';
-      case 1:
-        return 'bg-increase-1';
-      case -1:
-        return 'bg-decrease-1';
-      case -2:
-        return 'bg-decrease-2';
-      default:
-        return 'bg-stateless';
-    }
-  };
+  // ...
 
 
 
@@ -120,9 +115,10 @@ const colorServiceFactory = (): IColorService => {
     DECREASE_2,
     STATE,
     STATE_RGB,
+    STATE_CLASS_NAME,
+    STATE_TW_CLASS_NAME,
 
-    // state helpers
-    getBackgroundClassByState,
+    // ...
   });
 };
 

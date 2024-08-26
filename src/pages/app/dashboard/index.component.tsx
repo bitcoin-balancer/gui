@@ -1,16 +1,12 @@
 import { useEffect } from 'react';
 import { prettifyValue } from 'bignumber-utils';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/shared/shadcn/components/ui/card.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import { useBoundStore } from '@/shared/store/index.store';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import WindowState from '@/pages/app/dashboard/window/index.component.tsx';
 import Position from '@/pages/app/dashboard/position/index.component.tsx';
+import Indicators from '@/pages/app/dashboard/indicators/index.component.tsx';
+import Coins from '@/pages/app/dashboard/coins/index.component.tsx';
 
 /* ************************************************************************************************
  *                                            HELPERS                                             *
@@ -110,28 +106,19 @@ const Dashboard = () => {
         {/* ************
           * INDICATORS *
           ************ */}
-        <Card className='md:mt-7'>
-          <CardHeader>
-            <CardTitle>Indicators</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p>Card Content</p>
-          </CardContent>
-        </Card>
+        <Indicators
+          marketState={marketState}
+        />
 
         <Separator className='my-10 md:hidden' />
 
         {/* *******
           * COINS *
           ******* */}
-        <Card className='md:mt-7'>
-          <CardHeader>
-            <CardTitle>Coins</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p>Card Content</p>
-          </CardContent>
-        </Card>
+        <Coins
+          coinsStates={marketState.coinsStates}
+        />
+
       </aside>
 
     </div>

@@ -228,6 +228,59 @@ a:hover {
 
 
 /* ************************************************************************************************
+ *                                        COMBINED STATES                                         *
+ ************************************************************************************************ */
+
+/**
+ * Decreasing Strongly Variants
+ */
+.decrease-2-decrease-2 { background: linear-gradient(90deg, var(--decrease-2-color) 50%, var(--decrease-2-color) 50%);}
+.decrease-2-decrease-1 { background: linear-gradient(90deg, var(--decrease-2-color) 50%, var(--decrease-1-color) 50%);}
+.decrease-2-stateless { background: linear-gradient(90deg, var(--decrease-2-color) 50%, var(--stateless-color) 50%);}
+.decrease-2-increase-1 { background: linear-gradient(90deg, var(--decrease-2-color) 50%, var(--increase-1-color) 50%);}
+.decrease-2-increase-2 { background: linear-gradient(90deg, var(--decrease-2-color) 50%, var(--increase-2-color) 50%);}
+
+/**
+ * Decreasing Variants
+ */
+.decrease-1-decrease-2 { background: linear-gradient(90deg, var(--decrease-1-color) 50%, var(--decrease-2-color) 50%);}
+.decrease-1-decrease-1 { background: linear-gradient(90deg, var(--decrease-1-color) 50%, var(--decrease-1-color) 50%);}
+.decrease-1-stateless { background: linear-gradient(90deg, var(--decrease-1-color) 50%, var(--stateless-color) 50%);}
+.decrease-1-increase-1 { background: linear-gradient(90deg, var(--decrease-1-color) 50%, var(--increase-1-color) 50%);}
+.decrease-1-increase-2 { background: linear-gradient(90deg, var(--decrease-1-color) 50%, var(--increase-2-color) 50%);}
+ 
+/**
+ * Stateless Variants
+ */
+.stateless-decrease-2 { background: linear-gradient(90deg, var(--stateless-color) 50%, var(--decrease-2-color) 50%);}
+.stateless-decrease-1 { background: linear-gradient(90deg, var(--stateless-color) 50%, var(--decrease-1-color) 50%);}
+.stateless-stateless { background: linear-gradient(90deg, var(--stateless-color) 50%, var(--stateless-color) 50%);}
+.stateless-increase-1 { background: linear-gradient(90deg, var(--stateless-color) 50%, var(--increase-1-color) 50%);}
+.stateless-increase-2 { background: linear-gradient(90deg, var(--stateless-color) 50%, var(--increase-2-color) 50%);}
+ 
+/**
+ * Increasing Variants
+ */
+.increase-1-decrease-2 { background: linear-gradient(90deg, var(--increase-1-color) 50%, var(--decrease-2-color) 50%);}
+.increase-1-decrease-1 { background: linear-gradient(90deg, var(--increase-1-color) 50%, var(--decrease-1-color) 50%);}
+.increase-1-stateless { background: linear-gradient(90deg, var(--increase-1-color) 50%, var(--stateless-color) 50%);}
+.increase-1-increase-1 { background: linear-gradient(90deg, var(--increase-1-color) 50%, var(--increase-1-color) 50%);}
+.increase-1-increase-2 { background: linear-gradient(90deg, var(--increase-1-color) 50%, var(--increase-2-color) 50%);}
+
+/**
+ * Increasing Strongly Variants
+ */
+.increase-2-decrease-2 { background: linear-gradient(90deg, var(--increase-2-color) 50%, var(--decrease-2-color) 50%);}
+.increase-2-decrease-1 { background: linear-gradient(90deg, var(--increase-2-color) 50%, var(--decrease-1-color) 50%);}
+.increase-2-stateless { background: linear-gradient(90deg, var(--increase-2-color) 50%, var(--stateless-color) 50%);}
+.increase-2-increase-1 { background: linear-gradient(90deg, var(--increase-2-color) 50%, var(--increase-1-color) 50%);}
+.increase-2-increase-2 { background: linear-gradient(90deg, var(--increase-2-color) 50%, var(--increase-2-color) 50%);}
+ 
+
+
+
+
+/* ************************************************************************************************
  *                                           DASHBOARD                                            *
  ************************************************************************************************ */
 .dashboard-container {

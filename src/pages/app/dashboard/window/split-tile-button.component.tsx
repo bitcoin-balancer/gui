@@ -39,9 +39,6 @@ const SplitTileButton = memo(({ id, split, displayWindowDialog }: ISplitTileButt
   // the change% experienced by the split
   const splitChange = useMemo(() => formatPercentageChange(split.change, 1), [split.change]);
 
-  // determines the background class that will be applied on the button based on the state
-  const bgClass = useMemo(() => ColorService.getBackgroundClassByState(split.state), [split.state]);
-
   // the side in which the tooltip will appear to avoid interruptions
   const tooltipSide = getTooltipSide(id);
 
@@ -56,7 +53,7 @@ const SplitTileButton = memo(({ id, split, displayWindowDialog }: ISplitTileButt
     <Tooltip>
       <TooltipTrigger
         onClick={() => displayWindowDialog(id)}
-        className={`text-white text-xs sm:text-sm py-2 px-0 sm:px-2 font-semibold ${bgClass} hover:opacity-80`}
+        className={`text-white text-xs sm:text-sm py-2 px-0 sm:px-2 font-semibold ${ColorService.STATE_TW_CLASS_NAME[split.state]} hover:opacity-80`}
       >
         {splitChange}
       </TooltipTrigger>

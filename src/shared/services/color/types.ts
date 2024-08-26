@@ -31,9 +31,10 @@ type IColorService = {
   DECREASE_2: string;
   STATE: IStateColors;
   STATE_RGB: IStateColors;
+  STATE_CLASS_NAME: IStateColors;
+  STATE_TW_CLASS_NAME: IStateColors;
 
-  // state helpers
-  getBackgroundClassByState: (state: IState) => string;
+  // ...
 };
 
 
