@@ -7,6 +7,7 @@ import {
   ICoinsState,
   ISemiCompactCoinState,
   ICompactCoinState,
+  ICoinsStates,
 } from './types.ts';
 
 /* ************************************************************************************************
@@ -158,5 +159,6 @@ export {
   type ISemiCompactCoinState,
   type ICompactCoinState,
   type ICoinsState,
+  type ICoinsStates,
   type ICoinsConfig,
 };

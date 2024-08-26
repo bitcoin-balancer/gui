@@ -33,6 +33,7 @@ const __onNewCompactAppEssentials = (
       user: <IUser>currentState.user,
       exchangeConfig: <IExchangeConfig>currentState.exchangeConfig,
       marketState: {
+        ...payload.marketState,
         windowState: {
           ...payload.marketState.windowState,
           window: CandlestickService.syncRecords(
