@@ -21,6 +21,7 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/shadcn/components/ui/dropdown-menu.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
+import { toSplitStateItems } from '@/shared/backend/market-state/shared/utils.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
 import { IComponentProps } from '@/pages/app/dashboard/indicators/types.ts';
 
@@ -33,7 +34,7 @@ import { IComponentProps } from '@/pages/app/dashboard/indicators/types.ts';
  * Component in charge of displaying the state of the indicators.
  */
 // eslint-disable-next-line arrow-body-style
-const Indicators = ({ marketState }: IComponentProps) => {
+const Indicators = ({ marketState, openSplitStatesDialog }: IComponentProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
@@ -54,6 +55,20 @@ const Indicators = ({ marketState }: IComponentProps) => {
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
    ********************************************************************************************** */
+
+  /**
+   * Opens the window state dialog an activates the split ID.
+   */
+  const openWindowStateDialog = (): void => (
+    openSplitStatesDialog({
+      moduleID: 'WINDOW',
+      moduleState: {
+        state: marketState.windowState.state,
+        splitStates: marketState.windowState.splitStates,
+        window: toSplitStateItems(marketState.windowState.window),
+      },
+    })
+  );
 
   /**
    * Displays the information dialog which describes how to the window module operates.
@@ -151,6 +166,7 @@ const Indicators = ({ marketState }: IComponentProps) => {
             ******** */}
           <button
             className={`h-[45px] text-xs text-white font-bold ${ColorService.STATE_TW_CLASS_NAME[marketState.windowState.state]} hover:opacity-80`}
+            onClick={openWindowStateDialog}
           >
             WINDOW
           </button>

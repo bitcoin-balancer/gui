@@ -50,7 +50,7 @@ const prettifyPrice = (price: number, asset: ICoinStateAsset | undefined): strin
     case 'base':
       return prettifyValue(price, { processing: { decimalPlaces: 12 }, format: { prefix: '₿' } });
     default:
-      return formatDollarAmount(price);
+      return formatDollarAmount(price, 0);
   }
 };
 

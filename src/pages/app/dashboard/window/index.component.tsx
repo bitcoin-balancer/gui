@@ -12,7 +12,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/shared/shadcn/components/ui/card.tsx';
-import { ISplitStateID, ISplitStateItem } from '@/shared/backend/market-state/shared/types.ts';
+import { ISplitStateID } from '@/shared/backend/market-state/shared/types.ts';
+import { toSplitStateItems } from '@/shared/backend/market-state/shared/utils.ts';
 import { MarketStateService } from '@/shared/backend/market-state/index.service.ts';
 import { formatDate, formatDollarAmount } from '@/shared/services/transformers/index.service.ts';
 import { IBreakpoint } from '@/shared/services/media-query/index.service.ts';
@@ -133,10 +134,7 @@ const WindowState = ({ windowState, openSplitStatesDialog }: IComponentProps) =>
       moduleState: {
         state: windowState.state,
         splitStates: windowState.splitStates,
-        window: windowState.window.id.reduce(
-          (prev, current, idx) => [...prev, { x: current, y: windowState.window.close[idx] }],
-          [] as ISplitStateItem[],
-        ),
+        window: toSplitStateItems(windowState.window),
       },
     })
   );

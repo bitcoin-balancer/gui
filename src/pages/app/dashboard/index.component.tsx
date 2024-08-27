@@ -85,9 +85,9 @@ const Dashboard = () => {
    ********************************************************************************************** */
 
   /**
-   * Closes the window state dialog.
+   * Closes the split states dialog.
    */
-  const closeWindowStateDialog = useCallback(
+  const closeSplitStatesDialog = useCallback(
     (): void => {
       setActiveDialog(undefined);
     },
@@ -154,6 +154,7 @@ const Dashboard = () => {
               <TabsContent value='indicators'>
                 <Indicators
                   marketState={marketState}
+                  openSplitStatesDialog={setActiveDialog}
                 />
               </TabsContent>
 
@@ -174,6 +175,7 @@ const Dashboard = () => {
             && <>
               <Indicators
                   marketState={marketState}
+                  openSplitStatesDialog={setActiveDialog}
                 />
 
               <Separator className='my-10 md:hidden' />
@@ -199,7 +201,7 @@ const Dashboard = () => {
         activeDialog !== undefined
         && <SplitStatesDialog
           data={activeDialog}
-          closeDialog={closeWindowStateDialog}
+          closeDialog={closeSplitStatesDialog}
         />
       }
     </>

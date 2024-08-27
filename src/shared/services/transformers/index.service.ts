@@ -155,6 +155,15 @@ const toLocalTime = (originalTime: number): UTCTimestamp => {
   ) / 1000 as UTCTimestamp;
 };
 
+/**
+ * Capitalizes the first letter of a string and returns the new value.
+ * @param val
+ * @returns string
+ */
+const capitalizeFirst = (val: string): string => `${val[0].toUpperCase()}${val.slice(1)}`;
+
+
+
 
 
 /* ************************************************************************************************
@@ -168,4 +177,5 @@ export {
   formatDollarAmount,
   formatSplitStateChanges,
   toLocalTime,
+  capitalizeFirst,
 };

@@ -129,13 +129,6 @@ const delay = (seconds: number): Promise<void> => new Promise((resolve) => {
   setTimeout(resolve, Math.round(seconds * 1000));
 });
 
-/**
- * Capitalizes the first letter of a string and returns the new value.
- * @param val
- * @returns string
- */
-const capitalizeFirst = (val: string): string => `${val[0].toUpperCase()}${val.slice(1)}`;
-
 
 
 
@@ -156,5 +149,4 @@ export {
 
   // misc helpers
   delay,
-  capitalizeFirst,
 };
