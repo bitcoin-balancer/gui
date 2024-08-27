@@ -1,8 +1,11 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { prettifyValue } from 'bignumber-utils';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import { useBoundStore } from '@/shared/store/index.store';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
+import SplitStatesDialog, {
+  ISplitStatesDialogData,
+} from '@/pages/app/dashboard/split-states-dialog/index.component.tsx';
 import WindowState from '@/pages/app/dashboard/window/index.component.tsx';
 import Position from '@/pages/app/dashboard/position/index.component.tsx';
 import Indicators from '@/pages/app/dashboard/indicators/index.component.tsx';
@@ -40,6 +43,7 @@ const Dashboard = () => {
    *                                             STATE                                            *
    ********************************************************************************************** */
   const marketState = useBoundStore((state) => state.marketState!);
+  const [activeDialog, setActiveDialog] = useState<ISplitStatesDialogData | undefined>(undefined);
 
 
 
@@ -69,59 +73,95 @@ const Dashboard = () => {
 
 
   /* **********************************************************************************************
+   *                                        EVENT HANDLERS                                        *
+   ********************************************************************************************** */
+
+  /**
+   * Closes the window state dialog.
+   */
+  const closeWindowStateDialog = useCallback(
+    (): void => {
+      setActiveDialog(undefined);
+    },
+    [],
+  );
+
+
+
+
+
+  /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   if (marketState === undefined) {
     return <PageLoader />;
   }
   return (
-    <div
-      className='dashboard-container page-container flex flex-col lg:flex-row justify-center items-start gap-5 animate-in fade-in duration-700'
-    >
-
-      <section
-        className='window w-full lg:w-8/12 xl:w-8/12 2xl:w-9/12'
-      >
-        {/* **************
-          * WINDOW STATE *
-          ************** */}
-        <WindowState
-          windowState={marketState.windowState}
-        />
-      </section>
-
-      <aside
-        className='flex-1 w-full'
+    <>
+      <div
+        className='dashboard-container page-container flex flex-col lg:flex-row justify-center items-start gap-5 animate-in fade-in duration-700'
       >
 
-        <Separator className='my-10 md:hidden' />
+        <section
+          className='window w-full lg:w-8/12 xl:w-8/12 2xl:w-9/12'
+        >
+          {/* **************
+            * WINDOW STATE *
+            ************** */}
+          <WindowState
+            windowState={marketState.windowState}
+            openSplitStatesDialog={setActiveDialog}
+          />
+        </section>
 
-        {/* **********
-          * POSITION *
-          ********** */}
-        <Position />
+        <aside
+          className='flex-1 w-full'
+        >
 
-        <Separator className='my-10 md:hidden' />
+          <Separator className='my-10 md:hidden' />
 
-        {/* ************
-          * INDICATORS *
-          ************ */}
-        <Indicators
-          marketState={marketState}
+          {/* **********
+            * POSITION *
+            ********** */}
+          <Position />
+
+          <Separator className='my-10 md:hidden' />
+
+          {/* ************
+            * INDICATORS *
+            ************ */}
+          <Indicators
+            marketState={marketState}
+          />
+
+          <Separator className='my-10 md:hidden' />
+
+          {/* *******
+            * COINS *
+            ******* */}
+          <Coins
+            coinsStates={marketState.coinsStates}
+          />
+
+        </aside>
+
+      </div>
+
+
+
+
+
+      {/* *********************
+        * SPLIT STATES DIALOG *
+        ********************* */}
+      {
+        activeDialog !== undefined
+        && <SplitStatesDialog
+          data={activeDialog}
+          closeDialog={closeWindowStateDialog}
         />
-
-        <Separator className='my-10 md:hidden' />
-
-        {/* *******
-          * COINS *
-          ******* */}
-        <Coins
-          coinsStates={marketState.coinsStates}
-        />
-
-      </aside>
-
-    </div>
+      }
+    </>
   );
 };
 

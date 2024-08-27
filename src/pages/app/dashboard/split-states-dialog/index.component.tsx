@@ -12,8 +12,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
+import { IInfoDialogConfig } from '@/shared/store/slices/info-dialog/types.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
-import { ICompactCandlestickRecords } from '@/shared/backend/candlestick/index.service.ts';
 import { ISplitStateID, ISplitStateItem } from '@/shared/backend/market-state/shared/types.ts';
 import { MarketStateService } from '@/shared/backend/market-state/index.service.ts';
 import {
@@ -26,25 +26,37 @@ import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/i
 import StateIcon from '@/shared/components/state-icon/index.component.tsx';
 import LineChart from '@/shared/components/charts/line-chart/index.component.tsx';
 import {
+  IModuleID,
   IComponentProps,
-  IWindowStateDialogData,
-} from '@/pages/app/dashboard/window/window-split-states-dialog/types.ts';
+  ISplitStatesDialogData,
+} from '@/pages/app/dashboard/split-states-dialog/types.ts';
 
 /* ************************************************************************************************
  *                                            HELPERS                                             *
  ************************************************************************************************ */
 
 /**
- * Turns a compact candlestick records object into a list of split state items.
- * @param records
- * @returns ISplitStateItem[]
+ * Builds the content that will be inserted in the info dialog.
+ * @param id
+ * @param window
+ * @returns IInfoDialogConfig
  */
-const transformCompactCandlestickRecords = (
-  records: ICompactCandlestickRecords,
-): ISplitStateItem[] => records.id.reduce(
-  (prev, current, idx) => [...prev, { x: current, y: records.close[idx] }],
-  [] as ISplitStateItem[],
-);
+const buildInfoDialogContent = (id: IModuleID, window: ISplitStateItem[]): IInfoDialogConfig => {
+  if (id === 'WINDOW') {
+    return {
+      title: 'Window Snapshot',
+      content: [
+        `DATE RANGE (${window.length} items)`,
+        `${formatDate(window[0].x, 'datetime-medium')}`,
+        `${formatDate(window[window.length - 1].x, 'datetime-medium')}`,
+        '-----',
+        'CURRENT PRICE',
+        formatDollarAmount(window[window.length - 1].y),
+      ],
+    };
+  }
+  return {} as IInfoDialogConfig;
+};
 
 
 
@@ -55,11 +67,11 @@ const transformCompactCandlestickRecords = (
  ************************************************************************************************ */
 
 /**
- * Window Split States Dialog Component
+ * Split States Dialog Component
  * Component in charge of displaying additional information regarding each of the window splits.
  */
-const WindowSplitStatesDialog = memo(({
-  data: { activeID, windowState },
+const SplitStatesDialog = memo(({
+  data: { moduleID, moduleState, activeID = 's100' },
   closeDialog,
 }: IComponentProps) => {
   /* **********************************************************************************************
@@ -79,10 +91,13 @@ const WindowSplitStatesDialog = memo(({
    *                                       REACTIVE VALUES                                        *
    ********************************************************************************************** */
 
+  // the dialog's title
+  const title = moduleID === 'WINDOW' ? 'Window' : '';
+
   // the percentage change experienced by each split
   const splitChanges = useMemo(
-    () => formatSplitStateChanges(windowState.splitStates),
-    [windowState.splitStates],
+    () => formatSplitStateChanges(moduleState.splitStates),
+    [moduleState.splitStates],
   );
 
 
@@ -100,31 +115,16 @@ const WindowSplitStatesDialog = memo(({
   const activateSplit = useCallback(
     (id: ISplitStateID): void => {
       setActiveSplitID(id);
-      setActiveSplit(
-        MarketStateService.applySplit(
-          transformCompactCandlestickRecords(windowState.window),
-          id,
-        ) as ISplitStateItem[],
-      );
+      setActiveSplit(MarketStateService.applySplit(moduleState.window, id) as ISplitStateItem[]);
     },
-    [windowState.window],
+    [moduleState.window],
   );
 
   /**
    * Displays the information dialog which describes how to the window module operates.
    */
   const displayWindowInfo = (): void => {
-    openInfoDialog({
-      title: 'Window State',
-      content: [
-        `DATE RANGE (${windowState.window.id.length} bars)`,
-        `${formatDate(windowState.window.id[0], 'datetime-medium')}`,
-        `${formatDate(windowState.window.id.at(-1)!, 'datetime-medium')}`,
-        '-----',
-        'CURRENT PRICE',
-        formatDollarAmount(windowState.window.close.at(-1)!),
-      ],
-    });
+    openInfoDialog(buildInfoDialogContent(moduleID, moduleState.window));
   };
 
   /**
@@ -178,10 +178,10 @@ const WindowSplitStatesDialog = memo(({
               className='flex justify-center sm:justify-start items-center'
               onClick={displayWindowInfo}
             >
-            Window State
+            {title}
             <StateIcon
               className='ml-2'
-              state={windowState.state}
+              state={moduleState.state}
             />
             </button>
           </DialogTitle>
@@ -200,7 +200,7 @@ const WindowSplitStatesDialog = memo(({
             <button
               key={split}
               onClick={() => activateSplit(split)}
-              className={` py-2 px-0 sm:px-2 ${ColorService.STATE_TW_CLASS_NAME[windowState.splitStates[split].state]} ${activeSplitID === split ? 'opacity-60' : 'hover:opacity-80'}`}
+              className={` py-2 px-0 sm:px-2 ${ColorService.STATE_TW_CLASS_NAME[moduleState.splitStates[split].state]} ${activeSplitID === split ? 'opacity-60' : 'hover:opacity-80'}`}
               disabled={activeSplitID === split}
             >
               <p className='text-white text-sm font-semibold'>{splitChanges[split]}</p>
@@ -218,7 +218,7 @@ const WindowSplitStatesDialog = memo(({
           kind='area'
           height={breakpoint === 'xs' || breakpoint === 'sm' ? 350 : 450}
           data={activeSplit}
-          state={windowState.splitStates[activeSplitID].state}
+          state={moduleState.splitStates[activeSplitID].state}
           prettifyY={true}
         />
 
@@ -236,7 +236,7 @@ const WindowSplitStatesDialog = memo(({
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export default WindowSplitStatesDialog;
+export default SplitStatesDialog;
 export type {
-  IWindowStateDialogData,
+  ISplitStatesDialogData,
 };
