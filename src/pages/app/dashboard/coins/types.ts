@@ -1,4 +1,5 @@
 import { ICoinsStates, ICompactCoinState } from '@/shared/backend/market-state/coins/index.service.ts';
+import { ISplitStatesDialogData } from '../split-states-dialog/index.component.tsx';
 
 /* ************************************************************************************************
  *                                             TYPES                                              *
@@ -11,7 +12,11 @@ import { ICoinsStates, ICompactCoinState } from '@/shared/backend/market-state/c
  * ...
  */
 type IComponentProps = {
+  // the current state of the coins
   coinsStates: ICoinsStates<ICompactCoinState>;
+
+  // the function that opens the split states dialog when invoked
+  openSplitStatesDialog: (data: ISplitStatesDialogData) => void;
 };
 
 

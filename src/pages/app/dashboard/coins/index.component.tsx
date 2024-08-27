@@ -1,5 +1,10 @@
-import { useMemo } from 'react';
-import { EllipsisVertical } from 'lucide-react';
+import { memo, useMemo, useState } from 'react';
+import {
+  EllipsisVertical,
+  DollarSign,
+  Bitcoin,
+  Loader2,
+} from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -14,7 +19,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/shared/shadcn/components/ui/dropdown-menu.tsx';
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+} from '@/shared/shadcn/components/ui/drawer.tsx';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
+import { delay, errorToast } from '@/shared/services/utils/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
+import { CoinsService, ICoinStateAsset } from '@/shared/backend/market-state/coins/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
 import { IComponentProps } from '@/pages/app/dashboard/coins/types.ts';
 
@@ -26,12 +42,56 @@ import { IComponentProps } from '@/pages/app/dashboard/coins/types.ts';
  * Coins Component
  * Component in charge of displaying the state of the coins for the quote and base assets.
  */
-const Coins = ({ coinsStates }: IComponentProps) => {
+const Coins = memo(({ coinsStates, openSplitStatesDialog }: IComponentProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [activeSymbol, setActiveSymbol] = useState<string>('');
+  const [isRetrievingState, setIsRetrievingState] = useState<boolean>(false);
   const exchangeConfig = useBoundStore((state) => state.exchangeConfig!);
   /* console.log('In Coins'); */
+
+
+
+
+  /* **********************************************************************************************
+   *                                        EVENT HANDLERS                                        *
+   ********************************************************************************************** */
+
+  /**
+   * Activates a symbol and opens the drawer.
+   * @param symbol
+   */
+  const activateSymbol = (symbol: string): void => {
+    setActiveSymbol(symbol);
+    setIsOpen(true);
+  };
+
+  /**
+   * Displays the split states dialog for a symbol and asset.
+   * @param asset
+   * @returns Promise<void>
+   */
+  const displaySplitStateDialog = async (asset: ICoinStateAsset): Promise<void> => {
+    setIsRetrievingState(true);
+    try {
+      const state = await CoinsService.getStateForSymbol(asset, activeSymbol);
+      setIsOpen(false);
+      await delay(0.25);
+      openSplitStatesDialog({
+        moduleID: 'COINS',
+        asset,
+        symbol: activeSymbol,
+        moduleState: state,
+      });
+    } catch (e) {
+      errorToast(e);
+    } finally {
+      setIsRetrievingState(false);
+    }
+  };
+
 
 
 
@@ -102,15 +162,72 @@ const Coins = ({ coinsStates }: IComponentProps) => {
             <button
               key={symbol}
               className={`h-[45px] text-xs text-white font-bold ${coinBackgrounds[symbol]} hover:opacity-80`}
+              onClick={() => activateSymbol(symbol)}
             >
               {symbol}
             </button>
           ))}
         </CardContent>
       </Card>
+
+
+
+      {/* ********************
+        * STATE ASSET DRAWER *
+        ******************** */}
+      <Drawer open={isOpen} onOpenChange={setIsOpen}>
+        <DrawerContent>
+          <div
+            className='mx-auto w-full max-w-sm'
+          >
+            <DrawerHeader>
+              <DrawerTitle>Select a pair</DrawerTitle>
+              <DrawerDescription
+                className='flex justify-center items-center sm:justify-start'
+              >
+                {
+                  isRetrievingState
+                  && <Loader2
+                    className='mr-2 h-4 w-4 animate-spin'
+                  />
+                }
+                {
+                  isRetrievingState
+                    ? 'Retrieving state...'
+                    : `Display the state for ${activeSymbol}`
+                }
+              </DrawerDescription>
+            </DrawerHeader>
+            <DrawerFooter
+              className='flex flex-row justify-center items-stretch'
+            >
+              <Button
+                variant='outline'
+                aria-label={`View the state of the coin in the ${exchangeConfig.quoteAsset} pair`}
+                className='flex flex-col h-20 w-full gap-y-1'
+                onClick={() => displaySplitStateDialog('quote')}
+                disabled={isRetrievingState}
+              >
+                <DollarSign aria-hidden='true' />
+                <p>{activeSymbol}/{exchangeConfig.quoteAsset}</p>
+              </Button>
+              <Button
+                variant='outline'
+                aria-label={`View the state of the coin in the ${exchangeConfig.baseAsset} pair`}
+                className='flex flex-col h-20 w-full gap-y-1'
+                onClick={() => displaySplitStateDialog('base')}
+                disabled={isRetrievingState || activeSymbol === exchangeConfig.baseAsset}
+              >
+                <Bitcoin aria-hidden='true' />
+                <p>{activeSymbol}/{exchangeConfig.baseAsset}</p>
+              </Button>
+            </DrawerFooter>
+          </div>
+        </DrawerContent>
+      </Drawer>
     </>
   );
-};
+});
 
 
 

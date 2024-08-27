@@ -1,3 +1,4 @@
+import { ICoinStateAsset } from '@/shared/backend/market-state/coins/types';
 import {
   ISplitStateID,
   ISplitStateItem,
@@ -43,6 +44,10 @@ type ISplitStatesDialogData = {
 
   // the split that will be activated on load. Defaults to s100
   activeID?: ISplitStateID;
+
+  // present when moduleID === 'COINS'
+  asset: ICoinStateAsset;
+  symbol: string;
 };
 
 /**

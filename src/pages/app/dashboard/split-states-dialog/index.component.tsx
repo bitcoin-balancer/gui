@@ -5,6 +5,7 @@ import {
   useCallback,
   useMemo,
 } from 'react';
+import { prettifyValue } from 'bignumber-utils';
 import {
   Dialog,
   DialogContent,
@@ -30,6 +31,7 @@ import {
   IComponentProps,
   ISplitStatesDialogData,
 } from '@/pages/app/dashboard/split-states-dialog/types.ts';
+import { ICoinStateAsset } from '@/shared/backend/market-state/coins/types';
 
 /* ************************************************************************************************
  *                                            HELPERS                                             *
@@ -41,21 +43,40 @@ import {
  * @param window
  * @returns IInfoDialogConfig
  */
-const buildInfoDialogContent = (id: IModuleID, window: ISplitStateItem[]): IInfoDialogConfig => {
-  if (id === 'WINDOW') {
-    return {
-      title: 'Window Snapshot',
-      content: [
-        `DATE RANGE (${window.length} items)`,
-        `${formatDate(window[0].x, 'datetime-medium')}`,
-        `${formatDate(window[window.length - 1].x, 'datetime-medium')}`,
-        '-----',
-        'CURRENT PRICE',
-        formatDollarAmount(window[window.length - 1].y),
-      ],
-    };
+const buildInfoDialogContent = (
+  id: IModuleID,
+  window: ISplitStateItem[],
+  asset: ICoinStateAsset | undefined,
+  assetName: string,
+  symbol: string | undefined,
+): IInfoDialogConfig => {
+  let title: string;
+  let currentPrice: string;
+  if (id === 'COINS') {
+    title = `${symbol}/${assetName} Snapshot`;
+    if (asset === 'quote') {
+      currentPrice = formatDollarAmount(window[window.length - 1].y, 12);
+    } else {
+      currentPrice = prettifyValue(
+        window[window.length - 1].y,
+        { processing: { decimalPlaces: 12 }, format: { prefix: '₿' } },
+      );
+    }
+  } else {
+    title = 'Window Snapshot';
+    currentPrice = formatDollarAmount(window[window.length - 1].y);
   }
-  return {} as IInfoDialogConfig;
+  return {
+    title,
+    content: [
+      `DATE RANGE (${window.length} items)`,
+      `${formatDate(window[0].x, 'datetime-medium')}`,
+      `${formatDate(window[window.length - 1].x, 'datetime-medium')}`,
+      '-----',
+      'CURRENT PRICE',
+      currentPrice,
+    ],
+  };
 };
 
 
@@ -71,7 +92,13 @@ const buildInfoDialogContent = (id: IModuleID, window: ISplitStateItem[]): IInfo
  * Component in charge of displaying additional information regarding each of the window splits.
  */
 const SplitStatesDialog = memo(({
-  data: { moduleID, moduleState, activeID = 's100' },
+  data: {
+    moduleID,
+    moduleState,
+    activeID = 's100',
+    asset,
+    symbol,
+  },
   closeDialog,
 }: IComponentProps) => {
   /* **********************************************************************************************
@@ -81,6 +108,7 @@ const SplitStatesDialog = memo(({
   const breakpoint = useMediaQueryBreakpoint();
   const [activeSplitID, setActiveSplitID] = useState<ISplitStateID>(activeID);
   const [activeSplit, setActiveSplit] = useState<ISplitStateItem[]>([]);
+  const exchangeConfig = useBoundStore((state) => state.exchangeConfig!);
   const openInfoDialog = useBoundStore((state) => state.openInfoDialog);
 
 
@@ -91,8 +119,11 @@ const SplitStatesDialog = memo(({
    *                                       REACTIVE VALUES                                        *
    ********************************************************************************************** */
 
+  // the name of the asset
+  const assetName = asset === 'quote' ? exchangeConfig.quoteAsset : exchangeConfig.baseAsset;
+
   // the dialog's title
-  const title = moduleID === 'WINDOW' ? 'Window' : '';
+  const title = moduleID === 'COINS' ? `${symbol}/${assetName}` : 'Window';
 
   // the percentage change experienced by each split
   const splitChanges = useMemo(
@@ -124,7 +155,7 @@ const SplitStatesDialog = memo(({
    * Displays the information dialog which describes how to the window module operates.
    */
   const displayWindowInfo = (): void => {
-    openInfoDialog(buildInfoDialogContent(moduleID, moduleState.window));
+    openInfoDialog(buildInfoDialogContent(moduleID, moduleState.window, asset, assetName, symbol));
   };
 
   /**
@@ -219,7 +250,7 @@ const SplitStatesDialog = memo(({
           height={breakpoint === 'xs' || breakpoint === 'sm' ? 350 : 450}
           data={activeSplit}
           state={moduleState.splitStates[activeSplitID].state}
-          prettifyY={true}
+          prettifyY={moduleID === 'WINDOW'}
         />
 
 

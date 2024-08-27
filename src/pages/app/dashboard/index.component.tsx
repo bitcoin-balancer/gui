@@ -141,6 +141,7 @@ const Dashboard = () => {
             ******* */}
           <Coins
             coinsStates={marketState.coinsStates}
+            openSplitStatesDialog={setActiveDialog}
           />
 
         </aside>
