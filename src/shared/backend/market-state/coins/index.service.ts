@@ -1,13 +1,14 @@
 import { APIService } from '../../api/index.service.ts';
 import {
   ICoinsService,
-  ICoinsConfig,
   ICoinStateAsset,
   ICoinState,
   ICoinsState,
   ISemiCompactCoinState,
   ICompactCoinState,
   ICoinsStates,
+  ICoinsConfig,
+  ICoinsConfigGUI,
 } from './types.ts';
 
 /* ************************************************************************************************
@@ -101,6 +102,7 @@ const coinsServiceFactory = (): ICoinsService => {
    * - 23506: if any of the whitelisted symbols is invalid
    * - 23507: if the limit is invalid
    * - 23509: if the whitelist doesn't include the base asset
+   * - 23511: if the requirement is equals or larger than the strongRequirement
    */
   const updateConfig = (newConfig: ICoinsConfig, otpToken: string): Promise<void> => (
     APIService.request(
@@ -161,4 +163,5 @@ export {
   type ICoinsState,
   type ICoinsStates,
   type ICoinsConfig,
+  type ICoinsConfigGUI,
 };

@@ -143,6 +143,14 @@ type ICoinsConfig = {
   whitelistedSymbols: string[];
 };
 
+/**
+ * Coins Config GUI
+ * A variation of the config object that allows the management of the whitelist as a string.
+ */
+type ICoinsConfigGUI = Omit<ICoinsConfig, 'whitelistedSymbols'> & {
+  whitelistedSymbolsStr: string;
+};
+
 
 
 
@@ -166,4 +174,5 @@ export type {
 
   // configuration
   ICoinsConfig,
+  ICoinsConfigGUI,
 };

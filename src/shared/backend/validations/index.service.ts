@@ -195,6 +195,16 @@ const semverValid = (value: unknown): value is string => (
   && /^[0-9]{1,5}\.[0-9]{1,5}\.[0-9]{1,5}$/.test(value)
 );
 
+/**
+ * Verifies if a value is (or could be) an asset's symbol.
+ * @param value
+ * @returns boolean
+ */
+const symbolValid = (value: unknown): value is string => (
+  typeof value === 'string'
+  && /^[A-Z0-9]{1,20}$/.test(value)
+);
+
 
 
 
@@ -220,4 +230,5 @@ export {
   ipValid,
   ipNotesValid,
   semverValid,
+  symbolValid,
 };

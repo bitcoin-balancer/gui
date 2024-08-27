@@ -166,25 +166,11 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
           noValidate
         >
 
-          <div className='flex justify-start items-center'>
-            <p
-              className='text-sm font-medium'
-            >Exchange</p>
-            <span className='flex-1'></span>
-            <img
-              src={`/exchanges/${exchangeConfig.window}.png`}
-              alt={`Logo of the Exchange being used by the Window Module (${exchangeConfig.window})`}
-              height={435}
-              width={90}
-              className='max-h-6'
-            />
-          </div>
-
           <FormField
             control={form.control}
             name='refetchFrequency'
             render={({ field }) => (
-              <FormItem className='mt-7'>
+              <FormItem>
                 <FormLabelWithMoreInfo
                   value='Re-fetch frequency (seconds)'
                   description={[
@@ -393,8 +379,15 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
 
         <DialogHeader>
           <DialogTitle>Update Window</DialogTitle>
-          <DialogDescription>
-            The changes will be applied immediately upon submission
+          <DialogDescription className='flex justify-center items-center sm:justify-start'>
+            Connected to
+            <img
+              src={`/exchanges/${exchangeConfig.window}.png`}
+              alt={`Logo of the Exchange being used by the Window Module (${exchangeConfig.window})`}
+              height={435}
+              width={90}
+              className='ml-1 max-h-4'
+            />
           </DialogDescription>
         </DialogHeader>
 
