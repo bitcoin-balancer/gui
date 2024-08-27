@@ -130,6 +130,9 @@ const SplitStatesDialog = memo(({
     [moduleState.splitStates],
   );
 
+  // the price formatter that will be used on the chart
+  const priceFormatter = useCallback((value: number) => prettifyPrice(value, asset), [asset]);
+
 
 
 
@@ -251,7 +254,7 @@ const SplitStatesDialog = memo(({
           state={moduleState.splitStates[activeSplitID].state}
           priceFormatterFunc={
             moduleID === 'WINDOW'
-              ? (value: number) => formatDollarAmount(value, 0)
+              ? priceFormatter
               : undefined
           }
         />

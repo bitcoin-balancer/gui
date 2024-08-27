@@ -3,6 +3,7 @@ import {
   useState,
   useRef,
   useEffect,
+  useCallback,
 } from 'react';
 import {
   Card,
@@ -93,6 +94,9 @@ const WindowState = ({ windowState, openSplitStatesDialog }: IComponentProps) =>
     ),
     [breakpoint, windowState.window.id],
   );
+
+  // the price formatter that will be used on the chart
+  const priceFormatter = useCallback((value: number) => formatDollarAmount(value, 0), []);
 
 
 
@@ -238,7 +242,7 @@ const WindowState = ({ windowState, openSplitStatesDialog }: IComponentProps) =>
             height={chartHeight}
             data={windowState.window}
             state={windowState.state}
-            priceFormatterFunc={(value: number) => formatDollarAmount(value, 0)}
+            priceFormatterFunc={priceFormatter}
           />
         }
       </CardContent>
