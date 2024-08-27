@@ -142,7 +142,7 @@ const Dashboard = () => {
             (breakpoint !== 'xs' && breakpoint !== 'sm')
             && <Tabs
               defaultValue='indicators'
-              className='w-full md:mt-10'
+              className='w-full md:mt-7'
             >
               <TabsList
                 className='grid w-full grid-cols-2'

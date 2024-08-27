@@ -6,9 +6,9 @@ import {
   SeriesOptionsCommon,
 } from 'lightweight-charts';
 import { ISplitStateItem, IState } from '@/shared/backend/market-state/shared/types.ts';
-import { formatDollarAmount, toLocalTime } from '@/shared/services/transformers/index.service.ts';
+import { toLocalTime } from '@/shared/services/transformers/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
-import { IChartKind, ISeriesItem } from '@/shared/components/charts/line-chart/types.ts';
+import { IChartKind, IPriceFormatterFunc, ISeriesItem } from '@/shared/components/charts/line-chart/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -30,13 +30,13 @@ const toSeriesItems = (items: ISplitStateItem[]): ISeriesItem[] => items.map(
  * Builds the essential options for creating a line chart.
  * @param chartContainerEl
  * @param height
- * @param prettifyY
+ * @param priceFormatterFunc
  * @returns DeepPartial<ChartOptions>
  */
 const buildChartOptions = (
   chartContainerEl: HTMLDivElement,
   height: number,
-  prettifyY: boolean | undefined,
+  priceFormatterFunc: IPriceFormatterFunc | undefined,
 ): DeepPartial<ChartOptions> => ({
   layout: {
     textColor: 'black',
@@ -46,7 +46,7 @@ const buildChartOptions = (
   height,
   grid: { horzLines: { visible: false }, vertLines: { visible: false } },
   localization: {
-    priceFormatter: prettifyY ? (val: number) => formatDollarAmount(val, 0) : undefined,
+    priceFormatter: priceFormatterFunc,
   },
   timeScale: {
     borderColor: ColorService.PRIMARY,

@@ -25,7 +25,7 @@ const LineChart = ({
   height,
   data,
   state,
-  prettifyY,
+  priceFormatterFunc,
 }: IComponentProps) => {
   /* **********************************************************************************************
    *                                             REFS                                             *
@@ -41,7 +41,7 @@ const LineChart = ({
       if (!this.__api) {
         this.__api = createChart(
           chartContainerRef.current!,
-          buildChartOptions(chartContainerRef.current!, height, prettifyY),
+          buildChartOptions(chartContainerRef.current!, height, priceFormatterFunc),
         );
         this.__api.timeScale().fitContent();
       }
@@ -56,9 +56,6 @@ const LineChart = ({
         } else {
           this.__series = this.api().addAreaSeries({
             ...getColorByState(kind, state),
-            /* priceFormat: prettifyY !== true
-              ? { type: 'price', precision: 12, minMove: 0.000000000001 }
-              : { type: 'price', precision: 2, minMove: 0.01 }, */
           });
         }
       }

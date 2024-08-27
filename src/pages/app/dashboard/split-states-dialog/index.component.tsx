@@ -38,6 +38,23 @@ import {
  ************************************************************************************************ */
 
 /**
+ * Prettifies a price based on the asset pair (if any).
+ * @param price
+ * @param asset
+ * @returns string
+ */
+const prettifyPrice = (price: number, asset: ICoinStateAsset | undefined): string => {
+  switch (asset) {
+    case 'quote':
+      return formatDollarAmount(price, 12);
+    case 'base':
+      return prettifyValue(price, { processing: { decimalPlaces: 12 }, format: { prefix: '₿' } });
+    default:
+      return formatDollarAmount(price);
+  }
+};
+
+/**
  * Builds the content that will be inserted in the info dialog.
  * @param id
  * @param window
@@ -49,35 +66,17 @@ const buildInfoDialogContent = (
   asset: ICoinStateAsset | undefined,
   assetName: string,
   symbol: string | undefined,
-): IInfoDialogConfig => {
-  let title: string;
-  let currentPrice: string;
-  if (id === 'COINS') {
-    title = `${symbol}/${assetName} Snapshot`;
-    if (asset === 'quote') {
-      currentPrice = formatDollarAmount(window[window.length - 1].y, 12);
-    } else {
-      currentPrice = prettifyValue(
-        window[window.length - 1].y,
-        { processing: { decimalPlaces: 12 }, format: { prefix: '₿' } },
-      );
-    }
-  } else {
-    title = 'Window Snapshot';
-    currentPrice = formatDollarAmount(window[window.length - 1].y);
-  }
-  return {
-    title,
-    content: [
-      `DATE RANGE (${window.length} items)`,
-      `${formatDate(window[0].x, 'datetime-medium')}`,
-      `${formatDate(window[window.length - 1].x, 'datetime-medium')}`,
-      '-----',
-      'CURRENT PRICE',
-      currentPrice,
-    ],
-  };
-};
+): IInfoDialogConfig => ({
+  title: id === 'WINDOW' ? 'Window Snapshot' : `${symbol}/${assetName} Snapshot`,
+  content: [
+    `DATE RANGE (${window.length} items)`,
+    `${formatDate(window[0].x, 'datetime-medium')}`,
+    `${formatDate(window[window.length - 1].x, 'datetime-medium')}`,
+    '-----',
+    'CURRENT PRICE',
+    prettifyPrice(window[window.length - 1].y, asset),
+  ],
+});
 
 
 
@@ -250,7 +249,11 @@ const SplitStatesDialog = memo(({
           height={breakpoint === 'xs' || breakpoint === 'sm' ? 350 : 450}
           data={activeSplit}
           state={moduleState.splitStates[activeSplitID].state}
-          prettifyY={moduleID === 'WINDOW'}
+          priceFormatterFunc={
+            moduleID === 'WINDOW'
+              ? (value: number) => formatDollarAmount(value, 0)
+              : undefined
+          }
         />
 
 
