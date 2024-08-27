@@ -134,7 +134,7 @@ const Coins = memo(({ coinsStates, openSplitStatesDialog }: IComponentProps) => 
    ********************************************************************************************** */
   return (
     <>
-      <Card className='md:mt-7'>
+      <Card className='md:mt-2'>
         <CardHeader>
           <CardTitle className='flex justify-start items-center'>
               Coins

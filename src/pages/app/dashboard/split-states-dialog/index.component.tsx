@@ -22,6 +22,7 @@ import {
   formatDollarAmount,
   formatSplitStateChanges,
 } from '@/shared/services/transformers/index.service.ts';
+import { ICoinStateAsset } from '@/shared/backend/market-state/coins/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
 import StateIcon from '@/shared/components/state-icon/index.component.tsx';
@@ -31,7 +32,6 @@ import {
   IComponentProps,
   ISplitStatesDialogData,
 } from '@/pages/app/dashboard/split-states-dialog/types.ts';
-import { ICoinStateAsset } from '@/shared/backend/market-state/coins/types';
 
 /* ************************************************************************************************
  *                                            HELPERS                                             *

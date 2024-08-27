@@ -46,8 +46,8 @@ type ISplitStatesDialogData = {
   activeID?: ISplitStateID;
 
   // present when moduleID === 'COINS'
-  asset: ICoinStateAsset;
-  symbol: string;
+  asset?: ICoinStateAsset;
+  symbol?: string;
 };
 
 /**

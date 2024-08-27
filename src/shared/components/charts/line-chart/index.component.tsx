@@ -51,11 +51,15 @@ const LineChart = ({
     // inits (only once) and returns the instance of the Series API
     series(): ILineSeriesAPI {
       if (!this.__series) {
-        // const { upColor, downColor } = getBarColorsByState(state);
         if (kind === 'line') {
           this.__series = this.api().addLineSeries(getColorByState(kind, state));
         } else {
-          this.__series = this.api().addAreaSeries(getColorByState(kind, state));
+          this.__series = this.api().addAreaSeries({
+            ...getColorByState(kind, state),
+            /* priceFormat: prettifyY !== true
+              ? { type: 'price', precision: 12, minMove: 0.000000000001 }
+              : { type: 'price', precision: 2, minMove: 0.01 }, */
+          });
         }
       }
       return this.__series;

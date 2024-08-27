@@ -1,7 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
 import { prettifyValue } from 'bignumber-utils';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/shared/shadcn/components/ui/tabs.tsx';
 import { useBoundStore } from '@/shared/store/index.store';
+import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import SplitStatesDialog, {
   ISplitStatesDialogData,
@@ -42,6 +49,7 @@ const Dashboard = () => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
+  const breakpoint = useMediaQueryBreakpoint();
   const marketState = useBoundStore((state) => state.marketState!);
   const [activeDialog, setActiveDialog] = useState<ISplitStatesDialogData | undefined>(undefined);
 
@@ -127,23 +135,55 @@ const Dashboard = () => {
 
           <Separator className='my-10 md:hidden' />
 
-          {/* ************
-            * INDICATORS *
-            ************ */}
-          <Indicators
-            marketState={marketState}
-          />
+          {/* ******
+            * TABS *
+            ****** */}
+          {
+            (breakpoint !== 'xs' && breakpoint !== 'sm')
+            && <Tabs
+              defaultValue='indicators'
+              className='w-full md:mt-10'
+            >
+              <TabsList
+                className='grid w-full grid-cols-2'
+              >
+                <TabsTrigger value='indicators'>Indicators</TabsTrigger>
+                <TabsTrigger value='coins'>Coins</TabsTrigger>
+              </TabsList>
 
-          <Separator className='my-10 md:hidden' />
+              <TabsContent value='indicators'>
+                <Indicators
+                  marketState={marketState}
+                />
+              </TabsContent>
+
+              <TabsContent value='coins'>
+                <Coins
+                  coinsStates={marketState.coinsStates}
+                  openSplitStatesDialog={setActiveDialog}
+                />
+              </TabsContent>
+            </Tabs>
+          }
 
           {/* *******
-            * COINS *
+            * CARDS *
             ******* */}
-          <Coins
-            coinsStates={marketState.coinsStates}
-            openSplitStatesDialog={setActiveDialog}
-          />
+          {
+            (breakpoint === 'xs' || breakpoint === 'sm')
+            && <>
+              <Indicators
+                  marketState={marketState}
+                />
 
+              <Separator className='my-10 md:hidden' />
+
+              <Coins
+                coinsStates={marketState.coinsStates}
+                openSplitStatesDialog={setActiveDialog}
+              />
+            </>
+          }
         </aside>
 
       </div>
