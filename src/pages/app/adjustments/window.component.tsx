@@ -27,6 +27,7 @@ import {
   DialogTitle,
   DialogFooter,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
+import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { numberValid } from '@/shared/backend/validations/index.service.ts';
@@ -166,187 +167,197 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
           noValidate
         >
 
-          <FormField
-            control={form.control}
-            name='refetchFrequency'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabelWithMoreInfo
-                  value='Re-fetch frequency (seconds)'
-                  description={[
-                    'The interval at which the pricing data is re-fetched from the exchange.',
-                    '-----',
-                    'When using Kraken, ensure your request frequency respects their strict rate limits.  Setting a value larger than 10 seconds for your request interval is recommended to avoid hitting rate limits and ensure smooth operation.',
-                  ]}
-                />
-                <FormControl>
-                  <Input
-                    type='number'
-                    placeholder='2.5'
-                    {...field}
-                    autoComplete='off'
-                    disabled={isSubmitting}
-                    min={2.5}
-                    max={60}
-                    />
-                </FormControl>
-                <FormDescription>Refresh interval</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-            rules={{
-              validate: {
-                required: (value) => (numberValid(Number(value), 2.5, 60) ? true : 'Enter a number ranging 2.5 - 60'),
-              },
-            }}
-          />
+          <fieldset>
+            <h3 className='text-md font-semibold'>Window</h3>
 
-          <FormField
-            control={form.control}
-            name='size'
-            render={({ field }) => (
-              <FormItem className='mt-7'>
-                <FormLabelWithMoreInfo
-                  value='Window size'
-                  description='The number of candlestick bars that comprise the window.'
-                />
-                <FormControl>
-                  <Input
-                    type='number'
-                    placeholder='128'
-                    {...field}
-                    autoComplete='off'
-                    disabled={isSubmitting}
-                    min={128}
-                    max={512}
-                    />
-                </FormControl>
-                <FormDescription>Candlestick bars</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-            rules={{
-              validate: {
-                required: (value) => (numberValid(Number(value), 128, 512) ? true : 'Enter a number ranging 128 - 512'),
-              },
-            }}
-          />
+            <FormField
+              control={form.control}
+              name='refetchFrequency'
+              render={({ field }) => (
+                <FormItem className='mt-5'>
+                  <FormLabelWithMoreInfo
+                    value='Re-fetch frequency (seconds)'
+                    description={[
+                      'The interval at which the pricing data is re-fetched from the exchange.',
+                      '-----',
+                      'When using Kraken, ensure your request frequency respects their strict rate limits.  Setting a value larger than 10 seconds for your request interval is recommended to avoid hitting rate limits and ensure smooth operation.',
+                    ]}
+                  />
+                  <FormControl>
+                    <Input
+                      type='number'
+                      placeholder='2.5'
+                      {...field}
+                      autoComplete='off'
+                      disabled={isSubmitting}
+                      min={2.5}
+                      max={60}
+                      />
+                  </FormControl>
+                  <FormDescription>Refresh interval</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+              rules={{
+                validate: {
+                  required: (value) => (numberValid(Number(value), 2.5, 60) ? true : 'Enter a number ranging 2.5 - 60'),
+                },
+              }}
+            />
 
-          <FormField
-            control={form.control}
-            name='interval'
-            render={({ field }) => (
-              <FormItem className='mt-7'>
-                <FormLabelWithMoreInfo
-                  value='Interval'
-                  description='The amount of time contained by each candlestick bar.'
-                  htmlFor='intervalSelect'
-                />
-                <FormControl>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                    value={field.value}
-                    disabled={isSubmitting}
-                    name='intervalSelect'
-                  >
-                    <SelectTrigger id='intervalSelect'>
-                      <SelectValue placeholder='Select one option' />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value='1m'>1 minute</SelectItem>
-                      <SelectItem value='5m'>5 minutes</SelectItem>
-                      <SelectItem value='15m'>15 minutes</SelectItem>
-                      <SelectItem value='30m'>30 minutes</SelectItem>
-                      <SelectItem value='1h'>1 hour</SelectItem>
-                      <SelectItem value='1d'>1 day</SelectItem>
-                      <SelectItem value='1w'>1 week</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </FormControl>
-                <FormDescription>Candlestick bar duration</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-            rules={{
-              validate: {
-                required: (value) => (value.length ? true : 'Select a valid interval'),
-              },
-            }}
-          />
+            <FormField
+              control={form.control}
+              name='size'
+              render={({ field }) => (
+                <FormItem className='mt-7'>
+                  <FormLabelWithMoreInfo
+                    value='Window size'
+                    description='The number of candlestick bars that comprise the window.'
+                  />
+                  <FormControl>
+                    <Input
+                      type='number'
+                      placeholder='128'
+                      {...field}
+                      autoComplete='off'
+                      disabled={isSubmitting}
+                      min={128}
+                      max={512}
+                      />
+                  </FormControl>
+                  <FormDescription>Candlestick bars</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+              rules={{
+                validate: {
+                  required: (value) => (numberValid(Number(value), 128, 512) ? true : 'Enter a number ranging 128 - 512'),
+                },
+              }}
+            />
 
-          <FormField
-            control={form.control}
-            name='requirement'
-            render={({ field }) => (
-              <FormItem className='mt-7'>
-                <FormLabelWithMoreInfo
-                  value='State requirement%'
-                  description={[
-                    'The percentage change in Bitcoin\'s price needed to mark a window split as "stateful". ',
-                    'The possible states for this requirement are:',
-                    ' 1: increasing',
-                    '-1: decreasing',
-                  ]}
-                />
-                <FormControl>
-                  <Input
-                    type='number'
-                    placeholder='0.025'
-                    {...field}
-                    autoComplete='off'
-                    disabled={isSubmitting}
-                    min={0.01}
-                    max={100}
-                    />
-                </FormControl>
-                <FormDescription>Bitcoin's price% change</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-            rules={{
-              validate: {
-                required: (value) => (numberValid(Number(value), 0.01, 100) ? true : 'Enter a number ranging 0.01% - 100%'),
-              },
-            }}
-          />
+            <FormField
+              control={form.control}
+              name='interval'
+              render={({ field }) => (
+                <FormItem className='mt-7'>
+                  <FormLabelWithMoreInfo
+                    value='Interval'
+                    description='The amount of time contained by each candlestick bar.'
+                    htmlFor='intervalSelect'
+                  />
+                  <FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      value={field.value}
+                      disabled={isSubmitting}
+                      name='intervalSelect'
+                    >
+                      <SelectTrigger id='intervalSelect'>
+                        <SelectValue placeholder='Select one option' />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value='1m'>1 minute</SelectItem>
+                        <SelectItem value='5m'>5 minutes</SelectItem>
+                        <SelectItem value='15m'>15 minutes</SelectItem>
+                        <SelectItem value='30m'>30 minutes</SelectItem>
+                        <SelectItem value='1h'>1 hour</SelectItem>
+                        <SelectItem value='1d'>1 day</SelectItem>
+                        <SelectItem value='1w'>1 week</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormDescription>Candlestick bar duration</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+              rules={{
+                validate: {
+                  required: (value) => (value.length ? true : 'Select a valid interval'),
+                },
+              }}
+            />
+          </fieldset>
 
-          <FormField
-            control={form.control}
-            name='strongRequirement'
-            render={({ field }) => (
-              <FormItem className='mt-7'>
-                <FormLabelWithMoreInfo
-                  value='Strong state requirement%'
-                  description={[
-                    'The percentage change in Bitcoin\'s price needed to mark a window split as "stateful". ',
-                    'The possible states for this requirement are:',
-                    ' 2: increasing strongly',
-                    '-2: decreasing strongly',
-                  ]}
-                />
-                <FormControl>
-                  <Input
-                    type='number'
-                    placeholder='0.85'
-                    {...field}
-                    autoComplete='off'
-                    disabled={isSubmitting}
-                    min={0.01}
-                    max={100}
-                    />
-                </FormControl>
-                <FormDescription>Bitcoin's price% change</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-            rules={{
-              validate: {
-                required: (value) => (numberValid(Number(value), 0.01, 100) ? true : 'Enter a number ranging 0.01% - 100%'),
-              },
-            }}
-          />
+          <Separator className='my-10' />
 
+
+          <fieldset>
+            <h3 className='text-md font-semibold'>State</h3>
+
+            <FormField
+              control={form.control}
+              name='requirement'
+              render={({ field }) => (
+                <FormItem className='mt-5'>
+                  <FormLabelWithMoreInfo
+                    value='State requirement%'
+                    description={[
+                      'The percentage change in Bitcoin\'s price needed to mark a window split as "stateful". ',
+                      'The possible states for this requirement are:',
+                      ' 1: increasing',
+                      '-1: decreasing',
+                    ]}
+                  />
+                  <FormControl>
+                    <Input
+                      type='number'
+                      placeholder='0.025'
+                      {...field}
+                      autoComplete='off'
+                      disabled={isSubmitting}
+                      min={0.01}
+                      max={100}
+                      />
+                  </FormControl>
+                  <FormDescription>Bitcoin's price% change</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+              rules={{
+                validate: {
+                  required: (value) => (numberValid(Number(value), 0.01, 100) ? true : 'Enter a number ranging 0.01% - 100%'),
+                },
+              }}
+            />
+
+            <FormField
+              control={form.control}
+              name='strongRequirement'
+              render={({ field }) => (
+                <FormItem className='mt-7'>
+                  <FormLabelWithMoreInfo
+                    value='Strong state requirement%'
+                    description={[
+                      'The percentage change in Bitcoin\'s price needed to mark a window split as "stateful". ',
+                      'The possible states for this requirement are:',
+                      ' 2: increasing strongly',
+                      '-2: decreasing strongly',
+                    ]}
+                  />
+                  <FormControl>
+                    <Input
+                      type='number'
+                      placeholder='0.85'
+                      {...field}
+                      autoComplete='off'
+                      disabled={isSubmitting}
+                      min={0.01}
+                      max={100}
+                      />
+                  </FormControl>
+                  <FormDescription>Bitcoin's price% change</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+              rules={{
+                validate: {
+                  required: (value) => (numberValid(Number(value), 0.01, 100) ? true : 'Enter a number ranging 0.01% - 100%'),
+                },
+              }}
+            />
+          </fieldset>
 
 
           <DialogFooter>

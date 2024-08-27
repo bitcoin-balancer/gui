@@ -10,6 +10,7 @@ type IPageName = 'monitoring' | 'api-errors' | 'database';
 // the props for all server components
 type IServerComponentProps = {
   setSidenavOpen: (value: boolean) => void;
+  unreadAPIErrors?: number;
 };
 
 

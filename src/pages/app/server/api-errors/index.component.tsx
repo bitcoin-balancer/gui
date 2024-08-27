@@ -52,16 +52,7 @@ const LIMIT = 15;
  * API Errors Component
  * Component in charge of displaying the API Errors.
  */
-const APIErrors = memo(({ setSidenavOpen }: IServerComponentProps) => {
-  /* **********************************************************************************************
-   *                                             REFS                                             *
-   ********************************************************************************************** */
-  const rowsRef = useRef<HTMLDivElement | null>(null);
-
-
-
-
-
+const APIErrors = memo(({ setSidenavOpen, unreadAPIErrors }: IServerComponentProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
@@ -88,6 +79,16 @@ const APIErrors = memo(({ setSidenavOpen }: IServerComponentProps) => {
   const [closingDialog, setClosingDialog] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
+
+
+
+
+
+  /* **********************************************************************************************
+   *                                             REFS                                             *
+   ********************************************************************************************** */
+  const rowsRef = useRef<HTMLDivElement | null>(null);
+  const unreadRef = useRef<number>(unreadAPIErrors as number);
 
 
 
@@ -249,6 +250,7 @@ const APIErrors = memo(({ setSidenavOpen }: IServerComponentProps) => {
                       id={`aer-${record.id}`}
                       data={record}
                       openDialog={() => setActiveDialog({ open: true, record })}
+                      isUnread={i < unreadRef.current}
                     />
                     {i < data.length - 1 && <Separator />}
                   </Fragment>
