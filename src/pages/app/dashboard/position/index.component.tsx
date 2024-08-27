@@ -31,13 +31,10 @@ const Position = memo(() => {
       <Card className='md:mt-2.5 lg:mt-0'>
         <CardHeader>
           <CardTitle className='flex justify-start items-center'>
-
             Position
-
             <span className='flex-1'></span>
-
             <DropdownMenu>
-              <DropdownMenuTrigger>
+              <DropdownMenuTrigger aria-label='More information'>
                 <EllipsisVertical className='w-5 h-5' aria-hidden='true' />
               </DropdownMenuTrigger>
               <DropdownMenuContent>

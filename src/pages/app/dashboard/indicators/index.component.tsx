@@ -1,10 +1,19 @@
 /* import { useMemo } from 'react'; */
+import { EllipsisVertical } from 'lucide-react';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
 } from '@/shared/shadcn/components/ui/card.tsx';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/shared/shadcn/components/ui/dropdown-menu.tsx';
 import { ColorService } from '@/shared/services/color/index.service.ts';
 import { IComponentProps } from '@/pages/app/dashboard/indicators/types.ts';
 
@@ -38,7 +47,23 @@ const Indicators = ({ marketState }: IComponentProps) => {
     <>
       <Card className='md:mt-7'>
         <CardHeader>
-          <CardTitle>Indicators</CardTitle>
+          <CardTitle className='flex justify-start items-center'>
+              Indicators
+              <span className='flex-1'></span>
+              <DropdownMenu>
+                <DropdownMenuTrigger aria-label='More information'>
+                  <EllipsisVertical className='w-5 h-5' aria-hidden='true' />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                  <DropdownMenuItem>Billing</DropdownMenuItem>
+                  <DropdownMenuItem>Team</DropdownMenuItem>
+                  <DropdownMenuItem>Subscription</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </CardTitle>
         </CardHeader>
         <CardContent
           className='grid grid-cols-2 gap-1'

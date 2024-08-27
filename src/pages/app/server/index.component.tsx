@@ -157,7 +157,8 @@ const Server = () => {
             activePage === 'database'
             && <Database
               setSidenavOpen={setSidenavOpen}
-            />}
+            />
+          }
         </div>
 
       </section>
