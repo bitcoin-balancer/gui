@@ -141,15 +141,20 @@ const Coins = memo(({ coinsStates, openSplitStatesDialog }: IComponentProps) => 
               <span className='flex-1'></span>
               <DropdownMenu>
                 <DropdownMenuTrigger aria-label='More information'>
-                  <EllipsisVertical className='w-5 h-5' aria-hidden='true' />
+                  <EllipsisVertical
+                    className='w-5 h-5'
+                    aria-hidden='true'
+                  />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuLabel>Information</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
-                  <DropdownMenuItem>Billing</DropdownMenuItem>
-                  <DropdownMenuItem>Team</DropdownMenuItem>
-                  <DropdownMenuItem>Subscription</DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Bitcoin
+                      aria-hidden='true'
+                      className='mr-1 h-5 w-5'
+                    /> Coins
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </CardTitle>

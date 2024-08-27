@@ -12,8 +12,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/shared/shadcn/components/ui/card.tsx';
-import { Tooltip, TooltipTrigger, TooltipContent } from '@/shared/shadcn/components/ui/tooltip.tsx';
-import { useBoundStore } from '@/shared/store/index.store.ts';
 import { ISplitStateID, ISplitStateItem } from '@/shared/backend/market-state/shared/types.ts';
 import { MarketStateService } from '@/shared/backend/market-state/index.service.ts';
 import { formatDate, formatDollarAmount } from '@/shared/services/transformers/index.service.ts';
@@ -76,7 +74,6 @@ const WindowState = ({ windowState, openSplitStatesDialog }: IComponentProps) =>
    ********************************************************************************************** */
   const breakpoint = useMediaQueryBreakpoint();
   const [chartHeight, setChartHeight] = useState<number>();
-  const openInfoDialog = useBoundStore((state) => state.openInfoDialog);
 
 
 
@@ -144,43 +141,6 @@ const WindowState = ({ windowState, openSplitStatesDialog }: IComponentProps) =>
     })
   );
 
-  /**
-   * Displays the information dialog which describes how to the window module operates.
-   */
-  const displayWindowInfo = (): void => {
-    openInfoDialog({
-      title: 'Window',
-      description: 'The Window Module employs a dynamic moving window that analyzes candlestick data to identify market trends.',
-      content: [
-        'CALCULATION',
-        'The module calculates the window\'s state by applying eight distinct splits to the candlestick sequence. Each split represents a different time frame, providing insights into short-term and long-term trends.',
-        'By default, the window utilizes 128 15-minute candlesticks, spanning approximately 32 hours. These splits are applied as follows:',
-        '* 100% (128 items): last ~32 hours',
-        '* 75% (96 items): last ~24 hours',
-        '* 50% (64 items): last ~16 hours',
-        '* 25% (32 items): last ~8 hours',
-        '* 15% (20 items): last ~5 hours',
-        '* 10% (13 items): last ~3.25 hours',
-        '* 5% (7 items): last ~1.75 hours',
-        '* 2% (3 items): last ~45 minutes',
-        '-----',
-        'STATE INTERPRETATION',
-        'The window\'s state is categorized into five distinct levels, indicating the strength and direction of the trend:',
-        '* 2: Increasing strongly - a clear upward trend with strong momentum',
-        '* 1: Increasing - a positive trend, but with less intensity than "Increasing strongly"',
-        '* 0: Sideways - a period of consolidation with no clear direction',
-        '* -1: Decreasing - a negative trend with moderate downward momentum',
-        '* -2: Decreasing strongly - a strong downward trend with significant downward momentum',
-        '-----',
-        'USES',
-        'The Window Module plays a crucial role in triggering other modules based on detected market trends:',
-        'Strong decrease (-2): when the window identifies a strong downward trend, it activates the Reversal Module. This module analyzes various indicators to determine potential opportunities for opening or increasing the position, seeking to capitalize on the reversal of the downward trend.',
-        'Strong increase (2): conversely, when a strong upward trend is detected, the Position Module is triggered. This module assesses the current profit and loss (PnL) situation to determine if the position can be reduced, aiming to secure profits.',
-        '-----',
-        'The window module can be fully configured in the Adjustments/Window page, allowing you to tailor the analysis to your specific needs.',
-      ],
-    });
-  };
 
 
 
@@ -195,25 +155,20 @@ const WindowState = ({ windowState, openSplitStatesDialog }: IComponentProps) =>
       <CardHeader
         className='flex flex-col md:flex-row justify-start'
       >
-        <Tooltip>
-          <TooltipTrigger
-            onClick={displayWindowInfo}
-            aria-label='Display information about how the Window Module works'
-            className='flex flex-row justify-start items-center md:flex-col md:justify-start md:items-start'
+        <div
+          className='flex flex-row justify-start items-center md:flex-col md:justify-start md:items-start'
+        >
+          <CardTitle
+            className='flex justify-start items-center gap-2'
           >
-            <CardTitle
-              className='flex justify-start items-center gap-2'
-            >
-              Window
-              <StateIcon state={windowState.state} />
-            </CardTitle>
+            Window
+            <StateIcon state={windowState.state} />
+          </CardTitle>
 
-            <span className='flex-1 md:hidden'></span>
+          <span className='flex-1 md:hidden'></span>
 
-            <CardDescription>{currentBar}</CardDescription>
-          </TooltipTrigger>
-          <TooltipContent><p>More info</p></TooltipContent>
-        </Tooltip>
+          <CardDescription>{currentBar}</CardDescription>
+        </div>
 
         <span
           className='flex-1 hidden md:inline'

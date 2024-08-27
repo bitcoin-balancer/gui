@@ -5,7 +5,7 @@
  ************************************************************************************************ */
 
 // each item represents a form for a module that can be tuned
-type IFormID = 'WINDOW' | 'LIQUIDITY' | 'COINS' | 'REVERSAL' | 'TRADING_STRATEGY' | 'SERVER_ALARMS';
+type IFormID = 'WINDOW' | 'LIQUIDITY' | 'COINS' | 'REVERSAL' | 'STRATEGY' | 'SERVER_ALARMS';
 type IFormItem = {
   id: IFormID;
   title: string;

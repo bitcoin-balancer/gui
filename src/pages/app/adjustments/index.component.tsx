@@ -47,8 +47,8 @@ const FORMS: IFormItem[] = [
     icon: <Undo2 aria-hidden='true' className='rotate-90' />,
   },
   {
-    id: 'TRADING_STRATEGY',
-    title: 'Trading strategy',
+    id: 'STRATEGY',
+    title: 'Strategy',
     description: 'Configure the way positions are increased and reduced',
     icon: <ArrowLeftRight aria-hidden='true' />,
   },
