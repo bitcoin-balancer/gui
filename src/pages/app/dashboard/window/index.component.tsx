@@ -15,7 +15,7 @@ import { Tooltip, TooltipTrigger, TooltipContent } from '@/shared/shadcn/compone
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { ISplitStateID, ISplitStateItem } from '@/shared/backend/market-state/shared/types.ts';
 import { MarketStateService } from '@/shared/backend/market-state/index.service.ts';
-import { formatDate } from '@/shared/services/transformers/index.service.ts';
+import { formatDate, formatDollarAmount } from '@/shared/services/transformers/index.service.ts';
 import { IBreakpoint } from '@/shared/services/media-query/index.service.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
 import StateIcon from '@/shared/components/state-icon/index.component.tsx';
@@ -238,7 +238,7 @@ const WindowState = ({ windowState, openSplitStatesDialog }: IComponentProps) =>
             height={chartHeight}
             data={windowState.window}
             state={windowState.state}
-            prettifyY={true}
+            priceFormatterFunc={(value: number) => formatDollarAmount(value, 0)}
           />
         }
       </CardContent>

@@ -24,7 +24,7 @@ const CandlestickChart = ({
   height,
   data,
   state,
-  prettifyY,
+  priceFormatterFunc,
 }: IComponentProps) => {
   /* **********************************************************************************************
    *                                             REFS                                             *
@@ -40,7 +40,7 @@ const CandlestickChart = ({
       if (!this.__api) {
         this.__api = createChart(
           chartContainerRef.current!,
-          buildChartOptions(chartContainerRef.current!, height, prettifyY),
+          buildChartOptions(chartContainerRef.current!, height, priceFormatterFunc),
         );
         this.__api.timeScale().fitContent();
       }

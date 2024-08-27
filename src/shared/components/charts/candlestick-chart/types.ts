@@ -11,6 +11,13 @@ import { IState } from '@/shared/backend/market-state/shared/types.ts';
  *                                             TYPES                                              *
  ************************************************************************************************ */
 
+
+/**
+ * Price Formatter Func
+ * The function that will be applied to every item in the series.
+ */
+type IPriceFormatterFunc = (value: number) => string;
+
 /**
  * Component Props
  * ...
@@ -25,8 +32,8 @@ type IComponentProps = {
   // the current state of the module
   state?: IState;
 
-  // if enabled, it will format the prices displayed in the chart to integers like '$59,108'
-  prettifyY?: boolean;
+  // the function that will be applied to each of the series items
+  priceFormatterFunc?: IPriceFormatterFunc;
 };
 
 /**
@@ -79,6 +86,7 @@ type IChartAPIRef = {
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export type {
+  IPriceFormatterFunc,
   IComponentProps,
   ICandlestickBar,
   ICandlestickSeriesAPI,

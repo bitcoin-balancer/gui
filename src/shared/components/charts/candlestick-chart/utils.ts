@@ -1,9 +1,9 @@
 import { ChartOptions, DeepPartial } from 'lightweight-charts';
 import { ICompactCandlestickRecords } from '@/shared/backend/candlestick/index.service.ts';
 import { IState } from '@/shared/backend/market-state/shared/types.ts';
-import { formatDollarAmount, toLocalTime } from '@/shared/services/transformers/index.service.ts';
+import { toLocalTime } from '@/shared/services/transformers/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
-import { ICandlestickBar } from '@/shared/components/charts/candlestick-chart/types.ts';
+import { ICandlestickBar, IPriceFormatterFunc } from '@/shared/components/charts/candlestick-chart/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -28,13 +28,13 @@ const toBars = (records: ICompactCandlestickRecords): ICandlestickBar[] => recor
  * Builds the essential options for creating a candlesticks chart.
  * @param chartContainerEl
  * @param height
- * @param prettifyY
+ * @param priceFormatterFunc
  * @returns DeepPartial<ChartOptions>
  */
 const buildChartOptions = (
   chartContainerEl: HTMLDivElement,
   height: number,
-  prettifyY: boolean | undefined,
+  priceFormatterFunc: IPriceFormatterFunc | undefined,
 ): DeepPartial<ChartOptions> => ({
   layout: {
     textColor: 'black',
@@ -44,7 +44,7 @@ const buildChartOptions = (
   height,
   grid: { horzLines: { visible: false }, vertLines: { visible: false } },
   localization: {
-    priceFormatter: prettifyY ? (val: number) => formatDollarAmount(val, 0) : undefined,
+    priceFormatter: priceFormatterFunc,
   },
   timeScale: {
     borderColor: ColorService.PRIMARY,
