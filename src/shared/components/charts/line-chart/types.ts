@@ -41,6 +41,30 @@ type IComponentProps = {
 
   // the function that will be applied to each of the series items
   priceFormatterFunc?: IPriceFormatterFunc;
+
+  // if enabled, it will display TradingView's logo on the chart
+  showAttributionLogo?: boolean;
+
+  // if enabled, it will hide the x axis
+  hideTimeScale?: boolean;
+
+  // hides the price scale that's generally displayed on the right of the chart (y axis)
+  hideRightPriceScale?: boolean;
+
+  // hides both crosshairs (vertical and horizontal)
+  hideCrosshair?: boolean;
+
+  // if enabled, the marker circle won't appear on hover
+  hideCrosshairMarker?: boolean;
+
+  // if enabled, the chart won't display the series price line
+  hidePriceLine?: boolean;
+
+  // if enabled, the user will be unable to drag the chart
+  disableScrollHandler?: boolean;
+
+  // if enabled, the user will be unable to scale the chart
+  disableScaleHandler?: boolean;
 };
 
 /**

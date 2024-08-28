@@ -68,12 +68,19 @@ const colorServiceFactory = (): IColorService => {
     1: 'increase-1',
     2: 'increase-2',
   };
-  const STATE_TW_CLASS_NAME: IStateColors = {
+  const STATE_BG_CLASS_NAME: IStateColors = {
     '-2': 'bg-decrease-2',
     '-1': 'bg-decrease-1',
     0: 'bg-stateless',
     1: 'bg-increase-1',
     2: 'bg-increase-2',
+  };
+  const STATE_TEXT_CLASS_NAME: IStateColors = {
+    '-2': 'text-decrease-2',
+    '-1': 'text-decrease-1',
+    0: 'text-stateless',
+    1: 'text-increase-1',
+    2: 'text-increase-2',
   };
 
 
@@ -116,7 +123,8 @@ const colorServiceFactory = (): IColorService => {
     STATE,
     STATE_RGB,
     STATE_CLASS_NAME,
-    STATE_TW_CLASS_NAME,
+    STATE_BG_CLASS_NAME,
+    STATE_TEXT_CLASS_NAME,
 
     // ...
   });

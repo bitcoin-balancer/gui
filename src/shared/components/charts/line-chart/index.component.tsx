@@ -5,6 +5,7 @@ import {
   toSeriesItems,
   buildChartOptions,
   getColorByState,
+  buildSeriesOptions,
 } from '@/shared/components/charts/line-chart/utils.ts';
 import {
   IComponentProps,
@@ -26,6 +27,14 @@ const LineChart = ({
   data,
   state,
   priceFormatterFunc,
+  showAttributionLogo = true,
+  hideTimeScale = false,
+  hideRightPriceScale = false,
+  hideCrosshair = false,
+  hideCrosshairMarker = false,
+  hidePriceLine = false,
+  disableScrollHandler = false,
+  disableScaleHandler = false,
 }: IComponentProps) => {
   /* **********************************************************************************************
    *                                             REFS                                             *
@@ -41,7 +50,17 @@ const LineChart = ({
       if (!this.__api) {
         this.__api = createChart(
           chartContainerRef.current!,
-          buildChartOptions(chartContainerRef.current!, height, priceFormatterFunc),
+          buildChartOptions(
+            chartContainerRef.current!,
+            height,
+            priceFormatterFunc,
+            showAttributionLogo,
+            hideTimeScale,
+            hideRightPriceScale,
+            hideCrosshair,
+            disableScrollHandler,
+            disableScaleHandler,
+          ),
         );
         this.__api.timeScale().fitContent();
       }
@@ -51,12 +70,11 @@ const LineChart = ({
     // inits (only once) and returns the instance of the Series API
     series(): ILineSeriesAPI {
       if (!this.__series) {
+        const options = buildSeriesOptions(kind, state, hidePriceLine, hideCrosshairMarker);
         if (kind === 'line') {
-          this.__series = this.api().addLineSeries(getColorByState(kind, state));
+          this.__series = this.api().addLineSeries(options);
         } else {
-          this.__series = this.api().addAreaSeries({
-            ...getColorByState(kind, state),
-          });
+          this.__series = this.api().addAreaSeries(options);
         }
       }
       return this.__series;

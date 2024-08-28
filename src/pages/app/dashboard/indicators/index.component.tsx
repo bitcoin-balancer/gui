@@ -5,7 +5,9 @@ import {
   Droplet,
   Bitcoin,
   Undo2,
+  DollarSign,
 } from 'lucide-react';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import {
   Card,
   CardContent,
@@ -19,13 +21,21 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/shared/shadcn/components/ui/dropdown-menu.tsx';
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+} from '@/shared/shadcn/components/ui/drawer.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { toSplitStateItems } from '@/shared/backend/market-state/shared/utils.ts';
+import { ICoinStateAsset } from '@/shared/backend/market-state/coins/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
-import CoinsStateDialog, {
-  ICoinsStateDialogData,
-} from '@/pages/app/dashboard/indicators/coins-state-dialog/index.component.tsx';
+import CoinsStateDialog from '@/pages/app/dashboard/indicators/coins-state-dialog/index.component.tsx';
 import { IComponentProps } from '@/pages/app/dashboard/indicators/types.ts';
+import { delay } from '@/shared/services/utils/index.service';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -39,7 +49,9 @@ const Indicators = memo(({ marketState, openSplitStatesDialog }: IComponentProps
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const [coinsStateDialog, setCoinsStateDialog] = useState<ICoinsStateDialogData>();
+  const exchangeConfig = useBoundStore((state) => state.exchangeConfig!);
+  const [coinsStateAssetMenu, setCoinsStateAssetMenu] = useState<boolean>(false);
+  const [coinsStateDialog, setCoinsStateDialog] = useState<ICoinStateAsset>();
   const openInfoDialog = useBoundStore((state) => state.openInfoDialog);
 
 
@@ -76,6 +88,17 @@ const Indicators = memo(({ marketState, openSplitStatesDialog }: IComponentProps
    * Closes the coins state dialog.
    */
   const closeCoinsStateDialog = useCallback((): void => setCoinsStateDialog(undefined), []);
+
+  /**
+   * Displays the coins state dialog for an asset.
+   * @param asset
+   * @returns Promise<void>
+   */
+  const displayCoinsStateDialog = async (asset: ICoinStateAsset): Promise<void> => {
+    setCoinsStateAssetMenu(false);
+    await delay(0.25);
+    setCoinsStateDialog(asset);
+  };
 
   /**
    * Displays the information dialog which describes how to the window module operates.
@@ -171,7 +194,7 @@ const Indicators = memo(({ marketState, openSplitStatesDialog }: IComponentProps
             * WINDOW *
             ******** */}
           <button
-            className={`h-[45px] text-xs text-white font-bold ${ColorService.STATE_TW_CLASS_NAME[marketState.windowState.state]} hover:opacity-80`}
+            className={`h-[45px] text-xs text-white font-bold ${ColorService.STATE_BG_CLASS_NAME[marketState.windowState.state]} hover:opacity-80`}
             onClick={openWindowStateDialog}
           >
             WINDOW
@@ -191,6 +214,7 @@ const Indicators = memo(({ marketState, openSplitStatesDialog }: IComponentProps
             ******* */}
           <button
             className={`h-[45px] text-xs text-white font-bold ${ColorService.STATE_CLASS_NAME[marketState.coinsStates.quote.state]}-${ColorService.STATE_CLASS_NAME[marketState.coinsStates.base.state]} hover:opacity-80`}
+            onClick={() => setCoinsStateAssetMenu(true)}
           >
             COINS
           </button>
@@ -208,6 +232,50 @@ const Indicators = memo(({ marketState, openSplitStatesDialog }: IComponentProps
 
 
 
+      {/* **************************
+        * COINS STATE ASSET DRAWER *
+        ************************** */}
+      <Drawer open={coinsStateAssetMenu} onOpenChange={setCoinsStateAssetMenu}>
+        <DrawerContent>
+          <div
+            className='mx-auto w-full max-w-sm'
+          >
+            <DrawerHeader>
+              <DrawerTitle>Select an asset</DrawerTitle>
+              <DrawerDescription
+                className='flex justify-center items-center sm:justify-start'
+              >
+                Display the state for the coins
+              </DrawerDescription>
+            </DrawerHeader>
+            <DrawerFooter
+              className='flex flex-row justify-center items-stretch'
+            >
+              <Button
+                variant='outline'
+                aria-label={`View the state of the coins in the ${exchangeConfig.quoteAsset} pair`}
+                className='flex flex-col h-20 w-full gap-y-1'
+                onClick={() => displayCoinsStateDialog('quote')}
+              >
+                <DollarSign aria-hidden='true' />
+                <p>COINS/{exchangeConfig.quoteAsset}</p>
+              </Button>
+              <Button
+                variant='outline'
+                aria-label={`View the state of the coins in the ${exchangeConfig.baseAsset} pair`}
+                className='flex flex-col h-20 w-full gap-y-1'
+                onClick={() => displayCoinsStateDialog('base')}
+              >
+                <Bitcoin aria-hidden='true' />
+                <p>COINS/{exchangeConfig.baseAsset}</p>
+              </Button>
+            </DrawerFooter>
+          </div>
+        </DrawerContent>
+      </Drawer>
+
+
+
 
 
       {/* ********************
@@ -216,7 +284,7 @@ const Indicators = memo(({ marketState, openSplitStatesDialog }: IComponentProps
       {
         coinsStateDialog !== undefined
         && <CoinsStateDialog
-          data={coinsStateDialog}
+          asset={coinsStateDialog}
           closeDialog={closeCoinsStateDialog}
         />
       }

@@ -32,7 +32,8 @@ type IColorService = {
   STATE: IStateColors;
   STATE_RGB: IStateColors;
   STATE_CLASS_NAME: IStateColors;
-  STATE_TW_CLASS_NAME: IStateColors;
+  STATE_BG_CLASS_NAME: IStateColors;
+  STATE_TEXT_CLASS_NAME: IStateColors;
 
   // ...
 };
