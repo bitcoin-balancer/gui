@@ -46,9 +46,9 @@ import {
 const prettifyPrice = (price: number, asset: ICoinStateAsset | undefined): string => {
   switch (asset) {
     case 'quote':
-      return formatDollarAmount(price, 12);
+      return formatDollarAmount(price, 16);
     case 'base':
-      return prettifyValue(price, { processing: { decimalPlaces: 12 }, format: { prefix: '₿' } });
+      return prettifyValue(price, { processing: { decimalPlaces: 16 }, format: { prefix: '₿' } });
     default:
       return formatDollarAmount(price, 0);
   }
