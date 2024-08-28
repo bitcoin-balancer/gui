@@ -6,6 +6,9 @@ import { ISplitStateItem, ISplitStates } from '@/shared/backend/market-state/sha
  *                                           CONSTANTS                                            *
  ************************************************************************************************ */
 
+// a mock date to be able to build the split state items
+const CURRENT_TIME = 1724877858112;
+
 // the number of milliseconds in 1 hour
 const ONE_HOUR_MS = 60 * (60 * 1000);
 
@@ -43,19 +46,18 @@ const __calculateEstimatedSplitValue = (val: number, change: number): number => 
 /**
  * Turns a split states object into a series of split state items (estimated dates and prices).
  * @param states
- * @param currentTime
  * @returns ISplitStateItem[]
  */
-const toLineSeries = (states: ISplitStates, currentTime: number): ISplitStateItem[] => ([
-  { x: currentTime - (ONE_HOUR_MS * 8), y: __calculateEstimatedSplitValue(1, states.s100.change) },
-  { x: currentTime - (ONE_HOUR_MS * 7), y: __calculateEstimatedSplitValue(1, states.s75.change) },
-  { x: currentTime - (ONE_HOUR_MS * 6), y: __calculateEstimatedSplitValue(1, states.s50.change) },
-  { x: currentTime - (ONE_HOUR_MS * 5), y: __calculateEstimatedSplitValue(1, states.s25.change) },
-  { x: currentTime - (ONE_HOUR_MS * 4), y: __calculateEstimatedSplitValue(1, states.s15.change) },
-  { x: currentTime - (ONE_HOUR_MS * 3), y: __calculateEstimatedSplitValue(1, states.s10.change) },
-  { x: currentTime - (ONE_HOUR_MS * 2), y: __calculateEstimatedSplitValue(1, states.s5.change) },
-  { x: currentTime - (ONE_HOUR_MS * 1), y: __calculateEstimatedSplitValue(1, states.s2.change) },
-  { x: currentTime, y: 1 },
+const toLineSeries = (states: ISplitStates): ISplitStateItem[] => ([
+  { x: CURRENT_TIME - (ONE_HOUR_MS * 8), y: __calculateEstimatedSplitValue(1, states.s100.change) },
+  { x: CURRENT_TIME - (ONE_HOUR_MS * 7), y: __calculateEstimatedSplitValue(1, states.s75.change) },
+  { x: CURRENT_TIME - (ONE_HOUR_MS * 6), y: __calculateEstimatedSplitValue(1, states.s50.change) },
+  { x: CURRENT_TIME - (ONE_HOUR_MS * 5), y: __calculateEstimatedSplitValue(1, states.s25.change) },
+  { x: CURRENT_TIME - (ONE_HOUR_MS * 4), y: __calculateEstimatedSplitValue(1, states.s15.change) },
+  { x: CURRENT_TIME - (ONE_HOUR_MS * 3), y: __calculateEstimatedSplitValue(1, states.s10.change) },
+  { x: CURRENT_TIME - (ONE_HOUR_MS * 2), y: __calculateEstimatedSplitValue(1, states.s5.change) },
+  { x: CURRENT_TIME - (ONE_HOUR_MS * 1), y: __calculateEstimatedSplitValue(1, states.s2.change) },
+  { x: CURRENT_TIME, y: 1 },
 ]);
 
 

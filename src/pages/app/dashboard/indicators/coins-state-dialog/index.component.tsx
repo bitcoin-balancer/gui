@@ -1,4 +1,9 @@
-import { memo, useState, useMemo } from 'react';
+import {
+  memo,
+  useState,
+  useMemo,
+  Fragment,
+} from 'react';
 import {
   Dialog,
   DialogContent,
@@ -21,17 +26,7 @@ import LineChart from '@/shared/components/charts/line-chart/index.component.tsx
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import { IComponentProps } from '@/pages/app/dashboard/indicators/coins-state-dialog/types.ts';
-
-/* ************************************************************************************************
- *                                           CONSTANTS                                            *
- ************************************************************************************************ */
-
-// the current time in ms
-const currentTime = Date.now();
-
-
-
-
+import { Separator } from '@/shared/shadcn/components/ui/separator';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -71,12 +66,9 @@ const CoinsStateDialog = memo(({ asset, closeDialog }: IComponentProps) => {
     [data],
   );
 
-  //
+  // the list of charts that will be rendered
   const charts = useMemo(
-    () => topSymbols.map((symbol) => toLineSeries(
-      data.statesBySymbol[symbol].splitStates,
-      currentTime,
-    )),
+    () => topSymbols.map((symbol) => toLineSeries(data.statesBySymbol[symbol].splitStates)),
     [topSymbols, data],
   );
 
@@ -98,6 +90,10 @@ const CoinsStateDialog = memo(({ asset, closeDialog }: IComponentProps) => {
     }, 250);
   };
 
+
+  const displaySplitStatesDialog = async (symbol: string): Promise<void> => {
+
+  };
 
 
 
@@ -122,31 +118,44 @@ const CoinsStateDialog = memo(({ asset, closeDialog }: IComponentProps) => {
     content = <PageLoader variant='dialog' />;
   } else {
     content = (
-      <div className='grid grid-cols-1 gap-6 sm:grid-cols-4 animate-in fade-in duration-700'>
+      <div
+        className='grid grid-cols-1 gap-6 sm:grid-cols-3 md:grid-cols-4 animate-in fade-in duration-700'
+      >
         {topSymbols.map((symbol, i) => (
-          <Card key={symbol}>
-            <CardContent
-              className='md:pt-0 md:p-1 relative'
-            >
-              <span
-                className={`absolute top-1 left-1/2 transform -translate-x-1/2 z-10 text-base font-semibold ${ColorService.STATE_TEXT_CLASS_NAME[data.statesBySymbol[symbol].state]}`}
-              >{symbol}</span>
-              <LineChart
-                kind='line'
-                height={150}
-                data={charts[i]}
-                state={data.statesBySymbol[symbol].state}
-                showAttributionLogo={false}
-                hideTimeScale={true}
-                hideRightPriceScale={true}
-                hideCrosshair={true}
-                hideCrosshairMarker={true}
-                hidePriceLine={true}
-                disableScrollHandler={true}
-                disableScaleHandler={true}
-              />
-            </CardContent>
-          </Card>
+          <Fragment key={symbol}>
+            <div>
+              <Card
+                role='button'
+                aria-label={`Display the split states dialog for ${symbol}`}
+                tabIndex={1}
+                className='hover:pointer hover:scale-105'
+                onClick={() => displaySplitStatesDialog(symbol)}
+              >
+                <CardContent
+                  className='md:pt-0 md:p-1 relative'
+                >
+                  <span
+                    className={`absolute top-1 left-1/2 transform -translate-x-1/2 z-10 text-base font-semibold ${ColorService.STATE_TEXT_CLASS_NAME[data.statesBySymbol[symbol].state]}`}
+                  >{symbol}</span>
+                  <LineChart
+                    kind='line'
+                    height={150}
+                    data={charts[i]}
+                    state={data.statesBySymbol[symbol].state}
+                    showAttributionLogo={false}
+                    hideTimeScale={true}
+                    hideRightPriceScale={true}
+                    hideCrosshair={true}
+                    hideCrosshairMarker={true}
+                    hidePriceLine={true}
+                    disableScrollHandler={true}
+                    disableScaleHandler={true}
+                  />
+                </CardContent>
+              </Card>
+              {i < topSymbols.length - 1 && <Separator className='my-7 block md:hidden' />}
+            </div>
+          </Fragment>
         ))}
       </div>
     );
