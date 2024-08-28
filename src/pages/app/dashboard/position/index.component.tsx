@@ -5,6 +5,7 @@ import {
   ArrowUpWideNarrow,
   ArrowDownWideNarrow,
   ReceiptText,
+  Wallet,
 } from 'lucide-react';
 import {
   Card,
@@ -83,6 +84,12 @@ const Position = memo(() => {
                       aria-hidden='true'
                       className='mr-1 h-5 w-5'
                     /> Details
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Wallet
+                      aria-hidden='true'
+                      className='mr-1 h-5 w-5'
+                    /> Balances
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <ArrowLeftRight
