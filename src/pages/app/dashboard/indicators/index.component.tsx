@@ -285,6 +285,7 @@ const Indicators = memo(({ marketState, openSplitStatesDialog }: IComponentProps
         coinsStateDialog !== undefined
         && <CoinsStateDialog
           asset={coinsStateDialog}
+          openSplitStatesDialog={openSplitStatesDialog}
           closeDialog={closeCoinsStateDialog}
         />
       }

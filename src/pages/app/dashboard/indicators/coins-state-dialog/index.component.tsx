@@ -4,6 +4,7 @@ import {
   useMemo,
   Fragment,
 } from 'react';
+import { Loader2 } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -27,6 +28,7 @@ import PageLoadError from '@/shared/components/page-load-error/index.component.t
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import { IComponentProps } from '@/pages/app/dashboard/indicators/coins-state-dialog/types.ts';
 import { Separator } from '@/shared/shadcn/components/ui/separator';
+import { errorToast } from '@/shared/services/utils/index.service';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -36,17 +38,18 @@ import { Separator } from '@/shared/shadcn/components/ui/separator';
  * Coins State Dialog Component
  * Component in charge of displaying a line chart for each coin for an asset.
  */
-const CoinsStateDialog = memo(({ asset, closeDialog }: IComponentProps) => {
+const CoinsStateDialog = memo(({ asset, openSplitStatesDialog, closeDialog }: IComponentProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
+  const [isOpen, setIsOpen] = useState<boolean>(true);
   const { data, loading, error } = useAPIFetch<ICoinsState<ISemiCompactCoinState>>(useMemo(
     () => ({
       fetchFunc: { func: CoinsService.getSemiCompactStateForAsset, args: [asset] },
     }),
     [asset],
   ));
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [retrievingState, setRetrievingState] = useState<boolean>(false);
   const exchangeConfig = useBoundStore((state) => state.exchangeConfig!);
 
 
@@ -90,10 +93,29 @@ const CoinsStateDialog = memo(({ asset, closeDialog }: IComponentProps) => {
     }, 250);
   };
 
-
+  /**
+   * Displays the split states for a symbol.
+   * @param symbol
+   * @returns Promise<void>
+   */
   const displaySplitStatesDialog = async (symbol: string): Promise<void> => {
-
+    if (!retrievingState) {
+      setRetrievingState(true);
+      try {
+        const state = await CoinsService.getStateForSymbol(asset, symbol);
+        openSplitStatesDialog({
+          moduleID: 'COINS',
+          asset,
+          symbol,
+          moduleState: state,
+        });
+      } catch (e) {
+        errorToast(e);
+      }
+      setRetrievingState(false);
+    }
   };
+
 
 
 
@@ -128,7 +150,7 @@ const CoinsStateDialog = memo(({ asset, closeDialog }: IComponentProps) => {
                 role='button'
                 aria-label={`Display the split states dialog for ${symbol}`}
                 tabIndex={1}
-                className='hover:pointer hover:scale-105'
+                className={`hover:scale-105 ${retrievingState ? 'hover:cursor-not-allowed opacity-50' : 'hover:pointer'}`}
                 onClick={() => displaySplitStatesDialog(symbol)}
               >
                 <CardContent
@@ -185,6 +207,12 @@ const CoinsStateDialog = memo(({ asset, closeDialog }: IComponentProps) => {
                 state={data.state}
               />
             }
+            {
+                retrievingState
+                && <Loader2
+                  className='ml-1 h-4 w-4 animate-spin'
+                />
+              }
           </DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
