@@ -51,7 +51,7 @@ const Dashboard = () => {
    ********************************************************************************************** */
   const breakpoint = useMediaQueryBreakpoint();
   const marketState = useBoundStore((state) => state.marketState!);
-  const [activeDialog, setActiveDialog] = useState<ISplitStatesDialogData | undefined>(undefined);
+  const [splitStatesDialog, setSplitStatesDialog] = useState<ISplitStatesDialogData>();
 
 
 
@@ -87,12 +87,7 @@ const Dashboard = () => {
   /**
    * Closes the split states dialog.
    */
-  const closeSplitStatesDialog = useCallback(
-    (): void => {
-      setActiveDialog(undefined);
-    },
-    [],
-  );
+  const closeSplitStatesDialog = useCallback((): void => setSplitStatesDialog(undefined), []);
 
 
 
@@ -118,7 +113,7 @@ const Dashboard = () => {
             ************** */}
           <WindowState
             windowState={marketState.windowState}
-            openSplitStatesDialog={setActiveDialog}
+            openSplitStatesDialog={setSplitStatesDialog}
           />
         </section>
 
@@ -154,14 +149,14 @@ const Dashboard = () => {
               <TabsContent value='indicators'>
                 <Indicators
                   marketState={marketState}
-                  openSplitStatesDialog={setActiveDialog}
+                  openSplitStatesDialog={setSplitStatesDialog}
                 />
               </TabsContent>
 
               <TabsContent value='coins'>
                 <Coins
                   coinsStates={marketState.coinsStates}
-                  openSplitStatesDialog={setActiveDialog}
+                  openSplitStatesDialog={setSplitStatesDialog}
                 />
               </TabsContent>
             </Tabs>
@@ -175,14 +170,14 @@ const Dashboard = () => {
             && <>
               <Indicators
                   marketState={marketState}
-                  openSplitStatesDialog={setActiveDialog}
+                  openSplitStatesDialog={setSplitStatesDialog}
                 />
 
               <Separator className='my-10 md:hidden' />
 
               <Coins
                 coinsStates={marketState.coinsStates}
-                openSplitStatesDialog={setActiveDialog}
+                openSplitStatesDialog={setSplitStatesDialog}
               />
             </>
           }
@@ -198,9 +193,9 @@ const Dashboard = () => {
         * SPLIT STATES DIALOG *
         ********************* */}
       {
-        activeDialog !== undefined
+        splitStatesDialog !== undefined
         && <SplitStatesDialog
-          data={activeDialog}
+          data={splitStatesDialog}
           closeDialog={closeSplitStatesDialog}
         />
       }

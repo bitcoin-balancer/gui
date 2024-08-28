@@ -1,4 +1,4 @@
-import { ICoinStateAsset } from '@/shared/backend/market-state/coins/types';
+import { ICoinStateAsset } from '@/shared/backend/market-state/coins/index.service.ts';
 import {
   ISplitStateID,
   ISplitStateItem,

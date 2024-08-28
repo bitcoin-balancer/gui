@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useCallback, useState } from 'react';
 import {
   EllipsisVertical,
   ChartCandlestick,
@@ -22,6 +22,9 @@ import {
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { toSplitStateItems } from '@/shared/backend/market-state/shared/utils.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
+import CoinsStateDialog, {
+  ICoinsStateDialogData,
+} from '@/pages/app/dashboard/indicators/coins-state-dialog/index.component.tsx';
 import { IComponentProps } from '@/pages/app/dashboard/indicators/types.ts';
 
 /* ************************************************************************************************
@@ -36,6 +39,7 @@ const Indicators = memo(({ marketState, openSplitStatesDialog }: IComponentProps
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
+  const [coinsStateDialog, setCoinsStateDialog] = useState<ICoinsStateDialogData>();
   const openInfoDialog = useBoundStore((state) => state.openInfoDialog);
 
 
@@ -67,6 +71,11 @@ const Indicators = memo(({ marketState, openSplitStatesDialog }: IComponentProps
       },
     })
   );
+
+  /**
+   * Closes the coins state dialog.
+   */
+  const closeCoinsStateDialog = useCallback((): void => setCoinsStateDialog(undefined), []);
 
   /**
    * Displays the information dialog which describes how to the window module operates.
@@ -196,6 +205,21 @@ const Indicators = memo(({ marketState, openSplitStatesDialog }: IComponentProps
           </button>
         </CardContent>
       </Card>
+
+
+
+
+
+      {/* ********************
+        * COINS STATE DIALOG *
+        ******************** */}
+      {
+        coinsStateDialog !== undefined
+        && <CoinsStateDialog
+          data={coinsStateDialog}
+          closeDialog={closeCoinsStateDialog}
+        />
+      }
     </>
   );
 });
