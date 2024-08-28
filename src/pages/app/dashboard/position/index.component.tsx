@@ -1,5 +1,11 @@
 import { memo } from 'react';
-import { EllipsisVertical } from 'lucide-react';
+import {
+  EllipsisVertical,
+  ArrowLeftRight,
+  ArrowUpWideNarrow,
+  ArrowDownWideNarrow,
+  ReceiptText,
+} from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -9,9 +15,14 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuPortal,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/shared/shadcn/components/ui/dropdown-menu.tsx';
 
@@ -25,7 +36,6 @@ import {
  */
 // eslint-disable-next-line arrow-body-style
 const Position = memo(() => {
-  console.log('In Position');
   return (
     <>
       <Card className='md:mt-2.5 lg:mt-0'>
@@ -38,12 +48,48 @@ const Position = memo(() => {
                 <EllipsisVertical className='w-5 h-5' aria-hidden='true' />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                <DropdownMenuItem>
+                  <ArrowUpWideNarrow
+                      aria-hidden='true'
+                      className='mr-1 h-5 w-5'
+                    /> Increase
+                </DropdownMenuItem>
+                <DropdownMenuGroup>
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      <ArrowDownWideNarrow
+                          aria-hidden='true'
+                          className='mr-1 h-5 w-5'
+                        /> Reduce
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent>
+                        <DropdownMenuItem>100%</DropdownMenuItem>
+                        <DropdownMenuItem>75%</DropdownMenuItem>
+                        <DropdownMenuItem>66%</DropdownMenuItem>
+                        <DropdownMenuItem>50%</DropdownMenuItem>
+                        <DropdownMenuItem>33%</DropdownMenuItem>
+                        <DropdownMenuItem>25%</DropdownMenuItem>
+                        <DropdownMenuItem>15%</DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+                </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Billing</DropdownMenuItem>
-                <DropdownMenuItem>Team</DropdownMenuItem>
-                <DropdownMenuItem>Subscription</DropdownMenuItem>
+                <DropdownMenuLabel>Information</DropdownMenuLabel>
+                <DropdownMenuItem>
+                  <ReceiptText
+                      aria-hidden='true'
+                      className='mr-1 h-5 w-5'
+                    /> Details
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <ArrowLeftRight
+                      aria-hidden='true'
+                      className='mr-1 h-5 w-5'
+                    /> Strategy
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </CardTitle>

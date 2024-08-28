@@ -1,4 +1,4 @@
-/* import { useMemo } from 'react'; */
+import { memo } from 'react';
 import {
   EllipsisVertical,
   ChartCandlestick,
@@ -17,7 +17,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/shared/shadcn/components/ui/dropdown-menu.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
@@ -33,8 +32,7 @@ import { IComponentProps } from '@/pages/app/dashboard/indicators/types.ts';
  * Indicators Component
  * Component in charge of displaying the state of the indicators.
  */
-// eslint-disable-next-line arrow-body-style
-const Indicators = ({ marketState, openSplitStatesDialog }: IComponentProps) => {
+const Indicators = memo(({ marketState, openSplitStatesDialog }: IComponentProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
@@ -126,7 +124,6 @@ const Indicators = ({ marketState, openSplitStatesDialog }: IComponentProps) => 
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <DropdownMenuLabel>Information</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
                   <DropdownMenuItem
                     onClick={() => displayWindowInfo()}
                   >
@@ -201,7 +198,7 @@ const Indicators = ({ marketState, openSplitStatesDialog }: IComponentProps) => 
       </Card>
     </>
   );
-};
+});
 
 
 
