@@ -189,7 +189,7 @@ const CoinsStateDialog = memo(({ asset, openSplitStatesDialog, closeDialog }: IC
     >
 
       <DialogContent
-        className='max-w-[900px]'
+        className='max-w-[1000px]'
       >
 
         {/* ***************
