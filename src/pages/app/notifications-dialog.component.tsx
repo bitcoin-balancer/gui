@@ -119,14 +119,18 @@ const NotificationsDialog = ({
         </div>
         {
           (hasMore && data.length >= LIMIT)
-          && <LoadMoreButton
-            loadMore={() => loadMore(
-              { func: NotificationService.list, args: [LIMIT, data.at(-1)!.id] },
-              rowsRef.current!,
-              `nd-${data.at(-1)!.id}`,
-            )}
-            loadingMore={loadingMore}
-          />
+          && <div
+            className='py-5'
+          >
+            <LoadMoreButton
+              loadMore={() => loadMore(
+                { func: NotificationService.list, args: [LIMIT, data.at(-1)!.id] },
+                rowsRef.current!,
+                `nd-${data.at(-1)!.id}`,
+              )}
+              loadingMore={loadingMore}
+            />
+          </div>
         }
       </>
     );
