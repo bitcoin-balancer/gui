@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { prettifyValue } from 'bignumber-utils';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import {
@@ -75,19 +75,6 @@ const Dashboard = () => {
       document.title = 'Balancer';
     };
   }, [marketState]);
-
-
-
-
-
-  /* **********************************************************************************************
-   *                                        EVENT HANDLERS                                        *
-   ********************************************************************************************** */
-
-  /**
-   * Closes the split states dialog.
-   */
-  const closeSplitStatesDialog = useCallback((): void => setSplitStatesDialog(undefined), []);
 
 
 
@@ -196,7 +183,7 @@ const Dashboard = () => {
         splitStatesDialog !== undefined
         && <SplitStatesDialog
           data={splitStatesDialog}
-          closeDialog={closeSplitStatesDialog}
+          closeDialog={setSplitStatesDialog}
         />
       }
     </>

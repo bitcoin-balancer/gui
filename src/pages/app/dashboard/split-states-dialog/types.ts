@@ -59,7 +59,7 @@ type IComponentProps = {
   data: ISplitStatesDialogData;
 
   // the func to close the dialog
-  closeDialog: () => void;
+  closeDialog: (nextState: undefined) => void;
 };
 
 

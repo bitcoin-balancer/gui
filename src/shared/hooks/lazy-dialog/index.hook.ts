@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { delay } from '@/shared/services/utils/index.service.tsx';
+import { delay } from '@/shared/services/utils/index.service.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -10,11 +10,11 @@ import { delay } from '@/shared/services/utils/index.service.tsx';
  * Provides utility functions that simplify the management of dialogs that are removed from the DOM
  * on close.
  */
-const useLazyDialog = (closeDialog: () => void) => {
+const useLazyDialog = (closeDialog: (nextState: undefined) => void) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(true);
 
 
 
@@ -32,7 +32,7 @@ const useLazyDialog = (closeDialog: () => void) => {
     async (): Promise<void> => {
       setIsDialogOpen(false);
       await delay(0.25);
-      closeDialog();
+      closeDialog(undefined);
     },
     [closeDialog],
   );

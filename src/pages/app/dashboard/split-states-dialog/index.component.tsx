@@ -25,6 +25,7 @@ import {
 import { ICoinStateAsset } from '@/shared/backend/market-state/coins/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
+import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import StateIcon from '@/shared/components/state-icon/index.component.tsx';
 import LineChart from '@/shared/components/charts/line-chart/index.component.tsx';
 import {
@@ -103,7 +104,7 @@ const SplitStatesDialog = memo(({
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
   const breakpoint = useMediaQueryBreakpoint();
   const [activeSplitID, setActiveSplitID] = useState<ISplitStateID>(activeID);
   const [activeSplit, setActiveSplit] = useState<ISplitStateItem[]>([]);
@@ -160,16 +161,6 @@ const SplitStatesDialog = memo(({
     openInfoDialog(buildInfoDialogContent(moduleID, moduleState.window, asset, assetName, symbol));
   };
 
-  /**
-   * Handles the closing of the dialog after a small delay.
-   */
-  const handleCloseDialog = (): void => {
-    setIsOpen(false);
-    setTimeout(() => {
-      closeDialog();
-    }, 250);
-  };
-
 
 
 
@@ -194,7 +185,7 @@ const SplitStatesDialog = memo(({
    ********************************************************************************************** */
   return (
     <Dialog
-      open={isOpen}
+      open={isDialogOpen}
       onOpenChange={handleCloseDialog}
     >
 
