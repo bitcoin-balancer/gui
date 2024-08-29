@@ -12,6 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
+import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import {
   CoinsService,
@@ -20,6 +21,7 @@ import {
 } from '@/shared/backend/market-state/coins/index.service.ts';
 import { Card, CardContent } from '@/shared/shadcn/components/ui/card.tsx';
 import { toLineSeries } from '@/shared/backend/market-state/shared/utils.ts';
+import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import StateIcon from '@/shared/components/state-icon/index.component.tsx';
@@ -27,8 +29,6 @@ import LineChart from '@/shared/components/charts/line-chart/index.component.tsx
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import { IComponentProps } from '@/pages/app/dashboard/indicators/coins-state-dialog/types.ts';
-import { Separator } from '@/shared/shadcn/components/ui/separator';
-import { errorToast } from '@/shared/services/utils/index.service';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -150,11 +150,11 @@ const CoinsStateDialog = memo(({ asset, openSplitStatesDialog, closeDialog }: IC
                 role='button'
                 aria-label={`Display the split states dialog for ${symbol}`}
                 tabIndex={1}
-                className={`hover:scale-105 ${retrievingState ? 'hover:cursor-not-allowed opacity-50' : 'hover:pointer'}`}
+                className={`hover:ring-1 hover:ring-slate-300 ${retrievingState ? 'hover:cursor-not-allowed opacity-50 ' : 'hover:pointer'}`}
                 onClick={() => displaySplitStatesDialog(symbol)}
               >
                 <CardContent
-                  className='md:pt-0 md:p-1 relative'
+                  className='md:pt-0 md:p-2 relative'
                 >
                   <span
                     className={`absolute top-1 left-1/2 transform -translate-x-1/2 z-10 text-base font-semibold ${ColorService.STATE_TEXT_CLASS_NAME[data.statesBySymbol[symbol].state]}`}
