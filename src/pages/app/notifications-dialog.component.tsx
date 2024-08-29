@@ -11,6 +11,7 @@ import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import { NotificationService, INotification } from '@/shared/backend/notification/index.service.ts';
 import { formatDate } from '@/shared/services/transformers/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
+import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import NoRecords from '@/shared/components/no-records/index.component.tsx';
@@ -36,10 +37,9 @@ const LIMIT = 15;
  * Component in charge of displaying the platform notifications.
  */
 const NotificationsDialog = ({
-  open,
-  onOpenChange,
   unreadCount,
-}: { open: boolean, onOpenChange: (open: boolean) => void, unreadCount: number }) => {
+  closeDialog,
+}: { unreadCount: number, closeDialog: (nextState: undefined) => void }) => {
   /* **********************************************************************************************
    *                                             REFS                                             *
    ********************************************************************************************** */
@@ -67,6 +67,7 @@ const NotificationsDialog = ({
     }),
     [],
   ));
+  const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
 
 
 
@@ -139,8 +140,8 @@ const NotificationsDialog = ({
   }
   return (
     <Dialog
-      open={open}
-      onOpenChange={() => onOpenChange(false)}
+      open={isDialogOpen}
+      onOpenChange={handleCloseDialog}
     >
       <DialogContent className='p-0'>
 
