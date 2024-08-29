@@ -191,7 +191,7 @@ const Coins = memo(({ coinsStates, openSplitStatesDialog }: IComponentProps) => 
                 {
                   isRetrievingState
                   && <Loader2
-                    className='mr-2 h-4 w-4 animate-spin'
+                    className='mr-1 h-4 w-4 animate-spin'
                   />
                 }
                 {

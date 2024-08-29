@@ -201,7 +201,7 @@ const CoinsStateDialog = memo(({ asset, openSplitStatesDialog, closeDialog }: IC
           >
             COINS/{assetName}
             {
-              (!error && !loading)
+              (!error && !loading && !retrievingState)
                 && <StateIcon
                 className='ml-2'
                 state={data.state}
@@ -210,7 +210,7 @@ const CoinsStateDialog = memo(({ asset, openSplitStatesDialog, closeDialog }: IC
             {
                 retrievingState
                 && <Loader2
-                  className='ml-1 h-4 w-4 animate-spin'
+                  className='ml-2 h-4 w-4 animate-spin'
                 />
               }
           </DialogTitle>
