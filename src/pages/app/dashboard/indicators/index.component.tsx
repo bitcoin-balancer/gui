@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from 'react';
+import { memo, useState } from 'react';
 import {
   EllipsisVertical,
   ChartCandlestick,
@@ -83,11 +83,6 @@ const Indicators = memo(({ marketState, openSplitStatesDialog }: IComponentProps
       },
     })
   );
-
-  /**
-   * Closes the coins state dialog.
-   */
-  const closeCoinsStateDialog = useCallback((): void => setCoinsStateDialog(undefined), []);
 
   /**
    * Displays the coins state dialog for an asset.
@@ -286,7 +281,7 @@ const Indicators = memo(({ marketState, openSplitStatesDialog }: IComponentProps
         && <CoinsStateDialog
           asset={coinsStateDialog}
           openSplitStatesDialog={openSplitStatesDialog}
-          closeDialog={closeCoinsStateDialog}
+          closeDialog={setCoinsStateDialog}
         />
       }
     </>

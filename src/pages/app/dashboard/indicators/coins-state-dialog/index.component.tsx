@@ -24,6 +24,7 @@ import { toLineSeries } from '@/shared/backend/market-state/shared/utils.ts';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
+import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import StateIcon from '@/shared/components/state-icon/index.component.tsx';
 import LineChart from '@/shared/components/charts/line-chart/index.component.tsx';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
@@ -42,7 +43,7 @@ const CoinsStateDialog = memo(({ asset, openSplitStatesDialog, closeDialog }: IC
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
   const { data, loading, error } = useAPIFetch<ICoinsState<ISemiCompactCoinState>>(useMemo(
     () => ({
       fetchFunc: { func: CoinsService.getSemiCompactStateForAsset, args: [asset] },
@@ -82,16 +83,6 @@ const CoinsStateDialog = memo(({ asset, openSplitStatesDialog, closeDialog }: IC
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
    ********************************************************************************************** */
-
-  /**
-   * Handles the closing of the dialog after a small delay.
-   */
-  const handleCloseDialog = (): void => {
-    setIsOpen(false);
-    setTimeout(() => {
-      closeDialog();
-    }, 250);
-  };
 
   /**
    * Displays the split states for a symbol.
@@ -184,7 +175,7 @@ const CoinsStateDialog = memo(({ asset, openSplitStatesDialog, closeDialog }: IC
   }
   return (
     <Dialog
-      open={isOpen}
+      open={isDialogOpen}
       onOpenChange={handleCloseDialog}
     >
 

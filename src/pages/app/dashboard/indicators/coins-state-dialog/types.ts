@@ -17,7 +17,7 @@ type IComponentProps = {
   openSplitStatesDialog: (data: ISplitStatesDialogData) => void;
 
   // the func to close the dialog
-  closeDialog: () => void;
+  closeDialog: (nexState: undefined) => void;
 };
 
 

@@ -62,7 +62,7 @@ const Position = memo(() => {
                       <ArrowDownWideNarrow
                           aria-hidden='true'
                           className='mr-1 h-5 w-5'
-                        /> Reduce
+                        /> Decrease
                     </DropdownMenuSubTrigger>
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent>
