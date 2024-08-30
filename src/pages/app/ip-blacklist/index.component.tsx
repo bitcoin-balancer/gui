@@ -32,7 +32,7 @@ import {
 } from '@/shared/shadcn/components/ui/table.tsx';
 import { Card, CardContent } from '@/shared/shadcn/components/ui/card.tsx';
 import { IRecord } from '@/shared/types.ts';
-import { delay, errorToast } from '@/shared/services/utils/index.service.ts';
+import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { formatDate } from '@/shared/services/transformers/index.service.ts';
 import { IBreakpoint } from '@/shared/services/media-query/index.service.ts';
 import { IPBlacklistService, IIPBlacklistRecord } from '@/shared/backend/ip-blacklist/index.service.ts';
@@ -45,7 +45,7 @@ import NoRecords from '@/shared/components/no-records/index.component.tsx';
 import LoadMoreButton from '@/shared/components/load-more-button/index.component.tsx';
 import { dispatch } from '@/pages/app/ip-blacklist/reducer.ts';
 import RecordForm from '@/pages/app/ip-blacklist/record-form.component.tsx';
-import { IAction } from '@/pages/app/ip-blacklist/types.ts';
+import { IAction, IDialogRecord } from '@/pages/app/ip-blacklist/types.ts';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
@@ -142,10 +142,11 @@ const IPBlacklist = () => {
     [],
   ));
   const breakpoint = useMediaQueryBreakpoint();
-  const [activeDialog, setActiveDialog] = useState<IIPBlacklistRecord | null | false>(false);
-  const [closingDialog, setClosingDialog] = useState<boolean>(false);
+  const [activeDialog, setActiveDialog] = useState<IDialogRecord>();
   const [busyRecord, setBusyRecord] = useState<number | undefined>();
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
+
+
 
 
 
@@ -194,14 +195,11 @@ const IPBlacklist = () => {
    * @param action
    */
   const handleDispatch = useCallback(
-    async (action: IAction | false) => {
+    async (action: IAction | undefined) => {
+      setActiveDialog(undefined);
       if (action) {
         dispatch(action, data, setData);
       }
-      setClosingDialog(true);
-      await delay(0.25);
-      setClosingDialog(false);
-      setActiveDialog(false);
     },
     [data, setData],
   );
@@ -399,10 +397,10 @@ const IPBlacklist = () => {
         * FORM DIALOGS *
         ************** */}
       {
-        activeDialog !== false
+        activeDialog !== undefined
         && <RecordForm
-          open={closingDialog ? false : activeDialog}
-          onOpenChange={handleDispatch}
+          record={activeDialog}
+          closeDialog={handleDispatch}
         />
       }
     </>

@@ -23,10 +23,11 @@ import {
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { formatDate } from '@/shared/services/transformers/index.service.ts';
+import { useBoundStore } from '@/shared/store/index.store.ts';
 import { ipNotesValid, ipValid } from '@/shared/backend/validations/index.service.ts';
 import { IPBlacklistService } from '@/shared/backend/ip-blacklist/index.service.ts';
-import { useBoundStore } from '@/shared/store/index.store.ts';
-import { IRecordFormProps, IRecordFormInputs } from '@/pages/app/ip-blacklist/types.ts';
+import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
+import { IRecordFormProps, IRecordFormInputs, IAction } from '@/pages/app/ip-blacklist/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -36,14 +37,15 @@ import { IRecordFormProps, IRecordFormInputs } from '@/pages/app/ip-blacklist/ty
  * Record Form Component
  * Component in charge of creating and updating records.
  */
-const RecordForm = ({ open, onOpenChange }: IRecordFormProps) => {
+const RecordForm = ({ record, closeDialog }: IRecordFormProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
+  const { isDialogOpen, handleCloseDialog } = useLazyDialog(() => undefined);
   const form = useForm<IRecordFormInputs>({
     defaultValues: {
-      ip: open ? open.ip : '',
-      notes: open ? open.notes || '' : '',
+      ip: record ? record.ip : '',
+      notes: record ? record.notes || '' : '',
     },
   });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -58,6 +60,17 @@ const RecordForm = ({ open, onOpenChange }: IRecordFormProps) => {
    ********************************************************************************************** */
 
   /**
+   * Handles the closing of the dialog. An action can be provided to manage the state in the parent
+   * component.
+   * @param action
+   * @returns Promise<void>
+   */
+  const __handleCloseDialog = async (action: IAction | undefined): Promise<void> => {
+    await handleCloseDialog();
+    closeDialog(action);
+  };
+
+  /**
    * Triggers whenever the form is submitted and it prompts the user with the confirmation dialog.
    * @param data
    * @returns void
@@ -65,8 +78,8 @@ const RecordForm = ({ open, onOpenChange }: IRecordFormProps) => {
   const onSubmit = (data: IRecordFormInputs): void => {
     openConfirmationDialog({
       mode: 'OTP',
-      title: open === null ? 'Register IP' : 'Update Registration',
-      description: open === null
+      title: record === null ? 'Register IP' : 'Update Registration',
+      description: record === null
         ? `The IP address ${data.ip} will be blacklisted immediately upon submission`
         : `The changes will be applied to the IP address ${data.ip} immediately upon submission`,
       onConfirmation: async (confirmation: string) => {
@@ -75,15 +88,15 @@ const RecordForm = ({ open, onOpenChange }: IRecordFormProps) => {
 
           // handle the action accordingly
           const notes = data.notes.length === 0 ? undefined : data.notes;
-          if (open) {
-            await IPBlacklistService.updateIPRegistration(open.id, data.ip, notes, confirmation);
-            onOpenChange({
+          if (record) {
+            await IPBlacklistService.updateIPRegistration(record.id, data.ip, notes, confirmation);
+            __handleCloseDialog({
               type: 'UPDATE_REGISTRATION',
-              payload: { id: open.id, ip: data.ip, notes },
+              payload: { id: record.id, ip: data.ip, notes },
             });
           } else {
             const payload = await IPBlacklistService.registerIP(data.ip, notes, confirmation);
-            onOpenChange({ type: 'REGISTER_IP', payload });
+            __handleCloseDialog({ type: 'REGISTER_IP', payload });
           }
         } catch (e) {
           errorToast(e);
@@ -109,16 +122,16 @@ const RecordForm = ({ open, onOpenChange }: IRecordFormProps) => {
    ********************************************************************************************** */
   return (
     <Dialog
-      open={open !== false}
-      onOpenChange={() => onOpenChange(false)}>
+      open={isDialogOpen}
+      onOpenChange={() => __handleCloseDialog(undefined)}>
 
       <DialogContent>
 
         <DialogHeader>
-          <DialogTitle>{open === null ? 'Register IP' : 'Update registration'}</DialogTitle>
+          <DialogTitle>{record === null ? 'Register IP' : 'Update registration'}</DialogTitle>
           <DialogDescription>
             {
-              open === null
+              record === null
                 ? 'The IP address will be blacklisted immediately upon submission'
                 : 'The changes will be applied immediately upon submission'
             }
@@ -126,7 +139,7 @@ const RecordForm = ({ open, onOpenChange }: IRecordFormProps) => {
         </DialogHeader>
 
         {
-          open
+          record
           && <>
             <div
               className='flex justify-start items-center'
@@ -135,7 +148,7 @@ const RecordForm = ({ open, onOpenChange }: IRecordFormProps) => {
                 className='text-light text-xs sm:text-sm'
               >ID</p>
               <span className='flex-1'></span>
-              <p>{open.id}</p>
+              <p>{record.id}</p>
             </div>
             <div
               className='flex justify-start items-center'
@@ -146,7 +159,7 @@ const RecordForm = ({ open, onOpenChange }: IRecordFormProps) => {
               <span className='flex-1'></span>
               <p
                 className='text-sm sm:text-md'
-              >{formatDate(open.event_time, 'datetime-medium')}</p>
+              >{formatDate(record.event_time, 'datetime-medium')}</p>
             </div>
           </>
         }
@@ -215,7 +228,7 @@ const RecordForm = ({ open, onOpenChange }: IRecordFormProps) => {
                     isSubmitting
                     && <Loader2
                       className='mr-2 h-4 w-4 animate-spin'
-                    />} {open === null ? 'Blacklist IP' : 'Update registration'}
+                    />} {record === null ? 'Blacklist IP' : 'Update registration'}
                 </Button>
               </DialogFooter>
 

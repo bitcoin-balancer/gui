@@ -35,10 +35,17 @@ type IAction = {
  *                                         RECORD FORM                                            *
  ************************************************************************************************ */
 
+/**
+ * Dialog Record
+ * The type of records that can exist. If undefined, the dialog won't be in the DOM, null will
+ * display the create record form while a record show the update form.
+ */
+type IDialogRecord = IIPBlacklistRecord | null | undefined;
+
 // component props
 type IRecordFormProps = {
-  open: IIPBlacklistRecord | null | false;
-  onOpenChange: (action: IAction | false) => void;
+  record: IDialogRecord;
+  closeDialog: (action: IAction | undefined) => void;
 };
 
 // form inputs
@@ -59,6 +66,7 @@ export type {
   IAction,
 
   // record form
+  IDialogRecord,
   IRecordFormProps,
   IRecordFormInputs,
 };
