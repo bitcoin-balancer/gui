@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Ellipsis } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import {
@@ -27,7 +28,7 @@ import ResourcePieChart from '@/pages/app/server/monitoring/resource-pie-chart.c
  * File System Card Component
  * Component in charge of displaying information regarding the current state of the File System.
  */
-const FileSystemCard = ({ data }: { data: IFileSystemState }) => (
+const FileSystemCard = memo(({ data }: { data: IFileSystemState }) => (
   <Card
     className='flex-1 w-full'
   >
@@ -119,7 +120,7 @@ const FileSystemCard = ({ data }: { data: IFileSystemState }) => (
     </CardContent>
 
   </Card>
-);
+));
 
 
 

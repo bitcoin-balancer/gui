@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Ellipsis } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import {
@@ -25,7 +26,7 @@ import ResourcePieChart from '@/pages/app/server/monitoring/resource-pie-chart.c
  * CPU Card Component
  * Component in charge of displaying information regarding the current state of the CPU.
  */
-const CPUCard = ({ data }: { data: ICPUState }) => (
+const CPUCard = memo(({ data }: { data: ICPUState }) => (
   <Card
     className='flex-1 w-full'
   >
@@ -99,7 +100,7 @@ const CPUCard = ({ data }: { data: ICPUState }) => (
     </CardContent>
 
   </Card>
-);
+));
 
 
 

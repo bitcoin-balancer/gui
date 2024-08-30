@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Label, Pie, PieChart as PieChartAPI } from 'recharts';
 import {
   ChartContainer,
@@ -15,7 +16,7 @@ import { IResourcePieChartProps } from '@/pages/app/server/monitoring/types.ts';
  * Resource Pie Chart Component
  * Component in charge of charting the % of a resource that is being used.
  */
-const ResourcePieChart = ({
+const ResourcePieChart = memo(({
   className = 'max-h-[187px]',
   valueLabel = 'Usage%',
   value,
@@ -77,7 +78,7 @@ const ResourcePieChart = ({
       </Pie>
     </PieChartAPI>
   </ChartContainer>
-);
+));
 
 
 

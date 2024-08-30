@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { CodeXml, ExternalLink, Github } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
@@ -30,7 +30,7 @@ const API_URL = buildAPIURL('ping');
  * API Card Component
  * Component in charge of displaying general information regarding the API.
  */
-const APICard = ({ data }: { data: IServerState }) => {
+const APICard = memo(({ data }: { data: IServerState }) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
@@ -180,7 +180,7 @@ const APICard = ({ data }: { data: IServerState }) => {
       </CardContent>
     </Card>
   );
-};
+});
 
 
 

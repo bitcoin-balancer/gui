@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Ellipsis } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import {
@@ -26,7 +27,7 @@ import ResourcePieChart from '@/pages/app/server/monitoring/resource-pie-chart.c
  * Memory Card Component
  * Component in charge of displaying information regarding the current state of the RAM.
  */
-const MemoryCard = ({ data }: { data: IMemoryState }) => (
+const MemoryCard = memo(({ data }: { data: IMemoryState }) => (
   <Card
     className='flex-1 w-full'
   >
@@ -91,7 +92,7 @@ const MemoryCard = ({ data }: { data: IMemoryState }) => (
     </CardContent>
 
   </Card>
-);
+));
 
 
 
