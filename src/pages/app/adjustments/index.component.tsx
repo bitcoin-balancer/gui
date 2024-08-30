@@ -1,4 +1,4 @@
-import { useState, useCallback, Fragment } from 'react';
+import { useState, Fragment } from 'react';
 import {
   ChartCandlestick,
   Droplet,
@@ -10,7 +10,6 @@ import {
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import { Card, CardContent } from '@/shared/shadcn/components/ui/card.tsx';
-import { delay } from '@/shared/services/utils/index.service.ts';
 import Window from '@/pages/app/adjustments/window.component.tsx';
 import Coins from '@/pages/app/adjustments/coins.component.tsx';
 import ServerAlarms from '@/pages/app/adjustments/server-alarms.component.tsx';
@@ -76,27 +75,7 @@ const Adjustments = () => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const [activeDialog, setActiveDialog] = useState<IFormID | false>(false);
-  const [closingDialog, setClosingDialog] = useState<boolean>(false);
-
-
-
-
-
-  /* **********************************************************************************************
-   *                                        EVENT HANDLERS                                        *
-   ********************************************************************************************** */
-
-  // handles the closing of a dialog
-  const handleOnOpenChange = useCallback(
-    async () => {
-      setClosingDialog(true);
-      await delay(0.25);
-      setClosingDialog(false);
-      setActiveDialog(false);
-    },
-    [],
-  );
+  const [activeDialog, setActiveDialog] = useState<IFormID>();
 
 
 
@@ -167,22 +146,19 @@ const Adjustments = () => {
       {
         activeDialog === 'WINDOW'
         && <Window
-          open={activeDialog === 'WINDOW' && !closingDialog}
-          onOpenChange={handleOnOpenChange}
+          closeDialog={setActiveDialog}
         />
       }
       {
         activeDialog === 'COINS'
         && <Coins
-          open={activeDialog === 'COINS' && !closingDialog}
-          onOpenChange={handleOnOpenChange}
+        closeDialog={setActiveDialog}
         />
       }
       {
         activeDialog === 'SERVER_ALARMS'
         && <ServerAlarms
-          open={activeDialog === 'SERVER_ALARMS' && !closingDialog}
-          onOpenChange={handleOnOpenChange}
+          closeDialog={setActiveDialog}
         />
       }
     </>

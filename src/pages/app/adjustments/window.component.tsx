@@ -34,6 +34,7 @@ import { numberValid } from '@/shared/backend/validations/index.service.ts';
 import { WindowService, IWindowConfig } from '@/shared/backend/market-state/window/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
+import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import FormLabelWithMoreInfo from '@/shared/components/form-label-with-more-info/index.component.tsx';
@@ -47,10 +48,11 @@ import { IFormProps } from '@/pages/app/adjustments/types.ts';
  * Window Component
  * Component in charge of updating the window's configuration.
  */
-const Window = ({ open, onOpenChange }: IFormProps) => {
+const Window = ({ closeDialog }: IFormProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
+  const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
   const { data, loading, error } = useAPIFetch<IWindowConfig>(useMemo(
     () => ({
       fetchFunc: { func: WindowService.getConfig },
@@ -119,7 +121,7 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
             },
             confirmation,
           );
-          onOpenChange(false);
+          handleCloseDialog();
           setTimeout(() => {
             SWService.updateApp();
           }, 2000);
@@ -382,8 +384,8 @@ const Window = ({ open, onOpenChange }: IFormProps) => {
   }
   return (
     <Dialog
-      open={open}
-      onOpenChange={onOpenChange}
+      open={isDialogOpen}
+      onOpenChange={handleCloseDialog}
     >
 
       <DialogContent>

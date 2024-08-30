@@ -36,6 +36,7 @@ import {
 } from '@/shared/backend/market-state/coins/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
+import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import FormLabelWithMoreInfo from '@/shared/components/form-label-with-more-info/index.component.tsx';
@@ -71,10 +72,11 @@ const isWhitelistValid = (whitelist: string, baseAsset: string): boolean => {
  * Coins Component
  * Component in charge of updating the coins's configuration.
  */
-const Coins = ({ open, onOpenChange }: IFormProps) => {
+const Coins = ({ closeDialog }: IFormProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
+  const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
   const { data, loading, error } = useAPIFetch<ICoinsConfig>(useMemo(
     () => ({
       fetchFunc: { func: CoinsService.getConfig },
@@ -146,7 +148,7 @@ const Coins = ({ open, onOpenChange }: IFormProps) => {
             },
             confirmation,
           );
-          onOpenChange(false);
+          handleCloseDialog();
         } catch (e) {
           errorToast(e);
           const { message, code } = decodeError(e);
@@ -428,8 +430,8 @@ const Coins = ({ open, onOpenChange }: IFormProps) => {
   }
   return (
     <Dialog
-      open={open}
-      onOpenChange={onOpenChange}
+      open={isDialogOpen}
+      onOpenChange={handleCloseDialog}
     >
 
       <DialogContent>

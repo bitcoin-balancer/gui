@@ -123,7 +123,7 @@ const APIErrorDialog = ({ record, closeDialog }: IAPIErrorDialogProps) => {
         }
 
         {
-          typeof record.uid === 'string'
+          typeof record.ip === 'string'
           && <div
             className='flex justify-center items-center mt-2'
           >

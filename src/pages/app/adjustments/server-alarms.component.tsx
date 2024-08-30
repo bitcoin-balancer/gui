@@ -26,6 +26,7 @@ import { numberValid } from '@/shared/backend/validations/index.service.ts';
 import { ServerService, IAlarmsConfiguration } from '@/shared/backend/server/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
+import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import { IFormProps } from './types.ts';
@@ -38,10 +39,11 @@ import { IFormProps } from './types.ts';
  * Server Alarms Component
  * Component in charge of updating the alarms' configuration.
  */
-const ServerAlarms = ({ open, onOpenChange }: IFormProps) => {
+const ServerAlarms = ({ closeDialog }: IFormProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
+  const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
   const { data, loading, error } = useAPIFetch<IAlarmsConfiguration>(useMemo(
     () => ({
       fetchFunc: { func: ServerService.getAlarms },
@@ -103,7 +105,7 @@ const ServerAlarms = ({ open, onOpenChange }: IFormProps) => {
             },
             confirmation,
           );
-          onOpenChange(false);
+          handleCloseDialog();
         } catch (e) {
           errorToast(e);
           const { message, code } = decodeError(e);
@@ -248,8 +250,8 @@ const ServerAlarms = ({ open, onOpenChange }: IFormProps) => {
   }
   return (
     <Dialog
-      open={open}
-      onOpenChange={onOpenChange}
+      open={isDialogOpen}
+      onOpenChange={handleCloseDialog}
     >
 
       <DialogContent>
