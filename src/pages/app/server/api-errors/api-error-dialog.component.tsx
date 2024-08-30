@@ -12,6 +12,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/shadcn/compone
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import { formatDate } from '@/shared/services/transformers/index.service.ts';
 import { ClipboardService } from '@/shared/services/clipboard/index.service.ts';
+import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import { IAPIErrorDialogProps } from '@/pages/app/server/api-errors/types.ts';
 
 /* ************************************************************************************************
@@ -23,7 +24,16 @@ import { IAPIErrorDialogProps } from '@/pages/app/server/api-errors/types.ts';
  * Component in charge of displaying an API Error and allowing users to download them for further
  * analysis.
  */
-const APIErrorDialog = ({ open, onOpenChange, record }: IAPIErrorDialogProps) => {
+const APIErrorDialog = ({ record, closeDialog }: IAPIErrorDialogProps) => {
+  /* **********************************************************************************************
+   *                                             STATE                                            *
+   ********************************************************************************************** */
+  const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
+
+
+
+
+
   /* **********************************************************************************************
    *                                       REACTIVE VALUES                                        *
    ********************************************************************************************** */
@@ -40,8 +50,8 @@ const APIErrorDialog = ({ open, onOpenChange, record }: IAPIErrorDialogProps) =>
    ********************************************************************************************** */
   return (
     <Dialog
-      open={open}
-      onOpenChange={onOpenChange}
+      open={isDialogOpen}
+      onOpenChange={handleCloseDialog}
     >
 
       <DialogContent

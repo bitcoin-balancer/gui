@@ -4,7 +4,6 @@ import {
   useMemo,
   useRef,
   Fragment,
-  useCallback,
 } from 'react';
 import {
   Menu,
@@ -21,7 +20,7 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/shadcn/components/ui/dropdown-menu.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
-import { delay, errorToast } from '@/shared/services/utils/index.service.ts';
+import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { APIErrorService, IAPIError } from '@/shared/backend/api-error/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
@@ -73,10 +72,7 @@ const APIErrors = memo(({ setSidenavOpen, unreadAPIErrors }: IServerComponentPro
     }),
     [],
   ));
-  const [activeDialog, setActiveDialog] = useState<{ open: boolean, record?: IAPIError }>({
-    open: false,
-  });
-  const [closingDialog, setClosingDialog] = useState<boolean>(false);
+  const [activeDialog, setActiveDialog] = useState<IAPIError>();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
 
@@ -119,19 +115,6 @@ const APIErrors = memo(({ setSidenavOpen, unreadAPIErrors }: IServerComponentPro
       },
     });
   };
-
-  /**
-   * Initializes the process to dismiss a dialog.
-   */
-  const handleOnOpenChange = useCallback(
-    async () => {
-      setClosingDialog(true);
-      await delay(0.25);
-      setClosingDialog(false);
-      setActiveDialog({ open: false, record: undefined });
-    },
-    [],
-  );
 
 
 
@@ -249,7 +232,7 @@ const APIErrors = memo(({ setSidenavOpen, unreadAPIErrors }: IServerComponentPro
                     <APIError
                       id={`aer-${record.id}`}
                       data={record}
-                      openDialog={() => setActiveDialog({ open: true, record })}
+                      openDialog={setActiveDialog}
                       isUnread={i < unreadRef.current}
                     />
                     {i < data.length - 1 && <Separator />}
@@ -287,11 +270,11 @@ const APIErrors = memo(({ setSidenavOpen, unreadAPIErrors }: IServerComponentPro
         * ERROR DIALOG *
         ************** */}
       {
-        activeDialog.record !== undefined
+        activeDialog !== undefined
         && <APIErrorDialog
-            open={closingDialog ? false : activeDialog.open}
-            record={activeDialog.record}
-            onOpenChange={handleOnOpenChange} />
+          record={activeDialog}
+          closeDialog={setActiveDialog}
+        />
       }
     </>
   );
