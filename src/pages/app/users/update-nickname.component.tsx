@@ -21,10 +21,11 @@ import {
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
+import { useBoundStore } from '@/shared/store/index.store.ts';
 import { nicknameValid } from '@/shared/backend/validations/index.service.ts';
 import { UserService } from '@/shared/backend/auth/user/index.service.ts';
-import { useBoundStore } from '@/shared/store/index.store.ts';
-import { IUpdateNicknameProps, IUpdateNicknameInputs } from '@/pages/app/users/types.ts';
+import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
+import { IUpdateNicknameProps, IUpdateNicknameInputs, IAction } from '@/pages/app/users/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -35,14 +36,14 @@ import { IUpdateNicknameProps, IUpdateNicknameInputs } from '@/pages/app/users/t
  * Component in charge of updating a user's nickname.
  */
 const UpdateNickname = ({
-  open,
-  onOpenChange,
   uid,
   nickname,
+  closeDialog,
 }: IUpdateNicknameProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
+  const { isDialogOpen, handleCloseDialog } = useLazyDialog(() => undefined);
   const form = useForm<IUpdateNicknameInputs>({ defaultValues: { newNickname: nickname } });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
@@ -54,6 +55,16 @@ const UpdateNickname = ({
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
    ********************************************************************************************** */
+
+  /**
+   * Handles the process of closing the dialog with an action.
+   * @param action
+   * @returns Promise<void>
+   */
+  const __handleCloseDialog = async (action: IAction | undefined): Promise<void> => {
+    await handleCloseDialog();
+    closeDialog(action);
+  };
 
   /**
    * Triggers whenever the form is submitted and it prompts the user with the confirmation dialog.
@@ -69,7 +80,7 @@ const UpdateNickname = ({
         try {
           setIsSubmitting(true);
           await UserService.updateNickname(uid, data.newNickname, confirmation);
-          onOpenChange({ type: 'UPDATE_NICKNAME', payload: { uid, newNickname: data.newNickname } });
+          __handleCloseDialog({ type: 'UPDATE_NICKNAME', payload: { uid, newNickname: data.newNickname } });
         } catch (e) {
           errorToast(e);
           const { message, code } = decodeError(e);
@@ -91,8 +102,8 @@ const UpdateNickname = ({
    ********************************************************************************************** */
   return (
     <Dialog
-      open={open}
-      onOpenChange={() => onOpenChange(false)}
+      open={isDialogOpen}
+      onOpenChange={() => __handleCloseDialog(undefined)}
     >
 
       <DialogContent>

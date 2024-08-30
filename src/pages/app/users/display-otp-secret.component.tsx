@@ -12,6 +12,7 @@ import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { ClipboardService } from '@/shared/services/clipboard/index.service.ts';
 import { UserService } from '@/shared/backend/auth/user/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
+import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import { IDisplayOTPSecretProps } from '@/pages/app/users/types.ts';
@@ -25,14 +26,14 @@ import { IDisplayOTPSecretProps } from '@/pages/app/users/types.ts';
  * Component in charge of displaying an user's OTP Secret.
  */
 const DisplayOTPSecret = memo(({
-  open,
-  onOpenChange,
   uid,
   nickname,
+  closeDialog,
 }: IDisplayOTPSecretProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
+  const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
   const { data, loading, error } = useAPIFetch<string>(useMemo(
     () => ({
       fetchFunc: { func: UserService.getOTPSecret, args: [uid] },
@@ -56,11 +57,11 @@ const DisplayOTPSecret = memo(({
     content = (
       <>
         <div
-          className='flex justify-start items-center border border-slate-300 rounded-md p-3 mt-2 shadow-md animate-in fade-in duration-700'
+          className='flex justify-start items-center border border-slate-300 rounded-md px-3 py-5 mt-3 mb-3 shadow-md animate-in fade-in duration-700'
         >
           <KeyRound
             aria-hidden='true'
-            className='mr-2'
+            className='mr-2 w-6 h-6'
           />
           <p
             className='text-sm sm:text-md md:text-lg'
@@ -87,8 +88,8 @@ const DisplayOTPSecret = memo(({
   }
   return (
     <Dialog
-      open={open}
-      onOpenChange={() => onOpenChange(false)}
+      open={isDialogOpen}
+      onOpenChange={handleCloseDialog}
     >
 
       <DialogContent>

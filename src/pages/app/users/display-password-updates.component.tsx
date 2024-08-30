@@ -18,6 +18,7 @@ import {
 import { formatDate } from '@/shared/services/transformers/index.service.ts';
 import { UserService, IPasswordUpdate } from '@/shared/backend/auth/user/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
+import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import NoRecords from '@/shared/components/no-records/index.component.tsx';
@@ -44,10 +45,9 @@ const LIMIT = 15;
  * Component in charge of displaying the list of password update records a user has.
  */
 const DisplayPasswordUpdates = memo(({
-  open,
-  onOpenChange,
   uid,
   nickname,
+  closeDialog,
 }: IDisplayAuthSessionsProps) => {
   /* **********************************************************************************************
    *                                             REFS                                             *
@@ -61,6 +61,7 @@ const DisplayPasswordUpdates = memo(({
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
+  const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
   const {
     data,
     loading,
@@ -146,8 +147,8 @@ const DisplayPasswordUpdates = memo(({
   }
   return (
     <Dialog
-      open={open}
-      onOpenChange={() => onOpenChange(false)}
+      open={isDialogOpen}
+      onOpenChange={handleCloseDialog}
     >
       <DialogContent>
 

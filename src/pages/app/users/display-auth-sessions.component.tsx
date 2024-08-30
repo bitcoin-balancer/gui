@@ -21,6 +21,7 @@ import { ClipboardService } from '@/shared/services/clipboard/index.service.ts';
 import { formatDate } from '@/shared/services/transformers/index.service.ts';
 import { JWTService, IRefreshTokenRecord } from '@/shared/backend/auth/jwt/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
+import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import NoRecords from '@/shared/components/no-records/index.component.tsx';
@@ -35,14 +36,14 @@ import { IDisplayAuthSessionsProps } from '@/pages/app/users/types.ts';
  * Component in charge of displaying the list of auth sessions a user has.
  */
 const DisplayAuthSessions = memo(({
-  open,
-  onOpenChange,
   uid,
   nickname,
+  closeDialog,
 }: IDisplayAuthSessionsProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
+  const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
   const { data, loading, error } = useAPIFetch<IRefreshTokenRecord[]>(useMemo(
     () => ({
       fetchFunc: { func: JWTService.listRecords, args: [uid] },
@@ -105,8 +106,8 @@ const DisplayAuthSessions = memo(({
   }
   return (
     <Dialog
-      open={open}
-      onOpenChange={() => onOpenChange(false)}
+      open={isDialogOpen}
+      onOpenChange={handleCloseDialog}
     >
 
       <DialogContent>

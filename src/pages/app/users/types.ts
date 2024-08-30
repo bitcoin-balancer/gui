@@ -48,7 +48,7 @@ type IDialogName = 'UPDATE_NICKNAME' | 'UPDATE_AUTHORITY' | 'DISPLAY_OTP_SECRET'
 | 'DISPLAY_AUTH_SESSIONS' | 'DISPLAY_PASSWORD_UPDATES';
 
 // the function triggered by dialogs when dismissed. It may contain an action to be dispatched
-type IDialogCloseFunc = (action: IAction | false) => void;
+type IDialogCloseFunc = (action: IAction | undefined) => void;
 
 
 
@@ -93,10 +93,9 @@ type IAddUserInputs = {
 
 // component props
 type IUpdateNicknameProps = {
-  open: boolean;
-  onOpenChange: IDialogCloseFunc;
   uid: string;
   nickname: string;
+  closeDialog: IDialogCloseFunc;
 };
 
 // form inputs
@@ -114,11 +113,10 @@ type IUpdateNicknameInputs = {
 
 // component props
 type IUpdateAuthorityProps = {
-  open: boolean;
-  onOpenChange: IDialogCloseFunc;
   uid: string;
   nickname: string;
   authority: IAuthority;
+  closeDialog: IDialogCloseFunc;
 };
 
 // form inputs
@@ -136,10 +134,9 @@ type IUpdateAuthorityInputs = {
 
 // component props
 type IDisplayOTPSecretProps = {
-  open: boolean;
-  onOpenChange: IDialogCloseFunc;
   uid: string;
   nickname: string;
+  closeDialog: IDialogCloseFunc;
 };
 
 
@@ -152,10 +149,9 @@ type IDisplayOTPSecretProps = {
 
 // component props
 type IDisplayAuthSessionsProps = {
-  open: boolean;
-  onOpenChange: IDialogCloseFunc;
   uid: string;
   nickname: string;
+  closeDialog: IDialogCloseFunc;
 };
 
 
@@ -168,10 +164,9 @@ type IDisplayAuthSessionsProps = {
 
 // component props
 type IDisplayPasswordUpdatesProps = {
-  open: boolean;
-  onOpenChange: IDialogCloseFunc;
   uid: string;
   nickname: string;
+  closeDialog: IDialogCloseFunc;
 };
 
 

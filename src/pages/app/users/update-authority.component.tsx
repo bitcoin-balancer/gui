@@ -21,10 +21,11 @@ import {
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
+import { useBoundStore } from '@/shared/store/index.store.ts';
 import { authorityValid } from '@/shared/backend/validations/index.service.ts';
 import { IAuthority, UserService } from '@/shared/backend/auth/user/index.service.ts';
-import { useBoundStore } from '@/shared/store/index.store.ts';
-import { IUpdateAuthorityProps, IUpdateAuthorityInputs } from '@/pages/app/users/types.ts';
+import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
+import { IUpdateAuthorityProps, IUpdateAuthorityInputs, IAction } from '@/pages/app/users/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -35,15 +36,15 @@ import { IUpdateAuthorityProps, IUpdateAuthorityInputs } from '@/pages/app/users
  * Component in charge of updating a user's authority.
  */
 const UpdateAuthority = ({
-  open,
-  onOpenChange,
   uid,
   nickname,
   authority,
+  closeDialog,
 }: IUpdateAuthorityProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
+  const { isDialogOpen, handleCloseDialog } = useLazyDialog(() => undefined);
   const form = useForm<IUpdateAuthorityInputs>({ defaultValues: { newAuthority: authority } });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
@@ -55,6 +56,16 @@ const UpdateAuthority = ({
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
    ********************************************************************************************** */
+
+  /**
+   * Handles the process of closing the dialog with an action.
+   * @param action
+   * @returns Promise<void>
+   */
+  const __handleCloseDialog = async (action: IAction | undefined): Promise<void> => {
+    await handleCloseDialog();
+    closeDialog(action);
+  };
 
   /**
    * Triggers whenever the form is submitted and it prompts the user with the confirmation dialog.
@@ -71,7 +82,7 @@ const UpdateAuthority = ({
           setIsSubmitting(true);
           const newAuthority = Number(data.newAuthority) as IAuthority;
           await UserService.updateAuthority(uid, newAuthority, confirmation);
-          onOpenChange({ type: 'UPDATE_AUTHORITY', payload: { uid, newAuthority } });
+          __handleCloseDialog({ type: 'UPDATE_AUTHORITY', payload: { uid, newAuthority } });
         } catch (e) {
           errorToast(e);
           const { message, code } = decodeError(e);
@@ -93,8 +104,8 @@ const UpdateAuthority = ({
    ********************************************************************************************** */
   return (
     <Dialog
-      open={open}
-      onOpenChange={() => onOpenChange(false)}
+      open={isDialogOpen}
+      onOpenChange={() => __handleCloseDialog(undefined)}
     >
 
       <DialogContent>

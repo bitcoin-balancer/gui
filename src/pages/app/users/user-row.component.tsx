@@ -74,8 +74,7 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
    *                                             STATE                                            *
    ********************************************************************************************** */
   const breakpoint = useMediaQueryBreakpoint();
-  const [activeDialog, setActiveDialog] = useState<IDialogName | false>(false);
-  const [closingDialog, setClosingDialog] = useState<boolean>(false);
+  const [activeDialog, setActiveDialog] = useState<IDialogName | undefined>();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
 
@@ -152,14 +151,11 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
    * @param action
    */
   const handleFormDismissal = useCallback(
-    async (action: IAction | false) => {
+    async (action: IAction | undefined) => {
+      setActiveDialog(undefined);
       if (action) {
         dispatch(action);
       }
-      setClosingDialog(true);
-      await delay(0.25);
-      setClosingDialog(false);
-      setActiveDialog(false);
     },
     [dispatch],
   );
@@ -334,20 +330,18 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
       {
         activeDialog === 'UPDATE_NICKNAME'
         && <UpdateNickname
-          open={activeDialog === 'UPDATE_NICKNAME' && !closingDialog}
-          onOpenChange={handleFormDismissal}
           uid={user.uid}
           nickname={user.nickname}
+          closeDialog={handleFormDismissal}
         />
       }
       {
         activeDialog === 'UPDATE_AUTHORITY'
         && <UpdateAuthority
-          open={activeDialog === 'UPDATE_AUTHORITY' && !closingDialog}
-          onOpenChange={handleFormDismissal}
           uid={user.uid}
           nickname={user.nickname}
           authority={user.authority}
+          closeDialog={handleFormDismissal}
         />
       }
 
@@ -359,28 +353,25 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
       {
         activeDialog === 'DISPLAY_OTP_SECRET'
         && <DisplayOTPSecret
-          open={activeDialog === 'DISPLAY_OTP_SECRET' && !closingDialog}
-          onOpenChange={handleFormDismissal}
           uid={user.uid}
           nickname={user.nickname}
+          closeDialog={handleFormDismissal}
         />
       }
       {
         activeDialog === 'DISPLAY_AUTH_SESSIONS'
         && <DisplayAuthSessions
-          open={activeDialog === 'DISPLAY_AUTH_SESSIONS' && !closingDialog}
-          onOpenChange={handleFormDismissal}
           uid={user.uid}
           nickname={user.nickname}
+          closeDialog={handleFormDismissal}
         />
       }
       {
         activeDialog === 'DISPLAY_PASSWORD_UPDATES'
         && <DisplayPasswordUpdates
-          open={activeDialog === 'DISPLAY_PASSWORD_UPDATES' && !closingDialog}
-          onOpenChange={handleFormDismissal}
           uid={user.uid}
           nickname={user.nickname}
+          closeDialog={handleFormDismissal}
         />
       }
     </>

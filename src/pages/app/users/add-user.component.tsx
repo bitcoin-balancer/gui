@@ -22,9 +22,9 @@ import {
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
+import { useBoundStore } from '@/shared/store/index.store.ts';
 import { nicknameValid, authorityValid } from '@/shared/backend/validations/index.service.ts';
 import { UserService, IAuthority } from '@/shared/backend/auth/user/index.service.ts';
-import { useBoundStore } from '@/shared/store/index.store.ts';
 import { IAddUserProps, IAddUserInputs } from '@/pages/app/users/types.ts';
 
 /* ************************************************************************************************
