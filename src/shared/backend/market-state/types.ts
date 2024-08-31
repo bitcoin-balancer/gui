@@ -6,6 +6,7 @@ import {
   IStateNames,
 } from '@/shared/backend/market-state/shared/types.ts';
 import { IWindowState } from '@/shared/backend/market-state/window/index.service.ts';
+import { ICompactLiquidityState } from '@/shared/backend/market-state/liquidity/index.service.ts';
 import { ICoinsStates, ICompactCoinState } from '@/shared/backend/market-state/coins/index.service.ts';
 
 
@@ -49,7 +50,7 @@ type IMarketState = {
   windowState: IWindowState;
 
   // the state of the liquidity module
-  // liquidity: ILiquidityState;
+  liquidity: ICompactLiquidityState;
 
   // the state of the coins module
   coinsStates: ICoinsStates<ICompactCoinState>;
