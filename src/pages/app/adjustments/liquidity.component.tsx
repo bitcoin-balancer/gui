@@ -1,7 +1,7 @@
 /* eslint-disable object-curly-newline */
 import { useState, useMemo, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Loader2 } from 'lucide-react';
+import { CircleHelp, Loader2 } from 'lucide-react';
 import { decodeError } from 'error-message-utils';
 import { Input } from '@/shared/shadcn/components/ui/input.tsx';
 import {
@@ -21,6 +21,7 @@ import {
   DialogTitle,
   DialogFooter,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/shadcn/components/ui/tooltip.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
@@ -105,6 +106,7 @@ const Liquidity = ({ closeDialog }: IFormProps) => {
   });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const exchangeConfig = useBoundStore((state) => state.exchangeConfig!);
+  const openInfoDialog = useBoundStore((state) => state.openInfoDialog);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
 
 
@@ -202,11 +204,10 @@ const Liquidity = ({ closeDialog }: IFormProps) => {
               render={({ field }) => (
                 <FormItem className='mt-7'>
                   <FormLabelWithMoreInfo
-                    value='Max distance% from price'
+                    value='Max. distance% from price'
                     description={[
-                      'The interval at which the pricing data is re-fetched from the exchange.',
-                      '-----',
-                      'When using Kraken, ensure your request frequency respects their strict rate limits.  Setting a value larger than 10 seconds for your request interval is recommended to avoid hitting rate limits and ensure smooth operation.',
+                      'The "Max. distance% from price" setting defines the percentage deviation from the current price used to determine the liquidity range. This range encompasses all orders considered when calculating the liquidity state.',
+                      'If the current price of BTC is $100 and the "Max. distance% from price" is set to 1%, the liquidity range will be $99 to $101. All orders placed within this range will be factored into the liquidity state calculation.',
                     ]}
                   />
                   <FormControl>
@@ -220,7 +221,7 @@ const Liquidity = ({ closeDialog }: IFormProps) => {
                       max={100}
                       />
                   </FormControl>
-                  <FormDescription>Price range size%</FormDescription>
+                  <FormDescription>Price range size</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -237,7 +238,36 @@ const Liquidity = ({ closeDialog }: IFormProps) => {
 
 
           <fieldset>
-            <h3 className='text-md font-semibold'>Intensity weights</h3>
+
+            <div
+              className='flex justify-start items-center'
+            >
+              <h3 className='text-md font-semibold'>Intensity weights</h3>
+
+              <span className='flex-1'></span>
+
+              <Tooltip>
+                <TooltipTrigger
+                  className='w-5 h-5'
+                  type='button'
+                  aria-label='View more information'
+                  onClick={() => openInfoDialog({
+                    title: 'Intensity weights',
+                    content: [
+                      'The weights that will be used to determine the value of each intensity when calculating the liquidity state.',
+                    ],
+                  })}
+                  tabIndex={-1}
+                >
+                  <CircleHelp
+                    className='w-5 h-5'
+                    aria-hidden='true'
+                  />
+                </TooltipTrigger>
+                <TooltipContent side='left'><p>More info</p></TooltipContent>
+              </Tooltip>
+            </div>
+
 
             <div
               className='grid grid-cols-2 gap-4'
