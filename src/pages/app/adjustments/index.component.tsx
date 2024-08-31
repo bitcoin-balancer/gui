@@ -11,6 +11,7 @@ import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import { Card, CardContent } from '@/shared/shadcn/components/ui/card.tsx';
 import Window from '@/pages/app/adjustments/window.component.tsx';
+import Liquidity from '@/pages/app/adjustments/liquidity.component.tsx';
 import Coins from '@/pages/app/adjustments/coins.component.tsx';
 import ServerAlarms from '@/pages/app/adjustments/server-alarms.component.tsx';
 import { IFormID, IFormItem } from '@/pages/app/adjustments/types.ts';
@@ -147,6 +148,12 @@ const Adjustments = () => {
         activeDialog === 'WINDOW'
         && <Window
           closeDialog={setActiveDialog}
+        />
+      }
+      {
+        activeDialog === 'LIQUIDITY'
+        && <Liquidity
+        closeDialog={setActiveDialog}
         />
       }
       {
