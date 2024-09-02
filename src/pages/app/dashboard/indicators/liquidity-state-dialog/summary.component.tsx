@@ -12,7 +12,6 @@ import {
   RadialBar,
   RadialBarChart,
 } from 'recharts';
-import { calculatePercentageRepresentation } from 'bignumber-utils';
 import {
   ChartConfig,
   ChartContainer,
@@ -22,7 +21,7 @@ import {
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import { formatBitcoinAmount } from '@/shared/services/transformers/index.service.ts';
-import { ILiquidityState } from '@/shared/backend/market-state/liquidity/index.service.ts';
+import { ILiquidityState, ILiquidityPriceLevel } from '@/shared/backend/market-state/liquidity/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
 
 /* ************************************************************************************************
@@ -45,6 +44,34 @@ const LIQUIDITY_CHART_CONFIG = {
 
 
 
+/* ************************************************************************************************
+ *                                            HELPERS                                             *
+ ************************************************************************************************ */
+
+/**
+ * Builds the total number of existing peaks on a side.
+ * @param levels
+ * @returns { 1: number, 2: number, 3: number, 4: number }
+ */
+const buildPeaksCountForSide = (levels: ILiquidityPriceLevel[]) => levels.reduce(
+  (previous, current) => {
+    if (current[2] !== 0) {
+      return { ...previous, [current[2]]: previous[current[2]] + 1, total: previous.total + 1 };
+    }
+    return previous;
+  },
+  {
+    1: 0,
+    2: 0,
+    3: 0,
+    4: 0,
+    total: 0,
+  },
+);
+
+
+
+
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -60,24 +87,17 @@ const LiquiditySummary = ({ state }: { state: ILiquidityState }) => {
    ********************************************************************************************** */
 
   // the total base asset liquidity
-  const __totalLiquidity = state ? state.asks.total + state.bids.total : 0;
+  const __totalLiquidity = state.asks.total + state.bids.total;
   const totalLiquidity = useMemo(
     () => (formatBitcoinAmount(__totalLiquidity, 3)),
     [__totalLiquidity],
   );
 
-  // percentage representation of the liquidity by side
-  const liquidityPercentageBySide = useMemo(
-    () => (
-      state
-        ? {
-          asks: calculatePercentageRepresentation(state.asks.total, __totalLiquidity),
-          bids: calculatePercentageRepresentation(state.bids.total, __totalLiquidity),
-        }
-        : { asks: 0, bids: 0 }
-    ),
-    [state, __totalLiquidity],
-  );
+  // the total number of peaks by intensity
+  const askPeaks = useMemo(() => buildPeaksCountForSide(state.asks.levels), [state.asks.levels]);
+  const bidPeaks = useMemo(() => buildPeaksCountForSide(state.bids.levels), [state.bids.levels]);
+
+
 
 
 
@@ -240,7 +260,7 @@ const LiquiditySummary = ({ state }: { state: ILiquidityState }) => {
 
 
       {/* <Separator className='mb-10 -mt-10 md:hidden' /> */}
-      <Separator className='my-10 md:hidden' />
+      <Separator className='mb-10 -mt-10 md:hidden' />
 
 
       {/* *******
@@ -261,7 +281,7 @@ const LiquiditySummary = ({ state }: { state: ILiquidityState }) => {
               className='text-base font-medium'
             >Bid peaks</h3>
             <span className='flex-1'></span>
-            <Badge className='bg-increase-1'>185</Badge>
+            <Badge className='bg-increase-1'>{bidPeaks.total}</Badge>
           </div>
 
           <ChartContainer
@@ -271,10 +291,10 @@ const LiquiditySummary = ({ state }: { state: ILiquidityState }) => {
             <BarChart
               accessibilityLayer
               data={[
-                { intensity: 'Low', count: 18 },
-                { intensity: 'Medium', count: 11 },
-                { intensity: 'High', count: 7 },
-                { intensity: 'V. high', count: 3 },
+                { intensity: 'Low', count: bidPeaks[1] },
+                { intensity: 'Medium', count: bidPeaks[2] },
+                { intensity: 'High', count: bidPeaks[3] },
+                { intensity: 'V. high', count: bidPeaks[4] },
               ]}
               layout='vertical'
             >
@@ -314,7 +334,7 @@ const LiquiditySummary = ({ state }: { state: ILiquidityState }) => {
               className='text-base font-medium'
             >Ask peaks</h3>
             <span className='flex-1'></span>
-            <Badge className='bg-decrease-1'>{totalLiquidity}</Badge>
+            <Badge className='bg-decrease-1'>{askPeaks.total}</Badge>
           </div>
 
           <ChartContainer
@@ -324,10 +344,10 @@ const LiquiditySummary = ({ state }: { state: ILiquidityState }) => {
             <BarChart
               accessibilityLayer
               data={[
-                { intensity: 'Low', count: 18 },
-                { intensity: 'Medium', count: 11 },
-                { intensity: 'High', count: 7 },
-                { intensity: 'V. high', count: 3 },
+                { intensity: 'Low', count: askPeaks[1] },
+                { intensity: 'Medium', count: askPeaks[2] },
+                { intensity: 'High', count: askPeaks[3] },
+                { intensity: 'V. high', count: askPeaks[4] },
               ]}
               layout='vertical'
             >
