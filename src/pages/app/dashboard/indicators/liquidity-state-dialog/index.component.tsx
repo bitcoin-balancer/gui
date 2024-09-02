@@ -1,4 +1,5 @@
 import { memo, useMemo } from 'react';
+import { Pie, PieChart } from 'recharts';
 import {
   Dialog,
   DialogContent,
@@ -6,6 +7,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from '@/shared/shadcn/components/ui/chart.jsx';
+import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import {
   formatBitcoinAmount,
   formatDate,
@@ -22,6 +30,29 @@ import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import { IComponentProps } from '@/pages/app/dashboard/indicators/liquidity-state-dialog/types.ts';
+import { ColorService } from '@/shared/services/color/index.service';
+
+/* ************************************************************************************************
+ *                                           CONSTANTS                                            *
+ ************************************************************************************************ */
+
+// the configuration that will be used to render the liquidity chart
+const LIQUIDITY_CHART_CONFIG = {
+  liquidity: {
+    label: 'Liquidity',
+  },
+  asks: {
+    label: 'Asks',
+    color: ColorService.DECREASE_1,
+  },
+  bids: {
+    label: 'Bids',
+    color: ColorService.INCREASE_1,
+  },
+} satisfies ChartConfig;
+
+
+
 
 /* ************************************************************************************************
  *                                            HELPERS                                             *
@@ -77,7 +108,7 @@ const LiquidityStateDialog = memo(({ closeDialog }: IComponentProps) => {
   const exchangeConfig = useBoundStore((state) => state.exchangeConfig!);
   const openInfoDialog = useBoundStore((state) => state.openInfoDialog);
 
-
+  console.log(data);
 
 
 
@@ -124,8 +155,47 @@ const LiquidityStateDialog = memo(({ closeDialog }: IComponentProps) => {
     content = <PageLoader variant='dialog' />;
   } else {
     content = (
-      <div>
-        <p>@TODO</p>
+      <div
+        className='grid grid-cols-1 sm:grid-cols-2 gap-4'
+      >
+
+        {/* ***********
+          * LIQUIDITY *
+          *********** */}
+        <article>
+          <div
+            className='flex justify-start items-center'
+          >
+            <h3
+              className='text-base font-medium'
+            >Total</h3>
+            <span className='flex-1'></span>
+            <Badge>{data.asks.total + data.bids.total} {exchangeConfig.baseAsset}</Badge>
+          </div>
+          <ChartContainer
+            config={LIQUIDITY_CHART_CONFIG}
+          >
+            <PieChart>
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent hideLabel />}
+              />
+              <Pie
+                dataKey='liquidity'
+                nameKey='side'
+                data={[
+                  { side: 'asks', liquidity: data.asks.total, fill: ColorService.DECREASE_1 },
+                  { side: 'bids', liquidity: data.bids.total, fill: ColorService.INCREASE_1 },
+                ]}
+                height={250}
+              />
+            </PieChart>
+          </ChartContainer>
+        </article>
+
+
+
+
       </div>
     );
   }
