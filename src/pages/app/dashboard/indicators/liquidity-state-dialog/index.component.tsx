@@ -1,5 +1,6 @@
 import { memo, useMemo } from 'react';
-import { Pie, PieChart } from 'recharts';
+import { LabelList, Pie, PieChart } from 'recharts';
+import { calculatePercentageRepresentation } from 'bignumber-utils';
 import {
   Dialog,
   DialogContent,
@@ -15,6 +16,12 @@ import {
 } from '@/shared/shadcn/components/ui/chart.jsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/shared/shadcn/components/ui/tabs.tsx';
+import {
   formatBitcoinAmount,
   formatDate,
   formatDollarAmount,
@@ -25,12 +32,12 @@ import {
   LiquidityService,
   ILiquidityState,
 } from '@/shared/backend/market-state/liquidity/index.service.ts';
+import { ColorService } from '@/shared/services/color/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import { IComponentProps } from '@/pages/app/dashboard/indicators/liquidity-state-dialog/types.ts';
-import { ColorService } from '@/shared/services/color/index.service';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
@@ -43,11 +50,11 @@ const LIQUIDITY_CHART_CONFIG = {
   },
   asks: {
     label: 'Asks',
-    color: ColorService.DECREASE_1,
+    color: ColorService.SLATE.H100,
   },
   bids: {
     label: 'Bids',
-    color: ColorService.INCREASE_1,
+    color: ColorService.SLATE.H100,
   },
 } satisfies ChartConfig;
 
@@ -108,7 +115,7 @@ const LiquidityStateDialog = memo(({ closeDialog }: IComponentProps) => {
   const exchangeConfig = useBoundStore((state) => state.exchangeConfig!);
   const openInfoDialog = useBoundStore((state) => state.openInfoDialog);
 
-  console.log(data);
+
 
 
 
@@ -116,9 +123,25 @@ const LiquidityStateDialog = memo(({ closeDialog }: IComponentProps) => {
    *                                       REACTIVE VALUES                                        *
    ********************************************************************************************** */
 
-  // ...
+  // the total base asset liquidity
+  const __totalLiquidity = data ? data.asks.total + data.bids.total : 0;
+  const totalLiquidity = useMemo(
+    () => (formatBitcoinAmount(__totalLiquidity, 3)),
+    [__totalLiquidity],
+  );
 
-
+  // percentage representation of the liquidity by side
+  const liquidityPercentageBySide = useMemo(
+    () => (
+      data
+        ? {
+          asks: calculatePercentageRepresentation(data.asks.total, __totalLiquidity),
+          bids: calculatePercentageRepresentation(data.bids.total, __totalLiquidity),
+        }
+        : { asks: 0, bids: 0 }
+    ),
+    [data, __totalLiquidity],
+  );
 
 
 
@@ -155,48 +178,100 @@ const LiquidityStateDialog = memo(({ closeDialog }: IComponentProps) => {
     content = <PageLoader variant='dialog' />;
   } else {
     content = (
-      <div
-        className='grid grid-cols-1 sm:grid-cols-2 gap-4'
+      <Tabs
+        defaultValue='summary'
+        className='w-full'
       >
+        <TabsList
+          className='grid w-full grid-cols-3'
+        >
+          <TabsTrigger value='summary'>Summary</TabsTrigger>
+          <TabsTrigger value='peaks'>Peaks</TabsTrigger>
+          <TabsTrigger value='levels'>Levels</TabsTrigger>
+        </TabsList>
 
-        {/* ***********
-          * LIQUIDITY *
-          *********** */}
-        <article>
+
+        {/* *********
+          * SUMMARY *
+          ********* */}
+
+        <TabsContent
+          value='summary'
+          className='p-3'
+        >
           <div
-            className='flex justify-start items-center'
+            className='grid grid-cols-1 sm:grid-cols-2 gap-4'
           >
-            <h3
-              className='text-base font-medium'
-            >Total</h3>
-            <span className='flex-1'></span>
-            <Badge>{data.asks.total + data.bids.total} {exchangeConfig.baseAsset}</Badge>
+
+            {/* ***********
+              * LIQUIDITY *
+              *********** */}
+            <article>
+              <div
+                className='flex justify-start items-center'
+              >
+                <h3
+                  className='text-base font-medium'
+                >Total</h3>
+                <span className='flex-1'></span>
+                <Badge>{totalLiquidity}</Badge>
+              </div>
+              <ChartContainer
+                config={LIQUIDITY_CHART_CONFIG}
+                className='mx-auto aspect-square max-h-[300px]'
+              >
+                <PieChart>
+                  <ChartTooltip
+                    content={<ChartTooltipContent nameKey='side' hideLabel />}
+                  />
+                  <Pie
+                    dataKey='liquidity'
+                    nameKey='side'
+                    data={[
+                      { side: 'asks', liquidity: liquidityPercentageBySide.asks, fill: ColorService.DECREASE_1 },
+                      { side: 'bids', liquidity: liquidityPercentageBySide.bids, fill: ColorService.INCREASE_1 },
+                    ]}
+                  >
+                    <LabelList
+                      dataKey='liquidity'
+                      className='text-black'
+                      style={{ color: '#FFFFFF' }}
+                      stroke='none'
+                      fontSize={12}
+                      formatter={(value: string) => `${value}%`}
+                    />
+                  </Pie>
+                </PieChart>
+              </ChartContainer>
+            </article>
+
+
+
+
           </div>
-          <ChartContainer
-            config={LIQUIDITY_CHART_CONFIG}
-          >
-            <PieChart>
-              <ChartTooltip
-                cursor={false}
-                content={<ChartTooltipContent hideLabel />}
-              />
-              <Pie
-                dataKey='liquidity'
-                nameKey='side'
-                data={[
-                  { side: 'asks', liquidity: data.asks.total, fill: ColorService.DECREASE_1 },
-                  { side: 'bids', liquidity: data.bids.total, fill: ColorService.INCREASE_1 },
-                ]}
-                height={250}
-              />
-            </PieChart>
-          </ChartContainer>
-        </article>
+        </TabsContent>
+
+        {/* *******
+          * PEAKS *
+          ******* */}
+        <TabsContent
+          value='peaks'
+          className='p-3'
+        >
+          <p>Peaks</p>
+        </TabsContent>
 
 
-
-
-      </div>
+        {/* *******
+          * LEVELS *
+          ******* */}
+        <TabsContent
+          value='levels'
+          className='p-3'
+        >
+          <p>Levels</p>
+        </TabsContent>
+      </Tabs>
     );
   }
   return (
