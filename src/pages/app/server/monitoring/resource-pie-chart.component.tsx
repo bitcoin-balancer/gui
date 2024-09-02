@@ -36,6 +36,7 @@ const ResourcePieChart = memo(({
         content={<ChartTooltipContent hideLabel />}
       />
       <Pie
+      isAnimationActive={false}
         data={[
           { key: 'active', value, fill: ColorService.PRIMARY },
           { key: 'available', value: total - value, fill: ColorService.SLATE.H200 },
