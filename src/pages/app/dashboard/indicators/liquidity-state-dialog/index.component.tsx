@@ -1,6 +1,4 @@
 import { memo, useMemo } from 'react';
-import { LabelList, Pie, PieChart } from 'recharts';
-import { calculatePercentageRepresentation } from 'bignumber-utils';
 import {
   Dialog,
   DialogContent,
@@ -8,13 +6,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from '@/shared/shadcn/components/ui/chart.jsx';
-import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import {
   Tabs,
   TabsContent,
@@ -32,31 +23,18 @@ import {
   LiquidityService,
   ILiquidityState,
 } from '@/shared/backend/market-state/liquidity/index.service.ts';
-import { ColorService } from '@/shared/services/color/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
+import LiquiditySummary from '@/pages/app/dashboard/indicators/liquidity-state-dialog/summary.component.tsx';
 import { IComponentProps } from '@/pages/app/dashboard/indicators/liquidity-state-dialog/types.ts';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
  ************************************************************************************************ */
 
-// the configuration that will be used to render the liquidity chart
-const LIQUIDITY_CHART_CONFIG = {
-  liquidity: {
-    label: 'Liquidity',
-  },
-  asks: {
-    label: 'Asks',
-    color: ColorService.SLATE.H100,
-  },
-  bids: {
-    label: 'Bids',
-    color: ColorService.SLATE.H100,
-  },
-} satisfies ChartConfig;
+// ...
 
 
 
@@ -112,7 +90,6 @@ const LiquidityStateDialog = memo(({ closeDialog }: IComponentProps) => {
     }),
     [],
   ));
-  const exchangeConfig = useBoundStore((state) => state.exchangeConfig!);
   const openInfoDialog = useBoundStore((state) => state.openInfoDialog);
 
 
@@ -123,25 +100,7 @@ const LiquidityStateDialog = memo(({ closeDialog }: IComponentProps) => {
    *                                       REACTIVE VALUES                                        *
    ********************************************************************************************** */
 
-  // the total base asset liquidity
-  const __totalLiquidity = data ? data.asks.total + data.bids.total : 0;
-  const totalLiquidity = useMemo(
-    () => (formatBitcoinAmount(__totalLiquidity, 3)),
-    [__totalLiquidity],
-  );
-
-  // percentage representation of the liquidity by side
-  const liquidityPercentageBySide = useMemo(
-    () => (
-      data
-        ? {
-          asks: calculatePercentageRepresentation(data.asks.total, __totalLiquidity),
-          bids: calculatePercentageRepresentation(data.bids.total, __totalLiquidity),
-        }
-        : { asks: 0, bids: 0 }
-    ),
-    [data, __totalLiquidity],
-  );
+  // ...
 
 
 
@@ -199,56 +158,7 @@ const LiquidityStateDialog = memo(({ closeDialog }: IComponentProps) => {
           value='summary'
           className='p-3'
         >
-          <div
-            className='grid grid-cols-1 sm:grid-cols-2 gap-4'
-          >
-
-            {/* ***********
-              * LIQUIDITY *
-              *********** */}
-            <article>
-              <div
-                className='flex justify-start items-center'
-              >
-                <h3
-                  className='text-base font-medium'
-                >Total</h3>
-                <span className='flex-1'></span>
-                <Badge>{totalLiquidity}</Badge>
-              </div>
-              <ChartContainer
-                config={LIQUIDITY_CHART_CONFIG}
-                className='mx-auto aspect-square max-h-[300px]'
-              >
-                <PieChart>
-                  <ChartTooltip
-                    content={<ChartTooltipContent nameKey='side' hideLabel />}
-                  />
-                  <Pie
-                    dataKey='liquidity'
-                    nameKey='side'
-                    data={[
-                      { side: 'asks', liquidity: liquidityPercentageBySide.asks, fill: ColorService.DECREASE_1 },
-                      { side: 'bids', liquidity: liquidityPercentageBySide.bids, fill: ColorService.INCREASE_1 },
-                    ]}
-                  >
-                    <LabelList
-                      dataKey='liquidity'
-                      className='text-black'
-                      style={{ color: '#FFFFFF' }}
-                      stroke='none'
-                      fontSize={12}
-                      formatter={(value: string) => `${value}%`}
-                    />
-                  </Pie>
-                </PieChart>
-              </ChartContainer>
-            </article>
-
-
-
-
-          </div>
+          <LiquiditySummary state={data} />
         </TabsContent>
 
         {/* *******
