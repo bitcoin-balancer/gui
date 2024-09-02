@@ -121,6 +121,16 @@ const formatDollarAmount = (value: number, decimalPlaces: number = 2): string =>
 );
 
 /**
+ * Prettifies a bitcoin amount and returns the string representation.
+ * @param value
+ * @param decimalPlaces?
+ * @returns string
+ */
+const formatBitcoinAmount = (value: number, decimalPlaces: number = 8): string => (
+  prettifyValue(value, { processing: { decimalPlaces }, format: { prefix: '₿' } })
+);
+
+/**
  * Prettifies the values in a split states object and returns them.
  * @param splitStates
  * @returns ISplitPercentageChanges
@@ -175,6 +185,7 @@ export {
   formatFileSize,
   formatPercentageChange,
   formatDollarAmount,
+  formatBitcoinAmount,
   formatSplitStateChanges,
   toLocalTime,
   capitalizeFirst,

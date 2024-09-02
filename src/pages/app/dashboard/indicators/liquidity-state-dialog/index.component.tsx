@@ -6,6 +6,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
+import {
+  formatBitcoinAmount,
+  formatDate,
+  formatDollarAmount,
+} from '@/shared/services/transformers/index.service.ts';
+import { IInfoDialogConfig } from '@/shared/store/slices/info-dialog/types.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import {
   LiquidityService,
@@ -16,6 +22,38 @@ import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import { IComponentProps } from '@/pages/app/dashboard/indicators/liquidity-state-dialog/types.ts';
+
+/* ************************************************************************************************
+ *                                            HELPERS                                             *
+ ************************************************************************************************ */
+
+/**
+ * Builds the content that will be inserted in the info dialog.
+ * @param state
+ * @returns IInfoDialogConfig
+ */
+const buildInfoDialogContent = (state: ILiquidityState): IInfoDialogConfig => ({
+  title: 'Liquidity Snapshot',
+  content: [
+    'LAST REFETCH',
+    formatDate(state.lastRefetch, 'datetime-medium'),
+    '-----',
+    'PRICE RANGE',
+    `Upper: ${formatDollarAmount(state.priceRange.upper)}`,
+    `Current: ${formatDollarAmount(state.priceRange.current)}`,
+    `Lower: ${formatDollarAmount(state.priceRange.lower)}`,
+    '-----',
+    'INTENSITY REQUIREMENTS',
+    `Low: ${formatBitcoinAmount(state.intensityRequirements.low)}`,
+    `Medium: ${formatBitcoinAmount(state.intensityRequirements.medium)}`,
+    `High: ${formatBitcoinAmount(state.intensityRequirements.high)}`,
+    `Very high: ${formatBitcoinAmount(state.intensityRequirements.veryHigh)}`,
+  ],
+});
+
+
+
+
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -37,6 +75,7 @@ const LiquidityStateDialog = memo(({ closeDialog }: IComponentProps) => {
     [],
   ));
   const exchangeConfig = useBoundStore((state) => state.exchangeConfig!);
+  const openInfoDialog = useBoundStore((state) => state.openInfoDialog);
 
 
 
@@ -56,7 +95,10 @@ const LiquidityStateDialog = memo(({ closeDialog }: IComponentProps) => {
    *                                        EVENT HANDLERS                                        *
    ********************************************************************************************** */
 
-  // ...
+  /**
+   * Displays the informational dialog for the current snapshot.
+   */
+  const displayLiquidityInfo = (): void => openInfoDialog(buildInfoDialogContent(data));
 
 
 
@@ -97,12 +139,14 @@ const LiquidityStateDialog = memo(({ closeDialog }: IComponentProps) => {
         className='max-w-[900px]'
       >
 
-        {/* ***************
-          * DIALOG HEADER *
-          *************** */}
         <DialogHeader>
           <DialogTitle>
-            Liquidity
+            <button
+              aria-label='Display liquidity information'
+              onClick={displayLiquidityInfo}
+            >
+              Liquidity
+            </button>
           </DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>

@@ -183,9 +183,6 @@ const CoinsStateDialog = memo(({ asset, openSplitStatesDialog, closeDialog }: IC
         className='max-w-[1000px]'
       >
 
-        {/* ***************
-          * DIALOG HEADER *
-          *************** */}
         <DialogHeader>
           <DialogTitle
             className='flex justify-center sm:justify-start items-center'
