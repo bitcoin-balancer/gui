@@ -172,6 +172,7 @@ const App = () => {
   useEffect(() => {
     if (compactAppEssentials) {
       /* console.log(compactAppEssentials); */
+      console.log(compactAppEssentials.marketState.liquidityState.bidDominance);
       setAppEssentials(compactAppEssentials);
     }
   }, [compactAppEssentials, setAppEssentials]);
