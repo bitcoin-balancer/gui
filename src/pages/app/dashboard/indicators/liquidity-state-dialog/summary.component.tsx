@@ -120,6 +120,7 @@ const LiquiditySummary = ({ state }: { state: ILiquidityState }) => {
               content={<ChartTooltipContent nameKey='side' hideLabel />}
             />
             <Pie
+              isAnimationActive={false}
               dataKey='liquidity'
               nameKey='side'
               data={[
