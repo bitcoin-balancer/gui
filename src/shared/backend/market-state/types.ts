@@ -50,7 +50,7 @@ type IMarketState = {
   windowState: IWindowState;
 
   // the state of the liquidity module
-  liquidity: ICompactLiquidityState;
+  liquidityState: ICompactLiquidityState;
 
   // the state of the coins module
   coinsStates: ICoinsStates<ICompactCoinState>;

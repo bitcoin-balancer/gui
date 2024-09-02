@@ -28,6 +28,25 @@ const liquidityServiceFactory = (): ILiquidityService => {
 
 
   /* **********************************************************************************************
+   *                                           RETRIEVER                                          *
+   ********************************************************************************************** */
+
+  /**
+   * Retrieves the up-to-date liquidity state.
+   * @returns Promise<ILiquidityState>
+   */
+  const getState = (): Promise<ILiquidityState> => APIService.request(
+    'GET',
+    'market-state/liquidity/state',
+    undefined,
+    true,
+  ) as Promise<ILiquidityState>;
+
+
+
+
+
+  /* **********************************************************************************************
    *                                         CONFIGURATION                                        *
    ********************************************************************************************** */
 
@@ -72,6 +91,9 @@ const liquidityServiceFactory = (): ILiquidityService => {
   return Object.freeze({
     // properties
     // ...
+
+    // retriever
+    getState,
 
     // configuration
     getConfig,
