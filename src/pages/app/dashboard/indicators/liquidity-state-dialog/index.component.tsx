@@ -28,6 +28,7 @@ import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import LiquiditySummary from '@/pages/app/dashboard/indicators/liquidity-state-dialog/summary.component.tsx';
+import PriceLevels from '@/pages/app/dashboard/indicators/liquidity-state-dialog/price-levels.component.tsx';
 import { IComponentProps } from '@/pages/app/dashboard/indicators/liquidity-state-dialog/types.ts';
 
 /* ************************************************************************************************
@@ -145,8 +146,8 @@ const LiquidityStateDialog = memo(({ closeDialog }: IComponentProps) => {
           className='grid w-full grid-cols-3'
         >
           <TabsTrigger value='summary'>Summary</TabsTrigger>
-          <TabsTrigger value='peaks'>Peaks</TabsTrigger>
-          <TabsTrigger value='levels'>Levels</TabsTrigger>
+          <TabsTrigger value='bids'>Bids</TabsTrigger>
+          <TabsTrigger value='asks'>Asks</TabsTrigger>
         </TabsList>
 
 
@@ -161,25 +162,31 @@ const LiquidityStateDialog = memo(({ closeDialog }: IComponentProps) => {
           <LiquiditySummary state={data} />
         </TabsContent>
 
-        {/* *******
-          * PEAKS *
-          ******* */}
+        {/* ******
+          * BIDS *
+          ****** */}
         <TabsContent
-          value='peaks'
-          className='p-3 animate-in fade-in duration-700'
+          value='bids'
+          className='p-3 pt-0 animate-in fade-in duration-700'
         >
-          <p>Peaks</p>
+          <PriceLevels
+            id='bids'
+            side={data.bids}
+          />
         </TabsContent>
 
 
-        {/* *******
-          * LEVELS *
-          ******* */}
+        {/* ******
+          * ASKS *
+          ****** */}
         <TabsContent
-          value='levels'
-          className='p-3 animate-in fade-in duration-700'
+          value='asks'
+          className='p-3 pt-0 animate-in fade-in duration-700'
         >
-          <p>Levels</p>
+          <PriceLevels
+            id='asks'
+            side={data.asks}
+          />
         </TabsContent>
       </Tabs>
     );

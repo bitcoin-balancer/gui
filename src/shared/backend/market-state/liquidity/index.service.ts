@@ -2,6 +2,9 @@ import { APIService } from '@/shared/backend/api/index.service.ts';
 import {
   ILiquidityService,
   ILiquidityPriceLevel,
+  ILiquiditySideID,
+  ILiquiditySide,
+  ILiquidityIntensity,
   ILiquidityState,
   ICompactLiquidityState,
   ILiquidityConfig,
@@ -124,6 +127,9 @@ export {
 
   // types
   type ILiquidityPriceLevel,
+  type ILiquiditySideID,
+  type ILiquiditySide,
+  type ILiquidityIntensity,
   type ILiquidityState,
   type ICompactLiquidityState,
   type ILiquidityConfig,
