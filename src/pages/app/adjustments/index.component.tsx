@@ -13,6 +13,7 @@ import { Card, CardContent } from '@/shared/shadcn/components/ui/card.tsx';
 import Window from '@/pages/app/adjustments/window.component.tsx';
 import Liquidity from '@/pages/app/adjustments/liquidity.component.tsx';
 import Coins from '@/pages/app/adjustments/coins.component.tsx';
+import Reversal from '@/pages/app/adjustments/reversal.component.tsx';
 import ServerAlarms from '@/pages/app/adjustments/server-alarms.component.tsx';
 import { IFormID, IFormItem } from '@/pages/app/adjustments/types.ts';
 
@@ -159,6 +160,12 @@ const Adjustments = () => {
       {
         activeDialog === 'COINS'
         && <Coins
+        closeDialog={setActiveDialog}
+        />
+      }
+      {
+        activeDialog === 'REVERSAL'
+        && <Reversal
         closeDialog={setActiveDialog}
         />
       }
