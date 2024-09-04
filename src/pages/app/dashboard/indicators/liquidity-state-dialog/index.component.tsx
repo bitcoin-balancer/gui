@@ -167,7 +167,7 @@ const LiquidityStateDialog = memo(({ closeDialog }: IComponentProps) => {
           ****** */}
         <TabsContent
           value='bids'
-          className='p-3 pt-0 animate-in fade-in duration-700'
+          className='animate-in fade-in duration-700'
         >
           <PriceLevels
             id='bids'
@@ -181,7 +181,7 @@ const LiquidityStateDialog = memo(({ closeDialog }: IComponentProps) => {
           ****** */}
         <TabsContent
           value='asks'
-          className='p-3 pt-0 animate-in fade-in duration-700'
+          className='animate-in fade-in duration-700'
         >
           <PriceLevels
             id='asks'
