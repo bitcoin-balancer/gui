@@ -38,7 +38,7 @@ const calculatePercentageRepresentation = (intensity: ILiquidityIntensity): numb
     case 1:
       return 25;
     default:
-      return 5;
+      return 0;
   }
 };
 

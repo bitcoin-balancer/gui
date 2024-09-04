@@ -1,4 +1,10 @@
-import { ICandlestickService, ICompactCandlestickRecords } from './types.ts';
+import { APIService } from '../api/index.service.ts';
+import {
+  ICandlestickService,
+  ICompactCandlestickRecords,
+  ICombinedCompactCandlestickRecords,
+  IEventHistoryRecord,
+} from './types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -15,6 +21,25 @@ const candlestickServiceFactory = (): ICandlestickService => {
    ********************************************************************************************** */
 
   // ...
+
+
+
+
+
+  /* **********************************************************************************************
+   *                                         RETRIEVERS                                           *
+   ********************************************************************************************** */
+
+  /**
+   * Retrieves the App Essentials object for the currently authenticated user.
+   * @returns Promise<IAppEssentials>
+   */
+  const getEventHistory = (id: string): Promise<IEventHistoryRecord> => APIService.request(
+    'GET',
+    `candlestick/event-history/${id}`,
+    undefined,
+    true,
+  ) as Promise<IEventHistoryRecord>;
 
 
 
@@ -85,6 +110,9 @@ const candlestickServiceFactory = (): ICandlestickService => {
     // properties
     // ...
 
+    // retrievers
+    getEventHistory,
+
     // helpers
     syncRecords,
   });
@@ -112,4 +140,6 @@ export {
 
   // types
   type ICompactCandlestickRecords,
+  type ICombinedCompactCandlestickRecords,
+  type IEventHistoryRecord,
 };
