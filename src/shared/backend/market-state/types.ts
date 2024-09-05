@@ -8,6 +8,7 @@ import {
 import { IWindowState } from '@/shared/backend/market-state/window/index.service.ts';
 import { ICompactLiquidityState } from '@/shared/backend/market-state/liquidity/index.service.ts';
 import { ICoinsStates, ICompactCoinState } from '@/shared/backend/market-state/coins/index.service.ts';
+import { IReversalState } from '@/shared/backend/market-state/reversal/index.service';
 
 
 /* ************************************************************************************************
@@ -54,6 +55,9 @@ type IMarketState = {
 
   // the state of the coins module
   coinsStates: ICoinsStates<ICompactCoinState>;
+
+  // the state of the reversal module
+  reversalState: IReversalState | undefined;
 };
 
 

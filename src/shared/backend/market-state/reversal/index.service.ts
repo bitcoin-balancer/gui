@@ -1,6 +1,8 @@
 import { APIService } from '@/shared/backend/api/index.service.ts';
 import {
   IReversalService,
+  IPriceCrashStateRecord,
+  IReversalState,
   IReversalPointWeights,
   IReversalConfig,
 } from '@/shared/backend/market-state/reversal/types.ts';
@@ -116,6 +118,8 @@ export {
   ReversalService,
 
   // types
+  type IPriceCrashStateRecord,
+  type IReversalState,
   type IReversalPointWeights,
   type IReversalConfig,
 };
