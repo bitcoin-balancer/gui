@@ -69,11 +69,12 @@ type IReversalPointWeights = {
  * It is also used to evaluate the likelihood of the price reversing.
  */
 type IReversalConfig = {
-  // the number of minutes the crash state will be active for. Once the time runs out, the record
-  // is stored in the database and the state is reset.
+  // the number of minutes the price crash state will be active for. Once the time runs out, the
+  // record is stored in the database and the state is reset.
   crashDuration: number;
 
-  // the number of minutes Balancer will wait before being able to activate the crash state again
+  // the number of minutes Balancer will wait before being able to activate the price crash state
+  // again
   crashIdleDuration: number;
 
   // the total number of points required for a reversal event to be issued

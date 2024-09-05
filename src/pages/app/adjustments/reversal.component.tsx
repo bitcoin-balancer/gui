@@ -194,7 +194,7 @@ const Reversal = ({ closeDialog }: IFormProps) => {
                   <FormLabelWithMoreInfo
                     value='Crash duration'
                     description={[
-                      'The number of minutes the crash state will be active for. Once the time runs out, the record is stored in the database and the state is reset.',
+                      'The number of minutes the price crash state will be active for. Once the time runs out, the record is stored in the database and the state is reset.',
                     ]}
                   />
                   <FormControl>
@@ -227,7 +227,7 @@ const Reversal = ({ closeDialog }: IFormProps) => {
                   <FormLabelWithMoreInfo
                     value='Crash idle duration'
                     description={[
-                      'The number of minutes Balancer will wait before being able to activate the crash state again.',
+                      'The number of minutes Balancer will wait before being able to activate the price crash state again.',
                     ]}
                   />
                   <FormControl>
