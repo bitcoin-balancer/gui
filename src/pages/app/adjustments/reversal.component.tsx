@@ -81,6 +81,7 @@ const Reversal = ({ closeDialog }: IFormProps) => {
     },
   });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const exchangeConfig = useBoundStore((state) => state.exchangeConfig!);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
 
 
@@ -346,7 +347,7 @@ const Reversal = ({ closeDialog }: IFormProps) => {
                 render={({ field }) => (
                   <FormItem className='mt-7'>
                     <FormLabelWithMoreInfo
-                      value='Coins quote'
+                      value={`Coins quote (COINS/${exchangeConfig.quoteAsset})`}
                       description={[
                         'The maximum number of points that can be obtained via the coins module (COINS/USDT)',
                       ]}
@@ -379,7 +380,7 @@ const Reversal = ({ closeDialog }: IFormProps) => {
                 render={({ field }) => (
                   <FormItem className='mt-7'>
                     <FormLabelWithMoreInfo
-                      value='Coins base'
+                      value={`Coins base (COINS/${exchangeConfig.baseAsset})`}
                       description={[
                         'The maximum number of points that can be obtained via the coins module (COINS/BTC)',
                       ]}

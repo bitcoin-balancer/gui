@@ -69,7 +69,11 @@ const ReversalButton = ({ reversalState }: { reversalState: IReversalState | und
    * Displays the menu or the list dialog based on the current state.
    */
   const displayDialog = (): void => {
-    setIsListDialogOpen(true);
+    if (reversalState === undefined) {
+      setIsListDialogOpen(true);
+    } else {
+      displayHistory(reversalState.id);
+    }
   };
 
 
