@@ -31,9 +31,9 @@ import {
 } from '@/shared/shadcn/components/ui/drawer.tsx';
 import { delay } from '@/shared/services/utils/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
-import { toSplitStateItems } from '@/shared/backend/market-state/shared/utils.ts';
 import { ICoinStateAsset } from '@/shared/backend/market-state/coins/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
+import WindowButton from '@/pages/app/dashboard/indicators/window-button/index.component.tsx';
 import LiquidityStateDialog from './liquidity-state-dialog/index.component.tsx';
 import CoinsStateDialog from '@/pages/app/dashboard/indicators/coins-state-dialog/index.component.tsx';
 import { IDialogID, IComponentProps } from '@/pages/app/dashboard/indicators/types.ts';
@@ -98,20 +98,6 @@ const Indicators = memo(({ marketState, openSplitStatesDialog }: IComponentProps
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
    ********************************************************************************************** */
-
-  /**
-   * Opens the window state dialog an activates the split ID.
-   */
-  const openWindowStateDialog = (): void => (
-    openSplitStatesDialog({
-      moduleID: 'WINDOW',
-      moduleState: {
-        state: marketState.windowState.state,
-        splitStates: marketState.windowState.splitStates,
-        window: toSplitStateItems(marketState.windowState.window),
-      },
-    })
-  );
 
   /**
    * Displays the coins state dialog for an asset.
@@ -218,12 +204,10 @@ const Indicators = memo(({ marketState, openSplitStatesDialog }: IComponentProps
           {/* ********
             * WINDOW *
             ******** */}
-          <button
-            className={`h-[45px] text-xs text-white font-bold ${ColorService.STATE_BG_CLASS_NAME[marketState.windowState.state]} hover:opacity-80`}
-            onClick={openWindowStateDialog}
-          >
-            WINDOW
-          </button>
+          <WindowButton
+            windowState={marketState.windowState}
+            openSplitStatesDialog={openSplitStatesDialog}
+          />
 
           {/* ***********
             * LIQUIDITY *
