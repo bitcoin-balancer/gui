@@ -13,7 +13,10 @@ type IReversalService = {
   // ...
 
   // retrievers
-  // ...
+  listRecords: (
+    limit: number,
+    startAtEventTime?: number,
+  ) => Promise<IPriceCrashStateRecord[]>;
 
   // configuration
   getConfig: () => Promise<IReversalConfig>;

@@ -252,9 +252,16 @@ const Indicators = memo(({ marketState, openSplitStatesDialog }: IComponentProps
             * REVERSAL *
             ******* */}
           <button
-            className='h-[45px] text-xs text-white font-bold bg-stateless hover:opacity-80'
+            className={`h-[45px] text-xs text-white font-bold hover:opacity-80 ${marketState.reversalState === undefined ? 'bg-stateless' : ''}`}
+            style={
+              marketState.reversalState !== undefined
+                ? {
+                  background: `linear-gradient(90deg, ${ColorService.INCREASE_2} ${marketState.reversalState.points}%, ${ColorService.INCREASE_0} ${marketState.reversalState.points}%)`,
+                }
+                : {}
+            }
           >
-            REVERSAL
+            {marketState.reversalState && marketState.reversalState.reversalEventTime ? 'REVERSED' : 'REVERSAL'}
           </button>
         </CardContent>
       </Card>

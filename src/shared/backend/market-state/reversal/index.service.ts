@@ -28,10 +28,33 @@ const reversalServiceFactory = (): IReversalService => {
 
 
   /* **********************************************************************************************
-   *                                           RETRIEVER                                          *
+   *                                          RETRIEVERS                                          *
    ********************************************************************************************** */
 
-  // ...
+  /**
+   * Retrieves a list of price crash state records.
+   * @param limit
+   * @param startAtEventTime
+   * @returns Promise<IPriceCrashStateRecord[]>
+   * @throws
+   * - 24510: if the desired number of records exceeds the limit
+   * - 24511: if the startAtEventTime was provided and is invalid
+   */
+  const listRecords = (
+    limit: number,
+    startAtEventTime?: number,
+  ): Promise<IPriceCrashStateRecord[]> => {
+    let urlPath: string = `market-state/reversal/records?limit=${limit}`;
+    if (typeof startAtEventTime === 'number') {
+      urlPath += `&startAtEventTime=${startAtEventTime}`;
+    }
+    return APIService.request(
+      'GET',
+      urlPath,
+      undefined,
+      true,
+    ) as Promise<IPriceCrashStateRecord[]>;
+  };
 
 
 
@@ -89,7 +112,7 @@ const reversalServiceFactory = (): IReversalService => {
     // ...
 
     // retrievers
-    // ...
+    listRecords,
 
     // configuration
     getConfig,
