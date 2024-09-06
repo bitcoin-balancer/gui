@@ -29,7 +29,7 @@ import StateIcon from '@/shared/components/state-icon/index.component.tsx';
 import LineChart from '@/shared/components/charts/line-chart/index.component.tsx';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
-import { IComponentProps } from '@/pages/app/dashboard/indicators/coins-state-dialog/types.ts';
+import { IComponentProps } from '@/pages/app/dashboard/indicators/coins-button/coins-state-dialog/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -106,16 +106,6 @@ const CoinsStateDialog = memo(({ asset, openSplitStatesDialog, closeDialog }: IC
       setRetrievingState(false);
     }
   };
-
-
-
-
-
-  /* **********************************************************************************************
-   *                                         SIDE EFFECTS                                         *
-   ********************************************************************************************** */
-
-  // ...
 
 
 

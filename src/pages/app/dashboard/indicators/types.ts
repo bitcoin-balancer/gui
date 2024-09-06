@@ -6,12 +6,6 @@ import { ISplitStatesDialogData } from '../split-states-dialog/index.component.t
  ************************************************************************************************ */
 
 /**
- * Dialog ID
- * The identifier of all supported lazy dialogs within the indicators component.
- */
-type IDialogID = 'liquidity' | 'coins' | 'reversal_list' | 'reversal';
-
-/**
  * Component Props
  * ...
  */
@@ -29,6 +23,5 @@ type IComponentProps = {
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export type {
-  IDialogID,
   IComponentProps,
 };

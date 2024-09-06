@@ -1,13 +1,11 @@
-import { memo, useState } from 'react';
+import { memo } from 'react';
 import {
   EllipsisVertical,
   ChartCandlestick,
   Droplet,
   Bitcoin,
   Undo2,
-  DollarSign,
 } from 'lucide-react';
-import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import {
   Card,
   CardContent,
@@ -21,22 +19,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/shared/shadcn/components/ui/dropdown-menu.tsx';
-import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-} from '@/shared/shadcn/components/ui/drawer.tsx';
-import { delay } from '@/shared/services/utils/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
-import { ICoinStateAsset } from '@/shared/backend/market-state/coins/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
 import WindowButton from '@/pages/app/dashboard/indicators/window-button/index.component.tsx';
 import LiquidityButton from '@/pages/app/dashboard/indicators/liquidity-button/index.component.tsx';
-import CoinsStateDialog from '@/pages/app/dashboard/indicators/coins-state-dialog/index.component.tsx';
-import { IDialogID, IComponentProps } from '@/pages/app/dashboard/indicators/types.ts';
+import CoinsButton from '@/pages/app/dashboard/indicators/coins-button/index.component';
+import { IComponentProps } from '@/pages/app/dashboard/indicators/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -50,10 +38,6 @@ const Indicators = memo(({ marketState, openSplitStatesDialog }: IComponentProps
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const exchangeConfig = useBoundStore((state) => state.exchangeConfig!);
-  const [activeDialog, setActiveDialog] = useState<IDialogID>();
-  const [coinsStateAssetMenu, setCoinsStateAssetMenu] = useState<boolean>(false);
-  const [coinsStateDialog, setCoinsStateDialog] = useState<ICoinStateAsset>();
   const openInfoDialog = useBoundStore((state) => state.openInfoDialog);
 
 
@@ -63,18 +47,6 @@ const Indicators = memo(({ marketState, openSplitStatesDialog }: IComponentProps
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
    ********************************************************************************************** */
-
-  /**
-   * Displays the coins state dialog for an asset.
-   * @param asset
-   * @returns Promise<void>
-   */
-  const displayCoinsStateDialog = async (asset: ICoinStateAsset): Promise<void> => {
-    setCoinsStateAssetMenu(false);
-    await delay(0.25);
-    setActiveDialog('coins');
-    setCoinsStateDialog(asset);
-  };
 
   /**
    * Displays the information dialog which describes how to the window module operates.
@@ -120,155 +92,91 @@ const Indicators = memo(({ marketState, openSplitStatesDialog }: IComponentProps
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
-    <>
-      <Card className='md:mt-2'>
-        <CardHeader>
-          <CardTitle className='flex justify-start items-center'>
-              Indicators
-              <span className='flex-1'></span>
-              <DropdownMenu>
-                <DropdownMenuTrigger aria-label='More information'>
-                  <EllipsisVertical className='w-5 h-5' aria-hidden='true' />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuLabel>Information</DropdownMenuLabel>
-                  <DropdownMenuItem
-                    onClick={() => displayWindowInfo()}
-                  >
-                    <ChartCandlestick
-                      aria-hidden='true'
-                      className='mr-1 h-5 w-5'
-                    /> Window
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Droplet
-                      aria-hidden='true'
-                      className='mr-1 h-5 w-5'
-                    /> Liquidity
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Bitcoin
-                      aria-hidden='true'
-                      className='mr-1 h-5 w-5'
-                    /> Coins
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Undo2
-                      aria-hidden='true'
-                      className='mr-1 h-5 w-5 rotate-90'
-                    /> Reversal
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </CardTitle>
-        </CardHeader>
-        <CardContent
-          className='grid grid-cols-2 gap-1'
-        >
+    <Card className='md:mt-2'>
+      <CardHeader>
+        <CardTitle className='flex justify-start items-center'>
+            Indicators
+            <span className='flex-1'></span>
+            <DropdownMenu>
+              <DropdownMenuTrigger aria-label='More information'>
+                <EllipsisVertical className='w-5 h-5' aria-hidden='true' />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>Information</DropdownMenuLabel>
+                <DropdownMenuItem
+                  onClick={() => displayWindowInfo()}
+                >
+                  <ChartCandlestick
+                    aria-hidden='true'
+                    className='mr-1 h-5 w-5'
+                  /> Window
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Droplet
+                    aria-hidden='true'
+                    className='mr-1 h-5 w-5'
+                  /> Liquidity
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Bitcoin
+                    aria-hidden='true'
+                    className='mr-1 h-5 w-5'
+                  /> Coins
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Undo2
+                    aria-hidden='true'
+                    className='mr-1 h-5 w-5 rotate-90'
+                  /> Reversal
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </CardTitle>
+      </CardHeader>
+      <CardContent
+        className='grid grid-cols-2 gap-1'
+      >
 
-          {/* ********
-            * WINDOW *
-            ******** */}
-          <WindowButton
-            windowState={marketState.windowState}
-            openSplitStatesDialog={openSplitStatesDialog}
-          />
-
-          {/* ***********
-            * LIQUIDITY *
-            *********** */}
-          <LiquidityButton
-            liquidityState={marketState.liquidityState}
-          />
-
-          {/* *******
-            * COINS *
-            ******* */}
-          <button
-            className={`h-[45px] text-xs text-white font-bold ${ColorService.STATE_CLASS_NAME[marketState.coinsStates.quote.state]}-${ColorService.STATE_CLASS_NAME[marketState.coinsStates.base.state]} hover:opacity-80`}
-            onClick={() => setCoinsStateAssetMenu(true)}
-          >
-            COINS
-          </button>
-
-          {/* *******
-            * REVERSAL *
-            ******* */}
-          <button
-            className={`h-[45px] text-xs text-white font-bold hover:opacity-80 ${marketState.reversalState === undefined ? 'bg-stateless' : ''}`}
-            style={
-              marketState.reversalState !== undefined
-                ? {
-                  background: `linear-gradient(90deg, ${ColorService.INCREASE_2} ${marketState.reversalState.points}%, ${ColorService.INCREASE_0} ${marketState.reversalState.points}%)`,
-                }
-                : {}
-            }
-          >
-            {marketState.reversalState && marketState.reversalState.reversalEventTime ? 'REVERSED' : 'REVERSAL'}
-          </button>
-        </CardContent>
-      </Card>
-
-
-
-      {/* **************************
-        * COINS STATE ASSET DRAWER *
-        ************************** */}
-      <Drawer open={coinsStateAssetMenu} onOpenChange={setCoinsStateAssetMenu}>
-        <DrawerContent>
-          <div
-            className='mx-auto w-full max-w-sm'
-          >
-            <DrawerHeader>
-              <DrawerTitle>Select an asset</DrawerTitle>
-              <DrawerDescription
-                className='flex justify-center items-center sm:justify-start'
-              >
-                Display the state for the coins
-              </DrawerDescription>
-            </DrawerHeader>
-            <DrawerFooter
-              className='flex flex-row justify-center items-stretch'
-            >
-              <Button
-                variant='outline'
-                aria-label={`View the state of the coins in the ${exchangeConfig.quoteAsset} pair`}
-                className='flex flex-col h-20 w-full gap-y-1'
-                onClick={() => displayCoinsStateDialog('quote')}
-              >
-                <DollarSign aria-hidden='true' />
-                <p>COINS/{exchangeConfig.quoteAsset}</p>
-              </Button>
-              <Button
-                variant='outline'
-                aria-label={`View the state of the coins in the ${exchangeConfig.baseAsset} pair`}
-                className='flex flex-col h-20 w-full gap-y-1'
-                onClick={() => displayCoinsStateDialog('base')}
-              >
-                <Bitcoin aria-hidden='true' />
-                <p>COINS/{exchangeConfig.baseAsset}</p>
-              </Button>
-            </DrawerFooter>
-          </div>
-        </DrawerContent>
-      </Drawer>
-
-
-
-
-
-      {/* ********************
-        * COINS STATE DIALOG *
-        ******************** */}
-      {
-        (activeDialog === 'coins' && coinsStateDialog !== undefined)
-        && <CoinsStateDialog
-          asset={coinsStateDialog}
+        {/* ********
+          * WINDOW *
+          ******** */}
+        <WindowButton
+          windowState={marketState.windowState}
           openSplitStatesDialog={openSplitStatesDialog}
-          closeDialog={setActiveDialog}
         />
-      }
-    </>
+
+        {/* ***********
+          * LIQUIDITY *
+          *********** */}
+        <LiquidityButton
+          liquidityState={marketState.liquidityState}
+        />
+
+        {/* *******
+          * COINS *
+          ******* */}
+        <CoinsButton
+          coinsStates={marketState.coinsStates}
+          openSplitStatesDialog={openSplitStatesDialog}
+        />
+
+        {/* *******
+          * REVERSAL *
+          ******* */}
+        <button
+          className={`h-[45px] text-xs text-white font-bold hover:opacity-80 ${marketState.reversalState === undefined ? 'bg-stateless' : ''}`}
+          style={
+            marketState.reversalState !== undefined
+              ? {
+                background: `linear-gradient(90deg, ${ColorService.INCREASE_2} ${marketState.reversalState.points}%, ${ColorService.INCREASE_0} ${marketState.reversalState.points}%)`,
+              }
+              : {}
+          }
+        >
+          {marketState.reversalState && marketState.reversalState.reversalEventTime ? 'REVERSED' : 'REVERSAL'}
+        </button>
+      </CardContent>
+    </Card>
   );
 });
 
