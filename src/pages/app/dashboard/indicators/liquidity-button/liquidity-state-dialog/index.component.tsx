@@ -27,9 +27,9 @@ import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
-import LiquiditySummary from '@/pages/app/dashboard/indicators/liquidity-state-dialog/summary.component.tsx';
-import PriceLevels from '@/pages/app/dashboard/indicators/liquidity-state-dialog/price-levels.component.tsx';
-import { IComponentProps } from '@/pages/app/dashboard/indicators/liquidity-state-dialog/types.ts';
+import LiquiditySummary from '@/pages/app/dashboard/indicators/liquidity-button/liquidity-state-dialog/summary.component.tsx';
+import PriceLevels from '@/pages/app/dashboard/indicators/liquidity-button/liquidity-state-dialog/price-levels.component.tsx';
+import { IComponentProps } from '@/pages/app/dashboard/indicators/liquidity-button/liquidity-state-dialog/types.ts';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *

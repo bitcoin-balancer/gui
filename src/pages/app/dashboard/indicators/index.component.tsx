@@ -1,4 +1,4 @@
-import { memo, useMemo, useState } from 'react';
+import { memo, useState } from 'react';
 import {
   EllipsisVertical,
   ChartCandlestick,
@@ -34,32 +34,9 @@ import { useBoundStore } from '@/shared/store/index.store.ts';
 import { ICoinStateAsset } from '@/shared/backend/market-state/coins/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
 import WindowButton from '@/pages/app/dashboard/indicators/window-button/index.component.tsx';
-import LiquidityStateDialog from './liquidity-state-dialog/index.component.tsx';
+import LiquidityButton from '@/pages/app/dashboard/indicators/liquidity-button/index.component.tsx';
 import CoinsStateDialog from '@/pages/app/dashboard/indicators/coins-state-dialog/index.component.tsx';
 import { IDialogID, IComponentProps } from '@/pages/app/dashboard/indicators/types.ts';
-
-/* ************************************************************************************************
- *                                            HELPERS                                             *
- ************************************************************************************************ */
-
-/**
- * Retrieves the colors that will be used on the liquidity button.
- * @param bidDominance
- * @returns { asks: string, bids: string }
- */
-const getLiquidityColors = (bidDominance: number): { asks: string, bids: string } => {
-  if (bidDominance >= 70) {
-    return { asks: ColorService.DECREASE_0, bids: ColorService.INCREASE_2 };
-  }
-  if (bidDominance <= 30) {
-    return { asks: ColorService.DECREASE_2, bids: ColorService.INCREASE_0 };
-  }
-  return { asks: ColorService.DECREASE_1, bids: ColorService.INCREASE_1 };
-};
-
-
-
-
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -78,18 +55,6 @@ const Indicators = memo(({ marketState, openSplitStatesDialog }: IComponentProps
   const [coinsStateAssetMenu, setCoinsStateAssetMenu] = useState<boolean>(false);
   const [coinsStateDialog, setCoinsStateDialog] = useState<ICoinStateAsset>();
   const openInfoDialog = useBoundStore((state) => state.openInfoDialog);
-
-
-
-  /* **********************************************************************************************
-   *                                       REACTIVE VALUES                                        *
-   ********************************************************************************************** */
-
-  // the colors that will be used by the liquidity button
-  const liquidityColors = useMemo(
-    () => getLiquidityColors(marketState.liquidityState.bidDominance),
-    [marketState.liquidityState.bidDominance],
-  );
 
 
 
@@ -212,15 +177,9 @@ const Indicators = memo(({ marketState, openSplitStatesDialog }: IComponentProps
           {/* ***********
             * LIQUIDITY *
             *********** */}
-          <button
-            className='h-[45px] text-xs text-white font-bold hover:opacity-80'
-            onClick={() => setActiveDialog('liquidity')}
-            style={{
-              background: `linear-gradient(90deg, ${liquidityColors.bids} ${marketState.liquidityState.bidDominance}%, ${liquidityColors.asks} ${marketState.liquidityState.bidDominance}%)`,
-            }}
-          >
-            LIQUIDITY
-          </button>
+          <LiquidityButton
+            liquidityState={marketState.liquidityState}
+          />
 
           {/* *******
             * COINS *
@@ -301,12 +260,6 @@ const Indicators = memo(({ marketState, openSplitStatesDialog }: IComponentProps
       {/* ********************
         * COINS STATE DIALOG *
         ******************** */}
-      {
-        activeDialog === 'liquidity'
-        && <LiquidityStateDialog
-          closeDialog={setActiveDialog}
-        />
-      }
       {
         (activeDialog === 'coins' && coinsStateDialog !== undefined)
         && <CoinsStateDialog
