@@ -20,6 +20,9 @@ type ICandlestickService = {
     oldVal: ICompactCandlestickRecords,
     newVal: ICompactCandlestickRecords,
   ) => ICompactCandlestickRecords;
+  splitRecords: (
+    combinedRecords: ICombinedCompactCandlestickRecords,
+  ) => ICompactCandlestickRecords[];
 };
 
 

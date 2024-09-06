@@ -50,6 +50,18 @@ const candlestickServiceFactory = (): ICandlestickService => {
    ********************************************************************************************** */
 
   /**
+   * Builds the compact candlestick records object in pristine state.
+   * @returns ICompactCandlestickRecords
+   */
+  const __buildPristineCompactCandlestickRecords = (): ICompactCandlestickRecords => ({
+    id: [],
+    open: [],
+    high: [],
+    low: [],
+    close: [],
+  });
+
+  /**
    * Syncs the compact candlestick records based on the new data.
    * @param oldVal
    * @param newVal
@@ -99,7 +111,36 @@ const candlestickServiceFactory = (): ICandlestickService => {
     return val;
   };
 
+  /**
+   * Splits a combined records object into individual compact records.
+   * @param combinedRecords
+   * @returns ICompactCandlestickRecords[]
+   */
+  const splitRecords = (
+    combinedRecords: ICombinedCompactCandlestickRecords,
+  ): ICompactCandlestickRecords[] => {
+    if (combinedRecords && combinedRecords.id.length) {
+      // init the records
+      const records: ICompactCandlestickRecords[] = combinedRecords.open[0].map(
+        __buildPristineCompactCandlestickRecords,
+      );
 
+      // iterate over each identifier and split the data
+      combinedRecords.id.forEach((openTime, i) => {
+        combinedRecords.open[0].forEach((_openPrice, innerI) => {
+          records[innerI].id.push(openTime);
+          records[innerI].open.push(combinedRecords.open[i][innerI]);
+          records[innerI].high.push(combinedRecords.high[i][innerI]);
+          records[innerI].low.push(combinedRecords.low[i][innerI]);
+          records[innerI].close.push(combinedRecords.close[i][innerI]);
+        });
+      });
+
+      // finally, return the split records
+      return records;
+    }
+    return [];
+  };
 
 
 
@@ -115,6 +156,7 @@ const candlestickServiceFactory = (): ICandlestickService => {
 
     // helpers
     syncRecords,
+    splitRecords,
   });
 };
 

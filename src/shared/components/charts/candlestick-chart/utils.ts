@@ -84,7 +84,7 @@ const getBarColorsByState = (state: IState | undefined): { upColor: string, down
     return { upColor: ColorService.INCREASE_2, downColor: ColorService.INCREASE_0 };
   }
   if (state === -2) {
-    return { upColor: ColorService.DECREASE_2, downColor: ColorService.DECREASE_0 };
+    return { upColor: ColorService.DECREASE_0, downColor: ColorService.DECREASE_2 };
   }
   return { upColor: ColorService.INCREASE_1, downColor: ColorService.DECREASE_1 };
 };

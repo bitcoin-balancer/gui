@@ -4,8 +4,9 @@ import {
   IReversalState,
 } from '@/shared/backend/market-state/reversal/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
+import PriceCrashStateHistoryDialog from './price-crash-state-history-dialog.component.tsx';
+import PriceCrashStateRecordDialog from './price-crash-state-record-dialog.component.tsx';
 import PriceCrashStatesDialog from '@/pages/app/dashboard/indicators/reversal-button/price-crash-states-dialog.component.tsx';
-import PriceCrashStateRecordDialog from './price-crash-state-record-dialog.component';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -22,21 +23,6 @@ const ReversalButton = ({ reversalState }: { reversalState: IReversalState | und
   const [isHistoryDialogOpen, setIsHistoryDialogOpen] = useState<string>();
   const [isRecordDialogOpen, setIsRecordDialogOpen] = useState<IPriceCrashStateRecord>();
   const [isListDialogOpen, setIsListDialogOpen] = useState<boolean>();
-
-
-
-
-  /* **********************************************************************************************
-   *                                       REACTIVE VALUES                                        *
-   ********************************************************************************************** */
-
-
-
-
-
-  /* **********************************************************************************************
-   *                                         SIDE EFFECTS                                         *
-   ********************************************************************************************** */
 
 
 
@@ -101,6 +87,19 @@ const ReversalButton = ({ reversalState }: { reversalState: IReversalState | und
       >
         {reversalState && reversalState.reversalEventTime ? 'REVERSED' : 'REVERSAL'}
       </button>
+
+
+
+      {/* ****************
+        * HISTORY DIALOG *
+        **************** */}
+      {
+        isHistoryDialogOpen !== undefined
+        && <PriceCrashStateHistoryDialog
+          id={isHistoryDialogOpen}
+          closeDialog={setIsHistoryDialogOpen}
+        />
+      }
 
 
 
