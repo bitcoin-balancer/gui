@@ -6,13 +6,14 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
-import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
+import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
+import { formatDate } from '@/shared/services/transformers/index.service.ts';
 import {
   ReversalService,
   IPriceCrashStateRecord,
 } from '@/shared/backend/market-state/reversal/index.service.ts';
-import { formatDate } from '@/shared/services/transformers/index.service';
-import { Badge } from '@/shared/shadcn/components/ui/badge';
+import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -25,7 +26,12 @@ import { Badge } from '@/shared/shadcn/components/ui/badge';
 const PriceCrashStateRecordDialog = memo(({
   record,
   closeDialog,
-}: { record: IPriceCrashStateRecord, closeDialog: (nextState: undefined) => void }) => {
+  setIsHistoryDialogOpen,
+}: {
+  record: IPriceCrashStateRecord,
+  closeDialog: (nextState: undefined) => void,
+  setIsHistoryDialogOpen: (nextState: string | undefined) => void
+}) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
@@ -108,6 +114,13 @@ const PriceCrashStateRecordDialog = memo(({
             {record.final_points}
           </Badge>
         </div>
+
+
+        <Button
+          onClick={() => setIsHistoryDialogOpen(record.id)}
+        >
+          View history
+        </Button>
 
       </DialogContent>
 

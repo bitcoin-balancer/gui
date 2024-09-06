@@ -33,14 +33,6 @@ const ReversalButton = ({ reversalState }: { reversalState: IReversalState | und
    ********************************************************************************************** */
 
   /**
-   * Displays the event history dialog.
-   */
-  const displayHistory = useCallback(
-    (id: string) => setIsHistoryDialogOpen(id),
-    [],
-  );
-
-  /**
    * Displays the dialog for an individual record.
    * @param record
    */
@@ -58,7 +50,7 @@ const ReversalButton = ({ reversalState }: { reversalState: IReversalState | und
     if (reversalState === undefined) {
       setIsListDialogOpen(true);
     } else {
-      displayHistory(reversalState.id);
+      setIsHistoryDialogOpen(reversalState.id);
     }
   };
 
@@ -111,6 +103,7 @@ const ReversalButton = ({ reversalState }: { reversalState: IReversalState | und
         && <PriceCrashStateRecordDialog
           record={isRecordDialogOpen}
           closeDialog={setIsRecordDialogOpen}
+          setIsHistoryDialogOpen={setIsHistoryDialogOpen}
         />
       }
 

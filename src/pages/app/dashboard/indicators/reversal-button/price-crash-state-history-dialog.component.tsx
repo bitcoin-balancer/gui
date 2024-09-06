@@ -12,6 +12,7 @@ import {
   IEventHistoryRecord,
 } from '@/shared/backend/candlestick/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
+import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
@@ -33,6 +34,7 @@ const PriceCrashStateHistoryDialog = memo(({
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
+  const breakpoint = useMediaQueryBreakpoint();
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
   const { data, loading, error } = useAPIFetch<IEventHistoryRecord>(useMemo(
     () => ({
@@ -66,7 +68,7 @@ const PriceCrashStateHistoryDialog = memo(({
     () => CandlestickService.splitRecords(data?.records),
     [data],
   );
-  console.log(data)
+
 
 
 
@@ -93,7 +95,7 @@ const PriceCrashStateHistoryDialog = memo(({
             >{chartNames[i]}</h3>
 
             <CandlestickChart
-                height={500}
+                height={breakpoint === 'xs' || breakpoint === 'sm' ? 350 : 500}
                 data={record}
               />
 
