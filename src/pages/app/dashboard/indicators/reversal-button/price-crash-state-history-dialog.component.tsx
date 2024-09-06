@@ -17,6 +17,7 @@ import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
+import NoRecords from '@/shared/components/no-records/index.component.tsx';
 import CandlestickChart from '@/shared/components/charts/candlestick-chart/index.component.tsx';
 
 /* ************************************************************************************************
@@ -81,6 +82,8 @@ const PriceCrashStateHistoryDialog = memo(({
     content = <PageLoadError variant='dialog' error={error} />;
   } else if (loading) {
     content = <PageLoader variant='dialog' />;
+  } else if (data && data.records.id.length === 0) {
+    content = <NoRecords />;
   } else {
     content = (
       <div
@@ -100,7 +103,7 @@ const PriceCrashStateHistoryDialog = memo(({
               />
 
             </article>
-            {i < records.length - 1 && <Separator className='my-7' />}
+            {i < records.length - 1 && <Separator className='my-10' />}
           </Fragment>
         ))}
       </div>

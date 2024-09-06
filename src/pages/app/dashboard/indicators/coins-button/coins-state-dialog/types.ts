@@ -1,5 +1,5 @@
 import { ICoinStateAsset } from '@/shared/backend/market-state/coins/index.service.ts';
-import { ISplitStatesDialogData } from '../../split-states-dialog/index.component.ts';
+import { ISplitStatesDialogData } from '@/pages/app/dashboard/split-states-dialog/index.component.tsx';
 
 /* ************************************************************************************************
  *                                             TYPES                                              *
