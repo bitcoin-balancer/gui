@@ -14,10 +14,10 @@ import LiquidityStateDialog from '@/pages/app/dashboard/indicators/liquidity-but
  */
 const getLiquidityColors = (bidDominance: number): { asks: string, bids: string } => {
   if (bidDominance >= 70) {
-    return { asks: ColorService.DECREASE_0, bids: ColorService.INCREASE_2 };
+    return { asks: ColorService.INCREASE_0, bids: ColorService.INCREASE_2 };
   }
   if (bidDominance <= 30) {
-    return { asks: ColorService.DECREASE_2, bids: ColorService.INCREASE_0 };
+    return { asks: ColorService.DECREASE_2, bids: ColorService.DECREASE_0 };
   }
   return { asks: ColorService.DECREASE_1, bids: ColorService.INCREASE_1 };
 };
