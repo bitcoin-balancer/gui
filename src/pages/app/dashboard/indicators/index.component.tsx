@@ -20,10 +20,10 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/shadcn/components/ui/dropdown-menu.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
-import { ColorService } from '@/shared/services/color/index.service.ts';
 import WindowButton from '@/pages/app/dashboard/indicators/window-button/index.component.tsx';
 import LiquidityButton from '@/pages/app/dashboard/indicators/liquidity-button/index.component.tsx';
 import CoinsButton from '@/pages/app/dashboard/indicators/coins-button/index.component';
+import ReversalButton from '@/pages/app/dashboard/indicators/reversal-button/index.component.tsx';
 import { IComponentProps } from '@/pages/app/dashboard/indicators/types.ts';
 
 /* ************************************************************************************************
@@ -160,21 +160,12 @@ const Indicators = memo(({ marketState, openSplitStatesDialog }: IComponentProps
           openSplitStatesDialog={openSplitStatesDialog}
         />
 
-        {/* *******
+        {/* **********
           * REVERSAL *
-          ******* */}
-        <button
-          className={`h-[45px] text-xs text-white font-bold hover:opacity-80 ${marketState.reversalState === undefined ? 'bg-stateless' : ''}`}
-          style={
-            marketState.reversalState !== undefined
-              ? {
-                background: `linear-gradient(90deg, ${ColorService.INCREASE_2} ${marketState.reversalState.points}%, ${ColorService.INCREASE_0} ${marketState.reversalState.points}%)`,
-              }
-              : {}
-          }
-        >
-          {marketState.reversalState && marketState.reversalState.reversalEventTime ? 'REVERSED' : 'REVERSAL'}
-        </button>
+          ********** */}
+        <ReversalButton
+          reversalState={marketState.reversalState}
+        />
       </CardContent>
     </Card>
   );

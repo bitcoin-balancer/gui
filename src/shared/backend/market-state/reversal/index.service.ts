@@ -105,6 +105,29 @@ const reversalServiceFactory = (): IReversalService => {
 
 
   /* **********************************************************************************************
+   *                                           HELPERS                                            *
+   ********************************************************************************************** */
+
+  /**
+   * Returns the badge color for the reversal points based on the sum.
+   * @param points
+   * @returns string
+   */
+  const getBadgeBGColor = (points: number): string => {
+    if (points >= 70) {
+      return 'bg-increase-2';
+    }
+    if (points >= 60) {
+      return 'bg-increase-1';
+    }
+    return 'bg-increase-0';
+  };
+
+
+
+
+
+  /* **********************************************************************************************
    *                                         MODULE BUILD                                         *
    ********************************************************************************************** */
   return Object.freeze({
@@ -117,6 +140,9 @@ const reversalServiceFactory = (): IReversalService => {
     // configuration
     getConfig,
     updateConfig,
+
+    // helpers
+    getBadgeBGColor,
   });
 };
 

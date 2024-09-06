@@ -21,6 +21,9 @@ type IReversalService = {
   // configuration
   getConfig: () => Promise<IReversalConfig>;
   updateConfig: (newConfig: IReversalConfig, otpToken: string) => Promise<void>;
+
+  // helpers
+  getBadgeBGColor: (points: number) => string;
 };
 
 
