@@ -255,9 +255,7 @@ const SignIn = () => {
               <p
                 className='text-light text-sm mt-6 text-center'
               >
-                If this is the first time you are signing into your account, go through the
-                <Link className='mx-1' to={NavService.updatePassword()}><strong>"Update password"</strong></Link>
-                section to set a password on it
+                If this is your first time signing in, you'll need to set a password. Please visit the <Link className='mx-1' to={NavService.updatePassword()}><strong>"Update password"</strong></Link> section to do so.
               </p>
 
             </form>
