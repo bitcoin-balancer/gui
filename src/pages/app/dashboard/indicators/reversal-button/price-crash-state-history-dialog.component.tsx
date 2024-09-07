@@ -87,7 +87,7 @@ const PriceCrashStateHistoryDialog = memo(({
   } else {
     content = (
       <div
-        className='animate-in fade-in duration-700'
+        className='grid grid-cols-1 md:grid-cols-2 md:gap-16 animate-in fade-in duration-700'
       >
         {records.map((record, i) => (
           <Fragment key={i}>
@@ -98,12 +98,15 @@ const PriceCrashStateHistoryDialog = memo(({
             >{chartNames[i]}</h3>
 
             <CandlestickChart
-                height={breakpoint === 'xs' || breakpoint === 'sm' ? 350 : 500}
+                height={breakpoint === 'xs' || breakpoint === 'sm' ? 350 : 275}
                 data={record}
               />
 
             </article>
-            {i < records.length - 1 && <Separator className='my-10' />}
+            {
+              (i < records.length - 1 && (breakpoint === 'xs' || breakpoint === 'sm'))
+              && <Separator className='my-10 md:hidden' />
+            }
           </Fragment>
         ))}
       </div>
