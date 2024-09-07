@@ -161,13 +161,15 @@ const useAPIFetch: IAPIFetchHook = <T>({
    * Refetches the data every refetchFrequency seconds.
    */
   useEffect(() => {
-    const interval = refetchInterval.current;
-    if (!interval && typeof refetchFrequency === 'number') {
+    if (!refetchInterval.current && typeof refetchFrequency === 'number') {
       refetchInterval.current = setInterval(() => {
         refetchData();
       }, refetchFrequency * 1000);
     }
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(refetchInterval.current);
+      refetchInterval.current = undefined;
+    };
   }, [refetchFrequency, refetchData]);
 
 
