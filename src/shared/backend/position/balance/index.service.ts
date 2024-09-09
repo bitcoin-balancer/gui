@@ -1,20 +1,18 @@
-import {
-  IExchangeService,
-  IExchangeConfig,
-  ICandlestickInterval,
-  IBalances,
-} from './types.ts';
+import { APIService } from '@/shared/backend/api/index.service.ts';
+import { IBalances } from '../../exchange/index.service.ts';
+import { IBalanceService } from '@/shared/backend/position/balance/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
 
 /**
- * Exchange Service Factory
- * Generates the object in charge of brokering the communication with the Exchanges' APIs.
- * @returns IExchangeService
+ * Balance Service Factory
+ * Generates the object in charge of retrieving and syncing the account's balances for both, the
+ * base and quote assets.
+ * @returns IBalanceService
  */
-const exchangeServiceFactory = (): IExchangeService => {
+const balanceServiceFactory = (): IBalanceService => {
   /* **********************************************************************************************
    *                                          PROPERTIES                                          *
    ********************************************************************************************** */
@@ -26,12 +24,26 @@ const exchangeServiceFactory = (): IExchangeService => {
 
 
   /* **********************************************************************************************
-   *                                            ACTIONS                                           *
+   *                                          RETRIEVERS                                          *
    ********************************************************************************************** */
 
-  const someAction = () => {
-    // ...
-  };
+  /**
+   * Retrieves the balances object from the local state.
+   * @returns Promise<IBalances>
+   * @throws
+   * - 12500: if the HTTP response code is not in the acceptedCodes
+   * - 13503: if the response didn't include a valid object (binance)
+   * - 13504: if the response didn't include a valid list of balances (binance)
+   * - 13750: if the balance for the base asset is not in the response object (binance)
+   * - 13751: if the balance for the quote asset is not in the response object (binance)
+   */
+  const getBalances = (): Promise<IBalances> => APIService.request(
+    'GET',
+    'position/balances',
+    undefined,
+    true,
+  ) as Promise<IBalances>;
+
 
 
 
@@ -43,7 +55,8 @@ const exchangeServiceFactory = (): IExchangeService => {
     // properties
     // ...
 
-    someAction,
+    // retrievers
+    getBalances,
   });
 };
 
@@ -54,7 +67,7 @@ const exchangeServiceFactory = (): IExchangeService => {
 /* ************************************************************************************************
  *                                        GLOBAL INSTANCE                                         *
  ************************************************************************************************ */
-const ExchangeService = exchangeServiceFactory();
+const BalanceService = balanceServiceFactory();
 
 
 
@@ -65,10 +78,7 @@ const ExchangeService = exchangeServiceFactory();
  ************************************************************************************************ */
 export {
   // service
-  ExchangeService,
+  BalanceService,
 
   // types
-  type IExchangeConfig,
-  type ICandlestickInterval,
-  type IBalances,
 };

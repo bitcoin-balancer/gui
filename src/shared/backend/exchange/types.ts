@@ -77,6 +77,29 @@ type ICandlestickInterval =
 
 
 
+
+
+/* ************************************************************************************************
+ *                                          ACCOUNT DATA                                          *
+ ************************************************************************************************ */
+
+/**
+ * Balances
+ * The object containing the available balance for the base and quote assets.
+ */
+type IBalances = {
+  [K in IBaseAsset]: number;
+} & {
+  [K in IQuoteAsset]?: number;
+} & {
+  // the timestamp in ms of the last time the balances were fetched
+  refetchTime: number;
+};
+
+
+
+
+
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
@@ -90,4 +113,7 @@ export type {
   IExchangeID,
   IExchangeConfig,
   ICandlestickInterval,
+
+  // account data
+  IBalances,
 };
