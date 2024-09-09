@@ -34,7 +34,7 @@ const MobileTabs = memo(({ items }: { items: IMainNavigationItem[] }) => {
             key={i}
             variant='ghost'
             size='icon'
-            className='h-14 flex-1 rounded-none'
+            className={`h-14 flex-1 rounded-none ${item.active ? 'text-slate-500' : ''}`}
             aria-label={item.name}
             onClick={() => navigate(item.path)}
             disabled={item.active}
@@ -54,7 +54,7 @@ const MobileTabs = memo(({ items }: { items: IMainNavigationItem[] }) => {
           key={i}
           variant='ghost'
           size='icon'
-          className='h-14 flex-1 rounded-none'
+          className={`h-14 flex-1 rounded-none ${item.active ? 'text-slate-500' : ''}`}
           aria-label={item.name}
           onClick={() => navigate(item.path)}
           disabled={item.active}
