@@ -31,7 +31,6 @@ import {
   TableRow,
 } from '@/shared/shadcn/components/ui/table.tsx';
 import { Card, CardContent } from '@/shared/shadcn/components/ui/card.tsx';
-import { IRecord } from '@/shared/types.ts';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { formatDate } from '@/shared/services/transformers/index.service.ts';
 import { IBreakpoint } from '@/shared/services/media-query/index.service.ts';
@@ -84,12 +83,12 @@ const formatDateByBreakpoint = (date: number, breakpoint: IBreakpoint): string =
  * Formats the date for each of the records in state.
  * @param records
  * @param breakpoint
- * @returns IRecord<string>
+ * @returns Record<string, string>
  */
 const buildDates = (
   records: IIPBlacklistRecord[] | undefined,
   breakpoint: IBreakpoint,
-): IRecord<string> => (
+): Record<string, string> => (
   Array.isArray(records)
     ? records.reduce(
       (previous, current) => ({
@@ -155,7 +154,7 @@ const IPBlacklist = () => {
    ********************************************************************************************** */
 
   // the dates for all the records based on the current breakpoint
-  const dates: IRecord<string> = useMemo(
+  const dates: Record<string, string> = useMemo(
     () => buildDates(data, breakpoint),
     [data, breakpoint],
   );

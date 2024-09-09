@@ -1,5 +1,4 @@
 import { isInteger } from 'bignumber-utils';
-import { IRecord } from '@/shared/types.ts';
 import { IAuthority } from '@/shared/backend/auth/user/index.service.ts';
 
 /* ************************************************************************************************
@@ -51,7 +50,7 @@ const integerValid = (value: unknown, min?: number, max?: number): value is numb
  * @param allowEmpty?
  * @returns boolean
  */
-const objectValid = (value: unknown, allowEmpty?: boolean): value is IRecord<unknown> => (
+const objectValid = (value: unknown, allowEmpty?: boolean): value is Record<string, unknown> => (
   Boolean(value)
   && typeof value === 'object'
   && !Array.isArray(value)

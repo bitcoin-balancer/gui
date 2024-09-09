@@ -10,15 +10,6 @@
  */
 type INodeEnv = 'development' | 'production';
 
-/**
- * Record
- * This utility type is used to replace the original 'object' type which can become difficult to
- * deal with.
- */
-type IRecord<T> = {
-  [key: string]: T;
-};
-
 // the possible instances of HTML elements
 type IHTMLElement = HTMLDivElement | HTMLTableSectionElement;
 
@@ -29,6 +20,5 @@ type IHTMLElement = HTMLDivElement | HTMLTableSectionElement;
  ************************************************************************************************ */
 export type {
   INodeEnv,
-  IRecord,
   IHTMLElement,
 };

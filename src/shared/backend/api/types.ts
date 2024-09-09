@@ -1,5 +1,4 @@
 import { IRequestMethod } from 'fetch-request-browser';
-import { IRecord } from '@/shared/types.ts';
 
 
 /* ************************************************************************************************
@@ -18,7 +17,7 @@ type IAPIService = {
   request: (
     method: IRequestMethod,
     path: string,
-    body?: IRecord<unknown>,
+    body?: Record<string, unknown>,
     requiresAuth?: boolean,
     otpToken?: string,
     retryDelaySchedule?: number[],

@@ -6,7 +6,6 @@ import {
   send,
 } from 'fetch-request-browser';
 import { IAPIResponse } from 'api-response-utils';
-import { IRecord } from '@/shared/types.ts';
 import { delay } from '@/shared/services/utils/index.service.ts';
 import { buildAPIURL, buildRequestOptions } from '@/shared/backend/api/utils.ts';
 import { AccessJWTService } from '@/shared/backend/api/access-jwt.service.ts';
@@ -69,7 +68,7 @@ const apiServiceFactory = (): IAPIService => {
   const request = async (
     method: IRequestMethod,
     path: string,
-    body?: IRecord<unknown>,
+    body?: Record<string, unknown>,
     requiresAuth?: boolean,
     otpToken?: string,
     retryDelaySchedule: number[] = [3, 5, 7],

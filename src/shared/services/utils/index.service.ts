@@ -1,6 +1,6 @@
 import { encodeError, decodeError } from 'error-message-utils';
 import { toast } from '@/shared/shadcn/components/ui/use-toast.ts';
-import { IHTMLElement, IRecord } from '@/shared/types.ts';
+import { IHTMLElement } from '@/shared/types.ts';
 import { ISortDirection } from '@/shared/services/utils/types.ts';
 
 /* ************************************************************************************************
@@ -97,12 +97,12 @@ const sortPrimitives = (
  * Sorts a list of record values by key based on their type and a sort direction.
  * @param key
  * @param direction
- * @returns <T extends IRecord<unknown>>(a: T, b: T): number
+ * @returns <T extends Record<string, unknown>>(a: T, b: T): number
  */
 const sortRecords = (
   key: string,
   direction: ISortDirection,
-) => <T extends IRecord<unknown>>(a: T, b: T): number => {
+) => <T extends Record<string, unknown>>(a: T, b: T): number => {
   if (typeof a[key] === 'string' && typeof b[key] === 'string') {
     return __sortStringValues(a[key], b[key], direction);
   }

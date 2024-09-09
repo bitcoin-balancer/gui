@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { IHTMLElement, IRecord } from '@/shared/types.ts';
+import { IHTMLElement } from '@/shared/types.ts';
 
 /* ************************************************************************************************
  *                                             TYPES                                              *
@@ -11,7 +11,7 @@ import { IHTMLElement, IRecord } from '@/shared/types.ts';
  */
 type ISortFunc =
   (<T extends string | number>(a: T, b: T) => number)
-  | (<T extends IRecord<unknown>>(a: T, b: T) => number);
+  | (<T extends Record<string, unknown>>(a: T, b: T) => number);
 
 /**
  * Fetch Function Reference

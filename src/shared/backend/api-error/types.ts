@@ -1,4 +1,4 @@
-import { IRecord } from '@/shared/types.ts';
+
 
 /* ************************************************************************************************
  *                                            SERVICE                                             *
@@ -65,7 +65,7 @@ type IAPIError = {
   ip: string | null;
 
   // the arguments used when the error was thrown
-  args: IRecord<unknown> | null;
+  args: Record<string, unknown> | null;
 };
 
 

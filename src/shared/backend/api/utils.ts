@@ -1,6 +1,5 @@
 import { decodeError } from 'error-message-utils';
 import { IOptions, IRequestMethod } from 'fetch-request-browser';
-import { IRecord } from '@/shared/types.ts';
 import { ENVIRONMENT } from '@/environment/environment.ts';
 
 /* ************************************************************************************************
@@ -94,7 +93,7 @@ const __buildRequestHeaders = (
  */
 const buildRequestOptions = (
   method: IRequestMethod,
-  body: IRecord<unknown> | undefined,
+  body: Record<string, unknown> | undefined,
   accessJWT: string | undefined,
   otpToken: string | undefined,
 ): Partial<IOptions> => ({
