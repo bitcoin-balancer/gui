@@ -116,8 +116,8 @@ const formatPercentageChange = (value: number, decimalPlaces: number = 2): strin
  * @param decimalPlaces?
  * @returns string
  */
-const formatDollarAmount = (value: number, decimalPlaces: number = 2): string => (
-  prettifyValue(value, { processing: { decimalPlaces }, format: { prefix: '$' } })
+const formatDollarAmount = (value: number, decimalPlaces: number = 2, prefix: string = '$'): string => (
+  prettifyValue(value, { processing: { decimalPlaces }, format: { prefix } })
 );
 
 /**
