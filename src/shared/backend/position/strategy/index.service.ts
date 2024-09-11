@@ -1,3 +1,4 @@
+import { IRange } from '@/shared/types.ts';
 import { APIService } from '@/shared/backend/api/index.service.ts';
 import { IStrategyService, IStrategy } from '@/shared/backend/position/strategy/types.ts';
 
@@ -16,7 +17,29 @@ const strategyServiceFactory = (): IStrategyService => {
    *                                          PROPERTIES                                          *
    ********************************************************************************************** */
 
-  // ...
+  // the range sizes that will be used to calculate the min. position amount lower and upper bands
+  const __MIN_POSITION_AMOUNT_RANGE_SIZE: IRange = {
+    min: 0.15,
+    max: 0.65,
+  };
+
+
+
+
+
+  /* **********************************************************************************************
+   *                                            HELPERS                                           *
+   ********************************************************************************************** */
+
+  /**
+   * Calculates the amount range that can be used to set the min position amount in the quote asset.
+   * @param increaseAmountQuote
+   * @returns IRange
+   */
+  const calculateMinPositionAmountQuoteRange = (increaseAmountQuote: number): IRange => ({
+    min: Math.floor(increaseAmountQuote * __MIN_POSITION_AMOUNT_RANGE_SIZE.min),
+    max: Math.floor(increaseAmountQuote * __MIN_POSITION_AMOUNT_RANGE_SIZE.max),
+  });
 
 
 
@@ -74,6 +97,9 @@ const strategyServiceFactory = (): IStrategyService => {
   return Object.freeze({
     // properties
     // ...
+
+    // helpers
+    calculateMinPositionAmountQuoteRange,
 
     // configuration
     getConfig,

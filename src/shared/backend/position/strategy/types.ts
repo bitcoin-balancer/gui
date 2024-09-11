@@ -1,4 +1,4 @@
-
+import { IRange } from '@/shared/types.ts';
 
 /* ************************************************************************************************
  *                                            SERVICE                                             *
@@ -11,6 +11,9 @@
 type IStrategyService = {
   // properties
   // ...
+
+  // helpers
+  calculateMinPositionAmountQuoteRange: (increaseAmountQuote: number) => IRange;
 
   // configuration
   getConfig: () => Promise<IStrategy>;

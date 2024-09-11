@@ -13,6 +13,17 @@ type INodeEnv = 'development' | 'production';
 // the possible instances of HTML elements
 type IHTMLElement = HTMLDivElement | HTMLTableSectionElement;
 
+/**
+ * Range
+ * Utility type used for numeric ranges.
+ */
+type IRange = {
+  min: number;
+  max: number;
+};
+
+
+
 
 
 /* ************************************************************************************************
@@ -21,4 +32,5 @@ type IHTMLElement = HTMLDivElement | HTMLTableSectionElement;
 export type {
   INodeEnv,
   IHTMLElement,
+  IRange,
 };
