@@ -95,7 +95,7 @@ const GeneralCard = ({ data }: { data: IDatabaseSummary }) => {
         >
           <p
             className='text-light text-sm'
-          >Database Size</p>
+          >Database's Size</p>
           <span className='flex-1'></span>
           <p><strong>{formatFileSize(data.size)}</strong></p>
         </div>

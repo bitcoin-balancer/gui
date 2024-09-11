@@ -104,12 +104,12 @@ const Position = memo(() => {
             <p className='text-light text-xs'>~2,205 USDT</p>
           </div>
 
-          {/* *********
-            * REDUCED *
-            ********* */}
+          {/* ***********
+            * DECREASED *
+            *********** */}
           <div>
             <p>783 USDT</p>
-            <p className='text-light text-xs'>REDUCED</p>
+            <p className='text-light text-xs'>DECREASED</p>
           </div>
 
           {/* ******
