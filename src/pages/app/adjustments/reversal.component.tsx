@@ -40,7 +40,6 @@ import { IFormProps } from '@/pages/app/adjustments/types.ts';
 // the structure that will be used to mutate the configuration
 type IReversalForm = {
   crashDuration: string;
-  crashIdleDuration: string;
   pointsRequirement: string;
   liquidityWeight: string;
   coinsQuoteWeight: string;
@@ -73,7 +72,6 @@ const Reversal = ({ closeDialog }: IFormProps) => {
   const form = useForm<IReversalForm>({
     defaultValues: {
       crashDuration: '',
-      crashIdleDuration: '',
       pointsRequirement: '',
       liquidityWeight: '',
       coinsQuoteWeight: '',
@@ -95,7 +93,6 @@ const Reversal = ({ closeDialog }: IFormProps) => {
   useEffect(() => {
     if (data) {
       form.setValue('crashDuration', String(data.crashDuration));
-      form.setValue('crashIdleDuration', String(data.crashIdleDuration));
       form.setValue('pointsRequirement', String(data.pointsRequirement));
       form.setValue('liquidityWeight', String(data.weights.liquidity));
       form.setValue('coinsQuoteWeight', String(data.weights.coinsQuote));
@@ -127,7 +124,6 @@ const Reversal = ({ closeDialog }: IFormProps) => {
           await ReversalService.updateConfig(
             {
               crashDuration: Number(formData.crashDuration),
-              crashIdleDuration: Number(formData.crashIdleDuration),
               pointsRequirement: Number(formData.pointsRequirement),
               weights: {
                 liquidity: Number(formData.liquidityWeight),
@@ -143,9 +139,6 @@ const Reversal = ({ closeDialog }: IFormProps) => {
           const { message, code } = decodeError(e);
           if (code === 24501) {
             form.setError('crashDuration', { message });
-          }
-          if (code === 24502) {
-            form.setError('crashIdleDuration', { message });
           }
           if (code === 24503) {
             form.setError('pointsRequirement', { message });
@@ -220,41 +213,6 @@ const Reversal = ({ closeDialog }: IFormProps) => {
               }}
             />
 
-            <FormField
-              control={form.control}
-              name='crashIdleDuration'
-              render={({ field }) => (
-                <FormItem className='mt-7'>
-                  <FormLabelWithMoreInfo
-                    value='Crash idle duration'
-                    description={[
-                      'The number of minutes Balancer will wait before being able to activate the price crash state again.',
-                    ]}
-                  />
-                  <FormControl>
-                    <Input
-                      type='number'
-                      placeholder='60'
-                      {...field}
-                      autoComplete='off'
-                      disabled={isSubmitting}
-                      min={0}
-                      max={1440}
-                      />
-                  </FormControl>
-                  <FormDescription>Number of minutes</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-              rules={{
-                validate: {
-                  required: (value) => (integerValid(Number(value), 0, 1440) ? true : 'Enter an integer ranging 0 - 1440'),
-                },
-              }}
-            />
-
-
-
           </fieldset>
 
 
@@ -316,7 +274,7 @@ const Reversal = ({ closeDialog }: IFormProps) => {
                     <FormLabelWithMoreInfo
                       value='Liquidity'
                       description={[
-                        'the maximum number of points that can be obtained via the liquidity module',
+                        'The maximum number of points that can be obtained via the liquidity module',
                       ]}
                     />
                     <FormControl>
