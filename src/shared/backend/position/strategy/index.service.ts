@@ -1,6 +1,12 @@
 import { IRange } from '@/shared/types.ts';
 import { APIService } from '@/shared/backend/api/index.service.ts';
-import { IStrategyService, IStrategy } from '@/shared/backend/position/strategy/types.ts';
+import {
+  IStrategyService,
+  IDecreaseLevelID,
+  IDecreaseLevel,
+  IDecreaseLevels,
+  IStrategy,
+} from '@/shared/backend/position/strategy/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -128,5 +134,8 @@ export {
   StrategyService,
 
   // types
+  type IDecreaseLevelID,
+  type IDecreaseLevel,
+  type IDecreaseLevels,
   type IStrategy,
 };

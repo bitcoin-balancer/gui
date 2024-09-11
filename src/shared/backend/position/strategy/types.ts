@@ -29,6 +29,12 @@ type IStrategyService = {
  ************************************************************************************************ */
 
 /**
+ * Decrease Level ID
+ * The unique identifier for a level. Used to access any level from the tuple.
+ */
+type IDecreaseLevelID = 0 | 1 | 2 | 3 | 4;
+
+/**
  * Decrease Level
  * The object containing the configuration that will be used by the PositionService when the
  * position is profitable and needs to be decreased.
@@ -44,6 +50,18 @@ type IDecreaseLevel = {
   // the WindowState is strongly increasing)
   frequency: number;
 };
+
+/**
+ * Decrease Levels
+ * The tuple that contains all the details for each level.
+ */
+type IDecreaseLevels = [
+  IDecreaseLevel,
+  IDecreaseLevel,
+  IDecreaseLevel,
+  IDecreaseLevel,
+  IDecreaseLevel,
+];
 
 /**
  * Strategy
@@ -70,7 +88,7 @@ type IStrategy = {
   increaseGainRequirement: number;
 
   // the tuple containing the decrease levels that will be activated based on the position's gain%
-  decreaseLevels: [IDecreaseLevel, IDecreaseLevel, IDecreaseLevel, IDecreaseLevel, IDecreaseLevel];
+  decreaseLevels: IDecreaseLevels;
 };
 
 
@@ -85,6 +103,8 @@ export type {
   IStrategyService,
 
   // types
+  IDecreaseLevelID,
   IDecreaseLevel,
+  IDecreaseLevels,
   IStrategy,
 };

@@ -14,6 +14,7 @@ import Window from '@/pages/app/adjustments/window.component.tsx';
 import Liquidity from '@/pages/app/adjustments/liquidity.component.tsx';
 import Coins from '@/pages/app/adjustments/coins.component.tsx';
 import Reversal from '@/pages/app/adjustments/reversal.component.tsx';
+import Strategy from '@/pages/app/adjustments/strategy.component.tsx';
 import ServerAlarms from '@/pages/app/adjustments/server-alarms.component.tsx';
 import { IFormID, IFormItem } from '@/pages/app/adjustments/types.ts';
 
@@ -50,7 +51,7 @@ const FORMS: IFormItem[] = [
   {
     id: 'STRATEGY',
     title: 'Strategy',
-    description: 'Configure the way positions are increased and reduced',
+    description: 'Configure the way positions are increased and decreased',
     icon: <ArrowLeftRight aria-hidden='true' />,
   },
   {
@@ -166,6 +167,12 @@ const Adjustments = () => {
       {
         activeDialog === 'REVERSAL'
         && <Reversal
+        closeDialog={setActiveDialog}
+        />
+      }
+      {
+        activeDialog === 'STRATEGY'
+        && <Strategy
         closeDialog={setActiveDialog}
         />
       }
