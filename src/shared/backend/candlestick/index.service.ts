@@ -1,4 +1,3 @@
-import { APIService } from '../api/index.service.ts';
 import {
   ICandlestickService,
   ICompactCandlestickRecords,
@@ -21,25 +20,6 @@ const candlestickServiceFactory = (): ICandlestickService => {
    ********************************************************************************************** */
 
   // ...
-
-
-
-
-
-  /* **********************************************************************************************
-   *                                         RETRIEVERS                                           *
-   ********************************************************************************************** */
-
-  /**
-   * Retrieves the App Essentials object for the currently authenticated user.
-   * @returns Promise<IAppEssentials>
-   */
-  const getEventHistory = (id: string): Promise<IEventHistoryRecord> => APIService.request(
-    'GET',
-    `candlestick/event-history/${id}`,
-    undefined,
-    true,
-  ) as Promise<IEventHistoryRecord>;
 
 
 
@@ -150,9 +130,6 @@ const candlestickServiceFactory = (): ICandlestickService => {
   return Object.freeze({
     // properties
     // ...
-
-    // retrievers
-    getEventHistory,
 
     // helpers
     syncRecords,

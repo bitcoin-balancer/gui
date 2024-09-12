@@ -1,4 +1,4 @@
-
+import { IEventHistoryRecord } from '../../candlestick/index.service.ts';
 
 /* ************************************************************************************************
  *                                            SERVICE                                             *
@@ -17,6 +17,7 @@ type IReversalService = {
     limit: number,
     startAtEventTime?: number,
   ) => Promise<IPriceCrashStateRecord[]>;
+  getEventHistory: (id: string) => Promise<IEventHistoryRecord>;
 
   // configuration
   getConfig: () => Promise<IReversalConfig>;

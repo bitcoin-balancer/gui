@@ -1,4 +1,5 @@
 import { APIService } from '@/shared/backend/api/index.service.ts';
+import { IEventHistoryRecord } from '../../candlestick/index.service.ts';
 import {
   IReversalService,
   IPriceCrashStateRecord,
@@ -56,6 +57,16 @@ const reversalServiceFactory = (): IReversalService => {
     ) as Promise<IPriceCrashStateRecord[]>;
   };
 
+  /**
+   * Retrieves the event history candlesticks for a price crash state based on an ID.
+   * @returns Promise<IEventHistoryRecord>
+   */
+  const getEventHistory = (id: string): Promise<IEventHistoryRecord> => APIService.request(
+    'GET',
+    `market-state/reversal/event-history/${id}`,
+    undefined,
+    true,
+  ) as Promise<IEventHistoryRecord>;
 
 
 
@@ -135,6 +146,7 @@ const reversalServiceFactory = (): IReversalService => {
 
     // retrievers
     listRecords,
+    getEventHistory,
 
     // configuration
     getConfig,

@@ -12,9 +12,6 @@ type ICandlestickService = {
   // properties
   // ...
 
-  // retrievers
-  getEventHistory: (id: string) => Promise<IEventHistoryRecord>;
-
   // helpers
   syncRecords: (
     oldVal: ICompactCandlestickRecords,
