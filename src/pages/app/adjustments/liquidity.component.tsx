@@ -255,6 +255,7 @@ const Liquidity = ({ closeDialog }: IFormProps) => {
                     title: 'Intensity weights',
                     content: [
                       'The weights that will be used to determine the value of each intensity when calculating the liquidity state.',
+                      'Liquidity requirements progressively increase across levels, culminating in the highest requirement at intensity level 4.',
                     ],
                   })}
                   tabIndex={-1}

@@ -274,7 +274,8 @@ const Reversal = ({ closeDialog }: IFormProps) => {
                     <FormLabelWithMoreInfo
                       value='Liquidity'
                       description={[
-                        'The maximum number of points that can be obtained via the liquidity module',
+                        'The maximum number of points that can be obtained via the liquidity module.',
+                        'This module directly correlates with buying pressure, yielding more points as buying pressure intensifies.',
                       ]}
                     />
                     <FormControl>
@@ -307,7 +308,8 @@ const Reversal = ({ closeDialog }: IFormProps) => {
                     <FormLabelWithMoreInfo
                       value={`Coins quote (COINS/${exchangeConfig.quoteAsset})`}
                       description={[
-                        'The maximum number of points that can be obtained via the coins module (COINS/USDT)',
+                        'The maximum number of points that can be obtained via the coins module (COINS/USDT).',
+                        'This module directly correlates with buying pressure, yielding more points as buying pressure intensifies.',
                       ]}
                     />
                     <FormControl>
@@ -341,6 +343,7 @@ const Reversal = ({ closeDialog }: IFormProps) => {
                       value={`Coins base (COINS/${exchangeConfig.baseAsset})`}
                       description={[
                         'The maximum number of points that can be obtained via the coins module (COINS/BTC)',
+                        'This module directly correlates with buying pressure, yielding more points as buying pressure intensifies.',
                       ]}
                     />
                     <FormControl>
