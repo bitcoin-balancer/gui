@@ -1,9 +1,10 @@
 import { useMemo, useEffect } from 'react';
 import {
-  Navigate,
   useNavigation,
-  Outlet,
   useNavigate,
+  Navigate,
+  Outlet,
+  ScrollRestoration,
 } from 'react-router-dom';
 import {
   House,
@@ -67,7 +68,6 @@ const App = () => {
   const compactAppEssentials = useSocketEvent('compact_app_essentials');
   const navigation = useNavigation();
   const navigate = useNavigate();
-
 
 
 
@@ -291,6 +291,13 @@ const App = () => {
         * TOASTER *
         ********* */}
       <Toaster />
+
+
+
+      {/* ********************
+        * SCROLL RESTORATION *
+        ******************** */}
+      <ScrollRestoration />
 
     </div>
   );
