@@ -193,7 +193,7 @@ const Strategy = ({ closeDialog }: IFormProps) => {
   useEffect(() => {
     if (data) {
       form.setValue('canIncrease', data.canIncrease);
-      form.setValue('canDecrease', data.canIncrease);
+      form.setValue('canDecrease', data.canDecrease);
       form.setValue('minPositionAmountQuote', String(data.minPositionAmountQuote));
       form.setValue('increaseAmountQuote', String(data.increaseAmountQuote));
       form.setValue('increaseIdleDuration', String(data.increaseIdleDuration));
@@ -230,7 +230,7 @@ const Strategy = ({ closeDialog }: IFormProps) => {
           await StrategyService.updateConfig(
             {
               canIncrease: formData.canIncrease,
-              canDecrease: formData.canIncrease,
+              canDecrease: formData.canDecrease,
               minPositionAmountQuote: Number(formData.minPositionAmountQuote),
               increaseAmountQuote: Number(formData.increaseAmountQuote),
               increaseIdleDuration: Number(formData.increaseIdleDuration),
