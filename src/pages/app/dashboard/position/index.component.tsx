@@ -6,6 +6,8 @@ import {
   ArrowDownWideNarrow,
   ReceiptText,
   Wallet,
+  List,
+  ListChecks,
 } from 'lucide-react';
 import {
   Card,
@@ -83,6 +85,18 @@ const Position = memo(() => {
                       aria-hidden='true'
                       className='mr-1 h-5 w-5'
                     /> Balances
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <List
+                      aria-hidden='true'
+                      className='mr-1 h-5 w-5'
+                    /> Positions
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <ListChecks
+                      aria-hidden='true'
+                      className='mr-1 h-5 w-5'
+                    /> Transactions
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <ArrowLeftRight
