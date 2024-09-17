@@ -429,7 +429,7 @@ const Strategy = ({ closeDialog }: IFormProps) => {
                       {...field}
                       autoComplete='off'
                       disabled={isSubmitting}
-                      min={1}
+                      min={20}
                       max={Number.MAX_SAFE_INTEGER}
                       />
                   </FormControl>
@@ -439,7 +439,7 @@ const Strategy = ({ closeDialog }: IFormProps) => {
               )}
               rules={{
                 validate: {
-                  required: (value) => (numberValid(Number(value), 1, Number.MAX_SAFE_INTEGER) ? true : `Enter a number ranging 1 - ${Number.MAX_SAFE_INTEGER}`),
+                  required: (value) => (numberValid(Number(value), 20, Number.MAX_SAFE_INTEGER) ? true : `Enter a number ranging 20 - ${Number.MAX_SAFE_INTEGER}`),
                 },
               }}
             />
