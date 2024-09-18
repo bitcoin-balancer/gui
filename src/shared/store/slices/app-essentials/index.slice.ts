@@ -42,6 +42,7 @@ const __onNewCompactAppEssentials = (
           ),
         },
       },
+      position: payload.position,
     }
 );
 
