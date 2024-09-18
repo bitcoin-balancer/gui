@@ -23,6 +23,9 @@ type IPositionService = {
   listCompactPositions: (limit: number, startAtOpenTime?: number) => Promise<ICompactPosition[]>;
   listCompactPositionsByRange: (startAt: number, endAt?: number) => Promise<ICompactPosition[]>;
   getPositionHistory: (id: string) => Promise<IEventHistoryRecord>;
+
+  // helpers
+  getGainClassName: (gain: number) => string;
 };
 
 

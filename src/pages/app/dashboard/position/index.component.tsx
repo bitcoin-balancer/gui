@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 import {
   EllipsisVertical,
   ArrowLeftRight,
@@ -23,6 +23,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/shared/shadcn/components/ui/dropdown-menu.tsx';
+import {
+  formatBitcoinAmount,
+  formatDollarAmount,
+  formatPercentageChange,
+} from '@/shared/services/transformers/index.service.ts';
+import { ICompactPosition, PositionService } from '@/shared/backend/position/index.service.ts';
 import BalancesDialog from '@/pages/app/dashboard/position/balances/index.component.tsx';
 
 /* ************************************************************************************************
@@ -33,14 +39,53 @@ import BalancesDialog from '@/pages/app/dashboard/position/balances/index.compon
  * Position Component
  * Component in charge of displaying information regarding the active position (if any)
  */
-// eslint-disable-next-line arrow-body-style
-const Position = memo(() => {
+const Position = memo(({ position }: { position: ICompactPosition | undefined }) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
   const [activeDialog, setActiveDialog] = useState<'balances'>();
 
 
+
+
+
+  /* **********************************************************************************************
+   *                                       REACTIVE VALUES                                        *
+   ********************************************************************************************** */
+
+  // main position details
+  const entry = useMemo(
+    () => (position === undefined ? '$0' : formatDollarAmount(position.entry_price, 0)),
+    [position],
+  );
+  const gain = useMemo(
+    () => (position === undefined ? '0%' : formatPercentageChange(position.gain, 0)),
+    [position],
+  );
+  const gainClassName = useMemo(
+    () => (
+      position === undefined
+        ? PositionService.getGainClassName(0)
+        : PositionService.getGainClassName(position.gain)
+    ),
+    [position],
+  );
+  const amount = useMemo(
+    () => (position === undefined ? '₿0 ' : formatBitcoinAmount(position.amount)),
+    [position],
+  );
+  const decreased = useMemo(
+    () => (position === undefined ? '$0 ' : formatDollarAmount(position.amount_quote_out)),
+    [position],
+  );
+
+
+
+
+
+  /* **********************************************************************************************
+   *                                           COMPONENT                                          *
+   ********************************************************************************************** */
   return (
     <>
 
@@ -110,36 +155,36 @@ const Position = memo(() => {
         </CardHeader>
         <CardContent className='grid grid-cols-2 gap-x-4 gap-y-6 text-center'>
 
-          {/* ******
-            * SIZE *
-            ****** */}
+          {/* *******
+            * ENTRY *
+            ******* */}
           <div>
-            <p>0.0361 BTC</p>
-            <p className='text-light text-xs'>~2,205 USDT</p>
-          </div>
-
-          {/* ***********
-            * DECREASED *
-            *********** */}
-          <div>
-            <p>783 USDT</p>
-            <p className='text-light text-xs'>DECREASED</p>
+            <p>{entry}</p>
+            <p className='text-light text-xs'>ENTRY</p>
           </div>
 
           {/* ******
             * GAIN *
             ****** */}
           <div>
-            <p className='text-increase-1 font-bold'>+2.85%</p>
+            <p className={`${gainClassName} font-bold`}>{gain}</p>
             <p className='text-light text-xs'>GAIN</p>
           </div>
 
-          {/* *******
-            * ENTRY *
-            ******* */}
+          {/* ********
+            * AMOUNT *
+            ******** */}
           <div>
-            <p>$61,588</p>
-            <p className='text-light text-xs'>ENTRY</p>
+            <p>{amount}</p>
+            <p className='text-light text-xs'>AMOUNT</p>
+          </div>
+
+          {/* ***********
+            * DECREASED *
+            *********** */}
+          <div>
+            <p>{decreased}</p>
+            <p className='text-light text-xs'>DECREASED</p>
           </div>
 
         </CardContent>

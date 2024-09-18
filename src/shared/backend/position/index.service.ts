@@ -195,6 +195,34 @@ const positionServiceFactory = (): IPositionService => {
 
 
   /* **********************************************************************************************
+   *                                           HELPERS                                            *
+   ********************************************************************************************** */
+
+  /**
+   * Retrieves the class name that should be applied to text based on the current gain%.
+   * @param gain
+   * @returns string
+   */
+  const getGainClassName = (gain: number): string => {
+    if (gain >= 3) {
+      return 'text-increase-2';
+    }
+    if (gain > 0) {
+      return 'text-increase-1';
+    }
+    if (gain <= -3) {
+      return 'text-decrease-2';
+    }
+    if (gain < 0) {
+      return 'text-decrease-1';
+    }
+    return 'text-stateless';
+  };
+
+
+
+
+  /* **********************************************************************************************
    *                                         MODULE BUILD                                         *
    ********************************************************************************************** */
   return Object.freeze({
@@ -212,6 +240,9 @@ const positionServiceFactory = (): IPositionService => {
     listCompactPositions,
     listCompactPositionsByRange,
     getPositionHistory,
+
+    // helpers
+    getGainClassName,
   });
 };
 

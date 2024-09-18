@@ -51,6 +51,7 @@ const Dashboard = () => {
    ********************************************************************************************** */
   const breakpoint = useMediaQueryBreakpoint();
   const marketState = useBoundStore((state) => state.marketState!);
+  const position = useBoundStore((state) => state.position);
   const [splitStatesDialog, setSplitStatesDialog] = useState<ISplitStatesDialogData>();
 
 
@@ -113,7 +114,9 @@ const Dashboard = () => {
           {/* **********
             * POSITION *
             ********** */}
-          <Position />
+          <Position
+            position={position}
+          />
 
           <Separator className='my-10 md:hidden' />
 
