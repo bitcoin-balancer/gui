@@ -7,7 +7,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
-import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import { formatDate } from '@/shared/services/transformers/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { IBalances } from '@/shared/backend/exchange/index.service.ts';
@@ -85,12 +84,11 @@ const BalancesDialog = memo(({
           className='text-light'
         >{exchangeConfig.baseAsset}</p>
         <span className='flex-1'></span>
-        <Badge
-          variant='secondary'
-          className='text-base'
+        <p
+          className='text-xl'
         >
           {baseBalance}
-        </Badge>
+        </p>
       </div>
       <div
         className='flex justify-center items-center mt-6'
@@ -99,12 +97,11 @@ const BalancesDialog = memo(({
           className='text-light'
         >{exchangeConfig.quoteAsset}</p>
         <span className='flex-1'></span>
-        <Badge
-          variant='secondary'
-          className='text-base'
+        <p
+          className='text-xl'
         >
           {quoteBalance}
-        </Badge>
+        </p>
       </div>
     </div>;
   }
