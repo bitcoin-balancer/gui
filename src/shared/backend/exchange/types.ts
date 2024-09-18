@@ -36,6 +36,14 @@ type IBaseAsset = 'BTC';
 type IQuoteAsset = 'USDT' | 'USDC' | 'DAI' | 'FDUSD' | 'PYUSD' | 'USDD' | 'TUSD';
 
 /**
+ * Side
+ * The kind of action executed by the account.
+ * BUY stands for buying the base asset (e.g. USDT -> BTC)
+ * SELL stands for selling the base asset (e.g. BTC -> USDT)
+ */
+type ISide = 'BUY' | 'SELL';
+
+/**
  * Exchange ID
  * Each exchange is identified by an ID and can be installed in any of the modules.
  */
@@ -96,6 +104,39 @@ type IBalances = {
   refetchTime: number;
 };
 
+/**
+ * Trade
+ * The object containing all the details for a single trade execution.
+ */
+type ITrade = {
+  // the identifier of the trade (assigned by Balancer)
+  id?: number;
+
+  // the identifier of the trade in the exchange
+  id_alt?: string | null;
+
+  // if this property is set it means the trade was created manually through the GUI
+  notes?: string | null;
+
+  // the kind of action that was executed
+  side: ISide;
+
+  // the rate of the trade in quote asset
+  price: number;
+
+  // the total amount in base asset
+  amount: number;
+
+  // the total amount in quote asset
+  amount_quote: number;
+
+  // the total comission charged in base or quote asset (whichever asset was received)
+  comission: number;
+
+  // the timestamp (ms) at which the trade was executed
+  event_time: number;
+};
+
 
 
 
@@ -110,10 +151,12 @@ export type {
   // types
   IBaseAsset,
   IQuoteAsset,
+  ISide,
   IExchangeID,
   IExchangeConfig,
   ICandlestickInterval,
 
   // account data
   IBalances,
+  ITrade,
 };

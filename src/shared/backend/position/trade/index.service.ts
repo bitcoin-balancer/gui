@@ -1,22 +1,17 @@
-import {
-  ISide,
-  IExchangeService,
-  IExchangeConfig,
-  ICandlestickInterval,
-  IBalances,
-  ITrade,
-} from './types.ts';
+import { ITradeService } from '@/shared/backend/position/trade/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
 
 /**
- * Exchange Service Factory
- * Generates the object in charge of brokering the communication with the Exchanges' APIs.
- * @returns IExchangeService
+ * Balance Service Factory
+ * Generates the object in charge of retrieving and storing the account trades triggered by
+ * positions.
+ * @returns ITradeService
  */
-const exchangeServiceFactory = (): IExchangeService => {
+// eslint-disable-next-line arrow-body-style
+const tradeServiceFactory = (): ITradeService => {
   /* **********************************************************************************************
    *                                          PROPERTIES                                          *
    ********************************************************************************************** */
@@ -28,24 +23,11 @@ const exchangeServiceFactory = (): IExchangeService => {
 
 
   /* **********************************************************************************************
-   *                                            ACTIONS                                           *
-   ********************************************************************************************** */
-
-  const someAction = () => {
-    // ...
-  };
-
-
-
-
-  /* **********************************************************************************************
    *                                         MODULE BUILD                                         *
    ********************************************************************************************** */
   return Object.freeze({
     // properties
     // ...
-
-    someAction,
   });
 };
 
@@ -56,7 +38,7 @@ const exchangeServiceFactory = (): IExchangeService => {
 /* ************************************************************************************************
  *                                        GLOBAL INSTANCE                                         *
  ************************************************************************************************ */
-const ExchangeService = exchangeServiceFactory();
+const TradeService = tradeServiceFactory();
 
 
 
@@ -67,12 +49,7 @@ const ExchangeService = exchangeServiceFactory();
  ************************************************************************************************ */
 export {
   // service
-  ExchangeService,
+  TradeService,
 
   // types
-  type ISide,
-  type IExchangeConfig,
-  type ICandlestickInterval,
-  type IBalances,
-  type ITrade,
 };
