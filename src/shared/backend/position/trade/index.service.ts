@@ -10,7 +10,6 @@ import { ITradeService } from '@/shared/backend/position/trade/types.ts';
  * positions.
  * @returns ITradeService
  */
-// eslint-disable-next-line arrow-body-style
 const tradeServiceFactory = (): ITradeService => {
   /* **********************************************************************************************
    *                                          PROPERTIES                                          *
