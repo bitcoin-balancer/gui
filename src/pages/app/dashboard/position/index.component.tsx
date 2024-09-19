@@ -98,6 +98,7 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [activeDialog, setActiveDialog] = useState<'balances'>();
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
+  const openPositionDialog = useBoundStore((state) => state.openPositionDialog);
 
 
 
@@ -245,6 +246,7 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
                 <DropdownMenuSeparator />
                 <DropdownMenuLabel>Information</DropdownMenuLabel>
                 <DropdownMenuItem
+                  onClick={() => openPositionDialog(position!.id)}
                   disabled={position === undefined}
                 >
                   <ReceiptText

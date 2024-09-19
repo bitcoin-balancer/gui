@@ -27,6 +27,7 @@ import { NavService } from '@/shared/services/nav/index.service.ts';
 import { useSocketEvent } from '@/shared/hooks/socket-event/index.component.ts';
 import InfoDialog from '@/shared/components/info-dialog/index.component.tsx';
 import ConfirmationDialog from '@/shared/components/confirmation-dialog/index.component.tsx';
+import PositionDialog from '@/shared/components/position-dialog/index.component.tsx';
 import GlobalLoader from '@/pages/global-loader/index.component.tsx';
 import Header from '@/pages/app/header.component.tsx';
 import MobileTabs from '@/pages/app/mobile-tabs.component.tsx';
@@ -65,6 +66,7 @@ const App = () => {
   const version = useBoundStore((state) => state.version);
   const unreadAPIErrors = useBoundStore((state) => state.unreadAPIErrors);
   const setAppEssentials = useBoundStore((state) => state.setAppEssentials);
+  const isPositionDialogOpen = useBoundStore((state) => state.isPositionDialogOpen);
   const compactAppEssentials = useSocketEvent('compact_app_essentials');
   const navigation = useNavigation();
   const navigate = useNavigate();
@@ -270,6 +272,18 @@ const App = () => {
         * CONFIRMATION DIALOG *
         ********************* */}
       <ConfirmationDialog />
+
+
+
+      {/* *****************
+        * POSITION DIALOG *
+        ***************** */}
+      {
+        typeof isPositionDialogOpen === 'string'
+        && <PositionDialog
+          id={isPositionDialogOpen}
+        />
+      }
 
 
 
