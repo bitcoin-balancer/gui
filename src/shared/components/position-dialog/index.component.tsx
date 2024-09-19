@@ -24,6 +24,7 @@ import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
+import { Archive } from 'lucide-react';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -203,7 +204,18 @@ const PositionDialog = ({ id }: { id: string }) => {
       <DialogContent>
 
         <DialogHeader>
-          <DialogTitle>Position</DialogTitle>
+          <div
+            className='flex justify-start items-center'
+          >
+            <DialogTitle>Position</DialogTitle>
+            {
+              data && data.archived
+              && <Archive
+              aria-label='hidden'
+              className='ml-2 h-4 w-4'
+            />
+            }
+          </div>
           <DialogDescription>
             {data?.id}
           </DialogDescription>
