@@ -1,5 +1,4 @@
 import { StateCreator } from 'zustand';
-import { ICompactPosition } from '@/shared/backend/position/index.service.ts';
 import { IPositionDialogSlice } from '@/shared/store/slices/position-dialog/types.ts';
 
 /* ************************************************************************************************
@@ -14,7 +13,7 @@ const createPositionDialogSlice: StateCreator<IPositionDialogSlice> = (
   set,
 ) => ({
   isPositionDialogOpen: undefined,
-  openPositionDialog: (data: ICompactPosition | string) => set(() => ({
+  openPositionDialog: (data: string) => set(() => ({
     isPositionDialogOpen: data,
   })),
   closePositionDialog: () => set(() => ({

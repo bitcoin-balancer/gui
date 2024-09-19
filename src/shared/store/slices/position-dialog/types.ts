@@ -1,4 +1,4 @@
-import { ICompactPosition } from '@/shared/backend/position/index.service.ts';
+
 
 /* ************************************************************************************************
  *                                             TYPES                                              *
@@ -10,10 +10,10 @@ import { ICompactPosition } from '@/shared/backend/position/index.service.ts';
  */
 type IPositionDialogSlice = {
   // if enabled, the dialog will be present on the document
-  isPositionDialogOpen: ICompactPosition | string | undefined;
+  isPositionDialogOpen: string | undefined;
 
   // the dialog's controllers
-  openPositionDialog: (data: string | ICompactPosition) => void;
+  openPositionDialog: (data: string) => void;
   closePositionDialog: () => void;
 };
 
