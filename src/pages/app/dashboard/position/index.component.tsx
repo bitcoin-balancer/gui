@@ -40,7 +40,10 @@ import {
 } from '@/shared/services/transformers/index.service.ts';
 import { delay, errorToast } from '@/shared/services/utils/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
-import { ICompactPosition, PositionService } from '@/shared/backend/position/index.service.ts';
+import {
+  ICompactPosition,
+  PositionService,
+} from '@/shared/backend/position/index.service.ts';
 import BalancesDialog from '@/pages/app/dashboard/position/balances/index.component.tsx';
 
 /* ************************************************************************************************
@@ -49,6 +52,31 @@ import BalancesDialog from '@/pages/app/dashboard/position/balances/index.compon
 
 // the percentages that can be used to reduce the amount of a position
 const DECREASE_OPTIONS: number[] = [5, 15, 25, 33, 50, 66, 75, 100];
+
+
+
+
+
+/* ************************************************************************************************
+ *                                            HELPERS                                             *
+ ************************************************************************************************ */
+
+/**
+ * Builds a decrease option based on the existing position and an option.
+ * @param position
+ * @param option
+ * @returns { percentage: number; amount: number; label: string; }
+ */
+const buildDecreaseOption = (position: ICompactPosition | undefined, option: number) => {
+  const decreaseAmount = position === undefined
+    ? PositionService.calculateDecreaseAmount(0, option)
+    : PositionService.calculateDecreaseAmount(position.amount, option);
+  return {
+    percentage: option,
+    amount: decreaseAmount,
+    label: formatBitcoinAmount(decreaseAmount),
+  };
+};
 
 
 
@@ -85,7 +113,7 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
     [position],
   );
   const gain = useMemo(
-    () => (position === undefined ? '0%' : formatPercentageChange(position.gain, 0)),
+    () => (position === undefined ? '0%' : formatPercentageChange(position.gain, 2)),
     [position],
   );
   const gainClassName = useMemo(
@@ -105,16 +133,7 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
     [position],
   );
   const decreaseMenu = useMemo(
-    () => DECREASE_OPTIONS.map((option) => {
-      const decreaseAmount = position === undefined
-        ? PositionService.calculateDecreaseAmount(0, option)
-        : PositionService.calculateDecreaseAmount(position.amount, option);
-      return {
-        percentage: option,
-        amount: decreaseAmount,
-        label: formatBitcoinAmount(decreaseAmount),
-      };
-    }),
+    () => DECREASE_OPTIONS.map((option) => buildDecreaseOption(position, option)),
     [position],
   );
 
@@ -159,7 +178,7 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
     openConfirmationDialog({
       mode: 'OTP',
       title: 'Decrease position',
-      description: `The amount of the position will be decreased by ${percentage}% immediately upon submission`,
+      description: `The amount of the position will be decreased by ~${percentage}% immediately upon submission`,
       onConfirmation: async (confirmation: string) => {
         try {
           setIsSubmitting(true);
@@ -331,7 +350,7 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
               <DrawerDescription>Select a percentage</DrawerDescription>
             </DrawerHeader>
             <DrawerFooter
-              className='grid grid-cols-4 gap-4'
+              className='grid grid-cols-3 sm:grid-cols-4 gap-1'
             >
               {
                 decreaseMenu.map((item) => (
@@ -344,7 +363,9 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
                     disabled={item.amount === 0}
                   >
                     <p>{item.label}</p>
-                    <p>{item.percentage}%</p>
+                    <p
+                      className='text-light text-xs'
+                    >{item.percentage}%</p>
                   </Button>
                 ))
               }
