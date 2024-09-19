@@ -1,3 +1,4 @@
+import { getBigNumber, processValue } from 'bignumber-utils';
 import { APIService } from '@/shared/backend/api/index.service.ts';
 import { IEventHistoryRecord } from '../candlestick/index.service.js';
 import { ICompactPosition, IPosition, IPositionService } from './types.js';
@@ -216,8 +217,22 @@ const positionServiceFactory = (): IPositionService => {
     if (gain < 0) {
       return 'text-decrease-1';
     }
-    return 'text-stateless';
+    return '';
   };
+
+  /**
+   * Calculates the amount that will be decreased from a position.
+   * @param positionAmount
+   * @param percentage
+   * @returns number
+   */
+  const calculateDecreaseAmount = (
+    positionAmount: number,
+    percentage: number,
+  ): number => processValue(
+    getBigNumber(positionAmount).times(percentage / 100),
+    { decimalPlaces: 4, roundingMode: 'ROUND_HALF_DOWN' },
+  );
 
 
 
@@ -244,6 +259,7 @@ const positionServiceFactory = (): IPositionService => {
 
     // helpers
     getGainClassName,
+    calculateDecreaseAmount,
   });
 };
 

@@ -8,7 +8,9 @@ import {
   Wallet,
   List,
   ListChecks,
+  Loader2,
 } from 'lucide-react';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import {
   Card,
   CardContent,
@@ -24,12 +26,33 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/shadcn/components/ui/dropdown-menu.tsx';
 import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+} from '@/shared/shadcn/components/ui/drawer.tsx';
+import {
   formatBitcoinAmount,
   formatDollarAmount,
   formatPercentageChange,
 } from '@/shared/services/transformers/index.service.ts';
+import { delay, errorToast } from '@/shared/services/utils/index.service.ts';
+import { useBoundStore } from '@/shared/store/index.store.ts';
 import { ICompactPosition, PositionService } from '@/shared/backend/position/index.service.ts';
 import BalancesDialog from '@/pages/app/dashboard/position/balances/index.component.tsx';
+
+/* ************************************************************************************************
+ *                                           CONSTANTS                                            *
+ ************************************************************************************************ */
+
+// the percentages that can be used to reduce the amount of a position
+const DECREASE_OPTIONS: number[] = [5, 15, 25, 33, 50, 66, 75, 100];
+
+
+
+
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -43,7 +66,10 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
+  const [isDecreaseMenuOpen, setIsDecreaseMenuOpen] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [activeDialog, setActiveDialog] = useState<'balances'>();
+  const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
 
 
 
@@ -78,6 +104,74 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
     () => (position === undefined ? '$0 ' : formatDollarAmount(position.amount_quote_out)),
     [position],
   );
+  const decreaseMenu = useMemo(
+    () => DECREASE_OPTIONS.map((option) => {
+      const decreaseAmount = position === undefined
+        ? PositionService.calculateDecreaseAmount(0, option)
+        : PositionService.calculateDecreaseAmount(position.amount, option);
+      return {
+        percentage: option,
+        amount: decreaseAmount,
+        label: formatBitcoinAmount(decreaseAmount),
+      };
+    }),
+    [position],
+  );
+
+
+
+
+
+  /* **********************************************************************************************
+   *                                        EVENT HANDLERS                                        *
+   ********************************************************************************************** */
+
+  /**
+   * Prompts the user with the confirmation dialog and opens/increases the position if confirmed.
+   */
+  const increasePosition = () => {
+    openConfirmationDialog({
+      mode: 'OTP',
+      title: position === undefined ? 'Open position' : 'Increase position',
+      description: position === undefined
+        ? 'A new position will be opened with the amount established in the strategy'
+        : 'The amount of the position will be increased following the strategy',
+      onConfirmation: async (confirmation: string) => {
+        try {
+          setIsSubmitting(true);
+          await PositionService.increasePosition(confirmation);
+        } catch (e) {
+          errorToast(e);
+        } finally {
+          setIsSubmitting(false);
+        }
+      },
+    });
+  };
+
+  /**
+   * Prompts the user with the confirmation dialog and decreases the position if confirmed.
+   * @param percentage
+   */
+  const decreasePosition = async (percentage: number) => {
+    setIsDecreaseMenuOpen(false);
+    await delay(0.25);
+    openConfirmationDialog({
+      mode: 'OTP',
+      title: 'Decrease position',
+      description: `The amount of the position will be decreased by ${percentage}% immediately upon submission`,
+      onConfirmation: async (confirmation: string) => {
+        try {
+          setIsSubmitting(true);
+          await PositionService.decreasePosition(percentage, confirmation);
+        } catch (e) {
+          errorToast(e);
+        } finally {
+          setIsSubmitting(false);
+        }
+      },
+    });
+  };
 
 
 
@@ -96,20 +190,34 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
         <CardHeader>
           <CardTitle className='flex justify-start items-center'>
             Position
+            {
+                isSubmitting
+                && <Loader2
+                  className='ml-2 h-5 w-5 animate-spin'
+                />
+              }
             <span className='flex-1'></span>
             <DropdownMenu>
-              <DropdownMenuTrigger aria-label='More information'>
+              <DropdownMenuTrigger
+                aria-label='More information'
+                disabled={isSubmitting}
+              >
                 <EllipsisVertical className='w-5 h-5' aria-hidden='true' />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={increasePosition}
+                >
                   <ArrowUpWideNarrow
                       aria-hidden='true'
                       className='mr-1 h-5 w-5'
                     /> Increase
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => setIsDecreaseMenuOpen(true)}
+                  disabled={position === undefined}
+                >
                   <ArrowDownWideNarrow
                       aria-hidden='true'
                       className='mr-1 h-5 w-5'
@@ -117,7 +225,9 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuLabel>Information</DropdownMenuLabel>
-                <DropdownMenuItem>
+                <DropdownMenuItem
+                  disabled={position === undefined}
+                >
                   <ReceiptText
                       aria-hidden='true'
                       className='mr-1 h-5 w-5'
@@ -167,7 +277,9 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
             * GAIN *
             ****** */}
           <div>
-            <p className={`${gainClassName} font-bold`}>{gain}</p>
+            <p
+              className={`${gainClassName} ${gain !== '0%' ? 'font-bold' : 'font-normal'}`}
+            >{gain}</p>
             <p className='text-light text-xs'>GAIN</p>
           </div>
 
@@ -201,6 +313,45 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
           closeDialog={setActiveDialog}
         />
       }
+
+
+
+
+
+      {/* **********************
+        * DECREASE MENU DRAWER *
+        ********************** */}
+      <Drawer open={isDecreaseMenuOpen} onOpenChange={setIsDecreaseMenuOpen}>
+        <DrawerContent>
+          <div
+            className='mx-auto w-full max-w-sm'
+          >
+            <DrawerHeader>
+              <DrawerTitle>Decrease position</DrawerTitle>
+              <DrawerDescription>Select a percentage</DrawerDescription>
+            </DrawerHeader>
+            <DrawerFooter
+              className='grid grid-cols-4 gap-4'
+            >
+              {
+                decreaseMenu.map((item) => (
+                  <Button
+                    key={item.percentage}
+                    variant='outline'
+                    aria-label={`Decrease the position amount by ${item.percentage}%`}
+                    className='flex flex-col h-20 w-full gap-y-1'
+                    onClick={() => decreasePosition(item.percentage)}
+                    disabled={item.amount === 0}
+                  >
+                    <p>{item.label}</p>
+                    <p>{item.percentage}%</p>
+                  </Button>
+                ))
+              }
+            </DrawerFooter>
+          </div>
+        </DrawerContent>
+      </Drawer>
     </>
   );
 });

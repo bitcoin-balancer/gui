@@ -26,6 +26,7 @@ type IPositionService = {
 
   // helpers
   getGainClassName: (gain: number) => string;
+  calculateDecreaseAmount: (positionAmount: number, percentage: number) => number;
 };
 
 
