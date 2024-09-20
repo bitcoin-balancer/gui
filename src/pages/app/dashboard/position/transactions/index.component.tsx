@@ -1,10 +1,10 @@
-import { formatDistance } from 'date-fns';
 import {
   memo,
   useMemo,
   useRef,
   Fragment,
 } from 'react';
+import { CircleCheck, CircleX, Loader2 } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -13,9 +13,11 @@ import {
   DialogTitle,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
-import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
-import { PositionService, ICompactPosition } from '@/shared/backend/position/index.service.ts';
-import { formatDate, formatPNL } from '@/shared/services/transformers/index.service.ts';
+import {
+  TransactionService,
+  ITransaction,
+} from '@/shared/backend/position/transaction/index.service.ts';
+import { formatDate } from '@/shared/services/transformers/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
@@ -40,10 +42,12 @@ const LIMIT = 15;
  ************************************************************************************************ */
 
 /**
- * Positions Dialog Component
- * Component in charge of displaying the positions.
+ * Transactions Dialog Component
+ * Component in charge of displaying the transactions.
  */
-const PositionsDialog = memo(({ closeDialog }: { closeDialog: (nextState: undefined) => void }) => {
+const TransactionsDialog = memo(({
+  closeDialog,
+}: { closeDialog: (nextState: undefined) => void }) => {
   /* **********************************************************************************************
    *                                             REFS                                             *
    ********************************************************************************************** */
@@ -63,14 +67,14 @@ const PositionsDialog = memo(({ closeDialog }: { closeDialog: (nextState: undefi
     hasMore,
     loadMore,
     loadingMore,
-  } = useAPIFetch<ICompactPosition[]>(useMemo(
+  } = useAPIFetch<ITransaction[]>(useMemo(
     () => ({
-      fetchFunc: { func: PositionService.listCompactPositions, args: [LIMIT] },
+      fetchFunc: { func: TransactionService.listTransactions, args: [LIMIT] },
       queryLimit: LIMIT,
     }),
     [],
   ));
-  const openPositionDialog = useBoundStore((state) => state.openPositionDialog);
+  const openTransactionDialog = useBoundStore((state) => state.openTransactionDialog);
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
 
 
@@ -81,24 +85,11 @@ const PositionsDialog = memo(({ closeDialog }: { closeDialog: (nextState: undefi
    *                                       REACTIVE VALUES                                        *
    ********************************************************************************************** */
 
-  // open times
-  const openTimes = useMemo(
-    () => data?.map((record) => formatDate(record.open, 'datetime-medium')),
+  // event times
+  const eventTimes = useMemo(
+    () => data?.map((record) => formatDate(record.event_time, 'datetime-medium')),
     [data],
   );
-
-  // time distances
-  const timeDistances = useMemo(
-    () => data?.map(
-      (record) => (
-        record.close === null ? 'Running...' : formatDistance(record.open, record.close)
-      ),
-    ),
-    [data],
-  );
-
-  // pnl values
-  const pnls = useMemo(() => data?.map((record) => formatPNL(record.pnl)), [data]);
 
 
 
@@ -119,29 +110,27 @@ const PositionsDialog = memo(({ closeDialog }: { closeDialog: (nextState: undefi
           {data.map((record, i) => (
             <Fragment key={record.id}>
               <button
-                id={`pd-${record.id}`}
-                className={`p-6 flex justify-start items-center w-full text-left ${record.archived ? 'opacity-50' : ''} hover:bg-slate-100`}
-                onClick={() => openPositionDialog(record.id)}
-                aria-label='Display position'
+                id={`txd-${record.id}`}
+                className='p-6 flex justify-start items-center w-full text-left hover:bg-slate-100'
+                onClick={() => openTransactionDialog(record)}
+                aria-label='Display transaction'
               >
                 <div
-                  className='max-w-[60%] sm:max-w-[70%]'
+                  className='max-w-[70%] sm:max-w-[85%]'
                 >
                   <p
-                    className='font-medium truncate'
-                  >{openTimes[i]}</p>
+                    className={`font-semibold ${record.side === 'BUY' ? 'text-increase-1' : 'text-decrease-1'}`}
+                  >{record.side === 'BUY' ? 'Increase' : 'Decrease'}</p>
                   <p
                     className='text-light text-sm truncate'
-                  >{timeDistances[i]}</p>
+                  >{eventTimes[i]}</p>
                 </div>
 
                 <span className='flex-1'></span>
 
-                <Badge
-                  className={`bg-stateless ${record.pnl > 0 ? 'bg-increase-1' : 'bg-decrease-1'}`}
-                >
-                  {pnls[i]}
-                </Badge>
+                {record.status === 'PROCESSING' && <Loader2 aria-hidden='true' className='ml-2 h-4 w-4 animate-spin' />}
+                {record.status === 'FAILED' && <CircleX aria-hidden='true' className='ml-2 h-5 w-5 text-error' />}
+                {record.status === 'SUCCEEDED' && <CircleCheck aria-hidden='true' className='ml-2 h-5 w-5 text-success' />}
               </button>
               {i < data.length - 1 && <Separator />}
             </Fragment>
@@ -154,9 +143,9 @@ const PositionsDialog = memo(({ closeDialog }: { closeDialog: (nextState: undefi
           >
             <LoadMoreButton
               loadMore={() => loadMore(
-                { func: PositionService.listCompactPositions, args: [LIMIT, data.at(-1)!.open] },
+                { func: TransactionService.listTransactions, args: [LIMIT, data.at(-1)!.id] },
                 rowsRef.current!,
-                `pd-${data.at(-1)!.id}`,
+                `txd-${data.at(-1)!.id}`,
               )}
               loadingMore={loadingMore}
             />
@@ -175,9 +164,9 @@ const PositionsDialog = memo(({ closeDialog }: { closeDialog: (nextState: undefi
       <DialogContent className='p-0'>
 
         <DialogHeader className='p-6 pb-0'>
-          <DialogTitle>Positions</DialogTitle>
+          <DialogTitle>Transactions</DialogTitle>
           <DialogDescription>
-            Active and closed positions managed by Balancer
+            Increase & decrease actions executed and confirmed by Balancer
           </DialogDescription>
         </DialogHeader>
 
@@ -196,4 +185,4 @@ const PositionsDialog = memo(({ closeDialog }: { closeDialog: (nextState: undefi
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export default PositionsDialog;
+export default TransactionsDialog;

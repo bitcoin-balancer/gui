@@ -1,7 +1,7 @@
 import { memo, useState, useEffect } from 'react';
 import {
   Braces,
-  Check,
+  CircleCheck,
   CircleX,
   Loader2,
 } from 'lucide-react';
@@ -53,7 +53,7 @@ const LOG_ACTIONS: Record<ITransactionActionName, string> = {
 const getStatusIcon = (status: ITransactionStatus | undefined): JSX.Element => {
   switch (status) {
     case 'SUCCEEDED':
-      return <Check aria-hidden='true' className='ml-2 h-5 w-5 text-success' />;
+      return <CircleCheck aria-hidden='true' className='ml-2 h-5 w-5 text-success' />;
     case 'FAILED':
       return <CircleX aria-hidden='true' className='ml-2 h-5 w-5 text-error' />;
     default:

@@ -46,6 +46,7 @@ import {
 } from '@/shared/backend/position/index.service.ts';
 import BalancesDialog from '@/pages/app/dashboard/position/balances/index.component.tsx';
 import PositionsDialog from '@/pages/app/dashboard/position/positions/index.component.tsx';
+import TransactionsDialog from '@/pages/app/dashboard/position/transactions/index.component.tsx';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
@@ -97,7 +98,7 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
    ********************************************************************************************** */
   const [isDecreaseMenuOpen, setIsDecreaseMenuOpen] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [activeDialog, setActiveDialog] = useState<'balances' | 'positions'>();
+  const [activeDialog, setActiveDialog] = useState<'balances' | 'positions' | 'transactions'>();
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
   const openPositionDialog = useBoundStore((state) => state.openPositionDialog);
 
@@ -271,7 +272,9 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
                       className='mr-1 h-5 w-5'
                     /> Positions
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => setActiveDialog('transactions')}
+                >
                   <ListChecks
                       aria-hidden='true'
                       className='mr-1 h-5 w-5'
@@ -340,6 +343,12 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
       {
         activeDialog === 'positions'
         && <PositionsDialog
+          closeDialog={setActiveDialog}
+        />
+      }
+      {
+        activeDialog === 'transactions'
+        && <TransactionsDialog
           closeDialog={setActiveDialog}
         />
       }
