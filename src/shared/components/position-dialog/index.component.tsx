@@ -1,4 +1,9 @@
-import { memo, useMemo, Fragment } from 'react';
+import {
+  memo,
+  useState,
+  useEffect,
+  Fragment,
+} from 'react';
 import { Archive } from 'lucide-react';
 import {
   Dialog,
@@ -28,7 +33,6 @@ import {
   formatDollarAmount,
   formatPercentageChange,
 } from '@/shared/services/transformers/index.service.ts';
-import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
@@ -43,19 +47,50 @@ import PositionAction from '@/shared/components/position-dialog/position-action.
  * Position Dialog Component
  * Component in charge of displaying position details.
  */
-const PositionDialog = memo(({ id }: { id: string }) => {
+const PositionDialog = memo(({ data }: { data: string | IPosition }) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const { data, loading, error } = useAPIFetch<IPosition>(useMemo(
-    () => ({
-      fetchFunc: { func: PositionService.getPosition, args: [id] },
-    }),
-    [id],
-  ));
+  const [position, setPosition] = useState<IPosition>();
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<Error | undefined>(undefined);
   const exchangeConfig = useBoundStore((state) => state.exchangeConfig!);
   const closePositionDialog = useBoundStore((state) => state.closePositionDialog);
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closePositionDialog);
+
+
+
+  /* **********************************************************************************************
+   *                                         SIDE EFFECTS                                         *
+   ********************************************************************************************** */
+
+  /**
+   * Retrieves and sets the requested position. If the position record was passed, it sets it right
+   * away.
+   */
+  useEffect(
+    () => {
+      let ignore = false;
+
+      const fetchPosition = async () => {
+        try {
+          const value = typeof data === 'string' ? await PositionService.getPosition(data) : data;
+          if (!ignore) {
+            setPosition(value);
+            setLoading(false);
+            setError(undefined);
+          }
+        } catch (e) {
+          setError(e as Error);
+        }
+      };
+
+      fetchPosition();
+
+      return () => { ignore = true; };
+    },
+    [data],
+  );
 
 
 
@@ -87,7 +122,6 @@ const PositionDialog = memo(({ id }: { id: string }) => {
         {/* *********
           * GENERAL *
           ********* */}
-
         <TabsContent
           value='general'
           className='px-3 pt-3 animate-in fade-in duration-700'
@@ -104,10 +138,10 @@ const PositionDialog = memo(({ id }: { id: string }) => {
             >
               <p
                 className='truncate'
-              >{formatDate(data.open, 'datetime-medium')}</p>
+              >{formatDate(position!.open, 'datetime-medium')}</p>
               {
-                data.close !== null
-                  ? <p>{formatDate(data.close, 'datetime-medium')}</p>
+                position!.close !== null
+                  ? <p>{formatDate(position!.close, 'datetime-medium')}</p>
                   : <p
                     className='text-light text-sm'
                   >N/A</p>
@@ -125,10 +159,10 @@ const PositionDialog = memo(({ id }: { id: string }) => {
             <div
               className='text-right'
             >
-              <p>{formatDollarAmount(data.entry_price)}</p>
+              <p>{formatDollarAmount(position!.entry_price)}</p>
               <p
-                className={`${PositionService.getGainClassName(data.gain)} text-sm`}
-              >{formatPercentageChange(data.gain, 2)}</p>
+                className={`${PositionService.getGainClassName(position!.gain)} text-sm`}
+              >{formatPercentageChange(position!.gain, 2)}</p>
             </div>
           </div>
 
@@ -142,10 +176,10 @@ const PositionDialog = memo(({ id }: { id: string }) => {
             <div
               className='text-right'
             >
-              <p>{formatBitcoinAmount(data.amount)}</p>
+              <p>{formatBitcoinAmount(position!.amount)}</p>
               <p
                 className='text-light text-sm'
-              >~{formatDollarAmount(data.amount_quote)}</p>
+              >~{formatDollarAmount(position!.amount_quote)}</p>
             </div>
           </div>
 
@@ -159,8 +193,8 @@ const PositionDialog = memo(({ id }: { id: string }) => {
             <div
               className='text-right'
             >
-              <p>{formatDollarAmount(data.amount_quote_in)}</p>
-              <p>{formatDollarAmount(data.amount_quote_out)}</p>
+              <p>{formatDollarAmount(position!.amount_quote_in)}</p>
+              <p>{formatDollarAmount(position!.amount_quote_out)}</p>
             </div>
           </div>
 
@@ -174,10 +208,10 @@ const PositionDialog = memo(({ id }: { id: string }) => {
             <div
               className='text-right'
             >
-              <p>{formatDollarAmount(data.pnl)}</p>
+              <p>{formatDollarAmount(position!.pnl)}</p>
               <p
-                className={`${PositionService.getGainClassName(data.roi)} text-sm`}
-              >{formatPercentageChange(data.roi, 2)}</p>
+                className={`${PositionService.getGainClassName(position!.roi)} text-sm`}
+              >{formatPercentageChange(position!.roi, 2)}</p>
             </div>
           </div>
         </TabsContent>
@@ -192,11 +226,11 @@ const PositionDialog = memo(({ id }: { id: string }) => {
           className='px-3 pt-2 animate-in fade-in duration-700'
         >
           {
-            data.increase_actions.map((action, i) => (
+            position!.increase_actions.map((action, i) => (
               <Fragment key={i}>
                 <PositionAction action={action} />
                 {
-                  i < data.increase_actions.length - 1
+                  i < position!.increase_actions.length - 1
                   && <Separator className='my-10' />
                 }
               </Fragment>
@@ -218,7 +252,7 @@ const PositionDialog = memo(({ id }: { id: string }) => {
             collapsible
             className='w-full'
           >
-            {data.decrease_actions.map((decreaseLevel, levelNum) => (
+            {position!.decrease_actions.map((decreaseLevel, levelNum) => (
               <AccordionItem key={levelNum} value={`level-${levelNum}`}>
                 <AccordionTrigger>Level {levelNum}</AccordionTrigger>
                 <AccordionContent>
@@ -258,7 +292,7 @@ const PositionDialog = memo(({ id }: { id: string }) => {
           >
             <DialogTitle>Position</DialogTitle>
             {
-              data && data.archived
+              position! && position!.archived
               && <Archive
               aria-label='hidden'
               className='ml-2 h-4 w-4'
@@ -266,7 +300,7 @@ const PositionDialog = memo(({ id }: { id: string }) => {
             }
           </div>
           <DialogDescription>
-            {data?.id}
+            {position?.id}
           </DialogDescription>
         </DialogHeader>
 

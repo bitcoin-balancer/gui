@@ -279,9 +279,9 @@ const App = () => {
         * POSITION DIALOG *
         ***************** */}
       {
-        typeof isPositionDialogOpen === 'string'
+        isPositionDialogOpen !== undefined
         && <PositionDialog
-          id={isPositionDialogOpen}
+          data={isPositionDialogOpen}
         />
       }
 
