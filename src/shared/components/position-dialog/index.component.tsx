@@ -182,6 +182,8 @@ const PositionDialog = memo(({ id }: { id: string }) => {
           </div>
         </TabsContent>
 
+
+
         {/* **********
           * INCREASE *
           ********** */}
@@ -201,6 +203,7 @@ const PositionDialog = memo(({ id }: { id: string }) => {
             ))
           }
         </TabsContent>
+
 
 
         {/* **********

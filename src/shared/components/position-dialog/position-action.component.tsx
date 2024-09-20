@@ -18,9 +18,6 @@ const PositionAction = ({ action }: { action: IPositionAction }) => {
   const [active, setActive] = useState();
 
 
-  console.log('PositionAction');
-
-
 
 
 
@@ -38,6 +35,8 @@ const PositionAction = ({ action }: { action: IPositionAction }) => {
         <span className='flex-1'></span>
         <Button
           variant='outline'
+          size='sm'
+          aria-label='Display transaction'
         >
           {action.txID}
         </Button>

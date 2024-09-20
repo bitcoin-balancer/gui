@@ -131,6 +131,17 @@ const formatBitcoinAmount = (value: number, decimalPlaces: number = 8): string =
 );
 
 /**
+ * Prettifies a PNL value and returns the string representation.
+ * @param pnl
+ * @param decimalPlaces
+ * @returns string
+ */
+const formatPNL = (pnl: number, decimalPlaces?: number): string => {
+  const value = formatDollarAmount(pnl, decimalPlaces);
+  return pnl > 0 ? `+${value}` : value;
+};
+
+/**
  * Prettifies the values in a split states object and returns them.
  * @param splitStates
  * @returns ISplitPercentageChanges
@@ -186,6 +197,7 @@ export {
   formatPercentageChange,
   formatDollarAmount,
   formatBitcoinAmount,
+  formatPNL,
   formatSplitStateChanges,
   toLocalTime,
   capitalizeFirst,
