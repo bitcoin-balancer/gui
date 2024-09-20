@@ -13,6 +13,12 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/shared/shadcn/components/ui/tabs.tsx';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/shared/shadcn/components/ui/accordion.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import { useBoundStore } from '@/shared/store/index.store';
 import { PositionService, IPosition } from '@/shared/backend/position/index.service.ts';
@@ -26,6 +32,7 @@ import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
+import NoRecords from '@/shared/components/no-records/index.component.tsx';
 import PositionAction from '@/shared/components/position-dialog/position-action.component.tsx';
 
 /* ************************************************************************************************
@@ -187,7 +194,7 @@ const PositionDialog = memo(({ id }: { id: string }) => {
               <Fragment key={i}>
                 <PositionAction action={action} />
                 {
-                  data.increase_actions.length < (i - 1)
+                  i < data.increase_actions.length - 1
                   && <Separator className='my-10' />
                 }
               </Fragment>
@@ -201,9 +208,36 @@ const PositionDialog = memo(({ id }: { id: string }) => {
           ********** */}
         <TabsContent
           value='decrease'
-          className='animate-in fade-in duration-700'
+          className='px-3 pt-2 animate-in fade-in duration-700'
         >
-          <p>Decrease</p>
+          <Accordion
+            type='single'
+            collapsible
+            className='w-full'
+          >
+            {data.decrease_actions.map((decreaseLevel, levelNum) => (
+              <AccordionItem key={levelNum} value={`level-${levelNum}`}>
+                <AccordionTrigger>Level {levelNum}</AccordionTrigger>
+                <AccordionContent>
+                  {
+                    decreaseLevel.length
+                      ? (
+                        decreaseLevel.map((action, i) => (
+                          <Fragment key={i}>
+                            <PositionAction action={action} />
+                            {
+                              i < decreaseLevel.length - 1
+                              && <Separator className='my-10' />
+                            }
+                          </Fragment>
+                        ))
+                      )
+                      : <NoRecords />
+                  }
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </TabsContent>
       </Tabs>
     );
