@@ -45,6 +45,7 @@ import {
   PositionService,
 } from '@/shared/backend/position/index.service.ts';
 import BalancesDialog from '@/pages/app/dashboard/position/balances/index.component.tsx';
+import PositionsDialog from '@/pages/app/dashboard/position/positions/index.component.tsx';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
@@ -96,7 +97,7 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
    ********************************************************************************************** */
   const [isDecreaseMenuOpen, setIsDecreaseMenuOpen] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [activeDialog, setActiveDialog] = useState<'balances'>();
+  const [activeDialog, setActiveDialog] = useState<'balances' | 'positions'>();
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
   const openPositionDialog = useBoundStore((state) => state.openPositionDialog);
 
@@ -262,7 +263,9 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
                       className='mr-1 h-5 w-5'
                     /> Balances
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => setActiveDialog('positions')}
+                >
                   <List
                       aria-hidden='true'
                       className='mr-1 h-5 w-5'
@@ -331,6 +334,12 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
       {
         activeDialog === 'balances'
         && <BalancesDialog
+          closeDialog={setActiveDialog}
+        />
+      }
+      {
+        activeDialog === 'positions'
+        && <PositionsDialog
           closeDialog={setActiveDialog}
         />
       }

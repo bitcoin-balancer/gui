@@ -35,10 +35,10 @@ const LIMIT = 15;
  ************************************************************************************************ */
 
 /**
- * Position Dialog Component
+ * Positions Dialog Component
  * Component in charge of displaying the positions.
  */
-const NotificationsDialog = ({ closeDialog }: { closeDialog: (nextState: undefined) => void }) => {
+const PositionsDialog = ({ closeDialog }: { closeDialog: (nextState: undefined) => void }) => {
   /* **********************************************************************************************
    *                                             REFS                                             *
    ********************************************************************************************** */
@@ -77,13 +77,13 @@ const NotificationsDialog = ({ closeDialog }: { closeDialog: (nextState: undefin
 
   // open times
   const openTimes = useMemo(
-    () => data.map((record) => formatDate(record.open, 'datetime-medium')),
+    () => data?.map((record) => formatDate(record.open, 'datetime-medium')),
     [data],
   );
 
   // time distances
   const timeDistances = useMemo(
-    () => data.map(
+    () => data?.map(
       (record) => (
         record.close === null ? 'Position is running' : formatDistance(record.open, record.close)
       ),
@@ -92,7 +92,7 @@ const NotificationsDialog = ({ closeDialog }: { closeDialog: (nextState: undefin
   );
 
   // pnl values
-  const pnls = useMemo(() => data.map((record) => formatPNL(record.pnl)), [data]);
+  const pnls = useMemo(() => data?.map((record) => formatPNL(record.pnl)), [data]);
 
 
 
@@ -114,30 +114,28 @@ const NotificationsDialog = ({ closeDialog }: { closeDialog: (nextState: undefin
             <Fragment key={record.id}>
               <button
                 id={`pd-${record.id}`}
-                className={`py-8 px-6 first:pt-5 ${record.archived ? 'opacity-70' : ''}`}
+                className={`py-8 px-6 first:pt-3 flex justify-start items-center w-full text-left ${record.archived ? 'opacity-70' : ''} hover:bg-slate-100`}
                 onClick={() => openPositionDialog(record.id)}
                 aria-label='Display position'
               >
                 <div
-                  className='flex justify-start items-center'
+                  className='max-w-[60%] sm:max-w-[70%]'
                 >
-                  <div>
-                    <p
-                      className='font-semibold'
-                    >{openTimes[i]}</p>
-                    <p
-                      className='text-light text-sm'
-                    >{timeDistances[i]}</p>
-                  </div>
-
-                  <span className='flex-1'></span>
-
-                  <Badge
-                    className={`bg-stateless ${record.pnl > 0 ? 'bg-increase-1' : 'bg-decrease-1'}`}
-                  >
-                    {pnls[i]}
-                  </Badge>
+                  <p
+                    className='font-medium truncate'
+                  >{openTimes[i]}</p>
+                  <p
+                    className='text-light text-sm truncate'
+                  >{timeDistances[i]}</p>
                 </div>
+
+                <span className='flex-1'></span>
+
+                <Badge
+                  className={`bg-stateless ${record.pnl > 0 ? 'bg-increase-1' : 'bg-decrease-1'}`}
+                >
+                  {pnls[i]}
+                </Badge>
               </button>
               {i < data.length - 1 && <Separator />}
             </Fragment>
@@ -192,4 +190,4 @@ const NotificationsDialog = ({ closeDialog }: { closeDialog: (nextState: undefin
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export default NotificationsDialog;
+export default PositionsDialog;
