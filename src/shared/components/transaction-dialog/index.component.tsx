@@ -7,12 +7,12 @@ import {
 } from 'lucide-react';
 import {
   Dialog,
+  DialogTrigger,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
-import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { useBoundStore } from '@/shared/store/index.store';
 import {
@@ -32,9 +32,9 @@ import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 
 // the actions that are executed when a transaction is created
 const LOG_ACTIONS: Record<ITransactionActionName, string> = {
-  INITIAL_BALANCES: 'Retrieve a snapshot of the balances from the exchange.',
-  EXECUTION: 'Build and send the transaction to the exchange.',
-  CONFIRMATION: 'Retrieve another balance snapshot from the exchange and compare it against the initial one.',
+  INITIAL_BALANCES: 'Retrieve a snapshot of the balances from the exchange',
+  EXECUTION: 'Build and send the transaction to the exchange',
+  CONFIRMATION: 'Retrieve another balance snapshot from the exchange and compare it against the initial one',
 };
 
 
@@ -172,11 +172,7 @@ const TransactionDialog = memo(({ data }: { data: number | ITransaction }) => {
             className='text-light text-sm'
           >ID</p>
           <span className='flex-1'></span>
-          <Badge
-            variant='outline'
-          >
-            {tx?.id}
-          </Badge>
+          <p>{tx!.id}</p>
         </div>
 
         <div
@@ -209,13 +205,33 @@ const TransactionDialog = memo(({ data }: { data: number | ITransaction }) => {
             >
               {
                 log.payload !== undefined
-                && <Button
-                  variant='outline'
-                  size='icon'
-                  className='float-right mt-1'
-                >
-                  <Braces aria-hidden='true' className='w-4 h-4' />
-                </Button>
+                && <Dialog>
+                  <DialogTrigger asChild>
+                    <Button
+                      variant='outline'
+                      size='icon'
+                      className='float-right mt-1'
+                    >
+                      <Braces aria-hidden='true' className='w-4 h-4' />
+                    </Button>
+                  </DialogTrigger>
+
+                  <DialogContent
+                    className='max-w-[550px]'
+                  >
+                    <DialogHeader>
+                      <DialogTitle>{log.action}</DialogTitle>
+                      <DialogDescription></DialogDescription>
+                    </DialogHeader>
+                    <div
+                      className='overflow-x-auto p-5 rounded-lg bg-slate-900 text-slate-50 text-sm'
+                    >
+                      <pre>
+                        {JSON.stringify(log.payload, null, 2)}
+                      </pre>
+                    </div>
+                  </DialogContent>
+                </Dialog>
               }
 
               <div
@@ -226,7 +242,7 @@ const TransactionDialog = memo(({ data }: { data: number | ITransaction }) => {
                   {formatDate(log.eventTime, 'datetime-medium')}
               </time>
               <h3
-                className='font-semibold'
+                className='text-sm font-semibold'
               >{log.action}</h3>
               {
                 log.error === undefined
