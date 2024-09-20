@@ -1,6 +1,8 @@
 import { APIService } from '@/shared/backend/api/index.service.ts';
 import {
   ITransactionService,
+  ITransactionStatus,
+  ITransactionActionName,
   ITransaction,
   ITransactionLog,
 } from '@/shared/backend/position/transaction/types.ts';
@@ -108,6 +110,8 @@ export {
   TransactionService,
 
   // types
+  type ITransactionStatus,
+  type ITransactionActionName,
   type ITransaction,
   type ITransactionLog,
 };

@@ -287,7 +287,7 @@ const PositionDialog = memo(({ data }: { data: string | IPosition }) => {
 
         <DialogHeader>
           <div
-            className='flex justify-start items-center'
+            className='flex justify-center sm:justify-start items-center'
           >
             <DialogTitle>Position</DialogTitle>
             {

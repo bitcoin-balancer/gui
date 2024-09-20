@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { formatDate } from '@/shared/services/transformers/index.service.ts';
+import { useBoundStore } from '@/shared/store/index.store.ts';
 import { IPositionAction } from '@/shared/backend/position/index.service.ts';
 
 /* ************************************************************************************************
@@ -15,7 +15,7 @@ const PositionAction = ({ action }: { action: IPositionAction }) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const [active, setActive] = useState();
+  const openTransactionDialog = useBoundStore((state) => state.openTransactionDialog);
 
 
 
@@ -36,6 +36,7 @@ const PositionAction = ({ action }: { action: IPositionAction }) => {
         <Button
           variant='outline'
           size='sm'
+          onClick={() => openTransactionDialog(action.txID)}
           aria-label='Display transaction'
         >
           {action.txID}
