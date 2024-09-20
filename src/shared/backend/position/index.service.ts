@@ -1,7 +1,12 @@
 import { getBigNumber, processValue } from 'bignumber-utils';
 import { APIService } from '@/shared/backend/api/index.service.ts';
 import { IEventHistoryRecord } from '../candlestick/index.service.js';
-import { ICompactPosition, IPosition, IPositionService } from './types.js';
+import {
+  IPositionService,
+  IPositionAction,
+  IPosition,
+  ICompactPosition,
+} from './types.js';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -284,6 +289,7 @@ export {
   PositionService,
 
   // types
+  type IPositionAction,
   type IPosition,
   type ICompactPosition,
 };

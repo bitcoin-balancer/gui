@@ -1,4 +1,5 @@
-import { useMemo } from 'react';
+import { memo, useMemo, Fragment } from 'react';
+import { Archive } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -12,6 +13,7 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/shared/shadcn/components/ui/tabs.tsx';
+import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import { useBoundStore } from '@/shared/store/index.store';
 import { PositionService, IPosition } from '@/shared/backend/position/index.service.ts';
 import {
@@ -24,7 +26,7 @@ import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
-import { Archive } from 'lucide-react';
+import PositionAction from '@/shared/components/position-dialog/position-action.component.tsx';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -34,7 +36,7 @@ import { Archive } from 'lucide-react';
  * Position Dialog Component
  * Component in charge of displaying position details.
  */
-const PositionDialog = ({ id }: { id: string }) => {
+const PositionDialog = memo(({ id }: { id: string }) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
@@ -81,10 +83,10 @@ const PositionDialog = ({ id }: { id: string }) => {
 
         <TabsContent
           value='general'
-          className='px-3 animate-in fade-in duration-700'
+          className='px-3 pt-3 animate-in fade-in duration-700'
         >
           <div
-            className='flex justify-center items-center mt-5'
+            className='flex justify-center items-start'
           >
             <p
               className='text-light text-sm'
@@ -107,7 +109,7 @@ const PositionDialog = ({ id }: { id: string }) => {
           </div>
 
           <div
-            className='flex justify-center items-center mt-5'
+            className='flex justify-center items-start mt-5'
           >
             <p
               className='text-light text-sm'
@@ -118,13 +120,13 @@ const PositionDialog = ({ id }: { id: string }) => {
             >
               <p>{formatDollarAmount(data.entry_price)}</p>
               <p
-                className={`${PositionService.getGainClassName(data.roi)} text-sm`}
+                className={`${PositionService.getGainClassName(data.gain)} text-sm`}
               >{formatPercentageChange(data.gain, 2)}</p>
             </div>
           </div>
 
           <div
-            className='flex justify-center items-center mt-5'
+            className='flex justify-center items-start mt-5'
           >
             <p
               className='text-light text-sm'
@@ -141,7 +143,7 @@ const PositionDialog = ({ id }: { id: string }) => {
           </div>
 
           <div
-            className='flex justify-center items-center mt-5'
+            className='flex justify-center items-start mt-5'
           >
             <p
               className='text-light text-sm'
@@ -156,7 +158,7 @@ const PositionDialog = ({ id }: { id: string }) => {
           </div>
 
           <div
-            className='flex justify-center items-center mt-5'
+            className='flex justify-center items-start mt-5'
           >
             <p
               className='text-light text-sm'
@@ -178,9 +180,19 @@ const PositionDialog = ({ id }: { id: string }) => {
           ********** */}
         <TabsContent
           value='increase'
-          className='animate-in fade-in duration-700'
+          className='px-3 pt-2 animate-in fade-in duration-700'
         >
-          <p>Increase</p>
+          {
+            data.increase_actions.map((action, i) => (
+              <Fragment key={i}>
+                <PositionAction action={action} />
+                {
+                  data.increase_actions.length < (i - 1)
+                  && <Separator className='my-10' />
+                }
+              </Fragment>
+            ))
+          }
         </TabsContent>
 
 
@@ -227,7 +239,7 @@ const PositionDialog = ({ id }: { id: string }) => {
 
     </Dialog>
   );
-};
+});
 
 
 
