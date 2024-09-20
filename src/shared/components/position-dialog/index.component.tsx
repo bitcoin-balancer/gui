@@ -65,8 +65,7 @@ const PositionDialog = memo(({ data }: { data: string | IPosition }) => {
    ********************************************************************************************** */
 
   /**
-   * Retrieves and sets the requested position. If the position record was passed, it sets it right
-   * away.
+   * Retrieves and sets the requested position. If the record was passed, it sets it right away.
    */
   useEffect(
     () => {

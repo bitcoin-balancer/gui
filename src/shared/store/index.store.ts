@@ -5,6 +5,7 @@ import { createInfoDialogSlice } from '@/shared/store/slices/info-dialog/index.s
 import { createConfirmationDialogSlice } from '@/shared/store/slices/confirmation-dialog/index.slice.ts';
 import { createAppEssentialsSlice } from '@/shared/store/slices/app-essentials/index.slice.ts';
 import { createPositionDialogSlice } from './slices/position-dialog/index.slice.ts';
+import { createTransactionDialogSlice } from './slices/transaction-dialog/index.slice.ts';
 import { IBoundStore } from '@/shared/store/types.ts';
 
 /* ************************************************************************************************
@@ -22,6 +23,7 @@ const useBoundStore = create(
     ...createConfirmationDialogSlice(set, get, api),
     ...createAppEssentialsSlice(set, get, api),
     ...createPositionDialogSlice(set, get, api),
+    ...createTransactionDialogSlice(set, get, api),
   })),
 );
 /* const useBoundStore = create<IBoundStore>((set, get, api) => ({

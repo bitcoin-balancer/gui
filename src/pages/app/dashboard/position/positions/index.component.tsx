@@ -91,7 +91,7 @@ const PositionsDialog = memo(({ closeDialog }: { closeDialog: (nextState: undefi
   const timeDistances = useMemo(
     () => data?.map(
       (record) => (
-        record.close === null ? 'Position is running' : formatDistance(record.open, record.close)
+        record.close === null ? 'Running...' : formatDistance(record.open, record.close)
       ),
     ),
     [data],
@@ -120,7 +120,7 @@ const PositionsDialog = memo(({ closeDialog }: { closeDialog: (nextState: undefi
             <Fragment key={record.id}>
               <button
                 id={`pd-${record.id}`}
-                className={`py-8 px-6 first:pt-3 flex justify-start items-center w-full text-left ${record.archived ? 'opacity-70' : ''} hover:bg-slate-100`}
+                className={`py-8 px-6 first:pt-3 flex justify-start items-center w-full text-left ${record.archived ? 'opacity-50' : ''} hover:bg-slate-100`}
                 onClick={() => openPositionDialog(record.id)}
                 aria-label='Display position'
               >

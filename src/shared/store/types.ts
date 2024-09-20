@@ -3,6 +3,7 @@ import { IInfoDialogSlice } from '@/shared/store/slices/info-dialog/types.ts';
 import { IConfirmationDialogSlice } from '@/shared/store/slices/confirmation-dialog/index.slice.ts';
 import { IAppEssentialsSlice } from '@/shared/store/slices/app-essentials/index.slice.ts';
 import { IPositionDialogSlice } from './slices/position-dialog/index.slice.ts';
+import { ITransactionDialogSlice } from './slices/transaction-dialog/index.slice.ts';
 
 /* ************************************************************************************************
  *                                             TYPES                                              *
@@ -17,7 +18,8 @@ type IBoundStore =
   & IInfoDialogSlice
   & IConfirmationDialogSlice
   & IAppEssentialsSlice
-  & IPositionDialogSlice;
+  & IPositionDialogSlice
+  & ITransactionDialogSlice;
 
 
 
