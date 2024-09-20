@@ -1,5 +1,10 @@
 import { formatDistance } from 'date-fns';
-import { useMemo, useRef, Fragment } from 'react';
+import {
+  memo,
+  useMemo,
+  useRef,
+  Fragment,
+} from 'react';
 import {
   Dialog,
   DialogContent,
@@ -38,7 +43,7 @@ const LIMIT = 15;
  * Positions Dialog Component
  * Component in charge of displaying the positions.
  */
-const PositionsDialog = ({ closeDialog }: { closeDialog: (nextState: undefined) => void }) => {
+const PositionsDialog = memo(({ closeDialog }: { closeDialog: (nextState: undefined) => void }) => {
   /* **********************************************************************************************
    *                                             REFS                                             *
    ********************************************************************************************** */
@@ -67,6 +72,7 @@ const PositionsDialog = ({ closeDialog }: { closeDialog: (nextState: undefined) 
   ));
   const openPositionDialog = useBoundStore((state) => state.openPositionDialog);
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
+
 
 
 
@@ -181,7 +187,7 @@ const PositionsDialog = ({ closeDialog }: { closeDialog: (nextState: undefined) 
 
     </Dialog>
   );
-};
+});
 
 
 
