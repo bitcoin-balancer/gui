@@ -57,6 +57,13 @@ const Router = () => {
           },
         },
         {
+          path: 'position/:id',
+          lazy: async () => {
+            const Component = await import('@/pages/app/positions/position/index.component.tsx');
+            return { Component: Component.default };
+          },
+        },
+        {
           path: 'server',
           lazy: async () => {
             const Component = await import('@/pages/app/server/index.component.tsx');

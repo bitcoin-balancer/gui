@@ -104,7 +104,7 @@ const Server = () => {
               >
                   <ChartNoAxesColumn
                     aria-hidden='true'
-                    className='mr-2'
+                    className='mr-2 w-5 h-5'
                   /> Monitoring
                 </Button>
               <Button
@@ -115,7 +115,7 @@ const Server = () => {
               >
                 <Bug
                   aria-hidden='true'
-                  className='mr-2'
+                  className='mr-2 w-5 h-5'
                 /> API Errors
                 <span className='flex-1'></span>
                 {
@@ -133,7 +133,7 @@ const Server = () => {
               >
                 <DatabaseIcon
                   aria-hidden='true'
-                  className='mr-2'
+                  className='mr-2 w-5 h-5'
                 /> Database
               </Button>
             </nav>
@@ -182,7 +182,7 @@ const Server = () => {
 
             <SheetHeader>
               <SheetTitle>Server</SheetTitle>
-              <SheetDescription>Components that comprise the API</SheetDescription>
+              <SheetDescription>Subcomponents</SheetDescription>
             </SheetHeader>
 
             <nav
@@ -196,7 +196,7 @@ const Server = () => {
               >
                   <ChartNoAxesColumn
                     aria-hidden='true'
-                    className='mr-2'
+                    className='mr-2 w-5 h-5'
                   /> Monitoring
                 </Button>
               <Button
@@ -207,7 +207,7 @@ const Server = () => {
               >
                 <Bug
                   aria-hidden='true'
-                  className='mr-2'
+                  className='mr-2 w-5 h-5'
                 /> API Errors
                 <span className='flex-1'></span>
                 {
@@ -225,7 +225,7 @@ const Server = () => {
               >
                 <DatabaseIcon
                   aria-hidden='true'
-                  className='mr-2'
+                  className='mr-2 w-5 h-5'
                 /> Database
               </Button>
             </nav>

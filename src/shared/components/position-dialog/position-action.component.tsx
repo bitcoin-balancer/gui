@@ -31,7 +31,7 @@ const PositionAction = ({ action }: { action: IPositionAction }) => {
       >
         <p
           className='text-light text-sm'
-        >TX ID</p>
+        >ID</p>
         <span className='flex-1'></span>
         <Button
           variant='outline'
