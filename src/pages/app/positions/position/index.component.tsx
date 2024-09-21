@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   ChartCandlestick,
@@ -14,7 +14,11 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/shared/shadcn/components/ui/sheet.tsx';
+import { PositionService, IPosition } from '@/shared/backend/position/index.service.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
+import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
+import PageLoader from '@/shared/components/page-loader/index.component.tsx';
+import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import { IPageName, INavItem } from '@/pages/app/positions/position/types.ts';
 
 /* ************************************************************************************************
@@ -62,12 +66,18 @@ const Position = () => {
    *                                             STATE                                            *
    ********************************************************************************************** */
   const { id } = useParams();
+  const { data, loading, error } = useAPIFetch<IPosition>(useMemo(
+    () => ({
+      fetchFunc: { func: PositionService.getPosition, args: [id] },
+    }),
+    [id],
+  ));
   const [sidenavOpen, setSidenavOpen] = useState<boolean>(false);
   const [activePage, setActivePage] = useState<IPageName>('general');
   const breakpoint = useMediaQueryBreakpoint();
 
 
-  console.log(id);
+
 
 
   /* **********************************************************************************************
@@ -99,6 +109,12 @@ const Position = () => {
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
+  if (error) {
+    return <PageLoadError error={error} />;
+  }
+  if (loading) {
+    return <PageLoader />;
+  }
   return (
     <>
       <section

@@ -4,6 +4,7 @@ import {
   useEffect,
   Fragment,
 } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Archive } from 'lucide-react';
 import {
   Dialog,
@@ -33,6 +34,7 @@ import {
   formatDollarAmount,
   formatPercentageChange,
 } from '@/shared/services/transformers/index.service.ts';
+import { NavService } from '@/shared/services/nav/index.service';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
@@ -57,6 +59,7 @@ const PositionDialog = memo(({ data }: { data: string | IPosition }) => {
   const exchangeConfig = useBoundStore((state) => state.exchangeConfig!);
   const closePositionDialog = useBoundStore((state) => state.closePositionDialog);
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closePositionDialog);
+  const navigate = useNavigate();
 
 
 
@@ -90,6 +93,22 @@ const PositionDialog = memo(({ data }: { data: string | IPosition }) => {
     },
     [data],
   );
+
+
+
+
+
+  /* **********************************************************************************************
+   *                                        EVENT HANDLERS                                        *
+   ********************************************************************************************** */
+
+  /**
+   * Closes the dialog and navigates to the position's page.
+   */
+  const navigateToPosition = async (): Promise<void> => {
+    await handleCloseDialog();
+    navigate(NavService.position(position!.id));
+  };
 
 
 
@@ -298,7 +317,12 @@ const PositionDialog = memo(({ data }: { data: string | IPosition }) => {
             />
             }
           </div>
-          <DialogDescription>
+          <DialogDescription
+            role='button'
+            aria-label='Navigate to position'
+            className='hover:cursor-pointer'
+            onClick={navigateToPosition}
+          >
             {position?.id}
           </DialogDescription>
         </DialogHeader>

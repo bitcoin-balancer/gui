@@ -31,6 +31,7 @@ type INavService = {
   updatePassword: () => string;
   dashboard: () => string;
   positions: () => string;
+  position: (id: string) => string;
   server: () => string;
   adjustments: () => string;
   ipBlacklist: () => string;

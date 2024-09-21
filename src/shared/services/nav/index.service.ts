@@ -140,6 +140,13 @@ const navServiceFactory = (): INavService => {
   const positions = (): string => '/app/positions';
 
   /**
+   * Builds the path to the position page.
+   * @param id
+   * @returns string
+   */
+  const position = (id: string): string => `/app/position/${id}`;
+
+  /**
    * Builds the path to the server page.
    * @returns string
    */
@@ -199,6 +206,7 @@ const navServiceFactory = (): INavService => {
     updatePassword,
     dashboard,
     positions,
+    position,
     server,
     adjustments,
     ipBlacklist,
