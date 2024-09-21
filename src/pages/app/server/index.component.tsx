@@ -181,13 +181,11 @@ const Server = () => {
           >
 
             <SheetHeader>
-              <SheetTitle>Server</SheetTitle>
-              <SheetDescription>Subcomponents</SheetDescription>
+              <SheetTitle className='text-left'>Server</SheetTitle>
+              <SheetDescription></SheetDescription>
             </SheetHeader>
 
-            <nav
-              className='mt-3'
-            >
+            <nav>
               <Button
                 variant='ghost'
                 className='w-full justify-start'

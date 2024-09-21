@@ -1,4 +1,4 @@
-
+import { IPosition } from '@/shared/backend/position/index.service.ts';
 
 /* ************************************************************************************************
  *                                             TYPES                                              *
@@ -16,6 +16,7 @@ type INavItem = {
 
 // the props for all server components
 type IPositionComponentProps = {
+  position: IPosition
   setSidenavOpen: (value: boolean) => void;
 };
 
