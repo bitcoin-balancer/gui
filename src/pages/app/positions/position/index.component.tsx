@@ -23,6 +23,8 @@ import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import General from '@/pages/app/positions/position/general/index.component';
+import Trades from '@/pages/app/positions/position/trades/index.component';
+import Transactions from '@/pages/app/positions/position/transactions/index.component.tsx';
 import { IPageName, INavItem } from '@/pages/app/positions/position/types.ts';
 
 /* ************************************************************************************************
@@ -172,6 +174,20 @@ const Position = () => {
           {
             activePage === 'general'
             && <General
+              position={data}
+              setSidenavOpen={setSidenavOpen}
+            />
+          }
+          {
+            activePage === 'trades'
+            && <Trades
+              position={data}
+              setSidenavOpen={setSidenavOpen}
+            />
+          }
+          {
+            activePage === 'transactions'
+            && <Transactions
               position={data}
               setSidenavOpen={setSidenavOpen}
             />
