@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Menu } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { IPositionComponentProps } from '@/pages/app/positions/position/types.ts';
@@ -21,7 +20,7 @@ const General = ({ position, setSidenavOpen }: IPositionComponentProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const [active, setActive] = useState();
+  
 
 
 
@@ -79,7 +78,7 @@ const General = ({ position, setSidenavOpen }: IPositionComponentProps) => {
           >General</h1>
         </header>
 
-
+        <p>{position.id}</p>
       </section>
 
     </div>
