@@ -1,4 +1,6 @@
 import { IEventHistoryRecord } from '@/shared/backend/candlestick/index.service.js';
+import { ITrade } from '@/shared/backend/exchange/index.service.ts';
+import { ITransaction } from '@/shared/backend/position/transaction/index.service.ts';
 
 /* ************************************************************************************************
  *                                            SERVICE                                             *
@@ -23,6 +25,8 @@ type IPositionService = {
   listCompactPositions: (limit: number, startAtOpenTime?: number) => Promise<ICompactPosition[]>;
   listCompactPositionsByRange: (startAt: number, endAt?: number) => Promise<ICompactPosition[]>;
   getPositionHistory: (id: string) => Promise<IEventHistoryRecord>;
+  listPositionTrades: (id: string) => Promise<ITrade[]>;
+  listPositionTransactions: (id: string) => Promise<ITransaction[]>;
 
   // helpers
   getGainClassName: (gain: number) => string;

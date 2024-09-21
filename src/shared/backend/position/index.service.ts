@@ -1,6 +1,8 @@
 import { getBigNumber, processValue } from 'bignumber-utils';
 import { APIService } from '@/shared/backend/api/index.service.ts';
 import { IEventHistoryRecord } from '../candlestick/index.service.js';
+import { ITrade } from '../exchange/index.service.js';
+import { ITransaction } from './transaction/index.service.js';
 import {
   IPositionService,
   IPositionAction,
@@ -196,6 +198,36 @@ const positionServiceFactory = (): IPositionService => {
     true,
   ) as Promise<IEventHistoryRecord>;
 
+  /**
+   * Retrieves all the trades that were executed in a position.
+   * @param id
+   * @returns Promise<ITrade[]>
+   * @throws
+   * - 30500: if the ID is not a valid uuid v4
+   * - 30000: if the positition is not found in the db
+   */
+  const listPositionTrades = (id: string): Promise<ITrade[]> => APIService.request(
+    'GET',
+    `position/record/trades/${id}`,
+    undefined,
+    true,
+  ) as Promise<ITrade[]>;
+
+  /**
+   * Retrieves all the transactions that were executed in a position.
+   * @param id
+   * @returns Promise<ITransaction[]>
+   * @throws
+   * - 30500: if the ID is not a valid uuid v4
+   * - 30000: if the positition is not found in the db
+   */
+  const listPositionTransactions = (id: string): Promise<ITransaction[]> => APIService.request(
+    'GET',
+    `position/record/transactions/${id}`,
+    undefined,
+    true,
+  ) as Promise<ITransaction[]>;
+
 
 
 
@@ -261,6 +293,8 @@ const positionServiceFactory = (): IPositionService => {
     listCompactPositions,
     listCompactPositionsByRange,
     getPositionHistory,
+    listPositionTrades,
+    listPositionTransactions,
 
     // helpers
     getGainClassName,
