@@ -43,14 +43,20 @@ const Transactions = ({ position, setSidenavOpen }: IPositionComponentProps) => 
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
-  let content;
   if (error) {
-    content = <PageLoadError error={error} />;
-  } else if (loading) {
-    content = <PageLoader />;
-  } else {
-    content = (
-      <>
+    return <PageLoadError error={error} />;
+  }
+  if (loading) {
+    return <PageLoader />;
+  }
+  return (
+    <div
+      className='page-container flex justify-center items-start animate-in fade-in duration-700'
+    >
+
+      <section
+        className='w-full md:w-8/12 lg:w-7/12 xl:w-6/12 2xl:w-5/12'
+      >
         {/* ********
           * HEADER *
           ******** */}
@@ -114,18 +120,6 @@ const Transactions = ({ position, setSidenavOpen }: IPositionComponentProps) => 
           </Card>
             : <NoRecords />
         }
-      </>
-    );
-  }
-  return (
-    <div
-      className='page-container flex justify-center items-start animate-in fade-in duration-700'
-    >
-
-      <section
-        className='w-full md:w-8/12 lg:w-7/12 xl:w-6/12 2xl:w-5/12'
-      >
-        {content}
       </section>
 
     </div>

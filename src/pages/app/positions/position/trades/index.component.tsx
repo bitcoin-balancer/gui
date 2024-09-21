@@ -115,14 +115,20 @@ const Trades = ({ position, setSidenavOpen }: IPositionComponentProps) => {
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
-  let content;
   if (error) {
-    content = <PageLoadError error={error} />;
-  } else if (loading) {
-    content = <PageLoader />;
-  } else {
-    content = (
-      <>
+    return <PageLoadError error={error} />;
+  }
+  if (loading) {
+    return <PageLoader />;
+  }
+  return (
+    <div
+      className='page-container flex justify-center items-start animate-in fade-in duration-700'
+    >
+
+      <section
+        className='w-full xl:w-11/12 2xl:w-9/12'
+      >
         {/* ********
           * HEADER *
           ******** */}
@@ -324,18 +330,6 @@ const Trades = ({ position, setSidenavOpen }: IPositionComponentProps) => {
               </>
               : <NoRecords />
           }
-      </>
-    );
-  }
-  return (
-    <div
-      className='page-container flex justify-center items-start animate-in fade-in duration-700'
-    >
-
-      <section
-        className='w-full xl:w-11/12 2xl:w-9/12'
-      >
-        {content}
       </section>
 
     </div>
