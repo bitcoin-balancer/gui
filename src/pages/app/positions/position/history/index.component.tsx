@@ -69,7 +69,7 @@ const History = ({ position, setSidenavOpen }: IPositionComponentProps) => {
           <Button
             variant='ghost'
             size='icon'
-            className='mr-2'
+            className='mr-2 lg:hidden'
             onClick={() => setSidenavOpen(true)}
             aria-label='Open Side Navigation'
           ><Menu aria-hidden='true' /></Button>

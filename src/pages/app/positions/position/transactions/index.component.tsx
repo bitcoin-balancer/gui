@@ -60,7 +60,7 @@ const Transactions = ({ position, setSidenavOpen }: IPositionComponentProps) => 
           <Button
             variant='ghost'
             size='icon'
-            className='mr-2 md:hidden'
+            className='mr-2 lg:hidden'
             onClick={() => setSidenavOpen(true)}
             aria-label='Open Side Navigation'
           ><Menu aria-hidden='true' /></Button>

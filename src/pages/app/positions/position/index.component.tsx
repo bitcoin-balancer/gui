@@ -131,7 +131,7 @@ const Position = () => {
         * DESKTOP SIDENAV MENU *
         ********************** */}
         {
-          (breakpoint === 'md' || breakpoint === 'lg' || breakpoint === 'xl' || breakpoint === '2xl')
+          (breakpoint === 'lg' || breakpoint === 'xl' || breakpoint === '2xl')
           && <aside
             className='md:w-56 xl:w-64 pl-3 pt-3'
           >
@@ -171,7 +171,7 @@ const Position = () => {
           </aside>
         }
 
-        <div className='flex-1'>
+        <div className='flex-1 w-full'>
           {
             activePage === 'general'
             && <General
@@ -210,7 +210,7 @@ const Position = () => {
         * MOBILE SIDENAV MENU *
         ********************* */}
       {
-        (breakpoint === 'xs' || breakpoint === 'sm')
+        (breakpoint === 'xs' || breakpoint === 'sm' || breakpoint === 'md')
         && <Sheet
           open={sidenavOpen}
           onOpenChange={setSidenavOpen}
