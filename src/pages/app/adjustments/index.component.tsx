@@ -120,7 +120,7 @@ const Adjustments = () => {
                     >
                       {form.icon}
                       <div
-                        className='ml-2 max-w-52 sm:max-w-none'
+                        className='ml-2 max-w-[85%] sm:max-w-[90%]'
                       >
                         <p
                           className='font-bold'

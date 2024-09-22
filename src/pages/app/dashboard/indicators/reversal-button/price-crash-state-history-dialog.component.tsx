@@ -66,10 +66,7 @@ const PriceCrashStateHistoryDialog = memo(({
   );
 
   // the list of compact candlestick records
-  const records = useMemo(
-    () => CandlestickService.splitRecords(data?.records),
-    [data],
-  );
+  const records = useMemo(() => CandlestickService.splitRecords(data?.records), [data]);
 
 
 
