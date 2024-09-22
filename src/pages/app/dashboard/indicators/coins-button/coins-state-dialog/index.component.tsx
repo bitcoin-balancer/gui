@@ -25,6 +25,7 @@ import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
+import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
 import StateIcon from '@/shared/components/state-icon/index.component.tsx';
 import LineChart from '@/shared/components/charts/line-chart/index.component.tsx';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
@@ -52,7 +53,7 @@ const CoinsStateDialog = memo(({ asset, openSplitStatesDialog, closeDialog }: IC
   ));
   const [retrievingState, setRetrievingState] = useState<boolean>(false);
   const exchangeConfig = useBoundStore((state) => state.exchangeConfig!);
-
+  const breakpoint = useMediaQueryBreakpoint();
 
 
 
@@ -142,7 +143,7 @@ const CoinsStateDialog = memo(({ asset, openSplitStatesDialog, closeDialog }: IC
                   >{symbol}</span>
                   <LineChart
                     kind='line'
-                    height={150}
+                    height={breakpoint === 'xs' || breakpoint === 'sm' ? 200 : 150 }
                     data={charts[i]}
                     state={data.statesBySymbol[symbol].state}
                     showAttributionLogo={false}
