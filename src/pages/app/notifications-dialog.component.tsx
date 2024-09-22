@@ -92,7 +92,7 @@ const NotificationsDialog = ({
                 className={`py-8 px-6 first:pt-5 ${i < unreadRef.current ? 'bg-slate-50' : ''}`}
               >
                 <div
-                  className='flex justify-start items-center'
+                  className='flex justify-start items-start'
                 >
                   <p
                     className='font-medium'
@@ -100,7 +100,7 @@ const NotificationsDialog = ({
                   <span className='flex-1'></span>
                   <Badge
                     variant='secondary'
-                    className='text-xs max-w-24 sm:max-w-40'
+                    className='text-xs max-w-[50%]'
                   >
                     <p
                       className='truncate'

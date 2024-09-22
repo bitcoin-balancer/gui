@@ -37,7 +37,7 @@ const APIError = memo(({
     <Button
       id={id}
       variant='ghost'
-      className={`w-full justify-left items-center text-left h-auto py-5 px-3 text-wrap ${isUnread ? 'bg-slate-50' : ''}`}
+      className={`w-full max-w-full flex justify-start items-center text-left h-auto py-5 px-3 text-wrap ${isUnread ? 'bg-slate-50' : ''}`}
       aria-label='Display API Error'
       onClick={() => openDialog(data)}
     >
