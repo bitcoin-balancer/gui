@@ -3,6 +3,7 @@ import {
   Time,
   ISeriesApi,
   SeriesType,
+  SeriesMarker,
 } from 'lightweight-charts';
 import { ICompactCandlestickRecords } from '@/shared/backend/candlestick/index.service.ts';
 import { IState } from '@/shared/backend/market-state/shared/types.ts';
@@ -32,6 +33,9 @@ type IComponentProps = {
   // the current state of the module
   state?: IState;
 
+  // the markers that will be rendered in the chart
+  markers?: IMarker[];
+
   // the function that will be applied to each of the series items
   priceFormatterFunc?: IPriceFormatterFunc;
 };
@@ -55,6 +59,7 @@ type ICandlestickBar = {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type HorzScaleItem = any;
 type ICandlestickSeriesAPI = ISeriesApi<SeriesType, HorzScaleItem>;
+type IMarker = SeriesMarker<HorzScaleItem>;
 
 /**
  * Chart API Ref
@@ -89,6 +94,7 @@ export type {
   IPriceFormatterFunc,
   IComponentProps,
   ICandlestickBar,
+  IMarker,
   ICandlestickSeriesAPI,
   IChartAPIRef,
 };

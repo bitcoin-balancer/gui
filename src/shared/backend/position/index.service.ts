@@ -6,6 +6,7 @@ import { ITransaction } from './transaction/index.service.js';
 import {
   IPositionService,
   IPositionAction,
+  IDecreaseActions,
   IPosition,
   ICompactPosition,
 } from './types.js';
@@ -324,6 +325,7 @@ export {
 
   // types
   type IPositionAction,
+  type IDecreaseActions,
   type IPosition,
   type ICompactPosition,
 };

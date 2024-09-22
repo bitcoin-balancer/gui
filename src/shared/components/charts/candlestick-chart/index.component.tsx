@@ -1,6 +1,7 @@
 import { useRef, useLayoutEffect, useEffect } from 'react';
 import { createChart, IChartApi } from 'lightweight-charts';
 import { toLocalTime } from '@/shared/services/transformers/index.service.ts';
+import { arrayValid } from '@/shared/backend/validations/index.service.ts';
 import {
   toBars,
   buildChartOptions,
@@ -8,6 +9,7 @@ import {
 } from '@/shared/components/charts/candlestick-chart/utils.ts';
 import {
   IComponentProps,
+  IMarker,
   IChartAPIRef,
   ICandlestickSeriesAPI,
 } from '@/shared/components/charts/candlestick-chart/types.ts';
@@ -24,6 +26,7 @@ const CandlestickChart = ({
   height,
   data,
   state,
+  markers,
   priceFormatterFunc,
 }: IComponentProps) => {
   /* **********************************************************************************************
@@ -58,6 +61,9 @@ const CandlestickChart = ({
           wickUpColor: upColor,
           wickDownColor: downColor,
         });
+        if (arrayValid(markers)) {
+          this.__series.setMarkers(markers);
+        }
       }
       return this.__series;
     },
@@ -161,3 +167,6 @@ const CandlestickChart = ({
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export default CandlestickChart;
+export {
+  type IMarker,
+};

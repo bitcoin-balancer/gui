@@ -1,27 +1,33 @@
 import { Fragment, useMemo } from 'react';
-import {
-  CircleCheck,
-  CircleX,
-  Loader2,
-  Menu,
-} from 'lucide-react';
+import { Menu } from 'lucide-react';
+import { UTCTimestamp } from 'lightweight-charts';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
-import { Card, CardContent, CardHeader, CardTitle } from '@/shared/shadcn/components/ui/card.tsx';
-import { formatDate } from '@/shared/services/transformers/index.service.ts';
-import { useBoundStore } from '@/shared/store/index.store.ts';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/shared/shadcn/components/ui/card.tsx';
 import {
   CandlestickService,
   IEventHistoryRecord,
 } from '@/shared/backend/candlestick/index.service.ts';
-import { PositionService } from '@/shared/backend/position/index.service.ts';
+import {
+  PositionService,
+  IPositionAction,
+  IDecreaseActions,
+} from '@/shared/backend/position/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
 import NoRecords from '@/shared/components/no-records/index.component.tsx';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
-import CandlestickChart from '@/shared/components/charts/candlestick-chart/index.component.tsx';
+import CandlestickChart, {
+  IMarker,
+} from '@/shared/components/charts/candlestick-chart/index.component.tsx';
 import { IPositionComponentProps } from '@/pages/app/positions/position/types.ts';
+import { ColorService } from '@/shared/services/color/index.service';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
@@ -29,6 +35,59 @@ import { IPositionComponentProps } from '@/pages/app/positions/position/types.ts
 
 // the list of charts that show the history of a position
 const CHART_NAMES = ['Price', 'Gain', 'Entry price', 'Amount'];
+
+
+
+
+/* ************************************************************************************************
+ *                                            HELPERS                                             *
+ ************************************************************************************************ */
+
+/**
+ * Builds a marker object based on an action.
+ * @param action
+ * @param isIncrease
+ * @returns IMarker
+ */
+const buildMarker = (action: IPositionAction, isIncrease: boolean): IMarker => ({
+  time: action.eventTime as UTCTimestamp,
+  position: isIncrease ? 'belowBar' : 'aboveBar',
+  color: isIncrease ? ColorService.INCREASE_1 : ColorService.DECREASE_1,
+  shape: isIncrease ? 'arrowUp' : 'arrowDown',
+  text: isIncrease ? 'Increase' : 'Decrease',
+});
+
+/**
+ * Builds the markers for the increase actions
+ * @param actions
+ * @returns IMarker[]
+ */
+const buildIncreaseMarkers = (actions: IPositionAction[]): IMarker[] => actions.map(
+  (action) => buildMarker(action, true),
+);
+
+/**
+ * Builds the markers for the decrease actions.
+ * @param decreaseActions
+ * @returns IMarker[]
+ */
+const buildDecreaseMarkers = (actions: IDecreaseActions): IMarker[] => actions.flat().map(
+  (action) => buildMarker(action, false),
+);
+
+/**
+ * Builds the markers for all the actions that have taken place.
+ * @param increaseActions
+ * @param decreaseActions
+ * @returns IMarker[]
+ */
+const buildPositionMarkers = (
+  increaseActions: IPositionAction[],
+  decreaseActions: IDecreaseActions,
+): IMarker[] => [
+  ...buildIncreaseMarkers(increaseActions),
+  ...buildDecreaseMarkers(decreaseActions),
+];
 
 
 
@@ -62,6 +121,12 @@ const History = ({ position, setSidenavOpen }: IPositionComponentProps) => {
 
   // the list of compact candlestick records
   const records = useMemo(() => CandlestickService.splitRecords(data?.records), [data]);
+
+  // the list of markers that will be inserted into the price chart
+  const markers = useMemo(
+    () => buildPositionMarkers(position.increase_actions, position.decrease_actions),
+    [position],
+  );
 
 
 
@@ -125,6 +190,7 @@ const History = ({ position, setSidenavOpen }: IPositionComponentProps) => {
                         <CandlestickChart
                           height={breakpoint === 'xs' || breakpoint === 'sm' ? 350 : 375}
                           data={record}
+                          markers={i === 0 ? markers : undefined}
                         />
                       </CardContent>
                     </Card>
