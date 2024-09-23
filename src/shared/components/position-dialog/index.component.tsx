@@ -62,7 +62,7 @@ const PositionDialog = memo(({ data }: { data: string | IPosition }) => {
   const navigate = useNavigate();
 
 
-  console.log('PositionDialog');
+
 
 
   /* **********************************************************************************************
@@ -228,7 +228,9 @@ const PositionDialog = memo(({ data }: { data: string | IPosition }) => {
             <div
               className='text-right'
             >
-              <p>{formatDollarAmount(position!.pnl)}</p>
+              <p
+                className={PositionService.getGainClassName(position!.roi)}
+              >{position!.pnl > 0 ? '+' : ''}{formatDollarAmount(position!.pnl)}</p>
               <p
                 className={`${PositionService.getGainClassName(position!.roi)} text-sm`}
               >{formatPercentageChange(position!.roi, 2)}</p>

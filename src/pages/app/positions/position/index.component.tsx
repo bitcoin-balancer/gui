@@ -6,6 +6,7 @@ import {
   Gauge,
   List,
   ListChecks,
+  ReceiptText,
 } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import {
@@ -16,6 +17,7 @@ import {
   SheetTitle,
 } from '@/shared/shadcn/components/ui/sheet.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
+import { useBoundStore } from '@/shared/store/index.store.ts';
 import { PositionService, IPosition } from '@/shared/backend/position/index.service.ts';
 import { NavService } from '@/shared/services/nav/index.service';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
@@ -80,6 +82,7 @@ const Position = () => {
   const [sidenavOpen, setSidenavOpen] = useState<boolean>(false);
   const [activePage, setActivePage] = useState<IPageName>('general');
   const breakpoint = useMediaQueryBreakpoint();
+  const openPositionDialog = useBoundStore((state) => state.openPositionDialog);
   const navigate = useNavigate();
 
 
@@ -155,6 +158,18 @@ const Position = () => {
                   {item.icon} {item.name}
                 </Button>
               ))}
+
+              <Separator className='my-3' />
+              <Button
+                  variant='ghost'
+                  className='w-full justify-start'
+                  onClick={() => openPositionDialog(data)}
+                >
+                  <ReceiptText
+                    aria-hidden='true'
+                    className='mr-2 w-5 h-5'
+                  /> Display details
+              </Button>
 
               <Separator className='my-3' />
               <Button
@@ -240,6 +255,18 @@ const Position = () => {
                   {item.icon} {item.name}
                 </Button>
               ))}
+
+              <Separator className='my-3' />
+              <Button
+                  variant='ghost'
+                  className='w-full justify-start'
+                  onClick={() => openPositionDialog(data)}
+                >
+                  <ReceiptText
+                    aria-hidden='true'
+                    className='mr-2 w-5 h-5'
+                  /> Display details
+              </Button>
 
               <Separator className='my-3' />
               <Button

@@ -169,7 +169,7 @@ const Trades = ({ position, setSidenavOpen }: IPositionComponentProps) => {
             /> Display position
           </Button>
           <Button
-            disabled={isSubmitting}
+            disabled={isSubmitting || position.close !== null}
             className='hidden sm:flex'
           >
             <Plus
@@ -198,6 +198,7 @@ const Trades = ({ position, setSidenavOpen }: IPositionComponentProps) => {
               </DropdownMenuItem>
               <DropdownMenuItem
                 aria-label='Add trade'
+                disabled={position.close !== null}
                 onClick={handler}
               >
                 <Plus
