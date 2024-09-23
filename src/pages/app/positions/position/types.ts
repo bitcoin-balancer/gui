@@ -16,8 +16,9 @@ type INavItem = {
 
 // the props for all server components
 type IPositionComponentProps = {
-  position: IPosition
+  position: IPosition;
   setSidenavOpen: (value: boolean) => void;
+  refetchPosition: () => Promise<void>;
 };
 
 

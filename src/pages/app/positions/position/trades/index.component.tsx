@@ -86,7 +86,7 @@ const buildMetadata = (trades: ITrade[]): ITradeMetadata[] => {
  * Trades
  * Component in charge of displaying the trades that took place in a position.
  */
-const Trades = memo(({ position, setSidenavOpen }: IPositionComponentProps) => {
+const Trades = memo(({ position, setSidenavOpen, refetchPosition }: IPositionComponentProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
@@ -111,8 +111,9 @@ const Trades = memo(({ position, setSidenavOpen }: IPositionComponentProps) => {
 
 
   const handler = () => {
-    setIsSubmitting(true)
-  }
+    setIsSubmitting(true);
+    refetchPosition();
+  };
 
 
   /* **********************************************************************************************

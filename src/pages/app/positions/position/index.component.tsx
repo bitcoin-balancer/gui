@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   Archive,
@@ -102,15 +102,6 @@ const Position = () => {
 
 
   /* **********************************************************************************************
-   *                                         SIDE EFFECTS                                         *
-   ********************************************************************************************** */
-
-  // ...
-
-
-
-
-  /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
    ********************************************************************************************** */
 
@@ -122,6 +113,21 @@ const Position = () => {
     setSidenavOpen(false);
     setActivePage(name);
   };
+
+  /**
+   * Refetches the position record and updates the state.
+   * @returns Promise<void>
+   */
+  const refetchPosition = useCallback(
+    async () => {
+      try {
+        setData(await PositionService.getPosition(data.id));
+      } catch (e) {
+        errorToast(e);
+      }
+    },
+    [data, setData],
+  );
 
   /**
    * Prompts the user with the confirmation dialog and archives the active position.
@@ -294,6 +300,7 @@ const Position = () => {
             && <General
               position={data}
               setSidenavOpen={setSidenavOpen}
+              refetchPosition={refetchPosition}
             />
           }
           {
@@ -301,6 +308,7 @@ const Position = () => {
             && <History
               position={data}
               setSidenavOpen={setSidenavOpen}
+              refetchPosition={refetchPosition}
             />
           }
           {
@@ -308,6 +316,7 @@ const Position = () => {
             && <Trades
               position={data}
               setSidenavOpen={setSidenavOpen}
+              refetchPosition={refetchPosition}
             />
           }
           {
@@ -315,6 +324,7 @@ const Position = () => {
             && <Transactions
               position={data}
               setSidenavOpen={setSidenavOpen}
+              refetchPosition={refetchPosition}
             />
           }
         </div>
