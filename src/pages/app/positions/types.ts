@@ -1,4 +1,4 @@
-
+import { ISplitStateItem } from '@/shared/backend/market-state/shared/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -13,6 +13,20 @@ type IDateRange = {
   label: string;
 };
 
+// the result of processing the positions' data
+type IProcessedPositions = {
+  // header
+  pnl: string;
+  pnlClass: string;
+  roi: string;
+  roiClass: string;
+  investments: string;
+
+  // charts
+  pnlChart: ISplitStateItem[];
+  roiChart: ISplitStateItem[];
+  investmentsChart: ISplitStateItem[];
+};
 
 
 /* ************************************************************************************************
@@ -21,4 +35,5 @@ type IDateRange = {
 export type {
   IDateRangeID,
   IDateRange,
+  IProcessedPositions,
 };

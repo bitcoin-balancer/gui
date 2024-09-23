@@ -1,6 +1,16 @@
 import { formatDistance, subMonths, subYears } from 'date-fns';
 import { useMemo, useState, Fragment } from 'react';
-import { Calendar, List } from 'lucide-react';
+import {
+  Calendar,
+  List,
+  ArrowDownWideNarrow,
+  ArrowUpWideNarrow,
+  CalendarClock,
+  DollarSign,
+  HandCoins,
+  Menu,
+  Percent,
+} from 'lucide-react';
 import {
   Tabs,
   TabsContent,
@@ -23,16 +33,23 @@ import {
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
+import { Card, CardContent, CardHeader, CardTitle } from '@/shared/shadcn/components/ui/card.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
+import {
+  formatDate,
+  formatPNL,
+} from '@/shared/services/transformers/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { PositionService, ICompactPosition } from '@/shared/backend/position/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
-import { IDateRange, IDateRangeID } from '@/pages/app/positions/types.ts';
-import { Card, CardContent } from '@/shared/shadcn/components/ui/card';
-import { formatDate, formatPNL } from '@/shared/services/transformers/index.service';
+import {
+  IDateRange,
+  IDateRangeID,
+  IProcessedPositions,
+} from '@/pages/app/positions/types.ts';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
@@ -84,6 +101,23 @@ const calculateStartAt = (id: IDateRangeID): number => {
   }
 };
 
+// eslint-disable-next-line padded-blocks, arrow-body-style
+const processPositions = (positions: ICompactPosition[]): IProcessedPositions => {
+
+
+  // finally, return the build
+  return {
+    pnl: '+$1,855.96',
+    pnlClass: 'text-increase-1',
+    roi: '+15%',
+    roiClass: 'text-increase-1',
+    investments: '$10,555.85',
+    pnlChart: [],
+    roiChart: [],
+    investmentsChart: [],
+  };
+};
+
 
 
 
@@ -110,6 +144,7 @@ const Positions = () => {
     }),
     [range],
   ));
+  const [activeChart, setActiveChart] = useState<'pnl' | 'roi' | 'investments'>('pnl');
   const openPositionDialog = useBoundStore((state) => state.openPositionDialog);
   const breakpoint = useMediaQueryBreakpoint();
 
@@ -121,7 +156,9 @@ const Positions = () => {
    *                                       REACTIVE VALUES                                        *
    ********************************************************************************************** */
 
-  // reversed list of records that will be displayed in the dialog
+  /**
+   * Reversed list of records and computable values that will be displayed in the dialog
+   */
   const records = useMemo(() => (Array.isArray(data) ? [...data].reverse() : []), [data]);
   const openTimes = useMemo(
     () => (
@@ -151,6 +188,11 @@ const Positions = () => {
     ),
     [records],
   );
+
+  /**
+   * List of records that have not been archived as well as the computable values.
+   */
+  const processed = useMemo(() => processPositions(data), [data]);
 
 
 
@@ -216,7 +258,7 @@ const Positions = () => {
                 </DialogHeader>
 
                 <div>
-                  {data.map((record, i) => (
+                  {records.map((record, i) => (
                     <Fragment key={record.id}>
                       <button
                         id={`pd-${record.id}`}
@@ -287,15 +329,144 @@ const Positions = () => {
         {/* *********
           * CONTENT *
           ********* */}
-        <article>
-          <Card>
+        <article
+          className='mt-5'
+        >
 
-            <CardContent>
+          <header
+            className='flex flex-col sm:flex-row justify-center items-center gap-4'
+          >
 
-            </CardContent>
-          </Card>
+            {/* *****
+              * PNL *
+              ***** */}
+            <button
+              onClick={() => setActiveChart('pnl')}
+              disabled={activeChart === 'pnl'}
+              className='flex-1 w-full text-left'
+            >
+              <Card
+                className={`border-solid shadow-sm hover:bg-slate-50 ${activeChart === 'pnl' ? 'bg-slate-50 cursor-not-allowed' : ''}`}
+              >
+                <CardHeader
+                  className='p-4 flex flex-row items-center justify-between'
+                >
+                  <CardTitle
+                    className='text-base font-medium'
+                  >
+                    PNL
+                  </CardTitle>
+
+                  <HandCoins
+                    aria-hidden='true'
+                    className='h-5 w-5 md:h-6 md:w-6'
+                  />
+                </CardHeader>
+
+                <CardContent
+                  className='p-4'
+                >
+                  <p
+                    className={`text-2xl font-bold ${processed.pnlClass}`}
+                  >{processed.pnl}</p>
+                </CardContent>
+              </Card>
+            </button>
+
+            {/* *****
+              * ROI *
+              ***** */}
+            <button
+              onClick={() => setActiveChart('roi')}
+              disabled={activeChart === 'roi'}
+                className='flex-1 w-full text-left'
+            >
+              <Card
+                className={`border-solid shadow-sm hover:bg-slate-50 ${activeChart === 'roi' ? 'bg-slate-50 cursor-not-allowed' : ''}`}
+              >
+                <CardHeader
+                  className='p-4 flex flex-row items-center justify-between'
+                >
+                  <CardTitle
+                    className='text-base font-medium'
+                  >
+                    ROI
+                  </CardTitle>
+
+                  <Percent
+                    aria-hidden='true'
+                    className='h-5 w-5 md:h-6 md:w-6'
+                  />
+                </CardHeader>
+
+                <CardContent
+                  className='p-4'
+                >
+                  <p
+                    className={`text-2xl font-bold ${processed.roiClass}`}
+                  >
+                    {processed.roi}
+                  </p>
+                </CardContent>
+              </Card>
+            </button>
+
+            {/* *************
+              * INVESTMENTS *
+              ************* */}
+            <button
+              onClick={() => setActiveChart('investments')}
+              disabled={activeChart === 'investments'}
+              className='flex-1 w-full text-left'
+            >
+              <Card
+                className={`border-solid shadow-sm hover:bg-slate-50 ${activeChart === 'investments' ? 'bg-slate-50 cursor-not-allowed' : ''}`}
+              >
+                <CardHeader
+                  className='p-4 flex flex-row items-center justify-between'
+                >
+                  <CardTitle
+                    className='text-base font-medium'
+                  >
+                    Investments
+                  </CardTitle>
+
+                  <DollarSign
+                    aria-hidden='true'
+                    className='h-5 w-5 md:h-6 md:w-6'
+                  />
+                </CardHeader>
+
+                <CardContent
+                  className='p-4'
+                >
+                  <p
+                    className='text-2xl font-bold'
+                  >
+                    {processed.investments}
+                  </p>
+                </CardContent>
+              </Card>
+            </button>
+          </header>
+
+          <div>
+            {
+              activeChart === 'pnl'
+              && <p>PNL</p>
+            }
+
+            {
+              activeChart === 'roi'
+              && <p>ROI</p>
+            }
+
+            {
+              activeChart === 'investments'
+              && <p>Investments</p>
+            }
+          </div>
         </article>
-
       </section>
     </div>
   );
