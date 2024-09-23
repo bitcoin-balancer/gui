@@ -3,20 +3,10 @@ import { useMemo, useState, Fragment } from 'react';
 import {
   Calendar,
   List,
-  ArrowDownWideNarrow,
-  ArrowUpWideNarrow,
-  CalendarClock,
   DollarSign,
   HandCoins,
-  Menu,
   Percent,
 } from 'lucide-react';
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '@/shared/shadcn/components/ui/tabs.tsx';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -33,7 +23,12 @@ import {
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
-import { Card, CardContent, CardHeader, CardTitle } from '@/shared/shadcn/components/ui/card.tsx';
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+} from '@/shared/shadcn/components/ui/card.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import {
   formatDate,
@@ -104,7 +99,7 @@ const calculateStartAt = (id: IDateRangeID): number => {
 // eslint-disable-next-line padded-blocks, arrow-body-style
 const processPositions = (positions: ICompactPosition[]): IProcessedPositions => {
 
-
+  console.log(positions);
   // finally, return the build
   return {
     pnl: '+$1,855.96',
@@ -367,7 +362,7 @@ const Positions = () => {
                   className='p-4'
                 >
                   <p
-                    className={`text-2xl font-bold ${processed.pnlClass}`}
+                    className={`text-2xl font-bold ${processed.pnlClass} truncate`}
                   >{processed.pnl}</p>
                 </CardContent>
               </Card>
@@ -403,7 +398,7 @@ const Positions = () => {
                   className='p-4'
                 >
                   <p
-                    className={`text-2xl font-bold ${processed.roiClass}`}
+                    className={`text-2xl font-bold ${processed.roiClass} truncate`}
                   >
                     {processed.roi}
                   </p>
@@ -441,7 +436,7 @@ const Positions = () => {
                   className='p-4'
                 >
                   <p
-                    className='text-2xl font-bold'
+                    className='text-2xl font-bold truncate'
                   >
                     {processed.investments}
                   </p>
