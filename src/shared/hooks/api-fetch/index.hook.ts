@@ -139,6 +139,7 @@ const useAPIFetch: IAPIFetchHook = <T>({
 
     const fetchInitialData = async () => {
       try {
+        setLoading(true);
         const res = await executeFetchFunc<T>(fetchFunc);
         if (DEBUG) console.log('useAPIFetch.fetchInitialData', res);
         if (!ignore) {
