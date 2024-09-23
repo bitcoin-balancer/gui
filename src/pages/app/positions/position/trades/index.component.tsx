@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 import {
   ArrowLeftRight,
   EllipsisVertical,
@@ -86,7 +86,7 @@ const buildMetadata = (trades: ITrade[]): ITradeMetadata[] => {
  * Trades
  * Component in charge of displaying the trades that took place in a position.
  */
-const Trades = ({ position, setSidenavOpen }: IPositionComponentProps) => {
+const Trades = memo(({ position, setSidenavOpen }: IPositionComponentProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
@@ -339,7 +339,7 @@ const Trades = ({ position, setSidenavOpen }: IPositionComponentProps) => {
 
     </div>
   );
-};
+});
 
 
 
