@@ -1,4 +1,4 @@
-import { Fragment, useMemo } from 'react';
+import { memo, useMemo, Fragment } from 'react';
 import {
   CircleCheck,
   CircleX,
@@ -26,7 +26,7 @@ import { IPositionComponentProps } from '@/pages/app/positions/position/types.ts
  * Transactions
  * Component in charge of displaying the transactions that took place in a position.
  */
-const Transactions = ({ position, setSidenavOpen }: IPositionComponentProps) => {
+const Transactions = memo(({ position, setSidenavOpen }: IPositionComponentProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
@@ -35,6 +35,23 @@ const Transactions = ({ position, setSidenavOpen }: IPositionComponentProps) => 
     [position.id],
   ));
   const openTransactionDialog = useBoundStore((state) => state.openTransactionDialog);
+
+
+
+
+  /* **********************************************************************************************
+   *                                       REACTIVE VALUES                                        *
+   ********************************************************************************************** */
+
+  // the prettified dates in which the tx was executed
+  const dates = useMemo(
+    () => (
+      Array.isArray(data)
+        ? data.map((record) => formatDate(record.event_time, 'datetime-medium'))
+        : []
+    ),
+    [data],
+  );
 
 
 
@@ -104,7 +121,7 @@ const Transactions = ({ position, setSidenavOpen }: IPositionComponentProps) => 
                     >{record.side === 'BUY' ? 'Increase' : 'Decrease'}</p>
                     <p
                       className='text-light text-sm truncate'
-                    >{formatDate(record.event_time, 'datetime-medium')}</p>
+                    >{dates[i]}</p>
                   </div>
 
                   <span className='flex-1'></span>
@@ -124,7 +141,7 @@ const Transactions = ({ position, setSidenavOpen }: IPositionComponentProps) => 
 
     </div>
   );
-};
+});
 
 
 
