@@ -78,6 +78,7 @@ const positionServiceFactory = (): IPositionService => {
    * - 30500: if the ID is not a valid uuid v4
    * - 30509: if the positon doesn't exist
    * - 30510: if the positon has already been archived
+   * - 30512: if the positon is currently active
    */
   const archivePosition = (id: string, otpToken: string): Promise<void> => (
     APIService.request(

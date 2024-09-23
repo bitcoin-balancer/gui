@@ -20,6 +20,8 @@ import {
   SheetTitle,
 } from '@/shared/shadcn/components/ui/sheet.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
+import { toast } from '@/shared/shadcn/components/ui/use-toast.ts';
+import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { PositionService, IPosition } from '@/shared/backend/position/index.service.ts';
 import { NavService } from '@/shared/services/nav/index.service';
@@ -78,14 +80,20 @@ const Position = () => {
    *                                             STATE                                            *
    ********************************************************************************************** */
   const { id } = useParams();
-  const { data, loading, error } = useAPIFetch<IPosition>(useMemo(
+  const {
+    data,
+    setData,
+    loading,
+    error,
+  } = useAPIFetch<IPosition>(useMemo(
     () => ({ fetchFunc: { func: PositionService.getPosition, args: [id] } }),
     [id],
   ));
   const [sidenavOpen, setSidenavOpen] = useState<boolean>(false);
   const [activePage, setActivePage] = useState<IPageName>('general');
-  const breakpoint = useMediaQueryBreakpoint();
   const openPositionDialog = useBoundStore((state) => state.openPositionDialog);
+  const breakpoint = useMediaQueryBreakpoint();
+  const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -115,7 +123,57 @@ const Position = () => {
     setActivePage(name);
   };
 
+  /**
+   * Prompts the user with the confirmation dialog and archives the active position.
+   */
+  const archive = () => {
+    openConfirmationDialog({
+      mode: 'OTP',
+      title: 'Archive',
+      description: `The position ${data.id} will be archived immediately upon submission and won't be taken into consideration when calculating metrics`,
+      onConfirmation: async (confirmation: string) => {
+        try {
+          setIsSubmitting(true);
+          await PositionService.archivePosition(data.id, confirmation);
+          setData({ ...data, archived: true });
+          toast({
+            title: 'Success',
+            description: 'The position has been archived and will not be taken into consideration when calculating metrics.',
+          });
+        } catch (e) {
+          errorToast(e);
+        } finally {
+          setIsSubmitting(false);
+        }
+      },
+    });
+  };
 
+  /**
+   * Prompts the user with the confirmation dialog and unarchives the active position.
+   */
+  const unarchive = () => {
+    openConfirmationDialog({
+      mode: 'OTP',
+      title: 'Unarchive',
+      description: `The position ${data.id} will be unarchived immediately upon submission and will be taken into consideration when calculating metrics`,
+      onConfirmation: async (confirmation: string) => {
+        try {
+          setIsSubmitting(true);
+          await PositionService.unarchivePosition(data.id, confirmation);
+          setData({ ...data, archived: true });
+          toast({
+            title: 'Success',
+            description: 'The position has been unarchived and will be taken into consideration when calculating metrics.',
+          });
+        } catch (e) {
+          errorToast(e);
+        } finally {
+          setIsSubmitting(false);
+        }
+      },
+    });
+  };
 
 
 
@@ -184,7 +242,7 @@ const Position = () => {
                   ? <Button
                       variant='ghost'
                       className='w-full justify-start'
-                      onClick={() => openPositionDialog(data)}
+                      onClick={unarchive}
                       disabled={isSubmitting}
                     >
                       <ArchiveX
@@ -199,7 +257,7 @@ const Position = () => {
                   : <Button
                       variant='ghost'
                       className='w-full justify-start'
-                      onClick={() => openPositionDialog(data)}
+                      onClick={archive}
                       disabled={isSubmitting}
                     >
                       <Archive
