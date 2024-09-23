@@ -83,22 +83,37 @@ const PositionsDialog = memo(({ closeDialog }: { closeDialog: (nextState: undefi
 
   // open times
   const openTimes = useMemo(
-    () => data?.map((record) => formatDate(record.open, 'datetime-medium')),
+    () => (
+      Array.isArray(data)
+        ? data.map((record) => formatDate(record.open, 'datetime-medium'))
+        : []
+    ),
     [data],
   );
 
   // time distances
   const timeDistances = useMemo(
-    () => data?.map(
-      (record) => (
-        record.close === null ? 'Running...' : formatDistance(record.open, record.close)
-      ),
+    () => (
+      Array.isArray(data)
+        ? data.map(
+          (record) => (
+            record.close === null ? 'Running...' : formatDistance(record.open, record.close)
+          ),
+        )
+        : []
     ),
     [data],
   );
 
   // pnl values
-  const pnls = useMemo(() => data?.map((record) => formatPNL(record.pnl)), [data]);
+  const pnls = useMemo(
+    () => (
+      Array.isArray(data)
+        ? data.map((record) => formatPNL(record.pnl))
+        : []
+    ),
+    [data],
+  );
 
 
 

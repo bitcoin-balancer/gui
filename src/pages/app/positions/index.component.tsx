@@ -1,7 +1,6 @@
-import { subMonths, subYears } from 'date-fns';
-import { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Calendar, EllipsisVertical } from 'lucide-react';
+import { formatDistance, subMonths, subYears } from 'date-fns';
+import { useMemo, useState, Fragment } from 'react';
+import { Calendar, List } from 'lucide-react';
 import {
   Tabs,
   TabsContent,
@@ -11,17 +10,20 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/shared/shadcn/components/ui/dropdown-menu.tsx';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/shared/shadcn/components/ui/dialog.tsx';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
+import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
+import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { PositionService, ICompactPosition } from '@/shared/backend/position/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
@@ -29,7 +31,8 @@ import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/i
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import { IDateRange, IDateRangeID } from '@/pages/app/positions/types.ts';
-import { Button } from '@/shared/shadcn/components/ui/button';
+import { Card, CardContent } from '@/shared/shadcn/components/ui/card';
+import { formatDate, formatPNL } from '@/shared/services/transformers/index.service';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
@@ -107,8 +110,47 @@ const Positions = () => {
     }),
     [range],
   ));
+  const openPositionDialog = useBoundStore((state) => state.openPositionDialog);
   const breakpoint = useMediaQueryBreakpoint();
-  const navigate = useNavigate();
+
+
+
+
+
+  /* **********************************************************************************************
+   *                                       REACTIVE VALUES                                        *
+   ********************************************************************************************** */
+
+  // reversed list of records that will be displayed in the dialog
+  const records = useMemo(() => (Array.isArray(data) ? [...data].reverse() : []), [data]);
+  const openTimes = useMemo(
+    () => (
+      Array.isArray(records)
+        ? records.map((record) => formatDate(record.open, 'datetime-medium'))
+        : []
+    ),
+    [records],
+  );
+  const timeDistances = useMemo(
+    () => (
+      Array.isArray(records)
+        ? records.map(
+          (record) => (
+            record.close === null ? 'Running...' : formatDistance(record.open, record.close)
+          ),
+        )
+        : []
+    ),
+    [records],
+  );
+  const pnls = useMemo(
+    () => (
+      Array.isArray(records)
+        ? records.map((record) => formatPNL(record.pnl))
+        : []
+    ),
+    [records],
+  );
 
 
 
@@ -142,21 +184,87 @@ const Positions = () => {
 
             <span className='flex-1'></span>
 
+            {/* *********
+              * RECORDS *
+              ********* */}
+            <Dialog>
+              <DialogTrigger asChild>
+              {
+                  (breakpoint === 'xs' || breakpoint === 'sm')
+                    ? <Button
+                      variant='outline'
+                      size='icon'
+                      className='mr-2'
+                    >
+                      <List className='w-5 h-5' aria-hidden='true' />
+                    </Button>
+                    : <Button
+                      variant='outline'
+                      className='mr-2'
+                    >
+                      <List className='mr-1 w-5 h-5' aria-hidden='true' />
+                      Records
+                    </Button>
+                }
+              </DialogTrigger>
+              <DialogContent className='p-0'>
+                <DialogHeader className='p-6 pb-0'>
+                  <DialogTitle>Positions</DialogTitle>
+                  <DialogDescription>
+                    List of records within the range
+                  </DialogDescription>
+                </DialogHeader>
+
+                <div>
+                  {data.map((record, i) => (
+                    <Fragment key={record.id}>
+                      <button
+                        id={`pd-${record.id}`}
+                        className={`p-6 flex justify-start items-center w-full text-left ${record.archived ? 'opacity-50' : ''} hover:bg-slate-100`}
+                        onClick={() => openPositionDialog(record.id)}
+                        aria-label='Display position'
+                      >
+                        <div
+                          className='max-w-[60%] sm:max-w-[70%]'
+                        >
+                          <p
+                            className='font-medium truncate'
+                          >{openTimes[i]}</p>
+                          <p
+                            className='text-light text-sm truncate'
+                          >{timeDistances[i]}</p>
+                        </div>
+
+                        <span className='flex-1'></span>
+
+                        <Badge
+                          className={`bg-stateless ${record.pnl > 0 ? 'bg-increase-1' : 'bg-decrease-1'}`}
+                        >
+                          {pnls[i]}
+                        </Badge>
+                      </button>
+                      {i < data.length - 1 && <Separator />}
+                    </Fragment>
+                  ))}
+                </div>
+              </DialogContent>
+            </Dialog>
+
+            {/* ************
+              * RANGE MENU *
+              ************ */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 {
                   (breakpoint === 'xs' || breakpoint === 'sm')
                     ? <Button
                       size='icon'
-                      className='sm:hidden'
                     >
                       <Calendar className='w-5 h-5' aria-hidden='true' />
                     </Button>
-                    : <Button
-                      className='hidden sm:flex'
-                    >
+                    : <Button>
                       <Calendar className='mr-1 w-5 h-5' aria-hidden='true' />
-                      Range: {range.label}
+                      {range.label}
                     </Button>
                 }
               </DropdownMenuTrigger>
@@ -174,7 +282,20 @@ const Positions = () => {
             </DropdownMenu>
           </header>
 
-          
+
+
+        {/* *********
+          * CONTENT *
+          ********* */}
+        <article>
+          <Card>
+
+            <CardContent>
+
+            </CardContent>
+          </Card>
+        </article>
+
       </section>
     </div>
   );
