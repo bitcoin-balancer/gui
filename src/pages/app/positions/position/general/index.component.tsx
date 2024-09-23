@@ -73,7 +73,7 @@ const General = ({ position, setSidenavOpen }: IPositionComponentProps) => {
         </header>
 
         <div
-          className='grid grid-cols-1 md:grid-cols-2 gap-8'
+          className='grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-10'
         >
 
           {/* ************
@@ -91,7 +91,7 @@ const General = ({ position, setSidenavOpen }: IPositionComponentProps) => {
 
               <DollarSign
                 aria-hidden='true'
-                className='h-5 w-5 text-light'
+                className='h-6 w-6 text-light'
               />
             </CardHeader>
 
@@ -121,7 +121,7 @@ const General = ({ position, setSidenavOpen }: IPositionComponentProps) => {
 
               <CalendarClock
                 aria-hidden='true'
-                className='h-5 w-5 text-light'
+                className='h-6 w-6 text-light'
               />
             </CardHeader>
 
@@ -151,7 +151,7 @@ const General = ({ position, setSidenavOpen }: IPositionComponentProps) => {
 
               <ArrowUpWideNarrow
                 aria-hidden='true'
-                className='h-5 w-5 text-light'
+                className='h-6 w-6 text-light'
               />
             </CardHeader>
 
@@ -181,7 +181,7 @@ const General = ({ position, setSidenavOpen }: IPositionComponentProps) => {
 
               <ArrowDownWideNarrow
                 aria-hidden='true'
-                className='h-5 w-5 text-light'
+                className='h-6 w-6 text-light'
               />
             </CardHeader>
 
@@ -211,7 +211,7 @@ const General = ({ position, setSidenavOpen }: IPositionComponentProps) => {
 
               <HandCoins
                 aria-hidden='true'
-                className='h-5 w-5 text-light'
+                className='h-6 w-6 text-light'
               />
             </CardHeader>
 
@@ -241,7 +241,7 @@ const General = ({ position, setSidenavOpen }: IPositionComponentProps) => {
 
               <Percent
                 aria-hidden='true'
-                className='h-5 w-5 text-light'
+                className='h-6 w-6 text-light'
               />
             </CardHeader>
 
@@ -253,8 +253,6 @@ const General = ({ position, setSidenavOpen }: IPositionComponentProps) => {
               </p>
             </CardContent>
           </Card>
-
-          <Separator className='md:hidden' />
 
         </div>
 
