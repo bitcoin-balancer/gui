@@ -1,4 +1,4 @@
-import { Fragment, useMemo } from 'react';
+import { memo, useMemo, Fragment } from 'react';
 import { Menu } from 'lucide-react';
 import { UTCTimestamp } from 'lightweight-charts';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
@@ -18,6 +18,7 @@ import {
   IPositionAction,
   IDecreaseActions,
 } from '@/shared/backend/position/index.service.ts';
+import { ColorService } from '@/shared/services/color/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
 import NoRecords from '@/shared/components/no-records/index.component.tsx';
@@ -27,7 +28,6 @@ import CandlestickChart, {
   IMarker,
 } from '@/shared/components/charts/candlestick-chart/index.component.tsx';
 import { IPositionComponentProps } from '@/pages/app/positions/position/types.ts';
-import { ColorService } from '@/shared/services/color/index.service';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
@@ -101,7 +101,7 @@ const buildPositionMarkers = (
  * History
  * Component in charge of displaying the history of a position in OHLC format.
  */
-const History = ({ position, setSidenavOpen }: IPositionComponentProps) => {
+const History = memo(({ position, setSidenavOpen }: IPositionComponentProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
@@ -208,7 +208,7 @@ const History = ({ position, setSidenavOpen }: IPositionComponentProps) => {
 
     </div>
   );
-};
+});
 
 
 
