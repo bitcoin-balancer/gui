@@ -120,7 +120,7 @@ const General = memo(({ position, setSidenavOpen }: IPositionComponentProps) => 
 
               <DollarSign
                 aria-hidden='true'
-                className='h-6 w-6 text-light'
+                className='h-5 w-5 md:h-6 md:w-6'
               />
             </CardHeader>
 
@@ -150,7 +150,7 @@ const General = memo(({ position, setSidenavOpen }: IPositionComponentProps) => 
 
               <CalendarClock
                 aria-hidden='true'
-                className='h-6 w-6 text-light'
+                className='h-5 w-5 md:h-6 md:w-6'
               />
             </CardHeader>
 
@@ -180,7 +180,7 @@ const General = memo(({ position, setSidenavOpen }: IPositionComponentProps) => 
 
               <ArrowUpWideNarrow
                 aria-hidden='true'
-                className='h-6 w-6 text-light'
+                className='h-5 w-5 md:h-6 md:w-6'
               />
             </CardHeader>
 
@@ -210,7 +210,7 @@ const General = memo(({ position, setSidenavOpen }: IPositionComponentProps) => 
 
               <ArrowDownWideNarrow
                 aria-hidden='true'
-                className='h-6 w-6 text-light'
+                className='h-5 w-5 md:h-6 md:w-6'
               />
             </CardHeader>
 
@@ -240,7 +240,7 @@ const General = memo(({ position, setSidenavOpen }: IPositionComponentProps) => 
 
               <HandCoins
                 aria-hidden='true'
-                className='h-6 w-6 text-light'
+                className='h-5 w-5 md:h-6 md:w-6'
               />
             </CardHeader>
 
@@ -270,7 +270,7 @@ const General = memo(({ position, setSidenavOpen }: IPositionComponentProps) => 
 
               <Percent
                 aria-hidden='true'
-                className='h-6 w-6 text-light'
+                className='h-5 w-5 md:h-6 md:w-6'
               />
             </CardHeader>
 
