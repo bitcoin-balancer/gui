@@ -1,11 +1,14 @@
 import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
+  Archive,
+  ArchiveX,
   ArrowLeft,
   ChartCandlestick,
   Gauge,
   List,
   ListChecks,
+  Loader2,
   ReceiptText,
 } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
@@ -83,6 +86,7 @@ const Position = () => {
   const [activePage, setActivePage] = useState<IPageName>('general');
   const breakpoint = useMediaQueryBreakpoint();
   const openPositionDialog = useBoundStore((state) => state.openPositionDialog);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const navigate = useNavigate();
 
 
@@ -110,6 +114,8 @@ const Position = () => {
     setSidenavOpen(false);
     setActivePage(name);
   };
+
+
 
 
 
@@ -153,7 +159,7 @@ const Position = () => {
                   variant='ghost'
                   className='w-full justify-start'
                   onClick={() => setActivePage(item.id)}
-                  disabled={activePage === item.id}
+                  disabled={activePage === item.id || isSubmitting}
                 >
                   {item.icon} {item.name}
                 </Button>
@@ -164,6 +170,7 @@ const Position = () => {
                   variant='ghost'
                   className='w-full justify-start'
                   onClick={() => openPositionDialog(data)}
+                  disabled={isSubmitting}
                 >
                   <ReceiptText
                     aria-hidden='true'
@@ -172,10 +179,47 @@ const Position = () => {
               </Button>
 
               <Separator className='my-3' />
+              {
+                data.archived
+                  ? <Button
+                      variant='ghost'
+                      className='w-full justify-start'
+                      onClick={() => openPositionDialog(data)}
+                      disabled={isSubmitting}
+                    >
+                      <ArchiveX
+                        aria-hidden='true'
+                        className='mr-2 w-5 h-5'
+                      /> Unarchive position
+
+                      <span className='flex-1'></span>
+
+                      {isSubmitting && <Loader2 className='w-4 h-4 animate-spin'/>}
+                  </Button>
+                  : <Button
+                      variant='ghost'
+                      className='w-full justify-start'
+                      onClick={() => openPositionDialog(data)}
+                      disabled={isSubmitting}
+                    >
+                      <Archive
+                        aria-hidden='true'
+                        className='mr-2 w-5 h-5'
+                      /> Archive position
+
+                      <span className='flex-1'></span>
+
+                      {isSubmitting && <Loader2 className='w-4 h-4 animate-spin'/>}
+                  </Button>
+              }
+
+
+              <Separator className='my-3' />
               <Button
                   variant='ghost'
                   className='w-full justify-start'
                   onClick={() => navigate(NavService.positions())}
+                  disabled={isSubmitting}
                 >
                   <ArrowLeft
                     aria-hidden='true'
@@ -250,7 +294,7 @@ const Position = () => {
                   variant='ghost'
                   className='w-full justify-start'
                   onClick={() => navigateFromSidenav(item.id)}
-                  disabled={activePage === item.id}
+                  disabled={activePage === item.id || isSubmitting}
                 >
                   {item.icon} {item.name}
                 </Button>
@@ -261,6 +305,7 @@ const Position = () => {
                   variant='ghost'
                   className='w-full justify-start'
                   onClick={() => openPositionDialog(data)}
+                  disabled={isSubmitting}
                 >
                   <ReceiptText
                     aria-hidden='true'
@@ -273,6 +318,7 @@ const Position = () => {
                   variant='ghost'
                   className='w-full justify-start'
                   onClick={() => navigate(NavService.positions())}
+                  disabled={isSubmitting}
                 >
                   <ArrowLeft
                     aria-hidden='true'

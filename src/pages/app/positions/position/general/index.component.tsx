@@ -1,3 +1,4 @@
+import { memo, useMemo } from 'react';
 import { formatDistance } from 'date-fns';
 import {
   ArrowDownWideNarrow,
@@ -33,11 +34,39 @@ import { IPositionComponentProps } from '@/pages/app/positions/position/types.ts
  * General
  * Component in charge of displaying general information about a position.
  */
-const General = ({ position, setSidenavOpen }: IPositionComponentProps) => {
+const General = memo(({ position, setSidenavOpen }: IPositionComponentProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
   const serverTime = useBoundStore((state) => state.serverTime!);
+
+
+
+
+
+  /* **********************************************************************************************
+   *                                       REACTIVE VALUES                                        *
+   ********************************************************************************************** */
+
+  const investment = useMemo(
+    () => formatDollarAmount(position.amount_quote_in),
+    [position.amount_quote_in],
+  );
+
+  const duration = useMemo(
+    () => formatDistance(position.open, position.close || serverTime),
+    [position.open, position.close, serverTime],
+  );
+
+  const decreaseActions = useMemo(
+    () => position.decrease_actions.flat().length,
+    [position.decrease_actions],
+  );
+
+  const pnl = useMemo(() => formatDollarAmount(position.pnl), [position.pnl]);
+
+  const roi = useMemo(() => formatPercentageChange(position.roi), [position.roi]);
+  const roiClass = useMemo(() => PositionService.getGainClassName(position.roi), [position.roi]);
 
 
 
@@ -99,7 +128,7 @@ const General = ({ position, setSidenavOpen }: IPositionComponentProps) => {
               <p
                 className='text-2xl font-bold'
               >
-                {formatDollarAmount(position.amount_quote_in)}
+                {investment}
               </p>
             </CardContent>
           </Card>
@@ -129,7 +158,7 @@ const General = ({ position, setSidenavOpen }: IPositionComponentProps) => {
               <p
                 className='text-2xl font-bold truncate'
               >
-                {formatDistance(position.open, position.close || serverTime)}
+                {duration}
               </p>
             </CardContent>
           </Card>
@@ -189,7 +218,7 @@ const General = ({ position, setSidenavOpen }: IPositionComponentProps) => {
               <p
                 className='text-2xl font-bold'
               >
-                {position.decrease_actions.flat().length} times
+                {decreaseActions} times
               </p>
             </CardContent>
           </Card>
@@ -219,7 +248,7 @@ const General = ({ position, setSidenavOpen }: IPositionComponentProps) => {
               <p
                 className={`text-2xl font-bold ${position.pnl > 0 ? 'text-increase-1' : 'text-decrease-1'}`}
               >
-                {position.pnl > 0 ? '+' : ''}{formatDollarAmount(position.pnl)}
+                {position.pnl > 0 ? '+' : ''}{pnl}
               </p>
             </CardContent>
           </Card>
@@ -247,9 +276,9 @@ const General = ({ position, setSidenavOpen }: IPositionComponentProps) => {
 
             <CardContent>
               <p
-                className={`text-2xl font-bold ${PositionService.getGainClassName(position!.roi)}`}
+                className={`text-2xl font-bold ${roiClass}`}
               >
-                {formatPercentageChange(position.roi)}
+                {roi}
               </p>
             </CardContent>
           </Card>
@@ -260,7 +289,7 @@ const General = ({ position, setSidenavOpen }: IPositionComponentProps) => {
 
     </div>
   );
-};
+});
 
 
 
