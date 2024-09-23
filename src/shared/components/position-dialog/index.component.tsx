@@ -62,6 +62,8 @@ const PositionDialog = memo(({ data }: { data: string | IPosition }) => {
   const navigate = useNavigate();
 
 
+  console.log('PositionDialog');
+
 
   /* **********************************************************************************************
    *                                         SIDE EFFECTS                                         *
@@ -272,7 +274,15 @@ const PositionDialog = memo(({ data }: { data: string | IPosition }) => {
           >
             {position!.decrease_actions.map((decreaseLevel, levelNum) => (
               <AccordionItem key={levelNum} value={`level-${levelNum}`}>
-                <AccordionTrigger>Level {levelNum}</AccordionTrigger>
+                <AccordionTrigger
+                  className='flex justify-start items-center'
+                >
+                  <p>Level {levelNum}</p>
+                  <p
+                    className='text-light text-sm ml-2'
+                  >{formatDollarAmount(position!.decrease_price_levels[levelNum])}</p>
+                  <span className='flex-1'></span>
+                </AccordionTrigger>
                 <AccordionContent>
                   {
                     decreaseLevel.length

@@ -110,6 +110,9 @@ const Trades = ({ position, setSidenavOpen }: IPositionComponentProps) => {
 
 
 
+  const handler = () => {
+    setIsSubmitting(true)
+  }
 
 
   /* **********************************************************************************************
@@ -195,6 +198,7 @@ const Trades = ({ position, setSidenavOpen }: IPositionComponentProps) => {
               </DropdownMenuItem>
               <DropdownMenuItem
                 aria-label='Add trade'
+                onClick={handler}
               >
                 <Plus
                   aria-hidden='true'
