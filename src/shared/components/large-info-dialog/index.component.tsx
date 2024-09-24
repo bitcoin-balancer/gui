@@ -7,6 +7,7 @@ import {
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
+import Terms from '@/shared/components/large-info-dialog/terms.component.tsx';
 import { ISectionID, ISections } from '@/shared/components/large-info-dialog/types.ts';
 
 /* ************************************************************************************************
@@ -92,7 +93,7 @@ const LargeInfoDialog = ({ data }: { data: ISectionID }) => {
           *************** */}
         <DialogHeader>
 
-          <DialogTitle>{section.title}</DialogTitle>
+          <DialogTitle className='text-xl'>{section.title}</DialogTitle>
           <DialogDescription>{section.description}</DialogDescription>
 
         </DialogHeader>
@@ -102,7 +103,7 @@ const LargeInfoDialog = ({ data }: { data: ISectionID }) => {
         {/* ****************
           * DIALOG CONTENT *
           **************** */}
-        <p>@TODO</p>
+        { data === 'terms' && <Terms />}
 
       </DialogContent>
 

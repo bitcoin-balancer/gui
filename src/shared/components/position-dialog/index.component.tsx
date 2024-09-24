@@ -40,6 +40,7 @@ import PageLoadError from '@/shared/components/page-load-error/index.component.t
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import NoRecords from '@/shared/components/no-records/index.component.tsx';
 import PositionAction from '@/shared/components/position-dialog/position-action.component.tsx';
+import { Badge } from '@/shared/shadcn/components/ui/badge';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -161,7 +162,9 @@ const PositionDialog = memo(({ data }: { data: string | IPosition }) => {
               >{formatDate(position!.open, 'datetime-medium')}</p>
               {
                 position!.close !== null
-                  ? <p>{formatDate(position!.close, 'datetime-medium')}</p>
+                  ? <p
+                    className='truncate'
+                  >{formatDate(position!.close, 'datetime-medium')}</p>
                   : <p
                     className='text-light text-sm'
                   >N/A</p>
@@ -284,6 +287,12 @@ const PositionDialog = memo(({ data }: { data: string | IPosition }) => {
                     className='text-light text-sm ml-2'
                   >{formatDollarAmount(position!.decrease_price_levels[levelNum])}</p>
                   <span className='flex-1'></span>
+                  <Badge
+                    variant='secondary'
+                    className='mr-2'
+                  >
+                    {position!.decrease_actions[levelNum].length}
+                  </Badge>
                 </AccordionTrigger>
                 <AccordionContent>
                   {
