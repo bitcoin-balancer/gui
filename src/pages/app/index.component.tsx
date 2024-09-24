@@ -26,6 +26,7 @@ import { formatBadgeCount } from '@/shared/services/transformers/index.service.t
 import { NavService } from '@/shared/services/nav/index.service.ts';
 import { useSocketEvent } from '@/shared/hooks/socket-event/index.component.ts';
 import InfoDialog from '@/shared/components/info-dialog/index.component.tsx';
+import LargeInfoDialog from '@/shared/components/large-info-dialog/index.component.tsx';
 import ConfirmationDialog from '@/shared/components/confirmation-dialog/index.component.tsx';
 import PositionDialog from '@/shared/components/position-dialog/index.component.tsx';
 import TransactionDialog from '@/shared/components/transaction-dialog/index.component.tsx';
@@ -67,6 +68,7 @@ const App = () => {
   const version = useBoundStore((state) => state.version);
   const unreadAPIErrors = useBoundStore((state) => state.unreadAPIErrors);
   const setAppEssentials = useBoundStore((state) => state.setAppEssentials);
+  const isLargeInfoDialogOpen = useBoundStore((state) => state.isLargeInfoDialogOpen);
   const isPositionDialogOpen = useBoundStore((state) => state.isPositionDialogOpen);
   const isTransactionDialogOpen = useBoundStore((state) => state.isTransactionDialogOpen);
   const compactAppEssentials = useSocketEvent('compact_app_essentials');
@@ -267,6 +269,16 @@ const App = () => {
         * INFO DIALOG *
         ************* */}
       <InfoDialog />
+
+      {/* *******************
+        * LARGE INFO DIALOG *
+        ******************* */}
+      {
+        isLargeInfoDialogOpen !== undefined
+        && <LargeInfoDialog
+          data={isLargeInfoDialogOpen}
+        />
+      }
 
 
 

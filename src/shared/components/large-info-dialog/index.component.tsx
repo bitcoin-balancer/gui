@@ -7,7 +7,43 @@ import {
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
-import { ISectionID } from '@/shared/components/large-info-dialog/types.ts';
+import { ISectionID, ISections } from '@/shared/components/large-info-dialog/types.ts';
+
+/* ************************************************************************************************
+ *                                           CONSTANTS                                            *
+ ************************************************************************************************ */
+
+// the list of supported sections
+const SECTIONS: ISections = {
+  window: {
+    title: 'Window',
+    description: '',
+  },
+  liquidity: {
+    title: 'Liquidity',
+    description: '',
+  },
+  coins: {
+    title: 'Coins',
+    description: '',
+  },
+  reversal: {
+    title: 'Reversal',
+    description: '',
+  },
+  strategy: {
+    title: 'Strategy',
+    description: '',
+  },
+  terms: {
+    title: 'Terms',
+    description: '',
+  },
+};
+
+
+
+
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -23,9 +59,17 @@ const LargeInfoDialog = ({ data }: { data: ISectionID }) => {
    ********************************************************************************************** */
   const closeLargeInfoDialog = useBoundStore((state) => state.closeLargeInfoDialog);
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeLargeInfoDialog);
-  const isOpen = useBoundStore((state) => state.isInfoDialogOpen);
-  const config = useBoundStore((state) => state.infoDialogConfig!);
-  const closeDialog = useBoundStore((state) => state.closeInfoDialog);
+
+
+
+
+
+  /* **********************************************************************************************
+   *                                       REACTIVE VALUES                                        *
+   ********************************************************************************************** */
+
+  // the section that will be displayed
+  const section = SECTIONS[data];
 
 
 
@@ -36,8 +80,8 @@ const LargeInfoDialog = ({ data }: { data: ISectionID }) => {
    ********************************************************************************************** */
   return (
     <Dialog
-      open={isOpen}
-      onOpenChange={closeDialog}
+      open={isDialogOpen}
+      onOpenChange={handleCloseDialog}
     >
       <DialogContent
         className='max-w-[900px]'
@@ -48,8 +92,8 @@ const LargeInfoDialog = ({ data }: { data: ISectionID }) => {
           *************** */}
         <DialogHeader>
 
-          <DialogTitle>{config?.title}</DialogTitle>
-          <DialogDescription>{config?.description}</DialogDescription>
+          <DialogTitle>{section.title}</DialogTitle>
+          <DialogDescription>{section.description}</DialogDescription>
 
         </DialogHeader>
 
@@ -58,7 +102,7 @@ const LargeInfoDialog = ({ data }: { data: ISectionID }) => {
         {/* ****************
           * DIALOG CONTENT *
           **************** */}
-        
+        <p>@TODO</p>
 
       </DialogContent>
 

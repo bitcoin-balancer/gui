@@ -99,6 +99,7 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
   const [isDecreaseMenuOpen, setIsDecreaseMenuOpen] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [activeDialog, setActiveDialog] = useState<'balances' | 'positions' | 'transactions'>();
+  const openLargeInfoDialog = useBoundStore((state) => state.openLargeInfoDialog);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
   const openPositionDialog = useBoundStore((state) => state.openPositionDialog);
 
@@ -280,7 +281,9 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
                       className='mr-1 h-5 w-5'
                     /> Transactions
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => openLargeInfoDialog('strategy')}
+                >
                   <ArrowLeftRight
                       aria-hidden='true'
                       className='mr-1 h-5 w-5'

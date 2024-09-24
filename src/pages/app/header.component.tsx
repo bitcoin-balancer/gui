@@ -11,6 +11,7 @@ import {
   LogOut,
   Loader2,
   FlaskConical,
+  Scale,
 } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
@@ -55,6 +56,7 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
   const breakpoint = useMediaQueryBreakpoint();
   const [sidenavOpen, setSidenavOpen] = useState<boolean>(false);
   const navigate = useNavigate();
+  const openLargeInfoDialog = useBoundStore((state) => state.openLargeInfoDialog);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
   const version = useBoundStore((state) => state.version!);
   const [isSigningOut, setIsSigningOut] = useState<boolean>(false);
@@ -233,7 +235,7 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
         </SheetTrigger>
 
         <SheetContent
-          className='w-64 sm:72 md-80 lg:96 p-4'
+          className='w-64 sm:72 md-80 lg:96 p-4 overflow-y-auto'
         >
           <SheetHeader>
             <SheetTitle
@@ -298,7 +300,9 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
               <EarthLock
                 aria-hidden='true'
                 className='w-5 h-5 mr-2'
-              /> IP address blacklist</Button>
+              /> IP address blacklist
+            </Button>
+
             <Button
               variant='ghost'
               className='w-full justify-start'
@@ -308,7 +312,9 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
               <Users
                 aria-hidden='true'
                 className='w-5 h-5 mr-2'
-              /> Users</Button>
+              /> Users
+            </Button>
+
             <Button
               variant='ghost'
               className='w-full justify-start'
@@ -342,7 +348,9 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
               <ExternalLink
                 aria-hidden='true'
                 className='w-5 h-5 mr-2'
-              /> Create new instance</Button>
+              /> Create new instance
+            </Button>
+
             <Button
               variant='ghost'
               className='w-full justify-start'
@@ -352,7 +360,9 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
               <FlaskConical
                 aria-hidden='true'
                 className='w-5 h-5 mr-2'
-              /> About the project</Button>
+              /> About the project
+            </Button>
+
             <Button
               variant='ghost'
               className='w-full justify-start'
@@ -361,24 +371,37 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
               <Github
                 aria-hidden='true'
                 className='w-5 h-5 mr-2'
-              /> View on GitHub</Button>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-              <Button
-                variant='ghost'
-                className='w-full justify-start'
-                disabled={isSigningOut}
-              >
-                <LogOut
+              /> View on GitHub
+            </Button>
+
+            <Button
+              variant='ghost'
+              className='w-full justify-start'
+              onClick={() => openLargeInfoDialog('terms')}
+            >
+              <Scale
                 aria-hidden='true'
                 className='w-5 h-5 mr-2'
-              /> Sign out
-                <span className='flex-1'></span>
-                {
-                  isSigningOut
-                  && <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-                }
+              /> Terms
             </Button>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant='ghost'
+                  className='w-full justify-start'
+                  disabled={isSigningOut}
+                >
+                  <LogOut
+                    aria-hidden='true'
+                    className='w-5 h-5 mr-2'
+                  /> Sign out
+                    <span className='flex-1'></span>
+                    {
+                      isSigningOut
+                      && <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                    }
+                </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem onClick={() => signOut(false)}>

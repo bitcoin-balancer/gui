@@ -49,7 +49,7 @@ const Coins = memo(({ coinsStates, openSplitStatesDialog }: IComponentProps) => 
   const [activeSymbol, setActiveSymbol] = useState<string>('');
   const [isRetrievingState, setIsRetrievingState] = useState<boolean>(false);
   const exchangeConfig = useBoundStore((state) => state.exchangeConfig!);
-  /* console.log('In Coins'); */
+  const openLargeInfoDialog = useBoundStore((state) => state.openLargeInfoDialog);
 
 
 
@@ -147,7 +147,9 @@ const Coins = memo(({ coinsStates, openSplitStatesDialog }: IComponentProps) => 
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <DropdownMenuLabel>Information</DropdownMenuLabel>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => openLargeInfoDialog('coins')}
+                  >
                     <Bitcoin
                       aria-hidden='true'
                       className='mr-1 h-5 w-5'

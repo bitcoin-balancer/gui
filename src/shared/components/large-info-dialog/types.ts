@@ -6,8 +6,16 @@
  ************************************************************************************************ */
 
 // the list of sections supported by the large info dialog
-type ISectionID = 'window' | 'liquidity' | 'coins' | 'reversal' | 'strategy';
+type ISectionID = 'window' | 'liquidity' | 'coins' | 'reversal' | 'strategy' | 'terms';
 
+// details about each section
+type ISection = {
+  title: string;
+  description: string;
+};
+type ISections = {
+  [id in ISectionID]: ISection;
+};
 
 
 
@@ -17,4 +25,5 @@ type ISectionID = 'window' | 'liquidity' | 'coins' | 'reversal' | 'strategy';
  ************************************************************************************************ */
 export type {
   ISectionID,
+  ISections,
 };
