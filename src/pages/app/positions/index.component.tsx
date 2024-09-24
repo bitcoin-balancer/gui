@@ -38,20 +38,21 @@ import {
   formatPercentageChange,
   formatPNL,
 } from '@/shared/services/transformers/index.service.ts';
+import { arrayValid } from '@/shared/backend/validations/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
+import { ISplitStateItem, IState } from '@/shared/backend/market-state/shared/types.ts';
 import { PositionService, ICompactPosition } from '@/shared/backend/position/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
+import NoRecords from '@/shared/components/no-records/index.component.tsx';
+import LineChart from '@/shared/components/charts/line-chart/index.component.tsx';
 import {
   IDateRange,
   IDateRangeID,
   IProcessedPositions,
 } from '@/pages/app/positions/types.ts';
-import NoRecords from '@/shared/components/no-records/index.component';
-import { ISplitStateItem } from '@/shared/backend/market-state/shared/types';
-import { arrayValid } from '@/shared/backend/validations/index.service';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
@@ -104,6 +105,21 @@ const calculateStartAt = (id: IDateRangeID): number => {
 };
 
 /**
+ * Retrieves the state of a data item based on its value.
+ * @param value
+ * @returns IState
+ */
+const getValueState = (value: number): IState => {
+  if (value > 0) {
+    return 1;
+  }
+  if (value < 0) {
+    return -1;
+  }
+  return 0;
+};
+
+/**
  * Processes a list of unarchived positions and retrieves the data needed to render the view.
  * @param positions
  * @returns IProcessedPositions
@@ -131,14 +147,17 @@ const processPositions = (positions: ICompactPosition[] | undefined): IProcessed
     });
   }
 
-  // calculate the means
+  // calculate the values
+  const pnlValue = pnlAccum.toNumber();
   const roiMean = calculateMean(roi);
   const investmentsMean = calculateMean(investments);
 
   // finally, return the build
   return {
-    pnl: formatPNL(pnlAccum.toNumber()),
+    pnlState: getValueState(pnlValue),
+    pnl: formatPNL(pnlValue),
     pnlClass: PositionService.getPNLClassName(pnlAccum.toNumber()),
+    roiState: getValueState(roiMean),
     roi: formatPercentageChange(roiMean),
     roiClass: PositionService.getGainClassName(roiMean),
     investments: formatDollarAmount(investmentsMean),
@@ -481,7 +500,7 @@ const Positions = () => {
                         className='p-4'
                       >
                         <p
-                          className='text-2xl font-bold truncate'
+                          className='text-2xl font-bold'
                         >
                           {processed.investments}
                         </p>
@@ -490,20 +509,48 @@ const Positions = () => {
                   </button>
                 </header>
 
-                <div>
+                <div
+                  className='mt-5'
+                >
                   {
                     activeChart === 'pnl'
-                    && <p>PNL</p>
+                    && <div
+                      className='animate-in fade-in duration-700'
+                    >
+                      <LineChart
+                        kind='area'
+                        height={breakpoint === 'xs' || breakpoint === 'sm' ? 350 : 450}
+                        data={processed.pnlChart}
+                        state={processed.pnlState}
+                      />
+                    </div>
                   }
 
                   {
                     activeChart === 'roi'
-                    && <p>ROI</p>
+                    && <div
+                      className='animate-in fade-in duration-700'
+                    >
+                      <LineChart
+                        kind='area'
+                        height={breakpoint === 'xs' || breakpoint === 'sm' ? 350 : 450}
+                        data={processed.roiChart}
+                        state={processed.roiState}
+                      />
+                    </div>
                   }
 
                   {
                     activeChart === 'investments'
-                    && <p>Investments</p>
+                    && <div
+                      className='animate-in fade-in duration-700'
+                    >
+                      <LineChart
+                        kind='area'
+                        height={breakpoint === 'xs' || breakpoint === 'sm' ? 350 : 450}
+                        data={processed.investmentsChart}
+                      />
+                    </div>
                   }
                 </div>
               </>

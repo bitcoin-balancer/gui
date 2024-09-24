@@ -1,4 +1,4 @@
-import { ISplitStateItem } from '@/shared/backend/market-state/shared/types.ts';
+import { ISplitStateItem, IState } from '@/shared/backend/market-state/shared/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -16,8 +16,10 @@ type IDateRange = {
 // the result of processing the positions' data
 type IProcessedPositions = {
   // header
+  pnlState: IState;
   pnl: string;
   pnlClass: string;
+  roiState: IState;
   roi: string;
   roiClass: string;
   investments: string;
