@@ -70,7 +70,7 @@ const SignIn = () => {
     openConfirmationDialog({
       mode: 'OTP',
       title: 'Sign in',
-      description: 'Your session will be instantiated immediately upon submission and will last for approximately 30 days',
+      description: 'Signing in means you agree to our terms of use',
       onConfirmation: async (confirmation: string) => {
         try {
           setIsSubmitting(true);

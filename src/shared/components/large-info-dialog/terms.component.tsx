@@ -1,10 +1,8 @@
-
+import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
-
-import { Separator } from "@/shared/shadcn/components/ui/separator";
 
 /**
  * Terms
