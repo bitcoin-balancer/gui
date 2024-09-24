@@ -39,7 +39,8 @@ const Landing = () => {
         * HEADER *
         ******** */}
       <header
-        id='landing-header' className='flex justify-center items-center gap-3 bg-primary p-4'
+        id='landing-header'
+        className='flex justify-center items-center gap-3 bg-primary p-4'
       >
 
         <img
