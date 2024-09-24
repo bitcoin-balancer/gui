@@ -261,7 +261,7 @@ const Positions = () => {
       className='page-container flex justify-center items-start animate-in fade-in duration-700'
     >
       <section
-        className='w-full lg:w-9/12 xl:w-7/12 2xl:w-6/12'
+        className='w-full lg:w-10/12 xl:w-9/12 2xl:w-8/12'
       >
         {/* ********
           * HEADER *
