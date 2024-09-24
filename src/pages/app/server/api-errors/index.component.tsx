@@ -75,6 +75,7 @@ const APIErrors = memo(({ setSidenavOpen, unreadAPIErrors }: IServerComponentPro
   const [activeDialog, setActiveDialog] = useState<IAPIError>();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
+  const { authority } = useBoundStore((state) => state.user!);
 
 
 
@@ -174,7 +175,7 @@ const APIErrors = memo(({ setSidenavOpen, unreadAPIErrors }: IServerComponentPro
             </Button>
             <Button
               onClick={deleteAll}
-              disabled={isSubmitting || data.length === 0 || refetching}
+              disabled={isSubmitting || data.length === 0 || refetching || authority < 3}
               className='hidden sm:flex'
             >
               <Trash
@@ -203,7 +204,7 @@ const APIErrors = memo(({ setSidenavOpen, unreadAPIErrors }: IServerComponentPro
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={deleteAll}
-                  disabled={data.length === 0}
+                  disabled={data.length === 0 || authority < 3}
                   aria-label='Delete all of the API Errors'
                 >
                   <Trash

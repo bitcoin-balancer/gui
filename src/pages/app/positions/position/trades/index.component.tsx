@@ -95,6 +95,7 @@ const Trades = memo(({ position, setSidenavOpen, refetchPosition }: IPositionCom
     [position.id],
   ));
   const openPositionDialog = useBoundStore((state) => state.openPositionDialog);
+  const { authority } = useBoundStore((state) => state.user!);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
 
@@ -170,7 +171,7 @@ const Trades = memo(({ position, setSidenavOpen, refetchPosition }: IPositionCom
             /> Display position
           </Button>
           <Button
-            disabled={isSubmitting || position.close !== null}
+            disabled={isSubmitting || authority < 4}
             className='hidden sm:flex'
           >
             <Plus
@@ -301,7 +302,7 @@ const Trades = memo(({ position, setSidenavOpen, refetchPosition }: IPositionCom
                                         variant='ghost'
                                         size='icon'
                                         aria-label='Trade actions menu'
-                                        disabled={isSubmitting}
+                                        disabled={isSubmitting || authority < 4}
                                       >
                                         <EllipsisVertical aria-hidden='true'/>
                                       </Button>

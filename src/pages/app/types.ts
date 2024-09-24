@@ -1,4 +1,4 @@
-
+import { IAuthority } from '@/shared/backend/auth/user/index.service.ts';
 
 /* ************************************************************************************************
  *                                             TYPES                                              *
@@ -14,6 +14,7 @@ type IMainNavigationItem = {
   name: IMainNavigationItemName;
   path: string;
   icon: JSX.Element;
+  requirement: IAuthority;
   badge?: string;
 };
 

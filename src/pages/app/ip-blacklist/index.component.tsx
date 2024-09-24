@@ -144,6 +144,7 @@ const IPBlacklist = () => {
   const [activeDialog, setActiveDialog] = useState<IDialogRecord>();
   const [busyRecord, setBusyRecord] = useState<number | undefined>();
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
+  const { authority } = useBoundStore((state) => state.user!);
 
 
 
@@ -241,7 +242,7 @@ const IPBlacklist = () => {
               aria-label='Register IP Address to the blacklist'
               className='sm:hidden'
               onClick={() => setActiveDialog(null)}
-              disabled={typeof busyRecord === 'number'}
+              disabled={typeof busyRecord === 'number' || authority < 3}
             >
               <GlobeLock
                 aria-hidden='true'
@@ -252,7 +253,7 @@ const IPBlacklist = () => {
               aria-label='Register IP Address to the blacklist'
               className='hidden sm:flex'
               onClick={() => setActiveDialog(null)}
-              disabled={typeof busyRecord === 'number'}
+              disabled={typeof busyRecord === 'number' || authority < 3}
             >
               <GlobeLock
                 aria-hidden='true'
@@ -327,7 +328,7 @@ const IPBlacklist = () => {
                                     variant='ghost'
                                     size='icon'
                                     aria-label='IP Blacklist actions menu'
-                                    disabled={busyRecord === record.id}
+                                    disabled={busyRecord === record.id || authority < 3}
                                   >
                                     {
                                       busyRecord === record.id

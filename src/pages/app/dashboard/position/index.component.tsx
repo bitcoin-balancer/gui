@@ -102,6 +102,7 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
   const openLargeInfoDialog = useBoundStore((state) => state.openLargeInfoDialog);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
   const openPositionDialog = useBoundStore((state) => state.openPositionDialog);
+  const { authority } = useBoundStore((state) => state.user!);
 
 
 
@@ -231,6 +232,7 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                 <DropdownMenuItem
                   onClick={increasePosition}
+                  disabled={authority < 4}
                 >
                   <ArrowUpWideNarrow
                       aria-hidden='true'
@@ -239,7 +241,7 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => setIsDecreaseMenuOpen(true)}
-                  disabled={position === undefined}
+                  disabled={position === undefined || authority < 4}
                 >
                   <ArrowDownWideNarrow
                       aria-hidden='true'
@@ -250,7 +252,7 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
                 <DropdownMenuLabel>Information</DropdownMenuLabel>
                 <DropdownMenuItem
                   onClick={() => openPositionDialog(position!.id)}
-                  disabled={position === undefined}
+                  disabled={position === undefined || authority < 2}
                 >
                   <ReceiptText
                       aria-hidden='true'
@@ -259,6 +261,7 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => setActiveDialog('balances')}
+                  disabled={authority < 2}
                 >
                   <Wallet
                       aria-hidden='true'
@@ -267,6 +270,7 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => setActiveDialog('positions')}
+                  disabled={authority < 2}
                 >
                   <List
                       aria-hidden='true'
@@ -275,6 +279,7 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => setActiveDialog('transactions')}
+                  disabled={authority < 2}
                 >
                   <ListChecks
                       aria-hidden='true'

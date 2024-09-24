@@ -181,6 +181,7 @@ const Strategy = ({ closeDialog }: IFormProps) => {
   const exchangeConfig = useBoundStore((state) => state.exchangeConfig!);
   const openInfoDialog = useBoundStore((state) => state.openInfoDialog);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
+  const { authority } = useBoundStore((state) => state.user!);
 
 
 
@@ -661,7 +662,7 @@ const Strategy = ({ closeDialog }: IFormProps) => {
           <DialogFooter>
             <Button
               type='submit'
-              disabled={isSubmitting}
+              disabled={isSubmitting || authority < 3}
               className='mt-7 w-full'
             >
               {

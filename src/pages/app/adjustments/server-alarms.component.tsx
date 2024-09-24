@@ -59,6 +59,7 @@ const ServerAlarms = ({ closeDialog }: IFormProps) => {
   });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
+  const { authority } = useBoundStore((state) => state.user!);
 
 
 
@@ -231,7 +232,7 @@ const ServerAlarms = ({ closeDialog }: IFormProps) => {
           <DialogFooter>
             <Button
               type='submit'
-              disabled={isSubmitting}
+              disabled={isSubmitting || authority < 3}
               className='mt-7 w-full'
             >
               {

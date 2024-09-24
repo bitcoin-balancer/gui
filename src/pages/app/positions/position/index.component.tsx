@@ -94,6 +94,7 @@ const Position = () => {
   const openPositionDialog = useBoundStore((state) => state.openPositionDialog);
   const breakpoint = useMediaQueryBreakpoint();
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
+  const { authority } = useBoundStore((state) => state.user!);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -249,7 +250,7 @@ const Position = () => {
                       variant='ghost'
                       className='w-full justify-start'
                       onClick={unarchive}
-                      disabled={isSubmitting}
+                      disabled={isSubmitting || authority < 4}
                     >
                       <ArchiveX
                         aria-hidden='true'
@@ -264,7 +265,7 @@ const Position = () => {
                       variant='ghost'
                       className='w-full justify-start'
                       onClick={archive}
-                      disabled={isSubmitting}
+                      disabled={isSubmitting || authority < 4}
                     >
                       <Archive
                         aria-hidden='true'

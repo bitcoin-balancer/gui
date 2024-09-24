@@ -59,6 +59,7 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
   const openLargeInfoDialog = useBoundStore((state) => state.openLargeInfoDialog);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
   const version = useBoundStore((state) => state.version!);
+  const { authority } = useBoundStore((state) => state.user!);
   const [isSigningOut, setIsSigningOut] = useState<boolean>(false);
 
 
@@ -161,7 +162,7 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
               className='hidden md:flex lg:hidden relative'
               aria-label={item.name}
               onClick={() => navigate(item.path)}
-              disabled={item.active}
+              disabled={item.active || item.requirement > authority}
             >
               {item.icon}
               {
@@ -192,7 +193,8 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
           key={i}
           variant='ghost'
           className='hidden lg:flex relative'
-          onClick={() => navigate(item.path)} disabled={item.active}
+          onClick={() => navigate(item.path)}
+          disabled={item.active || item.requirement > authority}
         >
           {item.icon} <span className='ml-2'>{item.name}</span>
           {
@@ -295,7 +297,7 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
               variant='ghost'
               className='w-full justify-start'
               onClick={() => navigateFromSidenav(NavService.ipBlacklist())}
-              disabled={pathname === NavService.ipBlacklist()}
+              disabled={pathname === NavService.ipBlacklist() || authority < 2}
             >
               <EarthLock
                 aria-hidden='true'
@@ -307,7 +309,7 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
               variant='ghost'
               className='w-full justify-start'
               onClick={() => navigateFromSidenav(NavService.users())}
-              disabled={pathname === NavService.users()}
+              disabled={pathname === NavService.users() || authority < 5}
             >
               <Users
                 aria-hidden='true'

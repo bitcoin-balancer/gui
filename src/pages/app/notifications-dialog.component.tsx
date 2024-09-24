@@ -78,7 +78,11 @@ const NotificationsDialog = ({
    ********************************************************************************************** */
   let content;
   if (error) {
-    content = <PageLoadError variant='dialog' error={error} />;
+    content = (
+      <div className='pb-5'>
+        <PageLoadError variant='dialog' error={error} />
+      </div>
+    );
   } else if (loading) {
     content = <PageLoader variant='dialog' />;
   } else if (data.length) {
