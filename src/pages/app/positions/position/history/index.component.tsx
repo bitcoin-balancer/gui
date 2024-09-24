@@ -9,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/shared/shadcn/components/ui/card.tsx';
+import { sortRecords } from '@/shared/services/utils/index.service.ts';
 import {
   CandlestickService,
   IEventHistoryRecord,
@@ -28,7 +29,6 @@ import CandlestickChart, {
   IMarker,
 } from '@/shared/components/charts/candlestick-chart/index.component.tsx';
 import { IPositionComponentProps } from '@/pages/app/positions/position/types.ts';
-import { sortRecords } from '@/shared/services/utils/index.service';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *

@@ -7,6 +7,7 @@ import {
   HandCoins,
   Percent,
 } from 'lucide-react';
+import { calculateMean, getBigNumber, processValue } from 'bignumber-utils';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,7 +32,10 @@ import {
 } from '@/shared/shadcn/components/ui/card.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import {
+  formatBadgeCount,
   formatDate,
+  formatDollarAmount,
+  formatPercentageChange,
   formatPNL,
 } from '@/shared/services/transformers/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
@@ -45,6 +49,9 @@ import {
   IDateRangeID,
   IProcessedPositions,
 } from '@/pages/app/positions/types.ts';
+import NoRecords from '@/shared/components/no-records/index.component';
+import { ISplitStateItem } from '@/shared/backend/market-state/shared/types';
+import { arrayValid } from '@/shared/backend/validations/index.service';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
@@ -96,20 +103,48 @@ const calculateStartAt = (id: IDateRangeID): number => {
   }
 };
 
-// eslint-disable-next-line padded-blocks, arrow-body-style
-const processPositions = (positions: ICompactPosition[]): IProcessedPositions => {
+/**
+ * Processes a list of unarchived positions and retrieves the data needed to render the view.
+ * @param positions
+ * @returns IProcessedPositions
+ */
+const processPositions = (positions: ICompactPosition[] | undefined): IProcessedPositions => {
+  // init values
+  let pnlAccum = getBigNumber(0);
+  const pnlChart: ISplitStateItem[] = [];
+  const roi: number[] = [];
+  const roiChart: ISplitStateItem[] = [];
+  const investments: number[] = [];
+  const investmentsChart: ISplitStateItem[] = [];
 
-  console.log(positions);
+  // iterate over each position
+  if (arrayValid(positions)) {
+    positions.forEach((pos) => {
+      if (!pos.archived) {
+        pnlAccum = pnlAccum.plus(pos.pnl);
+        pnlChart.push({ x: pos.open, y: processValue(pnlAccum) });
+        roi.push(pos.roi);
+        roiChart.push({ x: pos.open, y: pos.roi });
+        investments.push(pos.amount_quote_in);
+        investmentsChart.push({ x: pos.open, y: pos.amount_quote_in });
+      }
+    });
+  }
+
+  // calculate the means
+  const roiMean = calculateMean(roi);
+  const investmentsMean = calculateMean(investments);
+
   // finally, return the build
   return {
-    pnl: '+$1,855.96',
-    pnlClass: 'text-increase-1',
-    roi: '+15%',
-    roiClass: 'text-increase-1',
-    investments: '$10,555.85',
-    pnlChart: [],
-    roiChart: [],
-    investmentsChart: [],
+    pnl: formatPNL(pnlAccum.toNumber()),
+    pnlClass: PositionService.getPNLClassName(pnlAccum.toNumber()),
+    roi: formatPercentageChange(roiMean),
+    roiClass: PositionService.getGainClassName(roiMean),
+    investments: formatDollarAmount(investmentsMean),
+    pnlChart,
+    roiChart,
+    investmentsChart,
   };
 };
 
@@ -218,6 +253,11 @@ const Positions = () => {
             <h1
               className='text-2xl font-semibold leading-none tracking-tight'
             >Positions</h1>
+            <Badge
+              className='ml-1 -mt-4'
+            >
+              {formatBadgeCount(processed.pnlChart.length, 99)}
+            </Badge>
 
             <span className='flex-1'></span>
 
@@ -296,10 +336,13 @@ const Positions = () => {
                   (breakpoint === 'xs' || breakpoint === 'sm')
                     ? <Button
                       size='icon'
+                      disabled={processed.pnlChart.length === 0}
                     >
                       <Calendar className='w-5 h-5' aria-hidden='true' />
                     </Button>
-                    : <Button>
+                    : <Button
+                      disabled={processed.pnlChart.length === 0}
+                    >
                       <Calendar className='mr-1 w-5 h-5' aria-hidden='true' />
                       {range.label}
                     </Button>
@@ -327,140 +370,145 @@ const Positions = () => {
         <article
           className='mt-5'
         >
-
-          <header
-            className='flex flex-col sm:flex-row justify-center items-center gap-4'
-          >
-
-            {/* *****
-              * PNL *
-              ***** */}
-            <button
-              onClick={() => setActiveChart('pnl')}
-              disabled={activeChart === 'pnl'}
-              className='flex-1 w-full text-left'
-            >
-              <Card
-                className={`border-solid shadow-sm hover:bg-slate-50 ${activeChart === 'pnl' ? 'bg-slate-50 cursor-not-allowed' : ''}`}
-              >
-                <CardHeader
-                  className='p-4 flex flex-row items-center justify-between'
+          {
+            processed.pnlChart.length > 0
+              ? <>
+                <header
+                  className='flex flex-col sm:flex-row justify-center items-center gap-4'
                 >
-                  <CardTitle
-                    className='text-base font-medium'
+
+                  {/* *****
+                    * PNL *
+                    ***** */}
+                  <button
+                    onClick={() => setActiveChart('pnl')}
+                    disabled={activeChart === 'pnl'}
+                    className='flex-1 w-full text-left'
                   >
-                    PNL
-                  </CardTitle>
+                    <Card
+                      className={`border-solid shadow-sm hover:bg-slate-50 ${activeChart === 'pnl' ? 'bg-slate-50 cursor-not-allowed' : ''}`}
+                    >
+                      <CardHeader
+                        className='p-4 flex flex-row items-center justify-between'
+                      >
+                        <CardTitle
+                          className='text-base font-medium'
+                        >
+                          PNL
+                        </CardTitle>
 
-                  <HandCoins
-                    aria-hidden='true'
-                    className='h-5 w-5 md:h-6 md:w-6'
-                  />
-                </CardHeader>
+                        <HandCoins
+                          aria-hidden='true'
+                          className='h-5 w-5 md:h-6 md:w-6'
+                        />
+                      </CardHeader>
 
-                <CardContent
-                  className='p-4'
-                >
-                  <p
-                    className={`text-2xl font-bold ${processed.pnlClass} truncate`}
-                  >{processed.pnl}</p>
-                </CardContent>
-              </Card>
-            </button>
+                      <CardContent
+                        className='p-4'
+                      >
+                        <p
+                          className={`text-2xl font-bold ${processed.pnlClass} truncate`}
+                        >{processed.pnl}</p>
+                      </CardContent>
+                    </Card>
+                  </button>
 
-            {/* *****
-              * ROI *
-              ***** */}
-            <button
-              onClick={() => setActiveChart('roi')}
-              disabled={activeChart === 'roi'}
-                className='flex-1 w-full text-left'
-            >
-              <Card
-                className={`border-solid shadow-sm hover:bg-slate-50 ${activeChart === 'roi' ? 'bg-slate-50 cursor-not-allowed' : ''}`}
-              >
-                <CardHeader
-                  className='p-4 flex flex-row items-center justify-between'
-                >
-                  <CardTitle
-                    className='text-base font-medium'
+                  {/* *****
+                    * ROI *
+                    ***** */}
+                  <button
+                    onClick={() => setActiveChart('roi')}
+                    disabled={activeChart === 'roi'}
+                      className='flex-1 w-full text-left'
                   >
-                    ROI
-                  </CardTitle>
+                    <Card
+                      className={`border-solid shadow-sm hover:bg-slate-50 ${activeChart === 'roi' ? 'bg-slate-50 cursor-not-allowed' : ''}`}
+                    >
+                      <CardHeader
+                        className='p-4 flex flex-row items-center justify-between'
+                      >
+                        <CardTitle
+                          className='text-base font-medium'
+                        >
+                          ROI
+                        </CardTitle>
 
-                  <Percent
-                    aria-hidden='true'
-                    className='h-5 w-5 md:h-6 md:w-6'
-                  />
-                </CardHeader>
+                        <Percent
+                          aria-hidden='true'
+                          className='h-5 w-5 md:h-6 md:w-6'
+                        />
+                      </CardHeader>
 
-                <CardContent
-                  className='p-4'
-                >
-                  <p
-                    className={`text-2xl font-bold ${processed.roiClass} truncate`}
+                      <CardContent
+                        className='p-4'
+                      >
+                        <p
+                          className={`text-2xl font-bold ${processed.roiClass} truncate`}
+                        >
+                          {processed.roi}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </button>
+
+                  {/* *************
+                    * INVESTMENTS *
+                    ************* */}
+                  <button
+                    onClick={() => setActiveChart('investments')}
+                    disabled={activeChart === 'investments'}
+                    className='flex-1 w-full text-left'
                   >
-                    {processed.roi}
-                  </p>
-                </CardContent>
-              </Card>
-            </button>
+                    <Card
+                      className={`border-solid shadow-sm hover:bg-slate-50 ${activeChart === 'investments' ? 'bg-slate-50 cursor-not-allowed' : ''}`}
+                    >
+                      <CardHeader
+                        className='p-4 flex flex-row items-center justify-between'
+                      >
+                        <CardTitle
+                          className='text-base font-medium'
+                        >
+                          Investments
+                        </CardTitle>
 
-            {/* *************
-              * INVESTMENTS *
-              ************* */}
-            <button
-              onClick={() => setActiveChart('investments')}
-              disabled={activeChart === 'investments'}
-              className='flex-1 w-full text-left'
-            >
-              <Card
-                className={`border-solid shadow-sm hover:bg-slate-50 ${activeChart === 'investments' ? 'bg-slate-50 cursor-not-allowed' : ''}`}
-              >
-                <CardHeader
-                  className='p-4 flex flex-row items-center justify-between'
-                >
-                  <CardTitle
-                    className='text-base font-medium'
-                  >
-                    Investments
-                  </CardTitle>
+                        <DollarSign
+                          aria-hidden='true'
+                          className='h-5 w-5 md:h-6 md:w-6'
+                        />
+                      </CardHeader>
 
-                  <DollarSign
-                    aria-hidden='true'
-                    className='h-5 w-5 md:h-6 md:w-6'
-                  />
-                </CardHeader>
+                      <CardContent
+                        className='p-4'
+                      >
+                        <p
+                          className='text-2xl font-bold truncate'
+                        >
+                          {processed.investments}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </button>
+                </header>
 
-                <CardContent
-                  className='p-4'
-                >
-                  <p
-                    className='text-2xl font-bold truncate'
-                  >
-                    {processed.investments}
-                  </p>
-                </CardContent>
-              </Card>
-            </button>
-          </header>
+                <div>
+                  {
+                    activeChart === 'pnl'
+                    && <p>PNL</p>
+                  }
 
-          <div>
-            {
-              activeChart === 'pnl'
-              && <p>PNL</p>
-            }
+                  {
+                    activeChart === 'roi'
+                    && <p>ROI</p>
+                  }
 
-            {
-              activeChart === 'roi'
-              && <p>ROI</p>
-            }
-
-            {
-              activeChart === 'investments'
-              && <p>Investments</p>
-            }
-          </div>
+                  {
+                    activeChart === 'investments'
+                    && <p>Investments</p>
+                  }
+                </div>
+              </>
+              : <NoRecords />
+          }
         </article>
       </section>
     </div>

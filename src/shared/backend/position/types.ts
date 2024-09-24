@@ -29,6 +29,7 @@ type IPositionService = {
   listPositionTransactions: (id: string) => Promise<ITransaction[]>;
 
   // helpers
+  getPNLClassName: (pnl: number) => string,
   getGainClassName: (gain: number) => string;
   calculateDecreaseAmount: (positionAmount: number, percentage: number) => number;
 };

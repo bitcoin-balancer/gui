@@ -239,6 +239,21 @@ const positionServiceFactory = (): IPositionService => {
    ********************************************************************************************** */
 
   /**
+   * Retrieves the class name that should be applied to text based on the PNL.
+   * @param pnl
+   * @returns string
+   */
+  const getPNLClassName = (pnl: number): string => {
+    if (pnl > 0) {
+      return 'text-increase-1';
+    }
+    if (pnl < 0) {
+      return 'text-decrease-1';
+    }
+    return '';
+  };
+
+  /**
    * Retrieves the class name that should be applied to text based on the current gain%.
    * @param gain
    * @returns string
@@ -299,6 +314,7 @@ const positionServiceFactory = (): IPositionService => {
     listPositionTransactions,
 
     // helpers
+    getPNLClassName,
     getGainClassName,
     calculateDecreaseAmount,
   });
