@@ -3,7 +3,9 @@ import {
   Time,
   ISeriesApi,
   SeriesType,
-  SeriesMarker,
+  UTCTimestamp,
+  SeriesMarkerPosition,
+  SeriesMarkerShape,
 } from 'lightweight-charts';
 import { ICompactCandlestickRecords } from '@/shared/backend/candlestick/index.service.ts';
 import { IState } from '@/shared/backend/market-state/shared/types.ts';
@@ -59,7 +61,15 @@ type ICandlestickBar = {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type HorzScaleItem = any;
 type ICandlestickSeriesAPI = ISeriesApi<SeriesType, HorzScaleItem>;
-type IMarker = SeriesMarker<HorzScaleItem>;
+type IMarker = {
+  time: UTCTimestamp;
+  position: SeriesMarkerPosition;
+  shape: SeriesMarkerShape;
+  color: string;
+  id?: string;
+  text?: string;
+  size?: number;
+};
 
 /**
  * Chart API Ref

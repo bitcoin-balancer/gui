@@ -28,6 +28,7 @@ import CandlestickChart, {
   IMarker,
 } from '@/shared/components/charts/candlestick-chart/index.component.tsx';
 import { IPositionComponentProps } from '@/pages/app/positions/position/types.ts';
+import { sortRecords } from '@/shared/services/utils/index.service';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
@@ -87,7 +88,7 @@ const buildPositionMarkers = (
 ): IMarker[] => [
   ...buildIncreaseMarkers(increaseActions),
   ...buildDecreaseMarkers(decreaseActions),
-];
+].sort(sortRecords('time', 'asc'));
 
 
 
