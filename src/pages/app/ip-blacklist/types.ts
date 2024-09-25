@@ -4,7 +4,7 @@ import { IIPBlacklistRecord } from '@/shared/backend/ip-blacklist/index.service.
  *                                           DISPATCH                                             *
  ************************************************************************************************ */
 
-// the actions that are dispatched when users are mutated in order to keep the state in sync
+// the actions that are dispatched when records are mutated in order to keep the state in sync
 type IActionType = 'REGISTER_IP' | 'UPDATE_REGISTRATION' | 'UNREGISTER_IP' | 'LOADED_MORE';
 type IAction = {
   type: IActionType;
