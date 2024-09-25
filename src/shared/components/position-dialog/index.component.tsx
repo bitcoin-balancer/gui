@@ -5,7 +5,7 @@ import {
   Fragment,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Archive } from 'lucide-react';
+import { Archive, Link } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -26,7 +26,8 @@ import {
   AccordionTrigger,
 } from '@/shared/shadcn/components/ui/accordion.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
-import { useBoundStore } from '@/shared/store/index.store';
+import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
+import { useBoundStore } from '@/shared/store/index.store.ts';
 import { PositionService, IPosition } from '@/shared/backend/position/index.service.ts';
 import {
   formatBitcoinAmount,
@@ -40,7 +41,6 @@ import PageLoadError from '@/shared/components/page-load-error/index.component.t
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import NoRecords from '@/shared/components/no-records/index.component.tsx';
 import PositionAction from '@/shared/components/position-dialog/position-action.component.tsx';
-import { Badge } from '@/shared/shadcn/components/ui/badge';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -331,11 +331,20 @@ const PositionDialog = memo(({ data }: { data: string | IPosition }) => {
           >
             <DialogTitle>Position</DialogTitle>
             {
-              position! && position!.archived
+              (position !== undefined && position.archived)
               && <Archive
-              aria-label='hidden'
-              className='ml-2 h-4 w-4'
-            />
+                aria-label='hidden'
+                className='ml-1 h-4 w-4'
+              />
+            }
+            {
+              position !== undefined
+              && <Link
+                role='button'
+                aria-label='Navigate to position'
+                className='ml-1 h-4 w-4 hover:cursor-pointer'
+                onClick={navigateToPosition}
+              />
             }
           </div>
           <DialogDescription

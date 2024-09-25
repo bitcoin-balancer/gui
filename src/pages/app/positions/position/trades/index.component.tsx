@@ -171,7 +171,7 @@ const Trades = memo(({ position, setSidenavOpen, refetchPosition }: IPositionCom
             /> Display position
           </Button>
           <Button
-            disabled={isSubmitting || authority < 4}
+            disabled={position.close !== null || isSubmitting || authority < 4}
             className='hidden sm:flex'
           >
             <Plus
