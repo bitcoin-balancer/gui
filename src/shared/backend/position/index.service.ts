@@ -395,13 +395,13 @@ const positionServiceFactory = (): IPositionService => {
    * @param trade
    * @returns IManualTrade
    */
-  const toManualTrade = (trade: ITrade): IManualTrade => ({
+  /* const toManualTrade = (trade: ITrade): IManualTrade => ({
     event_time: trade.event_time,
     side: trade.side,
     notes: trade.notes ?? '',
     price: trade.price,
     amount: trade.amount,
-  });
+  }); */
 
 
 
@@ -437,7 +437,7 @@ const positionServiceFactory = (): IPositionService => {
     getPNLClassName,
     getGainClassName,
     calculateDecreaseAmount,
-    toManualTrade,
+    // toManualTrade,
   });
 };
 

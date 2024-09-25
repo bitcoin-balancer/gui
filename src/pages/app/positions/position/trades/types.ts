@@ -1,5 +1,4 @@
 import { ISide, ITrade } from '@/shared/backend/exchange/index.service.ts';
-import { IManualTrade } from '@/shared/backend/position/trade/index.service.ts';
 
 /* ************************************************************************************************
  *                                             TYPES                                              *
@@ -54,7 +53,7 @@ type IAction = {
  * The type of records that can exist. If undefined, the dialog won't be in the DOM, null will
  * display the create record form while a record show the update form.
  */
-type IDialogRecord = IManualTrade | null | undefined;
+type IDialogRecord = ITrade | null | undefined;
 
 // component props
 type IRecordFormProps = {
@@ -64,7 +63,7 @@ type IRecordFormProps = {
 
 // form inputs
 type IRecordFormInputs = {
-  event_time: string;
+  event_time: Date;
   side: ISide;
   notes: string;
   price: string;

@@ -373,7 +373,7 @@ const Trades = memo(({ position, setSidenavOpen, refetchPosition }: IPositionCom
                                         <DropdownMenuItem
                                           aria-label='Update a trade that was added manually'
                                           onClick={() => {
-                                            setActiveDialog(PositionService.toManualTrade(record));
+                                            setActiveDialog(record);
                                           }}
                                         >
                                             <Pencil
