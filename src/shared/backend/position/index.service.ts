@@ -2,6 +2,7 @@ import { getBigNumber, processValue } from 'bignumber-utils';
 import { APIService } from '@/shared/backend/api/index.service.ts';
 import { IEventHistoryRecord } from '../candlestick/index.service.js';
 import { ITrade } from '../exchange/index.service.js';
+import { IManualTrade } from './trade/index.service.js';
 import { ITransaction } from './transaction/index.service.js';
 import {
   IPositionService,
@@ -10,7 +11,6 @@ import {
   IPosition,
   ICompactPosition,
 } from './types.js';
-import { IManualTrade } from './trade/index.service.js';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
