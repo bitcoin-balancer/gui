@@ -10,6 +10,7 @@ import {
   IPosition,
   ICompactPosition,
 } from './types.js';
+import { IManualTrade } from './trade/index.service.js';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -235,6 +236,107 @@ const positionServiceFactory = (): IPositionService => {
 
 
   /* **********************************************************************************************
+   *                                      TRADE MANAGEMENT                                        *
+   ********************************************************************************************** */
+
+  /**
+   * Validates and creates a trade record for the active position.
+   * @param trade
+   * @param otpToken
+   * @returns Promise<ITrade>
+   * @throws
+   * - 33500: if the record is not an object
+   * - 33501: if the event_time is an invalid
+   * - 33502: if the timestamp is set ahead of time
+   * - 33503: if the side of the record is invalid
+   * - 33504: if the notes are invalid
+   * - 33505: if the price is invalid
+   * - 33506: if the amount is invalid
+   * - 30513: if there isn't an active position
+   * - 30517: if the timestamp of the trade is older than the position's open time
+   * - 30514: if there no items in the list of trades
+   * - 30515: if the state causes the amount to be less than 0
+   * - 30516: if the state causes the entry price to be less than or equals to 0
+   * - 30519: if the first trade is a sell
+   */
+  const createTrade = (trade: IManualTrade, otpToken: string): Promise<ITrade> => (
+    APIService.request(
+      'POST',
+      'position/trade',
+      { trade },
+      true,
+      otpToken,
+    ) as Promise<ITrade>
+  );
+
+  /**
+   * Validates and updates a trade record for the active position.
+   * @param id
+   * @param trade
+   * @param otpToken
+   * @returns Promise<ITrade>
+   * @throws
+   * - 33500: if the record is not an object
+   * - 33501: if the event_time is an invalid
+   * - 33502: if the timestamp is set ahead of time
+   * - 33503: if the side of the record is invalid
+   * - 33504: if the notes are invalid
+   * - 33505: if the price is invalid
+   * - 33506: if the amount is invalid
+   * - 30513: if there isn't an active position
+   * - 30517: if the timestamp of the trade is older than the position's open time
+   * - 33507: if the record's ID has an invalid format
+   * - 30518: if the trade doesn't exist
+   * - 30514: if there no items in the list of trades
+   * - 30515: if the state causes the amount to be less than 0
+   * - 30516: if the state causes the entry price to be less than or equals to 0
+   * - 30519: if the first trade is a sell
+   */
+  const updateTrade = (id: number, trade: IManualTrade, otpToken: string): Promise<ITrade> => (
+    APIService.request(
+      'PUT',
+      `position/trade/${id}`,
+      { trade },
+      true,
+      otpToken,
+    ) as Promise<ITrade>
+  );
+
+  /**
+   * Validates and deletes a trade record from the active position.
+   * @param id
+   * @returns Promise<void>
+   * @throws
+   * - 33500: if the record is not an object
+   * - 33501: if the event_time is an invalid
+   * - 33502: if the timestamp is set ahead of time
+   * - 33503: if the side of the record is invalid
+   * - 33504: if the notes are invalid
+   * - 33505: if the price is invalid
+   * - 33506: if the amount is invalid
+   * - 30513: if there isn't an active position
+   * - 30517: if the timestamp of the trade is older than the position's open time
+   * - 30514: if there no items in the list of trades
+   * - 30515: if the state causes the amount to be less than 0
+   * - 30516: if the state causes the entry price to be less than or equals to 0
+   * - 30519: if the first trade is a sell
+   * - 30518: if the trade doesn't exist
+   */
+  const deleteTrade = (id: number, otpToken: string): Promise<void> => (
+    APIService.request(
+      'DELETE',
+      `position/trade/${id}`,
+      undefined,
+      true,
+      otpToken,
+    ) as Promise<void>
+  );
+
+
+
+
+
+  /* **********************************************************************************************
    *                                           HELPERS                                            *
    ********************************************************************************************** */
 
@@ -312,6 +414,11 @@ const positionServiceFactory = (): IPositionService => {
     getPositionHistory,
     listPositionTrades,
     listPositionTransactions,
+
+    // trade management
+    createTrade,
+    updateTrade,
+    deleteTrade,
 
     // helpers
     getPNLClassName,

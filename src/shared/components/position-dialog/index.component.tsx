@@ -35,7 +35,7 @@ import {
   formatDollarAmount,
   formatPercentageChange,
 } from '@/shared/services/transformers/index.service.ts';
-import { NavService } from '@/shared/services/nav/index.service';
+import { NavService } from '@/shared/services/nav/index.service.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';

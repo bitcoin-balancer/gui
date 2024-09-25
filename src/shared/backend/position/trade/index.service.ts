@@ -1,4 +1,4 @@
-import { ITradeService } from '@/shared/backend/position/trade/types.ts';
+import { ITradeService, IManualTrade } from '@/shared/backend/position/trade/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -51,4 +51,5 @@ export {
   TradeService,
 
   // types
+  type IManualTrade,
 };

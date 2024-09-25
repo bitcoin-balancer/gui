@@ -1,5 +1,6 @@
 import { IEventHistoryRecord } from '@/shared/backend/candlestick/index.service.js';
 import { ITrade } from '@/shared/backend/exchange/index.service.ts';
+import { IManualTrade } from '@/shared/backend/position/trade/index.service.ts';
 import { ITransaction } from '@/shared/backend/position/transaction/index.service.ts';
 
 /* ************************************************************************************************
@@ -27,6 +28,11 @@ type IPositionService = {
   getPositionHistory: (id: string) => Promise<IEventHistoryRecord>;
   listPositionTrades: (id: string) => Promise<ITrade[]>;
   listPositionTransactions: (id: string) => Promise<ITransaction[]>;
+
+  // trade management
+  createTrade: (trade: IManualTrade, otpToken: string) => Promise<ITrade>;
+  updateTrade: (id: number, trade: IManualTrade, otpToken: string) => Promise<ITrade>;
+  deleteTrade: (id: number, otpToken: string) => Promise<void>;
 
   // helpers
   getPNLClassName: (pnl: number) => string,
