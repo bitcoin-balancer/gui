@@ -447,9 +447,9 @@ const Positions = () => {
                         className='p-4 flex flex-row items-center justify-between'
                       >
                         <CardTitle
-                          className='text-base font-medium'
+                          className='text-base font-medium truncate'
                         >
-                          ROI
+                          Avg. ROI
                         </CardTitle>
 
                         <Percent
@@ -485,9 +485,9 @@ const Positions = () => {
                         className='p-4 flex flex-row items-center justify-between'
                       >
                         <CardTitle
-                          className='text-base font-medium'
+                          className='text-base font-medium truncate'
                         >
-                          Investments
+                          Avg. Investment
                         </CardTitle>
 
                         <DollarSign
