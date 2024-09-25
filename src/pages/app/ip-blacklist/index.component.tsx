@@ -169,28 +169,6 @@ const IPBlacklist = () => {
    ********************************************************************************************** */
 
   /**
-   * Prompts the user with the confirmation dialog and unregisters the IP address.
-   */
-  const unregisterIP = (record: IIPBlacklistRecord) => {
-    openConfirmationDialog({
-      mode: 'OTP',
-      title: 'Unregister IP',
-      description: `The address ${record.ip} will be removed from the blacklist immediately upon submission`,
-      onConfirmation: async (confirmation: string) => {
-        try {
-          setBusyRecord(record.id);
-          await IPBlacklistService.unregisterIP(record.id, confirmation);
-          dispatch({ type: 'UNREGISTER_IP', payload: record.id }, data, setData);
-        } catch (e) {
-          errorToast(e);
-        } finally {
-          setBusyRecord(undefined);
-        }
-      },
-    });
-  };
-
-  /**
    * Dispatches an action to the module's reducer.
    * @param action
    */
@@ -203,6 +181,28 @@ const IPBlacklist = () => {
     },
     [data, setData],
   );
+
+  /**
+   * Prompts the user with the confirmation dialog and unregisters the IP address.
+   */
+  const unregisterIP = (record: IIPBlacklistRecord) => {
+    openConfirmationDialog({
+      mode: 'OTP',
+      title: 'Unregister IP',
+      description: `The address ${record.ip} will be removed from the blacklist immediately upon submission`,
+      onConfirmation: async (confirmation: string) => {
+        try {
+          setBusyRecord(record.id);
+          await IPBlacklistService.unregisterIP(record.id, confirmation);
+          handleDispatch({ type: 'UNREGISTER_IP', payload: record.id });
+        } catch (e) {
+          errorToast(e);
+        } finally {
+          setBusyRecord(undefined);
+        }
+      },
+    });
+  };
 
 
 

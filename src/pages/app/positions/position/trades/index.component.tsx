@@ -1,4 +1,9 @@
-import { memo, useMemo, useState } from 'react';
+import {
+  memo,
+  useCallback,
+  useMemo,
+  useState,
+} from 'react';
 import {
   ArrowLeftRight,
   EllipsisVertical,
@@ -25,6 +30,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/shared/shadcn/components/ui/table.tsx';
+import { errorToast } from '@/shared/services/utils/index.service.ts';
 import {
   formatBitcoinAmount,
   formatDate,
@@ -38,7 +44,13 @@ import NoRecords from '@/shared/components/no-records/index.component.tsx';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import { IPositionComponentProps } from '@/pages/app/positions/position/types.ts';
-import { IDialogRecord, ITradeMetadata } from '@/pages/app/positions/position/trades/types.ts';
+import { dispatch } from '@/pages/app/positions/position/trades/reducer.ts';
+import RecordForm from '@/pages/app/positions/position/trades/record-form.component.tsx';
+import {
+  IAction,
+  IDialogRecord,
+  ITradeMetadata,
+} from '@/pages/app/positions/position/trades/types.ts';
 
 /* ************************************************************************************************
  *                                            HELPERS                                             *
@@ -90,7 +102,12 @@ const Trades = memo(({ position, setSidenavOpen, refetchPosition }: IPositionCom
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const { data, loading, error } = useAPIFetch<ITrade[]>(useMemo(
+  const {
+    data,
+    setData,
+    loading,
+    error,
+  } = useAPIFetch<ITrade[]>(useMemo(
     () => ({ fetchFunc: { func: PositionService.listPositionTrades, args: [position.id] } }),
     [position.id],
   ));
@@ -113,10 +130,51 @@ const Trades = memo(({ position, setSidenavOpen, refetchPosition }: IPositionCom
 
 
 
-  const handler = () => {
-    setIsSubmitting(true);
-    refetchPosition();
+
+
+  /* **********************************************************************************************
+   *                                        EVENT HANDLERS                                        *
+   ********************************************************************************************** */
+
+  /**
+   * Dispatches an action to the module's reducer.
+   * @param action
+   */
+  const handleDispatch = useCallback(
+    async (action: IAction | undefined) => {
+      setActiveDialog(undefined);
+      if (action) {
+        dispatch(action, data, setData);
+        refetchPosition();
+      }
+    },
+    [data, setData, refetchPosition],
+  );
+
+  /**
+   * Prompts the user with the confirmation dialog and deletes a trade.
+   */
+  const deleteTrade = (record: ITrade) => {
+    openConfirmationDialog({
+      mode: 'OTP',
+      title: 'Delete trade',
+      description: `The record ${record.id} will be deleted and the position will be updated immediately upon submission`,
+      onConfirmation: async (confirmation: string) => {
+        try {
+          setIsSubmitting(true);
+          await PositionService.deleteTrade(record.id!, confirmation);
+          handleDispatch({ type: 'DELETE_TRADE', payload: record.id! });
+        } catch (e) {
+          errorToast(e);
+        } finally {
+          setIsSubmitting(false);
+        }
+      },
+    });
   };
+
+
+
 
 
   /* **********************************************************************************************
@@ -174,8 +232,9 @@ const Trades = memo(({ position, setSidenavOpen, refetchPosition }: IPositionCom
               /> Display position
             </Button>
             <Button
-              disabled={position.close !== null || isSubmitting || authority < 4}
               className='hidden sm:flex'
+              onClick={() => setActiveDialog(null)}
+              disabled={position.close !== null || isSubmitting || authority < 4}
             >
               <Plus
                 aria-hidden='true'
@@ -203,8 +262,8 @@ const Trades = memo(({ position, setSidenavOpen, refetchPosition }: IPositionCom
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   aria-label='Add trade'
+                  onClick={() => setActiveDialog(null)}
                   disabled={position.close !== null}
-                  onClick={handler}
                 >
                   <Plus
                     aria-hidden='true'
@@ -313,6 +372,9 @@ const Trades = memo(({ position, setSidenavOpen, refetchPosition }: IPositionCom
                                       <DropdownMenuContent>
                                         <DropdownMenuItem
                                           aria-label='Update a trade that was added manually'
+                                          onClick={() => {
+                                            setActiveDialog(PositionService.toManualTrade(record));
+                                          }}
                                         >
                                             <Pencil
                                               aria-hidden='true'
@@ -321,6 +383,7 @@ const Trades = memo(({ position, setSidenavOpen, refetchPosition }: IPositionCom
                                         </DropdownMenuItem>
                                         <DropdownMenuItem
                                           aria-label='Delete a trade that was added manually'
+                                          onClick={() => deleteTrade(record)}
                                         >
                                           <Trash
                                             aria-hidden='true'
@@ -343,6 +406,19 @@ const Trades = memo(({ position, setSidenavOpen, refetchPosition }: IPositionCom
         </section>
 
       </div>
+
+
+
+      {/* **************
+        * FORM DIALOGS *
+        ************** */}
+      {
+        activeDialog !== undefined
+        && <RecordForm
+          record={activeDialog}
+          closeDialog={handleDispatch}
+        />
+      }
     </>
   );
 });

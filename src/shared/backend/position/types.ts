@@ -38,6 +38,7 @@ type IPositionService = {
   getPNLClassName: (pnl: number) => string,
   getGainClassName: (gain: number) => string;
   calculateDecreaseAmount: (positionAmount: number, percentage: number) => number;
+  toManualTrade: (trade: ITrade) => IManualTrade;
 };
 
 

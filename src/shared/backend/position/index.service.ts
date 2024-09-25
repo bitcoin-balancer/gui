@@ -390,6 +390,19 @@ const positionServiceFactory = (): IPositionService => {
     { decimalPlaces: 4, roundingMode: 'ROUND_HALF_DOWN' },
   );
 
+  /**
+   * Converts a trade record into a manual trade object.
+   * @param trade
+   * @returns IManualTrade
+   */
+  const toManualTrade = (trade: ITrade): IManualTrade => ({
+    event_time: trade.event_time,
+    side: trade.side,
+    notes: trade.notes ?? '',
+    price: trade.price,
+    amount: trade.amount,
+  });
+
 
 
 
@@ -424,6 +437,7 @@ const positionServiceFactory = (): IPositionService => {
     getPNLClassName,
     getGainClassName,
     calculateDecreaseAmount,
+    toManualTrade,
   });
 };
 
