@@ -38,12 +38,12 @@ import { stringValid, numberValid } from '@/shared/backend/validations/index.ser
 import { IManualTrade } from '@/shared/backend/position/trade/index.service.ts';
 import { PositionService } from '@/shared/backend/position/index.service.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
+import FormLabelWithMoreInfo from '@/shared/components/form-label-with-more-info/index.component.tsx';
 import {
   IRecordFormProps,
   IRecordFormInputs,
   IAction,
 } from '@/pages/app/positions/position/trades/types.ts';
-import FormLabelWithMoreInfo from '@/shared/components/form-label-with-more-info/index.component';
 
 /* ************************************************************************************************
  *                                            HELPERS                                             *
