@@ -7,6 +7,7 @@ import {
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
+import ValueAveraging from '@/shared/components/large-info-dialog/value-averaging.component';
 import Terms from '@/shared/components/large-info-dialog/terms.component.tsx';
 import { ISectionID, ISections } from '@/shared/components/large-info-dialog/types.ts';
 
@@ -16,6 +17,10 @@ import { ISectionID, ISections } from '@/shared/components/large-info-dialog/typ
 
 // the list of supported sections
 const SECTIONS: ISections = {
+  value_averaging: {
+    title: 'Value averaging',
+    description: '',
+  },
   window: {
     title: 'Window',
     description: '',
@@ -103,6 +108,7 @@ const LargeInfoDialog = ({ data }: { data: ISectionID }) => {
         {/* ****************
           * DIALOG CONTENT *
           **************** */}
+        { data === 'value_averaging' && <ValueAveraging />}
         { data === 'terms' && <Terms />}
 
       </DialogContent>

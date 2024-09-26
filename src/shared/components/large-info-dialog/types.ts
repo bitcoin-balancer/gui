@@ -6,7 +6,7 @@
  ************************************************************************************************ */
 
 // the list of sections supported by the large info dialog
-type ISectionID = 'window' | 'liquidity' | 'coins' | 'reversal' | 'strategy' | 'terms';
+type ISectionID = 'value_averaging' | 'window' | 'liquidity' | 'coins' | 'reversal' | 'strategy' | 'terms';
 
 // details about each section
 type ISection = {
