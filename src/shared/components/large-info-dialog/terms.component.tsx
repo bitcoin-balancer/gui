@@ -37,7 +37,7 @@ const Terms = () => (
     <p>
       <strong>Trading Bitcoin is inherently risky.</strong> You understand and acknowledge that:
     </p>
-    <ul>
+    <ul className='list-disc'>
       <li>
         <p>
           <strong>Balancer is not responsible for any losses you may incur due to bugs in the
@@ -80,7 +80,7 @@ const Terms = () => (
       regulations. You are solely responsible for all activity that occurs under your account.
       You are prohibited from:
     </p>
-    <ul>
+    <ul className='list-disc'>
       <li>
         <p><strong>Using the Platform for any illegal or unauthorized purpose.</strong></p>
       </li>
@@ -120,7 +120,7 @@ const Terms = () => (
     <p>
       However, any commercial use of Balancer, including but not limited to:
     </p>
-    <ul>
+    <ul className='list-disc'>
       <li><p>Redistributing the code for profit</p></li>
       <li><p>Using Balancer to offer trading services to others</p></li>
       <li><p>Developing derivative works for commercial purposes</p></li>

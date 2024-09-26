@@ -1,4 +1,4 @@
-import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
+import { Link } from 'lucide-react';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -37,19 +37,26 @@ const ValueAveraging = () => (
           stick with the VA strategy.
     </p>
 
-    <Separator className='my-5' />
 
-    <h3 className='text-lg font-semibold'>Sources</h3>
+    <h3 className='text-lg font-semibold mt-5'>Sources</h3>
 
     <ul>
       <li>
-        <a href='https://www.investopedia.com/terms/v/value_averaging.asp' target='_blank' rel='noopener noreferrer'>
-          Value Averaging: What it Means, Examples
+        <a
+          href='https://www.investopedia.com/terms/v/value_averaging.asp'
+          target='_blank'
+          rel='noopener noreferrer'
+          className='flex justify-start items-center gap-2 text-sky-700'>
+          <Link aria-hidden='true' className='w-5 h-5' /> Value Averaging: What it Means, Examples
         </a>
       </li>
       <li>
-        <a href='https://www.investopedia.com/articles/stocks/07/dcavsva.asp' target='_blank' rel='noopener noreferrer'>
-          Choosing Between Dollar-Cost and Value Averaging
+        <a
+          href='https://www.investopedia.com/articles/stocks/07/dcavsva.asp'
+          target='_blank'
+          rel='noopener noreferrer'
+          className='flex justify-start items-center gap-2 text-sky-700'>
+          <Link aria-hidden='true' className='w-5 h-5' /> Choosing Between Dollar-Cost and Value Averaging
         </a>
       </li>
     </ul>
