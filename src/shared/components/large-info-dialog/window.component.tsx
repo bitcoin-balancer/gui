@@ -36,8 +36,9 @@ const windowStateCalculationCode = `const calculateStateMean = (states: IState[]
 const Window = () => (
   <>
     <p>
-      The Window Indicator employs a dynamic moving window that analyzes Bitcoin's price to
-       understand its current state and trend to react to events accordingly in a real-time manner.
+      The Window Indicator establishes a real-time connection with the pre-configured exchange and
+       employs a dynamic moving window that analyzes Bitcoin's price to understand its current state
+        and trend. This information allows Balancer to react to events accordingly.
     </p>
 
     <h2 className='text-lg font-semibold'>Calculation</h2>
