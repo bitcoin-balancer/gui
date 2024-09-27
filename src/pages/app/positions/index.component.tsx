@@ -272,11 +272,14 @@ const Positions = () => {
             <h1
               className='text-2xl font-semibold leading-none tracking-tight'
             >Positions</h1>
-            <Badge
-              className='ml-1 -mt-4'
-            >
-              {formatBadgeCount(processed.pnlChart.length, 99)}
-            </Badge>
+            {
+              processed.pnlChart.length > 0
+              && <Badge
+                className='ml-1 -mt-4'
+              >
+                {formatBadgeCount(processed.pnlChart.length, 99)}
+              </Badge>
+            }
 
             <span className='flex-1'></span>
 
