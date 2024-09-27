@@ -168,10 +168,10 @@ const Window = () => (
       Example of a window that is increasing strongly:
     </p>
     <img
-      src='large-info-dialog/window/01.png'
-      alt='Screenshot showing how the state for each split is calculated'
-      width='1243'
-      height='767'
+      src='large-info-dialog/window/increasing-strongly.png'
+      alt='Screenshot showing what an increasing strongly state looks like'
+      width='903'
+      height='533'
     />
   </>
 );
