@@ -10,6 +10,7 @@ import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import ValueAveraging from '@/shared/components/large-info-dialog/value-averaging.component';
 import Window from '@/shared/components/large-info-dialog/window.component.tsx';
 import Liquidity from '@/shared/components/large-info-dialog/liquidity.component.tsx';
+import Coins from '@/shared/components/large-info-dialog/coins.component.tsx';
 import Terms from '@/shared/components/large-info-dialog/terms.component.tsx';
 import { ISectionID, ISections } from '@/shared/components/large-info-dialog/types.ts';
 
@@ -29,11 +30,11 @@ const SECTIONS: ISections = {
   },
   liquidity: {
     title: 'Liquidity',
-    description: '',
+    description: 'Indicator used by Balancer to see Bitcoin\'s buy and sell orders',
   },
   coins: {
     title: 'Coins',
-    description: '',
+    description: 'Indicator used by Balancer to see the influx and outflux of capital in the market',
   },
   reversal: {
     title: 'Reversal',
@@ -113,6 +114,7 @@ const LargeInfoDialog = ({ data }: { data: ISectionID }) => {
         { data === 'value_averaging' && <ValueAveraging />}
         { data === 'window' && <Window />}
         { data === 'liquidity' && <Liquidity />}
+        { data === 'coins' && <Coins />}
         { data === 'terms' && <Terms />}
 
       </DialogContent>

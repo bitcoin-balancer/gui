@@ -16,10 +16,13 @@ const Liquidity = () => (
         buying or selling liquidity.
     </p>
     <p>
-      Once these peaks are identified on both the bid and ask sides, the "Bids' dominance" is
-       calculated. This metric reflects the relative strength of buyers versus sellers. The
-        Reversal Indicator then uses this dominance score to assess the current market direction
-         and potential for a price reversal.
+      Once these peaks are identified on both the bid and ask sides,
+      the <strong>"Bids' dominance"</strong> is calculated. This metric reflects the relative
+       strength of buyers versus sellers.
+    </p>
+    <p>
+      The <strong>Reversal Indicator</strong> then uses this
+        dominance score to assess the current market direction and potential for a price reversal.
     </p>
     <img
       src='large-info-dialog/liquidity/summary.png'
