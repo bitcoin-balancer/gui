@@ -1,5 +1,5 @@
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
-import { Separator } from '@/shared/shadcn/components/ui/separator';
+import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *

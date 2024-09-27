@@ -9,6 +9,7 @@ import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import ValueAveraging from '@/shared/components/large-info-dialog/value-averaging.component';
 import Window from '@/shared/components/large-info-dialog/window.component.tsx';
+import Liquidity from '@/shared/components/large-info-dialog/liquidity.component.tsx';
 import Terms from '@/shared/components/large-info-dialog/terms.component.tsx';
 import { ISectionID, ISections } from '@/shared/components/large-info-dialog/types.ts';
 
@@ -111,6 +112,7 @@ const LargeInfoDialog = ({ data }: { data: ISectionID }) => {
           **************** */}
         { data === 'value_averaging' && <ValueAveraging />}
         { data === 'window' && <Window />}
+        { data === 'liquidity' && <Liquidity />}
         { data === 'terms' && <Terms />}
 
       </DialogContent>
