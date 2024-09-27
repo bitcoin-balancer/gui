@@ -8,6 +8,7 @@ import {
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import ValueAveraging from '@/shared/components/large-info-dialog/value-averaging.component';
+import Window from '@/shared/components/large-info-dialog/window.component.tsx';
 import Terms from '@/shared/components/large-info-dialog/terms.component.tsx';
 import { ISectionID, ISections } from '@/shared/components/large-info-dialog/types.ts';
 
@@ -19,11 +20,11 @@ import { ISectionID, ISections } from '@/shared/components/large-info-dialog/typ
 const SECTIONS: ISections = {
   value_averaging: {
     title: 'Value averaging',
-    description: '',
+    description: 'Investment strategy that involves making regular contributions to a portfolio over time',
   },
   window: {
     title: 'Window',
-    description: '',
+    description: 'Indicator used by Balancer to see Bitcoin\'s price and trend',
   },
   liquidity: {
     title: 'Liquidity',
@@ -43,7 +44,7 @@ const SECTIONS: ISections = {
   },
   terms: {
     title: 'Terms',
-    description: '',
+    description: 'Legal agreements between you and Balancer',
   },
 };
 
@@ -109,6 +110,7 @@ const LargeInfoDialog = ({ data }: { data: ISectionID }) => {
           * DIALOG CONTENT *
           **************** */}
         { data === 'value_averaging' && <ValueAveraging />}
+        { data === 'window' && <Window />}
         { data === 'terms' && <Terms />}
 
       </DialogContent>
