@@ -28,19 +28,14 @@ const Coins = () => (
        overall market direction and identify potential price reversals.
     </p>
     <img
-      src='large-info-dialog/coins/desktop.png'
+      src='large-info-dialog/coins/list.png'
       alt='Screenshot showing what a coins‘ state snapshot looks like'
       width='949'
       height='569'
-      className='hidden sm:block'
     />
-    <img
-      src='large-info-dialog/coins/mobile.png'
-      alt='Screenshot showing what a coins‘ state snapshot looks like'
-      width='432'
-      height='399'
-      className='sm:hidden'
-    />
+    <p className='text-light text-xs text-center'>
+      The states for a series of coins
+    </p>
   </>
 );
 

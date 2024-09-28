@@ -5,10 +5,10 @@
  ************************************************************************************************ */
 
 /**
- * Liquidity
- * Component in charge of explaining how the liquidity indicator works.
+ * Reversal
+ * Component in charge of explaining how the reversal indicator works.
  */
-const Liquidity = () => (
+const Reversal = () => (
   <>
     <p>
       The Liquidity Indicator monitors the Bitcoin/Dollar order book on a pre-configured exchange
@@ -43,4 +43,4 @@ const Liquidity = () => (
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export default Liquidity;
+export default Reversal;

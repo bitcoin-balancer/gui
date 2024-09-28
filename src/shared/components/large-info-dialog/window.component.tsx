@@ -121,6 +121,9 @@ const Window = () => (
       width='1243'
       height='767'
     />
+    <p className='text-light text-xs text-center'>
+      Example of a how the state of the window is calculated
+    </p>
 
 
     <Separator className='my-5' />
@@ -143,18 +146,18 @@ const Window = () => (
         potential opportunities for opening or increasing the position, seeking to capitalize on
          the reversal of the downward trend.
     </p>
-    <p>
-      Example of a window that is decreasing strongly:
-    </p>
     <img
       src='large-info-dialog/window/01.png'
       alt='Screenshot showing how the state for each split is calculated'
       width='1243'
       height='767'
     />
+    <p className='text-light text-xs text-center'>
+      Example of a window that is decreasing strongly
+    </p>
 
     <div
-      className='flex justify-start items-center mt-5 gap-2'
+      className='flex justify-start items-center mt-7 gap-2'
     >
       <h3 className='text-md text-increase-2 font-semibold'>Increasing strongly</h3>
       <Badge className='bg-increase-2'>2</Badge>
@@ -163,10 +166,7 @@ const Window = () => (
     <p>
       Conversely, when a strong upward trend is detected, the <strong>Strategy</strong> is
        triggered. This module assesses the current profit and loss (PNL) situation to determine if
-        the position can be reduced, aiming to secure profits.
-    </p>
-    <p>
-      Example of a window that is increasing strongly:
+        the position can be decreased, aiming to secure profits.
     </p>
     <img
       src='large-info-dialog/window/increasing-strongly.png'
@@ -174,6 +174,9 @@ const Window = () => (
       width='903'
       height='533'
     />
+    <p className='text-light text-xs text-center'>
+      Example of a window that is increasing strongly
+    </p>
   </>
 );
 

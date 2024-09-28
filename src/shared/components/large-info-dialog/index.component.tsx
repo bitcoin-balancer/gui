@@ -11,6 +11,7 @@ import ValueAveraging from '@/shared/components/large-info-dialog/value-averagin
 import Window from '@/shared/components/large-info-dialog/window.component.tsx';
 import Liquidity from '@/shared/components/large-info-dialog/liquidity.component.tsx';
 import Coins from '@/shared/components/large-info-dialog/coins.component.tsx';
+import Reversal from '@/shared/components/large-info-dialog/reversal.component.tsx';
 import Terms from '@/shared/components/large-info-dialog/terms.component.tsx';
 import { ISectionID, ISections } from '@/shared/components/large-info-dialog/types.ts';
 
@@ -115,6 +116,7 @@ const LargeInfoDialog = ({ data }: { data: ISectionID }) => {
         { data === 'window' && <Window />}
         { data === 'liquidity' && <Liquidity />}
         { data === 'coins' && <Coins />}
+        { data === 'reversal' && <Reversal />}
         { data === 'terms' && <Terms />}
 
       </DialogContent>
