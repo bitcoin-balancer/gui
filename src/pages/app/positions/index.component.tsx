@@ -315,36 +315,40 @@ const Positions = () => {
                 </DialogHeader>
 
                 <div>
-                  {records.map((record, i) => (
-                    <Fragment key={record.id}>
-                      <button
-                        id={`pd-${record.id}`}
-                        className={`p-6 flex justify-start items-center w-full text-left ${record.archived ? 'opacity-50' : ''} hover:bg-slate-100`}
-                        onClick={() => openPositionDialog(record.id)}
-                        aria-label='Display position'
-                      >
-                        <div
-                          className='max-w-[60%] sm:max-w-[70%]'
-                        >
-                          <p
-                            className='font-medium truncate'
-                          >{openTimes[i]}</p>
-                          <p
-                            className='text-light text-sm truncate'
-                          >{timeDistances[i]}</p>
-                        </div>
+                  {
+                    records.length > 0
+                      ? records.map((record, i) => (
+                        <Fragment key={record.id}>
+                          <button
+                            id={`pd-${record.id}`}
+                            className={`p-6 flex justify-start items-center w-full text-left ${record.archived ? 'opacity-50' : ''} hover:bg-slate-100`}
+                            onClick={() => openPositionDialog(record.id)}
+                            aria-label='Display position'
+                          >
+                            <div
+                              className='max-w-[60%] sm:max-w-[70%]'
+                            >
+                              <p
+                                className='font-medium truncate'
+                              >{openTimes[i]}</p>
+                              <p
+                                className='text-light text-sm truncate'
+                              >{timeDistances[i]}</p>
+                            </div>
 
-                        <span className='flex-1'></span>
+                            <span className='flex-1'></span>
 
-                        <Badge
-                          className={`bg-stateless ${record.pnl > 0 ? 'bg-increase-1' : 'bg-decrease-1'}`}
-                        >
-                          {pnls[i]}
-                        </Badge>
-                      </button>
-                      {i < data.length - 1 && <Separator />}
-                    </Fragment>
-                  ))}
+                            <Badge
+                              className={`bg-stateless ${record.pnl > 0 ? 'bg-increase-1' : 'bg-decrease-1'}`}
+                            >
+                              {pnls[i]}
+                            </Badge>
+                          </button>
+                          {i < data.length - 1 && <Separator />}
+                        </Fragment>
+                      ))
+                      : <NoRecords />
+                  }
                 </div>
               </DialogContent>
             </Dialog>
