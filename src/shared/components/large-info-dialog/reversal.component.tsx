@@ -1,4 +1,4 @@
-
+import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -11,27 +11,51 @@
 const Reversal = () => (
   <>
     <p>
-      The Liquidity Indicator monitors the Bitcoin/Dollar order book on a pre-configured exchange
-       in real-time. By analyzing and normalizing order book data, it detects unusual spikes in
-        buying or selling liquidity.
+      The Reversal Indicator activates during significant price drops within the Window Indicator's
+       observation period. During this time, It collaborates with other indicators to assess the
+        likelihood of a price reversal.
+    </p>
+
+    <h2 className='text-lg font-semibold'>Calculation</h2>
+    <p>
+      Each indicator contributes a weighted score based on its relevance to potential price
+       reversals. A minimum number of points must be accumulated across all indicators to trigger
+        a reversal signal.
     </p>
     <p>
-      Once these peaks are identified on both the bid and ask sides,
-      the <strong>"Bids' dominance"</strong> is calculated. This metric reflects the relative
-       strength of buyers versus sellers.
+      The score is calculated every time the Window Indicator fetches new data (every ~3 seconds
+       by default).
     </p>
-    <p>
-      The <strong>Reversal Indicator</strong> then uses this
-        dominance score to assess the current market direction and potential for a price reversal.
-    </p>
+
     <img
-      src='large-info-dialog/liquidity/summary.png'
-      alt='Screenshot showing what a liquidity snapshot looks like'
+      src='large-info-dialog/reversal/points.png'
+      alt='Screenshot showing how the reversal points are calculated'
       width='852'
       height='578'
     />
     <p className='text-light text-xs text-center'>
-      Example of a how the liquidity state is calculated
+      Example of a how the reversal points are calculated
+    </p>
+
+
+    <Separator className='my-5' />
+
+    <h2 className='text-lg font-semibold'>Price crash state</h2>
+    <p>
+      The Reversal Indicator's activation during price crashes aligns with Balancer's
+       "value averaging" trading strategy, which aims to increase portfolio size during price dips
+        and reduce it during rallies. This strategic approach leverages the potential for price
+         reversals following significant market downturns.
+    </p>
+
+    <img
+      src='large-info-dialog/reversal/decreasing-strongly.png'
+      alt='Screenshot showing what a price crash looks like'
+      width='852'
+      height='578'
+    />
+    <p className='text-light text-xs text-center'>
+      Example of a price crash
     </p>
   </>
 );

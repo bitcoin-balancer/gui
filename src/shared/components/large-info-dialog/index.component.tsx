@@ -39,7 +39,7 @@ const SECTIONS: ISections = {
   },
   reversal: {
     title: 'Reversal',
-    description: '',
+    description: 'Indicator used by Balancer to measure the probability of the price reversing after a price crash',
   },
   strategy: {
     title: 'Strategy',
