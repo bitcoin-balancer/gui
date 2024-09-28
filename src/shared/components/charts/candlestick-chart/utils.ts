@@ -38,7 +38,7 @@ const buildChartOptions = (
 ): DeepPartial<ChartOptions> => ({
   layout: {
     textColor: 'black',
-    attributionLogo: false,
+    attributionLogo: true,
   },
   width: chartContainerEl.clientWidth,
   height,

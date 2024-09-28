@@ -5,7 +5,9 @@
     "/assets",
     "/exchanges",
     "/installer",
+    "/large-info-dialog",
     "/logo",
+    "/screenshots",
     "/index.html"
   ],
   "excludeFilesFromPrecache": [],

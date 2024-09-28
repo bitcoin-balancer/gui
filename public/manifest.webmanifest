@@ -11,7 +11,74 @@
   "background_color": "#0c0c0c",
   "default_locale": "en",
   "orientation": "portrait",
-  "screenshots": [],
+  "screenshots": [
+    {
+      "src": "screenshots/desktop-01.png",
+      "type": "image/png",
+      "sizes": "1354x625",
+      "form_factor": "wide"
+    },
+    {
+      "src": "screenshots/desktop-02.png",
+      "type": "image/png",
+      "sizes": "1354x625",
+      "form_factor": "wide"
+    },
+    {
+      "src": "screenshots/desktop-03.png",
+      "type": "image/png",
+      "sizes": "1354x625",
+      "form_factor": "wide"
+    },
+    {
+      "src": "screenshots/desktop-04.png",
+      "type": "image/png",
+      "sizes": "1354x625",
+      "form_factor": "wide"
+    },
+    {
+      "src": "screenshots/desktop-05.png",
+      "type": "image/png",
+      "sizes": "1354x625",
+      "form_factor": "wide"
+    },
+    {
+      "src": "screenshots/mobile-01.png",
+      "type": "image/png",
+      "sizes": "355x633",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "screenshots/mobile-02.png",
+      "type": "image/png",
+      "sizes": "355x633",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "screenshots/mobile-03.png",
+      "type": "image/png",
+      "sizes": "355x633",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "screenshots/mobile-04.png",
+      "type": "image/png",
+      "sizes": "355x633",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "screenshots/mobile-05.png",
+      "type": "image/png",
+      "sizes": "355x633",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "screenshots/mobile-06.png",
+      "type": "image/png",
+      "sizes": "355x633",
+      "form_factor": "narrow"
+    }
+  ],
   "icons": [
     {
       "src": "pwa-assets/icons/16x16.png",
