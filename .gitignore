@@ -25,6 +25,3 @@ dist-ssr
 
 # gui-environment output
 src/environment/environment.ts
-
-# mocks dir
-mocks
