@@ -566,15 +566,23 @@ const Strategy = ({ closeDialog }: IFormProps) => {
               GAIN_REQUIREMENTS.map((gainRequirement, i) => (
                 <div
                   key={i}
-                  className='flex justify-start items-center gap-3'
+                  className='flex justify-start items-center gap-3 mt-7'
                 >
-                  <h4 className='font-semibold'>#{i}</h4>
+                  <h4
+                    className={`font-semibold ${i === 0 ? 'mt-6' : ''}`}
+                  >#{i}</h4>
 
                   <FormField
                     control={form.control}
                     name={gainRequirement.name}
                     render={({ field }) => (
-                      <FormItem className='mt-7 flex-1'>
+                      <FormItem className='flex-1'>
+                        {
+                          i === 0
+                          && <FormDescription className='text-xs'>
+                            {breakpoint === 'xs' ? 'Gain req.%' : 'Gain requirement%'}
+                          </FormDescription>
+                        }
                         <FormControl>
                           <Input
                             type='number'
@@ -586,9 +594,6 @@ const Strategy = ({ closeDialog }: IFormProps) => {
                             max={MAX_GAIN_REQUIREMENT}
                             />
                         </FormControl>
-                        <FormDescription className='text-xs'>
-                          {breakpoint === 'xs' ? 'Gain req.%' : 'Gain requirement%'}
-                        </FormDescription>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -603,7 +608,13 @@ const Strategy = ({ closeDialog }: IFormProps) => {
                     control={form.control}
                     name={PERCENTAGES[i].name}
                     render={({ field }) => (
-                      <FormItem className='mt-7 flex-1'>
+                      <FormItem className='flex-1'>
+                        {
+                          i === 0
+                          && <FormDescription className='text-xs'>
+                            Percentage
+                          </FormDescription>
+                        }
                         <FormControl>
                           <Input
                             type='number'
@@ -615,7 +626,6 @@ const Strategy = ({ closeDialog }: IFormProps) => {
                             max={100}
                             />
                         </FormControl>
-                        <FormDescription className='text-xs'>Percentage</FormDescription>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -630,7 +640,13 @@ const Strategy = ({ closeDialog }: IFormProps) => {
                     control={form.control}
                     name={FREQUENCIES[i].name}
                     render={({ field }) => (
-                      <FormItem className='mt-7 flex-1'>
+                      <FormItem className='flex-1'>
+                        {
+                          i === 0
+                          && <FormDescription className='text-xs'>
+                            Frequency
+                          </FormDescription>
+                        }
                         <FormControl>
                           <Input
                             type='number'
@@ -642,7 +658,6 @@ const Strategy = ({ closeDialog }: IFormProps) => {
                             max={MAX_FREQUENCY}
                             />
                         </FormControl>
-                        <FormDescription className='text-xs'>Frequency</FormDescription>
                         <FormMessage />
                       </FormItem>
                     )}
