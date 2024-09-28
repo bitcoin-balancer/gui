@@ -20,7 +20,7 @@ const Reversal = () => (
     <p>
       Each indicator contributes a weighted score based on its relevance to potential price
        reversals. A minimum number of points must be accumulated across all indicators to trigger
-        a reversal signal.
+        a reversal event.
     </p>
     <p>
       The score is calculated every time the Window Indicator fetches new data (every ~3 seconds

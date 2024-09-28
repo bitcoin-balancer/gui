@@ -1,4 +1,4 @@
-
+import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -11,28 +11,51 @@
 const Strategy = () => (
   <>
     <p>
-      The Liquidity Indicator monitors the Bitcoin/Dollar order book on a pre-configured exchange
-       in real-time. By analyzing and normalizing order book data, it detects unusual spikes in
-        buying or selling liquidity.
+      The Strategy Module monitors the state of the market and is responsible for opening,
+       increasing, and decreasing positions based on events.
+    </p>
+
+    <h2 className='text-lg font-semibold'>Opening and increasing positions</h2>
+    <p>
+      <strong>Value Averaging Strategy:</strong> positions are opened or increased when the price
+       has experienced a significant drop but indicators signal a potential price reversal. This
+        strategy aims to capitalize on price dips by acquiring more assets at a lower price.
     </p>
     <p>
-      Once these peaks are identified on both the bid and ask sides,
-      the <strong>"Bids' dominance"</strong> is calculated. This metric reflects the relative
-       strength of buyers versus sellers.
-    </p>
-    <p>
-      The <strong>Reversal Indicator</strong> then uses this
-        dominance score to assess the current market direction and potential for a price reversal.
+      <strong>Loss Mitigation:</strong> if an existing position is currently in a loss, the
+       Strategy Module may increase the position size only if the new entry price improves the
+        overall average cost.
     </p>
     <img
-      src='large-info-dialog/liquidity/summary.png'
-      alt='Screenshot showing what a liquidity snapshot looks like'
+      src='large-info-dialog/strategy/decreasing-strongly.png'
+      alt='Screenshot showing what a price crash looks like'
       width='852'
       height='578'
     />
     <p className='text-light text-xs text-center'>
-      Example of a how the liquidity state is calculated
+      Example of a price crash
     </p>
+
+
+    <Separator className='my-5' />
+
+    <h2 className='text-lg font-semibold'>Decreasing positions</h2>
+    <p>
+      <strong>Profit Protection:</strong> profitable positions are gradually decreased as the
+       price increases significantly. The higher the profit, the larger the percentage reduction
+        and the more frequent the adjustments. This strategy helps to lock in gains and reduce
+         exposure to potential price reversals.
+    </p>
+    <img
+      src='large-info-dialog/strategy/increasing-strongly.png'
+      alt='Screenshot showing what a price crash looks like'
+      width='852'
+      height='578'
+    />
+    <p className='text-light text-xs text-center'>
+      Example of a price rally
+    </p>
+
   </>
 );
 
