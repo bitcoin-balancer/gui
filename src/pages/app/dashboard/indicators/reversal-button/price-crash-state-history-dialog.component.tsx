@@ -60,7 +60,7 @@ const PriceCrashStateHistoryDialog = memo(({
       'Total',
       'Liquidity',
       `Coins quote (COINS/${exchangeConfig.quoteAsset})`,
-      `Coins base (COIN/${exchangeConfig.baseAsset})`,
+      `Coins base (COINS/${exchangeConfig.baseAsset})`,
     ],
     [exchangeConfig.quoteAsset, exchangeConfig.baseAsset],
   );
