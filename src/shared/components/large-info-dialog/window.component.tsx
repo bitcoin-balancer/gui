@@ -116,7 +116,7 @@ const Window = () => (
        for a random period:
     </p>
     <img
-      src='large-info-dialog/window/01.png'
+      src='large-info-dialog/window/window-state-calculation.png'
       alt='Screenshot showing how the state for each split is calculated'
       width='1243'
       height='767'
@@ -147,8 +147,8 @@ const Window = () => (
          the reversal of the downward trend.
     </p>
     <img
-      src='large-info-dialog/window/01.png'
-      alt='Screenshot showing how the state for each split is calculated'
+      src='large-info-dialog/window/decreasing-strongly.png'
+      alt='Screenshot showing what a decreasing strongly state looks like'
       width='1243'
       height='767'
     />

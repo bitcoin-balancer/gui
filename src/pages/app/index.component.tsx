@@ -14,7 +14,7 @@ import {
   CloudDownload,
 } from 'lucide-react';
 import { SWService } from 'sw-service';
-import { Toaster } from '@/shared/shadcn/components/ui/toaster';
+import { Toaster } from '@/shared/shadcn/components/ui/toaster.tsx';
 import { ToastAction } from '@/shared/shadcn/components/ui/toast.tsx';
 import { toast } from '@/shared/shadcn/components/ui/use-toast.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
