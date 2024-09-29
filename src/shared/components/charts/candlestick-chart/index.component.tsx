@@ -28,6 +28,13 @@ const CandlestickChart = ({
   state,
   markers,
   priceFormatterFunc,
+  showAttributionLogo = true,
+  hideTimeScale = false,
+  hideRightPriceScale = false,
+  hideCrosshair = false,
+  hidePriceLine = false,
+  disableScrollHandler = false,
+  disableScaleHandler = false,
 }: IComponentProps) => {
   /* **********************************************************************************************
    *                                             REFS                                             *
@@ -43,7 +50,17 @@ const CandlestickChart = ({
       if (!this.__api) {
         this.__api = createChart(
           chartContainerRef.current!,
-          buildChartOptions(chartContainerRef.current!, height, priceFormatterFunc),
+          buildChartOptions(
+            chartContainerRef.current!,
+            height,
+            priceFormatterFunc,
+            showAttributionLogo,
+            hideTimeScale,
+            hideRightPriceScale,
+            hideCrosshair,
+            disableScrollHandler,
+            disableScaleHandler,
+          ),
         );
         this.__api.timeScale().fitContent();
       }
@@ -60,6 +77,7 @@ const CandlestickChart = ({
           borderVisible: false,
           wickUpColor: upColor,
           wickDownColor: downColor,
+          priceLineVisible: !hidePriceLine,
         });
         if (arrayValid(markers)) {
           this.__series.setMarkers(markers);

@@ -18,7 +18,7 @@ const buildMarker = (timestamp: number, isIncrease: boolean): IMarker => ({
   position: isIncrease ? 'belowBar' : 'aboveBar',
   color: isIncrease ? ColorService.INCREASE_1 : ColorService.DECREASE_1,
   shape: isIncrease ? 'arrowUp' : 'arrowDown',
-  text: isIncrease ? 'Increase' : 'Decrease',
+  text: isIncrease ? 'Buy' : 'Sell',
 });
 
 

@@ -29,16 +29,28 @@ const toBars = (records: ICompactCandlestickRecords): ICandlestickBar[] => recor
  * @param chartContainerEl
  * @param height
  * @param priceFormatterFunc
+ * @param showAttributionLogo
+ * @param hideTimeScale
+ * @param hideRightPriceScale
+ * @param hideCrosshair
+ * @param disableScrollHandler
+ * @param disableScaleHandler
  * @returns DeepPartial<ChartOptions>
  */
 const buildChartOptions = (
   chartContainerEl: HTMLDivElement,
   height: number,
   priceFormatterFunc: IPriceFormatterFunc | undefined,
+  showAttributionLogo: boolean,
+  hideTimeScale: boolean,
+  hideRightPriceScale: boolean,
+  hideCrosshair: boolean,
+  disableScrollHandler: boolean,
+  disableScaleHandler: boolean,
 ): DeepPartial<ChartOptions> => ({
   layout: {
     textColor: 'black',
-    attributionLogo: true,
+    attributionLogo: showAttributionLogo,
   },
   width: chartContainerEl.clientWidth,
   height,
@@ -48,10 +60,12 @@ const buildChartOptions = (
   },
   timeScale: {
     borderColor: ColorService.PRIMARY,
+    visible: !hideTimeScale,
     timeVisible: true,
   },
   rightPriceScale: {
     borderColor: ColorService.PRIMARY,
+    visible: !hideRightPriceScale,
   },
   crosshair: {
     // change mode from default 'magnet' to 'normal'.
@@ -64,14 +78,20 @@ const buildChartOptions = (
       color: ColorService.PRIMARY,
       style: 3,
       labelBackgroundColor: ColorService.PRIMARY,
+      visible: !hideCrosshair,
+      labelVisible: !hideCrosshair,
     },
 
     // Horizontal crosshair line (showing Price in Label)
     horzLine: {
       color: ColorService.PRIMARY,
       labelBackgroundColor: ColorService.PRIMARY,
+      visible: !hideCrosshair,
+      labelVisible: !hideCrosshair,
     },
   },
+  handleScroll: !disableScrollHandler,
+  handleScale: !disableScaleHandler,
 });
 
 /**

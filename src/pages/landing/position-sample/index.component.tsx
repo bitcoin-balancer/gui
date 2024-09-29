@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { formatDollarAmount } from '@/shared/services/transformers/index.service.ts';
 import { IBreakpoint } from '@/shared/services/media-query/index.service.ts';
 import CandlestickChart from '@/shared/components/charts/candlestick-chart/index.component.tsx';
@@ -62,6 +62,13 @@ const PositionSample = ({ breakpoint }: { breakpoint: IBreakpoint }) => {
             data={DATA}
             markers={MARKERS}
             priceFormatterFunc={priceFormatter}
+            showAttributionLogo={false}
+            hideTimeScale={true}
+            hideRightPriceScale={true}
+            hideCrosshair={true}
+            hidePriceLine={true}
+            disableScrollHandler={true}
+            disableScaleHandler={true}
           />
         </article>
 
