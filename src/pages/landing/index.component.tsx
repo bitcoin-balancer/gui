@@ -13,6 +13,7 @@ import PositionSample from '@/pages/landing/position-sample/index.component.tsx'
 import ScrollToTop from '@/shared/components/scroll-to-top/index.component.tsx';
 import LargeInfoDialog from '@/shared/components/large-info-dialog/index.component.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator';
+import { ISectionID } from '@/pages/landing/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -30,6 +31,21 @@ const Landing = () => {
   const isLargeInfoDialogOpen = useBoundStore((state) => state.isLargeInfoDialogOpen);
   const openLargeInfoDialog = useBoundStore((state) => state.openLargeInfoDialog);
   const navigate = useNavigate();
+
+
+
+
+  /* **********************************************************************************************
+   *                                        EVENT HANDLERS                                        *
+   ********************************************************************************************** */
+
+  /**
+   * Attempts to navigate to a section based on its ID.
+   * @param id
+   */
+  const navigateToSection = (id: ISectionID): void => {
+    document.querySelector(`#${id}`)?.scrollIntoView();
+  };
 
 
 
@@ -110,22 +126,14 @@ const Landing = () => {
             >
 
               <Button
-                className='hidden sm:flex'
-                size='lg'
+                size={breakpoint === 'xs' ? 'default' : 'lg'}
+                onClick={() => navigateToSection('position_sample')}
               ><ChartCandlestick className='mr-2' /> Learn more</Button>
-              <Button
-                className='sm:hidden'
-              ><ChartCandlestick className='mr-1' /> Learn more</Button>
 
               <Button
-                className='hidden sm:flex'
-                size='lg'
+                size={breakpoint === 'xs' ? 'default' : 'lg'}
                 onClick={() => navigate(NavService.dashboard())}
               ><LogIn className='mr-2' /> Go to app</Button>
-              <Button
-                className='sm:hidden'
-                onClick={() => navigate(NavService.dashboard())}
-              ><LogIn className='mr-1' /> Go to app</Button>
 
             </div>
 
@@ -138,9 +146,14 @@ const Landing = () => {
         {/* *****************
           * POSITION SAMPLE *
           ***************** */}
-        <PositionSample
-          breakpoint={breakpoint}
-        />
+        <div
+          id='position_sample'
+          className='my-20'
+        >
+          <PositionSample
+            breakpoint={breakpoint}
+          />
+        </div>
 
 
         <Separator className='my-20' />

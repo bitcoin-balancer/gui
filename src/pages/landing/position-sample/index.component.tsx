@@ -29,7 +29,7 @@ const PositionSample = ({ breakpoint }: { breakpoint: IBreakpoint }) => {
    ********************************************************************************************** */
   return (
     <div
-      className='w-full flex justify-center items-start my-20'
+      className='w-full flex justify-center items-start'
     >
       <section
         className='w-full md:w-10/12 lg:w-9/12 xl:w-8/12 2xl:w-7/12 relative'
@@ -59,7 +59,7 @@ const PositionSample = ({ breakpoint }: { breakpoint: IBreakpoint }) => {
           * CHART *
           ******* */}
         <article
-          className='sm:-mt-5'
+          className='mt-3 sm:-mt-5'
         >
           <CandlestickChart
             height={breakpoint === 'xs' || breakpoint === 'sm' ? 400 : 500}
