@@ -8,8 +8,11 @@ import {
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { NavService } from '@/shared/services/nav/index.service.ts';
+import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
+import PositionSample from '@/pages/landing/position-sample/index.component.tsx';
 import ScrollToTop from '@/shared/components/scroll-to-top/index.component.tsx';
 import LargeInfoDialog from '@/shared/components/large-info-dialog/index.component.tsx';
+import { Separator } from '@/shared/shadcn/components/ui/separator';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -23,6 +26,7 @@ const Landing = () => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
+  const breakpoint = useMediaQueryBreakpoint();
   const isLargeInfoDialogOpen = useBoundStore((state) => state.isLargeInfoDialogOpen);
   const openLargeInfoDialog = useBoundStore((state) => state.openLargeInfoDialog);
   const navigate = useNavigate();
@@ -78,9 +82,9 @@ const Landing = () => {
 
 
 
-        {/* **************
-          * HERO SECTION *
-          ************** */}
+        {/* ******
+          * HERO *
+          ****** */}
         <section
           id='landing-hero'
           className='bg-primary flex justify-center items-center shadow-6'
@@ -128,6 +132,20 @@ const Landing = () => {
           </div>
 
         </section>
+
+
+
+        {/* *****************
+          * POSITION SAMPLE *
+          ***************** */}
+        <PositionSample
+          breakpoint={breakpoint}
+        />
+
+
+        <Separator className='my-20' />
+
+
 
         <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
         <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
