@@ -9,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/shared/shadcn/components/ui/card.tsx';
+import { toLocalTime } from '@/shared/services/transformers/index.service.ts';
 import { sortRecords } from '@/shared/services/utils/index.service.ts';
 import {
   CandlestickService,
@@ -51,7 +52,7 @@ const CHART_NAMES = ['Price', 'Gain', 'Entry price', 'Amount'];
  * @returns IMarker
  */
 const buildMarker = (action: IPositionAction, isIncrease: boolean): IMarker => ({
-  time: action.eventTime as UTCTimestamp,
+  time: toLocalTime(action.eventTime) as UTCTimestamp,
   position: isIncrease ? 'belowBar' : 'aboveBar',
   color: isIncrease ? ColorService.INCREASE_1 : ColorService.DECREASE_1,
   shape: isIncrease ? 'arrowUp' : 'arrowDown',
