@@ -32,21 +32,25 @@ const PositionSample = ({ breakpoint }: { breakpoint: IBreakpoint }) => {
       className='w-full flex justify-center items-start my-20'
     >
       <section
-        className='w-full lg:w-10/12 xl:w-9/12 2xl:w-8/12'
+        className='w-full md:w-10/12 lg:w-9/12 xl:w-8/12 2xl:w-7/12 relative'
       >
 
         {/* ********
           * HEADER *
           ******** */}
         <header
-          className='flex flex-col gap-3 sm:flex-row justify-center items-center'
+          className='w-full absolute z-10'
         >
-          <p
-            className='text-4xl sm:text-5xl font-bold'
-          ><strong className='text-increase-1 font-extrabold'>Buy</strong> the dip{breakpoint !== 'xs' ? '.' : ''}</p>
-          <p
-            className='text-4xl sm:text-5xl font-bold'
-          ><strong className='text-decrease-1 font-extrabold'>Sell</strong> the rally</p>
+          <div
+            className='flex flex-col gap-3 sm:flex-row justify-center items-center'
+          >
+            <p
+              className='text-4xl sm:text-5xl font-bold'
+            ><strong className='text-increase-1 font-extrabold'>Buy</strong> the dip{breakpoint !== 'xs' ? '.' : ''}</p>
+            <p
+              className='text-4xl sm:text-5xl font-bold'
+            ><strong className='text-decrease-1 font-extrabold'>Sell</strong> the rally</p>
+          </div>
         </header>
 
 
@@ -55,7 +59,7 @@ const PositionSample = ({ breakpoint }: { breakpoint: IBreakpoint }) => {
           * CHART *
           ******* */}
         <article
-          className='mt-5'
+          className='sm:-mt-5'
         >
           <CandlestickChart
             height={breakpoint === 'xs' || breakpoint === 'sm' ? 400 : 500}
