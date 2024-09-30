@@ -15,7 +15,7 @@ import {
  */
 const Characteristics = () => (
   <div
-      className='w-full flex justify-center items-start bg-primary text-slate-50 shadow-4'
+    className='w-full flex justify-center items-start bg-primary text-slate-50 shadow-4'
   >
     <section
       className='w-full md:w-11/12 lg:w-9/12 xl:w-11/12 2xl:w-10/12 py-20 px-3'
@@ -30,7 +30,7 @@ const Characteristics = () => (
       </header>
 
       <div
-        className='mt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 justify-between gap-10'
+        className='mt-10 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 justify-between gap-10'
       >
 
         {/* **************

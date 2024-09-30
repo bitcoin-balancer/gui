@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
 import ScrollToTop from '@/shared/components/scroll-to-top/index.component.tsx';
@@ -7,6 +8,7 @@ import Header from '@/pages/landing/header/index.component.tsx';
 import Hero from '@/pages/landing/hero/index.component.tsx';
 import PositionSample from '@/pages/landing/position-sample/index.component.tsx';
 import Characteristics from '@/pages/landing/characteristics/index.component.tsx';
+import FAQ from '@/pages/landing/faq/index.component.tsx';
 import { ISectionID } from '@/pages/landing/types.ts';
 
 /* ************************************************************************************************
@@ -100,6 +102,16 @@ const Landing = () => {
 
         {/* <Separator className='my-20' /> */}
 
+
+        {/* *****
+          * FAQ *
+          ***** */}
+        <div
+          id='faq'
+          className='my-20'
+        >
+          <FAQ />
+        </div>
 
 
         <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />

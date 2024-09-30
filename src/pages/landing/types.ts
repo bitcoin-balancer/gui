@@ -5,7 +5,7 @@
  ************************************************************************************************ */
 
 // sections that can be navigated to
-type ISectionID = 'position_sample' | 'characteristics';
+type ISectionID = 'position_sample' | 'characteristics' | 'faq';
 
 
 
