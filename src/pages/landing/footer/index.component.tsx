@@ -1,14 +1,13 @@
-import { Button } from '@/shared/shadcn/components/ui/button';
 import {
-  Bitcoin,
-  CodeXml,
-  EarthLock,
+  Container,
   Github,
   Link,
-  ShieldCheck,
+  Scale,
+  Mail,
 } from 'lucide-react';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
+import { NavService } from '@/shared/services/nav/index.service.ts';
 import { IFooterProps } from '@/pages/landing/footer/types.ts';
-import { NavService } from '@/shared/services/nav/index.service';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -19,34 +18,34 @@ import { NavService } from '@/shared/services/nav/index.service';
  * Component in charge of displaying why people should use balancer.
  */
 const Footer = ({
+  openContactDialog,
   openLargeInfoDialog,
-  navigateToSection,
   navigate,
 }: IFooterProps) => (
   <div
     className='w-full flex justify-center items-start bg-primary text-slate-50 shadow-6'
   >
     <footer
-      className='w-full md:w-11/12 lg:w-9/12 xl:w-11/12 2xl:w-10/12 py-20 px-3 flex justify-start items-start gap-4'
+      className='w-full xl:w-11/12 2xl:w-9/12 py-20 px-3 flex flex-col lg:flex-row justify-start items-start gap-10'
     >
 
       {/* *******
         * BRAND *
         ******* */}
-      <div>
+      <div className='flex-1 grow'>
         <img
           src='logo/logo-light.png'
           alt='Balancer’s Logo'
           width='176'
           height='60'
-          className='w-36 sm:w-44'
+          className='w-36'
         />
 
         <p
-          className='font-bold'
+          className='mt-3 text-lg font-bold'
         >Trade like a proffessional consistently</p>
         <p
-          className='text-sm'
+          className='mt-1 text-sm'
         >
           Balancer is a cutting-edge, open-source, self-hosted platform that empowers users to
           automate the Value Averaging Strategy for Bitcoin
@@ -54,11 +53,12 @@ const Footer = ({
       </div>
 
 
+
       {/* **********
         * PLATFORM *
         ********** */}
-      <div className='flex flex-col justify-start items-start'>
-        <h3>Platform</h3>
+      <div className='flex-initial flex flex-col justify-start items-start'>
+        <h3 className='font-bold'>Platform</h3>
 
         <Button
           variant='link'
@@ -91,37 +91,101 @@ const Footer = ({
         >
           <Link aria-hidden='true' className='w-4 h-4 mr-1' /> GitHub
         </Button>
+
+        <Button
+          variant='link'
+          className='text-slate-50'
+          onClick={() => openLargeInfoDialog('terms')}
+        >
+          <Scale aria-hidden='true' className='w-4 h-4 mr-1' /> Terms
+        </Button>
+
+        <Button
+          variant='link'
+          className='text-slate-50'
+          onClick={() => openContactDialog()}
+        >
+          <Mail aria-hidden='true' className='w-4 h-4 mr-1' /> Contact
+        </Button>
       </div>
 
 
-      {/* **********
-        * PLATFORM *
-        ********** */}
-      <div className='flex flex-col justify-start items-start'>
-        <h3>Repositories</h3>
+      {/* **************
+        * REPOSITORIES *
+        ************** */}
+      <div className='flex-initial flex flex-col justify-start items-start'>
+        <h3 className='font-bold'>Repositories</h3>
 
         <Button
           variant='link'
           className='text-slate-50'
-          onClick={() => navigate(NavService.dashboard())}
+          onClick={() => NavService.openCLIRepo()}
         >
-          <Github aria-hidden='true' className='w-4 h-4 mr-1' /> Application
+          <Github aria-hidden='true' className='w-4 h-4 mr-1' /> bitcoin-balancer/cli
         </Button>
 
         <Button
           variant='link'
           className='text-slate-50'
-          onClick={() => navigate(NavService.signIn())}
+          onClick={() => NavService.openAPIRepo()}
         >
-          <Link aria-hidden='true' className='w-4 h-4 mr-1' /> Sign in
+          <Github aria-hidden='true' className='w-4 h-4 mr-1' /> bitcoin-balancer/api
         </Button>
 
         <Button
           variant='link'
           className='text-slate-50'
-          onClick={() => navigate(NavService.updatePassword())}
+          onClick={() => NavService.openGUIRepo()}
         >
-          <Link aria-hidden='true' className='w-4 h-4 mr-1' /> Update password
+          <Github aria-hidden='true' className='w-4 h-4 mr-1' /> bitcoin-balancer/gui
+        </Button>
+
+        <Button
+          variant='link'
+          className='text-slate-50'
+          onClick={() => NavService.openCTRepo()}
+        >
+          <Github aria-hidden='true' className='w-4 h-4 mr-1' /> bitcoin-balancer/ct
+        </Button>
+      </div>
+
+
+      {/* ***************
+        * DOCKER IMAGES *
+        *************** */}
+      <div className='flex-initial flex flex-col justify-start items-start'>
+        <h3 className='font-bold'>Docker Images</h3>
+
+        <Button
+          variant='link'
+          className='text-slate-50'
+          onClick={() => NavService.openPostgresImage()}
+        >
+          <Container aria-hidden='true' className='w-4 h-4 mr-1' /> postgres
+        </Button>
+
+        <Button
+          variant='link'
+          className='text-slate-50'
+          onClick={() => NavService.openAPIImage()}
+        >
+          <Container aria-hidden='true' className='w-4 h-4 mr-1' /> jesusgraterol/balancer-api
+        </Button>
+
+        <Button
+          variant='link'
+          className='text-slate-50'
+          onClick={() => NavService.openGUIImage()}
+        >
+          <Container aria-hidden='true' className='w-4 h-4 mr-1' /> jesusgraterol/balancer-gui
+        </Button>
+
+        <Button
+          variant='link'
+          className='text-slate-50'
+          onClick={() => NavService.openCTImage()}
+        >
+          <Container aria-hidden='true' className='w-4 h-4 mr-1' /> jesusgraterol/balancer-ct
         </Button>
       </div>
 

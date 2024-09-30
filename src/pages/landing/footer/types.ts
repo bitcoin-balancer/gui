@@ -1,5 +1,4 @@
 import { ISectionID } from '@/shared/components/large-info-dialog/index.component.tsx';
-import { ISectionID as ILandingSectionID } from '@/pages/landing/types.ts';
 
 /* ************************************************************************************************
  *                                             TYPES                                              *
@@ -7,8 +6,8 @@ import { ISectionID as ILandingSectionID } from '@/pages/landing/types.ts';
 
 // props used by the component
 type IFooterProps = {
+  openContactDialog: () => void,
   openLargeInfoDialog: (data: ISectionID) => void,
-  navigateToSection: (id: ILandingSectionID) => void,
   navigate: (path: string) => void,
 };
 

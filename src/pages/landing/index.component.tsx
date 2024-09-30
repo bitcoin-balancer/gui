@@ -4,6 +4,7 @@ import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
 import ScrollToTop from '@/shared/components/scroll-to-top/index.component.tsx';
+import InfoDialog from '@/shared/components/info-dialog/index.component.tsx';
 import LargeInfoDialog from '@/shared/components/large-info-dialog/index.component.tsx';
 import Header from '@/pages/landing/header/index.component.tsx';
 import Hero from '@/pages/landing/hero/index.component.tsx';
@@ -27,6 +28,7 @@ const Landing = () => {
    ********************************************************************************************** */
   const breakpoint = useMediaQueryBreakpoint();
   const isLargeInfoDialogOpen = useBoundStore((state) => state.isLargeInfoDialogOpen);
+  const openInfoDialog = useBoundStore((state) => state.openInfoDialog);
   const openLargeInfoDialog = useBoundStore((state) => state.openLargeInfoDialog);
   const navigate = useNavigate();
 
@@ -46,6 +48,18 @@ const Landing = () => {
       document.querySelector(`#${id}`)?.scrollIntoView();
     },
     [],
+  );
+
+  /**
+   * Opens the contact dialog.
+   */
+  const openContactDialog = useCallback(
+    () => openInfoDialog({
+      title: 'Contact',
+      description: 'Having issues running the platform? Open a GitHub issue. For other inquiries, contact me at:',
+      content: 'jesusgraterol.dev@protonmail.com',
+    }),
+    [openInfoDialog],
   );
 
 
@@ -127,8 +141,8 @@ const Landing = () => {
           id='footer'
         >
           <Footer
+            openContactDialog={openContactDialog}
             openLargeInfoDialog={openLargeInfoDialog}
-            navigateToSection={navigateToSection}
             navigate={navigate}
           />
         </div>
@@ -141,6 +155,13 @@ const Landing = () => {
         <ScrollToTop />
 
       </main>
+
+
+
+      {/* *************
+        * INFO DIALOG *
+        ************* */}
+      <InfoDialog />
 
 
 

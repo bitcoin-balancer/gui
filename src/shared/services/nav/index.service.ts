@@ -20,8 +20,14 @@ const navServiceFactory = (): INavService => {
   // the URL for the services' repos
   const __API_REPO_URL = 'https://github.com/bitcoin-balancer/api';
   const __GUI_REPO_URL = 'https://github.com/bitcoin-balancer/gui';
+  const __CLI_REPO_URL = 'https://github.com/bitcoin-balancer/cli';
+  const __CT_REPO_URL = 'https://github.com/bitcoin-balancer/ct';
 
-
+  // the URL for the docker images
+  const __POSTGRES_IMAGE_URL = 'https://hub.docker.com/_/postgres';
+  const __API_IMAGE_URL = 'https://hub.docker.com/r/jesusgraterol/balancer-api';
+  const __GUI_IMAGE_URL = 'https://hub.docker.com/r/jesusgraterol/balancer-gui';
+  const __CT_IMAGE_URL = 'https://hub.docker.com/r/jesusgraterol/balancer-ct';
 
 
 
@@ -80,6 +86,11 @@ const navServiceFactory = (): INavService => {
   const openGitHubPage = (): void => openURL(__GITHUB_URL);
 
   /**
+   * Opens the CLI's respository page in a new tab.
+   */
+  const openCLIRepo = (): void => openURL(__CLI_REPO_URL);
+
+  /**
    * Opens the GUI's respository page in a new tab.
    */
   const openGUIRepo = (): void => openURL(__GUI_REPO_URL);
@@ -100,6 +111,31 @@ const navServiceFactory = (): INavService => {
    * @param hash
    */
   const openAPICommit = (hash: string): void => openURL(buildAPICommitURL(hash));
+
+  /**
+   * Opens the Cloudflare Tunnel's respository page in a new tab.
+   */
+  const openCTRepo = (): void => openURL(__CT_REPO_URL);
+
+  /**
+   * Opens the Docker Image page for postgres in a new tab.
+   */
+  const openPostgresImage = (): void => openURL(__POSTGRES_IMAGE_URL);
+
+  /**
+   * Opens the Docker Image page for the API in a new tab.
+   */
+  const openAPIImage = (): void => openURL(__API_IMAGE_URL);
+
+  /**
+   * Opens the Docker Image page for the GUI in a new tab.
+   */
+  const openGUIImage = (): void => openURL(__GUI_IMAGE_URL);
+
+  /**
+   * Opens the Docker Image page for the CT in a new tab.
+   */
+  const openCTImage = (): void => openURL(__CT_IMAGE_URL);
 
 
 
@@ -195,10 +231,16 @@ const navServiceFactory = (): INavService => {
     openURL,
     createNewInstance,
     openGitHubPage,
+    openCLIRepo,
     openGUIRepo,
     openGUICommit,
     openAPIRepo,
     openAPICommit,
+    openCTRepo,
+    openPostgresImage,
+    openAPIImage,
+    openGUIImage,
+    openCTImage,
 
     // internal navigation
     landing,
