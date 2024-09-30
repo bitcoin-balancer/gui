@@ -143,6 +143,15 @@ const FAQ_ITEMS = [
             <p><strong>* OKX (planned)</strong></p>
           </li>
         </ul>
+        <p>
+          More more information,
+          visit <a
+            href='https://github.com/bitcoin-balancer/.github/blob/main/profile/sections/supported-exchanges/index.md'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='text-sky-700'
+          >Supported exchanges</a>.
+        </p>
       </>
     ),
   },
