@@ -243,7 +243,7 @@ const Coins = ({ closeDialog }: IFormProps) => {
                   <FormControl>
                     <Input
                       type='number'
-                      placeholder='20'
+                      placeholder='15'
                       {...field}
                       autoComplete='off'
                       disabled={isSubmitting}
