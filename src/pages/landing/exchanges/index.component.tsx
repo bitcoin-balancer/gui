@@ -1,9 +1,4 @@
-import {
-  CodeXml,
-  DraftingCompass,
-  EarthLock,
-  ShieldCheck,
-} from 'lucide-react';
+
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -18,7 +13,7 @@ const Exchanges = () => (
     className='w-full flex justify-center items-start bg-primary text-slate-50 shadow-4'
   >
     <section
-      className='w-full md:w-9/12 lg:w-7/12 xl:w-6/12 2xl:w-5/12 py-20 px-3'
+      className='w-full md:w-9/12 lg:w-7/12 xl:w-6/12 2xl:w-4/12 py-20 px-3'
     >
       <header className='text-center'>
         <h2
@@ -32,10 +27,10 @@ const Exchanges = () => (
       <div
         className='mt-10 flex justify-center items-center flex-wrap gap-14'
       >
-        <img src='exchanges/white/binance.png' alt='Binance Logo' className='w-40' />
-        <img src='exchanges/white/bitfinex.png' alt='Bitfinex Logo' className='w-48' />
-        <img src='exchanges/white/kraken.png' alt='Kraken Logo' className='w-36' />
-        <img src='exchanges/white/coinbase.png' alt='Coinbase Logo' className='w-40' />
+        <img src='exchanges/white/binance.png' alt='Binance Logo' className='w-36' />
+        <img src='exchanges/white/bitfinex.png' alt='Bitfinex Logo' className='w-44' />
+        <img src='exchanges/white/kraken.png' alt='Kraken Logo' className='w-32' />
+        <img src='exchanges/white/coinbase.png' alt='Coinbase Logo' className='w-36' />
         <img src='exchanges/white/okx.png' alt='OKX Logo' className='w-20' />
       </div>
     </section>
