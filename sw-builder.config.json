@@ -7,6 +7,7 @@
     "/installer",
     "/large-info-dialog",
     "/logo",
+    "/technologies",
     "/index.html"
   ],
   "excludeFilesFromPrecache": [],
