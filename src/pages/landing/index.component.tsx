@@ -6,13 +6,14 @@ import {
   ChartCandlestick,
 } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
+import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { NavService } from '@/shared/services/nav/index.service.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
-import PositionSample from '@/pages/landing/position-sample/index.component.tsx';
 import ScrollToTop from '@/shared/components/scroll-to-top/index.component.tsx';
 import LargeInfoDialog from '@/shared/components/large-info-dialog/index.component.tsx';
-import { Separator } from '@/shared/shadcn/components/ui/separator';
+import PositionSample from '@/pages/landing/position-sample/index.component.tsx';
+import Characteristics from '@/pages/landing/characteristics/index.component.tsx';
 import { ISectionID } from '@/pages/landing/types.ts';
 
 /* ************************************************************************************************
@@ -156,7 +157,19 @@ const Landing = () => {
         </div>
 
 
-        <Separator className='my-20' />
+
+        {/* *****************
+          * CHARACTERISTICS *
+          ***************** */}
+        <div
+          id='characteristics'
+          className='my-20'
+        >
+          <Characteristics />
+        </div>
+
+
+        {/* <Separator className='my-20' /> */}
 
 
 
