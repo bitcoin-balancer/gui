@@ -343,7 +343,7 @@ const Liquidity = ({ closeDialog }: IFormProps) => {
           <DialogDescription className='flex justify-center items-center sm:justify-start'>
             Connected to
             <img
-              src={`/exchanges/${exchangeConfig.liquidity}.png`}
+              src={`/exchanges/color/${exchangeConfig.liquidity}.png`}
               alt={`Logo of the Exchange being used by the Liquidity Module (${exchangeConfig.liquidity})`}
               height={435}
               width={90}

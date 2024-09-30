@@ -396,7 +396,7 @@ const Window = ({ closeDialog }: IFormProps) => {
           <DialogDescription className='flex justify-center items-center sm:justify-start'>
             Connected to
             <img
-              src={`/exchanges/${exchangeConfig.window}.png`}
+              src={`/exchanges/color/${exchangeConfig.window}.png`}
               alt={`Logo of the Exchange being used by the Window Module (${exchangeConfig.window})`}
               height={435}
               width={90}

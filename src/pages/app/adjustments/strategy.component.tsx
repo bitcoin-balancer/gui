@@ -707,7 +707,7 @@ const Strategy = ({ closeDialog }: IFormProps) => {
           <DialogDescription className='flex justify-center items-center sm:justify-start'>
             Connected to
             <img
-              src={`/exchanges/${exchangeConfig.trading}.png`}
+              src={`/exchanges/color/${exchangeConfig.trading}.png`}
               alt={`Logo of the Exchange being used by the Strategy Module (${exchangeConfig.trading})`}
               height={435}
               width={90}

@@ -442,7 +442,7 @@ const Coins = ({ closeDialog }: IFormProps) => {
           <DialogDescription className='flex justify-center items-center sm:justify-start'>
             Connected to
             <img
-              src={`/exchanges/${exchangeConfig.coins}.png`}
+              src={`/exchanges/color/${exchangeConfig.coins}.png`}
               alt={`Logo of the Exchange being used by the Coins Module (${exchangeConfig.coins})`}
               height={435}
               width={90}
