@@ -4,6 +4,16 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/shared/shadcn/components/ui/accordion.tsx';
+import { Button } from '@/shared/shadcn/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/shared/shadcn/components/ui/dialog.tsx';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
@@ -219,14 +229,38 @@ const FrequentlyAskedQuestions = () => (
 
       <Accordion type='single' collapsible className='w-full mt-2'>
         {
-          FAQ_ITEMS.map((item, i) => (
+          FAQ_ITEMS.slice(0, 5).map((item, i) => (
             <AccordionItem key={i} value={`item-${i}`}>
-              <AccordionTrigger>{item.title}</AccordionTrigger>
+              <AccordionTrigger><p className='text-left'>{item.title}</p></AccordionTrigger>
               <AccordionContent>{item.content}</AccordionContent>
             </AccordionItem>
           ))
         }
       </Accordion>
+
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant='ghost' className='w-full mt-2'>View all</Button>
+        </DialogTrigger>
+        <DialogContent className='sm:max-w-[500px]'>
+          <DialogHeader>
+            <DialogTitle>FAQ</DialogTitle>
+            <DialogDescription>
+              Commonly asked questions
+            </DialogDescription>
+          </DialogHeader>
+          <Accordion type='single' collapsible>
+            {
+              FAQ_ITEMS.map((item, i) => (
+                <AccordionItem key={i} value={`item-${i}`}>
+                  <AccordionTrigger><p className='text-left'>{item.title}</p></AccordionTrigger>
+                  <AccordionContent>{item.content}</AccordionContent>
+                </AccordionItem>
+              ))
+            }
+          </Accordion>
+        </DialogContent>
+      </Dialog>
     </section>
   </div>
 );
