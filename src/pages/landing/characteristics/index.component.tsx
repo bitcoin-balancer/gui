@@ -1,6 +1,6 @@
 import {
-  Bitcoin,
   CodeXml,
+  DraftingCompass,
   EarthLock,
   ShieldCheck,
 } from 'lucide-react';
@@ -37,7 +37,7 @@ const Characteristics = () => (
           * CONSERVATIVE *
           ************** */}
         <article className='text-center flex flex-col items-center'>
-          <Bitcoin aria-hidden='true' className='h-14 w-14' />
+          <DraftingCompass aria-hidden='true' className='h-14 w-14' />
 
           <h3 className='text-2xl font-bold mt-2'>
             Conservative

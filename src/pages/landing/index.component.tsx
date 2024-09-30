@@ -10,6 +10,7 @@ import Header from '@/pages/landing/header/index.component.tsx';
 import Hero from '@/pages/landing/hero/index.component.tsx';
 import PositionSample from '@/pages/landing/position-sample/index.component.tsx';
 import Characteristics from '@/pages/landing/characteristics/index.component.tsx';
+import Indicators from '@/pages/landing/indicators/index.component.tsx';
 import FAQ from '@/pages/landing/faq/index.component.tsx';
 import Footer from '@/pages/landing/footer/index.component.tsx';
 import { ISectionID } from '@/pages/landing/types.ts';
@@ -119,7 +120,21 @@ const Landing = () => {
         </div>
 
 
-        {/* <Separator className='my-20' /> */}
+
+        {/* ************
+          * INDICATORS *
+          ************ */}
+        <div
+          id='indicators'
+          className='my-20'
+        >
+          <Indicators
+            openLargeInfoDialog={openLargeInfoDialog}
+          />
+        </div>
+
+
+        <Separator className='my-20' />
 
 
         {/* *****

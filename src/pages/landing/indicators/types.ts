@@ -1,11 +1,24 @@
+import { ISectionID } from '@/shared/components/large-info-dialog/index.component.tsx';
 
 
 /* ************************************************************************************************
  *                                             TYPES                                              *
  ************************************************************************************************ */
 
-// sections that can be navigated to
-type ISectionID = 'position_sample' | 'characteristics' | 'indicators' | 'faq';
+// props used by an individual indicator
+type IIndicatorProps = {
+  title: string;
+  description: string;
+  openDialog: () => void;
+};
+
+
+// props used by the component
+type IIndicatorsProps = {
+  openLargeInfoDialog: (data: ISectionID) => void;
+};
+
+
 
 
 
@@ -13,5 +26,6 @@ type ISectionID = 'position_sample' | 'characteristics' | 'indicators' | 'faq';
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export type {
-  ISectionID,
+  IIndicatorProps,
+  IIndicatorsProps,
 };

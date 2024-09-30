@@ -198,7 +198,7 @@ const FAQ_ITEMS = [
  ************************************************************************************************ */
 
 /**
- * FrequentlyAskedQuestions
+ * Frequently Asked Questions
  * Component in charge of displaying the most common questions asked by users.
  */
 const FrequentlyAskedQuestions = () => (
