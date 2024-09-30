@@ -54,25 +54,25 @@ const FAQ_ITEMS = [
         <ul className='mt-2'>
           <li>
             <p>
-              <strong>Automated strategy:</strong> it takes the guesswork out of trading by
+              <strong>* Automated strategy:</strong> it takes the guesswork out of trading by
                automating a proven strategy, allowing you to focus on your long-term goals.
             </p>
           </li>
           <li>
             <p>
-              <strong>Secure Asset Storage:</strong> it enables you to store your Bitcoin in secure
-               cold storage wallets, keeping your funds safe and under your control.
+              <strong>* Secure Asset Storage:</strong> it enables you to store your Bitcoin in
+               secure cold storage wallets, keeping your funds safe and under your control.
             </p>
           </li>
           <li>
             <p>
-              <strong>Reduced Risk:</strong> value averaging helps you minimize the impact of market
-               fluctuations and reduce overall risk.
+              <strong>* Reduced Risk:</strong> value averaging helps you minimize the impact of
+               market fluctuations and reduce overall risk.
             </p>
           </li>
           <li>
             <p>
-              <strong>Long-Term Growth:</strong> tt's designed to help you build wealth steadily
+              <strong>* Long-Term Growth:</strong> tt's designed to help you build wealth steadily
                over time, taking advantage of market trends to maximize potential returns.
             </p>
           </li>

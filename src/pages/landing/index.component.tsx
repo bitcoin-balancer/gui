@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
@@ -9,6 +10,7 @@ import Hero from '@/pages/landing/hero/index.component.tsx';
 import PositionSample from '@/pages/landing/position-sample/index.component.tsx';
 import Characteristics from '@/pages/landing/characteristics/index.component.tsx';
 import FAQ from '@/pages/landing/faq/index.component.tsx';
+import Footer from '@/pages/landing/footer/index.component.tsx';
 import { ISectionID } from '@/pages/landing/types.ts';
 
 /* ************************************************************************************************
@@ -39,9 +41,12 @@ const Landing = () => {
    * Attempts to navigate to a section based on its ID.
    * @param id
    */
-  const navigateToSection = (id: ISectionID): void => {
-    document.querySelector(`#${id}`)?.scrollIntoView();
-  };
+  const navigateToSection = useCallback(
+    (id: ISectionID): void => {
+      document.querySelector(`#${id}`)?.scrollIntoView();
+    },
+    [],
+  );
 
 
 
@@ -114,15 +119,19 @@ const Landing = () => {
         </div>
 
 
-        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
 
+        {/* ********
+          * FOOTER *
+          ******** */}
+        <div
+          id='footer'
+        >
+          <Footer
+            openLargeInfoDialog={openLargeInfoDialog}
+            navigateToSection={navigateToSection}
+            navigate={navigate}
+          />
+        </div>
 
 
 
