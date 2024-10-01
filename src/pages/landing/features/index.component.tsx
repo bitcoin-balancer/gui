@@ -16,7 +16,7 @@ const Features = ({ breakpoint, openLargeInfoDialog, navigateToSection }: IFeatu
     className='w-full flex justify-center items-start'
   >
     <section
-      className='w-full md:w-11/12 lg:w-10/12 xl:w-9/12 2xl:w-8/12'
+      className='w-full lg:w-11/12 xl:w-10/12 2xl:w-9/12'
     >
 
       {/* **********
@@ -68,7 +68,7 @@ const Features = ({ breakpoint, openLargeInfoDialog, navigateToSection }: IFeatu
         * DECREASE *
         ********** */}
       <div
-        className='w-full flex flex-col-reverse md:flex-row justify-center items-center md:gap-8 mt-14 md:mt-0'
+        className='w-full flex flex-col-reverse md:flex-row justify-center items-center md:gap-10 mt-14 md:mt-0'
       >
         <article
           className='w-full flex-1'
@@ -97,13 +97,13 @@ const Features = ({ breakpoint, openLargeInfoDialog, navigateToSection }: IFeatu
             <strong className='text-decrease-1'>Decrease</strong> your holdings during price boosts
           </h2>
           <p className='mt-5 text-lg'>
-            Balancer uses a series
-            of <Button
+            Balancer's <Button
               variant='link'
               className='text-lg text-sky-700 px-0'
-              onClick={() => navigateToSection('indicators')}>indicators</Button> to assess the
-              probability of price reversals following significant price drops, allowing you to
-                capitalize on potential rebound opportunities.
+              onClick={() => openLargeInfoDialog('strategy')}>profit optimization strategy</Button> automatically
+               reduces your position size at intervals, taking into account the magnitude of your
+                gains. The larger the profit, the more significant the reduction and the more
+                 frequent the adjustments.
           </p>
         </aside>
       </div>
