@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import {
   Container,
   Github,
@@ -19,7 +20,7 @@ import { IFooterProps } from '@/pages/landing/footer/types.ts';
  * Footer
  * Component in charge of displaying why people should use balancer.
  */
-const Footer = ({
+const Footer = memo(({
   openContactDialog,
   openLargeInfoDialog,
   navigate,
@@ -193,7 +194,7 @@ const Footer = ({
 
     </footer>
   </div>
-);
+));
 
 
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import {
   ArrowLeftRight,
   ChartLine,
@@ -38,7 +38,7 @@ import { ISectionID } from '@/pages/landing/types.ts';
  * Header
  * Component in charge of displaying the introduction to the project.
  */
-const Header = ({
+const Header = memo(({
   openContactDialog,
   openLargeInfoDialog,
   navigateToSection,
@@ -48,6 +48,7 @@ const Header = ({
    *                                             STATE                                            *
    ********************************************************************************************** */
   const [sidenavOpen, setSidenavOpen] = useState<boolean>(false);
+
 
 
 
@@ -125,14 +126,10 @@ const Header = ({
             <SheetDescription></SheetDescription>
           </SheetHeader>
 
-          <nav className='mt-2'>
-            <p
-              className='text-light text-sm'
-            >Landing page</p>
-
+          <nav>
             <Button
               variant='ghost'
-              className='w-full justify-start mt-2'
+              className='w-full justify-start'
               onClick={() => navigateFromMenu('position_sample')}
             >
               <SwatchBook
@@ -220,14 +217,9 @@ const Header = ({
 
             <Separator className='my-5' />
 
-
-            <p
-              className='text-light text-sm'
-            >Platform</p>
-
             <Button
               variant='ghost'
-              className='w-full justify-start mt-3'
+              className='w-full justify-start'
               onClick={() => navigate(NavService.dashboard())}
             >
               <LayoutPanelLeft
@@ -298,7 +290,7 @@ const Header = ({
       </Sheet>
     </header>
   );
-};
+});
 
 
 

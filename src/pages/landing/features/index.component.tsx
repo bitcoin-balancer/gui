@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import CandlestickChart from '@/shared/components/charts/candlestick-chart/index.component.tsx';
 import {
@@ -16,7 +17,7 @@ import { IFeaturesProps } from '@/pages/landing/features/types.ts';
  * Features
  * Component in charge of describing Balancer's features.
  */
-const Features = ({ breakpoint, openLargeInfoDialog, navigateToSection }: IFeaturesProps) => (
+const Features = memo(({ breakpoint, openLargeInfoDialog, navigateToSection }: IFeaturesProps) => (
   <div
     className='w-full flex justify-center items-start'
   >
@@ -117,7 +118,7 @@ const Features = ({ breakpoint, openLargeInfoDialog, navigateToSection }: IFeatu
 
     </section>
   </div>
-);
+));
 
 
 

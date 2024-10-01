@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import Autoplay from 'embla-carousel-autoplay';
 import { Carousel, CarouselContent, CarouselItem } from '@/shared/shadcn/components/ui/carousel.tsx';
 
@@ -26,7 +27,7 @@ const EXCHANGES = [
  * Exchanges
  * Component in charge of displaying the list of supported exchanges.
  */
-const Exchanges = () => (
+const Exchanges = memo(() => (
   <div
     className='w-full flex justify-center items-start bg-primary text-slate-50 shadow-4'
   >
@@ -74,7 +75,7 @@ const Exchanges = () => (
       </Carousel>
     </section>
   </div>
-);
+));
 
 
 

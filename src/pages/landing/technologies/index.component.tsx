@@ -1,4 +1,4 @@
-
+import { memo } from 'react';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
@@ -43,7 +43,7 @@ const ITEMS = [
  * Technologies
  * Component in charge of displaying the technologies that were used to build Balancer.
  */
-const Technologies = () => (
+const Technologies = memo(() => (
   <div
     className='w-full flex justify-center items-start'
   >
@@ -74,7 +74,7 @@ const Technologies = () => (
       </div>
     </section>
   </div>
-);
+));
 
 
 

@@ -1,4 +1,4 @@
-
+import { memo } from 'react';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -8,7 +8,7 @@
  * Monitoring
  * Component in charge of displaying the technologies that were used to build Balancer.
  */
-const Monitoring = () => (
+const Monitoring = memo(() => (
   <div
     className='w-full flex justify-center items-start'
   >
@@ -35,7 +35,7 @@ const Monitoring = () => (
       </div>
     </section>
   </div>
-);
+));
 
 
 

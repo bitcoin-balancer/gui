@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { IBreakpoint } from '@/shared/services/media-query/index.service.ts';
 import CandlestickChart from '@/shared/components/charts/candlestick-chart/index.component.tsx';
 import { MARKERS, DATA } from '@/pages/landing/position-sample/data.ts';
@@ -10,7 +11,7 @@ import { MARKERS, DATA } from '@/pages/landing/position-sample/data.ts';
  * Position Sample
  * Component in charge of displaying what a position looks like.
  */
-const PositionSample = ({ breakpoint }: { breakpoint: IBreakpoint }) => (
+const PositionSample = memo(({ breakpoint }: { breakpoint: IBreakpoint }) => (
   <div
     className='w-full flex justify-center items-start'
   >
@@ -60,7 +61,7 @@ const PositionSample = ({ breakpoint }: { breakpoint: IBreakpoint }) => (
 
     </section>
   </div>
-);
+));
 
 
 

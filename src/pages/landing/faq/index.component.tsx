@@ -1,10 +1,11 @@
+import { memo } from 'react';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from '@/shared/shadcn/components/ui/accordion.tsx';
-import { Button } from '@/shared/shadcn/components/ui/button';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import {
   Dialog,
   DialogContent,
@@ -210,7 +211,7 @@ const FAQ_ITEMS = [
  * Frequently Asked Questions
  * Component in charge of displaying the most common questions asked by users.
  */
-const FrequentlyAskedQuestions = () => (
+const FrequentlyAskedQuestions = memo(() => (
   <div
     className='w-full flex justify-center items-start'
   >
@@ -262,7 +263,7 @@ const FrequentlyAskedQuestions = () => (
       </Dialog>
     </section>
   </div>
-);
+));
 
 
 

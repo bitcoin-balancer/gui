@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import {
   Bitcoin,
   ChartCandlestick,
@@ -80,7 +81,7 @@ const Indicator = ({
  * Indicators Component
  * Component in charge of listing and explaining how the indicators work
  */
-const Indicators = ({ openLargeInfoDialog }: IIndicatorsProps) => (
+const Indicators = memo(({ openLargeInfoDialog }: IIndicatorsProps) => (
   <div
     className='w-full flex justify-center items-start'
   >
@@ -125,7 +126,7 @@ const Indicators = ({ openLargeInfoDialog }: IIndicatorsProps) => (
       </div>
     </section>
   </div>
-);
+));
 
 
 

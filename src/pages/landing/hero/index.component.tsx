@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { LogIn, ChartCandlestick } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { NavService } from '@/shared/services/nav/index.service.ts';
@@ -11,7 +12,7 @@ import { IHeroProps } from '@/pages/landing/hero/types.ts';
  * Hero
  * Component in charge of displaying the introduction to the project.
  */
-const Hero = ({
+const Hero = memo(({
   breakpoint,
   openLargeInfoDialog,
   navigateToSection,
@@ -56,7 +57,7 @@ const Hero = ({
     </div>
 
   </section>
-);
+));
 
 
 

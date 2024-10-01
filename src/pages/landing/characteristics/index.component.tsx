@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import {
   CodeXml,
   DraftingCompass,
@@ -13,7 +14,7 @@ import {
  * Characteristics
  * Component in charge of displaying why people should use balancer.
  */
-const Characteristics = () => (
+const Characteristics = memo(() => (
   <div
     className='w-full flex justify-center items-start bg-primary text-slate-50 shadow-4'
   >
@@ -103,7 +104,7 @@ const Characteristics = () => (
       </div>
     </section>
   </div>
-);
+));
 
 
 
