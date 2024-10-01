@@ -1,8 +1,7 @@
-import { useCallback } from 'react';
-import { formatDollarAmount } from '@/shared/services/transformers/index.service.ts';
-import { IBreakpoint } from '@/shared/services/media-query/index.service.ts';
 import CandlestickChart from '@/shared/components/charts/candlestick-chart/index.component.tsx';
 import { MARKERS, DATA } from '@/pages/landing/position-sample/data.ts';
+import { IFeaturesProps } from '@/pages/landing/features/types.ts';
+import { Button } from '@/shared/shadcn/components/ui/button';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -12,60 +11,72 @@ import { MARKERS, DATA } from '@/pages/landing/position-sample/data.ts';
  * Features
  * Component in charge of describing Balancer's features.
  */
-const Features = ({ breakpoint }: { breakpoint: IBreakpoint }) => {
-  /* **********************************************************************************************
-   *                                       REACTIVE VALUES                                        *
-   ********************************************************************************************** */
-
-  // the price formatter that will be used on the chart
-  const priceFormatter = useCallback((value: number) => formatDollarAmount(value, 0), []);
-
-
-
-
-
-  /* **********************************************************************************************
-   *                                           COMPONENT                                          *
-   ********************************************************************************************** */
-  return (
-    <div
-      className='w-full flex justify-center items-start'
+const Features = ({ breakpoint, openLargeInfoDialog, navigateToSection }: IFeaturesProps) => (
+  <div
+    className='w-full flex justify-center items-start'
+  >
+    <section
+      className='w-full md:w-11/12 lg:w-10/12 xl:w-9/12 2xl:w-8/12'
     >
-      <section
-        className='w-full md:w-10/12 lg:w-9/12 xl:w-8/12 2xl:w-7/12 relative'
+
+      {/* **********
+        * INCREASE *
+        ********** */}
+      <div
+        className='w-full flex flex-col md:flex-row justify-center items-center gap-8'
       >
-
-        {/* ********
-          * HEADER *
-          ******** */}
-        <header
-          className='w-full absolute z-10'
+        <aside
+          className='w-full flex-1 text-center md:text-left p-3'
         >
-          <div
-            className='flex flex-col gap-3 sm:flex-row justify-center items-center'
+          <h2
+            className='text-4xl sm:text-5xl font-bold'
           >
-            <p
-              className='text-4xl sm:text-5xl font-bold'
-            ><strong className='text-increase-1 font-extrabold'>Buy</strong> the dip{breakpoint !== 'xs' ? '.' : ''}</p>
-            <p
-              className='text-4xl sm:text-5xl font-bold'
-            ><strong className='text-decrease-1 font-extrabold'>Sell</strong> the rally</p>
-          </div>
-        </header>
+            <strong className='text-increase-1'>Increase</strong> your holdings during price crashes
+          </h2>
+          <p className='mt-5 text-lg'>
+            Balancer uses a series
+             of <Button
+              variant='link'
+              className='text-lg text-sky-700 px-0'
+              onClick={() => navigateToSection('indicators')}>indicators</Button> to assess the
+               probability of price reversals following significant price drops, allowing you to
+                capitalize on potential rebound opportunities.
+          </p>
+        </aside>
 
-
-
-        {/* *******
-          * CHART *
-          ******* */}
         <article
-          className='mt-3 sm:-mt-5'
+          className='w-full flex-1'
         >
           <CandlestickChart
             height={breakpoint === 'xs' || breakpoint === 'sm' ? 400 : 500}
             data={DATA}
             markers={MARKERS}
-            priceFormatterFunc={priceFormatter}
+            showAttributionLogo={false}
+            hideTimeScale={true}
+            hideRightPriceScale={true}
+            hideCrosshair={true}
+            hidePriceLine={true}
+            disableScrollHandler={true}
+            disableScaleHandler={true}
+          />
+        </article>
+      </div>
+
+
+
+      {/* **********
+        * DECREASE *
+        ********** */}
+      <div
+        className='w-full flex flex-col-reverse md:flex-row justify-center items-center md:gap-8 mt-14 md:mt-0'
+      >
+        <article
+          className='w-full flex-1'
+        >
+          <CandlestickChart
+            height={breakpoint === 'xs' || breakpoint === 'sm' ? 400 : 500}
+            data={DATA}
+            markers={MARKERS}
             showAttributionLogo={false}
             hideTimeScale={true}
             hideRightPriceScale={true}
@@ -76,10 +87,33 @@ const Features = ({ breakpoint }: { breakpoint: IBreakpoint }) => {
           />
         </article>
 
-      </section>
-    </div>
-  );
-};
+
+        <aside
+          className='w-full flex-1 text-center md:text-left p-3'
+        >
+          <h2
+            className='text-4xl sm:text-5xl font-bold'
+          >
+            <strong className='text-decrease-1'>Decrease</strong> your holdings during price boosts
+          </h2>
+          <p className='mt-5 text-lg'>
+            Balancer uses a series
+            of <Button
+              variant='link'
+              className='text-lg text-sky-700 px-0'
+              onClick={() => navigateToSection('indicators')}>indicators</Button> to assess the
+              probability of price reversals following significant price drops, allowing you to
+                capitalize on potential rebound opportunities.
+          </p>
+        </aside>
+      </div>
+
+
+
+
+    </section>
+  </div>
+);
 
 
 
