@@ -1,13 +1,18 @@
 import Autoplay from 'embla-carousel-autoplay';
 import { Carousel, CarouselContent, CarouselItem } from '@/shared/shadcn/components/ui/carousel.tsx';
-import { IExchangeID } from '@/shared/backend/exchange/index.service.ts';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
  ************************************************************************************************ */
 
 // list of exchanges supported by Balancer
-const EXCHANGES: IExchangeID[] = ['binance', 'bitfinex', 'kraken', 'coinbase', 'okx'];
+const EXCHANGES = [
+  { id: 'binance', className: 'max-w-40 sm:max-w-44' },
+  { id: 'bitfinex', className: 'max-w-44 sm:max-w-48' },
+  { id: 'kraken', className: 'max-w-36 sm:max-w-40' },
+  { id: 'coinbase', className: 'max-w-36 sm:max-w-40' },
+  { id: 'okx', className: 'max-w-20 sm:max-w-24' },
+];
 
 
 
@@ -26,7 +31,7 @@ const Exchanges = () => (
     className='w-full flex justify-center items-start bg-primary text-slate-50 shadow-4'
   >
     <section
-      className='w-full md:w-9/12 lg:w-7/12 xl:w-6/12 2xl:w-6/12 py-20 md:py-28 px-3'
+      className='w-full lg:w-10/12 xl:w-9/12 2xl:w-7/12 py-20 md:py-28 px-3'
     >
       <header className='text-center'>
         <h2
@@ -47,21 +52,19 @@ const Exchanges = () => (
           Autoplay({ delay: 1500 }),
         ]}
       >
-        <CarouselContent
-          className='items-center'
-        >
+        <CarouselContent>
           {
-            EXCHANGES.map((id) => (
+            EXCHANGES.map((item) => (
               <CarouselItem
-                key={id}
-                className='basis-full sm:basis-1/3'>
+                key={item.id}
+                className='basis-full'>
                 <div
-                  className='w-full flex justify-center items-center'
+                  className='w-full flex justify-center'
                 >
                   <img
-                    src={`exchanges/white/${id}.png`}
-                    alt={`${id} logo`}
-                    className='max-w-40 max-h-6'
+                    src={`exchanges/white/${item.id}.png`}
+                    alt={`${item.id} logo`}
+                    className={item.className}
                   />
                 </div>
               </CarouselItem>
