@@ -104,7 +104,7 @@ const Landing = () => {
           ***************** */}
         <div
           id='position_sample'
-          className='my-20'
+          className='my-20 md:my-32'
         >
           <PositionSample
             breakpoint={breakpoint}
@@ -118,7 +118,7 @@ const Landing = () => {
           ***************** */}
         <div
           id='characteristics'
-          className='my-20'
+          className='my-20 md:my-32'
         >
           <Characteristics />
         </div>
@@ -130,7 +130,7 @@ const Landing = () => {
           ********** */}
         <div
           id='features'
-          className='my-20'
+          className='my-20 md:my-32'
         >
           <Features
             breakpoint={breakpoint}
@@ -141,7 +141,7 @@ const Landing = () => {
 
 
 
-        <Separator className='my-20' />
+        <Separator className='my-20 md:my-32' />
 
 
 
@@ -150,7 +150,7 @@ const Landing = () => {
           ************ */}
         <div
           id='indicators'
-          className='my-20'
+          className='my-20 md:my-32'
         >
           <Indicators
             openLargeInfoDialog={openLargeInfoDialog}
@@ -159,7 +159,7 @@ const Landing = () => {
 
 
 
-        <Separator className='my-20' />
+        <Separator className='my-20 md:my-32' />
 
 
 
@@ -169,7 +169,7 @@ const Landing = () => {
           *********** */}
         <div
           id='monitoring'
-          className='my-20'
+          className='my-20 md:my-32'
         >
           <Monitoring />
         </div>
@@ -181,7 +181,7 @@ const Landing = () => {
           *********** */}
         <div
           id='exchanges'
-          className='my-20'
+          className='my-20 md:my-32'
         >
           <Exchanges />
         </div>
@@ -193,14 +193,14 @@ const Landing = () => {
           ************** */}
         <div
           id='technologies'
-          className='my-20'
+          className='my-20 md:my-32'
         >
           <Technologies />
         </div>
 
 
 
-        <Separator className='my-20' />
+        <Separator className='my-20 md:my-32' />
 
 
 
@@ -209,7 +209,7 @@ const Landing = () => {
           ***** */}
         <div
           id='faq'
-          className='my-20'
+          className='my-20 md:my-32'
         >
           <FAQ />
         </div>

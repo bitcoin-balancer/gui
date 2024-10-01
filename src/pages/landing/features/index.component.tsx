@@ -1,7 +1,12 @@
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import CandlestickChart from '@/shared/components/charts/candlestick-chart/index.component.tsx';
-import { MARKERS, DATA } from '@/pages/landing/position-sample/data.ts';
+import {
+  INCREASE_MARKERS,
+  INCREASE_DATA,
+  DECREASE_MARKERS,
+  DECREASE_DATA,
+} from '@/pages/landing/features/data.ts';
 import { IFeaturesProps } from '@/pages/landing/features/types.ts';
-import { Button } from '@/shared/shadcn/components/ui/button';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -49,8 +54,9 @@ const Features = ({ breakpoint, openLargeInfoDialog, navigateToSection }: IFeatu
         >
           <CandlestickChart
             height={breakpoint === 'xs' || breakpoint === 'sm' ? 400 : 500}
-            data={DATA}
-            markers={MARKERS}
+            data={INCREASE_DATA}
+            markers={INCREASE_MARKERS}
+            state={-2}
             showAttributionLogo={false}
             hideTimeScale={true}
             hideRightPriceScale={true}
@@ -75,8 +81,9 @@ const Features = ({ breakpoint, openLargeInfoDialog, navigateToSection }: IFeatu
         >
           <CandlestickChart
             height={breakpoint === 'xs' || breakpoint === 'sm' ? 400 : 500}
-            data={DATA}
-            markers={MARKERS}
+            data={DECREASE_DATA}
+            markers={DECREASE_MARKERS}
+            state={2}
             showAttributionLogo={false}
             hideTimeScale={true}
             hideRightPriceScale={true}
@@ -107,9 +114,6 @@ const Features = ({ breakpoint, openLargeInfoDialog, navigateToSection }: IFeatu
           </p>
         </aside>
       </div>
-
-
-
 
     </section>
   </div>
