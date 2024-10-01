@@ -1,3 +1,16 @@
+import Autoplay from 'embla-carousel-autoplay';
+import { Carousel, CarouselContent, CarouselItem } from '@/shared/shadcn/components/ui/carousel.tsx';
+import { IExchangeID } from '@/shared/backend/exchange/index.service.ts';
+
+/* ************************************************************************************************
+ *                                           CONSTANTS                                            *
+ ************************************************************************************************ */
+
+// list of exchanges supported by Balancer
+const EXCHANGES: IExchangeID[] = ['binance', 'bitfinex', 'kraken', 'coinbase', 'okx'];
+
+
+
 
 
 /* ************************************************************************************************
@@ -13,7 +26,7 @@ const Exchanges = () => (
     className='w-full flex justify-center items-start bg-primary text-slate-50 shadow-4'
   >
     <section
-      className='w-full md:w-9/12 lg:w-7/12 xl:w-6/12 2xl:w-4/12 py-20 md:py-28 px-3'
+      className='w-full md:w-9/12 lg:w-7/12 xl:w-6/12 2xl:w-6/12 py-20 md:py-28 px-3'
     >
       <header className='text-center'>
         <h2
@@ -24,15 +37,38 @@ const Exchanges = () => (
         </p>
       </header>
 
-      <div
-        className='mt-10 flex justify-center items-center flex-wrap gap-14'
+      <Carousel
+        className='mt-10'
+        opts={{
+          align: 'center',
+          loop: true,
+        }}
+        plugins={[
+          Autoplay({ delay: 1500 }),
+        ]}
       >
-        <img src='exchanges/white/binance.png' alt='Binance Logo' className='w-36' />
-        <img src='exchanges/white/bitfinex.png' alt='Bitfinex Logo' className='w-44' />
-        <img src='exchanges/white/kraken.png' alt='Kraken Logo' className='w-32' />
-        <img src='exchanges/white/coinbase.png' alt='Coinbase Logo' className='w-36' />
-        <img src='exchanges/white/okx.png' alt='OKX Logo' className='w-20' />
-      </div>
+        <CarouselContent
+          className='items-center'
+        >
+          {
+            EXCHANGES.map((id) => (
+              <CarouselItem
+                key={id}
+                className='basis-full sm:basis-1/3'>
+                <div
+                  className='w-full flex justify-center items-center'
+                >
+                  <img
+                    src={`exchanges/white/${id}.png`}
+                    alt={`${id} logo`}
+                    className='max-w-40 max-h-6'
+                  />
+                </div>
+              </CarouselItem>
+            ))
+          }
+        </CarouselContent>
+      </Carousel>
     </section>
   </div>
 );

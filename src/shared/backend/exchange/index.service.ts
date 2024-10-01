@@ -1,5 +1,6 @@
 import {
   ISide,
+  IExchangeID,
   IExchangeService,
   IExchangeConfig,
   ICandlestickInterval,
@@ -71,6 +72,7 @@ export {
 
   // types
   type ISide,
+  type IExchangeID,
   type IExchangeConfig,
   type ICandlestickInterval,
   type IBalances,
