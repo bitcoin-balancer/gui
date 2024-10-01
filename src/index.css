@@ -263,6 +263,13 @@ ul li:first-child {
 
 
 
+.monitoring-container img {
+  -webkit-mask-image: linear-gradient(to top, transparent 0%, black 25%);
+  mask-image: linear-gradient(to top, transparent 0%, black 25%); 
+}
+
+
+
 
 
 /* ************************************************************************************************

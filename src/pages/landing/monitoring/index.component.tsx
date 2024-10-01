@@ -13,7 +13,7 @@ const Monitoring = () => (
     className='w-full flex justify-center items-start'
   >
     <section
-      className='w-full md:w-11/12 lg:w-10/12 xl:w-8/12 2xl:w-6/12'
+      className='w-full md:w-11/12 lg:w-9/12 xl:w-8/12 2xl:w-7/12'
     >
       <header className='text-center p-3'>
         <h2
@@ -24,7 +24,7 @@ const Monitoring = () => (
         </p>
       </header>
 
-      <div>
+      <div className='monitoring-container'>
         <img
           src='landing-page/monitoring.png'
           alt='Monitoring screenshot'
