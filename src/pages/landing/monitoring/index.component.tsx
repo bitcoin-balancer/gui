@@ -28,8 +28,9 @@ const Monitoring = memo(() => (
         <img
           src='landing-page/monitoring.png'
           alt='Monitoring screenshot'
-          width='1107'
-          height='612'
+          width='927'
+          height='641'
+          loading='lazy'
           className='mt-3'
         />
       </div>

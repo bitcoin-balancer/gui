@@ -66,6 +66,9 @@ const Exchanges = memo(() => (
                     src={`exchanges/white/${item.id}.png`}
                     alt={`${item.id} logo`}
                     className={item.className}
+                    width='175'
+                    height='50'
+                    loading='lazy'
                   />
                 </div>
               </CarouselItem>

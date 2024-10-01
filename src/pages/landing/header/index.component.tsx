@@ -110,12 +110,10 @@ const Header = memo(({
       >
 
         <SheetTrigger asChild>
-          <div>
-            <Button
-              size='icon'
-              aria-label='Open sidenav menu'
-            ><Menu aria-hidden='true' /></Button>
-          </div>
+          <Button
+            size='icon'
+            aria-label='Open sidenav menu'
+          ><Menu aria-hidden='true' /></Button>
         </SheetTrigger>
 
         <SheetContent
