@@ -26,7 +26,7 @@ const Footer = ({
     className='w-full flex justify-center items-start bg-primary text-slate-50 shadow-6'
   >
     <footer
-      className='w-full xl:w-11/12 2xl:w-8/12 py-20 px-3 flex flex-col lg:flex-row justify-start items-start gap-10'
+      className='w-full xl:w-11/12 2xl:w-8/12 py-20 md:py-28 px-3 flex flex-col lg:flex-row justify-start items-start gap-10'
     >
 
       {/* *******

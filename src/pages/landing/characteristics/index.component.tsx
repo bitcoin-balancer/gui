@@ -18,7 +18,7 @@ const Characteristics = () => (
     className='w-full flex justify-center items-start bg-primary text-slate-50 shadow-4'
   >
     <section
-      className='w-full md:w-11/12 lg:w-9/12 xl:w-11/12 2xl:w-10/12 py-20 md:py-32 px-3'
+      className='w-full md:w-11/12 lg:w-9/12 xl:w-11/12 2xl:w-10/12 py-20 md:py-28 px-3'
     >
       <header className='text-center'>
         <h2
