@@ -31,7 +31,6 @@ const Monitoring = memo(() => (
           width='927'
           height='641'
           loading='lazy'
-          className='mt-3'
         />
       </div>
     </section>
