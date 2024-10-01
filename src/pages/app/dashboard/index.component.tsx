@@ -67,7 +67,7 @@ const Dashboard = () => {
    * Initializes a timeout that will mark the component as loaded.
    */
   useEffect(() => {
-    const timeout = setTimeout(() => setIsLoading(false), 750);
+    const timeout = setTimeout(() => setIsLoading(false), 500);
     return () => {
       clearTimeout(timeout);
     };
