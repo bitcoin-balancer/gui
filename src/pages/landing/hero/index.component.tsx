@@ -29,7 +29,7 @@ const Hero = memo(({
 
       <h1
         className='text-4xl sm:text-5xl font-bold'
-      >Trade like a proffessional consistently</h1>
+      >Trade like a professional consistently</h1>
 
       <p
         className='text-lg sm:text-xl mt-5'

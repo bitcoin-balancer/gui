@@ -46,7 +46,7 @@ const Footer = memo(({
 
         <p
           className='mt-3 text-lg font-bold'
-        >Trade like a proffessional consistently</p>
+        >Trade like a professional consistently</p>
         <p
           className='mt-1 text-sm'
         >
