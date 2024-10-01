@@ -49,6 +49,7 @@ const Dashboard = () => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const breakpoint = useMediaQueryBreakpoint();
   const marketState = useBoundStore((state) => state.marketState!);
   const position = useBoundStore((state) => state.position);
@@ -61,6 +62,16 @@ const Dashboard = () => {
   /* **********************************************************************************************
    *                                         SIDE EFFECTS                                         *
    ********************************************************************************************** */
+
+  /**
+   * Initializes a timeout that will mark the component as loaded.
+   */
+  useEffect(() => {
+    const timeout = setTimeout(() => setIsLoading(false), 750);
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, []);
 
   /**
    * Sets the Bitcoin's price and price change% as the document's title.
@@ -84,7 +95,7 @@ const Dashboard = () => {
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
-  if (marketState === undefined) {
+  if (marketState === undefined || isLoading) {
     return <PageLoader />;
   }
   return (
