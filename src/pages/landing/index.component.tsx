@@ -83,7 +83,12 @@ const Landing = () => {
         {/* ********
           * HEADER *
           ******** */}
-        <Header />
+        <Header
+          openContactDialog={openContactDialog}
+          openLargeInfoDialog={openLargeInfoDialog}
+          navigateToSection={navigateToSection}
+          navigate={navigate}
+        />
 
 
 

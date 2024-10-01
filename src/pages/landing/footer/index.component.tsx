@@ -1,9 +1,11 @@
 import {
   Container,
   Github,
-  Link,
   Scale,
   Mail,
+  LayoutPanelLeft,
+  LogIn,
+  LockKeyhole,
 } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { NavService } from '@/shared/services/nav/index.service.ts';
@@ -65,7 +67,7 @@ const Footer = ({
           className='text-slate-50'
           onClick={() => navigate(NavService.dashboard())}
         >
-          <Link aria-hidden='true' className='w-4 h-4 mr-1' /> Application
+          <LayoutPanelLeft aria-hidden='true' className='w-4 h-4 mr-1' /> Application
         </Button>
 
         <Button
@@ -73,7 +75,7 @@ const Footer = ({
           className='text-slate-50'
           onClick={() => navigate(NavService.signIn())}
         >
-          <Link aria-hidden='true' className='w-4 h-4 mr-1' /> Sign in
+          <LogIn aria-hidden='true' className='w-4 h-4 mr-1' /> Sign in
         </Button>
 
         <Button
@@ -81,7 +83,7 @@ const Footer = ({
           className='text-slate-50'
           onClick={() => navigate(NavService.updatePassword())}
         >
-          <Link aria-hidden='true' className='w-4 h-4 mr-1' /> Update password
+          <LockKeyhole aria-hidden='true' className='w-4 h-4 mr-1' /> Update password
         </Button>
 
         <Button
@@ -89,7 +91,7 @@ const Footer = ({
           className='text-slate-50'
           onClick={() => NavService.openGitHubPage()}
         >
-          <Link aria-hidden='true' className='w-4 h-4 mr-1' /> GitHub page
+          <Github aria-hidden='true' className='w-4 h-4 mr-1' /> GitHub page
         </Button>
 
         <Button
