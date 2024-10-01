@@ -14,6 +14,7 @@ const ITEMS = [
   'javascript',
   'typescript',
   'eslint',
+  'zod',
   'nodejs',
   'npm',
   'rxjs',
@@ -27,7 +28,8 @@ const ITEMS = [
   'tailwindcss',
   'react',
   'react-router',
-  'radixui',
+  'zustand',
+  'shadcn',
 ];
 
 
