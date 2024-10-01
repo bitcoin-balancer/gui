@@ -214,7 +214,7 @@ const Liquidity = ({ closeDialog }: IFormProps) => {
                   <FormControl>
                     <Input
                       type='number'
-                      placeholder='0.1'
+                      placeholder='0.15'
                       {...field}
                       autoComplete='off'
                       disabled={isSubmitting}
