@@ -89,7 +89,7 @@ const Footer = ({
           className='text-slate-50'
           onClick={() => NavService.openGitHubPage()}
         >
-          <Link aria-hidden='true' className='w-4 h-4 mr-1' /> GitHub
+          <Link aria-hidden='true' className='w-4 h-4 mr-1' /> GitHub page
         </Button>
 
         <Button

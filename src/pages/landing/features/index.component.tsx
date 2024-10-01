@@ -9,10 +9,10 @@ import { MARKERS, DATA } from '@/pages/landing/position-sample/data.ts';
  ************************************************************************************************ */
 
 /**
- * Position Sample
- * Component in charge of displaying what a position looks like.
+ * Features
+ * Component in charge of describing Balancer's features.
  */
-const PositionSample = ({ breakpoint }: { breakpoint: IBreakpoint }) => {
+const Features = ({ breakpoint }: { breakpoint: IBreakpoint }) => {
   /* **********************************************************************************************
    *                                       REACTIVE VALUES                                        *
    ********************************************************************************************** */
@@ -88,4 +88,4 @@ const PositionSample = ({ breakpoint }: { breakpoint: IBreakpoint }) => {
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export default PositionSample;
+export default Features;

@@ -67,7 +67,7 @@ const Indicator = ({
         onClick={openDialog}
         className='mt-4'
       >
-        More info
+        Learn more
       </Button>
     </CardContent>
   </Card>
