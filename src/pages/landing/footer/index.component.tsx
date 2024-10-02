@@ -51,7 +51,7 @@ const Footer = memo(({
           className='mt-1 text-sm'
         >
           Balancer is a cutting-edge, open-source, self-hosted platform that empowers users to
-          automate the Value Averaging Strategy for Bitcoin
+          automate the Value Averaging Strategy for Bitcoin.
         </p>
       </div>
 

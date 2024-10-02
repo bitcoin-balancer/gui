@@ -43,7 +43,7 @@ const Features = memo(({ breakpoint, openLargeInfoDialog, navigateToSection }: I
             Balancer uses a series
              of <Button
               variant='link'
-              className='text-lg text-sky-700 px-0'
+              className='text-lg text-sky-700 p-0'
               onClick={() => navigateToSection('indicators')}>indicators</Button> to assess the
                probability of price reversals following significant price drops, allowing you to
                 capitalize on potential rebound opportunities.
@@ -107,7 +107,7 @@ const Features = memo(({ breakpoint, openLargeInfoDialog, navigateToSection }: I
           <p className='mt-5 text-lg'>
             Balancer's <Button
               variant='link'
-              className='text-lg text-sky-700 px-0'
+              className='text-lg text-sky-700 p-0'
               onClick={() => openLargeInfoDialog('strategy')}>profit optimization strategy</Button> automatically
                reduces your position size at intervals, taking into account the magnitude of your
                 gains. The larger the profit, the more significant the reduction and the more
