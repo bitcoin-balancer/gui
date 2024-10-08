@@ -84,7 +84,7 @@ const ReversalButton = ({ reversalState }: { reversalState: IReversalState | und
    */
   const displayDialog = (): void => {
     if (reversalState === undefined) {
-      displayList();
+      setIsListDialogOpen(true);
     } else {
       setIsMenuOpen(true);
     }
