@@ -1,4 +1,5 @@
 import { memo, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   EllipsisVertical,
   ArrowLeftRight,
@@ -9,6 +10,7 @@ import {
   List,
   ListChecks,
   Loader2,
+  Navigation,
 } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import {
@@ -44,6 +46,7 @@ import {
   ICompactPosition,
   PositionService,
 } from '@/shared/backend/position/index.service.ts';
+import { NavService } from '@/shared/services/nav/index.service.ts';
 import BalancesDialog from '@/pages/app/dashboard/position/balances/index.component.tsx';
 import PositionsDialog from '@/pages/app/dashboard/position/positions/index.component.tsx';
 import TransactionsDialog from '@/pages/app/dashboard/position/transactions/index.component.tsx';
@@ -103,6 +106,7 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
   const openPositionDialog = useBoundStore((state) => state.openPositionDialog);
   const { authority } = useBoundStore((state) => state.user!);
+  const navigate = useNavigate();
 
 
 
@@ -229,7 +233,25 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
                 <EllipsisVertical className='w-5 h-5' aria-hidden='true' />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                <DropdownMenuLabel>Active</DropdownMenuLabel>
+                <DropdownMenuItem
+                  onClick={() => navigate(NavService.position(position!.id))}
+                  disabled={position === undefined || authority < 2}
+                >
+                  <Navigation
+                      aria-hidden='true'
+                      className='mr-1 h-5 w-5'
+                    /> Navigate
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => openPositionDialog(position!.id)}
+                  disabled={position === undefined || authority < 2}
+                >
+                  <ReceiptText
+                      aria-hidden='true'
+                      className='mr-1 h-5 w-5'
+                    /> Details
+                </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={increasePosition}
                   disabled={authority < 4}
@@ -250,15 +272,6 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuLabel>Information</DropdownMenuLabel>
-                <DropdownMenuItem
-                  onClick={() => openPositionDialog(position!.id)}
-                  disabled={position === undefined || authority < 2}
-                >
-                  <ReceiptText
-                      aria-hidden='true'
-                      className='mr-1 h-5 w-5'
-                    /> Details
-                </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => setActiveDialog('balances')}
                   disabled={authority < 2}
