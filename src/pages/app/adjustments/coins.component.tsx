@@ -20,8 +20,13 @@ import {
   DialogTitle,
   DialogFooter,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/shared/shadcn/components/ui/tabs.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
-import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import {
   integerValid,
@@ -197,218 +202,245 @@ const Coins = ({ closeDialog }: IFormProps) => {
           noValidate
         >
 
-          <fieldset>
-            <h3 className='text-md font-semibold'>Window</h3>
+          <Tabs
+            defaultValue='window'
+            className='w-full'
+          >
+            <TabsList
+              className='grid w-full grid-cols-3'
+            >
+              <TabsTrigger value='window'>Window</TabsTrigger>
+              <TabsTrigger value='state'>State</TabsTrigger>
+              <TabsTrigger value='symbols'>Symbols</TabsTrigger>
+            </TabsList>
 
-            <FormField
-              control={form.control}
-              name='size'
-              render={({ field }) => (
-                <FormItem className='mt-7'>
-                  <FormLabelWithMoreInfo
-                    value='Size'
-                    description='The number of price items that comprise the window for each coin.'
-                  />
-                  <FormControl>
-                    <Input
-                      type='number'
-                      placeholder='128'
-                      {...field}
-                      autoComplete='off'
-                      disabled={isSubmitting}
-                      min={128}
-                      max={512}
+            {/* ********
+              * WINDOW *
+              ******** */}
+            <TabsContent value='window'>
+              <fieldset className='mt-3'>
+                <FormField
+                  control={form.control}
+                  name='size'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabelWithMoreInfo
+                        value='Size'
+                        description='The number of price items that comprise the window for each coin.'
                       />
-                  </FormControl>
-                  <FormDescription>Price items quantity</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-              rules={{
-                validate: {
-                  required: (value) => (numberValid(Number(value), 128, 512) ? true : 'Enter a number ranging 128 - 512'),
-                },
-              }}
-            />
+                      <FormControl>
+                        <Input
+                          type='number'
+                          placeholder='128'
+                          {...field}
+                          autoComplete='off'
+                          disabled={isSubmitting}
+                          min={128}
+                          max={512}
+                          />
+                      </FormControl>
+                      <FormDescription>Price items quantity</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                  rules={{
+                    validate: {
+                      required: (value) => (numberValid(Number(value), 128, 512) ? true : 'Enter a number ranging 128 - 512'),
+                    },
+                  }}
+                />
 
-            <FormField
-              control={form.control}
-              name='interval'
-              render={({ field }) => (
-                <FormItem className='mt-7'>
-                  <FormLabelWithMoreInfo
-                    value='Interval'
-                    description='The number of seconds each price item will last before appending a new one.'
-                  />
-                  <FormControl>
-                    <Input
-                      type='number'
-                      placeholder='15'
-                      {...field}
-                      autoComplete='off'
-                      disabled={isSubmitting}
-                      min={5}
-                      max={3600}
+                <FormField
+                  control={form.control}
+                  name='interval'
+                  render={({ field }) => (
+                    <FormItem className='mt-5'>
+                      <FormLabelWithMoreInfo
+                        value='Interval'
+                        description='The number of seconds each price item will last before appending a new one.'
                       />
-                  </FormControl>
-                  <FormDescription>Price item duration in seconds</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-              rules={{
-                validate: {
-                  required: (value) => (numberValid(Number(value), 5, 3600) ? true : 'Enter a number ranging 5 - 3600'),
-                },
-              }}
-            />
-          </fieldset>
+                      <FormControl>
+                        <Input
+                          type='number'
+                          placeholder='15'
+                          {...field}
+                          autoComplete='off'
+                          disabled={isSubmitting}
+                          min={5}
+                          max={3600}
+                          />
+                      </FormControl>
+                      <FormDescription>Price item duration in seconds</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                  rules={{
+                    validate: {
+                      required: (value) => (numberValid(Number(value), 5, 3600) ? true : 'Enter a number ranging 5 - 3600'),
+                    },
+                  }}
+                />
+              </fieldset>
+            </TabsContent>
 
-          <Separator className='my-10' />
 
-          <fieldset>
-            <h3 className='text-md font-semibold'>State</h3>
 
-            <FormField
-              control={form.control}
-              name='requirement'
-              render={({ field }) => (
-                <FormItem className='mt-7'>
-                  <FormLabelWithMoreInfo
-                    value='State requirement%'
-                    description={[
-                      'The percentage change in a coin\'s price needed to mark a window split as "stateful". ',
-                      'The possible states for this requirement are:',
-                      ' 1: increasing',
-                      '-1: decreasing',
-                    ]}
-                  />
-                  <FormControl>
-                    <Input
-                      type='number'
-                      placeholder='0.01'
-                      {...field}
-                      autoComplete='off'
-                      disabled={isSubmitting}
-                      min={0.01}
-                      max={100}
+            {/* ********
+              * STATE *
+              ******** */}
+            <TabsContent value='state'>
+              <fieldset className='mt-3'>
+                <FormField
+                  control={form.control}
+                  name='requirement'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabelWithMoreInfo
+                        value='State requirement%'
+                        description={[
+                          'The percentage change in a coin\'s price needed to mark a window split as "stateful". ',
+                          'The possible states for this requirement are:',
+                          ' 1: increasing',
+                          '-1: decreasing',
+                        ]}
                       />
-                  </FormControl>
-                  <FormDescription>Coin's price% change</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-              rules={{
-                validate: {
-                  required: (value) => (numberValid(Number(value), 0.01, 100) ? true : 'Enter a number ranging 0.01% - 100%'),
-                },
-              }}
-            />
+                      <FormControl>
+                        <Input
+                          type='number'
+                          placeholder='0.01'
+                          {...field}
+                          autoComplete='off'
+                          disabled={isSubmitting}
+                          min={0.01}
+                          max={100}
+                          />
+                      </FormControl>
+                      <FormDescription>Coin's price% change</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                  rules={{
+                    validate: {
+                      required: (value) => (numberValid(Number(value), 0.01, 100) ? true : 'Enter a number ranging 0.01% - 100%'),
+                    },
+                  }}
+                />
 
-            <FormField
-              control={form.control}
-              name='strongRequirement'
-              render={({ field }) => (
-                <FormItem className='mt-7'>
-                  <FormLabelWithMoreInfo
-                    value='Strong state requirement%'
-                    description={[
-                      'The percentage change in a coin\'s price needed to mark a window split as "stateful". ',
-                      'The possible states for this requirement are:',
-                      ' 2: increasing strongly',
-                      '-2: decreasing strongly',
-                    ]}
-                  />
-                  <FormControl>
-                    <Input
-                      type='number'
-                      placeholder='0.3'
-                      {...field}
-                      autoComplete='off'
-                      disabled={isSubmitting}
-                      min={0.01}
-                      max={100}
+                <FormField
+                  control={form.control}
+                  name='strongRequirement'
+                  render={({ field }) => (
+                    <FormItem className='mt-5'>
+                      <FormLabelWithMoreInfo
+                        value='Strong state requirement%'
+                        description={[
+                          'The percentage change in a coin\'s price needed to mark a window split as "stateful". ',
+                          'The possible states for this requirement are:',
+                          ' 2: increasing strongly',
+                          '-2: decreasing strongly',
+                        ]}
                       />
-                  </FormControl>
-                  <FormDescription>Coins's price% change</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-              rules={{
-                validate: {
-                  required: (value) => (numberValid(Number(value), 0.01, 100) ? true : 'Enter a number ranging 0.01% - 100%'),
-                },
-              }}
-            />
-          </fieldset>
+                      <FormControl>
+                        <Input
+                          type='number'
+                          placeholder='0.3'
+                          {...field}
+                          autoComplete='off'
+                          disabled={isSubmitting}
+                          min={0.01}
+                          max={100}
+                          />
+                      </FormControl>
+                      <FormDescription>Coins's price% change</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                  rules={{
+                    validate: {
+                      required: (value) => (numberValid(Number(value), 0.01, 100) ? true : 'Enter a number ranging 0.01% - 100%'),
+                    },
+                  }}
+                />
+              </fieldset>
+            </TabsContent>
 
-          <Separator className='my-10' />
 
-          <fieldset>
-            <h3 className='text-md font-semibold'>Symbols</h3>
 
-            <FormField
-              control={form.control}
-              name='limit'
-              render={({ field }) => (
-                <FormItem className='mt-5'>
-                  <FormLabelWithMoreInfo
-                    value='Limit'
-                    description='The maximum number of coins that will be selected based on the whitelist and their volume.'
-                  />
-                  <FormControl>
-                    <Input
-                      type='number'
-                      placeholder='24'
-                      {...field}
-                      autoComplete='off'
-                      disabled={isSubmitting}
-                      min={1}
-                      max={24}
+            {/* ********
+              * SYMBOLS *
+              ******** */}
+            <TabsContent value='symbols'>
+              <fieldset className='mt-3'>
+                <FormField
+                  control={form.control}
+                  name='limit'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabelWithMoreInfo
+                        value='Limit'
+                        description='The maximum number of coins that will be selected based on the whitelist and their volume.'
                       />
-                  </FormControl>
-                  <FormDescription>Maximum number of symbols</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-              rules={{
-                validate: {
-                  required: (value) => (integerValid(Number(value), 1, 24) ? true : 'Enter a number ranging 1 - 24'),
-                },
-              }}
-            />
+                      <FormControl>
+                        <Input
+                          type='number'
+                          placeholder='24'
+                          {...field}
+                          autoComplete='off'
+                          disabled={isSubmitting}
+                          min={1}
+                          max={24}
+                          />
+                      </FormControl>
+                      <FormDescription>Maximum number of symbols</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                  rules={{
+                    validate: {
+                      required: (value) => (integerValid(Number(value), 1, 24) ? true : 'Enter a number ranging 1 - 24'),
+                    },
+                  }}
+                />
 
-            <FormField
-              control={form.control}
-              name='whitelistedSymbolsStr'
-              render={({ field }) => (
-                <FormItem className='mt-7'>
-                  <FormLabelWithMoreInfo
-                    value='Whitelist'
-                    description='The list of symbols that can be selected by the system.'
-                  />
-                  <FormControl>
-                    <Textarea
-                      placeholder='BTC,ETH,BNB,XRP,...'
-                      rows={7}
-                      autoComplete='false'
-                      spellCheck='false'
-                      {...field}
-                      disabled={isSubmitting}
-                    />
-                  </FormControl>
-                  <FormDescription>Top symbols by market capital</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-              rules={{
-                validate: {
-                  required: (value) => (!isWhitelistValid(value, exchangeConfig.baseAsset) ? `Enter a valid list of whitelisted symbols separated by commas. Also make sure to include the base asset (${exchangeConfig.baseAsset})` : true),
-                },
-              }}
-            />
-          </fieldset>
+                <FormField
+                  control={form.control}
+                  name='whitelistedSymbolsStr'
+                  render={({ field }) => (
+                    <FormItem className='mt-5'>
+                      <FormLabelWithMoreInfo
+                        value='Whitelist'
+                        description='The list of symbols that can be selected by the system.'
+                      />
+                      <FormControl>
+                        <Textarea
+                          placeholder='BTC,ETH,BNB,XRP,...'
+                          rows={7}
+                          autoComplete='false'
+                          spellCheck='false'
+                          {...field}
+                          disabled={isSubmitting}
+                        />
+                      </FormControl>
+                      <FormDescription>Top symbols by market capital</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                  rules={{
+                    validate: {
+                      required: (value) => (!isWhitelistValid(value, exchangeConfig.baseAsset) ? `Enter a valid list of whitelisted symbols separated by commas. Also make sure to include the base asset (${exchangeConfig.baseAsset})` : true),
+                    },
+                  }}
+                />
+              </fieldset>
+            </TabsContent>
+          </Tabs>
 
 
+
+
+          {/* ************
+            * SUBMISSION *
+            ************ */}
           <DialogFooter>
             <Button
               type='submit'

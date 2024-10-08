@@ -230,7 +230,7 @@ const Window = ({ closeDialog }: IFormProps) => {
                   control={form.control}
                   name='size'
                   render={({ field }) => (
-                    <FormItem className='mt-7'>
+                    <FormItem className='mt-5'>
                       <FormLabelWithMoreInfo
                         value='Window size'
                         description='The number of candlestick bars that comprise the window.'
@@ -261,7 +261,7 @@ const Window = ({ closeDialog }: IFormProps) => {
                   control={form.control}
                   name='interval'
                   render={({ field }) => (
-                    <FormItem className='mt-7'>
+                    <FormItem className='mt-5'>
                       <FormLabelWithMoreInfo
                         value='Interval'
                         description='The amount of time contained by each candlestick bar.'
@@ -349,7 +349,7 @@ const Window = ({ closeDialog }: IFormProps) => {
                   control={form.control}
                   name='strongRequirement'
                   render={({ field }) => (
-                    <FormItem className='mt-7'>
+                    <FormItem className='mt-5'>
                       <FormLabelWithMoreInfo
                         value='Strong state requirement%'
                         description={[
@@ -383,6 +383,7 @@ const Window = ({ closeDialog }: IFormProps) => {
               </fieldset>
             </TabsContent>
           </Tabs>
+
 
 
           {/* ************
