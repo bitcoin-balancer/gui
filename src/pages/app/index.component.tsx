@@ -1,4 +1,4 @@
-import { useMemo, useEffect } from 'react';
+import { useMemo, useEffect, useRef } from 'react';
 import {
   useNavigation,
   useNavigate,
@@ -61,6 +61,15 @@ const APP_UPDATER_DURATION = 15 * 1000;
  * Component that serves as the parent of the application itself for authenticated users.
  */
 const App = () => {
+  /* **********************************************************************************************
+   *                                             REFS                                             *
+   ********************************************************************************************** */
+  const versionTooltipDisplayed = useRef<boolean>(false);
+
+
+
+
+
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
@@ -192,26 +201,29 @@ const App = () => {
    */
   useEffect(() => {
     let timeout: NodeJS.Timeout | undefined;
-    if (version) {
-      if (VersionService.getAvailableUpdates(version) !== null) {
-        timeout = setTimeout(() => {
-          toast({
-            title: 'Update available',
-            description: 'Enjoy the latest innovations, bug fixes, and enhanced security.',
-            action:
-              <ToastAction
-                altText='Update platform'
-                onClick={() => navigate(NavService.platformUpdate())}
-              >
-                <CloudDownload
-                  aria-hidden='true'
-                  className='w-5 h-5'
-                />
-              </ToastAction>,
-            duration: APP_UPDATER_DURATION,
-          });
-        }, APP_UPDATER_DELAY);
-      }
+    if (
+      version
+      && VersionService.getAvailableUpdates(version) !== null
+      && !versionTooltipDisplayed.current
+    ) {
+      timeout = setTimeout(() => {
+        toast({
+          title: 'Update available',
+          description: 'Enjoy the latest innovations, bug fixes, and enhanced security.',
+          action:
+            <ToastAction
+              altText='Update platform'
+              onClick={() => navigate(NavService.platformUpdate())}
+            >
+              <CloudDownload
+                aria-hidden='true'
+                className='w-5 h-5'
+              />
+            </ToastAction>,
+          duration: APP_UPDATER_DURATION,
+        });
+      }, APP_UPDATER_DELAY);
+      versionTooltipDisplayed.current = true;
     }
     return () => clearTimeout(timeout);
   }, [version, navigate]);
