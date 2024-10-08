@@ -67,7 +67,7 @@ const Technologies = memo(() => (
             <img key={item}
               src={`technologies/${item}.png`}
               alt={`${item} logo`}
-              className='floating-logo w-10 h-10'
+              className='w-10 h-10'
               width='40'
               height='40'
               loading='lazy'
