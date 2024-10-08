@@ -10,7 +10,7 @@ import {
   List,
   ListChecks,
   Loader2,
-  Navigation,
+  Link,
 } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import {
@@ -238,7 +238,7 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
                   onClick={() => navigate(NavService.position(position!.id))}
                   disabled={position === undefined || authority < 2}
                 >
-                  <Navigation
+                  <Link
                       aria-hidden='true'
                       className='mr-1 h-5 w-5'
                     /> Navigate

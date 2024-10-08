@@ -350,7 +350,7 @@ const PositionDialog = memo(({ data }: { data: string | IPosition }) => {
           <DialogDescription
             role='button'
             aria-label='Navigate to position'
-            className='hover:cursor-pointer'
+            className='hover:cursor-pointer text-xs'
             onClick={navigateToPosition}
           >
             {position?.id}

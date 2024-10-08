@@ -10,7 +10,10 @@ import { delay } from '@/shared/services/utils/index.service.ts';
  * Provides utility functions that simplify the management of dialogs that are removed from the DOM
  * on close.
  */
-const useLazyDialog = (closeDialog: (nextState: undefined) => void) => {
+const useLazyDialog = (
+  closeDialog: (nextState: undefined) => void,
+  delaySeconds: number = 0.25,
+) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
@@ -31,10 +34,10 @@ const useLazyDialog = (closeDialog: (nextState: undefined) => void) => {
   const handleCloseDialog = useCallback(
     async (): Promise<void> => {
       setIsDialogOpen(false);
-      await delay(0.25);
+      await delay(delaySeconds);
       closeDialog(undefined);
     },
-    [closeDialog],
+    [closeDialog, delaySeconds],
   );
 
 
@@ -46,6 +49,7 @@ const useLazyDialog = (closeDialog: (nextState: undefined) => void) => {
    ********************************************************************************************** */
   return {
     isDialogOpen,
+    setIsDialogOpen,
     handleCloseDialog,
   };
 };

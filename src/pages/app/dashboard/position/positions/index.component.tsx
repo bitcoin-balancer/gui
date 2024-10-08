@@ -1,9 +1,8 @@
-import { formatDistance } from 'date-fns';
 import {
+  Fragment,
   memo,
   useMemo,
   useRef,
-  Fragment,
 } from 'react';
 import {
   Dialog,
@@ -12,17 +11,15 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
-import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
-import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import { PositionService, ICompactPosition } from '@/shared/backend/position/index.service.ts';
-import { formatDate, formatPNL } from '@/shared/services/transformers/index.service.ts';
-import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import NoRecords from '@/shared/components/no-records/index.component.tsx';
+import PositionButton from '@/shared/components/position-button/index.component.tsx';
 import LoadMoreButton from '@/shared/components/load-more-button/index.component.tsx';
+import { Separator } from '@/shared/shadcn/components/ui/separator';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
@@ -70,50 +67,7 @@ const PositionsDialog = memo(({ closeDialog }: { closeDialog: (nextState: undefi
     }),
     [],
   ));
-  const openPositionDialog = useBoundStore((state) => state.openPositionDialog);
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
-
-
-
-
-
-  /* **********************************************************************************************
-   *                                       REACTIVE VALUES                                        *
-   ********************************************************************************************** */
-
-  // open times
-  const openTimes = useMemo(
-    () => (
-      Array.isArray(data)
-        ? data.map((record) => formatDate(record.open, 'datetime-medium'))
-        : []
-    ),
-    [data],
-  );
-
-  // time distances
-  const timeDistances = useMemo(
-    () => (
-      Array.isArray(data)
-        ? data.map(
-          (record) => (
-            record.close === null ? 'Running...' : formatDistance(record.open, record.close)
-          ),
-        )
-        : []
-    ),
-    [data],
-  );
-
-  // pnl values
-  const pnls = useMemo(
-    () => (
-      Array.isArray(data)
-        ? data.map((record) => formatPNL(record.pnl))
-        : []
-    ),
-    [data],
-  );
 
 
 
@@ -133,31 +87,7 @@ const PositionsDialog = memo(({ closeDialog }: { closeDialog: (nextState: undefi
         <div ref={rowsRef}>
           {data.map((record, i) => (
             <Fragment key={record.id}>
-              <button
-                id={`pd-${record.id}`}
-                className={`p-6 flex justify-start items-center w-full text-left ${record.archived ? 'opacity-50' : ''} hover:bg-slate-100`}
-                onClick={() => openPositionDialog(record.id)}
-                aria-label='Display position'
-              >
-                <div
-                  className='max-w-[60%] sm:max-w-[70%]'
-                >
-                  <p
-                    className='font-medium truncate'
-                  >{openTimes[i]}</p>
-                  <p
-                    className='text-light text-sm truncate'
-                  >{timeDistances[i]}</p>
-                </div>
-
-                <span className='flex-1'></span>
-
-                <Badge
-                  className={`bg-stateless ${record.pnl > 0 ? 'bg-increase-1' : 'bg-decrease-1'}`}
-                >
-                  {pnls[i]}
-                </Badge>
-              </button>
+              <PositionButton record={record} />
               {i < data.length - 1 && <Separator />}
             </Fragment>
           ))}
@@ -171,7 +101,7 @@ const PositionsDialog = memo(({ closeDialog }: { closeDialog: (nextState: undefi
               loadMore={() => loadMore(
                 { func: PositionService.listCompactPositions, args: [LIMIT, data.at(-1)!.open] },
                 rowsRef.current!,
-                `pd-${data.at(-1)!.id}`,
+                `pb-${data.at(-1)!.id}`,
               )}
               loadingMore={loadingMore}
             />

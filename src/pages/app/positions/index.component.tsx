@@ -1,4 +1,4 @@
-import { formatDistance, subMonths, subYears } from 'date-fns';
+import { subMonths, subYears } from 'date-fns';
 import { useMemo, useState, Fragment } from 'react';
 import {
   Calendar,
@@ -33,13 +33,11 @@ import {
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import {
   formatBadgeCount,
-  formatDate,
   formatDollarAmount,
   formatPercentageChange,
   formatPNL,
 } from '@/shared/services/transformers/index.service.ts';
 import { arrayValid } from '@/shared/backend/validations/index.service.ts';
-import { useBoundStore } from '@/shared/store/index.store.ts';
 import { ISplitStateItem, IState } from '@/shared/backend/market-state/shared/types.ts';
 import { PositionService, ICompactPosition } from '@/shared/backend/position/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
@@ -48,6 +46,7 @@ import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import NoRecords from '@/shared/components/no-records/index.component.tsx';
 import LineChart from '@/shared/components/charts/line-chart/index.component.tsx';
+import PositionButton from '@/shared/components/position-button/index.component.tsx';
 import {
   IDateRange,
   IDateRangeID,
@@ -194,7 +193,6 @@ const Positions = () => {
     [range],
   ));
   const [activeChart, setActiveChart] = useState<'pnl' | 'roi' | 'investments'>('pnl');
-  const openPositionDialog = useBoundStore((state) => state.openPositionDialog);
   const breakpoint = useMediaQueryBreakpoint();
 
 
@@ -209,34 +207,6 @@ const Positions = () => {
    * Reversed list of records and computable values that will be displayed in the dialog
    */
   const records = useMemo(() => (Array.isArray(data) ? [...data].reverse() : []), [data]);
-  const openTimes = useMemo(
-    () => (
-      Array.isArray(records)
-        ? records.map((record) => formatDate(record.open, 'datetime-medium'))
-        : []
-    ),
-    [records],
-  );
-  const timeDistances = useMemo(
-    () => (
-      Array.isArray(records)
-        ? records.map(
-          (record) => (
-            record.close === null ? 'Running...' : formatDistance(record.open, record.close)
-          ),
-        )
-        : []
-    ),
-    [records],
-  );
-  const pnls = useMemo(
-    () => (
-      Array.isArray(records)
-        ? records.map((record) => formatPNL(record.pnl))
-        : []
-    ),
-    [records],
-  );
 
   /**
    * List of records that have not been archived as well as the computable values.
@@ -319,31 +289,7 @@ const Positions = () => {
                     records.length > 0
                       ? records.map((record, i) => (
                         <Fragment key={record.id}>
-                          <button
-                            id={`pd-${record.id}`}
-                            className={`p-6 flex justify-start items-center w-full text-left ${record.archived ? 'opacity-50' : ''} hover:bg-slate-100`}
-                            onClick={() => openPositionDialog(record.id)}
-                            aria-label='Display position'
-                          >
-                            <div
-                              className='max-w-[60%] sm:max-w-[70%]'
-                            >
-                              <p
-                                className='font-medium truncate'
-                              >{openTimes[i]}</p>
-                              <p
-                                className='text-light text-sm truncate'
-                              >{timeDistances[i]}</p>
-                            </div>
-
-                            <span className='flex-1'></span>
-
-                            <Badge
-                              className={`bg-stateless ${record.pnl > 0 ? 'bg-increase-1' : 'bg-decrease-1'}`}
-                            >
-                              {pnls[i]}
-                            </Badge>
-                          </button>
+                          <PositionButton record={record} />
                           {i < data.length - 1 && <Separator />}
                         </Fragment>
                       ))
