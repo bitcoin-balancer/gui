@@ -19,13 +19,12 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/shadcn/components/ui/dropdown-menu.tsx';
 import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-} from '@/shared/shadcn/components/ui/drawer.tsx';
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from '@/shared/shadcn/components/ui/sheet.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { delay, errorToast } from '@/shared/services/utils/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
@@ -77,7 +76,7 @@ const Coins = memo(({ coinsStates, openSplitStatesDialog }: IComponentProps) => 
     try {
       const state = await CoinsService.getStateForSymbol(asset, activeSymbol);
       setIsOpen(false);
-      await delay(0.25);
+      await delay(0.5);
       openSplitStatesDialog({
         moduleID: 'COINS',
         asset,
@@ -177,17 +176,15 @@ const Coins = memo(({ coinsStates, openSplitStatesDialog }: IComponentProps) => 
 
 
 
-      {/* ********************
-        * STATE ASSET DRAWER *
-        ******************** */}
-      <Drawer open={isOpen} onOpenChange={setIsOpen}>
-        <DrawerContent>
-          <div
-            className='mx-auto w-full max-w-sm'
-          >
-            <DrawerHeader>
-              <DrawerTitle>Select a pair</DrawerTitle>
-              <DrawerDescription
+      {/* **************
+        * ACTIONS MENU *
+        ************** */}
+      <Sheet open={isOpen} onOpenChange={setIsOpen}>
+        <SheetContent side='bottom'>
+          <div className='mx-auto w-full max-w-sm'>
+            <SheetHeader className='space-y-0'>
+              <SheetTitle>Select a pair</SheetTitle>
+              <SheetDescription
                 className='flex justify-center items-center sm:justify-start'
               >
                 {
@@ -201,11 +198,10 @@ const Coins = memo(({ coinsStates, openSplitStatesDialog }: IComponentProps) => 
                     ? 'Retrieving state...'
                     : `Display the state for ${activeSymbol}`
                 }
-              </DrawerDescription>
-            </DrawerHeader>
-            <DrawerFooter
-              className='flex flex-row justify-center items-stretch'
-            >
+              </SheetDescription>
+            </SheetHeader>
+
+            <div className='flex flex-row justify-center items-stretch gap-2 sm:gap-4 mt-5'>
               <Button
                 variant='outline'
                 aria-label={`View the state of the coin in the ${exchangeConfig.quoteAsset} pair`}
@@ -226,10 +222,10 @@ const Coins = memo(({ coinsStates, openSplitStatesDialog }: IComponentProps) => 
                 <Bitcoin aria-hidden='true' />
                 <p>{activeSymbol}/{exchangeConfig.baseAsset}</p>
               </Button>
-            </DrawerFooter>
+            </div>
           </div>
-        </DrawerContent>
-      </Drawer>
+        </SheetContent>
+      </Sheet>
     </>
   );
 });

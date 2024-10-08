@@ -28,13 +28,12 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/shadcn/components/ui/dropdown-menu.tsx';
 import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-} from '@/shared/shadcn/components/ui/drawer.tsx';
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from '@/shared/shadcn/components/ui/sheet.tsx';
 import {
   formatBitcoinAmount,
   formatDollarAmount,
@@ -183,7 +182,7 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
    */
   const decreasePosition = async (percentage: number) => {
     setIsDecreaseMenuOpen(false);
-    await delay(0.25);
+    await delay(0.5);
     openConfirmationDialog({
       mode: 'OTP',
       title: 'Decrease position',
@@ -378,21 +377,21 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
 
 
 
-      {/* **********************
-        * DECREASE MENU DRAWER *
-        ********************** */}
-      <Drawer open={isDecreaseMenuOpen} onOpenChange={setIsDecreaseMenuOpen}>
-        <DrawerContent>
-          <div
-            className='mx-auto w-full max-w-sm'
-          >
-            <DrawerHeader>
-              <DrawerTitle>Decrease position</DrawerTitle>
-              <DrawerDescription>Select a percentage</DrawerDescription>
-            </DrawerHeader>
-            <DrawerFooter
-              className='grid grid-cols-3 sm:grid-cols-4 gap-1'
-            >
+      {/* ***************
+        * DECREASE MENU *
+        *************** */}
+      <Sheet open={isDecreaseMenuOpen} onOpenChange={setIsDecreaseMenuOpen}>
+        <SheetContent
+          side='bottom'
+          className='overflow-y-auto'
+        >
+          <div className='mx-auto w-full max-w-md'>
+            <SheetHeader className='space-y-0'>
+              <SheetTitle>Decrease position</SheetTitle>
+              <SheetDescription>Select a percentage</SheetDescription>
+            </SheetHeader>
+
+            <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4 mt-5'>
               {
                 decreaseMenu.map((item) => (
                   <Button
@@ -403,17 +402,17 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
                     onClick={() => decreasePosition(item.percentage)}
                     disabled={item.amount === 0}
                   >
-                    <p>{item.label}</p>
+                    <p>{item.percentage}%</p>
                     <p
                       className='text-light text-xs'
-                    >{item.percentage}%</p>
+                    >{item.label}</p>
                   </Button>
                 ))
               }
-            </DrawerFooter>
+            </div>
           </div>
-        </DrawerContent>
-      </Drawer>
+        </SheetContent>
+      </Sheet>
     </>
   );
 });

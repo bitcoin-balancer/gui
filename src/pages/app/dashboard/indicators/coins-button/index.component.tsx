@@ -5,13 +5,12 @@ import {
 } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-} from '@/shared/shadcn/components/ui/drawer.tsx';
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from '@/shared/shadcn/components/ui/sheet.tsx';
 import { delay } from '@/shared/services/utils/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import {
@@ -60,7 +59,7 @@ const CoinsButton = ({
    */
   const displayDialog = async (asset: ICoinStateAsset): Promise<void> => {
     setAssetMenu(false);
-    await delay(0.25);
+    await delay(0.5);
     setIsDialogOpen(asset);
   };
 
@@ -85,25 +84,18 @@ const CoinsButton = ({
 
 
 
-      {/* ********
-        * DRAWER *
-        ******** */}
-      <Drawer open={assetMenu} onOpenChange={setAssetMenu}>
-        <DrawerContent>
-          <div
-            className='mx-auto w-full max-w-sm'
-          >
-            <DrawerHeader>
-              <DrawerTitle>Select an asset</DrawerTitle>
-              <DrawerDescription
-                className='flex justify-center items-center sm:justify-start'
-              >
-                Display the state for the coins
-              </DrawerDescription>
-            </DrawerHeader>
-            <DrawerFooter
-              className='flex flex-row justify-center items-stretch'
-            >
+      {/* **************
+        * ACTIONS MENU *
+        ************** */}
+      <Sheet open={assetMenu} onOpenChange={setAssetMenu}>
+        <SheetContent side='bottom'>
+          <div className='mx-auto w-full max-w-sm'>
+            <SheetHeader className='space-y-0'>
+              <SheetTitle>Select an asset</SheetTitle>
+              <SheetDescription>Display the state for all the coins</SheetDescription>
+            </SheetHeader>
+
+            <div className='flex flex-row justify-center items-stretch gap-2 sm:gap-4 mt-5'>
               <Button
                 variant='outline'
                 aria-label={`View the state of the coins in the ${exchangeConfig.quoteAsset} pair`}
@@ -122,10 +114,11 @@ const CoinsButton = ({
                 <Bitcoin aria-hidden='true' />
                 <p>COINS/{exchangeConfig.baseAsset}</p>
               </Button>
-            </DrawerFooter>
+            </div>
           </div>
-        </DrawerContent>
-      </Drawer>
+        </SheetContent>
+      </Sheet>
+
 
 
       {/* ********
