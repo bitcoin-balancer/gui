@@ -21,8 +21,13 @@ import {
   DialogTitle,
   DialogFooter,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/shared/shadcn/components/ui/tabs.tsx';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/shadcn/components/ui/tooltip.tsx';
-import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { numberValid } from '@/shared/backend/validations/index.service.ts';
@@ -196,120 +201,145 @@ const Liquidity = ({ closeDialog }: IFormProps) => {
           onSubmit={form.handleSubmit(onSubmit)}
           noValidate
         >
-          <fieldset>
-            <h3 className='text-md font-semibold'>General</h3>
 
-            <FormField
-              control={form.control}
-              name='maxDistanceFromPrice'
-              render={({ field }) => (
-                <FormItem className='mt-7'>
-                  <FormLabelWithMoreInfo
-                    value='Max. distance% from price'
-                    description={[
-                      'The "Max. distance% from price" setting defines the percentage deviation from the current price used to determine the liquidity range. This range encompasses all orders considered when calculating the liquidity state.',
-                      'If the current price of BTC is $100 and the "Max. distance% from price" is set to 1%, the liquidity range will be $99 to $101. All orders placed within this range will be factored into the liquidity state calculation.',
-                    ]}
-                  />
-                  <FormControl>
-                    <Input
-                      type='number'
-                      placeholder='0.15'
-                      {...field}
-                      autoComplete='off'
-                      disabled={isSubmitting}
-                      min={0.01}
-                      max={100}
+          <Tabs
+            defaultValue='general'
+            className='w-full'
+          >
+            <TabsList
+              className='grid w-full grid-cols-2'
+            >
+              <TabsTrigger value='general'>General</TabsTrigger>
+              <TabsTrigger value='intensities'>Intensities</TabsTrigger>
+            </TabsList>
+
+            {/* *********
+              * GENERAL *
+              ********* */}
+            <TabsContent value='general'>
+              <fieldset className='mt-3'>
+                <FormField
+                  control={form.control}
+                  name='maxDistanceFromPrice'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabelWithMoreInfo
+                        value='Max. distance% from price'
+                        description={[
+                          'The "Max. distance% from price" setting defines the percentage deviation from the current price used to determine the liquidity range. This range encompasses all orders considered when calculating the liquidity state.',
+                          'If the current price of BTC is $100 and the "Max. distance% from price" is set to 1%, the liquidity range will be $99 to $101. All orders placed within this range will be factored into the liquidity state calculation.',
+                        ]}
                       />
-                  </FormControl>
-                  <FormDescription>Price range size</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-              rules={{
-                validate: {
-                  required: (value) => (numberValid(Number(value), 0.01, 100) ? true : 'Enter a number ranging 0.01 - 100'),
-                },
-              }}
-            />
-          </fieldset>
+                      <FormControl>
+                        <Input
+                          type='number'
+                          placeholder='0.15'
+                          {...field}
+                          autoComplete='off'
+                          disabled={isSubmitting}
+                          min={0.01}
+                          max={100}
+                          />
+                      </FormControl>
+                      <FormDescription>Price range size</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                  rules={{
+                    validate: {
+                      required: (value) => (numberValid(Number(value), 0.01, 100) ? true : 'Enter a number ranging 0.01 - 100'),
+                    },
+                  }}
+                />
+              </fieldset>
+            </TabsContent>
 
 
-          <Separator className='my-10' />
 
 
-          <fieldset>
+            {/* *************
+              * INTENSITIES *
+              ************* */}
+            <TabsContent value='intensities'>
+              <fieldset className='mt-3'>
 
-            <div
-              className='flex justify-start items-center'
-            >
-              <h3 className='text-md font-semibold'>Intensity weights</h3>
-
-              <span className='flex-1'></span>
-
-              <Tooltip>
-                <TooltipTrigger
-                  className='w-5 h-5'
-                  type='button'
-                  aria-label='View more information'
-                  onClick={() => openInfoDialog({
-                    title: 'Intensity weights',
-                    content: [
-                      'The weights that will be used to determine the value of each intensity when calculating the liquidity state.',
-                      'Liquidity requirements progressively increase across levels, culminating in the highest requirement at intensity level 4.',
-                    ],
-                  })}
-                  tabIndex={-1}
+                <div
+                  className='flex justify-start items-center'
                 >
-                  <CircleHelp
-                    className='w-5 h-5'
-                    aria-hidden='true'
+                  <h3 className='text-md font-semibold'>Intensity weights</h3>
+
+                  <span className='flex-1'></span>
+
+                  <Tooltip>
+                    <TooltipTrigger
+                      className='w-5 h-5'
+                      type='button'
+                      aria-label='View more information'
+                      onClick={() => openInfoDialog({
+                        title: 'Intensity weights',
+                        content: [
+                          'The weights that will be used to determine the value of each intensity when calculating the liquidity state.',
+                          'Liquidity requirements progressively increase across levels, culminating in the highest requirement at intensity level 4.',
+                        ],
+                      })}
+                      tabIndex={-1}
+                    >
+                      <CircleHelp
+                        className='w-5 h-5'
+                        aria-hidden='true'
+                      />
+                    </TooltipTrigger>
+                    <TooltipContent side='left'><p>More info</p></TooltipContent>
+                  </Tooltip>
+                </div>
+
+
+                <div
+                  className='grid grid-cols-2 gap-5 mt-3'
+                >
+
+                {INTENSITY_WEIGHT_INPUTS.map((item, i) => (
+                  <FormField
+                    key={i}
+                    control={form.control}
+                    name={item.name}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{item.label}</FormLabel>
+                        <FormControl>
+                          <Input
+                            type='number'
+                            placeholder={item.placeholder}
+                            {...field}
+                            autoComplete='off'
+                            disabled={isSubmitting}
+                            min={1}
+                            max={100}
+                            />
+                        </FormControl>
+                        <FormDescription className='text-xs'>{item.subTitle}</FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                    rules={{
+                      validate: {
+                        required: (value) => (numberValid(Number(value), 1, 100) ? true : 'Enter an integer ranging 1 - 100'),
+                      },
+                    }}
                   />
-                </TooltipTrigger>
-                <TooltipContent side='left'><p>More info</p></TooltipContent>
-              </Tooltip>
-            </div>
+                ))}
+
+                </div>
+
+              </fieldset>
+            </TabsContent>
+
+          </Tabs>
 
 
-            <div
-              className='grid grid-cols-2 gap-4'
-            >
-
-            {INTENSITY_WEIGHT_INPUTS.map((item, i) => (
-              <FormField
-                key={i}
-                control={form.control}
-                name={item.name}
-                render={({ field }) => (
-                  <FormItem className='mt-7'>
-                    <FormLabel>{item.label}</FormLabel>
-                    <FormControl>
-                      <Input
-                        type='number'
-                        placeholder={item.placeholder}
-                        {...field}
-                        autoComplete='off'
-                        disabled={isSubmitting}
-                        min={1}
-                        max={100}
-                        />
-                    </FormControl>
-                    <FormDescription className='text-xs'>{item.subTitle}</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-                rules={{
-                  validate: {
-                    required: (value) => (numberValid(Number(value), 1, 100) ? true : 'Enter an integer ranging 1 - 100'),
-                  },
-                }}
-              />
-            ))}
-
-            </div>
-
-          </fieldset>
-
+          {/* ************
+            * SUBMISSION *
+            ************ */}
           <DialogFooter>
             <Button
               type='submit'
