@@ -204,7 +204,7 @@ const Reversal = ({ closeDialog }: IFormProps) => {
               * GENERAL *
               ********* */}
             <TabsContent value='general'>
-              <fieldset className='mt-3'>
+              <fieldset className='mt-3 animate-in fade-in duration-700'>
                 <FormField
                   control={form.control}
                   name='crashDuration'
@@ -279,7 +279,7 @@ const Reversal = ({ closeDialog }: IFormProps) => {
               * WEIGHTS *
               ********* */}
             <TabsContent value='weights'>
-              <fieldset className='mt-3'>
+              <fieldset className='mt-3 animate-in fade-in duration-700'>
                 <FormField
                     control={form.control}
                     name='liquidityWeight'
