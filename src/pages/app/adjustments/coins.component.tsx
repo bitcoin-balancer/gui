@@ -218,7 +218,7 @@ const Coins = ({ closeDialog }: IFormProps) => {
               * WINDOW *
               ******** */}
             <TabsContent value='window'>
-              <fieldset className='mt-3'>
+              <fieldset className='mt-3 animate-in fade-in duration-700'>
                 <FormField
                   control={form.control}
                   name='size'
@@ -254,7 +254,7 @@ const Coins = ({ closeDialog }: IFormProps) => {
                   control={form.control}
                   name='interval'
                   render={({ field }) => (
-                    <FormItem className='mt-5'>
+                    <FormItem className='mt-7'>
                       <FormLabelWithMoreInfo
                         value='Interval'
                         description='The number of seconds each price item will last before appending a new one.'
@@ -289,7 +289,7 @@ const Coins = ({ closeDialog }: IFormProps) => {
               * STATE *
               ******** */}
             <TabsContent value='state'>
-              <fieldset className='mt-3'>
+              <fieldset className='mt-3 animate-in fade-in duration-700'>
                 <FormField
                   control={form.control}
                   name='requirement'
@@ -330,7 +330,7 @@ const Coins = ({ closeDialog }: IFormProps) => {
                   control={form.control}
                   name='strongRequirement'
                   render={({ field }) => (
-                    <FormItem className='mt-5'>
+                    <FormItem className='mt-7'>
                       <FormLabelWithMoreInfo
                         value='Strong state requirement%'
                         description={[
@@ -370,7 +370,7 @@ const Coins = ({ closeDialog }: IFormProps) => {
               * SYMBOLS *
               ******** */}
             <TabsContent value='symbols'>
-              <fieldset className='mt-3'>
+              <fieldset className='mt-3 animate-in fade-in duration-700'>
                 <FormField
                   control={form.control}
                   name='limit'
@@ -406,7 +406,7 @@ const Coins = ({ closeDialog }: IFormProps) => {
                   control={form.control}
                   name='whitelistedSymbolsStr'
                   render={({ field }) => (
-                    <FormItem className='mt-5'>
+                    <FormItem className='mt-7'>
                       <FormLabelWithMoreInfo
                         value='Whitelist'
                         description='The list of symbols that can be selected by the system.'

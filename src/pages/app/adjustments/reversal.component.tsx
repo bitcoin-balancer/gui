@@ -242,7 +242,7 @@ const Reversal = ({ closeDialog }: IFormProps) => {
                   control={form.control}
                   name='pointsRequirement'
                   render={({ field }) => (
-                    <FormItem className='mt-5'>
+                    <FormItem className='mt-7'>
                       <FormLabelWithMoreInfo
                         value='Event requirement'
                         description={[
@@ -318,7 +318,7 @@ const Reversal = ({ closeDialog }: IFormProps) => {
                     control={form.control}
                     name='coinsQuoteWeight'
                     render={({ field }) => (
-                      <FormItem className='mt-5'>
+                      <FormItem className='mt-7'>
                         <FormLabelWithMoreInfo
                           value={`Coins quote (COINS/${exchangeConfig.quoteAsset})`}
                           description={[

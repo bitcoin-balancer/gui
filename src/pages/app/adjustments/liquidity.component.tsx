@@ -217,7 +217,7 @@ const Liquidity = ({ closeDialog }: IFormProps) => {
               * GENERAL *
               ********* */}
             <TabsContent value='general'>
-              <fieldset className='mt-3'>
+              <fieldset className='mt-3 animate-in fade-in duration-700'>
                 <FormField
                   control={form.control}
                   name='maxDistanceFromPrice'
@@ -261,7 +261,7 @@ const Liquidity = ({ closeDialog }: IFormProps) => {
               * INTENSITIES *
               ************* */}
             <TabsContent value='intensities'>
-              <fieldset className='mt-3'>
+              <fieldset className='mt-3 animate-in fade-in duration-700'>
 
                 <div
                   className='flex justify-start items-center'
