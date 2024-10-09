@@ -62,7 +62,6 @@ const strategyServiceFactory = (): IStrategyService => {
    * - 31501: if the canIncrease property is not a boolean
    * - 31502: if the canDecrease property is not a boolean
    * - 31503: if the increaseAmountQuote property is not a valid number
-   * - 31504: if the minPositionAmountQuote property is not a valid number
    * - 31505: if the increaseIdleDuration property is not a valid number
    * - 31506: if the increaseGainRequirement property is not a valid number
    * - 31507: if the decreaseLevels property is not a valid tuple

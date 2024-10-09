@@ -188,6 +188,7 @@ const WindowState = ({ windowState, openSplitStatesDialog }: IComponentProps) =>
       <CardContent
         ref={chartContainerRef}
         className='pt-5 md:pb-0 md:pt-0 flex-1'
+        style={{ minHeight: chartHeight }}
       >
         {
           chartHeight !== undefined
