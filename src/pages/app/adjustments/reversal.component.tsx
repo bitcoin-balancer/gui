@@ -20,11 +20,19 @@ import {
   DialogTitle,
   DialogFooter,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
-import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/shared/shadcn/components/ui/tabs.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { integerValid, numberValid } from '@/shared/backend/validations/index.service.ts';
-import { ReversalService, IReversalConfig } from '@/shared/backend/market-state/reversal/index.service';
+import {
+  ReversalService,
+  IReversalConfig,
+} from '@/shared/backend/market-state/reversal/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
@@ -178,199 +186,211 @@ const Reversal = ({ closeDialog }: IFormProps) => {
           onSubmit={form.handleSubmit(onSubmit)}
           noValidate
         >
-          <fieldset>
-            <h3 className='text-md font-semibold'>General</h3>
 
-            <FormField
-              control={form.control}
-              name='crashDuration'
-              render={({ field }) => (
-                <FormItem className='mt-7'>
-                  <FormLabelWithMoreInfo
-                    value='Crash duration'
-                    description={[
-                      'The number of minutes the price crash state will be active for. Once the time runs out, the record is stored in the database and the state is reset.',
-                    ]}
-                  />
-                  <FormControl>
-                    <Input
-                      type='number'
-                      placeholder='360'
-                      {...field}
-                      autoComplete='off'
-                      disabled={isSubmitting}
-                      min={5}
-                      max={10080}
+          <Tabs
+            defaultValue='general'
+            className='w-full'
+          >
+            <TabsList
+              className='grid w-full grid-cols-2'
+            >
+              <TabsTrigger value='general'>General</TabsTrigger>
+              <TabsTrigger value='weights'>Weights</TabsTrigger>
+            </TabsList>
+
+
+
+            {/* *********
+              * GENERAL *
+              ********* */}
+            <TabsContent value='general'>
+              <fieldset className='mt-3'>
+                <FormField
+                  control={form.control}
+                  name='crashDuration'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabelWithMoreInfo
+                        value='Crash duration'
+                        description={[
+                          'The number of minutes the price crash state will be active for. Once the time runs out, the record is stored in the database and the state is reset.',
+                        ]}
                       />
-                  </FormControl>
-                  <FormDescription>Number of minutes</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-              rules={{
-                validate: {
-                  required: (value) => (integerValid(Number(value), 5, 10080) ? true : 'Enter an integer ranging 5 - 10080'),
-                },
-              }}
-            />
+                      <FormControl>
+                        <Input
+                          type='number'
+                          placeholder='360'
+                          {...field}
+                          autoComplete='off'
+                          disabled={isSubmitting}
+                          min={5}
+                          max={10080}
+                          />
+                      </FormControl>
+                      <FormDescription>Number of minutes</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                  rules={{
+                    validate: {
+                      required: (value) => (integerValid(Number(value), 5, 10080) ? true : 'Enter an integer ranging 5 - 10080'),
+                    },
+                  }}
+                />
 
-          </fieldset>
+                <FormField
+                  control={form.control}
+                  name='pointsRequirement'
+                  render={({ field }) => (
+                    <FormItem className='mt-5'>
+                      <FormLabelWithMoreInfo
+                        value='Event requirement'
+                        description={[
+                          'The total number of points required for a reversal event to be issued.',
+                        ]}
+                      />
+                      <FormControl>
+                        <Input
+                          type='number'
+                          placeholder='80'
+                          {...field}
+                          autoComplete='off'
+                          disabled={isSubmitting}
+                          min={50}
+                          max={100}
+                          />
+                      </FormControl>
+                      <FormDescription>Number of points</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                  rules={{
+                    validate: {
+                      required: (value) => (numberValid(Number(value), 50, 100) ? true : 'Enter a number ranging 50 - 100'),
+                    },
+                  }}
+                />
+              </fieldset>
+            </TabsContent>
 
 
-          <Separator className='my-10' />
 
-          <fieldset>
-
-            <h3 className='text-md font-semibold'>Reversal event</h3>
-
-            <FormField
-                control={form.control}
-                name='pointsRequirement'
-                render={({ field }) => (
-                  <FormItem className='mt-7'>
-                    <FormLabelWithMoreInfo
-                      value='Points requirement'
-                      description={[
-                        'The total number of points required for a reversal event to be issued.',
-                      ]}
-                    />
-                    <FormControl>
-                      <Input
-                        type='number'
-                        placeholder='80'
-                        {...field}
-                        autoComplete='off'
-                        disabled={isSubmitting}
-                        min={50}
-                        max={100}
+            {/* *********
+              * WEIGHTS *
+              ********* */}
+            <TabsContent value='weights'>
+              <fieldset className='mt-3'>
+                <FormField
+                    control={form.control}
+                    name='liquidityWeight'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabelWithMoreInfo
+                          value='Liquidity'
+                          description={[
+                            'The maximum number of points that can be obtained via the liquidity module.',
+                            'This module directly correlates with buying pressure, yielding more points as buying pressure intensifies.',
+                          ]}
                         />
-                    </FormControl>
-                    <FormDescription>Number of points</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-                rules={{
-                  validate: {
-                    required: (value) => (numberValid(Number(value), 50, 100) ? true : 'Enter a number ranging 0 - 1440'),
-                  },
-                }}
-              />
-          </fieldset>
+                        <FormControl>
+                          <Input
+                            type='number'
+                            placeholder='35'
+                            {...field}
+                            autoComplete='off'
+                            disabled={isSubmitting}
+                            min={1}
+                            max={100}
+                            />
+                        </FormControl>
+                        <FormDescription>Number of points</FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                    rules={{
+                      validate: {
+                        required: (value) => (numberValid(Number(value), 1, 100) ? true : 'Enter a number ranging 1 - 100'),
+                      },
+                    }}
+                  />
 
-
-          <Separator className='my-10' />
-
-
-
-          <fieldset>
-
-            <h3 className='text-md font-semibold'>Weights</h3>
-
-
-            <FormField
-                control={form.control}
-                name='liquidityWeight'
-                render={({ field }) => (
-                  <FormItem className='mt-7'>
-                    <FormLabelWithMoreInfo
-                      value='Liquidity'
-                      description={[
-                        'The maximum number of points that can be obtained via the liquidity module.',
-                        'This module directly correlates with buying pressure, yielding more points as buying pressure intensifies.',
-                      ]}
-                    />
-                    <FormControl>
-                      <Input
-                        type='number'
-                        placeholder='35'
-                        {...field}
-                        autoComplete='off'
-                        disabled={isSubmitting}
-                        min={1}
-                        max={100}
+                  <FormField
+                    control={form.control}
+                    name='coinsQuoteWeight'
+                    render={({ field }) => (
+                      <FormItem className='mt-5'>
+                        <FormLabelWithMoreInfo
+                          value={`Coins quote (COINS/${exchangeConfig.quoteAsset})`}
+                          description={[
+                            'The maximum number of points that can be obtained via the coins module (COINS/USDT).',
+                            'This module directly correlates with buying pressure, yielding more points as buying pressure intensifies.',
+                          ]}
                         />
-                    </FormControl>
-                    <FormDescription>Number of points</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-                rules={{
-                  validate: {
-                    required: (value) => (numberValid(Number(value), 1, 100) ? true : 'Enter a number ranging 1 - 100'),
-                  },
-                }}
-              />
+                        <FormControl>
+                          <Input
+                            type='number'
+                            placeholder='32.5'
+                            {...field}
+                            autoComplete='off'
+                            disabled={isSubmitting}
+                            min={1}
+                            max={100}
+                            />
+                        </FormControl>
+                        <FormDescription>Number of points</FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                    rules={{
+                      validate: {
+                        required: (value) => (numberValid(Number(value), 1, 100) ? true : 'Enter a number ranging 1 - 100'),
+                      },
+                    }}
+                  />
 
-              <FormField
-                control={form.control}
-                name='coinsQuoteWeight'
-                render={({ field }) => (
-                  <FormItem className='mt-7'>
-                    <FormLabelWithMoreInfo
-                      value={`Coins quote (COINS/${exchangeConfig.quoteAsset})`}
-                      description={[
-                        'The maximum number of points that can be obtained via the coins module (COINS/USDT).',
-                        'This module directly correlates with buying pressure, yielding more points as buying pressure intensifies.',
-                      ]}
-                    />
-                    <FormControl>
-                      <Input
-                        type='number'
-                        placeholder='32.5'
-                        {...field}
-                        autoComplete='off'
-                        disabled={isSubmitting}
-                        min={1}
-                        max={100}
+                  <FormField
+                    control={form.control}
+                    name='coinsBaseWeight'
+                    render={({ field }) => (
+                      <FormItem className='mt-7'>
+                        <FormLabelWithMoreInfo
+                          value={`Coins base (COINS/${exchangeConfig.baseAsset})`}
+                          description={[
+                            'The maximum number of points that can be obtained via the coins module (COINS/BTC)',
+                            'This module directly correlates with buying pressure, yielding more points as buying pressure intensifies.',
+                          ]}
                         />
-                    </FormControl>
-                    <FormDescription>Number of points</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-                rules={{
-                  validate: {
-                    required: (value) => (numberValid(Number(value), 1, 100) ? true : 'Enter a number ranging 1 - 100'),
-                  },
-                }}
-              />
+                        <FormControl>
+                          <Input
+                            type='number'
+                            placeholder='32.5'
+                            {...field}
+                            autoComplete='off'
+                            disabled={isSubmitting}
+                            min={1}
+                            max={100}
+                            />
+                        </FormControl>
+                        <FormDescription>Number of points</FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                    rules={{
+                      validate: {
+                        required: (value) => (numberValid(Number(value), 1, 100) ? true : 'Enter a number ranging 1 - 100'),
+                      },
+                    }}
+                  />
 
-              <FormField
-                control={form.control}
-                name='coinsBaseWeight'
-                render={({ field }) => (
-                  <FormItem className='mt-7'>
-                    <FormLabelWithMoreInfo
-                      value={`Coins base (COINS/${exchangeConfig.baseAsset})`}
-                      description={[
-                        'The maximum number of points that can be obtained via the coins module (COINS/BTC)',
-                        'This module directly correlates with buying pressure, yielding more points as buying pressure intensifies.',
-                      ]}
-                    />
-                    <FormControl>
-                      <Input
-                        type='number'
-                        placeholder='32.5'
-                        {...field}
-                        autoComplete='off'
-                        disabled={isSubmitting}
-                        min={1}
-                        max={100}
-                        />
-                    </FormControl>
-                    <FormDescription>Number of points</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-                rules={{
-                  validate: {
-                    required: (value) => (numberValid(Number(value), 1, 100) ? true : 'Enter a number ranging 1 - 100'),
-                  },
-                }}
-              />
+                </fieldset>
+            </TabsContent>
+          </Tabs>
 
-          </fieldset>
 
+
+          {/* ************
+            * SUBMISSION *
+            ************ */}
           <DialogFooter>
             <Button
               type='submit'
