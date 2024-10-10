@@ -75,8 +75,8 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
 
   // info regarding the running version
   const lastCommit = useMemo(
-    () => VersionService.buildLastCommitText(version.api.latest),
-    [version.api.latest],
+    () => VersionService.buildLastCommitText(version.gui.latest),
+    [version.gui.latest],
   );
 
 
