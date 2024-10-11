@@ -5,7 +5,7 @@ import {
   Fragment,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Archive, Link } from 'lucide-react';
+import { Archive, ExternalLink } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -287,12 +287,15 @@ const PositionDialog = memo(({ data }: { data: string | IPosition }) => {
                     className='text-light text-sm ml-2'
                   >{formatDollarAmount(position!.decrease_price_levels[levelNum])}</p>
                   <span className='flex-1'></span>
-                  <Badge
-                    variant='secondary'
-                    className='mr-2'
-                  >
-                    {position!.decrease_actions[levelNum].length}
-                  </Badge>
+                  {
+                    position!.decrease_actions[levelNum].length > 0
+                    && <Badge
+                      variant='secondary'
+                      className='mr-2'
+                    >
+                      {position!.decrease_actions[levelNum].length}
+                    </Badge>
+                  }
                 </AccordionTrigger>
                 <AccordionContent>
                   {
@@ -339,7 +342,7 @@ const PositionDialog = memo(({ data }: { data: string | IPosition }) => {
             }
             {
               position !== undefined
-              && <Link
+              && <ExternalLink
                 role='button'
                 aria-label='Navigate to position'
                 className='ml-1 h-4 w-4 hover:cursor-pointer'
