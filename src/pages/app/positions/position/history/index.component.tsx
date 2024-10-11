@@ -65,11 +65,13 @@ const History = memo(({ position, setSidenavOpen }: IPositionComponentProps) => 
   // the list of markers that will be inserted into the price chart
   const markers = useMemo(
     () => (
-      data === undefined ? [] : buildPositionMarkers(
-        data.records.id,
-        position.increase_actions,
-        position.decrease_actions,
-      )
+      data === undefined
+        ? []
+        : buildPositionMarkers(
+          data.records.id,
+          position.increase_actions,
+          position.decrease_actions,
+        )
     ),
     [data, position],
   );
