@@ -28,7 +28,7 @@ import PageLoadError from '@/shared/components/page-load-error/index.component.t
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import CandlestickChart, {
   IMarker,
-} from '@/shared/components/charts/candlestick-chart/index.component.tsx';
+} from '@/shared/components/charts/shared/types.ts';
 import { IPositionComponentProps } from '@/pages/app/positions/position/types.ts';
 
 /* ************************************************************************************************

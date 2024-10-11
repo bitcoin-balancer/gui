@@ -1,5 +1,5 @@
 import { ICompactCandlestickRecords } from '@/shared/backend/candlestick/index.service.ts';
-import { IMarker } from '@/shared/components/charts/candlestick-chart/index.component.tsx';
+import { IMarker } from '@/shared/components/charts/shared/types.ts';
 import { buildMarker } from '@/pages/landing/utils.ts';
 
 /* ************************************************************************************************

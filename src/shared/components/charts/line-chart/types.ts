@@ -5,6 +5,7 @@ import {
   SeriesType,
 } from 'lightweight-charts';
 import { IState, ISplitStateItem } from '@/shared/backend/market-state/shared/types.ts';
+import { IPriceFormatterFunc } from '@/shared/components/charts/shared/types.ts';
 
 /* ************************************************************************************************
  *                                             TYPES                                              *
@@ -15,12 +16,6 @@ import { IState, ISplitStateItem } from '@/shared/backend/market-state/shared/ty
  * The line and area charts are very similar as they share almost all properties.
  */
 type IChartKind = 'area' | 'line';
-
-/**
- * Price Formatter Func
- * The function that will be applied to every item in the series.
- */
-type IPriceFormatterFunc = (value: number) => string;
 
 /**
  * Component Props
@@ -115,7 +110,6 @@ type IChartAPIRef = {
  ************************************************************************************************ */
 export type {
   IChartKind,
-  IPriceFormatterFunc,
   IComponentProps,
   ISeriesItem,
   ILineSeriesAPI,

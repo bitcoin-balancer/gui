@@ -1,6 +1,6 @@
 import { useRef, useLayoutEffect, useEffect } from 'react';
 import { createChart, IChartApi } from 'lightweight-charts';
-import { toLocalTime } from '@/shared/services/transformers/index.service.ts';
+import { toLocalTime } from '@/shared/components/charts/shared/utils.ts';
 import {
   toSeriesItems,
   buildChartOptions,

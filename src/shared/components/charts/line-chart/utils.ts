@@ -7,13 +7,10 @@ import {
   LineSeriesPartialOptions,
 } from 'lightweight-charts';
 import { ISplitStateItem, IState } from '@/shared/backend/market-state/shared/types.ts';
-import { toLocalTime } from '@/shared/services/transformers/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
-import {
-  IChartKind,
-  IPriceFormatterFunc,
-  ISeriesItem,
-} from '@/shared/components/charts/line-chart/types.ts';
+import { IPriceFormatterFunc } from '@/shared/components/charts/shared/types.ts';
+import { toLocalTime } from '@/shared/components/charts/shared/utils.ts';
+import { IChartKind, ISeriesItem } from '@/shared/components/charts/line-chart/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
