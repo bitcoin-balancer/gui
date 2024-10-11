@@ -1,7 +1,7 @@
 import { formatDistance } from 'date-fns';
 import { memo, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Link, ReceiptText } from 'lucide-react';
+import { ExternalLink, ReceiptText } from 'lucide-react';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import {
@@ -146,7 +146,7 @@ const PositionButton = memo(({ record }: { record: ICompactPosition }) => {
                   className='w-full flex-1 flex flex-col h-20 gap-y-1'
                   onClick={handleNavigateToPosition}
                 >
-                  <Link aria-hidden='true' />
+                  <ExternalLink aria-hidden='true' />
                   <p>Navigate</p>
                 </Button>
                 <Button

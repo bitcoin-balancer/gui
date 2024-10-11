@@ -10,7 +10,7 @@ import {
   List,
   ListChecks,
   Loader2,
-  Link,
+  ExternalLink,
 } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import {
@@ -215,12 +215,21 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
         ****** */}
       <Card className='md:mt-2.5 lg:mt-0'>
         <CardHeader>
-          <CardTitle className='flex justify-start items-center'>
+          <CardTitle className='flex justify-start items-center gap-1.5'>
             Position
+            {
+              position !== undefined
+              && <button
+                aria-label='Navigate to position'
+                onClick={() => navigate(NavService.position(position.id))}
+              >
+                <ExternalLink aria-hidden='true' className='h-5 w-5'/>
+              </button>
+            }
             {
                 isSubmitting
                 && <Loader2
-                  className='ml-2 h-5 w-5 animate-spin'
+                  className='h-5 w-5 animate-spin'
                 />
               }
             <span className='flex-1'></span>
@@ -233,15 +242,6 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuLabel>Active</DropdownMenuLabel>
-                <DropdownMenuItem
-                  onClick={() => navigate(NavService.position(position!.id))}
-                  disabled={position === undefined || authority < 2}
-                >
-                  <Link
-                      aria-hidden='true'
-                      className='mr-1 h-5 w-5'
-                    /> Navigate
-                </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => openPositionDialog(position!.id)}
                   disabled={position === undefined || authority < 2}
