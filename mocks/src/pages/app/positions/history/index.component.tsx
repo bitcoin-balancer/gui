@@ -1,6 +1,5 @@
 import { memo, useMemo, Fragment } from 'react';
 import { Menu } from 'lucide-react';
-import { UTCTimestamp } from 'lightweight-charts';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import {
@@ -9,26 +8,18 @@ import {
   CardHeader,
   CardTitle,
 } from '@/shared/shadcn/components/ui/card.tsx';
-import { toLocalTime } from '@/shared/services/transformers/index.service.ts';
-import { sortRecords } from '@/shared/services/utils/index.service.ts';
 import {
   CandlestickService,
   IEventHistoryRecord,
 } from '@/shared/backend/candlestick/index.service.ts';
-import {
-  PositionService,
-  IPositionAction,
-  IDecreaseActions,
-} from '@/shared/backend/position/index.service.ts';
-import { ColorService } from '@/shared/services/color/index.service.ts';
+import { PositionService } from '@/shared/backend/position/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
 import NoRecords from '@/shared/components/no-records/index.component.tsx';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
-import CandlestickChart, {
-  IMarker,
-} from '@/shared/components/charts/shared/types.ts';
+import CandlestickChart from '@/shared/components/charts/candlestick-chart/index.component.tsx';
+import { buildPositionMarkers } from '@/pages/app/positions/position/history/utils.ts';
 import { IPositionComponentProps } from '@/pages/app/positions/position/types.ts';
 
 /* ************************************************************************************************
@@ -37,7 +28,6 @@ import { IPositionComponentProps } from '@/pages/app/positions/position/types.ts
 
 // the list of charts that show the history of a position
 const CHART_NAMES = ['Price', 'Gain', 'Entry price', 'Amount'];
-
 
 const MOCK_DATA = {
   id: [
@@ -89,61 +79,6 @@ const MOCK_DATA = {
 
 
 
-
-/* ************************************************************************************************
- *                                            HELPERS                                             *
- ************************************************************************************************ */
-
-/**
- * Builds a marker object based on an action.
- * @param action
- * @param isIncrease
- * @returns IMarker
- */
-const buildMarker = (action: IPositionAction, isIncrease: boolean): IMarker => ({
-  time: toLocalTime(action.eventTime) as UTCTimestamp,
-  position: isIncrease ? 'belowBar' : 'aboveBar',
-  color: isIncrease ? ColorService.INCREASE_1 : ColorService.DECREASE_1,
-  shape: isIncrease ? 'arrowUp' : 'arrowDown',
-  text: isIncrease ? 'Increase' : 'Decrease',
-});
-
-/**
- * Builds the markers for the increase actions
- * @param actions
- * @returns IMarker[]
- */
-const buildIncreaseMarkers = (actions: IPositionAction[]): IMarker[] => actions.map(
-  (action) => buildMarker(action, true),
-);
-
-/**
- * Builds the markers for the decrease actions.
- * @param decreaseActions
- * @returns IMarker[]
- */
-const buildDecreaseMarkers = (actions: IDecreaseActions): IMarker[] => actions.flat().map(
-  (action) => buildMarker(action, false),
-);
-
-/**
- * Builds the markers for all the actions that have taken place.
- * @param increaseActions
- * @param decreaseActions
- * @returns IMarker[]
- */
-const buildPositionMarkers = (
-  increaseActions: IPositionAction[],
-  decreaseActions: IDecreaseActions,
-): IMarker[] => [
-  ...buildIncreaseMarkers(increaseActions),
-  ...buildDecreaseMarkers(decreaseActions),
-].sort(sortRecords('time', 'asc'));
-
-
-
-
-
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
@@ -171,24 +106,25 @@ const History = memo(({ position, setSidenavOpen }: IPositionComponentProps) => 
    ********************************************************************************************** */
 
   // the list of compact candlestick records
-  // const records = useMemo(() => CandlestickService.splitRecords(data?.records), [data]);
   const records = useMemo(() => CandlestickService.splitRecords(MOCK_DATA), []);
 
   // the list of markers that will be inserted into the price chart
   const markers = useMemo(
-    () => buildPositionMarkers(
-      [
-        { txID: 1, eventTime: 1727656817759, nextEventTime: 1727916017759 },
-        { txID: 2, eventTime: 1727944838676, nextEventTime: 1728204038676 },
-      ],
-      position.decrease_actions,
+    () => (
+      data === undefined
+        ? []
+        : buildPositionMarkers(
+          data.records.id,
+          [
+            { txID: 1, eventTime: 1727656817759, nextEventTime: 1727916017759 },
+            { txID: 2, eventTime: 1727944838676, nextEventTime: 1728204038676 },
+          ],
+          position.decrease_actions,
+        )
     ),
-    [position],
+    [data, position],
   );
-  /* const markers = useMemo(
-    () => buildPositionMarkers(position.increase_actions, position.decrease_actions),
-    [position],
-  ); */
+
 
 
 

@@ -56,10 +56,13 @@ const __buildActionMarkers = (
   // init values
   const markers: Record<string, number> = {};
 
-  // iterate over each action and find the candlestick bar it belongs to
+  // iterate over each action and find the candlestick bar it belongs to. Leep in mind the first
+  // action happens before the first candlestick bar comes into existance
   actions.forEach((action) => {
     openTimes.forEach((time, i) => {
-      if (i === openTimes.length - 1) {
+      if (action.eventTime < time && i === 0) {
+        markers[time] = typeof markers[time] === 'number' ? markers[time] + 1 : 1;
+      } else if (i === openTimes.length - 1) {
         if (action.eventTime >= time) {
           markers[time] = typeof markers[time] === 'number' ? markers[time] + 1 : 1;
         }
