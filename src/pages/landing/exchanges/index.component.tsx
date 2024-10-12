@@ -37,7 +37,7 @@ const Exchanges = memo(() => (
       <header className='text-center'>
         <h2
           className='text-center text-4xl sm:text-5xl font-bold'
-        >Multi-exchange</h2>
+        >Exchange-agnostic</h2>
         <p className='text-xs sm:text-sm mt-2 text-slate-200'>
           Operate with your preferred platform
         </p>
