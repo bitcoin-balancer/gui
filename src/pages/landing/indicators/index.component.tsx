@@ -52,7 +52,7 @@ const Indicator = ({
   openDialog,
 }: IIndicatorProps) => (
   <Card
-    className='border-solid shadow-sm'
+    className='border-solid shadow-sm w-10/12 sm:w-full'
   >
     <CardContent
       className='text-center flex flex-col items-center p-6 md:p-6'
@@ -98,7 +98,7 @@ const Indicators = memo(({ openLargeInfoDialog }: IIndicatorsProps) => (
       </header>
 
       <div
-        className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8 mt-10'
+        className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8 mt-10 justify-items-center'
       >
         <Indicator
           title='Window'
