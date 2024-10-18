@@ -255,7 +255,7 @@ const TransactionDialog = memo(({ data }: { data: number | ITransaction }) => {
               }
             </div>
           ))}
-          </div>
+        </div>
       </article>
     );
   }
