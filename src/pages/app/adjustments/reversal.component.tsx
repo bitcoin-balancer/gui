@@ -252,7 +252,7 @@ const Reversal = ({ closeDialog }: IFormProps) => {
                       <FormControl>
                         <Input
                           type='number'
-                          placeholder='80'
+                          placeholder='77'
                           {...field}
                           autoComplete='off'
                           disabled={isSubmitting}
