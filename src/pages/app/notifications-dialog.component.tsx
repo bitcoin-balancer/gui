@@ -47,7 +47,7 @@ const NotificationsDialog = ({
   const unreadRef = useRef<number>(unreadCount);
 
 
-  const mess = '[{"errno":-110,"code":"ETIMEDOUT","syscall":"connect","address":"13.113.162.169","port":9443},{"errno":-110,"code":"ETIMEDOUT","syscall":"connect","address":"54.168.99.205","port":9443},{"errno":-110,"code":"ETIMEDOUT","syscall":"connect","address":"18.182.181.28","port":9443},{"errno":-110,"code":"ETIMEDOUT","syscall":"connect","address":"18.182.222.107","port":9443},{"errno":-110,"code":"ETIMEDOUT","syscall":"connect","address":"13.230.0.124","port":9443},{"errno":-110,"code":"ETIMEDOUT","syscall":"connect","address":"54.65.128.227","port":9443},{"errno":-110,"code":"ETIMEDOUT","syscall":"connect","address":"13.113.69.157","port":9443},{"errno":-110,"code":"ETIMEDOUT","syscall":"connect","address":"35.77.161.185","port":9443}] - If the data stream is not restored in a few minutes, consider restarting Balancer in order to try again.';
+
 
 
   /* **********************************************************************************************
