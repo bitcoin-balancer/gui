@@ -1,5 +1,13 @@
-import { memo, useMemo, Fragment } from 'react';
-import { Menu } from 'lucide-react';
+import {
+  memo,
+  useRef,
+  useMemo,
+  Fragment,
+  useEffect,
+  useState,
+  useCallback,
+} from 'react';
+import { Expand, Menu } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import {
@@ -8,6 +16,15 @@ import {
   CardHeader,
   CardTitle,
 } from '@/shared/shadcn/components/ui/card.tsx';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/shared/shadcn/components/ui/dialog.tsx';
+import { formatDollarAmount } from '@/shared/services/transformers/index.service.ts';
 import {
   CandlestickService,
   IEventHistoryRecord,
@@ -43,12 +60,22 @@ const CHART_NAMES = ['Price', 'Gain', 'Entry price', 'Amount'];
  */
 const History = memo(({ position, setSidenavOpen }: IPositionComponentProps) => {
   /* **********************************************************************************************
+   *                                             REFS                                             *
+   ********************************************************************************************** */
+  const chartContainerRef = useRef<HTMLDivElement | null>(null);
+
+
+
+
+
+  /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
   const { data, loading, error } = useAPIFetch<IEventHistoryRecord>(useMemo(
     () => ({ fetchFunc: { func: PositionService.getPositionHistory, args: [position.id] } }),
     [position.id],
   ));
+  const [chartHeight, setChartHeight] = useState<number>();
   const breakpoint = useMediaQueryBreakpoint();
 
 
@@ -75,6 +102,26 @@ const History = memo(({ position, setSidenavOpen }: IPositionComponentProps) => 
     ),
     [data, position],
   );
+
+  // the price formatter that will be used on the chart
+  const priceFormatter = useCallback((value: number) => formatDollarAmount(value, 0), []);
+
+
+
+
+
+  /* **********************************************************************************************
+   *                                         SIDE EFFECTS                                         *
+   ********************************************************************************************** */
+
+  /**
+   * Calculates the height of the chart based on the size of the card.
+   */
+  useEffect(() => {
+    if (chartContainerRef.current) {
+      setChartHeight(chartContainerRef.current.clientHeight);
+    }
+  }, []);
 
 
 
@@ -131,14 +178,53 @@ const History = memo(({ position, setSidenavOpen }: IPositionComponentProps) => 
                 {records.map((record, i) => (
                   <Fragment key={i}>
                     <Card>
-                      <CardHeader>
+                      <CardHeader
+                        className='flex-row justify-between items-center'
+                      >
                         <CardTitle>{CHART_NAMES[i]}</CardTitle>
+
+                        {
+                          (i === 0 && breakpoint !== 'xs' && breakpoint !== 'sm') && <Dialog>
+                            <DialogTrigger
+                              className='w-5 h-5'
+                              aria-label='Expand chart'
+                            >
+                              <Expand />
+                            </DialogTrigger>
+                            <DialogContent
+                              className='flex-col h-[85dvh] min-w-[85dvw]'
+                            >
+                              <DialogHeader className='bg-sky-100'>
+                                <DialogTitle>Price</DialogTitle>
+                                <DialogDescription>
+                                  Position actions
+                                </DialogDescription>
+                              </DialogHeader>
+
+                              <div
+                                ref={chartContainerRef}
+                                className='h-[70dvh] bg-sky-100'
+                              >
+                                {
+                                  chartHeight !== undefined
+                                  && <CandlestickChart
+                                    height={chartHeight}
+                                    data={record}
+                                    markers={markers}
+                                    priceFormatterFunc={priceFormatter}
+                                  />
+                                }
+                              </div>
+                            </DialogContent>
+                          </Dialog>
+                        }
                       </CardHeader>
                       <CardContent>
                         <CandlestickChart
                           height={breakpoint === 'xs' || breakpoint === 'sm' ? 350 : 375}
                           data={record}
                           markers={i === 0 ? markers : undefined}
+                          priceFormatterFunc={i === 0 ? priceFormatter : undefined}
                         />
                       </CardContent>
                     </Card>
