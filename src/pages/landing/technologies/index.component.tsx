@@ -65,7 +65,7 @@ const Technologies = memo(() => (
         {
           ITEMS.map((item) => (
             <img key={item}
-              src={`technologies/${item}.png`}
+              src={`landing-page/technologies/${item}.png`}
               alt={`${item} logo`}
               className='w-10 h-10'
               width='40'
