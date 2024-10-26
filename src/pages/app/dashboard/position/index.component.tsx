@@ -132,8 +132,8 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
     ),
     [position],
   );
-  const amount = useMemo(
-    () => (position === undefined ? '₿0 ' : formatBitcoinAmount(position.amount)),
+  const amountQuote = useMemo(
+    () => (position === undefined ? '$0 ' : formatDollarAmount(position.amount_quote, 0)),
     [position],
   );
   const decreased = useMemo(
@@ -334,9 +334,10 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
             * AMOUNT *
             ******** */}
           <div>
-            <p>{amount}</p>
+            <p>{position === undefined ? '' : '~'}{amountQuote}</p>
             <p className='text-light text-xs'>AMOUNT</p>
           </div>
+
 
           {/* ***********
             * DECREASED *
