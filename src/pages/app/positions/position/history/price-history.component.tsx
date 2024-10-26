@@ -1,4 +1,9 @@
-import { memo, useEffect, useRef, useState } from 'react';
+import {
+  memo,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { Expand } from 'lucide-react';
 import {
   Dialog,
@@ -36,11 +41,15 @@ const PriceHistory = memo(({
 
 
 
+
+
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [chartHeight, setChartHeight] = useState<number>();
+
+
 
 
 
@@ -52,15 +61,25 @@ const PriceHistory = memo(({
    * Calculates the height of the chart based on the size of the card.
    */
   useEffect(() => {
-    console.log('here');
-    console.log(isOpen, chartContainerRef.current);
-    if (isOpen && chartContainerRef.current) {
-      console.log(chartContainerRef.current.clientHeight);
-      setChartHeight(chartContainerRef.current.clientHeight);
+    let chartTimeout: NodeJS.Timeout | undefined;
+    if (isOpen) {
+      chartTimeout = setTimeout(() => {
+        if (isOpen && chartContainerRef.current) {
+          setChartHeight(chartContainerRef.current.clientHeight);
+        }
+      });
     }
+    return () => {
+      clearTimeout(chartTimeout);
+    };
   }, [isOpen]);
 
 
+
+
+  /* **********************************************************************************************
+   *                                           COMPONENT                                          *
+   ********************************************************************************************** */
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger
@@ -70,7 +89,7 @@ const PriceHistory = memo(({
         <Expand />
       </DialogTrigger>
       <DialogContent
-        className='min-h-[90%] min-w-[90%]'
+        className='min-w-[90%]'
       >
         <DialogHeader>
           <DialogTitle>Price</DialogTitle>
@@ -81,7 +100,7 @@ const PriceHistory = memo(({
 
         <div
           ref={chartContainerRef}
-          className='bg-slate-200'
+          className='min-h-[75dvh]'
         >
           {
             chartHeight !== undefined
