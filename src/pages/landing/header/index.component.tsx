@@ -63,7 +63,7 @@ const Header = memo(({
    */
   const navigateFromMenu = (section: ISectionID): void => {
     setSidenavOpen(false);
-    navigateToSection(section);
+    setTimeout(() => { navigateToSection(section); }, 500);
   };
 
 

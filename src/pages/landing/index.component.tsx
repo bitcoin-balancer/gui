@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import {
@@ -56,13 +56,7 @@ const Landing = () => {
    * @param id
    */
   const navigateToSection = useCallback(
-    (id: ISectionID): void => {
-      document.querySelector(`#${id}`)?.scrollIntoView();
-      /* const el = document.querySelector(`#${id}`) as HTMLDivElement;
-      if (el) {
-        window.scroll({ top: el.offsetTop });
-      } */
-    },
+    (id: ISectionID): void => document.querySelector(`#${id}`)?.scrollIntoView(),
     [],
   );
 
