@@ -1,17 +1,11 @@
 import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '@/shared/shadcn/components/ui/dialog.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
 import ScrollToTop from '@/shared/components/scroll-to-top/index.component.tsx';
 import LargeInfoDialog from '@/shared/components/large-info-dialog/index.component.tsx';
+import ContactDialog from '@/pages/landing/contact-dialog/index.component';
 import Header from '@/pages/landing/header/index.component.tsx';
 import Hero from '@/pages/landing/hero/index.component.tsx';
 import PositionSample from '@/pages/landing/position-sample/index.component.tsx';
@@ -246,21 +240,10 @@ const Landing = () => {
       {/* ****************
         * CONTACT DIALOG *
         **************** */}
-      <Dialog open={isContactDialogOpen} onOpenChange={setIsContactDialogOpen}>
-        <DialogContent
-          className='sm:max-w-[375px]'
-        >
-          <DialogHeader>
-            <DialogTitle>Contact</DialogTitle>
-            <DialogDescription>
-            Having issues running the platform? Open a GitHub issue. For other inquiries, email
-             me at:
-            </DialogDescription>
-          </DialogHeader>
-
-          <p className='text-center'>jesusgraterol.dev@protonmail.com</p>
-        </DialogContent>
-      </Dialog>
+      <ContactDialog
+        isOpen={isContactDialogOpen}
+        setIsOpen={setIsContactDialogOpen}
+      />
 
 
 
