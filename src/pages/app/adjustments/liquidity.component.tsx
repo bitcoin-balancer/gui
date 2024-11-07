@@ -266,7 +266,7 @@ const Liquidity = ({ closeDialog }: IFormProps) => {
                 <div
                   className='flex justify-start items-center'
                 >
-                  <h3 className='text-md font-semibold'>Intensity weights</h3>
+                  <legend className='text-md font-semibold'>Weights</legend>
 
                   <span className='flex-1'></span>
 

@@ -2,7 +2,7 @@
   "name": "gui",
   "description": "The Balancer GUI is a powerful, user-friendly Progressive Web Application designed to streamline the configuration and management of the Balancer API.",
   "private": false,
-  "version": "1.0.4",
+  "version": "1.0.5",
   "type": "module",
   "scripts": {
     "dev": "gui-environment --development && vite && sw-builder",
