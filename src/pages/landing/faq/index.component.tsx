@@ -223,7 +223,7 @@ const FrequentlyAskedQuestions = memo(() => (
           className='text-center text-4xl sm:text-5xl font-bold'
         >FAQ</h2>
         <p className='text-xs sm:text-sm mt-2 text-light'>
-          Commonly asked questions
+          Answers to common questions
         </p>
       </header>
 
@@ -246,7 +246,7 @@ const FrequentlyAskedQuestions = memo(() => (
           <DialogHeader>
             <DialogTitle>FAQ</DialogTitle>
             <DialogDescription>
-              Commonly asked questions
+              Answers to common questions
             </DialogDescription>
           </DialogHeader>
           <Accordion type='single' collapsible>
