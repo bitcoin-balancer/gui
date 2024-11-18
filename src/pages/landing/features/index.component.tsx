@@ -32,7 +32,7 @@ const Features = memo(({ breakpoint, openLargeInfoDialog, navigateToSection }: I
         className='w-full flex flex-col md:flex-row justify-center items-center gap-8'
       >
         <aside
-          className='w-full flex-1 text-center md:text-left p-3'
+          className='w-full flex-1 text-center md:text-left p-3 z-10'
         >
           <h2
             className='text-4xl sm:text-5xl font-bold'
@@ -51,7 +51,7 @@ const Features = memo(({ breakpoint, openLargeInfoDialog, navigateToSection }: I
         </aside>
 
         <article
-          className='w-full flex-1'
+          className='w-full flex-1 -mt-20 sm:mt-0'
         >
           <CandlestickChart
             height={breakpoint === 'xs' || breakpoint === 'sm' ? 400 : 500}
@@ -75,10 +75,10 @@ const Features = memo(({ breakpoint, openLargeInfoDialog, navigateToSection }: I
         * DECREASE *
         ********** */}
       <div
-        className='w-full flex flex-col-reverse md:flex-row justify-center items-center md:gap-10 mt-14 md:mt-0'
+        className='w-full flex flex-col-reverse md:flex-row justify-center items-center md:gap-10 mt-8 sm:mt-14 md:mt-0'
       >
         <article
-          className='w-full flex-1'
+          className='w-full flex-1 -mt-16 sm:mt-0'
         >
           <CandlestickChart
             height={breakpoint === 'xs' || breakpoint === 'sm' ? 400 : 500}
@@ -97,7 +97,7 @@ const Features = memo(({ breakpoint, openLargeInfoDialog, navigateToSection }: I
 
 
         <aside
-          className='w-full flex-1 text-center md:text-left p-3'
+          className='w-full flex-1 text-center md:text-left p-3 z-10'
         >
           <h2
             className='text-4xl sm:text-5xl font-bold'
