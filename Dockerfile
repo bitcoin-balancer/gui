@@ -5,7 +5,7 @@
 ###################################################################################################
 
 # extend the official Node.js Alpine image
-FROM node:22.3.0-alpine AS build
+FROM node:22.11.0-alpine AS build
 
 # Create app directory
 WORKDIR /usr/src/app
