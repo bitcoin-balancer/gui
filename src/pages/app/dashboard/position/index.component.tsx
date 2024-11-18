@@ -137,7 +137,7 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
     [position],
   );
   const decreased = useMemo(
-    () => (position === undefined ? '$0 ' : formatDollarAmount(position.amount_quote_out)),
+    () => (position === undefined ? '$0 ' : formatDollarAmount(position.amount_quote_out, 0)),
     [position],
   );
   const decreaseMenu = useMemo(
