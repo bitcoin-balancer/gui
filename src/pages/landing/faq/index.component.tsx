@@ -26,9 +26,9 @@ const FAQ_ITEMS = [
     content: (
       <p>
         Balancer is a self-hosted platform that automates a proven trading strategy known as
-         "Value Averaging" to help you build your Bitcoin portfolio over the long term. It utilizes
-          a set of indicators and algorithms to adjust your Bitcoin holdings based on market
-           conditions, while allowing you to keep your Bitcoin secure in cold storage wallets.
+         "Value Averaging" to help generate passive income by taking advantage of price
+          fluctuations. It utilizes a set of indicators and algorithms to adjust your
+           Bitcoin holdings based on market conditions.
       </p>
     ),
   },
