@@ -54,6 +54,7 @@ const buildChartOptions = (
   layout: {
     textColor: 'black',
     attributionLogo: showAttributionLogo,
+    fontFamily: 'Ubuntu',
   },
   width: chartContainerEl.clientWidth,
   height,
