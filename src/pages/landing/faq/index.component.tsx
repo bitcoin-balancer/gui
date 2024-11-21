@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import {
   Accordion,
   AccordionContent,
@@ -6,18 +6,13 @@ import {
   AccordionTrigger,
 } from '@/shared/shadcn/components/ui/accordion.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/shared/shadcn/components/ui/dialog.tsx';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
  ************************************************************************************************ */
+
+// the number of faq items that will be displayed to start with
+const INITIAL_RECORDS = 5;
 
 // the list of commonly asked questions
 const FAQ_ITEMS = [
@@ -211,59 +206,68 @@ const FAQ_ITEMS = [
  * Frequently Asked Questions
  * Component in charge of displaying the most common questions asked by users.
  */
-const FrequentlyAskedQuestions = memo(() => (
-  <div
-    className='w-full flex justify-center items-start'
-  >
-    <section
-      className='w-full sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-5/12 2xl:w-4/12 p-3'
+const FrequentlyAskedQuestions = memo(() => {
+  /* **********************************************************************************************
+   *                                             STATE                                            *
+   ********************************************************************************************** */
+  const [visibleRecords, setVisibleRecords] = useState<number>(INITIAL_RECORDS);
+
+
+
+
+
+  /* **********************************************************************************************
+   *                                           COMPONENT                                          *
+   ********************************************************************************************** */
+  return (
+    <div
+      className='w-full flex justify-center items-start'
     >
-      <header className='text-center'>
-        <h2
-          className='text-center text-4xl sm:text-5xl font-bold'
-        >FAQ</h2>
-        <p className='text-xs sm:text-sm mt-2 text-light'>
-          Answers to common questions
-        </p>
-      </header>
+      <section
+        className='w-full sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-5/12 2xl:w-4/12 p-3'
+      >
+        <header className='text-center'>
+          <h2
+            className='text-center text-4xl sm:text-5xl font-bold'
+          >FAQ</h2>
+          <p className='text-xs sm:text-sm mt-2 text-light'>
+            Answers to common questions
+          </p>
+        </header>
 
-      <Accordion type='single' collapsible className='w-full mt-2'>
+        <Accordion type='single' collapsible className='w-full mt-2'>
+          {
+            FAQ_ITEMS.slice(0, visibleRecords).map((item, i) => (
+              <AccordionItem
+                key={i}
+                value={`item-${i}`}
+                className='animate-in fade-in'
+              >
+                <AccordionTrigger>
+                  <p className='text-left'>{item.title}</p>
+                </AccordionTrigger>
+                <AccordionContent>
+                  {item.content}
+                </AccordionContent>
+              </AccordionItem>
+            ))
+          }
+        </Accordion>
+
         {
-          FAQ_ITEMS.slice(0, 5).map((item, i) => (
-            <AccordionItem key={i} value={`item-${i}`}>
-              <AccordionTrigger><p className='text-left'>{item.title}</p></AccordionTrigger>
-              <AccordionContent>{item.content}</AccordionContent>
-            </AccordionItem>
-          ))
+          visibleRecords === INITIAL_RECORDS
+          && (
+            <Button
+              variant='ghost'
+              className='w-full mt-2'
+              onClick={() => setVisibleRecords(100)}
+            >View all</Button>
+          )
         }
-      </Accordion>
-
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button variant='ghost' className='w-full mt-2'>View all</Button>
-        </DialogTrigger>
-        <DialogContent className='sm:max-w-[500px]'>
-          <DialogHeader>
-            <DialogTitle>FAQ</DialogTitle>
-            <DialogDescription>
-              Answers to common questions
-            </DialogDescription>
-          </DialogHeader>
-          <Accordion type='single' collapsible>
-            {
-              FAQ_ITEMS.map((item, i) => (
-                <AccordionItem key={i} value={`item-${i}`}>
-                  <AccordionTrigger><p className='text-left'>{item.title}</p></AccordionTrigger>
-                  <AccordionContent>{item.content}</AccordionContent>
-                </AccordionItem>
-              ))
-            }
-          </Accordion>
-        </DialogContent>
-      </Dialog>
-    </section>
-  </div>
-));
+      </section>
+    </div>
+  );
+});
 
 
 
