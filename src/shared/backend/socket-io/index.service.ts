@@ -27,7 +27,7 @@ const socketIOServiceFactory = (): ISocketIOService => {
    ********************************************************************************************** */
 
   // if enabled, it will print events to the console
-  const __DEBUG: boolean = true;
+  const __DEBUG: boolean = false;
 
   // the URL of the Balancer API
   const __API_URL = buildAPIURL('');
