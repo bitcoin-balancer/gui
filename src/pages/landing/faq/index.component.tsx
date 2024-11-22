@@ -43,9 +43,8 @@ const FAQ_ITEMS = [
     title: 'What is Value Averaging?',
     content: (
       <p>
-        Value averaging is a long-term investment strategy that involves buying a fixed dollar
-         amount of an asset at regular intervals. This strategy helps you average down your purchase
-          price and reduce the impact of market volatility.
+        Value averaging is a systematic trading strategy. It involves buying Bitcoin when prices
+         fall but indicators suggest a likely price reversal, and selling when prices rise sharply.
       </p>
     ),
   },
@@ -65,8 +64,9 @@ const FAQ_ITEMS = [
           </li>
           <li>
             <p>
-              <strong>* Secure Asset Storage:</strong> it enables you to store your Bitcoin in
-               secure cold storage wallets, keeping your funds safe and under your control.
+              <strong>* Secure Asset Storage:</strong> Balancer significantly reduces your exchange
+               risk by enabling you to store most of your Bitcoin/USD in your cold storage wallet,
+                only keeping the minimum required on the exchange for trading.
             </p>
           </li>
           <li>
