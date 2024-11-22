@@ -11,11 +11,12 @@ import { Link } from 'lucide-react';
 const ValueAveraging = () => (
   <>
     <p>
-      The main goal of value averaging (VA) is to acquire more shares when prices are falling and
-       fewer shares when prices are rising. This is what happens in dollar-cost averaging as well,
-        but the effect is less pronounced. Several independent studies have shown that over
-         multiyear periods, value averaging can produce slightly superior returns to dollar-cost
-          averaging, although both will closely resemble market returns over the same period.
+      Value Averaging is a counter-cyclical trading strategy that takes advantage of market swings
+       by buying during price dips and selling during price rallies. This is what happens in
+        dollar-cost averaging as well, but the effect is less pronounced. Several independent
+         studies have shown that over multiyear periods, value averaging can produce slightly
+          superior returns to dollar-cost averaging, although both will closely resemble market
+           returns over the same period.
     </p>
     <p>
       In dollar-cost averaging (<a href='https://www.investopedia.com/terms/d/dollarcostaveraging.asp' target='_blank' rel='noopener noreferrer'>DCA</a>), investors always make the same periodic investment. The only

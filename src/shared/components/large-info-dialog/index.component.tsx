@@ -23,8 +23,8 @@ import { ISectionID, ISections } from '@/shared/components/large-info-dialog/typ
 // the list of supported sections
 const SECTIONS: ISections = {
   value_averaging: {
-    title: 'Value averaging',
-    description: 'Investment strategy that involves making regular contributions to a portfolio over time',
+    title: 'Value Averaging',
+    description: 'Trading strategy used by Balancer',
   },
   window: {
     title: 'Window',
