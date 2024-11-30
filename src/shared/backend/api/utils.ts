@@ -59,7 +59,10 @@ const __BASE_URL = __buildAPIBaseURL();
  * @param error
  * @returns boolean
  */
-const needsNewSession = (error: unknown): boolean => decodeError(error).code === 4252;
+const needsNewSession = (error: unknown): boolean => {
+  const { code } = decodeError(error);
+  return code === 4252 || code === 4750;
+};
 
 /**
  * Builds the URL that will be used to interact with an API's Resource.
