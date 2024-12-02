@@ -31,7 +31,7 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/shadcn/components/ui/tooltip.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
-import { numberValid } from '@/shared/backend/validations/index.service.ts';
+import { integerValid, numberValid } from '@/shared/backend/validations/index.service.ts';
 import {
   StrategyService,
   IDecreaseLevelID,
@@ -658,7 +658,7 @@ const Strategy = ({ closeDialog }: IFormProps) => {
                       )}
                       rules={{
                         validate: {
-                          required: (value) => (numberValid(Number(value), 1, MAX_FREQUENCY) ? true : `Enter a number ranging 1 - ${MAX_FREQUENCY}`),
+                          required: (value) => (integerValid(Number(value), 3, MAX_FREQUENCY) ? true : `Enter an integer ranging 3 - ${MAX_FREQUENCY}`),
                         },
                       }}
                     />
