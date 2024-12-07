@@ -1,6 +1,6 @@
 import { useRef, useLayoutEffect, useEffect } from 'react';
 import { createChart, IChartApi } from 'lightweight-charts';
-import { arrayValid } from '@/shared/backend/validations/index.service.ts';
+import { isArrayValid } from 'web-utils-kit';
 import { toLocalTime } from '@/shared/components/charts/shared/utils.ts';
 import {
   toBars,
@@ -78,7 +78,7 @@ const CandlestickChart = ({
           wickDownColor: downColor,
           priceLineVisible: !hidePriceLine,
         });
-        if (arrayValid(markers)) {
+        if (isArrayValid(markers)) {
           this.__series.setMarkers(markers);
         }
       }

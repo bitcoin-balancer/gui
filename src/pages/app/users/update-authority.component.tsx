@@ -22,7 +22,7 @@ import {
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
-import { authorityValid } from '@/shared/backend/validations/index.service.ts';
+import { isAuthorityValid } from '@/shared/backend/validations/index.service.ts';
 import { IAuthority, UserService } from '@/shared/backend/auth/user/index.service.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import { IUpdateAuthorityProps, IUpdateAuthorityInputs, IAction } from '@/pages/app/users/types.ts';
@@ -146,7 +146,7 @@ const UpdateAuthority = ({
                 )}
                 rules={{
                   validate: {
-                    required: (value) => (authorityValid(Number(value), 4) ? true : 'Enter a valid authority (1 - 4)'),
+                    required: (value) => (isAuthorityValid(Number(value), 4) ? true : 'Enter a valid authority (1 - 4)'),
                   },
                 }}
               />

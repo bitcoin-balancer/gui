@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Loader2 } from 'lucide-react';
+import { isSlugValid, isPasswordValid } from 'web-utils-kit';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Input } from '@/shared/shadcn/components/ui/input.tsx';
 import {
@@ -14,11 +15,7 @@ import {
 } from '@/shared/shadcn/components/ui/form.tsx';
 import { Toaster } from '@/shared/shadcn/components/ui/toaster.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
-import {
-  altchaPayloadValid,
-  nicknameValid,
-  passwordValid,
-} from '@/shared/backend/validations/index.service.ts';
+import { isAltchaPayloadValid } from '@/shared/backend/validations/index.service.ts';
 import { NavService } from '@/shared/services/nav/index.service.ts';
 import { Altcha } from '@/shared/components/altcha/index.component.tsx';
 import { JWTService } from '@/shared/backend/auth/jwt/index.service.ts';
@@ -61,7 +58,7 @@ const SignIn = () => {
    */
   const onSubmit = (data: IFormInputs): void => {
     // ensure the altcha payload was provided
-    if (!altchaPayloadValid(altcha)) {
+    if (!isAltchaPayloadValid(altcha)) {
       setAltcha(null);
       return;
     }
@@ -189,7 +186,7 @@ const SignIn = () => {
                 )}
                 rules={{
                   validate: {
-                    required: (value) => (nicknameValid(value) ? true : 'Enter a valid nickname'),
+                    required: (value) => (isSlugValid(value) ? true : 'Enter a valid nickname'),
                   },
                 }}
               />
@@ -214,7 +211,7 @@ const SignIn = () => {
                 )}
                 rules={{
                   validate: {
-                    required: (value) => (passwordValid(value) ? true : 'Enter a valid password'),
+                    required: (value) => (isPasswordValid(value) ? true : 'Enter a valid password'),
                   },
                 }}
               />

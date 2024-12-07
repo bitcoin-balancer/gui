@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Loader2 } from 'lucide-react';
 import { decodeError } from 'error-message-utils';
+import { isStringValid, isNumberValid, isIntegerValid } from 'web-utils-kit';
 import { Input } from '@/shared/shadcn/components/ui/input.tsx';
 import { Textarea } from '@/shared/shadcn/components/ui/textarea.tsx';
 import {
@@ -28,12 +29,7 @@ import {
 } from '@/shared/shadcn/components/ui/tabs.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
-import {
-  integerValid,
-  numberValid,
-  stringValid,
-  symbolValid,
-} from '@/shared/backend/validations/index.service.ts';
+import { isSymbolValid } from '@/shared/backend/validations/index.service.ts';
 import {
   CoinsService,
   ICoinsConfig,
@@ -58,9 +54,9 @@ import { IFormProps } from '@/pages/app/adjustments/types.ts';
  * @returns boolean
  */
 const isWhitelistValid = (whitelist: string, baseAsset: string): boolean => {
-  if (stringValid(whitelist, 3)) {
+  if (isStringValid(whitelist, 3)) {
     const symbols = whitelist.split(',');
-    return symbols.includes(baseAsset) && symbols.every(symbolValid);
+    return symbols.includes(baseAsset) && symbols.every(isSymbolValid);
   }
   return false;
 };
@@ -245,7 +241,7 @@ const Coins = ({ closeDialog }: IFormProps) => {
                   )}
                   rules={{
                     validate: {
-                      required: (value) => (numberValid(Number(value), 128, 512) ? true : 'Enter a number ranging 128 - 512'),
+                      required: (value) => (isNumberValid(Number(value), 128, 512) ? true : 'Enter a number ranging 128 - 512'),
                     },
                   }}
                 />
@@ -276,7 +272,7 @@ const Coins = ({ closeDialog }: IFormProps) => {
                   )}
                   rules={{
                     validate: {
-                      required: (value) => (numberValid(Number(value), 5, 3600) ? true : 'Enter a number ranging 5 - 3600'),
+                      required: (value) => (isNumberValid(Number(value), 5, 3600) ? true : 'Enter a number ranging 5 - 3600'),
                     },
                   }}
                 />
@@ -321,7 +317,7 @@ const Coins = ({ closeDialog }: IFormProps) => {
                   )}
                   rules={{
                     validate: {
-                      required: (value) => (numberValid(Number(value), 0.01, 100) ? true : 'Enter a number ranging 0.01% - 100%'),
+                      required: (value) => (isNumberValid(Number(value), 0.01, 100) ? true : 'Enter a number ranging 0.01% - 100%'),
                     },
                   }}
                 />
@@ -357,7 +353,7 @@ const Coins = ({ closeDialog }: IFormProps) => {
                   )}
                   rules={{
                     validate: {
-                      required: (value) => (numberValid(Number(value), 0.01, 100) ? true : 'Enter a number ranging 0.01% - 100%'),
+                      required: (value) => (isNumberValid(Number(value), 0.01, 100) ? true : 'Enter a number ranging 0.01% - 100%'),
                     },
                   }}
                 />
@@ -397,7 +393,7 @@ const Coins = ({ closeDialog }: IFormProps) => {
                   )}
                   rules={{
                     validate: {
-                      required: (value) => (integerValid(Number(value), 1, 24) ? true : 'Enter a number ranging 1 - 24'),
+                      required: (value) => (isIntegerValid(Number(value), 1, 24) ? true : 'Enter a number ranging 1 - 24'),
                     },
                   }}
                 />

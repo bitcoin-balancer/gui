@@ -3,6 +3,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { CircleHelp, Loader2 } from 'lucide-react';
 import { decodeError } from 'error-message-utils';
+import { isNumberValid } from 'web-utils-kit';
 import { Input } from '@/shared/shadcn/components/ui/input.tsx';
 import {
   Form,
@@ -30,7 +31,6 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/shadcn/components/ui/tooltip.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
-import { numberValid } from '@/shared/backend/validations/index.service.ts';
 import { LiquidityService, ILiquidityConfig } from '@/shared/backend/market-state/liquidity/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
@@ -247,7 +247,7 @@ const Liquidity = ({ closeDialog }: IFormProps) => {
                   )}
                   rules={{
                     validate: {
-                      required: (value) => (numberValid(Number(value), 0.01, 100) ? true : 'Enter a number ranging 0.01 - 100'),
+                      required: (value) => (isNumberValid(Number(value), 0.01, 100) ? true : 'Enter a number ranging 0.01 - 100'),
                     },
                   }}
                 />
@@ -323,7 +323,7 @@ const Liquidity = ({ closeDialog }: IFormProps) => {
                     )}
                     rules={{
                       validate: {
-                        required: (value) => (numberValid(Number(value), 1, 100) ? true : 'Enter an integer ranging 1 - 100'),
+                        required: (value) => (isNumberValid(Number(value), 1, 100) ? true : 'Enter an integer ranging 1 - 100'),
                       },
                     }}
                   />

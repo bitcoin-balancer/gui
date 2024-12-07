@@ -1,4 +1,4 @@
-import { objectValid } from '@/shared/backend/validations/index.service.ts';
+import { isObjectValid } from 'web-utils-kit';
 import type { IAppEssentials } from '@/shared/backend/data-join/index.service.ts';
 
 /* ************************************************************************************************
@@ -25,7 +25,7 @@ const buildPristineState = (): Partial<IAppEssentials> => ({
  * @returns boolean
  */
 const isAppEssentialsObject = (payload: unknown): payload is IAppEssentials => (
-  objectValid(payload) && typeof payload.serverTime === 'number'
+  isObjectValid(payload) && typeof payload.serverTime === 'number'
 );
 
 

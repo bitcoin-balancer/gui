@@ -24,7 +24,7 @@ import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { formatDate } from '@/shared/services/transformers/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
-import { ipNotesValid, ipValid } from '@/shared/backend/validations/index.service.ts';
+import { isIPNotesValid, isIPValid } from '@/shared/backend/validations/index.service.ts';
 import { IPBlacklistService } from '@/shared/backend/ip-blacklist/index.service.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import { IRecordFormProps, IRecordFormInputs, IAction } from '@/pages/app/ip-blacklist/types.ts';
@@ -188,7 +188,7 @@ const RecordForm = ({ record, closeDialog }: IRecordFormProps) => {
                 )}
                 rules={{
                   validate: {
-                    required: (value) => (ipValid(value) ? true : 'Enter a valid IP address'),
+                    required: (value) => (isIPValid(value) ? true : 'Enter a valid IP address'),
                   },
                 }}
               />
@@ -213,7 +213,7 @@ const RecordForm = ({ record, closeDialog }: IRecordFormProps) => {
                 )}
                 rules={{
                   validate: {
-                    required: (value) => (value.length > 0 && !ipNotesValid(value) ? 'Enter a valid description of the event or clear the text area' : true),
+                    required: (value) => (value.length > 0 && !isIPNotesValid(value) ? 'Enter a valid description of the event or clear the text area' : true),
                   },
                 }}
               />

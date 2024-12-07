@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Loader2 } from 'lucide-react';
 import { decodeError } from 'error-message-utils';
+import { isSlugValid } from 'web-utils-kit';
 import { Input } from '@/shared/shadcn/components/ui/input.tsx';
 import {
   Form,
@@ -23,7 +24,7 @@ import {
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
-import { nicknameValid, authorityValid } from '@/shared/backend/validations/index.service.ts';
+import { isAuthorityValid } from '@/shared/backend/validations/index.service.ts';
 import { UserService, IAuthority } from '@/shared/backend/auth/user/index.service.ts';
 import { IAddUserProps, IAddUserInputs } from '@/pages/app/users/types.ts';
 
@@ -139,7 +140,7 @@ const AddUser = ({ children, dispatch }: IAddUserProps) => {
                 )}
                 rules={{
                   validate: {
-                    required: (value) => (nicknameValid(value) ? true : 'Enter a valid nickname'),
+                    required: (value) => (isSlugValid(value) ? true : 'Enter a valid nickname'),
                   },
                 }}
               />
@@ -166,7 +167,7 @@ const AddUser = ({ children, dispatch }: IAddUserProps) => {
                 )}
                 rules={{
                   validate: {
-                    required: (value) => (authorityValid(Number(value), 4) ? true : 'Enter a valid authority'),
+                    required: (value) => (isAuthorityValid(Number(value), 4) ? true : 'Enter a valid authority'),
                   },
                 }}
               />

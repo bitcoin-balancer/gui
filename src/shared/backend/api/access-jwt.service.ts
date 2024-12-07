@@ -1,5 +1,5 @@
+import { isJWTValid } from 'web-utils-kit';
 import { sendPOST } from 'fetch-request-browser';
-import { jwtValid } from '@/shared/backend/validations/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { buildAPIURL, needsNewSession } from '@/shared/backend/api/utils.ts';
 import { IAccessJWTService } from '@/shared/backend/api/types.ts';
@@ -87,7 +87,7 @@ const accessJWTServiceFactory = (): IAccessJWTService => {
     try {
       // if the passed Access JWT is null, means it needs to be extracted ASAP
       __current = newAccessJWT === null ? await __refreshAccessJWT() : newAccessJWT;
-      useBoundStore.setState({ authenticated: jwtValid(__current) });
+      useBoundStore.setState({ authenticated: isJWTValid(__current) });
 
       // start the interval if the user is actually logged in
       if (typeof __current === 'string') {

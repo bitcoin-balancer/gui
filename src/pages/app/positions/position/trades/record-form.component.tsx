@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { CalendarIcon, Loader2 } from 'lucide-react';
 import { decodeError } from 'error-message-utils';
+import { isStringValid, isNumberValid } from 'web-utils-kit';
 import { Input } from '@/shared/shadcn/components/ui/input.tsx';
 import { Textarea } from '@/shared/shadcn/components/ui/textarea.tsx';
 import {
@@ -34,7 +35,6 @@ import {
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { formatBitcoinAmount, formatDate } from '@/shared/services/transformers/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
-import { stringValid, numberValid } from '@/shared/backend/validations/index.service.ts';
 import { IManualTrade } from '@/shared/backend/position/trade/index.service.ts';
 import { PositionService } from '@/shared/backend/position/index.service.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
@@ -318,7 +318,7 @@ const RecordForm = ({ record, closeDialog }: IRecordFormProps) => {
                 )}
                 rules={{
                   validate: {
-                    required: (value) => (numberValid(Number(value), 0.01, Number.MAX_SAFE_INTEGER) ? true : 'Enter a valid price'),
+                    required: (value) => (isNumberValid(Number(value), 0.01, Number.MAX_SAFE_INTEGER) ? true : 'Enter a valid price'),
                   },
                 }}
               />
@@ -352,7 +352,7 @@ const RecordForm = ({ record, closeDialog }: IRecordFormProps) => {
                 )}
                 rules={{
                   validate: {
-                    required: (value) => (numberValid(Number(value), 0.00000001, Number.MAX_SAFE_INTEGER) ? true : 'Enter a valid amount'),
+                    required: (value) => (isNumberValid(Number(value), 0.00000001, Number.MAX_SAFE_INTEGER) ? true : 'Enter a valid amount'),
                   },
                 }}
               />
@@ -381,7 +381,7 @@ const RecordForm = ({ record, closeDialog }: IRecordFormProps) => {
                 )}
                 rules={{
                   validate: {
-                    required: (value) => (value.length > 0 && !stringValid(value, 10, 49999) ? 'Enter a valid description' : true),
+                    required: (value) => (value.length > 0 && !isStringValid(value, 10, 49999) ? 'Enter a valid description' : true),
                   },
                 }}
               />

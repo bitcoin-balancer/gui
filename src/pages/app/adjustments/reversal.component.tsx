@@ -3,6 +3,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Loader2 } from 'lucide-react';
 import { decodeError } from 'error-message-utils';
+import { isNumberValid, isIntegerValid } from 'web-utils-kit';
 import { Input } from '@/shared/shadcn/components/ui/input.tsx';
 import {
   Form,
@@ -28,7 +29,6 @@ import {
 } from '@/shared/shadcn/components/ui/tabs.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
-import { integerValid, numberValid } from '@/shared/backend/validations/index.service.ts';
 import {
   ReversalService,
   IReversalConfig,
@@ -233,7 +233,7 @@ const Reversal = ({ closeDialog }: IFormProps) => {
                   )}
                   rules={{
                     validate: {
-                      required: (value) => (integerValid(Number(value), 5, 10080) ? true : 'Enter an integer ranging 5 - 10080'),
+                      required: (value) => (isIntegerValid(Number(value), 5, 10080) ? true : 'Enter an integer ranging 5 - 10080'),
                     },
                   }}
                 />
@@ -266,7 +266,7 @@ const Reversal = ({ closeDialog }: IFormProps) => {
                   )}
                   rules={{
                     validate: {
-                      required: (value) => (numberValid(Number(value), 50, 100) ? true : 'Enter a number ranging 50 - 100'),
+                      required: (value) => (isNumberValid(Number(value), 50, 100) ? true : 'Enter a number ranging 50 - 100'),
                     },
                   }}
                 />
@@ -309,7 +309,7 @@ const Reversal = ({ closeDialog }: IFormProps) => {
                     )}
                     rules={{
                       validate: {
-                        required: (value) => (numberValid(Number(value), 1, 100) ? true : 'Enter a number ranging 1 - 100'),
+                        required: (value) => (isNumberValid(Number(value), 1, 100) ? true : 'Enter a number ranging 1 - 100'),
                       },
                     }}
                   />
@@ -343,7 +343,7 @@ const Reversal = ({ closeDialog }: IFormProps) => {
                     )}
                     rules={{
                       validate: {
-                        required: (value) => (numberValid(Number(value), 1, 100) ? true : 'Enter a number ranging 1 - 100'),
+                        required: (value) => (isNumberValid(Number(value), 1, 100) ? true : 'Enter a number ranging 1 - 100'),
                       },
                     }}
                   />
@@ -377,7 +377,7 @@ const Reversal = ({ closeDialog }: IFormProps) => {
                     )}
                     rules={{
                       validate: {
-                        required: (value) => (numberValid(Number(value), 1, 100) ? true : 'Enter a number ranging 1 - 100'),
+                        required: (value) => (isNumberValid(Number(value), 1, 100) ? true : 'Enter a number ranging 1 - 100'),
                       },
                     }}
                   />

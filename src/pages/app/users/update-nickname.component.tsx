@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Loader2 } from 'lucide-react';
 import { decodeError } from 'error-message-utils';
+import { isSlugValid } from 'web-utils-kit';
 import { Input } from '@/shared/shadcn/components/ui/input.tsx';
 import {
   Form,
@@ -22,7 +23,6 @@ import {
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
-import { nicknameValid } from '@/shared/backend/validations/index.service.ts';
 import { UserService } from '@/shared/backend/auth/user/index.service.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import { IUpdateNicknameProps, IUpdateNicknameInputs, IAction } from '@/pages/app/users/types.ts';
@@ -142,7 +142,7 @@ const UpdateNickname = ({
                 )}
                 rules={{
                   validate: {
-                    required: (value) => (nicknameValid(value) ? true : 'Nicknames can be 2 to 16 characters long and include letters, numbers, hyphens, commas, periods, and underscores'),
+                    required: (value) => (isSlugValid(value) ? true : 'Nicknames can be 2 to 16 characters long and include letters, numbers, hyphens, commas, periods, and underscores'),
                   },
                 }}
               />

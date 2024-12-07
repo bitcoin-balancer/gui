@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Loader2 } from 'lucide-react';
 import { decodeError } from 'error-message-utils';
+import { isNumberValid } from 'web-utils-kit';
 import { Input } from '@/shared/shadcn/components/ui/input.tsx';
 import {
   Form,
@@ -22,7 +23,6 @@ import {
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
-import { numberValid } from '@/shared/backend/validations/index.service.ts';
 import { ServerService, IAlarmsConfiguration } from '@/shared/backend/server/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
@@ -168,7 +168,7 @@ const ServerAlarms = ({ closeDialog }: IFormProps) => {
             )}
             rules={{
               validate: {
-                required: (value) => (numberValid(Number(value), 30, 99) ? true : 'Enter a number ranging 30% - 99%'),
+                required: (value) => (isNumberValid(Number(value), 30, 99) ? true : 'Enter a number ranging 30% - 99%'),
               },
             }}
           />
@@ -196,7 +196,7 @@ const ServerAlarms = ({ closeDialog }: IFormProps) => {
             )}
             rules={{
               validate: {
-                required: (value) => (numberValid(Number(value), 30, 99) ? true : 'Enter a number ranging 30% - 99%'),
+                required: (value) => (isNumberValid(Number(value), 30, 99) ? true : 'Enter a number ranging 30% - 99%'),
               },
             }}
           />
@@ -224,7 +224,7 @@ const ServerAlarms = ({ closeDialog }: IFormProps) => {
             )}
             rules={{
               validate: {
-                required: (value) => (numberValid(Number(value), 30, 99) ? true : 'Enter a number ranging 30% - 99%'),
+                required: (value) => (isNumberValid(Number(value), 30, 99) ? true : 'Enter a number ranging 30% - 99%'),
               },
             }}
           />

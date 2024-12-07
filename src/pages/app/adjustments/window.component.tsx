@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Loader2 } from 'lucide-react';
 import { decodeError } from 'error-message-utils';
+import { isNumberValid } from 'web-utils-kit';
 import { SWService } from 'sw-service';
 import { Input } from '@/shared/shadcn/components/ui/input.tsx';
 import {
@@ -35,7 +36,6 @@ import {
 } from '@/shared/shadcn/components/ui/tabs.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
-import { numberValid } from '@/shared/backend/validations/index.service.ts';
 import { WindowService, IWindowConfig } from '@/shared/backend/market-state/window/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
@@ -221,7 +221,7 @@ const Window = ({ closeDialog }: IFormProps) => {
                   )}
                   rules={{
                     validate: {
-                      required: (value) => (numberValid(Number(value), 2.5, 60) ? true : 'Enter a number ranging 2.5 - 60'),
+                      required: (value) => (isNumberValid(Number(value), 2.5, 60) ? true : 'Enter a number ranging 2.5 - 60'),
                     },
                   }}
                 />
@@ -252,7 +252,7 @@ const Window = ({ closeDialog }: IFormProps) => {
                   )}
                   rules={{
                     validate: {
-                      required: (value) => (numberValid(Number(value), 128, 512) ? true : 'Enter a number ranging 128 - 512'),
+                      required: (value) => (isNumberValid(Number(value), 128, 512) ? true : 'Enter a number ranging 128 - 512'),
                     },
                   }}
                 />
@@ -340,7 +340,7 @@ const Window = ({ closeDialog }: IFormProps) => {
                   )}
                   rules={{
                     validate: {
-                      required: (value) => (numberValid(Number(value), 0.01, 100) ? true : 'Enter a number ranging 0.01% - 100%'),
+                      required: (value) => (isNumberValid(Number(value), 0.01, 100) ? true : 'Enter a number ranging 0.01% - 100%'),
                     },
                   }}
                 />
@@ -376,7 +376,7 @@ const Window = ({ closeDialog }: IFormProps) => {
                   )}
                   rules={{
                     validate: {
-                      required: (value) => (numberValid(Number(value), 0.01, 100) ? true : 'Enter a number ranging 0.01% - 100%'),
+                      required: (value) => (isNumberValid(Number(value), 0.01, 100) ? true : 'Enter a number ranging 0.01% - 100%'),
                     },
                   }}
                 />

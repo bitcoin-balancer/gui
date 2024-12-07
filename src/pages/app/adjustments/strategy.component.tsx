@@ -3,6 +3,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { CircleHelp, Loader2 } from 'lucide-react';
 import { decodeError } from 'error-message-utils';
+import { isIntegerValid, isNumberValid } from 'web-utils-kit';
 import { Input } from '@/shared/shadcn/components/ui/input.tsx';
 import { Switch } from '@/shared/shadcn/components/ui/switch.tsx';
 import {
@@ -31,7 +32,6 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/shadcn/components/ui/tooltip.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
-import { integerValid, numberValid } from '@/shared/backend/validations/index.service.ts';
 import {
   StrategyService,
   IDecreaseLevelID,
@@ -385,7 +385,7 @@ const Strategy = ({ closeDialog }: IFormProps) => {
                 )}
                 rules={{
                   validate: {
-                    required: (value) => (numberValid(Number(value), 20, Number.MAX_SAFE_INTEGER) ? true : `Enter a number ranging 20 - ${Number.MAX_SAFE_INTEGER}`),
+                    required: (value) => (isNumberValid(Number(value), 20, Number.MAX_SAFE_INTEGER) ? true : `Enter a number ranging 20 - ${Number.MAX_SAFE_INTEGER}`),
                   },
                 }}
               />
@@ -420,7 +420,7 @@ const Strategy = ({ closeDialog }: IFormProps) => {
                 )}
                 rules={{
                   validate: {
-                    required: (value) => (numberValid(Number(value), 1, 1440) ? true : 'Enter a number ranging 1 - 1440'),
+                    required: (value) => (isNumberValid(Number(value), 1, 1440) ? true : 'Enter a number ranging 1 - 1440'),
                   },
                 }}
               />
@@ -456,7 +456,7 @@ const Strategy = ({ closeDialog }: IFormProps) => {
                 )}
                 rules={{
                   validate: {
-                    required: (value) => (numberValid(Number(value), -99, 0) ? true : 'Enter a number ranging -99% - 0%'),
+                    required: (value) => (isNumberValid(Number(value), -99, 0) ? true : 'Enter a number ranging -99% - 0%'),
                   },
                 }}
               />
@@ -594,7 +594,7 @@ const Strategy = ({ closeDialog }: IFormProps) => {
                       )}
                       rules={{
                         validate: {
-                          required: (value) => (numberValid(Number(value), 0.1, MAX_GAIN_REQUIREMENT) ? true : `Enter a number ranging 0.1 - ${MAX_GAIN_REQUIREMENT}`),
+                          required: (value) => (isNumberValid(Number(value), 0.1, MAX_GAIN_REQUIREMENT) ? true : `Enter a number ranging 0.1 - ${MAX_GAIN_REQUIREMENT}`),
                         },
                       }}
                     />
@@ -626,7 +626,7 @@ const Strategy = ({ closeDialog }: IFormProps) => {
                       )}
                       rules={{
                         validate: {
-                          required: (value) => (numberValid(Number(value), 1, 100) ? true : 'Enter a number ranging 1 - 100'),
+                          required: (value) => (isNumberValid(Number(value), 1, 100) ? true : 'Enter a number ranging 1 - 100'),
                         },
                       }}
                     />
@@ -658,7 +658,7 @@ const Strategy = ({ closeDialog }: IFormProps) => {
                       )}
                       rules={{
                         validate: {
-                          required: (value) => (integerValid(Number(value), 3, MAX_FREQUENCY) ? true : `Enter an integer ranging 3 - ${MAX_FREQUENCY}`),
+                          required: (value) => (isIntegerValid(Number(value), 3, MAX_FREQUENCY) ? true : `Enter an integer ranging 3 - ${MAX_FREQUENCY}`),
                         },
                       }}
                     />

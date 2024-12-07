@@ -7,6 +7,7 @@ import {
   HandCoins,
   Percent,
 } from 'lucide-react';
+import { isArrayValid } from 'web-utils-kit';
 import { calculateMean, getBigNumber, processValue } from 'bignumber-utils';
 import {
   DropdownMenu,
@@ -37,7 +38,6 @@ import {
   formatPercentageChange,
   formatPNL,
 } from '@/shared/services/transformers/index.service.ts';
-import { arrayValid } from '@/shared/backend/validations/index.service.ts';
 import { ISplitStateItem, IState } from '@/shared/backend/market-state/shared/types.ts';
 import { PositionService, ICompactPosition } from '@/shared/backend/position/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
@@ -133,7 +133,7 @@ const processPositions = (positions: ICompactPosition[] | undefined): IProcessed
   const investmentsChart: ISplitStateItem[] = [];
 
   // iterate over each position
-  if (arrayValid(positions)) {
+  if (isArrayValid(positions)) {
     positions.forEach((pos) => {
       if (!pos.archived) {
         pnlAccum = pnlAccum.plus(pos.pnl);

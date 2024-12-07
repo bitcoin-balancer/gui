@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm, useWatch } from 'react-hook-form';
 import { Loader2 } from 'lucide-react';
-import { Button } from '@/shared/shadcn/components/ui/button';
-import { Input } from '@/shared/shadcn/components/ui/input';
+import { isSlugValid, isPasswordValid } from 'web-utils-kit';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
+import { Input } from '@/shared/shadcn/components/ui/input.tsx';
 import {
   Form,
   FormControl,
@@ -11,14 +12,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/shared/shadcn/components/ui/form';
-import { Toaster } from '@/shared/shadcn/components/ui/toaster';
+} from '@/shared/shadcn/components/ui/form.tsx';
+import { Toaster } from '@/shared/shadcn/components/ui/toaster.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
-import {
-  altchaPayloadValid,
-  nicknameValid,
-  passwordValid,
-} from '@/shared/backend/validations/index.service.ts';
+import { isAltchaPayloadValid } from '@/shared/backend/validations/index.service.ts';
 import { NavService } from '@/shared/services/nav/index.service.ts';
 import { Altcha } from '@/shared/components/altcha/index.component.tsx';
 import { UserService } from '@/shared/backend/auth/user/index.service.ts';
@@ -68,7 +65,7 @@ const UpdatePassword = () => {
    */
   const onSubmit = (data: IFormInputs): void => {
     // ensure the altcha payload was provided
-    if (!altchaPayloadValid(altcha)) {
+    if (!isAltchaPayloadValid(altcha)) {
       setAltcha(null);
       return;
     }
@@ -152,7 +149,7 @@ const UpdatePassword = () => {
                 )}
                 rules={{
                   validate: {
-                    required: (value) => (nicknameValid(value) ? true : 'Enter a valid nickname'),
+                    required: (value) => (isSlugValid(value) ? true : 'Enter a valid nickname'),
                   },
                 }}
               />
@@ -177,7 +174,7 @@ const UpdatePassword = () => {
                 )}
                 rules={{
                   validate: {
-                    required: (value) => (passwordValid(value) ? true : 'The password must include a minimum of 8 characters and at least one lowercase letter, one uppercase letter, one number, and one special character.'),
+                    required: (value) => (isPasswordValid(value) ? true : 'The password must include a minimum of 8 characters and at least one lowercase letter, one uppercase letter, one number, and one special character.'),
                   },
                 }}
               />

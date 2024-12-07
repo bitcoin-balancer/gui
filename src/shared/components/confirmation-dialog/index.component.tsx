@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Clipboard } from 'lucide-react';
+import { isOTPTokenValid } from 'web-utils-kit';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import {
   Dialog,
@@ -22,7 +23,6 @@ import {
   TooltipTrigger,
 } from '@/shared/shadcn/components/ui/tooltip.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
-import { otpTokenValid } from '@/shared/backend/validations/index.service.ts';
 import { ClipboardService } from '@/shared/services/clipboard/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 
@@ -60,7 +60,7 @@ const ConfirmationDialog = () => {
     if (config?.mode === 'CLICK' && confirmed === true) {
       config.onConfirmation('');
     }
-    if (config?.mode === 'OTP' && otpTokenValid(confirmed)) {
+    if (config?.mode === 'OTP' && isOTPTokenValid(confirmed)) {
       config.onConfirmation(confirmed);
     }
     close();
@@ -74,7 +74,7 @@ const ConfirmationDialog = () => {
    */
   const onOTPTokenChanges = (value: string) => {
     setOTPToken(value);
-    if (otpTokenValid(value)) {
+    if (isOTPTokenValid(value)) {
       closeDialog(value);
     }
   };
@@ -87,7 +87,7 @@ const ConfirmationDialog = () => {
     try {
       setReadingClipboard(true);
       const val = await ClipboardService.readText();
-      if (!otpTokenValid(val)) {
+      if (!isOTPTokenValid(val)) {
         throw new Error(`The text extracted from the system's clipboard is not a valid OTP Token. Received: '${val}'`);
       }
       onOTPTokenChanges(val);
