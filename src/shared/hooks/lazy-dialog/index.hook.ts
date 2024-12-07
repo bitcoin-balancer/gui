@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { delay } from '@/shared/services/utils/index.service.ts';
+import { delay } from 'web-utils-kit';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *

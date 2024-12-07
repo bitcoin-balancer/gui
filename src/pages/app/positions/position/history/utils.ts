@@ -1,4 +1,4 @@
-import { sortRecords } from '@/shared/services/utils/index.service.ts';
+import { sortRecords } from 'web-utils-kit';
 import { IPositionAction, IDecreaseActions } from '@/shared/backend/position/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
 import { IMarker } from '@/shared/components/charts/shared/types.ts';

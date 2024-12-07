@@ -1,4 +1,4 @@
-import { sortRecords } from '@/shared/services/utils/index.service.ts';
+import { sortRecords } from 'web-utils-kit';
 import { ITrade } from '@/shared/backend/exchange/index.service.ts';
 import { IAction } from '@/pages/app/positions/position/trades/types.ts';
 

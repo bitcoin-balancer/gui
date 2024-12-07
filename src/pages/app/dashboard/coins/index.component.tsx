@@ -5,6 +5,7 @@ import {
   Bitcoin,
   Loader2,
 } from 'lucide-react';
+import { delay } from 'web-utils-kit';
 import {
   Card,
   CardContent,
@@ -26,7 +27,7 @@ import {
   SheetTitle,
 } from '@/shared/shadcn/components/ui/sheet.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
-import { delay, errorToast } from '@/shared/services/utils/index.service.ts';
+import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { CoinsService, ICoinStateAsset } from '@/shared/backend/market-state/coins/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';

@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 import { MoveDownRight, History } from 'lucide-react';
+import { delay } from 'web-utils-kit';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import {
   Sheet,
@@ -12,7 +13,6 @@ import {
   IPriceCrashStateRecord,
   IReversalState,
 } from '@/shared/backend/market-state/reversal/index.service.ts';
-import { delay } from '@/shared/services/utils/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
 import PriceCrashStateHistoryDialog from './price-crash-state-history-dialog.component.tsx';
 import PriceCrashStateRecordDialog from './price-crash-state-record-dialog.component.tsx';

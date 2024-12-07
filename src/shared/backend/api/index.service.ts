@@ -1,4 +1,5 @@
 import { decodeError } from 'error-message-utils';
+import { delay } from 'web-utils-kit';
 import {
   IRequestInput,
   IRequestMethod,
@@ -6,7 +7,6 @@ import {
   send,
 } from 'fetch-request-browser';
 import { IAPIResponse } from 'api-response-utils';
-import { delay } from '@/shared/services/utils/index.service.ts';
 import { buildAPIURL, buildRequestOptions } from '@/shared/backend/api/utils.ts';
 import { AccessJWTService } from '@/shared/backend/api/access-jwt.service.ts';
 import { IAPIService } from '@/shared/backend/api/types.ts';

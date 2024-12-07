@@ -12,6 +12,7 @@ import {
   Loader2,
   ExternalLink,
 } from 'lucide-react';
+import { delay } from 'web-utils-kit';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import {
   Card,
@@ -39,7 +40,7 @@ import {
   formatDollarAmount,
   formatPercentageChange,
 } from '@/shared/services/transformers/index.service.ts';
-import { delay, errorToast } from '@/shared/services/utils/index.service.ts';
+import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import {
   ICompactPosition,

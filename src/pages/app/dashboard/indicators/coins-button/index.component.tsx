@@ -3,6 +3,7 @@ import {
   Bitcoin,
   DollarSign,
 } from 'lucide-react';
+import { delay } from 'web-utils-kit';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import {
   Sheet,
@@ -11,7 +12,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/shared/shadcn/components/ui/sheet.tsx';
-import { delay } from '@/shared/services/utils/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import {
   ICoinsStates,

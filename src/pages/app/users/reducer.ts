@@ -1,4 +1,4 @@
-import { sortRecords } from '@/shared/services/utils/index.service.ts';
+import { sortRecords } from 'web-utils-kit';
 import { IUser } from '@/shared/backend/auth/user/index.service.ts';
 import { IAction } from '@/pages/app/users/types.ts';
 

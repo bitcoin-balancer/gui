@@ -8,6 +8,7 @@ import {
   Fingerprint,
   Loader2,
 } from 'lucide-react';
+import { delay } from 'web-utils-kit';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/shared/shadcn/components/ui/tooltip.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
@@ -20,7 +21,7 @@ import {
   DropdownMenuItem,
 } from '@/shared/shadcn/components/ui/dropdown-menu.tsx';
 import { TableCell, TableRow } from '@/shared/shadcn/components/ui/table.tsx';
-import { delay, errorToast } from '@/shared/services/utils/index.service.ts';
+import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { formatDate } from '@/shared/services/transformers/index.service.ts';
 import { IBreakpoint } from '@/shared/services/media-query/index.service.ts';
 import { ClipboardService } from '@/shared/services/clipboard/index.service.ts';
