@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { Ellipsis } from 'lucide-react';
+import { prettifyFileSize } from 'web-utils-kit';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import {
   Card,
@@ -17,7 +18,6 @@ import {
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import { IFileSystemState } from '@/shared/backend/server/types.ts';
-import { formatFileSize } from '@/shared/services/transformers/index.service.ts';
 import ResourcePieChart from '@/pages/app/server/monitoring/resource-pie-chart.component.tsx';
 
 /* ************************************************************************************************
@@ -88,7 +88,7 @@ const FileSystemCard = memo(({ data }: { data: IFileSystemState }) => (
               className='text-light text-sm'
             >Size</p>
             <span className='flex-1'></span>
-            <p><strong>{formatFileSize(data.size)}</strong></p>
+            <p><strong>{prettifyFileSize(data.size)}</strong></p>
           </div>
           <div
             className='flex justify-center items-center'
@@ -97,7 +97,7 @@ const FileSystemCard = memo(({ data }: { data: IFileSystemState }) => (
               className='text-light text-sm'
             >Used</p>
             <span className='flex-1'></span>
-            <p>{formatFileSize(data.used)}</p>
+            <p>{prettifyFileSize(data.used)}</p>
           </div>
           <div
             className='flex justify-center items-center'
@@ -106,7 +106,7 @@ const FileSystemCard = memo(({ data }: { data: IFileSystemState }) => (
               className='text-light text-sm'
             >Available</p>
             <span className='flex-1'></span>
-            <p>{formatFileSize(data.available)}</p>
+            <p>{prettifyFileSize(data.available)}</p>
           </div>
         </DialogContent>
       </Dialog>

@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { prettifyFileSize } from 'web-utils-kit';
 import { calculateSum } from 'bignumber-utils';
 import {
   Card,
@@ -7,7 +8,6 @@ import {
   CardTitle,
 } from '@/shared/shadcn/components/ui/card.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
-import { formatFileSize } from '@/shared/services/transformers/index.service.ts';
 import { IDatabaseSummary } from '@/shared/backend/database/types.ts';
 
 /* ************************************************************************************************
@@ -25,7 +25,7 @@ const GeneralCard = ({ data }: { data: IDatabaseSummary }) => {
 
   // the size of all the tables combined
   const tablesSize = useMemo(
-    () => formatFileSize(calculateSum(data.tables.map((table) => table.size))),
+    () => prettifyFileSize(calculateSum(data.tables.map((table) => table.size))),
     [data.tables],
   );
 
@@ -97,7 +97,7 @@ const GeneralCard = ({ data }: { data: IDatabaseSummary }) => {
             className='text-light text-sm'
           >Database's Size</p>
           <span className='flex-1'></span>
-          <p><strong>{formatFileSize(data.size)}</strong></p>
+          <p><strong>{prettifyFileSize(data.size)}</strong></p>
         </div>
       </CardContent>
     </Card>

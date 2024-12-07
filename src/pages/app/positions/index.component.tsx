@@ -7,7 +7,7 @@ import {
   HandCoins,
   Percent,
 } from 'lucide-react';
-import { isArrayValid } from 'web-utils-kit';
+import { isArrayValid, prettifyBadgeCount } from 'web-utils-kit';
 import { calculateMean, getBigNumber, processValue } from 'bignumber-utils';
 import {
   DropdownMenu,
@@ -33,7 +33,6 @@ import {
 } from '@/shared/shadcn/components/ui/card.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import {
-  formatBadgeCount,
   formatDollarAmount,
   formatPercentageChange,
   formatPNL,
@@ -247,7 +246,7 @@ const Positions = () => {
               && <Badge
                 className='ml-1 -mt-4'
               >
-                {formatBadgeCount(processed.pnlChart.length, 99)}
+                {prettifyBadgeCount(processed.pnlChart.length, 99)}
               </Badge>
             }
 

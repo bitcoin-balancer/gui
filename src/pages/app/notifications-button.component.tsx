@@ -1,10 +1,10 @@
 import { memo, useMemo, useState } from 'react';
 import { Bell, BellRing } from 'lucide-react';
+import { prettifyBadgeCount } from 'web-utils-kit';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/shared/shadcn/components/ui/tooltip.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
-import { formatBadgeCount } from '@/shared/services/transformers/index.service.ts';
 import NotificationsDialog from '@/pages/app/notifications-dialog.component.tsx';
 
 /* ************************************************************************************************
@@ -83,7 +83,7 @@ const NotificationsButton = memo(({ size }: { size: 'icon' | 'default' }) => {
 
   // the number of notifications that have not been seen
   const unreadNotificationsString = useMemo(
-    () => formatBadgeCount(unreadNotifications),
+    () => prettifyBadgeCount(unreadNotifications),
     [unreadNotifications],
   );
 
