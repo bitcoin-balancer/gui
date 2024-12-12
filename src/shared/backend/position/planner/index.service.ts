@@ -1,16 +1,21 @@
-import { ITradeService, IManualTrade } from '@/shared/backend/position/trade/types.ts';
+import {
+  IPlannerService,
+  ITargetState,
+  IIncreasePlan,
+  IDecreasePlan,
+  IPositionPlan,
+} from '@/shared/backend/position/planner/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
 
 /**
- * Trade Service Factory
- * Generates the object in charge of retrieving and storing the account trades triggered by
- * positions.
+ * Planner Service Factory
+ * Generates the object in charge of calculating the plans for increasing and decreasing positions.
  * @returns ITradeService
  */
-const tradeServiceFactory = (): ITradeService => {
+const plannerServiceFactory = (): IPlannerService => {
   /* **********************************************************************************************
    *                                          PROPERTIES                                          *
    ********************************************************************************************** */
@@ -37,7 +42,7 @@ const tradeServiceFactory = (): ITradeService => {
 /* ************************************************************************************************
  *                                        GLOBAL INSTANCE                                         *
  ************************************************************************************************ */
-const TradeService = tradeServiceFactory();
+const PlannerService = plannerServiceFactory();
 
 
 
@@ -48,8 +53,11 @@ const TradeService = tradeServiceFactory();
  ************************************************************************************************ */
 export {
   // service
-  TradeService,
+  PlannerService,
 
   // types
-  type IManualTrade,
+  type ITargetState,
+  type IIncreasePlan,
+  type IDecreasePlan,
+  type IPositionPlan,
 };
