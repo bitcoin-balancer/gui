@@ -45,6 +45,7 @@ import { useBoundStore } from '@/shared/store/index.store.ts';
 import {
   ICompactPosition,
   PositionService,
+  IPositionState,
 } from '@/shared/backend/position/index.service.ts';
 import { NavService } from '@/shared/services/nav/index.service.ts';
 import BalancesDialog from '@/pages/app/dashboard/position/balances/index.component.tsx';
@@ -95,7 +96,7 @@ const buildDecreaseOption = (position: ICompactPosition | undefined, option: num
  * Position Component
  * Component in charge of displaying information regarding the active position (if any)
  */
-const Position = memo(({ position }: { position: ICompactPosition | undefined }) => {
+const Position = memo(({ position }: { position: IPositionState }) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
@@ -118,32 +119,40 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
 
   // main position details
   const entry = useMemo(
-    () => (position === undefined ? '$0' : formatDollarAmount(position.entry_price, 0)),
-    [position],
+    () => (
+      position.active === undefined ? '$0' : formatDollarAmount(position.active.entry_price, 0)
+    ),
+    [position.active],
   );
   const gain = useMemo(
-    () => (position === undefined ? '0%' : formatPercentageChange(position.gain, 2)),
-    [position],
+    () => (
+      position.active === undefined ? '0%' : formatPercentageChange(position.active.gain, 2)
+    ),
+    [position.active],
   );
   const gainClassName = useMemo(
     () => (
-      position === undefined
+      position.active === undefined
         ? PositionService.getGainClassName(0)
-        : PositionService.getGainClassName(position.gain)
+        : PositionService.getGainClassName(position.active.gain)
     ),
-    [position],
+    [position.active],
   );
   const amountQuote = useMemo(
-    () => (position === undefined ? '$0 ' : formatDollarAmount(position.amount_quote, 0)),
-    [position],
+    () => (
+      position.active === undefined ? '$0 ' : formatDollarAmount(position.active.amount_quote, 0)
+    ),
+    [position.active],
   );
   const decreased = useMemo(
-    () => (position === undefined ? '$0 ' : formatDollarAmount(position.amount_quote_out, 0)),
-    [position],
+    () => (
+      position.active === undefined ? '$0 ' : formatDollarAmount(position.active.amount_quote_out, 0)
+    ),
+    [position.active],
   );
   const decreaseMenu = useMemo(
-    () => DECREASE_OPTIONS.map((option) => buildDecreaseOption(position, option)),
-    [position],
+    () => DECREASE_OPTIONS.map((option) => buildDecreaseOption(position.active, option)),
+    [position.active],
   );
 
 
@@ -219,15 +228,6 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
           <CardTitle className='flex justify-start items-center gap-1.5'>
             Position
             {
-              position !== undefined
-              && <button
-                aria-label='Navigate to position'
-                onClick={() => navigate(NavService.position(position.id))}
-              >
-                <ExternalLink aria-hidden='true' className='h-5 w-5'/>
-              </button>
-            }
-            {
                 isSubmitting
                 && <Loader2
                   className='h-5 w-5 animate-spin'
@@ -244,8 +244,8 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
               <DropdownMenuContent>
                 <DropdownMenuLabel>Active</DropdownMenuLabel>
                 <DropdownMenuItem
-                  onClick={() => openPositionDialog(position!.id)}
-                  disabled={position === undefined || authority < 2}
+                  onClick={() => openPositionDialog(position.active!.id)}
+                  disabled={position.active === undefined || authority < 2}
                 >
                   <ReceiptText
                       aria-hidden='true'
@@ -263,12 +263,21 @@ const Position = memo(({ position }: { position: ICompactPosition | undefined })
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => setIsDecreaseMenuOpen(true)}
-                  disabled={position === undefined || authority < 4}
+                  disabled={position.active === undefined || authority < 4}
                 >
                   <ArrowDownWideNarrow
                       aria-hidden='true'
                       className='mr-1 h-5 w-5'
                     /> Decrease
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => navigate(NavService.position(position.active!.id))}
+                  disabled={position.active === undefined || authority < 2}
+                >
+                  <ExternalLink
+                      aria-hidden='true'
+                      className='mr-1 h-5 w-5'
+                    /> Navigate
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuLabel>Information</DropdownMenuLabel>

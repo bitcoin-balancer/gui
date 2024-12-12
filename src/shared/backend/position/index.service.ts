@@ -10,6 +10,7 @@ import {
   IDecreaseActions,
   IPosition,
   ICompactPosition,
+  IPositionState,
 } from './types.js';
 
 /* ************************************************************************************************
@@ -466,4 +467,5 @@ export {
   type IDecreaseActions,
   type IPosition,
   type ICompactPosition,
+  type IPositionState,
 };

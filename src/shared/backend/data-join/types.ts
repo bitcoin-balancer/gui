@@ -2,7 +2,7 @@ import { IUser } from '@/shared/backend/auth/user/index.service.ts';
 import { IVersion } from '@/shared/backend/version/index.service.ts';
 import { IExchangeConfig } from '@/shared/backend/exchange/index.service.ts';
 import { IMarketState } from '@/shared/backend/market-state/index.service.ts';
-import { ICompactPosition } from '@/shared/backend/position/index.service.ts';
+import { IPositionState } from '@/shared/backend/position/index.service.ts';
 
 /* ************************************************************************************************
  *                                            SERVICE                                             *
@@ -56,7 +56,7 @@ type IAppEssentials = {
   marketState: IMarketState;
 
   // the active position record (if any)
-  position: ICompactPosition | undefined;
+  position: IPositionState;
 };
 
 /**
@@ -74,7 +74,7 @@ type ICompactAppEssentials = {
   marketState: IMarketState;
 
   // the active position record (if any)
-  position: ICompactPosition | undefined;
+  position: IPositionState;
 };
 
 

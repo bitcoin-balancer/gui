@@ -2,6 +2,7 @@ import { IEventHistoryRecord } from '@/shared/backend/candlestick/index.service.
 import { ITrade } from '@/shared/backend/exchange/index.service.ts';
 import { IManualTrade } from '@/shared/backend/position/trade/index.service.ts';
 import { ITransaction } from '@/shared/backend/position/transaction/index.service.ts';
+import { IPositionPlan } from '@/shared/backend/position/planner/index.service.ts';
 
 /* ************************************************************************************************
  *                                            SERVICE                                             *
@@ -189,6 +190,18 @@ type ICompactPosition = {
   roi: number;
 };
 
+/**
+ * Position State
+ * The state is comprised by an active position (if any) and a plan (increase and decrease).
+ */
+type IPositionState = {
+  // the compact object of the active position (if any)
+  active: ICompactPosition | undefined;
+
+  // the plan based on the active position, strategy and the state of the market
+  plan: IPositionPlan;
+};
+
 
 
 
@@ -210,4 +223,5 @@ export type {
   // position
   IPosition,
   ICompactPosition,
+  IPositionState,
 };
