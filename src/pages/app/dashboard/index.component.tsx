@@ -52,7 +52,6 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const breakpoint = useMediaQueryBreakpoint();
   const marketState = useBoundStore((state) => state.marketState!);
-  const position = useBoundStore((state) => state.position);
   const [splitStatesDialog, setSplitStatesDialog] = useState<ISplitStatesDialogData>();
 
 
@@ -126,7 +125,7 @@ const Dashboard = () => {
             * POSITION *
             ********** */}
           <Position
-            position={position}
+            windowState={marketState.windowState}
           />
 
           <Separator className='my-10 md:hidden' />

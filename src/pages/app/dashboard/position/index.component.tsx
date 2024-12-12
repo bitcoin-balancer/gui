@@ -42,15 +42,13 @@ import {
 } from '@/shared/services/transformers/index.service.ts';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
-import {
-  ICompactPosition,
-  PositionService,
-  IPositionState,
-} from '@/shared/backend/position/index.service.ts';
+import { IWindowState } from '@/shared/backend/market-state/window/index.service.ts';
+import { ICompactPosition, PositionService } from '@/shared/backend/position/index.service.ts';
 import { NavService } from '@/shared/services/nav/index.service.ts';
 import BalancesDialog from '@/pages/app/dashboard/position/balances/index.component.tsx';
 import PositionsDialog from '@/pages/app/dashboard/position/positions/index.component.tsx';
 import TransactionsDialog from '@/pages/app/dashboard/position/transactions/index.component.tsx';
+import Planner from './planner/index.component';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
@@ -96,7 +94,7 @@ const buildDecreaseOption = (position: ICompactPosition | undefined, option: num
  * Position Component
  * Component in charge of displaying information regarding the active position (if any)
  */
-const Position = memo(({ position }: { position: IPositionState }) => {
+const Position = memo(({ windowState }: { windowState: IWindowState }) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
@@ -106,6 +104,7 @@ const Position = memo(({ position }: { position: IPositionState }) => {
   const openLargeInfoDialog = useBoundStore((state) => state.openLargeInfoDialog);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
   const openPositionDialog = useBoundStore((state) => state.openPositionDialog);
+  const position = useBoundStore((state) => state.position!);
   const { authority } = useBoundStore((state) => state.user!);
   const navigate = useNavigate();
 
@@ -227,10 +226,17 @@ const Position = memo(({ position }: { position: IPositionState }) => {
         <CardHeader>
           <CardTitle className='flex justify-start items-center gap-1.5'>
             Position
+
+            <Planner
+              windowState={windowState}
+              positionState={position}
+              className='mt-1'
+            />
+
             {
                 isSubmitting
                 && <Loader2
-                  className='h-5 w-5 animate-spin'
+                  className='h-5 w-5 mt-1 animate-spin'
                 />
               }
             <span className='flex-1'></span>
