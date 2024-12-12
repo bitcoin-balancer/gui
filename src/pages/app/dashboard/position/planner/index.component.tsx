@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { ArrowDownWideNarrow, ArrowUpWideNarrow, AudioWaveform, Brain, PencilRuler, WandSparkles, GoalIcon, Split, TrendingUpDown } from 'lucide-react';
+import { ArrowDownWideNarrow, ArrowUpWideNarrow, TrendingUpDown } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,7 +16,7 @@ import { IComponentProps } from '@/pages/app/dashboard/position/planner/types.ts
  * Planner
  * Component in charge of ...
  */
-const Planner = memo(({ windowState, positionState, className }: IComponentProps) => {
+const Planner = memo(({ positionState, className }: IComponentProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
