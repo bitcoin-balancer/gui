@@ -1,4 +1,5 @@
 import { useMemo, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Dialog,
   DialogContent,
@@ -6,27 +7,15 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import { formatDate, formatDollarAmount } from '@/shared/services/transformers/index.service.ts';
 import { toSplitStateItems } from '@/shared/backend/market-state/shared/utils.ts';
-import { IIncreasePlan } from '@/shared/backend/position/planner/index.service.ts';
-import LineChart from '@/shared/components/charts/line-chart/index.component.tsx';
+import { NavService } from '@/shared/services/nav/index.service.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
+import LineChart from '@/shared/components/charts/line-chart/index.component.tsx';
 import { IIncreasePlanComponentProps } from '@/pages/app/dashboard/position/planner/types.ts';
-
-/* ************************************************************************************************
- *                                            HELPERS                                             *
- ************************************************************************************************ */
-
-
-const calculatePlanDescription = (plan: IIncreasePlan): JSX.Element => {
-
-
-};
-
-
-
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -46,7 +35,7 @@ const IncreasePlanDialog = ({
    ********************************************************************************************** */
   const breakpoint = useMediaQueryBreakpoint();
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
-
+  const navigate = useNavigate();
 
 
 
@@ -61,6 +50,38 @@ const IncreasePlanDialog = ({
   // the list of split items for the current window
   const windowData = useMemo(() => toSplitStateItems(windowState.window), [windowState.window]);
 
+  // the amount that will be used to open/increase a position
+  const canIncreaseAtPrice = useMemo(
+    () => (
+      plan.canIncrease && plan.canIncreaseAtPrice
+        ? formatDollarAmount(plan.canIncreaseAtPrice, 0)
+        : undefined
+    ),
+    [plan],
+  );
+
+  // the amount that will be used to open/increase a position
+  const increaseAmountQuote = useMemo(
+    () => (plan.canIncrease ? formatDollarAmount(plan.increaseAmountQuote) : undefined),
+    [plan],
+  );
+
+
+
+
+
+  /* **********************************************************************************************
+   *                                        EVENT HANDLERS                                        *
+   ********************************************************************************************** */
+
+  /**
+   * Closes the dialog and navigates to the adjustments page.
+   */
+  const navigateToAdjustments = async () => {
+    await handleCloseDialog();
+    navigate(NavService.adjustments());
+  };
+
 
 
 
@@ -68,6 +89,50 @@ const IncreasePlanDialog = ({
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
+  let planDescription: JSX.Element = (
+    <div>
+      The position won't be opened or increased because <strong>"Auto-increase"</strong> is
+       currently disabled. In order to enable it, navigate to
+        the <Button variant='link' onClick={navigateToAdjustments} className='p-0 m-0 h-auto text-sky-700'>Adjustments</Button> page and
+         update it via the <strong>"Strategy Form"</strong>
+    </div>
+  );
+
+  // calculate the plan description if the position can be increased
+  if (plan.canIncrease) {
+    // init helpers
+    const priceBadge: JSX.Element | undefined = (
+      plan.canIncreaseAtPrice && plan.canIncreaseAtPriceChange
+        ? <Badge variant='secondary'>{canIncreaseAtPrice} <span className='ml-2 text-decrease-1'>{plan.canIncreaseAtPriceChange}%</span></Badge>
+        : undefined
+    );
+
+    // put together the description according to the current requirements
+    if (plan.canIncreaseAtTime && plan.canIncreaseAtPrice && plan.canIncreaseAtPriceChange) {
+      planDescription = (
+        <div>
+          The position will be increased by {increaseAmountQuote} once the price drops to
+           {priceBadge} after {formatDate(plan.canIncreaseAtTime, 'datetime-short')} and a reversal
+            event is issued
+        </div>
+      );
+    } else if (plan.canIncreaseAtPrice && plan.canIncreaseAtPriceChange) {
+      planDescription = (
+        <div>
+          A position for {increaseAmountQuote} will be opened once the price drops to {priceBadge}
+           and a reversal event is issued
+        </div>
+      );
+    } else {
+      planDescription = plan.isOpen
+        ? <div>
+          A position for {increaseAmountQuote} will be opened once a reversal event is issued
+        </div>
+        : <div>
+          The position will be increased by {increaseAmountQuote} once a reversal event is issued
+        </div>;
+    }
+  }
   return (
     <Dialog
       open={isDialogOpen}
@@ -77,10 +142,14 @@ const IncreasePlanDialog = ({
 
         <DialogHeader className='p-6 pb-0'>
           <DialogTitle>Increase plan</DialogTitle>
-          <DialogDescription>
-            Events broadcasted by the Balancer API
-          </DialogDescription>
+          <DialogDescription></DialogDescription>
         </DialogHeader>
+
+        <div
+          className='text-light px-6 -mt-2 text-center sm:text-left'
+        >
+          {planDescription}
+        </div>
 
         <LineChart
           kind='line'

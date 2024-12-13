@@ -48,7 +48,7 @@ import { NavService } from '@/shared/services/nav/index.service.ts';
 import BalancesDialog from '@/pages/app/dashboard/position/balances/index.component.tsx';
 import PositionsDialog from '@/pages/app/dashboard/position/positions/index.component.tsx';
 import TransactionsDialog from '@/pages/app/dashboard/position/transactions/index.component.tsx';
-import Planner from './planner/index.component';
+import Planner from './planner/index.component.tsx';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
