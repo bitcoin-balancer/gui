@@ -1,11 +1,11 @@
-import {
+import type {
   IChartApi,
   Time,
   ISeriesApi,
   SeriesType,
 } from 'lightweight-charts';
 import { IState, ISplitStateItem } from '@/shared/backend/market-state/shared/types.ts';
-import { IPriceFormatterFunc } from '@/shared/components/charts/shared/types.ts';
+import { IPriceFormatterFunc, IPriceLineOptions } from '@/shared/components/charts/shared/types.ts';
 
 /* ************************************************************************************************
  *                                             TYPES                                              *
@@ -27,6 +27,9 @@ type IComponentProps = {
 
   // the records to render
   data: ISplitStateItem[];
+
+  // the price lines that will be added to the chart
+  priceLines?: IPriceLineOptions[];
 
   // the kind of chart that will be rendered
   kind?: IChartKind;

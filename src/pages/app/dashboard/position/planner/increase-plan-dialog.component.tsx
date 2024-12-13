@@ -11,9 +11,11 @@ import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import { formatDate, formatDollarAmount } from '@/shared/services/transformers/index.service.ts';
 import { toSplitStateItems } from '@/shared/backend/market-state/shared/utils.ts';
+import { ColorService } from '@/shared/services/color/index.service.ts';
 import { NavService } from '@/shared/services/nav/index.service.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
+import { IPriceLineOptions } from '@/shared/components/charts/shared/types.ts';
 import LineChart from '@/shared/components/charts/line-chart/index.component.tsx';
 import { IIncreasePlanComponentProps } from '@/pages/app/dashboard/position/planner/types.ts';
 
@@ -97,9 +99,22 @@ const IncreasePlanDialog = ({
          update it via the <strong>"Strategy Form"</strong>
     </div>
   );
+  let priceLines: IPriceLineOptions[] = [];
 
   // calculate the plan description if the position can be increased
   if (plan.canIncrease) {
+    // init the price lines
+    if (plan.canIncreaseAtPrice) {
+      priceLines = [{
+        price: plan.canIncreaseAtPrice,
+        color: ColorService.DECREASE_2,
+        lineWidth: 2,
+        lineStyle: 2,
+        axisLabelVisible: true,
+        title: plan.isOpen ? 'OPEN' : 'INCREASE',
+      }];
+    }
+
     // init helpers
     const priceBadge: JSX.Element | undefined = (
       plan.canIncreaseAtPrice && plan.canIncreaseAtPriceChange
@@ -155,6 +170,7 @@ const IncreasePlanDialog = ({
           kind='line'
           height={breakpoint === 'xs' || breakpoint === 'sm' ? 350 : 450}
           data={windowData}
+          priceLines={priceLines}
           priceFormatterFunc={priceFormatter}
         />
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 import { useRef, useLayoutEffect, useEffect } from 'react';
 import { createChart, IChartApi } from 'lightweight-charts';
 import { toLocalTime } from '@/shared/components/charts/shared/utils.ts';
@@ -25,6 +26,7 @@ const LineChart = ({
   kind = 'line',
   height,
   data,
+  priceLines = [],
   state,
   priceFormatterFunc,
   showAttributionLogo = true,
@@ -75,6 +77,11 @@ const LineChart = ({
           this.__series = this.api().addLineSeries(options);
         } else {
           this.__series = this.api().addAreaSeries(options);
+        }
+
+        // render the price lines if provided
+        for (const line of priceLines) {
+          this.__series.createPriceLine(line);
         }
       }
       return this.__series;

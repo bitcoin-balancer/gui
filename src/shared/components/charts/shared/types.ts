@@ -2,6 +2,7 @@ import {
   UTCTimestamp,
   SeriesMarkerPosition,
   SeriesMarkerShape,
+  CreatePriceLineOptions,
 } from 'lightweight-charts';
 
 /* ************************************************************************************************
@@ -28,6 +29,12 @@ type IMarker = {
   size?: number;
 };
 
+/**
+ * Price Line
+ * The object that will be used to render a line on the chart.
+ */
+type IPriceLineOptions = CreatePriceLineOptions;
+
 
 
 
@@ -38,4 +45,5 @@ type IMarker = {
 export type {
   IPriceFormatterFunc,
   IMarker,
+  IPriceLineOptions,
 };
