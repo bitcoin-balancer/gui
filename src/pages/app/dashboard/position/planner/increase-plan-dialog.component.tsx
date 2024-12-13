@@ -111,7 +111,7 @@ const IncreasePlanDialog = ({
     if (plan.canIncreaseAtTime && plan.canIncreaseAtPrice && plan.canIncreaseAtPriceChange) {
       planDescription = (
         <div>
-          The position will be increased by {increaseAmountQuote} once the price drops to
+          The position will be increased by {increaseAmountQuote} if the price drops to
            {priceBadge} after {formatDate(plan.canIncreaseAtTime, 'datetime-short')} and a reversal
             event is issued
         </div>
@@ -119,17 +119,17 @@ const IncreasePlanDialog = ({
     } else if (plan.canIncreaseAtPrice && plan.canIncreaseAtPriceChange) {
       planDescription = (
         <div>
-          A position for {increaseAmountQuote} will be opened once the price drops to {priceBadge}
+          A {increaseAmountQuote} position will be opened if the price drops to {priceBadge}
            and a reversal event is issued
         </div>
       );
     } else {
       planDescription = plan.isOpen
         ? <div>
-          A position for {increaseAmountQuote} will be opened once a reversal event is issued
+          A {increaseAmountQuote} position will be opened if a reversal event is issued
         </div>
         : <div>
-          The position will be increased by {increaseAmountQuote} once a reversal event is issued
+          The position will be increased by {increaseAmountQuote} if a reversal event is issued
         </div>;
     }
   }
