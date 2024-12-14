@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from 'react';
+import { useRef, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Dialog,
@@ -11,6 +11,7 @@ import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import { formatDate, formatDollarAmount } from '@/shared/services/transformers/index.service.ts';
 import { toSplitStateItems } from '@/shared/backend/market-state/shared/utils.ts';
+import { IIncreasePlan } from '@/shared/backend/position/planner/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
 import { NavService } from '@/shared/services/nav/index.service.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
@@ -18,6 +19,46 @@ import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import { IPriceLineOptions } from '@/shared/components/charts/shared/types.ts';
 import LineChart from '@/shared/components/charts/line-chart/index.component.tsx';
 import { IIncreasePlanComponentProps } from '@/pages/app/dashboard/position/planner/types.ts';
+
+/* ************************************************************************************************
+ *                                            HELPERS                                             *
+ ************************************************************************************************ */
+
+/**
+ * Builds te price line object that will be rendered in the chart.
+ * @param canIncreaseAtPrice
+ * @param isOpen
+ * @returns IPriceLineOptions[]
+ */
+const buildPriceLines = (canIncreaseAtPrice: number, isOpen: boolean): IPriceLineOptions[] => [{
+  price: canIncreaseAtPrice,
+  color: ColorService.DECREASE_2,
+  lineWidth: 2,
+  lineStyle: 2,
+  axisLabelVisible: true,
+  title: isOpen ? 'OPEN' : 'INCREASE',
+}];
+
+/**
+ * Builds the badge element that contains the canIncreaseAtPrice as well as the %.
+ * @param plan
+ * @param canIncreaseAtPrice
+ * @returns JSX.Element | undefined
+ */
+const buildPriceBadge = (
+  plan: IIncreasePlan,
+  canIncreaseAtPrice: string | undefined,
+): JSX.Element | undefined => (
+  plan.canIncrease && plan.canIncreaseAtPrice && plan.canIncreaseAtPriceChange
+    ? <Badge variant='secondary'>
+      {canIncreaseAtPrice} <span className='ml-2 text-decrease-1'>{plan.canIncreaseAtPriceChange}%</span>
+    </Badge>
+    : undefined
+);
+
+
+
+
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -32,6 +73,15 @@ const IncreasePlanDialog = ({
   plan,
   closeDialog,
 }: IIncreasePlanComponentProps) => {
+  /* **********************************************************************************************
+   *                                             REFS                                             *
+   ********************************************************************************************** */
+  const priceLines = useRef<IPriceLineOptions[]>([]);
+
+
+
+
+
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
@@ -99,34 +149,23 @@ const IncreasePlanDialog = ({
          update it via the <strong>"Strategy Form"</strong>
     </div>
   );
-  let priceLines: IPriceLineOptions[] = [];
 
   // calculate the plan description if the position can be increased
   if (plan.canIncrease) {
-    // init the price lines
-    if (plan.canIncreaseAtPrice) {
-      priceLines = [{
-        price: plan.canIncreaseAtPrice,
-        color: ColorService.DECREASE_2,
-        lineWidth: 2,
-        lineStyle: 2,
-        axisLabelVisible: true,
-        title: plan.isOpen ? 'OPEN' : 'INCREASE',
-      }];
+    // init the price lines in case they haven't been
+    if (plan.canIncreaseAtPrice && priceLines.current.length === 0) {
+      priceLines.current = buildPriceLines(plan.canIncreaseAtPrice, plan.isOpen);
     }
 
     // init helpers
-    const priceBadge: JSX.Element | undefined = (
-      plan.canIncreaseAtPrice && plan.canIncreaseAtPriceChange
-        ? <Badge variant='secondary'>{canIncreaseAtPrice} <span className='ml-2 text-decrease-1'>{plan.canIncreaseAtPriceChange}%</span></Badge>
-        : undefined
-    );
+    const priceBadge: JSX.Element | undefined = buildPriceBadge(plan, canIncreaseAtPrice);
+    const increaseAmountQuoteBadge: JSX.Element = <Badge variant='secondary'>{increaseAmountQuote}</Badge>;
 
     // put together the description according to the current requirements
     if (plan.canIncreaseAtTime && plan.canIncreaseAtPrice && plan.canIncreaseAtPriceChange) {
       planDescription = (
         <div>
-          The position will be increased by {increaseAmountQuote} if the price drops to
+          The position will be increased by {increaseAmountQuoteBadge} if the price drops to
            {priceBadge} after {formatDate(plan.canIncreaseAtTime, 'datetime-short')} and a reversal
             event is issued
         </div>
@@ -134,17 +173,17 @@ const IncreasePlanDialog = ({
     } else if (plan.canIncreaseAtPrice && plan.canIncreaseAtPriceChange) {
       planDescription = (
         <div>
-          A {increaseAmountQuote} position will be opened if the price drops to {priceBadge}
+          A {increaseAmountQuoteBadge} position will be opened if the price drops to {priceBadge}
            and a reversal event is issued
         </div>
       );
     } else {
       planDescription = plan.isOpen
         ? <div>
-          A {increaseAmountQuote} position will be opened if a reversal event is issued
+          A {increaseAmountQuoteBadge} position will be opened if a reversal event is issued
         </div>
         : <div>
-          The position will be increased by {increaseAmountQuote} if a reversal event is issued
+          The position will be increased by {increaseAmountQuoteBadge} if a reversal event is issued
         </div>;
     }
   }
@@ -170,7 +209,7 @@ const IncreasePlanDialog = ({
           kind='line'
           height={breakpoint === 'xs' || breakpoint === 'sm' ? 350 : 450}
           data={windowData}
-          priceLines={priceLines}
+          priceLines={priceLines.current}
           priceFormatterFunc={priceFormatter}
         />
 
