@@ -161,7 +161,7 @@ const IncreasePlanDialog = ({
         </DialogHeader>
 
         <div
-          className='text-light px-6 -mt-2 text-center sm:text-left'
+          className='text-light px-6 -mt-3 text-center sm:text-left'
         >
           {planDescription}
         </div>

@@ -50,7 +50,7 @@ const Hero = memo(({
         <Button
           size={breakpoint === 'xs' ? 'default' : 'lg'}
           onClick={() => navigate(NavService.dashboard())}
-        ><LogIn className='mr-2' /> Go to app</Button>
+        ><LogIn className='mr-2' /> Launch app</Button>
 
       </div>
 
