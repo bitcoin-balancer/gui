@@ -1,5 +1,6 @@
 import { useRef, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Wallet } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -7,6 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
+import { Alert, AlertDescription, AlertTitle } from '@/shared/shadcn/components/ui/alert.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import { formatDate, formatDollarAmount } from '@/shared/services/transformers/index.service.ts';
@@ -19,6 +21,7 @@ import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import { IPriceLineOptions } from '@/shared/components/charts/shared/types.ts';
 import LineChart from '@/shared/components/charts/line-chart/index.component.tsx';
 import { IIncreasePlanComponentProps } from '@/pages/app/dashboard/position/planner/types.ts';
+
 
 /* ************************************************************************************************
  *                                            HELPERS                                             *
@@ -53,6 +56,21 @@ const buildPriceBadge = (
     ? <Badge variant='secondary'>
       {canIncreaseAtPrice} <span className='ml-2 text-decrease-1'>{plan.canIncreaseAtPriceChange}%</span>
     </Badge>
+    : undefined
+);
+
+/**
+ * Builds the badge element that contains the formatted canIncreaseAtTime.
+ * @param plan
+ * @param canIncreaseAtTime
+ * @returns JSX.Element | undefined
+ */
+const buildDateBadge = (
+  plan: IIncreasePlan,
+  canIncreaseAtTime: string | undefined,
+): JSX.Element | undefined => (
+  plan.canIncrease && plan.canIncreaseAtTime
+    ? <Badge variant='secondary'>{canIncreaseAtTime}</Badge>
     : undefined
 );
 
@@ -102,6 +120,16 @@ const IncreasePlanDialog = ({
   // the list of split items for the current window
   const windowData = useMemo(() => toSplitStateItems(windowState.window), [windowState.window]);
 
+  // the date at which a position can be increased
+  const canIncreaseAtTime = useMemo(
+    () => (
+      plan.canIncrease && plan.canIncreaseAtTime
+        ? formatDate(plan.canIncreaseAtTime, 'datetime-short')
+        : undefined
+    ),
+    [plan],
+  );
+
   // the amount that will be used to open/increase a position
   const canIncreaseAtPrice = useMemo(
     () => (
@@ -115,6 +143,12 @@ const IncreasePlanDialog = ({
   // the amount that will be used to open/increase a position
   const increaseAmountQuote = useMemo(
     () => (plan.canIncrease ? formatDollarAmount(plan.increaseAmountQuote) : undefined),
+    [plan],
+  );
+
+  // the balance gap
+  const missingQuoteAmount = useMemo(
+    () => (plan.canIncrease ? formatDollarAmount(plan.missingQuoteAmount) : undefined),
     [plan],
   );
 
@@ -158,18 +192,27 @@ const IncreasePlanDialog = ({
     }
 
     // init helpers
+    const dateBadge: JSX.Element | undefined = buildDateBadge(plan, canIncreaseAtTime);
     const priceBadge: JSX.Element | undefined = buildPriceBadge(plan, canIncreaseAtPrice);
     const increaseAmountQuoteBadge: JSX.Element = <Badge variant='secondary'>{increaseAmountQuote}</Badge>;
 
     // put together the description according to the current requirements
-    if (plan.canIncreaseAtTime && plan.canIncreaseAtPrice && plan.canIncreaseAtPriceChange) {
-      planDescription = (
-        <div>
-          The position will be increased by {increaseAmountQuoteBadge} if the price drops to
-           {priceBadge} after {formatDate(plan.canIncreaseAtTime, 'datetime-short')} and a reversal
-            event is issued
-        </div>
-      );
+    if (plan.canIncreaseAtTime) {
+      if (plan.canIncreaseAtPrice && plan.canIncreaseAtPriceChange) {
+        planDescription = (
+          <div>
+            The position will be increased by {increaseAmountQuoteBadge} if the price drops to
+             {priceBadge} after {dateBadge} and a reversal event is issued
+          </div>
+        );
+      } else {
+        planDescription = (
+          <div>
+            The position will be increased by {increaseAmountQuoteBadge} after {dateBadge} and a
+             reversal event is issued
+          </div>
+        );
+      }
     } else if (plan.canIncreaseAtPrice && plan.canIncreaseAtPriceChange) {
       planDescription = (
         <div>
@@ -198,6 +241,22 @@ const IncreasePlanDialog = ({
           <DialogTitle>Increase plan</DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
+
+        {
+          (plan.canIncrease && plan.missingQuoteAmount > 0)
+          && (
+            <div className='px-6 pb-2'>
+              <Alert>
+                <Wallet className='h-4 w-4' />
+                <AlertTitle>Insufficient balance!</AlertTitle>
+                <AlertDescription>
+                  Please deposit <Badge variant='secondary'>{missingQuoteAmount}</Badge> to your Spot
+                  Wallet so positions can be opened/increased.
+                </AlertDescription>
+              </Alert>
+            </div>
+          )
+        }
 
         <div
           className='text-light px-6 -mt-3 text-center sm:text-left'

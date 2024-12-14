@@ -72,16 +72,7 @@ const Planner = memo(({ windowState, positionState, className }: IComponentProps
         isIncreasePlanOpen
         && <IncreasePlanDialog
           windowState={windowState}
-          /* plan={positionState.plan.increase} */
-          plan={{
-            canIncrease: true,
-            isOpen: false,
-            canIncreaseAtTime: null,
-            canIncreaseAtPrice: null,
-            canIncreaseAtPriceChange: null,
-            increaseAmountQuote: 20,
-            missingQuoteAmount: 0,
-          }}
+          plan={positionState.plan.increase}
           closeDialog={setIsIncreasePlanOpen}
         />
       }
