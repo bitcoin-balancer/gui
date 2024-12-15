@@ -1,4 +1,4 @@
-import { useRef, useMemo, useCallback } from 'react';
+import { useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Wallet } from 'lucide-react';
 import {
@@ -118,38 +118,30 @@ const IncreasePlanDialog = ({
   const priceFormatter = useCallback((value: number) => formatDollarAmount(value, 0), []);
 
   // the list of split items for the current window
-  const windowData = useMemo(() => toSplitStateItems(windowState.window), [windowState.window]);
+  const windowData = toSplitStateItems(windowState.window);
 
   // the date at which a position can be increased
-  const canIncreaseAtTime = useMemo(
-    () => (
-      plan.canIncrease && plan.canIncreaseAtTime
-        ? formatDate(plan.canIncreaseAtTime, 'datetime-short')
-        : undefined
-    ),
-    [plan],
+  const canIncreaseAtTime = (
+    plan.canIncrease && plan.canIncreaseAtTime
+      ? formatDate(plan.canIncreaseAtTime, 'datetime-short')
+      : undefined
   );
 
   // the amount that will be used to open/increase a position
-  const canIncreaseAtPrice = useMemo(
-    () => (
-      plan.canIncrease && plan.canIncreaseAtPrice
-        ? formatDollarAmount(plan.canIncreaseAtPrice, 0)
-        : undefined
-    ),
-    [plan],
+  const canIncreaseAtPrice = (
+    plan.canIncrease && plan.canIncreaseAtPrice
+      ? formatDollarAmount(plan.canIncreaseAtPrice, 0)
+      : undefined
   );
 
   // the amount that will be used to open/increase a position
-  const increaseAmountQuote = useMemo(
-    () => (plan.canIncrease ? formatDollarAmount(plan.increaseAmountQuote) : undefined),
-    [plan],
+  const increaseAmountQuote = (
+    plan.canIncrease ? formatDollarAmount(plan.increaseAmountQuote) : undefined
   );
 
   // the balance gap
-  const missingQuoteAmount = useMemo(
-    () => (plan.canIncrease ? formatDollarAmount(plan.missingQuoteAmount) : undefined),
-    [plan],
+  const missingQuoteAmount = (
+    plan.canIncrease ? formatDollarAmount(plan.missingQuoteAmount) : undefined
   );
 
 
