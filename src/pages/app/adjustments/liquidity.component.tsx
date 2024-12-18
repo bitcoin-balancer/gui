@@ -100,7 +100,7 @@ const Liquidity = ({ closeDialog }: IFormProps) => {
     }),
     [],
   ));
-  const form = useForm<ILiquidityForm>({
+  const { setValue, ...form } = useForm<ILiquidityForm>({
     defaultValues: {
       maxDistanceFromPrice: '',
       intensityWeight1: '',
@@ -125,13 +125,13 @@ const Liquidity = ({ closeDialog }: IFormProps) => {
 
   useEffect(() => {
     if (data) {
-      form.setValue('maxDistanceFromPrice', String(data.maxDistanceFromPrice));
-      form.setValue('intensityWeight1', String(data.intensityWeights[1]));
-      form.setValue('intensityWeight2', String(data.intensityWeights[2]));
-      form.setValue('intensityWeight3', String(data.intensityWeights[3]));
-      form.setValue('intensityWeight4', String(data.intensityWeights[4]));
+      setValue('maxDistanceFromPrice', String(data.maxDistanceFromPrice));
+      setValue('intensityWeight1', String(data.intensityWeights[1]));
+      setValue('intensityWeight2', String(data.intensityWeights[2]));
+      setValue('intensityWeight3', String(data.intensityWeights[3]));
+      setValue('intensityWeight4', String(data.intensityWeights[4]));
     }
-  }, [data, form]);
+  }, [data, setValue]);
 
 
 
@@ -196,7 +196,7 @@ const Liquidity = ({ closeDialog }: IFormProps) => {
     content = <PageLoader variant='dialog' />;
   } else {
     content = (
-      <Form {...form}>
+      <Form setValue={setValue} {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           noValidate

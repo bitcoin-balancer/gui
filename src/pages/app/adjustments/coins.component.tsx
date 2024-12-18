@@ -84,7 +84,7 @@ const Coins = ({ closeDialog }: IFormProps) => {
     }),
     [],
   ));
-  const form = useForm<ICoinsConfigGUI>({
+  const { setValue, ...form } = useForm<ICoinsConfigGUI>({
     defaultValues: {
       size: data?.size ?? '',
       interval: data?.interval ?? '',
@@ -109,14 +109,14 @@ const Coins = ({ closeDialog }: IFormProps) => {
 
   useEffect(() => {
     if (data) {
-      form.setValue('size', data.size);
-      form.setValue('interval', data.interval);
-      form.setValue('requirement', data.requirement);
-      form.setValue('strongRequirement', data.strongRequirement);
-      form.setValue('limit', data.limit);
-      form.setValue('whitelistedSymbolsStr', data.whitelistedSymbols.join(','));
+      setValue('size', data.size);
+      setValue('interval', data.interval);
+      setValue('requirement', data.requirement);
+      setValue('strongRequirement', data.strongRequirement);
+      setValue('limit', data.limit);
+      setValue('whitelistedSymbolsStr', data.whitelistedSymbols.join(','));
     }
-  }, [data, form]);
+  }, [data, setValue]);
 
 
 
@@ -192,7 +192,7 @@ const Coins = ({ closeDialog }: IFormProps) => {
     content = <PageLoader variant='dialog' />;
   } else {
     content = (
-      <Form {...form}>
+      <Form setValue={setValue} {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           noValidate

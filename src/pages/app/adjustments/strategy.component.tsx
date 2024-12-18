@@ -179,7 +179,7 @@ const Strategy = ({ closeDialog }: IFormProps) => {
     }),
     [],
   ));
-  const form = useForm<IStrategyForm>({ defaultValues: PRISTINE_FORM });
+  const { setValue, ...form } = useForm<IStrategyForm>({ defaultValues: PRISTINE_FORM });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const exchangeConfig = useBoundStore((state) => state.exchangeConfig!);
   const openInfoDialog = useBoundStore((state) => state.openInfoDialog);
@@ -196,18 +196,18 @@ const Strategy = ({ closeDialog }: IFormProps) => {
 
   useEffect(() => {
     if (data) {
-      form.setValue('canIncrease', data.canIncrease);
-      form.setValue('canDecrease', data.canDecrease);
-      form.setValue('increaseAmountQuote', String(data.increaseAmountQuote));
-      form.setValue('increaseIdleDuration', String(data.increaseIdleDuration));
-      form.setValue('increaseGainRequirement', String(data.increaseGainRequirement));
+      setValue('canIncrease', data.canIncrease);
+      setValue('canDecrease', data.canDecrease);
+      setValue('increaseAmountQuote', String(data.increaseAmountQuote));
+      setValue('increaseIdleDuration', String(data.increaseIdleDuration));
+      setValue('increaseGainRequirement', String(data.increaseGainRequirement));
       data.decreaseLevels.forEach((level, i) => {
-        form.setValue(`gainRequirement${i as IDecreaseLevelID}`, String(level.gainRequirement));
-        form.setValue(`percentage${i as IDecreaseLevelID}`, String(level.percentage));
-        form.setValue(`frequency${i as IDecreaseLevelID}`, String(level.frequency));
+        setValue(`gainRequirement${i as IDecreaseLevelID}`, String(level.gainRequirement));
+        setValue(`percentage${i as IDecreaseLevelID}`, String(level.percentage));
+        setValue(`frequency${i as IDecreaseLevelID}`, String(level.frequency));
       });
     }
-  }, [data, form]);
+  }, [data, setValue]);
 
 
 
@@ -284,7 +284,7 @@ const Strategy = ({ closeDialog }: IFormProps) => {
     content = <PageLoader variant='dialog' />;
   } else {
     content = (
-      <Form {...form}>
+      <Form setValue={setValue} {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           noValidate

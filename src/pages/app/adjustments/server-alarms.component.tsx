@@ -50,7 +50,7 @@ const ServerAlarms = ({ closeDialog }: IFormProps) => {
     }),
     [],
   ));
-  const form = useForm<IAlarmsConfiguration>({
+  const { setValue, ...form } = useForm<IAlarmsConfiguration>({
     defaultValues: {
       maxCPULoad: data?.maxCPULoad ?? '',
       maxMemoryUsage: data?.maxMemoryUsage ?? '',
@@ -71,11 +71,11 @@ const ServerAlarms = ({ closeDialog }: IFormProps) => {
 
   useEffect(() => {
     if (data) {
-      form.setValue('maxCPULoad', data.maxCPULoad);
-      form.setValue('maxMemoryUsage', data.maxMemoryUsage);
-      form.setValue('maxFileSystemUsage', data.maxFileSystemUsage);
+      setValue('maxCPULoad', data.maxCPULoad);
+      setValue('maxMemoryUsage', data.maxMemoryUsage);
+      setValue('maxFileSystemUsage', data.maxFileSystemUsage);
     }
-  }, [data, form]);
+  }, [data, setValue]);
 
 
 
@@ -139,7 +139,7 @@ const ServerAlarms = ({ closeDialog }: IFormProps) => {
     content = <PageLoader variant='dialog' />;
   } else {
     content = (
-      <Form {...form}>
+      <Form setValue={setValue} {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           noValidate

@@ -64,7 +64,7 @@ const Window = ({ closeDialog }: IFormProps) => {
     }),
     [],
   ));
-  const form = useForm<IWindowConfig>({
+  const { setValue, ...form } = useForm<IWindowConfig>({
     defaultValues: {
       refetchFrequency: data?.refetchFrequency ?? '',
       size: data?.size ?? '',
@@ -88,13 +88,13 @@ const Window = ({ closeDialog }: IFormProps) => {
 
   useEffect(() => {
     if (data) {
-      form.setValue('refetchFrequency', data.refetchFrequency);
-      form.setValue('size', data.size);
-      form.setValue('interval', data.interval);
-      form.setValue('requirement', data.requirement);
-      form.setValue('strongRequirement', data.strongRequirement);
+      setValue('refetchFrequency', data.refetchFrequency);
+      setValue('size', data.size);
+      setValue('interval', data.interval);
+      setValue('requirement', data.requirement);
+      setValue('strongRequirement', data.strongRequirement);
     }
-  }, [data, form]);
+  }, [data, setValue]);
 
 
 
@@ -169,7 +169,7 @@ const Window = ({ closeDialog }: IFormProps) => {
     content = <PageLoader variant='dialog' />;
   } else {
     content = (
-      <Form {...form}>
+      <Form setValue={setValue} {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           noValidate

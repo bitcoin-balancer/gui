@@ -77,7 +77,7 @@ const Reversal = ({ closeDialog }: IFormProps) => {
     }),
     [],
   ));
-  const form = useForm<IReversalForm>({
+  const { setValue, ...form } = useForm<IReversalForm>({
     defaultValues: {
       crashDuration: '',
       pointsRequirement: '',
@@ -101,13 +101,13 @@ const Reversal = ({ closeDialog }: IFormProps) => {
 
   useEffect(() => {
     if (data) {
-      form.setValue('crashDuration', String(data.crashDuration));
-      form.setValue('pointsRequirement', String(data.pointsRequirement));
-      form.setValue('liquidityWeight', String(data.weights.liquidity));
-      form.setValue('coinsQuoteWeight', String(data.weights.coinsQuote));
-      form.setValue('coinsBaseWeight', String(data.weights.coinsBase));
+      setValue('crashDuration', String(data.crashDuration));
+      setValue('pointsRequirement', String(data.pointsRequirement));
+      setValue('liquidityWeight', String(data.weights.liquidity));
+      setValue('coinsQuoteWeight', String(data.weights.coinsQuote));
+      setValue('coinsBaseWeight', String(data.weights.coinsBase));
     }
-  }, [data, form]);
+  }, [data, setValue]);
 
 
 
@@ -181,7 +181,7 @@ const Reversal = ({ closeDialog }: IFormProps) => {
     content = <PageLoader variant='dialog' />;
   } else {
     content = (
-      <Form {...form}>
+      <Form setValue={setValue} {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           noValidate
