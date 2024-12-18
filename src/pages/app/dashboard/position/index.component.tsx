@@ -168,8 +168,8 @@ const Position = memo(({ windowState }: { windowState: IWindowState }) => {
   const increasePosition = () => {
     openConfirmationDialog({
       mode: 'OTP',
-      title: position === undefined ? 'Open position' : 'Increase position',
-      description: position === undefined
+      title: position.active === undefined ? 'Open position' : 'Increase position',
+      description: position.active === undefined
         ? 'A new position will be opened with the amount established in the strategy'
         : 'The amount of the position will be increased following the strategy',
       onConfirmation: async (confirmation: string) => {
@@ -350,7 +350,7 @@ const Position = memo(({ windowState }: { windowState: IWindowState }) => {
             * AMOUNT *
             ******** */}
           <div>
-            <p>{position === undefined ? '' : '~'}{amountQuote}</p>
+            <p>{position.active === undefined ? '' : '~'}{amountQuote}</p>
             <p className='text-light text-xs'>AMOUNT</p>
           </div>
 
