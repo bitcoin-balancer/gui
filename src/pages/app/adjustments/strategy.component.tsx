@@ -30,6 +30,7 @@ import {
   TabsTrigger,
 } from '@/shared/shadcn/components/ui/tabs.tsx';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/shadcn/components/ui/tooltip.tsx';
+import { ENVIRONMENT } from '@/environment/environment.ts';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import {
@@ -103,6 +104,13 @@ const MAX_GAIN_REQUIREMENT = 1000000;
 
 // the maximum value allowed for decrease levels (~30 days)
 const MAX_FREQUENCY = 43200;
+
+// To prevent automatic closure of positions, ensure the quote asset amount used to buy BTC always
+// exceeds PositionService.__MIN_ORDER_SIZE. Positions with a quote asset amount below this
+// threshold will be automatically closed at the database level, without selling the BTC
+// For example, a __MIN_INCREASE_AMOUNT_QUOTE will only work until BTC is worth $500,000.
+// 0.0002 * 500000 = 100
+const __MIN_INCREASE_AMOUNT_QUOTE = ENVIRONMENT.production ? 100 : 25;
 
 // the form object in pristine state
 const PRISTINE_FORM: IStrategyForm = {
@@ -371,7 +379,7 @@ const Strategy = ({ closeDialog }: IFormProps) => {
                     <FormControl>
                       <Input
                         type='number'
-                        placeholder='100'
+                        placeholder='3500'
                         {...field}
                         autoComplete='off'
                         disabled={isSubmitting}
@@ -385,7 +393,7 @@ const Strategy = ({ closeDialog }: IFormProps) => {
                 )}
                 rules={{
                   validate: {
-                    required: (value) => (isNumberValid(Number(value), 20, Number.MAX_SAFE_INTEGER) ? true : `Enter a number ranging 20 - ${Number.MAX_SAFE_INTEGER}`),
+                    required: (value) => (isNumberValid(Number(value), __MIN_INCREASE_AMOUNT_QUOTE, Number.MAX_SAFE_INTEGER) ? true : `Enter a number ranging ${__MIN_INCREASE_AMOUNT_QUOTE} - ${Number.MAX_SAFE_INTEGER}`),
                   },
                 }}
               />
