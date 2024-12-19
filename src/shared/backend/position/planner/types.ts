@@ -66,8 +66,30 @@ type IIncreasePlan = {
 );
 
 /**
+ * Decrease Level
+ * The object containing the properties of a decrease level which it is derived from the
+ * Strategy based on the state of the position.
+ */
+type IDecreaseLevel = {
+  // the price at which the level will become active
+  price: number;
+
+  // the timestamp (ms) at which the level can decrease the position again (null if it can decrease
+  // it right away)
+  idleUntil: number | null;
+};
+type IDecreaseLevels = [
+  IDecreaseLevel,
+  IDecreaseLevel,
+  IDecreaseLevel,
+  IDecreaseLevel,
+  IDecreaseLevel,
+];
+
+/**
  * Decrease Plan
- * ..
+ * The plan that will be used to decrease an active position when the price is rising significantly
+ * and a decrease level is hit.
  */
 type IDecreasePlan = {
   canDecrease: boolean;
@@ -79,6 +101,25 @@ type IDecreasePlan = {
     // StrategyService.config.canDecrease
     canDecrease: true;
 
+    // the timestamp at which the position can be decreased, based on the active decrease level
+    // (null if it can be decreased right away)
+    canDecreaseAtTime: number | null;
+
+    // the price at which the position can be decreased
+    canDecreaseAtPrice: number | null;
+
+    // the price percentage change at which the position can be decreased (null if the current price
+    // is higher than the canDecreaseAtPrice)
+    canDecreaseAtPriceChange: number | null;
+
+    // the percentage of the position amount that will be decreased (based on the active level)
+    decreasePercentage: number;
+
+    // the amount of base asset that is missing from the balance (null if there is enough balance)
+    missingBaseAmount: number;
+
+    // the list of decrease level records
+    decreaseLevels: IDecreaseLevels;
   }
 );
 
@@ -106,6 +147,8 @@ export type {
   // types
   ITargetState,
   IIncreasePlan,
+  IDecreaseLevel,
+  IDecreaseLevels,
   IDecreasePlan,
   IPositionPlan,
 };

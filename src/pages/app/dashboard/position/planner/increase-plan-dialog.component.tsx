@@ -1,4 +1,4 @@
-import { useRef, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Wallet } from 'lucide-react';
 import {
@@ -34,6 +34,7 @@ import { IIncreasePlanComponentProps } from '@/pages/app/dashboard/position/plan
  * @returns IPriceLineOptions[]
  */
 const buildPriceLines = (canIncreaseAtPrice: number, isOpen: boolean): IPriceLineOptions[] => [{
+  id: 'open_increase_line',
   price: canIncreaseAtPrice,
   color: ColorService.DECREASE_2,
   lineWidth: 2,
@@ -92,15 +93,6 @@ const IncreasePlanDialog = ({
   closeDialog,
 }: IIncreasePlanComponentProps) => {
   /* **********************************************************************************************
-   *                                             REFS                                             *
-   ********************************************************************************************** */
-  const priceLines = useRef<IPriceLineOptions[]>([]);
-
-
-
-
-
-  /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
   const breakpoint = useMediaQueryBreakpoint();
@@ -144,6 +136,11 @@ const IncreasePlanDialog = ({
     plan.canIncrease ? formatDollarAmount(plan.missingQuoteAmount) : undefined
   );
 
+  // the price lines
+  let priceLines: IPriceLineOptions[] = [];
+  if (plan.canIncrease && plan.canIncreaseAtPrice) {
+    priceLines = buildPriceLines(plan.canIncreaseAtPrice, plan.isOpen);
+  }
 
 
 
@@ -178,11 +175,6 @@ const IncreasePlanDialog = ({
 
   // calculate the plan description if the position can be increased
   if (plan.canIncrease) {
-    // init the price lines in case they haven't been
-    if (plan.canIncreaseAtPrice && priceLines.current.length === 0) {
-      priceLines.current = buildPriceLines(plan.canIncreaseAtPrice, plan.isOpen);
-    }
-
     // init helpers
     const dateBadge: JSX.Element | undefined = buildDateBadge(plan, canIncreaseAtTime);
     const priceBadge: JSX.Element | undefined = buildPriceBadge(plan, canIncreaseAtPrice);
@@ -260,7 +252,7 @@ const IncreasePlanDialog = ({
           kind='line'
           height={breakpoint === 'xs' || breakpoint === 'sm' ? 350 : 450}
           data={windowData}
-          priceLines={priceLines.current}
+          priceLines={priceLines}
           priceFormatterFunc={priceFormatter}
         />
 

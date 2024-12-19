@@ -5,7 +5,11 @@ import type {
   SeriesType,
 } from 'lightweight-charts';
 import { IState, ISplitStateItem } from '@/shared/backend/market-state/shared/types.ts';
-import { IPriceFormatterFunc, IPriceLineOptions } from '@/shared/components/charts/shared/types.ts';
+import {
+  IPriceFormatterFunc,
+  IPriceLineOptions,
+  IPriceLineStore,
+} from '@/shared/components/charts/shared/types.ts';
 
 /* ************************************************************************************************
  *                                             TYPES                                              *
@@ -94,6 +98,9 @@ type IChartAPIRef = {
   // the instance of the series
   __series: ISeriesApi<'Line' | 'Area'> | undefined;
 
+  // the price lines that will be painted in the chart
+  __lines: IPriceLineStore;
+
   // instantiates (only once) and returns the chart instance
   api: () => IChartApi;
 
@@ -101,7 +108,7 @@ type IChartAPIRef = {
   series: () => ILineSeriesAPI;
 
   // fires whenever new data comes into existance
-  onSeriesChanges: (newData: ISplitStateItem[]) => void;
+  onSeriesChanges: (newData: ISplitStateItem[], priceLines: IPriceLineOptions[]) => void;
 };
 
 

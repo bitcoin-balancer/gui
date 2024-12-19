@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 import { useRef, useLayoutEffect, useEffect } from 'react';
 import { createChart, IChartApi } from 'lightweight-charts';
-import { toLocalTime } from '@/shared/components/charts/shared/utils.ts';
+import { areLinesEqual, buildChartPriceLine, toLocalTime } from '@/shared/components/charts/shared/utils.ts';
 import {
   toSeriesItems,
   buildChartOptions,
@@ -46,6 +46,7 @@ const LineChart = ({
     // properties
     __api: undefined,
     __series: undefined,
+    __lines: {},
 
     // inits (only once) and returns the instance of the Chart API
     api(): IChartApi {
@@ -79,16 +80,18 @@ const LineChart = ({
           this.__series = this.api().addAreaSeries(options);
         }
 
-        // render the price lines if provided
+        // paint the price lines if provided
         for (const line of priceLines) {
-          this.__series.createPriceLine(line);
+          const opts = buildChartPriceLine(line);
+          const instance = this.__series.createPriceLine(opts);
+          this.__lines[line.id] = { options: opts, instance };
         }
       }
       return this.__series;
     },
 
     // applies the data changes to the chart
-    onSeriesChanges(newData): void {
+    onSeriesChanges(newData, newPriceLines): void {
       const series = this.series();
       const seriesData = this.series().data();
       if (!seriesData.length) {
@@ -114,6 +117,15 @@ const LineChart = ({
           time: toLocalTime(newData[newData.length - 1].x),
           value: newData[newData.length - 1].y,
         });
+      }
+
+      // paint the price lines if provided
+      for (const line of newPriceLines) {
+        if (this.__lines[line.id] && !areLinesEqual(this.__lines[line.id].options, line)) {
+          const lineOptions = buildChartPriceLine(line);
+          this.__lines[line.id] = { ...this.__lines[line.id], options: lineOptions };
+          this.__lines[line.id].instance.applyOptions(lineOptions);
+        }
       }
     },
   });
@@ -151,7 +163,7 @@ const LineChart = ({
   /**
    * Fires whenever the data changes, keeping the local state synced.
    */
-  useEffect(() => { chartAPIRef.current.onSeriesChanges(data); }, [data]);
+  useEffect(() => { chartAPIRef.current.onSeriesChanges(data, priceLines); }, [data, priceLines]);
 
 
 

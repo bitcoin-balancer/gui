@@ -1,5 +1,5 @@
 import { SeriesMarkerPosition, SeriesMarkerShape, UTCTimestamp } from 'lightweight-charts';
-import { IMarker } from '@/shared/components/charts/shared/types.ts';
+import { IMarker, IPriceLineOptions } from '@/shared/components/charts/shared/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -48,6 +48,30 @@ const buildChartMarker = (
   text,
 });
 
+/**
+ * Builds a price line options object based on a partial one.
+ * @param options
+ * @returns IPriceLineOptions
+ */
+const buildChartPriceLine = (options: IPriceLineOptions): IPriceLineOptions => ({
+  ...options,
+  lineWidth: options.lineWidth ?? 2,
+  lineStyle: options.lineStyle ?? 2,
+  axisLabelVisible: options.axisLabelVisible ?? true,
+});
+
+/**
+ * Compares two price line objects and returns true if they are equal.
+ * @param a
+ * @param b
+ * @returns boolean
+ */
+const areLinesEqual = (a: IPriceLineOptions, b: IPriceLineOptions): boolean => (
+  a.id === b.id
+  && a.price === b.price
+  && a.color === b.color
+  && a.title === b.title
+);
 
 
 
@@ -58,4 +82,6 @@ const buildChartMarker = (
 export {
   toLocalTime,
   buildChartMarker,
+  buildChartPriceLine,
+  areLinesEqual,
 };

@@ -3,6 +3,7 @@ import {
   SeriesMarkerPosition,
   SeriesMarkerShape,
   CreatePriceLineOptions,
+  IPriceLine,
 } from 'lightweight-charts';
 
 /* ************************************************************************************************
@@ -33,7 +34,18 @@ type IMarker = {
  * Price Line
  * The object that will be used to render a line on the chart.
  */
-type IPriceLineOptions = CreatePriceLineOptions;
+type IPriceLineOptions = CreatePriceLineOptions & { id: string };
+
+/**
+ * Price Line Store
+ * For the charts to be able to keep the lines in sync, it needs to maintain a local state.
+ */
+type IPriceLineStore = {
+  [id: string]: {
+    options: IPriceLineOptions;
+    instance: IPriceLine;
+  }
+};
 
 
 
@@ -46,4 +58,5 @@ export type {
   IPriceFormatterFunc,
   IMarker,
   IPriceLineOptions,
+  IPriceLineStore,
 };
