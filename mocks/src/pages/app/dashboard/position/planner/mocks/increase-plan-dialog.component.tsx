@@ -254,6 +254,7 @@ const IncreasePlanDialog = ({
           data={windowData}
           priceLines={priceLines}
           priceFormatterFunc={priceFormatter}
+          showAttributionLogo={false}
         />
 
       </DialogContent>

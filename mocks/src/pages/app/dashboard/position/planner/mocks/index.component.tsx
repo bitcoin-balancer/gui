@@ -74,7 +74,37 @@ const Planner = memo(({ windowState, positionState, className }: IComponentProps
         isDecreasePlanOpen && positionState.plan.decrease
         && <DecreasePlanDialog
           windowState={windowState}
-          plan={positionState.plan.decrease}
+          /* plan={positionState.plan.decrease} */
+          plan={{ // entry: 94801.55
+            canDecrease: true,
+            canDecreaseAtTime: null,
+            canDecreaseAtPrice: 98119.60,
+            canDecreaseAtPriceChange: 1.42,
+            decreasePercentage: 12.5,
+            missingBaseAmount: 0,
+            decreaseLevels: [
+              {
+                price: 98119.60,
+                idleUntil: null,
+              },
+              {
+                price: 99541.62,
+                idleUntil: null,
+              },
+              {
+                price: 100963.65,
+                idleUntil: null,
+              },
+              {
+                price: 101911.66,
+                idleUntil: null,
+              },
+              {
+                price: 103333.68,
+                idleUntil: null,
+              },
+            ],
+          }}
           closeDialog={setIsDecreasePlanOpen}
         />
       }
@@ -88,7 +118,16 @@ const Planner = memo(({ windowState, positionState, className }: IComponentProps
         isIncreasePlanOpen
         && <IncreasePlanDialog
           windowState={windowState}
-          plan={positionState.plan.increase}
+          /* plan={positionState.plan.increase} */
+          plan={{ // entry: 94801.55
+            canIncrease: true,
+            isOpen: false,
+            canIncreaseAtTime: 1734787179087,
+            canIncreaseAtPrice: 91957.50,
+            canIncreaseAtPriceChange: -3.01,
+            increaseAmountQuote: 7500,
+            missingQuoteAmount: 0,
+          }}
           closeDialog={setIsIncreasePlanOpen}
         />
       }

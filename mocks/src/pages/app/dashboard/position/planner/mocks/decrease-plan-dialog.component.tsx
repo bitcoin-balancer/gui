@@ -1,3 +1,4 @@
+import { formatDistance } from 'date-fns';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Wallet } from 'lucide-react';
@@ -11,16 +12,21 @@ import {
 import { Alert, AlertDescription, AlertTitle } from '@/shared/shadcn/components/ui/alert.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
-import { formatDate, formatDollarAmount } from '@/shared/services/transformers/index.service.ts';
+import {
+  formatBitcoinAmount,
+  formatDate,
+  formatDollarAmount,
+} from '@/shared/services/transformers/index.service.ts';
+import { useBoundStore } from '@/shared/store/index.store.ts';
 import { toSplitStateItems } from '@/shared/backend/market-state/shared/utils.ts';
-import { IIncreasePlan } from '@/shared/backend/position/planner/index.service.ts';
+import { IDecreasePlan } from '@/shared/backend/position/planner/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
 import { NavService } from '@/shared/services/nav/index.service.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import { IPriceLineOptions } from '@/shared/components/charts/shared/types.ts';
 import LineChart from '@/shared/components/charts/line-chart/index.component.tsx';
-import { IIncreasePlanComponentProps } from '@/pages/app/dashboard/position/planner/types.ts';
+import { IDecreasePlanComponentProps } from '@/pages/app/dashboard/position/planner/types.ts';
 
 
 /* ************************************************************************************************
@@ -29,50 +35,51 @@ import { IIncreasePlanComponentProps } from '@/pages/app/dashboard/position/plan
 
 /**
  * Builds te price line object that will be rendered in the chart.
- * @param canIncreaseAtPrice
- * @param isOpen
+ * @param plan
+ * @param serverTime
  * @returns IPriceLineOptions[]
  */
-const buildPriceLines = (plan: IIncreasePlan): IPriceLineOptions[] => {
-  if (plan.canIncrease && plan.canIncreaseAtPrice) {
-    return [{
-      id: 'open_increase_line',
-      price: plan.canIncreaseAtPrice,
-      color: ColorService.DECREASE_2,
-    }];
+const buildPriceLines = (plan: IDecreasePlan, serverTime: number): IPriceLineOptions[] => {
+  if (plan.canDecrease) {
+    return plan.decreaseLevels.map((lvl, idx) => ({
+      id: `lvl-${idx}`,
+      price: lvl.price,
+      color: lvl.idleUntil === null ? ColorService.INCREASE_2 : ColorService.INCREASE_0,
+      title: lvl.idleUntil === null ? '' : `Active in ${formatDistance(lvl.idleUntil, serverTime)}`,
+    }));
   }
   return [];
 };
 
 /**
- * Builds the badge element that contains the canIncreaseAtPrice as well as the %.
+ * Builds the badge element that contains the canDecreaseAtPrice as well as the %.
  * @param plan
- * @param canIncreaseAtPrice
+ * @param canDecreaseAtPrice
  * @returns JSX.Element | undefined
  */
 const buildPriceBadge = (
-  plan: IIncreasePlan,
-  canIncreaseAtPrice: string | undefined,
+  plan: IDecreasePlan,
+  canDecreaseAtPrice: string | undefined,
 ): JSX.Element | undefined => (
-  plan.canIncrease && plan.canIncreaseAtPrice && plan.canIncreaseAtPriceChange
+  plan.canDecrease && plan.canDecreaseAtPrice && plan.canDecreaseAtPriceChange
     ? <Badge variant='secondary'>
-      {canIncreaseAtPrice} <span className='ml-2 text-decrease-1'>{plan.canIncreaseAtPriceChange}%</span>
+      {canDecreaseAtPrice} <span className='ml-2 text-increase-1'>+{plan.canDecreaseAtPriceChange}%</span>
     </Badge>
     : undefined
 );
 
 /**
- * Builds the badge element that contains the formatted canIncreaseAtTime.
+ * Builds the badge element that contains the formatted canDecreaseAtTime.
  * @param plan
- * @param canIncreaseAtTime
+ * @param canDecreaseAtTime
  * @returns JSX.Element | undefined
  */
 const buildDateBadge = (
-  plan: IIncreasePlan,
-  canIncreaseAtTime: string | undefined,
+  plan: IDecreasePlan,
+  canDecreaseAtTime: string | undefined,
 ): JSX.Element | undefined => (
-  plan.canIncrease && plan.canIncreaseAtTime
-    ? <Badge variant='secondary'>{canIncreaseAtTime}</Badge>
+  plan.canDecrease && plan.canDecreaseAtTime
+    ? <Badge variant='secondary'>{canDecreaseAtTime}</Badge>
     : undefined
 );
 
@@ -85,21 +92,21 @@ const buildDateBadge = (
  ************************************************************************************************ */
 
 /**
- * Increase Plan Dialog Component
- * Component in charge of displaying the plan to open/increase a position.
+ * Decrease Plan Dialog Component
+ * Component in charge of displaying the plan to decrease a position.
  */
-const IncreasePlanDialog = ({
+const DecreasePlanDialog = ({
   windowState,
   plan,
   closeDialog,
-}: IIncreasePlanComponentProps) => {
+}: IDecreasePlanComponentProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
   const breakpoint = useMediaQueryBreakpoint();
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
+  const serverTime = useBoundStore((state) => state.serverTime!);
   const navigate = useNavigate();
-
 
 
 
@@ -114,32 +121,27 @@ const IncreasePlanDialog = ({
   // the list of split items for the current window
   const windowData = toSplitStateItems(windowState.window);
 
-  // the date at which a position can be increased
-  const canIncreaseAtTime = (
-    plan.canIncrease && plan.canIncreaseAtTime
-      ? formatDate(plan.canIncreaseAtTime, 'datetime-short')
+  // the date at which a position can be decreased
+  const canDecreaseAtTime = (
+    plan.canDecrease && plan.canDecreaseAtTime
+      ? formatDate(plan.canDecreaseAtTime, 'datetime-short')
       : undefined
   );
 
-  // the price at which the position can be opened/increased
-  const canIncreaseAtPrice = (
-    plan.canIncrease && plan.canIncreaseAtPrice
-      ? formatDollarAmount(plan.canIncreaseAtPrice, 0)
+  // the price at which the position can be decreased
+  const canDecreaseAtPrice = (
+    plan.canDecrease && plan.canDecreaseAtPrice
+      ? formatDollarAmount(plan.canDecreaseAtPrice, 0)
       : undefined
-  );
-
-  // the amount that will be used to open/increase a position
-  const increaseAmountQuote = (
-    plan.canIncrease ? formatDollarAmount(plan.increaseAmountQuote) : undefined
   );
 
   // the balance gap
-  const missingQuoteAmount = (
-    plan.canIncrease ? formatDollarAmount(plan.missingQuoteAmount) : undefined
+  const missingBaseAmount = (
+    plan.canDecrease ? formatBitcoinAmount(plan.missingBaseAmount) : undefined
   );
 
   // the price lines
-  const priceLines = buildPriceLines(plan);
+  const priceLines = buildPriceLines(plan, serverTime);
 
 
 
@@ -166,52 +168,49 @@ const IncreasePlanDialog = ({
    ********************************************************************************************** */
   let planDescription: JSX.Element = (
     <div>
-      The position won't be opened or increased because <strong>"Auto-increase"</strong> is
-       currently disabled. In order to enable it, navigate to
+      The position won't be decreased because <strong>"Auto-decrease"</strong> is currently
+       disabled. In order to enable it, navigate to
         the <Button variant='link' onClick={navigateToAdjustments} className='p-0 m-0 h-auto text-base text-sky-700'>Adjustments</Button> page and
          update it via the <strong>"Strategy Form"</strong>
     </div>
   );
 
-  // calculate the plan description if the position can be increased
-  if (plan.canIncrease) {
+  // calculate the plan description if the position can be decreased
+  if (plan.canDecrease) {
     // init helpers
-    const dateBadge: JSX.Element | undefined = buildDateBadge(plan, canIncreaseAtTime);
-    const priceBadge: JSX.Element | undefined = buildPriceBadge(plan, canIncreaseAtPrice);
-    const increaseAmountQuoteBadge: JSX.Element = <Badge variant='secondary'>{increaseAmountQuote}</Badge>;
+    const dateBadge: JSX.Element | undefined = buildDateBadge(plan, canDecreaseAtTime);
+    const priceBadge: JSX.Element | undefined = buildPriceBadge(plan, canDecreaseAtPrice);
+    const decreasePercentageBadge: JSX.Element = <Badge variant='secondary'>{plan.decreasePercentage}%</Badge>;
 
     // put together the description according to the current requirements
-    if (plan.canIncreaseAtTime) {
-      if (plan.canIncreaseAtPrice && plan.canIncreaseAtPriceChange) {
+    if (plan.canDecreaseAtTime) {
+      if (plan.canDecreaseAtPrice && plan.canDecreaseAtPriceChange) {
         planDescription = (
           <div>
-            The position will be increased by {increaseAmountQuoteBadge} if the price drops to
-             {priceBadge} after {dateBadge} and a reversal event is issued
+            The position will be decreased by {decreasePercentageBadge} if the price rises to
+             {priceBadge} after {dateBadge}
           </div>
         );
       } else {
         planDescription = (
           <div>
-            The position will be increased by {increaseAmountQuoteBadge} after {dateBadge} and a
-             reversal event is issued
+            The position will be decreased by {decreasePercentageBadge} after {dateBadge}
           </div>
         );
       }
-    } else if (plan.canIncreaseAtPrice && plan.canIncreaseAtPriceChange) {
+    } else if (plan.canDecreaseAtPrice && plan.canDecreaseAtPriceChange) {
       planDescription = (
         <div>
-          A {increaseAmountQuoteBadge} position will be opened if the price drops to {priceBadge}
-           and a reversal event is issued
+          The position will be decreased by {decreasePercentageBadge} if the price rises to
+           {priceBadge}
         </div>
       );
     } else {
-      planDescription = plan.isOpen
-        ? <div>
-          A {increaseAmountQuoteBadge} position will be opened if a reversal event is issued
+      planDescription = (
+        <div>
+          The position will be decreased by {decreasePercentageBadge}
         </div>
-        : <div>
-          The position will be increased by {increaseAmountQuoteBadge} if a reversal event is issued
-        </div>;
+      );
     }
   }
   return (
@@ -222,20 +221,20 @@ const IncreasePlanDialog = ({
       <DialogContent className='p-0'>
 
         <DialogHeader className='p-6 pb-0'>
-          <DialogTitle>Increase plan</DialogTitle>
+          <DialogTitle>Decrease plan</DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
 
         {
-          (plan.canIncrease && plan.missingQuoteAmount > 0)
+          (plan.canDecrease && plan.missingBaseAmount > 0)
           && (
             <div className='px-6 pb-2'>
               <Alert>
                 <Wallet className='h-4 w-4' />
                 <AlertTitle>Insufficient balance!</AlertTitle>
                 <AlertDescription>
-                  Please deposit <Badge variant='secondary'>{missingQuoteAmount}</Badge> to your Spot
-                  Wallet so positions can be opened/increased.
+                  Please deposit <Badge variant='secondary'>{missingBaseAmount}</Badge> to your Spot
+                  Wallet so positions can be decreased.
                 </AlertDescription>
               </Alert>
             </div>
@@ -254,6 +253,7 @@ const IncreasePlanDialog = ({
           data={windowData}
           priceLines={priceLines}
           priceFormatterFunc={priceFormatter}
+          showAttributionLogo={false}
         />
 
       </DialogContent>
@@ -269,4 +269,4 @@ const IncreasePlanDialog = ({
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export default IncreasePlanDialog;
+export default DecreasePlanDialog;
