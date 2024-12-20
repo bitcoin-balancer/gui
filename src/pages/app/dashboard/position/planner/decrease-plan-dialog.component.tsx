@@ -45,7 +45,7 @@ const buildPriceLines = (plan: IDecreasePlan, serverTime: number): IPriceLineOpt
       id: `lvl-${idx}`,
       price: lvl.price,
       color: lvl.idleUntil === null ? ColorService.INCREASE_2 : ColorService.INCREASE_0,
-      title: lvl.idleUntil === null ? `Level ${idx}` : `Active in ${formatDistance(lvl.idleUntil, serverTime)}`,
+      title: lvl.idleUntil === null ? '' : `Active in ${formatDistance(lvl.idleUntil, serverTime)}`,
     }));
   }
   return [];

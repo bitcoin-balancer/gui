@@ -46,14 +46,6 @@ const Planner = memo(({ windowState, positionState, className }: IComponentProps
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem
-            onClick={() => setIsIncreasePlanOpen(true)}
-          >
-            <ArrowUpWideNarrow
-                aria-hidden='true'
-                className='mr-1 h-5 w-5'
-              /> Increase plan
-          </DropdownMenuItem>
-          <DropdownMenuItem
             onClick={() => setIsDecreasePlanOpen(true)}
             disabled={positionState.plan.decrease === undefined}
           >
@@ -62,8 +54,60 @@ const Planner = memo(({ windowState, positionState, className }: IComponentProps
                 className='mr-1 h-5 w-5'
               /> Decrease plan
           </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => setIsIncreasePlanOpen(true)}
+          >
+            <ArrowUpWideNarrow
+                aria-hidden='true'
+                className='mr-1 h-5 w-5'
+              /> Increase plan
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+
+
+
+      {/* **********************
+        * DECREASE PLAN DIALOG *
+        ********************** */}
+      {
+        isDecreasePlanOpen && positionState.plan.decrease
+        && <DecreasePlanDialog
+          windowState={windowState}
+          plan={positionState.plan.decrease}
+          /* plan={{ // entry 94767.21
+            canDecrease: true,
+            canDecreaseAtTime: Date.now() + 881200,
+            canDecreaseAtPrice: 105732.28,
+            canDecreaseAtPriceChange: 9.11,
+            decreasePercentage: 35,
+            missingBaseAmount: 0.0156455,
+            decreaseLevels: [
+              {
+                price: 95241.04,
+                idleUntil: null,
+              },
+              {
+                price: 96188.72,
+                idleUntil: Date.now() + 100000,
+              },
+              {
+                price: 97136.39,
+                idleUntil: Date.now() + 881200,
+              },
+              {
+                price: 98084.06,
+                idleUntil: null,
+              },
+              {
+                price: 99505.57,
+                idleUntil: null,
+              },
+            ],
+          }} */
+          closeDialog={setIsDecreasePlanOpen}
+        />
+      }
 
 
 
@@ -76,20 +120,6 @@ const Planner = memo(({ windowState, positionState, className }: IComponentProps
           windowState={windowState}
           plan={positionState.plan.increase}
           closeDialog={setIsIncreasePlanOpen}
-        />
-      }
-
-
-
-      {/* **********************
-        * DECREASE PLAN DIALOG *
-        ********************** */}
-      {
-        isDecreasePlanOpen && positionState.plan.decrease
-        && <DecreasePlanDialog
-          windowState={windowState}
-          plan={positionState.plan.decrease}
-          closeDialog={setIsDecreasePlanOpen}
         />
       }
     </>
