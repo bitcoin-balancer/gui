@@ -68,7 +68,7 @@ const Footer = memo(({
           className='text-slate-50'
           onClick={() => navigate(NavService.dashboard())}
         >
-          <LayoutPanelLeft aria-hidden='true' className='w-4 h-4 mr-1' /> Application
+          <LayoutPanelLeft aria-hidden='true' className='w-4 h-4 mr-1' /> Launch app
         </Button>
 
         <Button

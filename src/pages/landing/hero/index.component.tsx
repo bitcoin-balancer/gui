@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { LogIn, ChartCandlestick } from 'lucide-react';
+import { ChartCandlestick, LayoutPanelLeft } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { NavService } from '@/shared/services/nav/index.service.ts';
 import { IHeroProps } from '@/pages/landing/hero/types.ts';
@@ -50,7 +50,7 @@ const Hero = memo(({
         <Button
           size={breakpoint === 'xs' ? 'default' : 'lg'}
           onClick={() => navigate(NavService.dashboard())}
-        ><LogIn className='mr-2' /> Launch app</Button>
+        ><LayoutPanelLeft className='mr-2' /> Launch app</Button>
 
       </div>
 

@@ -235,7 +235,7 @@ const Header = memo(({
               <LayoutPanelLeft
                 aria-hidden='true'
                 className='w-5 h-5 mr-2'
-              /> Application
+              /> Launch app
             </Button>
 
             <Button
