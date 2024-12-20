@@ -11,7 +11,7 @@ import {
 import { Alert, AlertDescription, AlertTitle } from '@/shared/shadcn/components/ui/alert.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
-import { formatDate, formatDollarAmount } from '@/shared/services/transformers/index.service.ts';
+import { formatBitcoinAmount, formatDate, formatDollarAmount } from '@/shared/services/transformers/index.service.ts';
 import { toSplitStateItems } from '@/shared/backend/market-state/shared/utils.ts';
 import { IIncreasePlan } from '@/shared/backend/position/planner/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
@@ -112,28 +112,23 @@ const DecreasePlanDialog = ({
   // the list of split items for the current window
   const windowData = toSplitStateItems(windowState.window);
 
-  // the date at which a position can be increased
-  const canIncreaseAtTime = (
-    plan.canIncrease && plan.canIncreaseAtTime
-      ? formatDate(plan.canIncreaseAtTime, 'datetime-short')
+  // the date at which a position can be decreased
+  const canDecreaseAtTime = (
+    plan.canDecrease && plan.canDecreaseAtTime
+      ? formatDate(plan.canDecreaseAtTime, 'datetime-short')
       : undefined
   );
 
-  // the amount that will be used to open/increase a position
-  const canIncreaseAtPrice = (
-    plan.canIncrease && plan.canIncreaseAtPrice
-      ? formatDollarAmount(plan.canIncreaseAtPrice, 0)
+  // the price at which the position can be decreased
+  const canDecreaseAtPrice = (
+    plan.canDecrease && plan.canDecreaseAtPrice
+      ? formatDollarAmount(plan.canDecreaseAtPrice, 0)
       : undefined
-  );
-
-  // the amount that will be used to open/increase a position
-  const increaseAmountQuote = (
-    plan.canIncrease ? formatDollarAmount(plan.increaseAmountQuote) : undefined
   );
 
   // the balance gap
-  const missingQuoteAmount = (
-    plan.canIncrease ? formatDollarAmount(plan.missingQuoteAmount) : undefined
+  const missingBaseAmount = (
+    plan.canDecrease ? formatBitcoinAmount(plan.missingBaseAmount) : undefined
   );
 
   // the price lines
@@ -166,8 +161,8 @@ const DecreasePlanDialog = ({
    ********************************************************************************************** */
   let planDescription: JSX.Element = (
     <div>
-      The position won't be opened or increased because <strong>"Auto-increase"</strong> is
-       currently disabled. In order to enable it, navigate to
+      The position won't be decreased because <strong>"Auto-decrease"</strong> is currently
+       disabled. In order to enable it, navigate to
         the <Button variant='link' onClick={navigateToAdjustments} className='p-0 m-0 h-auto text-sky-700'>Adjustments</Button> page and
          update it via the <strong>"Strategy Form"</strong>
     </div>
@@ -222,20 +217,20 @@ const DecreasePlanDialog = ({
       <DialogContent className='p-0'>
 
         <DialogHeader className='p-6 pb-0'>
-          <DialogTitle>Increase plan</DialogTitle>
+          <DialogTitle>Decrease plan</DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
 
         {
-          (plan.canIncrease && plan.missingQuoteAmount > 0)
+          (plan.canDecrease && plan.missingBaseAmount > 0)
           && (
             <div className='px-6 pb-2'>
               <Alert>
                 <Wallet className='h-4 w-4' />
                 <AlertTitle>Insufficient balance!</AlertTitle>
                 <AlertDescription>
-                  Please deposit <Badge variant='secondary'>{missingQuoteAmount}</Badge> to your Spot
-                  Wallet so positions can be opened/increased.
+                  Please deposit <Badge variant='secondary'>{missingBaseAmount}</Badge> to your Spot
+                  Wallet so positions can be decreased.
                 </AlertDescription>
               </Alert>
             </div>

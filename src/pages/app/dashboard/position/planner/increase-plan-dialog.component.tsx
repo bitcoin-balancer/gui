@@ -33,15 +33,20 @@ import { IIncreasePlanComponentProps } from '@/pages/app/dashboard/position/plan
  * @param isOpen
  * @returns IPriceLineOptions[]
  */
-const buildPriceLines = (canIncreaseAtPrice: number, isOpen: boolean): IPriceLineOptions[] => [{
-  id: 'open_increase_line',
-  price: canIncreaseAtPrice,
-  color: ColorService.DECREASE_2,
-  lineWidth: 2,
-  lineStyle: 2,
-  axisLabelVisible: true,
-  title: isOpen ? 'OPEN' : 'INCREASE',
-}];
+const buildPriceLines = (plan: IIncreasePlan): IPriceLineOptions[] => {
+  if (plan.canIncrease && plan.canIncreaseAtPrice) {
+    return [{
+      id: 'open_increase_line',
+      price: plan.canIncreaseAtPrice,
+      color: ColorService.DECREASE_2,
+      lineWidth: 2,
+      lineStyle: 2,
+      axisLabelVisible: true,
+      title: plan.isOpen ? 'OPEN' : 'INCREASE',
+    }];
+  }
+  return [];
+};
 
 /**
  * Builds the badge element that contains the canIncreaseAtPrice as well as the %.
@@ -119,7 +124,7 @@ const IncreasePlanDialog = ({
       : undefined
   );
 
-  // the amount that will be used to open/increase a position
+  // the price at which the position can be opened/increased
   const canIncreaseAtPrice = (
     plan.canIncrease && plan.canIncreaseAtPrice
       ? formatDollarAmount(plan.canIncreaseAtPrice, 0)
@@ -137,10 +142,8 @@ const IncreasePlanDialog = ({
   );
 
   // the price lines
-  let priceLines: IPriceLineOptions[] = [];
-  if (plan.canIncrease && plan.canIncreaseAtPrice) {
-    priceLines = buildPriceLines(plan.canIncreaseAtPrice, plan.isOpen);
-  }
+  const priceLines = buildPriceLines(plan);
+
 
 
 
