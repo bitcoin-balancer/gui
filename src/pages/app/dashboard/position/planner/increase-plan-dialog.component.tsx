@@ -39,10 +39,6 @@ const buildPriceLines = (plan: IIncreasePlan): IPriceLineOptions[] => {
       id: 'open_increase_line',
       price: plan.canIncreaseAtPrice,
       color: ColorService.DECREASE_2,
-      lineWidth: 2,
-      lineStyle: 2,
-      axisLabelVisible: true,
-      title: plan.isOpen ? 'OPEN' : 'INCREASE',
     }];
   }
   return [];
@@ -171,7 +167,7 @@ const IncreasePlanDialog = ({
     <div>
       The position won't be opened or increased because <strong>"Auto-increase"</strong> is
        currently disabled. In order to enable it, navigate to
-        the <Button variant='link' onClick={navigateToAdjustments} className='p-0 m-0 h-auto text-sky-700'>Adjustments</Button> page and
+        the <Button variant='link' onClick={navigateToAdjustments} className='p-0 m-0 h-auto text-base text-sky-700'>Adjustments</Button> page and
          update it via the <strong>"Strategy Form"</strong>
     </div>
   );
