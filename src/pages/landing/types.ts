@@ -5,8 +5,8 @@
  ************************************************************************************************ */
 
 // sections that can be navigated to
-type ISectionID = 'position_sample' | 'characteristics' | 'features' | 'indicators' | 'exchanges'
-| 'monitoring' | 'technologies' | 'faq';
+type ISectionID = 'position_sample' | 'characteristics' | 'features' | 'indicators' | 'planner'
+| 'exchanges' | 'monitoring' | 'technologies' | 'faq';
 
 
 
