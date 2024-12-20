@@ -1,7 +1,11 @@
 /* eslint-disable no-restricted-syntax */
 import { useRef, useLayoutEffect, useEffect } from 'react';
 import { createChart, IChartApi } from 'lightweight-charts';
-import { areLinesEqual, buildChartPriceLine, toLocalTime } from '@/shared/components/charts/shared/utils.ts';
+import {
+  areLinesEqual,
+  buildChartPriceLine,
+  toLocalTime,
+} from '@/shared/components/charts/shared/utils.ts';
 import {
   toSeriesItems,
   buildChartOptions,

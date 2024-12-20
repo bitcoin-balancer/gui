@@ -8,6 +8,7 @@ import {
 } from '@/shared/shadcn/components/ui/dropdown-menu.tsx';
 import { IComponentProps } from '@/pages/app/dashboard/position/planner/types.ts';
 import IncreasePlanDialog from '@/pages/app/dashboard/position/planner/increase-plan-dialog.component.tsx';
+import DecreasePlanDialog from '@/pages/app/dashboard/position/planner/decrease-plan-dialog.component.tsx';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -84,11 +85,11 @@ const Planner = memo(({ windowState, positionState, className }: IComponentProps
         * DECREASE PLAN DIALOG *
         ********************** */}
       {
-        isDecreasePlanOpen
-        && <IncreasePlanDialog
+        isDecreasePlanOpen && positionState.plan.decrease
+        && <DecreasePlanDialog
           windowState={windowState}
-          plan={positionState.plan.increase}
-          closeDialog={setIsIncreasePlanOpen}
+          plan={positionState.plan.decrease}
+          closeDialog={setIsDecreasePlanOpen}
         />
       }
     </>
