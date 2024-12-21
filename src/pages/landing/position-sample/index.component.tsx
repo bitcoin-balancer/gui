@@ -1,4 +1,6 @@
 import { memo } from 'react';
+import { ChevronDown } from 'lucide-react';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { IBreakpoint } from '@/shared/services/media-query/index.service.ts';
 import CandlestickChart from '@/shared/components/charts/candlestick-chart/index.component.tsx';
 import { MARKERS, DATA } from '@/pages/landing/position-sample/data.ts';
@@ -11,7 +13,10 @@ import { MARKERS, DATA } from '@/pages/landing/position-sample/data.ts';
  * Position Sample
  * Component in charge of displaying what a position looks like.
  */
-const PositionSample = memo(({ breakpoint }: { breakpoint: IBreakpoint }) => (
+const PositionSample = memo(({
+  breakpoint,
+  openUnderConstructionDialog,
+}: { breakpoint: IBreakpoint, openUnderConstructionDialog: () => void }) => (
   <div
     className='w-full flex justify-center items-start'
   >
@@ -43,6 +48,31 @@ const PositionSample = memo(({ breakpoint }: { breakpoint: IBreakpoint }) => (
           <p className='text-xs sm:text-sm mt-2 text-light'>
           Trade automatically via your preferred exchange.
           </p>
+
+          {
+            (breakpoint !== 'xs' && breakpoint !== 'sm')
+            && (
+              <div
+                className='flex justify-start items-center gap-2 mt-5'
+              >
+
+                <Button
+                  onClick={openUnderConstructionDialog}
+                >
+                  Get Balancer
+                </Button>
+
+                <Button
+                  variant='outline'
+                  className='items-center gap-1'
+                  onClick={openUnderConstructionDialog}
+                >
+                  Videos <ChevronDown className='w-4 h-4' />
+                </Button>
+
+              </div>
+            )
+          }
         </aside>
 
 
@@ -65,6 +95,30 @@ const PositionSample = memo(({ breakpoint }: { breakpoint: IBreakpoint }) => (
 
       </div>
 
+      {
+        (breakpoint === 'xs' || breakpoint === 'sm')
+        && (
+          <div
+            className='flex justify-center items-center gap-2 mt-5'
+          >
+
+            <Button
+              onClick={openUnderConstructionDialog}
+            >
+              Get Balancer
+            </Button>
+
+            <Button
+              variant='outline'
+              className='items-center gap-1'
+              onClick={openUnderConstructionDialog}
+            >
+              Videos <ChevronDown className='w-4 h-4' />
+            </Button>
+
+          </div>
+        )
+      }
     </section>
   </div>
 ));

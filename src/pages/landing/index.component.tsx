@@ -119,6 +119,7 @@ const Landing = () => {
           className='my-20 md:my-28'
         >
           <PositionSample
+            openUnderConstructionDialog={openUnderConstructionDialog}
             breakpoint={breakpoint}
           />
         </div>
