@@ -7,6 +7,7 @@ import { ISectionID as ILandingSectionID } from '@/pages/landing/types.ts';
 
 // props used by the component
 type IHeaderProps = {
+  openUnderConstructionDialog: () => void;
   openContactDialog: () => void;
   openLargeInfoDialog: (data: ISectionID) => void,
   navigateToSection: (id: ILandingSectionID) => void;

@@ -4,6 +4,7 @@ import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
 import ScrollToTop from '@/shared/components/scroll-to-top/index.component.tsx';
+import InfoDialog from '@/shared/components/info-dialog/index.component.tsx';
 import LargeInfoDialog from '@/shared/components/large-info-dialog/index.component.tsx';
 import ContactDialog from '@/pages/landing/contact-dialog/index.component';
 import Header from '@/pages/landing/header/index.component.tsx';
@@ -35,6 +36,7 @@ const Landing = () => {
   const breakpoint = useMediaQueryBreakpoint();
   const isLargeInfoDialogOpen = useBoundStore((state) => state.isLargeInfoDialogOpen);
   const [isContactDialogOpen, setIsContactDialogOpen] = useState<boolean>(false);
+  const openInfoDialog = useBoundStore((state) => state.openInfoDialog);
   const openLargeInfoDialog = useBoundStore((state) => state.openLargeInfoDialog);
   const navigate = useNavigate();
 
@@ -60,6 +62,17 @@ const Landing = () => {
    */
   const openContactDialog = useCallback(() => setIsContactDialogOpen(true), []);
 
+  /**
+   * Opens the under construction dialog.
+   */
+  const openUnderConstructionDialog = useCallback(
+    () => openInfoDialog({
+      title: 'Under construction',
+      content: 'This section is currently under construction and will be available soon. Please check back in a few days.',
+    }),
+    [openInfoDialog],
+  );
+
 
 
 
@@ -77,6 +90,7 @@ const Landing = () => {
           * HEADER *
           ******** */}
         <Header
+          openUnderConstructionDialog={openUnderConstructionDialog}
           openContactDialog={openContactDialog}
           openLargeInfoDialog={openLargeInfoDialog}
           navigateToSection={navigateToSection}
@@ -261,6 +275,13 @@ const Landing = () => {
         isOpen={isContactDialogOpen}
         setIsOpen={setIsContactDialogOpen}
       />
+
+
+
+      {/* *************
+        * INFO DIALOG *
+        ************* */}
+      <InfoDialog />
 
 
 

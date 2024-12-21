@@ -16,6 +16,7 @@ import {
   LogIn,
   LayoutPanelLeft,
   TrendingUpDown,
+  Youtube,
 } from 'lucide-react';
 import {
   Sheet,
@@ -40,6 +41,7 @@ import { ISectionID } from '@/pages/landing/types.ts';
  * Component in charge of displaying the introduction to the project.
  */
 const Header = memo(({
+  openUnderConstructionDialog,
   openContactDialog,
   openLargeInfoDialog,
   navigateToSection,
@@ -271,6 +273,17 @@ const Header = memo(({
               /> GitHub page
             </Button>
 
+            <Button
+              variant='ghost'
+              className='w-full justify-start'
+              onClick={openUnderConstructionDialog}
+            >
+              <Youtube
+                aria-hidden='true'
+                className='w-5 h-5 mr-2'
+              /> Youtube page
+            </Button>
+
 
             <Button
               variant='ghost'
@@ -293,6 +306,33 @@ const Header = memo(({
                 className='w-5 h-5 mr-2'
               /> Contact
             </Button>
+
+
+            <Separator className='my-5' />
+
+
+            <Button
+              variant='ghost'
+              className='w-full justify-start'
+              onClick={openUnderConstructionDialog}
+            >
+              <Youtube
+                aria-hidden='true'
+                className='w-5 h-5 mr-2'
+              /> What is Balancer?
+            </Button>
+
+            <Button
+              variant='ghost'
+              className='w-full justify-start'
+              onClick={openUnderConstructionDialog}
+            >
+              <Youtube
+                aria-hidden='true'
+                className='w-5 h-5 mr-2'
+              /> Platform walk-through
+            </Button>
+
           </nav>
 
         </SheetContent>
