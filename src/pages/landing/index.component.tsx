@@ -251,6 +251,7 @@ const Landing = () => {
           id='footer'
         >
           <Footer
+            openUnderConstructionDialog={openUnderConstructionDialog}
             openContactDialog={openContactDialog}
             openLargeInfoDialog={openLargeInfoDialog}
             navigate={navigate}

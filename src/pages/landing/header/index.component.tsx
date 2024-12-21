@@ -17,6 +17,7 @@ import {
   LayoutPanelLeft,
   TrendingUpDown,
   Youtube,
+  HardDriveDownload,
 } from 'lucide-react';
 import {
   Sheet,
@@ -265,6 +266,17 @@ const Header = memo(({
             <Button
               variant='ghost'
               className='w-full justify-start'
+              onClick={openUnderConstructionDialog}
+            >
+              <HardDriveDownload
+                aria-hidden='true'
+                className='w-5 h-5 mr-2'
+              /> Get Balancer
+            </Button>
+
+            <Button
+              variant='ghost'
+              className='w-full justify-start'
               onClick={() => NavService.openGitHubPage()}
             >
               <Github
@@ -281,7 +293,7 @@ const Header = memo(({
               <Youtube
                 aria-hidden='true'
                 className='w-5 h-5 mr-2'
-              /> Youtube page
+              /> YouTube page
             </Button>
 
 

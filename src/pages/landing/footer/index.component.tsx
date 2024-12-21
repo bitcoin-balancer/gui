@@ -7,6 +7,8 @@ import {
   LayoutPanelLeft,
   LogIn,
   LockKeyhole,
+  Youtube,
+  HardDriveDownload,
 } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { NavService } from '@/shared/services/nav/index.service.ts';
@@ -21,6 +23,7 @@ import { IFooterProps } from '@/pages/landing/footer/types.ts';
  * Component in charge of displaying why people should use balancer.
  */
 const Footer = memo(({
+  openUnderConstructionDialog,
   openContactDialog,
   openLargeInfoDialog,
   navigate,
@@ -90,9 +93,25 @@ const Footer = memo(({
         <Button
           variant='link'
           className='text-slate-50'
+          onClick={openUnderConstructionDialog}
+        >
+          <HardDriveDownload aria-hidden='true' className='w-4 h-4 mr-1' /> Get Balancer
+        </Button>
+
+        <Button
+          variant='link'
+          className='text-slate-50'
           onClick={() => NavService.openGitHubPage()}
         >
           <Github aria-hidden='true' className='w-4 h-4 mr-1' /> GitHub page
+        </Button>
+
+        <Button
+          variant='link'
+          className='text-slate-50'
+          onClick={openUnderConstructionDialog}
+        >
+          <Youtube aria-hidden='true' className='w-4 h-4 mr-1' /> YouTube page
         </Button>
 
         <Button
