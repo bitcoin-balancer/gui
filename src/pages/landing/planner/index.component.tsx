@@ -1,6 +1,9 @@
 import { memo } from 'react';
+import { ChevronDown } from 'lucide-react';
 import Autoplay from 'embla-carousel-autoplay';
+import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Carousel, CarouselContent, CarouselItem } from '@/shared/shadcn/components/ui/carousel.tsx';
+import { IBreakpoint } from '@/shared/services/media-query/index.service.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -10,7 +13,10 @@ import { Carousel, CarouselContent, CarouselItem } from '@/shared/shadcn/compone
  * Planner
  * Component in charge of describing Balancer's Position Planner.
  */
-const Planner = memo(() => (
+const Planner = memo(({
+  breakpoint,
+  openUnderConstructionDialog,
+}: { breakpoint: IBreakpoint, openUnderConstructionDialog: () => void }) => (
   <div
     className='w-full flex justify-center items-start'
   >
@@ -36,6 +42,31 @@ const Planner = memo(() => (
           <p className='text-xs sm:text-sm mt-2 text-light'>
             You set the parameters; Balancer plans and executes the strategy.
           </p>
+
+          {
+            (breakpoint !== 'xs' && breakpoint !== 'sm')
+            && (
+              <div
+                className='flex justify-start items-center gap-2 mt-5'
+              >
+
+                <Button
+                  onClick={openUnderConstructionDialog}
+                >
+                  Get Balancer
+                </Button>
+
+                <Button
+                  variant='outline'
+                  className='items-center gap-1'
+                  onClick={openUnderConstructionDialog}
+                >
+                  Videos <ChevronDown className='w-4 h-4' />
+                </Button>
+
+              </div>
+            )
+          }
         </aside>
 
         <article
@@ -86,7 +117,30 @@ const Planner = memo(() => (
         </article>
       </div>
 
+      {
+        (breakpoint === 'xs' || breakpoint === 'sm')
+        && (
+          <div
+            className='flex justify-center items-center gap-2 mt-7'
+          >
 
+            <Button
+              onClick={openUnderConstructionDialog}
+            >
+              Get Balancer
+            </Button>
+
+            <Button
+              variant='outline'
+              className='items-center gap-1'
+              onClick={openUnderConstructionDialog}
+            >
+              Videos <ChevronDown className='w-4 h-4' />
+            </Button>
+
+          </div>
+        )
+      }
 
     </section>
   </div>

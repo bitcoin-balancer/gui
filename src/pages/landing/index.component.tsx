@@ -183,7 +183,10 @@ const Landing = () => {
           id='planner'
           className='my-20 md:my-28'
         >
-          <Planner />
+          <Planner
+            openUnderConstructionDialog={openUnderConstructionDialog}
+            breakpoint={breakpoint}
+          />
         </div>
 
 
