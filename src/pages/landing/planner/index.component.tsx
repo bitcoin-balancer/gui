@@ -4,6 +4,7 @@ import Autoplay from 'embla-carousel-autoplay';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Carousel, CarouselContent, CarouselItem } from '@/shared/shadcn/components/ui/carousel.tsx';
 import { IBreakpoint } from '@/shared/services/media-query/index.service.ts';
+import { NavService } from '@/shared/services/nav/index.service.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -51,7 +52,7 @@ const Planner = memo(({
               >
 
                 <Button
-                  onClick={openUnderConstructionDialog}
+                  onClick={NavService.openCLIRepo}
                 >
                   Get Balancer
                 </Button>
@@ -125,7 +126,7 @@ const Planner = memo(({
           >
 
             <Button
-              onClick={openUnderConstructionDialog}
+              onClick={NavService.openCLIRepo}
             >
               Get Balancer
             </Button>

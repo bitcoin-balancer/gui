@@ -266,7 +266,7 @@ const Header = memo(({
             <Button
               variant='ghost'
               className='w-full justify-start'
-              onClick={openUnderConstructionDialog}
+              onClick={NavService.openCLIRepo}
             >
               <HardDriveDownload
                 aria-hidden='true'

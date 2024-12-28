@@ -2,6 +2,7 @@ import { memo } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { IBreakpoint } from '@/shared/services/media-query/index.service.ts';
+import { NavService } from '@/shared/services/nav/index.service.ts';
 import CandlestickChart from '@/shared/components/charts/candlestick-chart/index.component.tsx';
 import { MARKERS, DATA } from '@/pages/landing/position-sample/data.ts';
 
@@ -57,7 +58,7 @@ const PositionSample = memo(({
               >
 
                 <Button
-                  onClick={openUnderConstructionDialog}
+                  onClick={NavService.openCLIRepo}
                 >
                   Get Balancer
                 </Button>
@@ -103,7 +104,7 @@ const PositionSample = memo(({
           >
 
             <Button
-              onClick={openUnderConstructionDialog}
+              onClick={NavService.openCLIRepo}
             >
               Get Balancer
             </Button>
