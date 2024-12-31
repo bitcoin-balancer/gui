@@ -147,7 +147,7 @@ const NotificationsDialog = ({
       open={isDialogOpen}
       onOpenChange={handleCloseDialog}
     >
-      <DialogContent className='p-0'>
+      <DialogContent className='p-0 h-dvh sm:h-[95dvh]'>
 
         <DialogHeader className='p-6 pb-0'>
           <DialogTitle>Notifications</DialogTitle>
