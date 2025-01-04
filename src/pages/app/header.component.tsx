@@ -1,4 +1,4 @@
-import { memo, useState, useMemo } from 'react';
+import { memo, useState, useMemo, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Menu,
@@ -12,6 +12,8 @@ import {
   Loader2,
   FlaskConical,
   Scale,
+  HardDriveDownload,
+  Youtube,
 } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
@@ -56,6 +58,7 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
   const breakpoint = useMediaQueryBreakpoint();
   const [sidenavOpen, setSidenavOpen] = useState<boolean>(false);
   const navigate = useNavigate();
+  const openInfoDialog = useBoundStore((state) => state.openInfoDialog);
   const openLargeInfoDialog = useBoundStore((state) => state.openLargeInfoDialog);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
   const version = useBoundStore((state) => state.version!);
@@ -95,6 +98,17 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
     setSidenavOpen(false);
     navigate(route);
   };
+
+  /**
+   * Opens the under construction dialog.
+   */
+  const openUnderConstructionDialog = useCallback(
+    () => openInfoDialog({
+      title: 'Under construction',
+      content: 'This section is currently under construction and will be available soon. Please check back in a few days.',
+    }),
+    [openInfoDialog],
+  );
 
   /**
    * Prompts the user and if confirmed, it will destroy the current session.
@@ -368,12 +382,34 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
             <Button
               variant='ghost'
               className='w-full justify-start'
+              onClick={NavService.openCLIRepo}
+            >
+              <HardDriveDownload
+                aria-hidden='true'
+                className='w-5 h-5 mr-2'
+              /> Get Balancer
+            </Button>
+
+            <Button
+              variant='ghost'
+              className='w-full justify-start'
               onClick={NavService.openGitHubPage}
             >
               <Github
                 aria-hidden='true'
                 className='w-5 h-5 mr-2'
-              /> View on GitHub
+              /> GitHub page
+            </Button>
+
+            <Button
+              variant='ghost'
+              className='w-full justify-start'
+              onClick={openUnderConstructionDialog}
+            >
+              <Youtube
+                aria-hidden='true'
+                className='w-5 h-5 mr-2'
+              /> YouTube page
             </Button>
 
             <Button
@@ -415,6 +451,32 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
               </DropdownMenuContent>
             </DropdownMenu>
 
+
+
+            <Separator className='my-5' />
+
+
+            <Button
+              variant='ghost'
+              className='w-full justify-start'
+              onClick={openUnderConstructionDialog}
+            >
+              <Youtube
+                aria-hidden='true'
+                className='w-5 h-5 mr-2'
+              /> What is Balancer?
+            </Button>
+
+            <Button
+              variant='ghost'
+              className='w-full justify-start'
+              onClick={openUnderConstructionDialog}
+            >
+              <Youtube
+                aria-hidden='true'
+                className='w-5 h-5 mr-2'
+              /> Platform walk-through
+            </Button>
           </nav>
 
         </SheetContent>
