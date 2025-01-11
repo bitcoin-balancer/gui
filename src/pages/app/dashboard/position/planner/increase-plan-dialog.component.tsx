@@ -198,12 +198,15 @@ const IncreasePlanDialog = ({
         );
       }
     } else if (plan.canIncreaseAtPrice && plan.canIncreaseAtPriceChange) {
-      planDescription = (
-        <div>
+      planDescription = plan.isOpen
+        ? <div>
           A {increaseAmountQuoteBadge} position will be opened if the price drops to {priceBadge}
-           and a reversal event is issued
+          and a reversal event is issued
         </div>
-      );
+        : <div>
+          The position will be increased by {increaseAmountQuoteBadge} if the price drops to
+           {priceBadge} and a reversal event is issued
+        </div>;
     } else {
       planDescription = plan.isOpen
         ? <div>
