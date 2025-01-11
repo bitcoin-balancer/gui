@@ -36,6 +36,13 @@ const Error = () => {
           onClick={SWService.updateApp}
         >Refresh app</Button>
 
+        <p
+          className='text-xs text-slate-200'
+        >
+          If the problem persists, close the app, clean the site data (cache) via your browser and
+           try again.
+        </p>
+
       </section>
 
     </main>
