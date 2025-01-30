@@ -1,4 +1,3 @@
-import { formatDistance } from 'date-fns';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Wallet } from 'lucide-react';
@@ -19,73 +18,17 @@ import {
 } from '@/shared/services/transformers/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { toSplitStateItems } from '@/shared/backend/market-state/shared/utils.ts';
-import { IDecreasePlan } from '@/shared/backend/position/planner/index.service.ts';
-import { ColorService } from '@/shared/services/color/index.service.ts';
 import { NavService } from '@/shared/services/nav/index.service.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
-import { IPriceLineOptions } from '@/shared/components/charts/shared/types.ts';
 import LineChart from '@/shared/components/charts/line-chart/index.component.tsx';
+import {
+  buildDateBadge,
+  buildDecreaseLevelPriceLines,
+  buildPriceBadge,
+  buildWindowStatePriceLine,
+} from '@/pages/app/dashboard/position/planner/utils.tsx';
 import { IDecreasePlanComponentProps } from '@/pages/app/dashboard/position/planner/types.ts';
-
-
-/* ************************************************************************************************
- *                                            HELPERS                                             *
- ************************************************************************************************ */
-
-/**
- * Builds te price line object that will be rendered in the chart.
- * @param plan
- * @param serverTime
- * @returns IPriceLineOptions[]
- */
-const buildPriceLines = (plan: IDecreasePlan, serverTime: number): IPriceLineOptions[] => {
-  if (plan.canDecrease) {
-    return plan.decreaseLevels.map((lvl, idx) => ({
-      id: `lvl-${idx}`,
-      price: lvl.price,
-      color: lvl.idleUntil === null ? ColorService.INCREASE_2 : ColorService.INCREASE_0,
-      title: lvl.idleUntil === null ? '' : `Active in ${formatDistance(lvl.idleUntil, serverTime)}`,
-    }));
-  }
-  return [];
-};
-
-/**
- * Builds the badge element that contains the canDecreaseAtPrice as well as the %.
- * @param plan
- * @param canDecreaseAtPrice
- * @returns JSX.Element | undefined
- */
-const buildPriceBadge = (
-  plan: IDecreasePlan,
-  canDecreaseAtPrice: string | undefined,
-): JSX.Element | undefined => (
-  plan.canDecrease && plan.canDecreaseAtPrice && plan.canDecreaseAtPriceChange
-    ? <Badge variant='secondary'>
-      {canDecreaseAtPrice} <span className='ml-2 text-increase-1'>+{plan.canDecreaseAtPriceChange}%</span>
-    </Badge>
-    : undefined
-);
-
-/**
- * Builds the badge element that contains the formatted canDecreaseAtTime.
- * @param plan
- * @param canDecreaseAtTime
- * @returns JSX.Element | undefined
- */
-const buildDateBadge = (
-  plan: IDecreasePlan,
-  canDecreaseAtTime: string | undefined,
-): JSX.Element | undefined => (
-  plan.canDecrease && plan.canDecreaseAtTime
-    ? <Badge variant='secondary'>{canDecreaseAtTime}</Badge>
-    : undefined
-);
-
-
-
-
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -141,8 +84,8 @@ const DecreasePlanDialog = ({
   );
 
   // the price lines
-  const priceLines = buildPriceLines(plan, serverTime);
-
+  const decreaseLevelPriceLines = buildDecreaseLevelPriceLines(plan, serverTime);
+  const windowStatePriceLine = buildWindowStatePriceLine(plan);
 
 
 
@@ -251,7 +194,11 @@ const DecreasePlanDialog = ({
           kind='line'
           height={breakpoint === 'xs' || breakpoint === 'sm' ? 350 : 450}
           data={windowData}
-          priceLines={priceLines}
+          priceLines={
+            windowStatePriceLine === undefined
+              ? decreaseLevelPriceLines
+              : [...decreaseLevelPriceLines, windowStatePriceLine]
+          }
           priceFormatterFunc={priceFormatter}
         />
 
