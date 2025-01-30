@@ -8,7 +8,7 @@ import {
 } from '@/shared/shadcn/components/ui/dropdown-menu.tsx';
 import { IComponentProps } from '@/pages/app/dashboard/position/planner/types.ts';
 import IncreasePlanDialog from '@/pages/app/dashboard/position/planner/increase-plan-dialog.component.tsx';
-import DecreasePlanDialog from '@/pages/app/dashboard/position/planner/decrease-plan-dialog.component.tsx';
+import DecreasePlanDialog from '@/pages/app/dashboard/position/planner/decrease-plan-dialog/index.component.tsx';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -47,7 +47,7 @@ const Planner = memo(({ windowState, positionState, className }: IComponentProps
         <DropdownMenuContent>
           <DropdownMenuItem
             onClick={() => setIsDecreasePlanOpen(true)}
-            disabled={positionState.plan.decrease === undefined}
+            /* disabled={positionState.plan.decrease === undefined} */
           >
             <ArrowDownWideNarrow
                 aria-hidden='true'
@@ -71,10 +71,26 @@ const Planner = memo(({ windowState, positionState, className }: IComponentProps
         * DECREASE PLAN DIALOG *
         ********************** */}
       {
-        isDecreasePlanOpen && positionState.plan.decrease
+        /* isDecreasePlanOpen && positionState.plan.decrease */
+        isDecreasePlanOpen
         && <DecreasePlanDialog
           windowState={windowState}
-          plan={positionState.plan.decrease}
+          /* plan={positionState.plan.decrease} */
+          plan={{
+            canDecrease: true,
+            canDecreaseAtTime: Date.now() + 100000,
+            canDecreaseAtPrice: 107830,
+            canDecreaseAtPriceChange: 2.5,
+            decreasePercentage: 15,
+            missingBaseAmount: 0,
+            decreaseLevels: [
+              { price: 105726, idleUntil: null },
+              { price: 106778, idleUntil: null },
+              { price: 107830, idleUntil: null },
+              { price: 108882, idleUntil: null },
+              { price: 110460, idleUntil: null },
+            ],
+          }}
           closeDialog={setIsDecreasePlanOpen}
         />
       }

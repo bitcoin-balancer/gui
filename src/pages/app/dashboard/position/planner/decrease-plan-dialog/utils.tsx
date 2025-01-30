@@ -5,12 +5,8 @@ import { ColorService } from '@/shared/services/color/index.service.ts';
 import { IPriceLineOptions } from '@/shared/components/charts/shared/types.ts';
 
 /* ************************************************************************************************
- *                                         DECREASE PLAN                                          *
+ *                                          PRICE LINES                                           *
  ************************************************************************************************ */
-
-/**
- * Price lines
- */
 
 /**
  * Builds te price line object that will be rendered in the chart.
@@ -39,9 +35,11 @@ const buildWindowStatePriceLine = (plan: IDecreasePlan): IPriceLineOptions | und
 
 
 
-/**
- * Badges
- */
+
+
+/* ************************************************************************************************
+ *                                             BADGES                                             *
+ ************************************************************************************************ */
 
 /**
  * Builds the badge element that contains the canDecreaseAtPrice as well as the %.
@@ -83,9 +81,11 @@ const buildDateBadge = (
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export {
-  // decrease plan
+  // price lines
   buildDecreaseLevelPriceLines,
   buildWindowStatePriceLine,
+
+  // badges
   buildPriceBadge,
   buildDateBadge,
 };

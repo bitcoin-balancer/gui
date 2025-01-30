@@ -27,7 +27,7 @@ import {
   buildDecreaseLevelPriceLines,
   buildPriceBadge,
   buildWindowStatePriceLine,
-} from '@/pages/app/dashboard/position/planner/utils.tsx';
+} from '@/pages/app/dashboard/position/planner/decrease-plan-dialog/utils.tsx';
 import { IDecreasePlanComponentProps } from '@/pages/app/dashboard/position/planner/types.ts';
 
 /* ************************************************************************************************
