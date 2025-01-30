@@ -56,6 +56,23 @@ const __isTargetingDecreaseLevel = (
 );
 
 /**
+ * Verifies if the window state price line should be plotted based on the targeted price.
+ * @param plan
+ * @param maxPercentageDifference
+ * @returns boolean
+ */
+const __shouldPlotWindowStatePriceLine = (
+  plan: IDecreasePlan,
+  maxPercentageDifference: number,
+): plan is { canDecrease: true } & IDecreasePlan => (
+  plan.canDecrease
+  && typeof plan.canDecreaseAtPrice === 'number'
+  && plan.decreaseLevels.filter((level) => (
+    __isTargetingDecreaseLevel(plan.canDecreaseAtPrice!, level.price, maxPercentageDifference)
+  )).length === 0
+);
+
+/**
  * Checks if the plan is targeting the decrease levels or the window state. Returns undefined if
  * targeting the decrease levels.
  * @param plan
@@ -65,16 +82,12 @@ const buildWindowStatePriceLine = (
   plan: IDecreasePlan,
   maxPercentageDifference: number = 0.1,
 ): IPriceLineOptions | undefined => {
-  if (plan.canDecrease && plan.canDecreaseAtPrice) {
-    if (plan.decreaseLevels.filter((level) => (
-      __isTargetingDecreaseLevel(plan.canDecreaseAtPrice!, level.price, maxPercentageDifference)
-    )).length === 0) {
-      return {
-        id: 'window-state',
-        price: plan.canDecreaseAtPrice,
-        color: ColorService.INCREASE_2,
-      };
-    }
+  if (__shouldPlotWindowStatePriceLine(plan, maxPercentageDifference)) {
+    return {
+      id: 'window-state',
+      price: plan.canDecreaseAtPrice!,
+      color: ColorService.INCREASE_2,
+    };
   }
   return undefined;
 };
