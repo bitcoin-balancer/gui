@@ -32,7 +32,7 @@ type IIncreasePlanComponentProps = {
  */
 type IDecreasePlanComponentProps = {
   windowState: IWindowState;
-  plan: IDecreasePlan;
+  plan: { canDecrease: true } & IDecreasePlan;
   closeDialog: (nextState: undefined) => void;
 };
 

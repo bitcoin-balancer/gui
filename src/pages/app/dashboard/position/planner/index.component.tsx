@@ -6,6 +6,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/shared/shadcn/components/ui/dropdown-menu.tsx';
+import { IDecreasePlan } from '@/shared/backend/position/planner/index.service.ts';
 import { IComponentProps } from '@/pages/app/dashboard/position/planner/types.ts';
 import IncreasePlanDialog from '@/pages/app/dashboard/position/planner/increase-plan-dialog/index.component.tsx';
 import DecreasePlanDialog from '@/pages/app/dashboard/position/planner/decrease-plan-dialog/index.component.tsx';
@@ -74,7 +75,7 @@ const Planner = memo(({ windowState, positionState, className }: IComponentProps
         isDecreasePlanOpen && positionState.plan.decrease
         && <DecreasePlanDialog
           windowState={windowState}
-          plan={positionState.plan.decrease}
+          plan={positionState.plan.decrease as { canDecrease: true } & IDecreasePlan}
           closeDialog={setIsDecreasePlanOpen}
         />
       }

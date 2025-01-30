@@ -62,11 +62,10 @@ const __isTargetingDecreaseLevel = (
  * @returns boolean
  */
 const __shouldPlotWindowStatePriceLine = (
-  plan: IDecreasePlan,
+  plan: { canDecrease: true } & IDecreasePlan,
   maxPercentageDifference: number,
-): plan is { canDecrease: true } & IDecreasePlan => (
-  plan.canDecrease
-  && typeof plan.canDecreaseAtPrice === 'number'
+): plan is { canDecrease: true, canDecreaseAtPrice: number } & IDecreasePlan => (
+  typeof plan.canDecreaseAtPrice === 'number'
   && plan.decreaseLevels.filter((level) => (
     __isTargetingDecreaseLevel(plan.canDecreaseAtPrice!, level.price, maxPercentageDifference)
   )).length === 0
@@ -79,13 +78,13 @@ const __shouldPlotWindowStatePriceLine = (
  * @returns IPriceLineOptions | undefined
  */
 const buildWindowStatePriceLine = (
-  plan: IDecreasePlan,
-  maxPercentageDifference: number = 0.1,
+  plan: { canDecrease: true } & IDecreasePlan,
+  maxPercentageDifference: number = 0.15,
 ): IPriceLineOptions | undefined => {
   if (__shouldPlotWindowStatePriceLine(plan, maxPercentageDifference)) {
     return {
       id: 'window-state',
-      price: plan.canDecreaseAtPrice!,
+      price: plan.canDecreaseAtPrice,
       color: ColorService.INCREASE_2,
     };
   }
@@ -107,10 +106,11 @@ const buildWindowStatePriceLine = (
  * @returns JSX.Element | undefined
  */
 const buildPriceBadge = (
-  plan: IDecreasePlan,
+  plan: { canDecrease: true } & IDecreasePlan,
   canDecreaseAtPrice: string | undefined,
 ): JSX.Element | undefined => (
-  plan.canDecrease && plan.canDecreaseAtPrice && plan.canDecreaseAtPriceChange
+  typeof plan.canDecreaseAtPrice === 'number'
+  && typeof plan.canDecreaseAtPriceChange === 'number'
     ? <Badge variant='secondary'>
       {canDecreaseAtPrice} <span className='ml-2 text-increase-1'>+{plan.canDecreaseAtPriceChange}%</span>
     </Badge>
@@ -124,10 +124,10 @@ const buildPriceBadge = (
  * @returns JSX.Element | undefined
  */
 const buildDateBadge = (
-  plan: IDecreasePlan,
+  plan: { canDecrease: true } & IDecreasePlan,
   canDecreaseAtTime: string | undefined,
 ): JSX.Element | undefined => (
-  plan.canDecrease && plan.canDecreaseAtTime
+  typeof plan.canDecreaseAtTime === 'number'
     ? <Badge variant='secondary'>{canDecreaseAtTime}</Badge>
     : undefined
 );
