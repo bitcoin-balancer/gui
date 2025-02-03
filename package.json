@@ -2,7 +2,7 @@
   "name": "gui",
   "description": "The Balancer GUI is a powerful, user-friendly Progressive Web Application designed to streamline the configuration and management of the Balancer API.",
   "private": false,
-  "version": "1.0.13",
+  "version": "1.0.14",
   "type": "module",
   "scripts": {
     "dev": "gui-environment --development && vite && sw-builder",
@@ -37,7 +37,7 @@
     "self-hosted"
   ],
   "author": "Jesus Graterol",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/bitcoin-balancer/gui/issues"
   },
