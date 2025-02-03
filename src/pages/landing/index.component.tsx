@@ -104,7 +104,6 @@ const Landing = () => {
           ****** */}
         <Hero
           breakpoint={breakpoint}
-          openLargeInfoDialog={openLargeInfoDialog}
           navigateToSection={navigateToSection}
           navigate={navigate}
         />

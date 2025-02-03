@@ -7,7 +7,6 @@ import {
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
-import ValueAveraging from '@/shared/components/large-info-dialog/value-averaging.component';
 import Window from '@/shared/components/large-info-dialog/window.component.tsx';
 import Liquidity from '@/shared/components/large-info-dialog/liquidity.component.tsx';
 import Coins from '@/shared/components/large-info-dialog/coins.component.tsx';
@@ -22,10 +21,6 @@ import { ISectionID, ISections } from '@/shared/components/large-info-dialog/typ
 
 // the list of supported sections
 const SECTIONS: ISections = {
-  value_averaging: {
-    title: 'Value Averaging',
-    description: 'Trading strategy used by Balancer',
-  },
   window: {
     title: 'Window',
     description: 'Indicator used by Balancer to see Bitcoin\'s price and trend',
@@ -113,7 +108,6 @@ const LargeInfoDialog = ({ data }: { data: ISectionID }) => {
         {/* ****************
           * DIALOG CONTENT *
           **************** */}
-        { data === 'value_averaging' && <ValueAveraging />}
         { data === 'window' && <Window />}
         { data === 'liquidity' && <Liquidity />}
         { data === 'coins' && <Coins />}

@@ -14,7 +14,6 @@ import { IHeroProps } from '@/pages/landing/hero/types.ts';
  */
 const Hero = memo(({
   breakpoint,
-  openLargeInfoDialog,
   navigateToSection,
   navigate,
 }: IHeroProps) => (
@@ -35,7 +34,7 @@ const Hero = memo(({
         className='text-lg sm:text-xl mt-5'
       >
         Balancer is a cutting-edge, open-source, self-hosted platform that empowers users to
-        automate the <button onClick={() => openLargeInfoDialog('value_averaging')} className='font-extrabold'>Value Averaging Strategy</button> for Bitcoin
+         trade <strong>Bitcoin</strong> automatically
       </p>
 
       <div
