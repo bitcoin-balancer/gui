@@ -1,6 +1,6 @@
 {
   "name": "gui",
-  "description": "The Balancer GUI is a powerful, user-friendly Progressive Web Application designed to streamline the configuration and management of the Balancer API.",
+  "description": "The gui is a powerful, user-friendly Progressive Web Application (PWA) designed to simplify the configuration and management of the api.",
   "private": false,
   "version": "1.0.14",
   "type": "module",
@@ -26,15 +26,14 @@
   "keywords": [
     "bitcoin",
     "trading",
-    "bitcoin-trading",
+    "dollar-cost-averaging",
+    "dca",
     "strategy",
     "trading-strategy",
-    "bitcoin-trading-strategy",
-    "spot",
-    "spot-market",
-    "bitcoin-spot-market",
-    "automated",
-    "self-hosted"
+    "value-averaging",
+    "open-source",
+    "profit",
+    "investment"
   ],
   "author": "Jesus Graterol",
   "license": "Apache-2.0",

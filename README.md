@@ -1,12 +1,13 @@
-# Balancer GUI
+# `gui`
 
-The Balancer GUI is a powerful, user-friendly Progressive Web Application designed to streamline the configuration and management of the Balancer API. It provides a central hub for:
+The `gui` is a powerful, user-friendly Progressive Web Application (PWA) designed to simplify the configuration and management of the [`api`](https://github.com/bitcoin-balancer/api). It serves as a central hub for:
 
-* **Seamless API Control:**  Effortlessly manage and configure all aspects of your Balancer API, from setting trading parameters to monitoring performance.
-* **Intuitive Interface:**  Enjoy a modern and intuitive interface designed for ease of use, making configuration and management accessible to users of all experience levels.
-* **Progressive Web App Features:**  Benefit from the speed and reliability of a Progressive Web App, with offline functionality and instant updates.
+* **Effortless API management** – Configure trading parameters, monitor performance, and control all aspects of your [`api`](https://github.com/bitcoin-balancer/api) with ease
+* **User-friendly interface** – A modern, intuitive design ensures seamless navigation for users of all experience levels
+* **PWA Benefits** – Enjoy fast performance and instant updates without the need for installations
 
-The Balancer GUI empowers you to take complete control of your Value Averaging Strategy, ensuring a smooth and efficient investment experience. 
+With the `gui`, you have full control over your Balancer Instance, making automated Bitcoin trading smooth, efficient, and hassle-free.
+
 
 
 
