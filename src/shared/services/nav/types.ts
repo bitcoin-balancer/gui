@@ -21,6 +21,7 @@ type INavService = {
   createNewInstance:() => void;
   openGitHubPage:() => void;
   openCLIRepo:() => void;
+  openCLILITERepo:() => void;
   openGUIRepo:() => void;
   openGUICommit: (hash: string) => void;
   openAPIRepo:() => void;

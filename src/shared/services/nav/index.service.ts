@@ -21,6 +21,7 @@ const navServiceFactory = (): INavService => {
   const __API_REPO_URL = 'https://github.com/bitcoin-balancer/api';
   const __GUI_REPO_URL = 'https://github.com/bitcoin-balancer/gui';
   const __CLI_REPO_URL = 'https://github.com/bitcoin-balancer/cli';
+  const __CLI_LITE_REPO_URL = 'https://github.com/bitcoin-balancer/cli-lite';
   const __CT_REPO_URL = 'https://github.com/bitcoin-balancer/ct';
 
   // the URL for the docker images
@@ -89,6 +90,11 @@ const navServiceFactory = (): INavService => {
    * Opens the CLI's respository page in a new tab.
    */
   const openCLIRepo = (): void => openURL(__CLI_REPO_URL);
+
+  /**
+   * Opens the CLI-LITE's respository page in a new tab.
+   */
+  const openCLILITERepo = (): void => openURL(__CLI_LITE_REPO_URL);
 
   /**
    * Opens the GUI's respository page in a new tab.
@@ -232,6 +238,7 @@ const navServiceFactory = (): INavService => {
     createNewInstance,
     openGitHubPage,
     openCLIRepo,
+    openCLILITERepo,
     openGUIRepo,
     openGUICommit,
     openAPIRepo,

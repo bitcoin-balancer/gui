@@ -149,6 +149,14 @@ const Footer = memo(({
         <Button
           variant='link'
           className='text-slate-50'
+          onClick={() => NavService.openCLILITERepo()}
+        >
+          <Github aria-hidden='true' className='w-4 h-4 mr-1' /> bitcoin-balancer/cli-lite
+        </Button>
+
+        <Button
+          variant='link'
+          className='text-slate-50'
           onClick={() => NavService.openAPIRepo()}
         >
           <Github aria-hidden='true' className='w-4 h-4 mr-1' /> bitcoin-balancer/api
