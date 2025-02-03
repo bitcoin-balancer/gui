@@ -177,8 +177,8 @@ const FAQ_ITEMS = [
     title: 'Can I use Balancer with other trading strategies?',
     content: (
       <p>
-        While Balancer focuses on value averaging, it is a flexible platform. You can adjust your
-         trading parameters and customize your approach to fit your personal investment goals.
+        Balancer is flexible. You can adjust your trading parameters and customize your approach to
+         fit your personal investment goals.
       </p>
     ),
   },

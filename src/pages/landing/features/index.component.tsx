@@ -108,7 +108,7 @@ const Features = memo(({ breakpoint, openLargeInfoDialog, navigateToSection }: I
             Balancer's <Button
               variant='link'
               className='text-lg text-sky-700 p-0'
-              onClick={() => openLargeInfoDialog('strategy')}>profit optimization strategy</Button> automatically
+              onClick={() => openLargeInfoDialog('strategy')}>strategy</Button> automatically
                reduces your position size at intervals, taking into account the magnitude of your
                 gains. The larger the profit, the more significant the reduction and the more
                  frequent the adjustments.
