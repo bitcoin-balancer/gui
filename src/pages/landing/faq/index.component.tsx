@@ -20,10 +20,9 @@ const FAQ_ITEMS = [
     title: 'What is Balancer?',
     content: (
       <p>
-        Balancer is a self-hosted platform that automates a proven trading strategy known as
-         "Value Averaging" to help generate passive income by taking advantage of price
-          fluctuations. It utilizes a set of indicators and algorithms to adjust your
-           Bitcoin holdings based on market conditions.
+        Balancer is a self-hosted platform that trades Bitcoin automatically, to help generate
+         passive income by taking advantage of price fluctuations. It utilizes a set of indicators
+          and algorithms to adjust your Bitcoin holdings based on market conditions.
       </p>
     ),
   },
@@ -36,15 +35,6 @@ const FAQ_ITEMS = [
           price reversals. It also uses a set of indicators to assess the overall market sentiment
            and direction. Based on this analysis, Balancer automatically adjusts your Bitcoin
             holdings by buying or selling at strategic intervals.
-      </p>
-    ),
-  },
-  {
-    title: 'What is Value Averaging?',
-    content: (
-      <p>
-        Value averaging is a systematic trading strategy. It involves buying Bitcoin when prices
-         fall but indicators suggest a likely price reversal, and selling when prices rise sharply.
       </p>
     ),
   },
@@ -64,20 +54,20 @@ const FAQ_ITEMS = [
           </li>
           <li>
             <p>
-              <strong>* Secure Asset Storage:</strong> Balancer significantly reduces your exchange
+              <strong>* Secure asset storage:</strong> Balancer significantly reduces your exchange
                risk by enabling you to store most of your Bitcoin/USD in your cold storage wallet,
                 only keeping the minimum required on the exchange for trading.
             </p>
           </li>
           <li>
             <p>
-              <strong>* Reduced Risk:</strong> value averaging helps you minimize the impact of
+              <strong>* Reduced risk:</strong> the trading strategy helps you minimize the impact of
                market fluctuations and reduce overall risk.
             </p>
           </li>
           <li>
             <p>
-              <strong>* Long-Term Growth:</strong> tt's designed to help you build wealth steadily
+              <strong>* Long-term growth:</strong> it is designed to help you build wealth steadily
                over time, taking advantage of market trends to maximize potential returns.
             </p>
           </li>
@@ -165,11 +155,11 @@ const FAQ_ITEMS = [
     content: (
       <p>
         Find detailed instructions on how to run Balancer
-         in <a
-          href='https://github.com/bitcoin-balancer/cli'
+         on the <a
+          href='https://github.com/bitcoin-balancer'
           target='_blank'
           rel='noopener noreferrer'
-          className='text-sky-700'>balancer/cli</a>
+          className='text-sky-700'>GitHub</a> page.
       </p>
     ),
   },
