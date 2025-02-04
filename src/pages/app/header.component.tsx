@@ -387,7 +387,7 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
             <Button
               variant='ghost'
               className='w-full justify-start'
-              onClick={NavService.openCLIRepo}
+              onClick={NavService.openGitHubPage}
             >
               <HardDriveDownload
                 aria-hidden='true'

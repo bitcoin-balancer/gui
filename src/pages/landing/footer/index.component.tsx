@@ -93,7 +93,7 @@ const Footer = memo(({
         <Button
           variant='link'
           className='text-slate-50'
-          onClick={openUnderConstructionDialog}
+          onClick={NavService.openGitHubPage}
         >
           <HardDriveDownload aria-hidden='true' className='w-4 h-4 mr-1' /> Get Balancer
         </Button>
@@ -101,7 +101,7 @@ const Footer = memo(({
         <Button
           variant='link'
           className='text-slate-50'
-          onClick={() => NavService.openGitHubPage()}
+          onClick={NavService.openGitHubPage}
         >
           <Github aria-hidden='true' className='w-4 h-4 mr-1' /> GitHub page
         </Button>

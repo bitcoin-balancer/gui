@@ -52,7 +52,7 @@ const Planner = memo(({
               >
 
                 <Button
-                  onClick={NavService.openCLIRepo}
+                  onClick={NavService.openGitHubPage}
                 >
                   Get Balancer
                 </Button>
@@ -126,7 +126,7 @@ const Planner = memo(({
           >
 
             <Button
-              onClick={NavService.openCLIRepo}
+              onClick={NavService.openGitHubPage}
             >
               Get Balancer
             </Button>

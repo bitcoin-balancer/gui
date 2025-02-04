@@ -58,7 +58,7 @@ const PositionSample = memo(({
               >
 
                 <Button
-                  onClick={NavService.openCLIRepo}
+                  onClick={NavService.openGitHubPage}
                 >
                   Get Balancer
                 </Button>
@@ -104,7 +104,7 @@ const PositionSample = memo(({
           >
 
             <Button
-              onClick={NavService.openCLIRepo}
+              onClick={NavService.openGitHubPage}
             >
               Get Balancer
             </Button>
