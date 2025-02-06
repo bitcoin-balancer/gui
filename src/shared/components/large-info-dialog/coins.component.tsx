@@ -30,7 +30,7 @@ const Coins = () => (
     <img
       src='large-info-dialog/coins/list.png'
       alt='Screenshot showing what a coins‘ state snapshot looks like'
-      width='948'
+      width='949'
       height='569'
     />
     <p className='text-light text-xs text-center'>
