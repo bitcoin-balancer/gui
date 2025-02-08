@@ -1,3 +1,4 @@
+import { BrowserCache } from 'browser-cache-async';
 import { APIService } from '@/shared/backend/api/index.service.ts';
 import { IDatabaseService, IDatabaseSummary } from '@/shared/backend/database/types.ts';
 
@@ -16,7 +17,8 @@ const databaseServiceFactory = (): IDatabaseService => {
    *                                          PROPERTIES                                          *
    ********************************************************************************************** */
 
-  // ...
+  // the instance of the state's cache
+  const __dbSummaryCache = new BrowserCache<IDatabaseSummary>('db-summary');
 
 
 
@@ -30,12 +32,15 @@ const databaseServiceFactory = (): IDatabaseService => {
    * Retrieves the essential database info to get an idea of how things are going from the GUI.
    * @returns Promise<IDatabaseSummary>
    */
-  const getDatabaseSummary = (): Promise<IDatabaseSummary> => APIService.request(
-    'GET',
-    'database/summary',
-    undefined,
-    true,
-  ) as Promise<IDatabaseSummary>;
+  const getDatabaseSummary = (): Promise<IDatabaseSummary> => __dbSummaryCache.run({
+    query: () => APIService.request(
+      'GET',
+      'database/summary',
+      undefined,
+      true,
+    ) as Promise<IDatabaseSummary>,
+    revalidate: '1 hour',
+  });
 
 
 

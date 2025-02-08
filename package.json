@@ -58,7 +58,7 @@
     "altcha": "0.6.7",
     "api-response-utils": "1.0.1",
     "bignumber-utils": "1.0.4",
-    "browser-cache-async": "1.0.0",
+    "browser-cache-async": "1.0.3",
     "browser-style-normalizer": "1.0.6",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",

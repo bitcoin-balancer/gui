@@ -1,3 +1,4 @@
+import { BrowserCache } from 'browser-cache-async';
 import { APIService } from '@/shared/backend/api/index.service.ts';
 import { IServerService, IAlarmsConfiguration, IServerState } from '@/shared/backend/server/types.ts';
 
@@ -16,7 +17,8 @@ const serverServiceFactory = (): IServerService => {
    *                                          PROPERTIES                                          *
    ********************************************************************************************** */
 
-  // ...
+  // the instance of the state's cache
+  const __serverStateCache = new BrowserCache<IServerState>('server-state');
 
 
 
@@ -30,12 +32,15 @@ const serverServiceFactory = (): IServerService => {
    * Retrieves the current state of the server.
    * @returns Promise<IServerState>
    */
-  const getState = (): Promise<IServerState> => APIService.request(
-    'GET',
-    'server',
-    undefined,
-    true,
-  ) as Promise<IServerState>;
+  const getState = (): Promise<IServerState> => __serverStateCache.run({
+    query: () => APIService.request(
+      'GET',
+      'server',
+      undefined,
+      true,
+    ) as Promise<IServerState>,
+    revalidate: '1 minute',
+  });
 
 
 
