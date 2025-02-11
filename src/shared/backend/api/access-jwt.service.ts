@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { isJWTValid } from 'web-utils-kit';
 import { sendPOST } from 'fetch-request-browser';
 import { useBoundStore } from '@/shared/store/index.store.ts';
