@@ -44,7 +44,7 @@ const transactionServiceFactory = (): ITransactionService => {
     `position/transaction/${id}`,
     undefined,
     true,
-  ) as Promise<ITransaction>;
+  );
 
   /**
    * Retrieves a series of transactions. If the startAtID is provided, it will start at that point
@@ -69,7 +69,7 @@ const transactionServiceFactory = (): ITransactionService => {
       urlPath,
       undefined,
       true,
-    ) as Promise<ITransaction[]>;
+    );
   };
 
 

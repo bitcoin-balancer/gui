@@ -41,14 +41,14 @@ const apiServiceFactory = (): IAPIService => {
    * @param input
    * @param options
    * @param retryDelaySchedule
-   * @returns Promise<IAPIResponse>
+   * @returns Promise<IAPIResponse<T>>
    */
-  const __sendRequest = async (
+  const __sendRequest = async <T>(
     input: IRequestInput,
     options: Partial<IOptions>,
     retryDelaySchedule: number[] | undefined,
-  ): Promise<IAPIResponse> => {
-    const reqResponse = await send(input, options, retryDelaySchedule);
+  ): Promise<IAPIResponse<T>> => {
+    const reqResponse = await send<IAPIResponse<T>>(input, options, retryDelaySchedule);
     return reqResponse.data;
   };
 
@@ -61,25 +61,25 @@ const apiServiceFactory = (): IAPIService => {
    * @param requiresAuth?
    * @param otpToken?
    * @param retryDelaySchedule?
-   * @returns Promise<unknown>
+   * @returns Promise<T>
    * @throws
    * - if the request requires authentication and the Access JWT is undefined
    */
-  const request = async (
+  const request = async <T>(
     method: IRequestMethod,
     path: string,
-    body?: Record<string, unknown>,
+    body?: Record<string, unknown> | Array<unknown>,
     requiresAuth?: boolean,
     otpToken?: string,
     retryDelaySchedule: number[] = [3, 5, 7],
-  ): Promise<unknown> => {
+  ): Promise<T> => {
     // if it requires auth, the Access JWT must be set
     if (requiresAuth && typeof AccessJWTService.current !== 'string') {
       throw new Error('The request requires the user to be authenticated but the Access JWT has not been set.');
     }
 
     // send the request
-    const res = await __sendRequest(
+    const res = await __sendRequest<T>(
       buildAPIURL(path),
       buildRequestOptions(method, body, AccessJWTService.current, otpToken),
       retryDelaySchedule,
@@ -96,13 +96,13 @@ const apiServiceFactory = (): IAPIService => {
     // if the Access JWT expired, refresh it and try again
     if (code === 4252) {
       await AccessJWTService.accessJWTChanged(null);
-      return request(method, path, body, requiresAuth, otpToken, retryDelaySchedule);
+      return request<T>(method, path, body, requiresAuth, otpToken, retryDelaySchedule);
     }
 
     // if the API is going through the initialization process, try again after a delay
     if (code === 6002) {
       await delay(30);
-      return request(method, path, body, requiresAuth, otpToken, retryDelaySchedule);
+      return request<T>(method, path, body, requiresAuth, otpToken, retryDelaySchedule);
     }
 
     // if the request is not going to be retried, throw the error

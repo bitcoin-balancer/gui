@@ -39,7 +39,7 @@ const userServiceFactory = (): IUserService => {
     'auth/user',
     undefined,
     true,
-  ) as Promise<IUser[]>;
+  );
 
   /**
    * Retrieves the OTP Secret for an user.
@@ -51,7 +51,7 @@ const userServiceFactory = (): IUserService => {
     `auth/user/${uid}/otp-secret`,
     undefined,
     true,
-  ) as Promise<string>;
+  );
 
   /**
    * Retrieves the list of password update records for a uid.
@@ -80,7 +80,7 @@ const userServiceFactory = (): IUserService => {
       urlPath,
       undefined,
       true,
-    ) as Promise<IPasswordUpdate[]>;
+    );
   };
 
 
@@ -115,7 +115,7 @@ const userServiceFactory = (): IUserService => {
     { nickname, authority },
     true,
     otpToken,
-  ) as Promise<IUser>;
+  );
 
   /**
    * Updates a nonroot user's nickname.
@@ -140,7 +140,7 @@ const userServiceFactory = (): IUserService => {
     { newNickname },
     true,
     otpToken,
-  ) as Promise<void>;
+  );
 
   /**
    * Updates a nonroot user's authority.
@@ -164,7 +164,7 @@ const userServiceFactory = (): IUserService => {
     { newAuthority },
     true,
     otpToken,
-  ) as Promise<void>;
+  );
 
   /**
    * Updates a nonroot user's password hash.
@@ -198,7 +198,7 @@ const userServiceFactory = (): IUserService => {
       otpToken,
       altchaPayload,
     },
-  ) as Promise<void>;
+  );
 
   /**
    * Updates a nonroot user's OTP Secret. The new secret is returned on completion.
@@ -215,7 +215,7 @@ const userServiceFactory = (): IUserService => {
     undefined,
     true,
     otpToken,
-  ) as Promise<string>;
+  );
 
   /**
    * Deletes a nonroot user account.
@@ -232,7 +232,7 @@ const userServiceFactory = (): IUserService => {
     undefined,
     true,
     otpToken,
-  ) as Promise<void>;
+  );
 
 
 

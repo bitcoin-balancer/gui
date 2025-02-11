@@ -42,7 +42,7 @@ const balanceServiceFactory = (): IBalanceService => {
     'position/balances',
     undefined,
     true,
-  ) as Promise<IBalances>;
+  );
 
 
 

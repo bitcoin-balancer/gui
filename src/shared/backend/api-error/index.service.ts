@@ -49,7 +49,7 @@ const apiErrorServiceFactory = (): IAPIErrorService => {
       urlPath,
       undefined,
       true,
-    ) as Promise<IAPIError[]>;
+    );
   };
 
   /**
@@ -57,13 +57,13 @@ const apiErrorServiceFactory = (): IAPIErrorService => {
    * @param otpToken
    * @returns Promise<void>
    */
-  const deleteAll = async (otpToken: string): Promise<void> => APIService.request(
+  const deleteAll = (otpToken: string): Promise<void> => APIService.request(
     'DELETE',
     'api-error',
     undefined,
     true,
     otpToken,
-  ) as Promise<void>;
+  );
 
 
 

@@ -37,7 +37,7 @@ const jwtServiceFactory = (): IJWTService => {
     `auth/jwt/${uid}`,
     undefined,
     true,
-  ) as Promise<IRefreshTokenRecord[]>;
+  );
 
 
 
@@ -72,7 +72,7 @@ const jwtServiceFactory = (): IJWTService => {
     otpToken: string,
     altchaPayload: string,
   ): Promise<void> => {
-    const accessJWT = await APIService.request(
+    const accessJWT = await APIService.request<string>(
       'POST',
       'auth/jwt/sign-in',
       {
@@ -81,7 +81,7 @@ const jwtServiceFactory = (): IJWTService => {
         otpToken,
         altchaPayload,
       },
-    ) as string;
+    );
     await AccessJWTService.accessJWTChanged(accessJWT);
   };
 

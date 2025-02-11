@@ -51,7 +51,7 @@ const strategyServiceFactory = (): IStrategyService => {
     'position/strategy',
     undefined,
     true,
-  ) as Promise<IStrategy>;
+  );
 
   /**
    * Validates and updates the strategy.
@@ -76,7 +76,7 @@ const strategyServiceFactory = (): IStrategyService => {
       { newConfig },
       true,
       otpToken,
-    ) as Promise<void>
+    )
   );
 
 

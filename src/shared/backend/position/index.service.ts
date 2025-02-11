@@ -49,7 +49,7 @@ const positionServiceFactory = (): IPositionService => {
       undefined,
       true,
       otpToken,
-    ) as Promise<void>
+    )
   );
 
   /**
@@ -68,7 +68,7 @@ const positionServiceFactory = (): IPositionService => {
       { percentage },
       true,
       otpToken,
-    ) as Promise<void>
+    )
   );
 
   /**
@@ -89,7 +89,7 @@ const positionServiceFactory = (): IPositionService => {
       undefined,
       true,
       otpToken,
-    ) as Promise<void>
+    )
   );
 
   /**
@@ -109,7 +109,7 @@ const positionServiceFactory = (): IPositionService => {
       undefined,
       true,
       otpToken,
-    ) as Promise<void>
+    )
   );
 
 
@@ -133,7 +133,7 @@ const positionServiceFactory = (): IPositionService => {
     `position/record/${id}`,
     undefined,
     true,
-  ) as Promise<IPosition>;
+  );
 
   /**
    * Validates and retrieves a list of compact position records.
@@ -157,7 +157,7 @@ const positionServiceFactory = (): IPositionService => {
       urlPath,
       undefined,
       true,
-    ) as Promise<ICompactPosition[]>;
+    );
   };
 
   /**
@@ -184,7 +184,7 @@ const positionServiceFactory = (): IPositionService => {
       urlPath,
       undefined,
       true,
-    ) as Promise<ICompactPosition[]>;
+    );
   };
 
   /**
@@ -200,7 +200,7 @@ const positionServiceFactory = (): IPositionService => {
     `position/event-history/${id}`,
     undefined,
     true,
-  ) as Promise<IEventHistoryRecord>;
+  );
 
   /**
    * Retrieves all the trades that were executed in a position.
@@ -215,7 +215,7 @@ const positionServiceFactory = (): IPositionService => {
     `position/record/trades/${id}`,
     undefined,
     true,
-  ) as Promise<ITrade[]>;
+  );
 
   /**
    * Retrieves all the transactions that were executed in a position.
@@ -230,7 +230,7 @@ const positionServiceFactory = (): IPositionService => {
     `position/record/transactions/${id}`,
     undefined,
     true,
-  ) as Promise<ITransaction[]>;
+  );
 
 
 
@@ -267,7 +267,7 @@ const positionServiceFactory = (): IPositionService => {
       { trade },
       true,
       otpToken,
-    ) as Promise<ITrade>
+    )
   );
 
   /**
@@ -300,7 +300,7 @@ const positionServiceFactory = (): IPositionService => {
       { trade },
       true,
       otpToken,
-    ) as Promise<ITrade>
+    )
   );
 
   /**
@@ -330,7 +330,7 @@ const positionServiceFactory = (): IPositionService => {
       undefined,
       true,
       otpToken,
-    ) as Promise<void>
+    )
   );
 
 
@@ -391,19 +391,6 @@ const positionServiceFactory = (): IPositionService => {
     { decimalPlaces: 4, roundingMode: 'ROUND_HALF_DOWN' },
   );
 
-  /**
-   * Converts a trade record into a manual trade object.
-   * @param trade
-   * @returns IManualTrade
-   */
-  /* const toManualTrade = (trade: ITrade): IManualTrade => ({
-    event_time: trade.event_time,
-    side: trade.side,
-    notes: trade.notes ?? '',
-    price: trade.price,
-    amount: trade.amount,
-  }); */
-
 
 
 
@@ -438,7 +425,6 @@ const positionServiceFactory = (): IPositionService => {
     getPNLClassName,
     getGainClassName,
     calculateDecreaseAmount,
-    // toManualTrade,
   });
 };
 

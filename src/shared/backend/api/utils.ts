@@ -96,7 +96,7 @@ const __buildRequestHeaders = (
  */
 const buildRequestOptions = (
   method: IRequestMethod,
-  body: Record<string, unknown> | undefined,
+  body: Record<string, unknown> | Array<unknown> | undefined,
   accessJWT: string | undefined,
   otpToken: string | undefined,
 ): Partial<IOptions> => ({

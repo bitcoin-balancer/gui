@@ -44,7 +44,7 @@ const liquidityServiceFactory = (): ILiquidityService => {
     'market-state/liquidity/state',
     undefined,
     true,
-  ) as Promise<ILiquidityState>;
+  );
 
 
 
@@ -63,7 +63,7 @@ const liquidityServiceFactory = (): ILiquidityService => {
     'market-state/liquidity/config',
     undefined,
     true,
-  ) as Promise<ILiquidityConfig>;
+  );
 
   /**
    * Validates and updates the liquidity's configuration.
@@ -82,7 +82,7 @@ const liquidityServiceFactory = (): ILiquidityService => {
       { newConfig },
       true,
       otpToken,
-    ) as Promise<void>
+    )
   );
 
 

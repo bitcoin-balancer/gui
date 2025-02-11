@@ -1,5 +1,9 @@
 import { APIService } from '@/shared/backend/api/index.service.ts';
-import { IWindowService, IWindowState, IWindowConfig } from '@/shared/backend/market-state/window/types.ts';
+import {
+  IWindowService,
+  IWindowState,
+  IWindowConfig,
+} from '@/shared/backend/market-state/window/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -35,7 +39,7 @@ const windowServiceFactory = (): IWindowService => {
     'market-state/window/config',
     undefined,
     true,
-  ) as Promise<IWindowConfig>;
+  );
 
   /**
    * Validates and updates the window's configuration.
@@ -57,7 +61,7 @@ const windowServiceFactory = (): IWindowService => {
       { newConfig },
       true,
       otpToken,
-    ) as Promise<void>
+    )
   );
 
 

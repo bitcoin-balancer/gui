@@ -54,7 +54,7 @@ const reversalServiceFactory = (): IReversalService => {
       urlPath,
       undefined,
       true,
-    ) as Promise<IPriceCrashStateRecord[]>;
+    );
   };
 
   /**
@@ -66,7 +66,7 @@ const reversalServiceFactory = (): IReversalService => {
     `market-state/reversal/event-history/${id}`,
     undefined,
     true,
-  ) as Promise<IEventHistoryRecord>;
+  );
 
 
 
@@ -84,7 +84,7 @@ const reversalServiceFactory = (): IReversalService => {
     'market-state/reversal/config',
     undefined,
     true,
-  ) as Promise<IReversalConfig>;
+  );
 
   /**
    * Validates and updates the reversal's configuration.
@@ -107,7 +107,7 @@ const reversalServiceFactory = (): IReversalService => {
       { newConfig },
       true,
       otpToken,
-    ) as Promise<void>
+    )
   );
 
 

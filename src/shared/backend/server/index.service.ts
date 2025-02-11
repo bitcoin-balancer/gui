@@ -38,7 +38,7 @@ const serverServiceFactory = (): IServerService => {
       'server',
       undefined,
       true,
-    ) as Promise<IServerState>,
+    ),
     revalidate: '1 minute',
   });
 
@@ -59,7 +59,7 @@ const serverServiceFactory = (): IServerService => {
     'server/alarms',
     undefined,
     true,
-  ) as Promise<IAlarmsConfiguration>;
+  );
 
   /**
    * Validates and updates the alarms' configuration.
@@ -78,7 +78,7 @@ const serverServiceFactory = (): IServerService => {
       { newConfig },
       true,
       otpToken,
-    ) as Promise<void>
+    )
   );
 
 

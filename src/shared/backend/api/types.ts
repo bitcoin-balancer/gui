@@ -14,14 +14,14 @@ type IAPIService = {
   // ...
 
   // actions
-  request: (
+  request: <T>(
     method: IRequestMethod,
     path: string,
     body?: Record<string, unknown>,
     requiresAuth?: boolean,
     otpToken?: string,
     retryDelaySchedule?: number[],
-  ) => Promise<unknown>
+  ) => Promise<T>;
 };
 
 /**

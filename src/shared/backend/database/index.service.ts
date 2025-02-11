@@ -38,7 +38,7 @@ const databaseServiceFactory = (): IDatabaseService => {
       'database/summary',
       undefined,
       true,
-    ) as Promise<IDatabaseSummary>,
+    ),
     revalidate: '1 hour',
   });
 

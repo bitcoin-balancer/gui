@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { isJWTValid } from 'web-utils-kit';
 import { sendPOST } from 'fetch-request-browser';
+import { IAPIResponse } from 'api-response-utils';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { buildAPIURL, needsNewSession } from '@/shared/backend/api/utils.ts';
 import { IAccessJWTService } from '@/shared/backend/api/types.ts';
@@ -49,7 +50,7 @@ const accessJWTServiceFactory = (): IAccessJWTService => {
    * - 4750: if there isn't a record that matches the refreshToken
    */
   const __refreshAccessJWT = async (): Promise<string> => {
-    const response = await sendPOST(
+    const response = await sendPOST<IAPIResponse<string>>(
       buildAPIURL('auth/jwt/refresh-jwt'),
       {
         requestOptions: {

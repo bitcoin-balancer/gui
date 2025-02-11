@@ -48,7 +48,7 @@ const notificationServiceFactory = (): INotificationService => {
       urlPath,
       undefined,
       true,
-    ) as Promise<INotification[]>;
+    );
   };
 
 

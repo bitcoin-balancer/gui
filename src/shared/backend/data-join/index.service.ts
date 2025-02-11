@@ -35,7 +35,7 @@ const dataJoinServiceFactory = (): IDataJoinService => {
     'data-join/app-essentials',
     undefined,
     true,
-  ) as Promise<IAppEssentials>;
+  );
 
 
 

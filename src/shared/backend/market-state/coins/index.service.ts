@@ -52,7 +52,7 @@ const coinsServiceFactory = (): ICoinsService => {
     `market-state/coins/state/${asset}/${symbol}`,
     undefined,
     true,
-  ) as Promise<ICoinState>;
+  );
 
   /**
    * Retrieves the semi-compact state for an asset.
@@ -67,7 +67,7 @@ const coinsServiceFactory = (): ICoinsService => {
     `market-state/coins/state/${asset}`,
     undefined,
     true,
-  ) as Promise<ICoinsState<ISemiCompactCoinState>>;
+  );
 
 
 
@@ -86,7 +86,7 @@ const coinsServiceFactory = (): ICoinsService => {
     'market-state/coins/config',
     undefined,
     true,
-  ) as Promise<ICoinsConfig>;
+  );
 
   /**
    * Validates and updates the coins module's configuration.
@@ -111,7 +111,7 @@ const coinsServiceFactory = (): ICoinsService => {
       { newConfig },
       true,
       otpToken,
-    ) as Promise<void>
+    )
   );
 
 
