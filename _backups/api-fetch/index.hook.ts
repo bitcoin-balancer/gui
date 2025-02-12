@@ -8,15 +8,15 @@ import {
 import { flushSync } from 'react-dom';
 import { IHTMLElement } from '@/shared/types.ts';
 import { errorToast, scrollChildIntoView } from '@/shared/services/utils/index.service.ts';
-import { hasMoreRecords, onMoreData } from '@/shared/hooks/api-fetch/utils.ts';
-import { IAPIFetchConfig, IAPIFetchHook } from '@/shared/hooks/api-fetch/types.ts';
+import { executeFetchFunc, hasMoreRecords, onMoreData } from '@/shared/hooks/api-fetch/utils.ts';
+import { IAPIFetchConfig, IAPIFetchHook, IAPIFetchFunction } from '@/shared/hooks/api-fetch/types.ts';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
  ************************************************************************************************ */
 
 // if enabled, it will print logs on the console
-const DEBUG = true;
+const DEBUG = false;
 
 
 
@@ -32,12 +32,12 @@ const DEBUG = true;
  * of arguments that will be used to call the function with.
  */
 const useAPIFetch: IAPIFetchHook = <T>({
-  fetchFn,
+  fetchFunc,
   refetchFrequency,
   queryLimit,
   appendNextRecords = true,
-  sortFn,
-}: IAPIFetchConfig<T>) => {
+  sortFunc,
+}: IAPIFetchConfig) => {
   /* **********************************************************************************************
    *                                             REFS                                             *
    ********************************************************************************************** */
@@ -50,7 +50,8 @@ const useAPIFetch: IAPIFetchHook = <T>({
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const [data, setData] = useState<T>(undefined as unknown as T);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [data, setData] = useState<T | any>(undefined);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | undefined>(undefined);
   const [refetching, setRefetching] = useState<boolean>(false);
@@ -73,7 +74,7 @@ const useAPIFetch: IAPIFetchHook = <T>({
     async (): Promise<void> => {
       try {
         setRefetching(true);
-        const res = await fetchFn();
+        const res = await executeFetchFunc<T>(fetchFunc);
         if (DEBUG) console.log('useAPIFetch.refetchData', res);
         setData(res);
       } catch (e) {
@@ -82,7 +83,7 @@ const useAPIFetch: IAPIFetchHook = <T>({
         setRefetching(false);
       }
     },
-    [fetchFn],
+    [fetchFunc],
   );
 
   /**
@@ -94,23 +95,23 @@ const useAPIFetch: IAPIFetchHook = <T>({
    */
   const loadMore = useCallback(
     async (
-      fn: () => Promise<T>,
+      func: IAPIFetchFunction,
       parentEl?: IHTMLElement,
       lastElementID?: string,
     ): Promise<void> => {
       try {
         setLoadingMore(true);
-        const res = await fn();
+        const res = await executeFetchFunc<T>(func);
         if (DEBUG) console.log('useAPIFetch.loadMore', res);
 
         // apply the changes based on the config
         if (parentEl) {
           flushSync(() => {
-            setData(onMoreData(data, res, sortFn, appendNextRecords));
+            setData(onMoreData(data, res, sortFunc, appendNextRecords));
           });
           scrollChildIntoView(parentEl, lastElementID!);
         } else {
-          setData(onMoreData(data, res, sortFn, appendNextRecords));
+          setData(onMoreData(data, res, sortFunc, appendNextRecords));
         }
 
         setHasMore(hasMoreRecords(res, queryLimit));
@@ -120,7 +121,7 @@ const useAPIFetch: IAPIFetchHook = <T>({
         setLoadingMore(false);
       }
     },
-    [data, queryLimit, appendNextRecords, sortFn],
+    [data, queryLimit, appendNextRecords, sortFunc],
   );
 
 
@@ -139,7 +140,7 @@ const useAPIFetch: IAPIFetchHook = <T>({
     const fetchInitialData = async () => {
       try {
         setLoading(true);
-        const res = await fetchFn();
+        const res = await executeFetchFunc<T>(fetchFunc);
         if (DEBUG) console.log('useAPIFetch.fetchInitialData', res);
         if (!ignore) {
           setData(res);
@@ -155,7 +156,7 @@ const useAPIFetch: IAPIFetchHook = <T>({
     fetchInitialData();
 
     return () => { ignore = true; };
-  }, [fetchFn, queryLimit]);
+  }, [fetchFunc, queryLimit]);
 
   /**
    * Refetches the data every refetchFrequency seconds.

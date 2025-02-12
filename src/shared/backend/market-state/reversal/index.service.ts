@@ -29,6 +29,7 @@ const reversalServiceFactory = (): IReversalService => {
 
 
 
+
   /* **********************************************************************************************
    *                                          RETRIEVERS                                          *
    ********************************************************************************************** */
@@ -76,6 +77,7 @@ const reversalServiceFactory = (): IReversalService => {
     cacheIf: cacheRecord,
     revalidate: '100 years',
   });
+
 
 
 

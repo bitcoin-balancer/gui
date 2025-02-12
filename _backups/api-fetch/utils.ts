@@ -1,9 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ISortFn } from '@/shared/hooks/api-fetch/types.ts';
+import { IAPIFetchFunction, ISortFunc } from '@/shared/hooks/api-fetch/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
+
+/**
+ * Executes a given fetch function asynchronously.
+ * @param fetchFunction
+ * @returns Promise<T>
+ */
+const executeFetchFunc = <T>(fetchFunction: IAPIFetchFunction): Promise<T> => {
+  if (fetchFunction.args) {
+    return fetchFunction.func(...fetchFunction.args);
+  }
+  return fetchFunction.func();
+};
 
 /**
  * Checks if a data source has more records that can be retrieved.
@@ -20,19 +32,19 @@ const hasMoreRecords = (data: unknown, queryLimit: number | undefined): boolean 
  * was just retrieved from the API.
  * @param records
  * @param nextRecords
- * @param sortFn
+ * @param sortFunc
  * @param appendNextRecords
  * @returns T
  */
 const onMoreData = <T>(
   records: T,
   nextRecords: T,
-  sortFn: ISortFn | undefined,
+  sortFunc: ISortFunc | undefined,
   appendNextRecords: boolean | undefined,
 ): T => {
-  // prioritize the sortFn if it was provided
-  if (typeof sortFn === 'function') {
-    return [...records as any[], nextRecords].sort(sortFn) as T;
+  // prioritize the sortFunc if it was provided
+  if (typeof sortFunc === 'function') {
+    return [...records as any[], nextRecords].sort(sortFunc) as T;
   }
 
   // otherwise, append or prepend the data
@@ -49,6 +61,7 @@ const onMoreData = <T>(
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export {
+  executeFetchFunc,
   hasMoreRecords,
   onMoreData,
 };

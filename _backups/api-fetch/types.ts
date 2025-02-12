@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IHTMLElement } from '@/shared/types.ts';
 
 /* ************************************************************************************************
@@ -5,20 +6,35 @@ import { IHTMLElement } from '@/shared/types.ts';
  ************************************************************************************************ */
 
 /**
- * Sort Fn
+ * Sort Func
  * The sort function used to keep records in order when loading more records.
  */
-type ISortFn =
+type ISortFunc =
   (<T extends string | number>(a: T, b: T) => number)
   | (<T extends Record<string, unknown>>(a: T, b: T) => number);
+
+/**
+ * Fetch Function Reference
+ * The hook requires function references to be passed as args so they can be invoked accordingly.
+ */
+type IAPIFetchFunctionReference = (...args: any[]) => Promise<any>;
+
+/**
+ * Fetch Function
+ * Object containing the reference to the request function and its args (if any).
+ */
+type IAPIFetchFunction = {
+  func: IAPIFetchFunctionReference;
+  args?: any[];
+};
 
 /**
  * Configuration
  * The configuration object that will instruct how to load and paginate data.
  */
-type IAPIFetchConfig<T> = {
+type IAPIFetchConfig = {
   // the function that will be invoked to load the initial data
-  fetchFn: () => Promise<T>;
+  fetchFunc: IAPIFetchFunction;
 
   // the data will be refetched every refetchFrequency seconds
   refetchFrequency?: number;
@@ -30,14 +46,14 @@ type IAPIFetchConfig<T> = {
   appendNextRecords?: boolean;
 
   // the sort func that will be applied when loading more records
-  sortFn?: ISortFn;
+  sortFunc?: ISortFunc;
 };
 
 /**
  * API Fetch Hook
  * The hook in charge of handling the retrieval, loading and error states
  */
-type IAPIFetchHook = <T>(config: IAPIFetchConfig<T>) => {
+type IAPIFetchHook = <T>(config: IAPIFetchConfig) => {
   data: T;
   setData: (state: T) => void;
   loading: boolean;
@@ -46,7 +62,7 @@ type IAPIFetchHook = <T>(config: IAPIFetchConfig<T>) => {
   refetching: boolean;
   hasMore: boolean;
   loadMore: (
-    fn: () => Promise<T>,
+    func: IAPIFetchFunction,
     parentEl?: IHTMLElement,
     lastElementID?: string,
   ) => Promise<void>;
@@ -61,7 +77,8 @@ type IAPIFetchHook = <T>(config: IAPIFetchConfig<T>) => {
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export type {
-  ISortFn,
+  ISortFunc,
+  IAPIFetchFunction,
   IAPIFetchConfig,
   IAPIFetchHook,
 };

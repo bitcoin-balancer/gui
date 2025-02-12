@@ -2,7 +2,7 @@ import { memo, useMemo } from 'react';
 import { Menu } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
-import { ServerService, IServerState } from '@/shared/backend/server/index.service.ts';
+import { ServerService } from '@/shared/backend/server/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
@@ -24,13 +24,14 @@ const Monitoring = memo(({ setSidenavOpen }: IServerComponentProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const { data, loading, error } = useAPIFetch<IServerState>(useMemo(
+  const { data, loading, error } = useAPIFetch(useMemo(
     () => ({
-      fetchFunc: { func: ServerService.getState },
+      fetchFn: () => ServerService.getState(),
       refetchFrequency: 35,
     }),
     [],
   ));
+
 
 
 
