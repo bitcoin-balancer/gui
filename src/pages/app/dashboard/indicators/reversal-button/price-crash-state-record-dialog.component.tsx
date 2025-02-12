@@ -14,6 +14,7 @@ import {
   IPriceCrashStateRecord,
 } from '@/shared/backend/market-state/reversal/index.service.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
+import { IHistoryDialogConfig } from '@/pages/app/dashboard/indicators/reversal-button/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -30,7 +31,7 @@ const PriceCrashStateRecordDialog = memo(({
 }: {
   record: IPriceCrashStateRecord,
   closeDialog: (nextState: undefined) => void,
-  setIsHistoryDialogOpen: (nextState: string | undefined) => void
+  setIsHistoryDialogOpen: (nextState: IHistoryDialogConfig | undefined) => void
 }) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
@@ -117,7 +118,7 @@ const PriceCrashStateRecordDialog = memo(({
 
 
         <Button
-          onClick={() => setIsHistoryDialogOpen(record.id)}
+          onClick={() => setIsHistoryDialogOpen({ id: record.id, cacheRecord: true })}
         >
           View history
         </Button>

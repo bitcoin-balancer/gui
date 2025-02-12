@@ -17,7 +17,7 @@ type IReversalService = {
     limit: number,
     startAtEventTime?: number,
   ) => Promise<IPriceCrashStateRecord[]>;
-  getEventHistory: (id: string) => Promise<IEventHistoryRecord>;
+  getEventHistory: (id: string, cacheRecord: boolean) => Promise<IEventHistoryRecord>;
 
   // configuration
   getConfig: () => Promise<IReversalConfig>;

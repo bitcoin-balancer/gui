@@ -1,3 +1,4 @@
+import { BrowserCache } from 'browser-cache-async';
 import { APIService } from '@/shared/backend/api/index.service.ts';
 import { IEventHistoryRecord } from '../../candlestick/index.service.ts';
 import {
@@ -22,8 +23,8 @@ const reversalServiceFactory = (): IReversalService => {
    *                                          PROPERTIES                                          *
    ********************************************************************************************** */
 
-  // ...
-
+  // the instance of the state's cache
+  const __priceCrashHistoryCache = new BrowserCache<IEventHistoryRecord>('price-crash-history');
 
 
 
@@ -61,12 +62,20 @@ const reversalServiceFactory = (): IReversalService => {
    * Retrieves the event history candlesticks for a price crash state based on an ID.
    * @returns Promise<IEventHistoryRecord>
    */
-  const getEventHistory = (id: string): Promise<IEventHistoryRecord> => APIService.request(
-    'GET',
-    `market-state/reversal/event-history/${id}`,
-    undefined,
-    true,
-  );
+  const getEventHistory = (
+    id: string,
+    cacheRecord: boolean,
+  ): Promise<IEventHistoryRecord> => __priceCrashHistoryCache.run({
+    id,
+    query: () => APIService.request(
+      'GET',
+      `market-state/reversal/event-history/${id}`,
+      undefined,
+      true,
+    ),
+    cacheIf: cacheRecord,
+    revalidate: '100 years',
+  });
 
 
 

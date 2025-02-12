@@ -17,6 +17,7 @@ import { ColorService } from '@/shared/services/color/index.service.ts';
 import PriceCrashStateHistoryDialog from './price-crash-state-history-dialog.component.tsx';
 import PriceCrashStateRecordDialog from './price-crash-state-record-dialog.component.tsx';
 import PriceCrashStatesDialog from '@/pages/app/dashboard/indicators/reversal-button/price-crash-states-dialog.component.tsx';
+import { IHistoryDialogConfig } from '@/pages/app/dashboard/indicators/reversal-button/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -31,7 +32,7 @@ const ReversalButton = ({ reversalState }: { reversalState: IReversalState | und
    *                                             STATE                                            *
    ********************************************************************************************** */
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const [isHistoryDialogOpen, setIsHistoryDialogOpen] = useState<string>();
+  const [isHistoryDialogOpen, setIsHistoryDialogOpen] = useState<IHistoryDialogConfig>();
   const [isRecordDialogOpen, setIsRecordDialogOpen] = useState<IPriceCrashStateRecord>();
   const [isListDialogOpen, setIsListDialogOpen] = useState<boolean>();
 
@@ -76,7 +77,7 @@ const ReversalButton = ({ reversalState }: { reversalState: IReversalState | und
    */
   const displayHistory = async () => {
     await hideMenu();
-    setIsHistoryDialogOpen(reversalState!.id);
+    setIsHistoryDialogOpen({ id: reversalState!.id, cacheRecord: false });
   };
 
   /**
@@ -161,7 +162,8 @@ const ReversalButton = ({ reversalState }: { reversalState: IReversalState | und
       {
         isHistoryDialogOpen !== undefined
         && <PriceCrashStateHistoryDialog
-          id={isHistoryDialogOpen}
+          id={isHistoryDialogOpen.id}
+          cacheRecord={isHistoryDialogOpen.cacheRecord}
           closeDialog={setIsHistoryDialogOpen}
         />
       }

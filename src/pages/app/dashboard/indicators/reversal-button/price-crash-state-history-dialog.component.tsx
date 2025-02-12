@@ -31,8 +31,13 @@ import CandlestickChart from '@/shared/components/charts/candlestick-chart/index
  */
 const PriceCrashStateHistoryDialog = memo(({
   id,
+  cacheRecord,
   closeDialog,
-}: { id: string, closeDialog: (nextState: undefined) => void }) => {
+}: {
+  id: string,
+  cacheRecord: boolean,
+  closeDialog: (nextState: undefined) => void,
+}) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
@@ -40,9 +45,9 @@ const PriceCrashStateHistoryDialog = memo(({
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
   const { data, loading, error } = useAPIFetch<IEventHistoryRecord>(useMemo(
     () => ({
-      fetchFunc: { func: ReversalService.getEventHistory, args: [id] },
+      fetchFunc: { func: ReversalService.getEventHistory, args: [id, cacheRecord] },
     }),
-    [id],
+    [id, cacheRecord],
   ));
   const exchangeConfig = useBoundStore((state) => state.exchangeConfig!);
 
