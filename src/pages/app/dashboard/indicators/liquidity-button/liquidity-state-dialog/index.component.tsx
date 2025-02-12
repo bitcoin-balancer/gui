@@ -85,9 +85,9 @@ const LiquidityStateDialog = memo(({ closeDialog }: IComponentProps) => {
    *                                             STATE                                            *
    ********************************************************************************************** */
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
-  const { data, loading, error } = useAPIFetch<ILiquidityState>(useMemo(
+  const { data, loading, error } = useAPIFetch(useMemo(
     () => ({
-      fetchFunc: { func: LiquidityService.getState },
+      fetchFn: () => LiquidityService.getState(),
     }),
     [],
   ));

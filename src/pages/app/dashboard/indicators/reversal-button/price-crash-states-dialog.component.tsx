@@ -71,9 +71,9 @@ const PriceCrashStatesDialog = memo(({
     hasMore,
     loadMore,
     loadingMore,
-  } = useAPIFetch<IPriceCrashStateRecord[]>(useMemo(
+  } = useAPIFetch(useMemo(
     () => ({
-      fetchFunc: { func: ReversalService.listRecords, args: [LIMIT] },
+      fetchFn: () => ReversalService.listRecords(LIMIT),
       queryLimit: LIMIT,
     }),
     [],
@@ -89,7 +89,11 @@ const PriceCrashStatesDialog = memo(({
    ********************************************************************************************** */
   let content;
   if (error) {
-    content = <PageLoadError variant='dialog' error={error} />;
+    content = (
+      <div className='pb-5'>
+        <PageLoadError variant='dialog' error={error} />
+      </div>
+    );
   } else if (loading) {
     content = <PageLoader variant='dialog' />;
   } else if (data.length) {
@@ -101,7 +105,7 @@ const PriceCrashStatesDialog = memo(({
               <button
                 aria-label='View more information'
                 id={`pcsr-${record.id}`}
-                className='flex justify-start items-center w-full py-5 px-2 hover:bg-slate-100'
+                className='flex justify-start items-center w-full py-5 px-6 hover:bg-slate-100'
                 onClick={() => displayRecord(record)}
               >
                 <div>
@@ -147,7 +151,7 @@ const PriceCrashStatesDialog = memo(({
           >
             <LoadMoreButton
               loadMore={() => loadMore(
-                { func: ReversalService.listRecords, args: [LIMIT, data.at(-1)!.event_time] },
+                () => ReversalService.listRecords(LIMIT, data.at(-1)!.event_time),
                 rowsRef.current!,
                 `pcsr-${data.at(-1)!.id}`,
               )}
@@ -165,9 +169,9 @@ const PriceCrashStatesDialog = memo(({
       open={isDialogOpen}
       onOpenChange={handleCloseDialog}
     >
-      <DialogContent>
+      <DialogContent className='p-0'>
 
-        <DialogHeader>
+        <DialogHeader className='p-6 pb-0'>
           <DialogTitle>Price crash states</DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>

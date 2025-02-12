@@ -9,7 +9,6 @@ import {
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { formatDate } from '@/shared/services/transformers/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
-import { IBalances } from '@/shared/backend/exchange/index.service.ts';
 import { BalanceService } from '@/shared/backend/position/balance/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
@@ -33,9 +32,9 @@ const BalancesDialog = memo(({
    *                                             STATE                                            *
    ********************************************************************************************** */
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
-  const { data, loading, error } = useAPIFetch<IBalances>(useMemo(
+  const { data, loading, error } = useAPIFetch(useMemo(
     () => ({
-      fetchFunc: { func: BalanceService.getBalances },
+      fetchFn: () => BalanceService.getBalances(),
     }),
     [],
   ));

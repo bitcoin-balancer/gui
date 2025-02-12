@@ -13,7 +13,7 @@ type INotificationService = {
   // ...
 
   // retrievers
-  list: (limit: number, startAtID: number | undefined) => Promise<INotification[]>;
+  list: (limit: number, startAtID?: number) => Promise<INotification[]>;
 };
 
 

@@ -29,7 +29,7 @@ const notificationServiceFactory = (): INotificationService => {
    * Retrieves a series of records. If the startAtID is provided, it will start at that point
    * exclusively.
    * @param limit
-   * @param startAtID
+   * @param startAtID?
    * @returns Promise<INotification[]>
    * @throws
    * - 10500: if the startAtID was provided and is not a valid identifier

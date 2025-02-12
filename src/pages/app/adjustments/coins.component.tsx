@@ -30,11 +30,7 @@ import {
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { isSymbolValid } from '@/shared/backend/validations/index.service.ts';
-import {
-  CoinsService,
-  ICoinsConfig,
-  ICoinsConfigGUI,
-} from '@/shared/backend/market-state/coins/index.service.ts';
+import { CoinsService, ICoinsConfigGUI } from '@/shared/backend/market-state/coins/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
@@ -78,9 +74,9 @@ const Coins = ({ closeDialog }: IFormProps) => {
    *                                             STATE                                            *
    ********************************************************************************************** */
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
-  const { data, loading, error } = useAPIFetch<ICoinsConfig>(useMemo(
+  const { data, loading, error } = useAPIFetch(useMemo(
     () => ({
-      fetchFunc: { func: CoinsService.getConfig },
+      fetchFn: () => CoinsService.getConfig(),
     }),
     [],
   ));

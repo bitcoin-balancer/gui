@@ -23,15 +23,15 @@ import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import { toast } from '@/shared/shadcn/components/ui/use-toast.ts';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
-import { PositionService, IPosition } from '@/shared/backend/position/index.service.ts';
+import { PositionService } from '@/shared/backend/position/index.service.ts';
 import { NavService } from '@/shared/services/nav/index.service';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
-import General from '@/pages/app/positions/position/general/index.component';
-import History from '@/pages/app/positions/position/history/index.component';
-import Trades from '@/pages/app/positions/position/trades/index.component';
+import General from '@/pages/app/positions/position/general/index.component.tsx';
+import History from '@/pages/app/positions/position/history/index.component.tsx';
+import Trades from '@/pages/app/positions/position/trades/index.component.tsx';
 import Transactions from '@/pages/app/positions/position/transactions/index.component.tsx';
 import { IPageName, INavItem } from '@/pages/app/positions/position/types.ts';
 
@@ -85,8 +85,10 @@ const Position = () => {
     setData,
     loading,
     error,
-  } = useAPIFetch<IPosition>(useMemo(
-    () => ({ fetchFunc: { func: PositionService.getPosition, args: [id] } }),
+  } = useAPIFetch(useMemo(
+    () => ({
+      fetchFn: () => PositionService.getPosition(id as string),
+    }),
     [id],
   ));
   const [sidenavOpen, setSidenavOpen] = useState<boolean>(false);

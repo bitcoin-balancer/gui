@@ -19,7 +19,7 @@ import { Tooltip, TooltipTrigger, TooltipContent } from '@/shared/shadcn/compone
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { ClipboardService } from '@/shared/services/clipboard/index.service.ts';
 import { formatDate } from '@/shared/services/transformers/index.service.ts';
-import { JWTService, IRefreshTokenRecord } from '@/shared/backend/auth/jwt/index.service.ts';
+import { JWTService } from '@/shared/backend/auth/jwt/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
@@ -44,9 +44,9 @@ const DisplayAuthSessions = memo(({
    *                                             STATE                                            *
    ********************************************************************************************** */
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
-  const { data, loading, error } = useAPIFetch<IRefreshTokenRecord[]>(useMemo(
+  const { data, loading, error } = useAPIFetch(useMemo(
     () => ({
-      fetchFunc: { func: JWTService.listRecords, args: [uid] },
+      fetchFn: () => JWTService.listRecords(uid),
     }),
     [uid],
   ));

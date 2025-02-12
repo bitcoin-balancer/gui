@@ -13,10 +13,7 @@ import {
   DialogTitle,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
-import {
-  TransactionService,
-  ITransaction,
-} from '@/shared/backend/position/transaction/index.service.ts';
+import { TransactionService } from '@/shared/backend/position/transaction/index.service.ts';
 import { formatDate } from '@/shared/services/transformers/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
@@ -67,9 +64,9 @@ const TransactionsDialog = memo(({
     hasMore,
     loadMore,
     loadingMore,
-  } = useAPIFetch<ITransaction[]>(useMemo(
+  } = useAPIFetch(useMemo(
     () => ({
-      fetchFunc: { func: TransactionService.listTransactions, args: [LIMIT] },
+      fetchFn: () => TransactionService.listTransactions(LIMIT),
       queryLimit: LIMIT,
     }),
     [],
@@ -100,7 +97,11 @@ const TransactionsDialog = memo(({
    ********************************************************************************************** */
   let content;
   if (error) {
-    content = <PageLoadError variant='dialog' error={error} />;
+    content = (
+      <div className='pb-5'>
+        <PageLoadError variant='dialog' error={error} />
+      </div>
+    );
   } else if (loading) {
     content = <PageLoader variant='dialog' />;
   } else if (data.length) {
@@ -143,7 +144,7 @@ const TransactionsDialog = memo(({
           >
             <LoadMoreButton
               loadMore={() => loadMore(
-                { func: TransactionService.listTransactions, args: [LIMIT, data.at(-1)!.id] },
+                () => TransactionService.listTransactions(LIMIT, data.at(-1)!.id),
                 rowsRef.current!,
                 `txd-${data.at(-1)!.id}`,
               )}

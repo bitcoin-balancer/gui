@@ -8,7 +8,7 @@ import {
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
-import { NotificationService, INotification } from '@/shared/backend/notification/index.service.ts';
+import { NotificationService } from '@/shared/backend/notification/index.service.ts';
 import { formatDate } from '@/shared/services/transformers/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
@@ -60,9 +60,9 @@ const NotificationsDialog = ({
     hasMore,
     loadMore,
     loadingMore,
-  } = useAPIFetch<INotification[]>(useMemo(
+  } = useAPIFetch(useMemo(
     () => ({
-      fetchFunc: { func: NotificationService.list, args: [LIMIT] },
+      fetchFn: () => NotificationService.list(LIMIT),
       queryLimit: LIMIT,
     }),
     [],
@@ -129,7 +129,7 @@ const NotificationsDialog = ({
           >
             <LoadMoreButton
               loadMore={() => loadMore(
-                { func: NotificationService.list, args: [LIMIT, data.at(-1)!.id] },
+                () => NotificationService.list(LIMIT, data.at(-1)!.id),
                 rowsRef.current!,
                 `nd-${data.at(-1)!.id}`,
               )}

@@ -31,7 +31,7 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/shadcn/components/ui/tooltip.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
-import { LiquidityService, ILiquidityConfig } from '@/shared/backend/market-state/liquidity/index.service.ts';
+import { LiquidityService } from '@/shared/backend/market-state/liquidity/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
@@ -94,9 +94,9 @@ const Liquidity = ({ closeDialog }: IFormProps) => {
    *                                             STATE                                            *
    ********************************************************************************************** */
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
-  const { data, loading, error } = useAPIFetch<ILiquidityConfig>(useMemo(
+  const { data, loading, error } = useAPIFetch(useMemo(
     () => ({
-      fetchFunc: { func: LiquidityService.getConfig },
+      fetchFn: () => LiquidityService.getConfig(),
     }),
     [],
   ));

@@ -34,9 +34,9 @@ const DisplayOTPSecret = memo(({
    *                                             STATE                                            *
    ********************************************************************************************** */
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
-  const { data, loading, error } = useAPIFetch<string>(useMemo(
+  const { data, loading, error } = useAPIFetch(useMemo(
     () => ({
-      fetchFunc: { func: UserService.getOTPSecret, args: [uid] },
+      fetchFn: () => UserService.getOTPSecret(uid),
     }),
     [uid],
   ));

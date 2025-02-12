@@ -11,7 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
-import { PositionService, ICompactPosition } from '@/shared/backend/position/index.service.ts';
+import { PositionService } from '@/shared/backend/position/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
@@ -60,9 +60,9 @@ const PositionsDialog = memo(({ closeDialog }: { closeDialog: (nextState: undefi
     hasMore,
     loadMore,
     loadingMore,
-  } = useAPIFetch<ICompactPosition[]>(useMemo(
+  } = useAPIFetch(useMemo(
     () => ({
-      fetchFunc: { func: PositionService.listCompactPositions, args: [LIMIT] },
+      fetchFn: () => PositionService.listCompactPositions(LIMIT),
       queryLimit: LIMIT,
     }),
     [],
@@ -78,7 +78,11 @@ const PositionsDialog = memo(({ closeDialog }: { closeDialog: (nextState: undefi
    ********************************************************************************************** */
   let content;
   if (error) {
-    content = <PageLoadError variant='dialog' error={error} />;
+    content = (
+      <div className='pb-5'>
+        <PageLoadError variant='dialog' error={error} />
+      </div>
+    );
   } else if (loading) {
     content = <PageLoader variant='dialog' />;
   } else if (data.length) {
@@ -99,7 +103,7 @@ const PositionsDialog = memo(({ closeDialog }: { closeDialog: (nextState: undefi
           >
             <LoadMoreButton
               loadMore={() => loadMore(
-                { func: PositionService.listCompactPositions, args: [LIMIT, data.at(-1)!.open] },
+                () => PositionService.listCompactPositions(LIMIT, data.at(-1)!.open),
                 rowsRef.current!,
                 `pb-${data.at(-1)!.id}`,
               )}

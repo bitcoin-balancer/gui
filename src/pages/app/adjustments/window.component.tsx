@@ -58,9 +58,9 @@ const Window = ({ closeDialog }: IFormProps) => {
    *                                             STATE                                            *
    ********************************************************************************************** */
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
-  const { data, loading, error } = useAPIFetch<IWindowConfig>(useMemo(
+  const { data, loading, error } = useAPIFetch(useMemo(
     () => ({
-      fetchFunc: { func: WindowService.getConfig },
+      fetchFn: () => WindowService.getConfig(),
     }),
     [],
   ));

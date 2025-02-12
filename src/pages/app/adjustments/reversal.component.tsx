@@ -29,10 +29,7 @@ import {
 } from '@/shared/shadcn/components/ui/tabs.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
-import {
-  ReversalService,
-  IReversalConfig,
-} from '@/shared/backend/market-state/reversal/index.service.ts';
+import { ReversalService } from '@/shared/backend/market-state/reversal/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
@@ -71,9 +68,9 @@ const Reversal = ({ closeDialog }: IFormProps) => {
    *                                             STATE                                            *
    ********************************************************************************************** */
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
-  const { data, loading, error } = useAPIFetch<IReversalConfig>(useMemo(
+  const { data, loading, error } = useAPIFetch(useMemo(
     () => ({
-      fetchFunc: { func: ReversalService.getConfig },
+      fetchFn: () => ReversalService.getConfig(),
     }),
     [],
   ));

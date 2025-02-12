@@ -14,11 +14,7 @@ import {
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
-import {
-  CoinsService,
-  ICoinsState,
-  ISemiCompactCoinState,
-} from '@/shared/backend/market-state/coins/index.service.ts';
+import { CoinsService } from '@/shared/backend/market-state/coins/index.service.ts';
 import { Card, CardContent } from '@/shared/shadcn/components/ui/card.tsx';
 import { toLineSeries } from '@/shared/backend/market-state/shared/utils.ts';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
@@ -45,9 +41,9 @@ const CoinsStateDialog = memo(({ asset, openSplitStatesDialog, closeDialog }: IC
    *                                             STATE                                            *
    ********************************************************************************************** */
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
-  const { data, loading, error } = useAPIFetch<ICoinsState<ISemiCompactCoinState>>(useMemo(
+  const { data, loading, error } = useAPIFetch(useMemo(
     () => ({
-      fetchFunc: { func: CoinsService.getSemiCompactStateForAsset, args: [asset] },
+      fetchFn: () => CoinsService.getSemiCompactStateForAsset(asset),
     }),
     [asset],
   ));

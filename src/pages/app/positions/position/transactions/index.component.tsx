@@ -10,7 +10,6 @@ import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import { Card, CardContent } from '@/shared/shadcn/components/ui/card.tsx';
 import { formatDate } from '@/shared/services/transformers/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
-import { ITransaction } from '@/shared/backend/position/transaction/index.service.ts';
 import { PositionService } from '@/shared/backend/position/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import NoRecords from '@/shared/components/no-records/index.component.tsx';
@@ -30,8 +29,10 @@ const Transactions = memo(({ position, setSidenavOpen }: IPositionComponentProps
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const { data, loading, error } = useAPIFetch<ITransaction[]>(useMemo(
-    () => ({ fetchFunc: { func: PositionService.listPositionTransactions, args: [position.id] } }),
+  const { data, loading, error } = useAPIFetch(useMemo(
+    () => ({
+      fetchFn: () => PositionService.listPositionTransactions(position.id),
+    }),
     [position.id],
   ));
   const openTransactionDialog = useBoundStore((state) => state.openTransactionDialog);

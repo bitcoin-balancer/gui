@@ -182,12 +182,9 @@ const Positions = () => {
    *                                             STATE                                            *
    ********************************************************************************************** */
   const [range, setRange] = useState<IDateRange>({ id: '1y', label: '1 year' });
-  const { data, loading, error } = useAPIFetch<ICompactPosition[]>(useMemo(
+  const { data, loading, error } = useAPIFetch(useMemo(
     () => ({
-      fetchFunc: {
-        func: PositionService.listCompactPositionsByRange,
-        args: [calculateStartAt(range.id)],
-      },
+      fetchFn: () => PositionService.listCompactPositionsByRange(calculateStartAt(range.id)),
     }),
     [range],
   ));

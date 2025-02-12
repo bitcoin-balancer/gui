@@ -14,10 +14,7 @@ import {
   CardTitle,
 } from '@/shared/shadcn/components/ui/card.tsx';
 import { formatDollarAmount } from '@/shared/services/transformers/index.service.ts';
-import {
-  CandlestickService,
-  IEventHistoryRecord,
-} from '@/shared/backend/candlestick/index.service.ts';
+import { CandlestickService } from '@/shared/backend/candlestick/index.service.ts';
 import { PositionService } from '@/shared/backend/position/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
@@ -52,8 +49,10 @@ const History = memo(({ position, setSidenavOpen }: IPositionComponentProps) => 
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const { data, loading, error } = useAPIFetch<IEventHistoryRecord>(useMemo(
-    () => ({ fetchFunc: { func: PositionService.getPositionHistory, args: [position.id] } }),
+  const { data, loading, error } = useAPIFetch(useMemo(
+    () => ({
+      fetchFn: () => PositionService.getPositionHistory(position.id),
+    }),
     [position.id],
   ));
   const breakpoint = useMediaQueryBreakpoint();

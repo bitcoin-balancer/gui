@@ -107,8 +107,10 @@ const Trades = memo(({ position, setSidenavOpen, refetchPosition }: IPositionCom
     setData,
     loading,
     error,
-  } = useAPIFetch<ITrade[]>(useMemo(
-    () => ({ fetchFunc: { func: PositionService.listPositionTrades, args: [position.id] } }),
+  } = useAPIFetch(useMemo(
+    () => ({
+      fetchFn: () => PositionService.listPositionTrades(position.id),
+    }),
     [position.id],
   ));
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);

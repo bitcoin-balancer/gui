@@ -7,10 +7,7 @@ import {
   DialogTitle,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
-import {
-  CandlestickService,
-  IEventHistoryRecord,
-} from '@/shared/backend/candlestick/index.service.ts';
+import { CandlestickService } from '@/shared/backend/candlestick/index.service.ts';
 import { ReversalService } from '@/shared/backend/market-state/reversal/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
@@ -43,9 +40,9 @@ const PriceCrashStateHistoryDialog = memo(({
    ********************************************************************************************** */
   const breakpoint = useMediaQueryBreakpoint();
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
-  const { data, loading, error } = useAPIFetch<IEventHistoryRecord>(useMemo(
+  const { data, loading, error } = useAPIFetch(useMemo(
     () => ({
-      fetchFunc: { func: ReversalService.getEventHistory, args: [id, cacheRecord] },
+      fetchFn: () => ReversalService.getEventHistory(id, cacheRecord),
     }),
     [id, cacheRecord],
   ));

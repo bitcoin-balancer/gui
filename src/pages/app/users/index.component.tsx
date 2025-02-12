@@ -10,7 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/shared/shadcn/components/ui/table.tsx';
-import { UserService, IUser } from '@/shared/backend/auth/user/index.service.ts';
+import { UserService } from '@/shared/backend/auth/user/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
@@ -37,9 +37,9 @@ const Users = () => {
     setData,
     loading,
     error,
-  } = useAPIFetch<IUser[]>(useMemo(
+  } = useAPIFetch(useMemo(
     () => ({
-      fetchFunc: { func: UserService.listUsers },
+      fetchFn: () => UserService.listUsers(),
     }),
     [],
   ));

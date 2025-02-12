@@ -65,9 +65,9 @@ const APIErrors = memo(({ setSidenavOpen, unreadAPIErrors }: IServerComponentPro
     hasMore,
     loadMore,
     loadingMore,
-  } = useAPIFetch<IAPIError[]>(useMemo(
+  } = useAPIFetch(useMemo(
     () => ({
-      fetchFunc: { func: APIErrorService.list, args: [LIMIT] },
+      fetchFn: () => APIErrorService.list(LIMIT),
       queryLimit: LIMIT,
     }),
     [],
@@ -253,7 +253,7 @@ const APIErrors = memo(({ setSidenavOpen, unreadAPIErrors }: IServerComponentPro
             (hasMore && data.length >= LIMIT)
             && <LoadMoreButton
               loadMore={() => loadMore(
-                { func: APIErrorService.list, args: [LIMIT, data.at(-1)!.id] },
+                () => APIErrorService.list(LIMIT, data.at(-1)!.id),
                 rowsRef.current!,
                 `aer-${data.at(-1)!.id}`,
               )}

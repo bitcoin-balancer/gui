@@ -44,9 +44,9 @@ const ServerAlarms = ({ closeDialog }: IFormProps) => {
    *                                             STATE                                            *
    ********************************************************************************************** */
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
-  const { data, loading, error } = useAPIFetch<IAlarmsConfiguration>(useMemo(
+  const { data, loading, error } = useAPIFetch(useMemo(
     () => ({
-      fetchFunc: { func: ServerService.getAlarms },
+      fetchFn: () => ServerService.getAlarms(),
     }),
     [],
   ));

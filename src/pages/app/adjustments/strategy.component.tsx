@@ -37,7 +37,6 @@ import {
   StrategyService,
   IDecreaseLevelID,
   IDecreaseLevels,
-  IStrategy,
 } from '@/shared/backend/position/strategy/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
@@ -181,9 +180,9 @@ const Strategy = ({ closeDialog }: IFormProps) => {
    ********************************************************************************************** */
   const breakpoint = useMediaQueryBreakpoint();
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
-  const { data, loading, error } = useAPIFetch<IStrategy>(useMemo(
+  const { data, loading, error } = useAPIFetch(useMemo(
     () => ({
-      fetchFunc: { func: StrategyService.getConfig },
+      fetchFn: () => StrategyService.getConfig(),
     }),
     [],
   ));

@@ -16,7 +16,7 @@ import { IAPIFetchConfig, IAPIFetchHook } from '@/shared/hooks/api-fetch/types.t
  ************************************************************************************************ */
 
 // if enabled, it will print logs on the console
-const DEBUG = true;
+const DEBUG = false;
 
 
 

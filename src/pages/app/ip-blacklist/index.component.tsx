@@ -133,9 +133,9 @@ const IPBlacklist = () => {
     hasMore,
     loadMore,
     loadingMore,
-  } = useAPIFetch<IIPBlacklistRecord[]>(useMemo(
+  } = useAPIFetch(useMemo(
     () => ({
-      fetchFunc: { func: IPBlacklistService.list, args: [LIMIT] },
+      fetchFn: () => IPBlacklistService.list(LIMIT),
       queryLimit: LIMIT,
     }),
     [],
@@ -377,7 +377,7 @@ const IPBlacklist = () => {
                     hasMore
                     && <LoadMoreButton
                       loadMore={() => loadMore(
-                        { func: IPBlacklistService.list, args: [LIMIT, data.at(-1)!.id] },
+                        () => IPBlacklistService.list(LIMIT, data.at(-1)!.id),
                         rowsRef.current!,
                         `ipb-${data.at(-1)!.id}`,
                       )}

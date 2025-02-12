@@ -16,7 +16,7 @@ import {
   TableRow,
 } from '@/shared/shadcn/components/ui/table.tsx';
 import { formatDate } from '@/shared/services/transformers/index.service.ts';
-import { UserService, IPasswordUpdate } from '@/shared/backend/auth/user/index.service.ts';
+import { UserService } from '@/shared/backend/auth/user/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
@@ -69,9 +69,9 @@ const DisplayPasswordUpdates = memo(({
     hasMore,
     loadMore,
     loadingMore,
-  } = useAPIFetch<IPasswordUpdate[]>(useMemo(
+  } = useAPIFetch(useMemo(
     () => ({
-      fetchFunc: { func: UserService.listUserPasswordUpdates, args: [uid, LIMIT] },
+      fetchFn: () => UserService.listUserPasswordUpdates(uid, LIMIT),
       queryLimit: LIMIT,
     }),
     [uid],
@@ -130,10 +130,7 @@ const DisplayPasswordUpdates = memo(({
           (hasMore && data.length >= LIMIT)
           && <LoadMoreButton
             loadMore={() => loadMore(
-              {
-                func: UserService.listUserPasswordUpdates,
-                args: [uid, LIMIT, data.at(-1)!.event_time],
-              },
+              () => UserService.listUserPasswordUpdates(uid, LIMIT, data.at(-1)!.event_time),
               rowsRef.current!,
               `pur-${data.at(-1)!.event_time}`,
             )}

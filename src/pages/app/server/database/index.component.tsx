@@ -7,7 +7,7 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/shared/shadcn/components/ui/tabs.tsx';
-import { DatabaseService, IDatabaseSummary } from '@/shared/backend/database/index.service.ts';
+import { DatabaseService } from '@/shared/backend/database/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 import PageLoadError from '@/shared/components/page-load-error/index.component.tsx';
@@ -27,9 +27,9 @@ const Database = memo(({ setSidenavOpen }: IServerComponentProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const { data, loading, error } = useAPIFetch<IDatabaseSummary>(useMemo(
+  const { data, loading, error } = useAPIFetch(useMemo(
     () => ({
-      fetchFunc: { func: DatabaseService.getDatabaseSummary },
+      fetchFn: () => DatabaseService.getDatabaseSummary(),
     }),
     [],
   ));
