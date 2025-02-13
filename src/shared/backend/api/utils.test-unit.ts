@@ -62,7 +62,6 @@ describe('__buildAPIBaseURL', () => {
     ['http://139.59.15.146/', 'http://139.59.15.146:5075'],
     ['http://139.59.15.146:8090', 'http://139.59.15.146:5075'],
     ['http://139.59.15.146:8090/', 'http://139.59.15.146:5075'],
-    ['http://139.59.15.146:8090/', 'http://139.59.15.146:5075'],
   ])('__buildAPIBaseURL(%s) -> %s', (a, expected) => {
     mockWindowLocation(a);
     expect(__buildAPIBaseURL()).toBe(expected);
