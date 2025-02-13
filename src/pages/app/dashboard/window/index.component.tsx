@@ -196,6 +196,7 @@ const WindowState = ({ windowState, openSplitStatesDialog }: IComponentProps) =>
             data={windowState.window}
             state={windowState.state}
             priceFormatterFunc={priceFormatter}
+            refreshFrequency={60}
           />
         }
       </CardContent>

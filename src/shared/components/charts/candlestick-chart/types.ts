@@ -55,6 +55,9 @@ type IComponentProps = {
 
   // if enabled, the user will be unable to scale the chart
   disableScaleHandler?: boolean;
+
+  // if provided, the chart will refreshed every X refreshFrequency minutes
+  refreshFrequency?: number;
 };
 
 /**

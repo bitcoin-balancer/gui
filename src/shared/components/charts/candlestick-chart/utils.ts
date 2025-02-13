@@ -1,3 +1,4 @@
+import { addMinutes } from 'date-fns';
 import { ChartOptions, DeepPartial } from 'lightweight-charts';
 import { ICompactCandlestickRecords } from '@/shared/backend/candlestick/index.service.ts';
 import { IState } from '@/shared/backend/market-state/shared/types.ts';
@@ -113,6 +114,22 @@ const getBarColorsByState = (state: IState | undefined): { upColor: string, down
   return { upColor: ColorService.INCREASE_1, downColor: ColorService.DECREASE_1 };
 };
 
+/**
+ * Verifies if the chart should be rendered a new. Useful for situations where data may have been
+ * lost due to the app being in the background.
+ * @param refreshFrequency
+ * @param lastRefresh
+ * @returns boolean
+ */
+const shouldChartBeRefreshed = (
+  refreshFrequency: number | undefined,
+  lastRefresh: number | undefined,
+): boolean => (
+  typeof refreshFrequency === 'number'
+  && typeof lastRefresh === 'number'
+  && Date.now() > addMinutes(lastRefresh, refreshFrequency).valueOf()
+);
+
 
 
 
@@ -124,4 +141,5 @@ export {
   toBars,
   buildChartOptions,
   getBarColorsByState,
+  shouldChartBeRefreshed,
 };

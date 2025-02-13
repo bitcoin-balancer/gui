@@ -6,6 +6,7 @@ import {
   toBars,
   buildChartOptions,
   getBarColorsByState,
+  shouldChartBeRefreshed,
 } from '@/shared/components/charts/candlestick-chart/utils.ts';
 import {
   IComponentProps,
@@ -34,10 +35,12 @@ const CandlestickChart = ({
   hidePriceLine = false,
   disableScrollHandler = false,
   disableScaleHandler = false,
+  refreshFrequency,
 }: IComponentProps) => {
   /* **********************************************************************************************
    *                                             REFS                                             *
    ********************************************************************************************** */
+  const lastRefreshRef = useRef<number>();
   const chartContainerRef = useRef<HTMLDivElement | null>(null);
   const chartAPIRef = useRef<IChartAPIRef>({
     // properties
@@ -89,9 +92,12 @@ const CandlestickChart = ({
     onSeriesChanges(newData): void {
       const series = this.series();
       const seriesData = this.series().data();
-      if (!seriesData.length) {
-        // init the bars
+      if (!seriesData.length || shouldChartBeRefreshed(refreshFrequency, lastRefreshRef.current)) {
+        // init/refresh the bars
         series.setData(toBars(newData));
+        if (typeof refreshFrequency === 'number') {
+          lastRefreshRef.current = Date.now();
+        }
       } else if (
         seriesData[seriesData.length - 1].time !== toLocalTime(newData.id[newData.id.length - 1])
       ) {
