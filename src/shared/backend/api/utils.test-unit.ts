@@ -44,13 +44,25 @@ describe('__buildAPIBaseURL', () => {
 
   test.each([
     ['http://balancer.com', 'http://balancerapi.balancer.com'],
+    ['http://www.balancer.com', 'http://www.balancerapi.balancer.com'],
     ['https://balancer.com', 'https://balancerapi.balancer.com'],
     ['https://www.balancer.com', 'https://www.balancerapi.balancer.com'],
-    ['http://www.balancer.com', 'http://www.balancerapi.balancer.com'],
+
+    ['http://jesusgraterol.dev', 'http://balancerapi.jesusgraterol.dev'],
+    ['http://www.jesusgraterol.dev', 'http://www.balancerapi.jesusgraterol.dev'],
     ['https://jesusgraterol.dev', 'https://balancerapi.jesusgraterol.dev'],
     ['https://www.jesusgraterol.dev', 'https://www.balancerapi.jesusgraterol.dev'],
+
+    ['http://balancer.jesusgraterol.dev', 'http://balancerapi.jesusgraterol.dev'],
+    ['http://www.balancer.jesusgraterol.dev', 'http://www.balancerapi.jesusgraterol.dev'],
     ['https://balancer.jesusgraterol.dev', 'https://balancerapi.jesusgraterol.dev'],
     ['https://www.balancer.jesusgraterol.dev', 'https://www.balancerapi.jesusgraterol.dev'],
+
+    ['http://139.59.15.146', 'http://139.59.15.146:5075'],
+    ['http://139.59.15.146/', 'http://139.59.15.146:5075'],
+    ['http://139.59.15.146:8090', 'http://139.59.15.146:5075'],
+    ['http://139.59.15.146:8090/', 'http://139.59.15.146:5075'],
+    ['http://139.59.15.146:8090/', 'http://139.59.15.146:5075'],
   ])('__buildAPIBaseURL(%s) -> %s', (a, expected) => {
     mockWindowLocation(a);
     expect(__buildAPIBaseURL()).toBe(expected);

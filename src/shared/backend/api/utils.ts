@@ -7,6 +7,16 @@ import { ENVIRONMENT } from '@/environment/environment.ts';
  ************************************************************************************************ */
 
 /**
+ * Verifies if a given hostname is an IP address.
+ * @param hostname
+ * @returns boolean
+ */
+const isIPAddress = (hostname: string): boolean => {
+  const ipPattern = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+  return ipPattern.test(hostname);
+};
+
+/**
  * Extracts the domain name based on a given hostname (www-less url).
  * @param hostname
  * @returns string
@@ -25,10 +35,17 @@ const __getDomainName = (hostname: string): string => {
  */
 const __buildAPIBaseURL = (): string => {
   if (ENVIRONMENT.production) {
-    const www = window.location.hostname.includes('www') ? 'www.' : '';
+    // handle when the hostname is an IP address
+    const { hostname } = window.location;
+    if (isIPAddress(hostname)) {
+      return `${window.location.protocol}//${hostname}:5075`;
+    }
+
+    // handle when the hostname is a domain name
+    const www = hostname.includes('www') ? 'www.' : '';
     const domain = www.length > 0
-      ? __getDomainName(window.location.hostname.substring(window.location.hostname.indexOf('.') + 1))
-      : __getDomainName(window.location.hostname);
+      ? __getDomainName(hostname.substring(hostname.indexOf('.') + 1))
+      : __getDomainName(hostname);
     return `${window.location.protocol}//${www}balancerapi.${domain}`;
   }
   return 'http://localhost:5075';
