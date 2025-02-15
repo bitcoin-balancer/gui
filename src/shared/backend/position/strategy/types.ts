@@ -29,6 +29,16 @@ type IStrategyService = {
  ************************************************************************************************ */
 
 /**
+ * Increase Idle Mode
+ * The mode that will be used to calculate when a position can be increased again.
+ * - incremental: the increaseIdleDuration value is multiplied by the number of increases that have
+ * taken place
+ * - fixed: the increaseIdleDuration value is used as is, regardless of the number of increases
+ * that have taken place
+ */
+type IIncreaseIdleMode = 'incremental' | 'fixed';
+
+/**
  * Decrease Level ID
  * The unique identifier for a level. Used to access any level from the tuple.
  */
@@ -77,11 +87,14 @@ type IStrategy = {
   // the amount of quote asset (USDT) that will be used to open/increase positions
   increaseAmountQuote: number;
 
+  // the position must be at a loss of at least increaseGainRequirement% to be able to increase
+  increaseGainRequirement: number;
+
   // the number of hours Balancer will wait before being able to increase the position again
   increaseIdleDuration: number;
 
-  // the position must be at a loss of at least increaseGainRequirement% to be able to increase
-  increaseGainRequirement: number;
+  // the mode that will be used to calculate when a position can be increased again
+  increaseIdleMode: IIncreaseIdleMode;
 
   // the tuple containing the decrease levels that will be activated based on the position's gain%
   decreaseLevels: IDecreaseLevels;
@@ -99,6 +112,7 @@ export type {
   IStrategyService,
 
   // types
+  IIncreaseIdleMode,
   IDecreaseLevelID,
   IDecreaseLevel,
   IDecreaseLevels,

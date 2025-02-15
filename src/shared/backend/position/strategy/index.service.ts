@@ -1,6 +1,7 @@
 import { APIService } from '@/shared/backend/api/index.service.ts';
 import {
   IStrategyService,
+  IIncreaseIdleMode,
   IDecreaseLevelID,
   IDecreaseLevel,
   IDecreaseLevels,
@@ -68,6 +69,7 @@ const strategyServiceFactory = (): IStrategyService => {
    * - 31508: if any of the price levels' gainRequirement property is invalid
    * - 31509: if any of the price levels' percentage property is invalid
    * - 31510: if any of the price levels' frequency property is invalid
+   * - 31511: if the increaseIdleMode property is not supported
    */
   const updateConfig = (newConfig: IStrategy, otpToken: string): Promise<void> => (
     APIService.request(
@@ -120,6 +122,7 @@ export {
   StrategyService,
 
   // types
+  type IIncreaseIdleMode,
   type IDecreaseLevelID,
   type IDecreaseLevel,
   type IDecreaseLevels,
