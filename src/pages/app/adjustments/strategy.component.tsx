@@ -5,6 +5,13 @@ import { CircleHelp, Loader2 } from 'lucide-react';
 import { decodeError } from 'error-message-utils';
 import { isIntegerValid, isNumberValid } from 'web-utils-kit';
 import { Input } from '@/shared/shadcn/components/ui/input.tsx';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/shared/shadcn/components/ui/select.tsx';
 import { Switch } from '@/shared/shadcn/components/ui/switch.tsx';
 import {
   Form,
@@ -37,6 +44,7 @@ import {
   StrategyService,
   IDecreaseLevelID,
   IDecreaseLevels,
+  IIncreaseIdleMode,
 } from '@/shared/backend/position/strategy/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
@@ -56,8 +64,9 @@ type IStrategyForm = {
   canIncrease: boolean;
   canDecrease: boolean;
   increaseAmountQuote: string;
-  increaseIdleDuration: string;
   increaseGainRequirement: string;
+  increaseIdleDuration: string;
+  increaseIdleMode: IIncreaseIdleMode;
   gainRequirement0: string;
   percentage0: string;
   frequency0: string;
@@ -116,8 +125,9 @@ const PRISTINE_FORM: IStrategyForm = {
   canIncrease: true,
   canDecrease: true,
   increaseAmountQuote: '',
-  increaseIdleDuration: '',
   increaseGainRequirement: '',
+  increaseIdleDuration: '',
+  increaseIdleMode: '' as IIncreaseIdleMode,
   gainRequirement0: '',
   percentage0: '',
   frequency0: '',
@@ -206,8 +216,9 @@ const Strategy = ({ closeDialog }: IFormProps) => {
       setValue('canIncrease', data.canIncrease);
       setValue('canDecrease', data.canDecrease);
       setValue('increaseAmountQuote', String(data.increaseAmountQuote));
-      setValue('increaseIdleDuration', String(data.increaseIdleDuration));
       setValue('increaseGainRequirement', String(data.increaseGainRequirement));
+      setValue('increaseIdleDuration', String(data.increaseIdleDuration));
+      setValue('increaseIdleMode', data.increaseIdleMode);
       data.decreaseLevels.forEach((level, i) => {
         setValue(`gainRequirement${i as IDecreaseLevelID}`, String(level.gainRequirement));
         setValue(`percentage${i as IDecreaseLevelID}`, String(level.percentage));
@@ -242,8 +253,9 @@ const Strategy = ({ closeDialog }: IFormProps) => {
               canIncrease: formData.canIncrease,
               canDecrease: formData.canDecrease,
               increaseAmountQuote: Number(formData.increaseAmountQuote),
-              increaseIdleDuration: Number(formData.increaseIdleDuration),
               increaseGainRequirement: Number(formData.increaseGainRequirement),
+              increaseIdleDuration: Number(formData.increaseIdleDuration),
+              increaseIdleMode: formData.increaseIdleMode,
               decreaseLevels: GAIN_REQUIREMENTS.map((_val, i) => ({
                 gainRequirement: Number(formData[`gainRequirement${i as IDecreaseLevelID}`]),
                 percentage: Number(formData[`percentage${i as IDecreaseLevelID}`]),
@@ -265,11 +277,14 @@ const Strategy = ({ closeDialog }: IFormProps) => {
           if (code === 31503) {
             form.setError('increaseAmountQuote', { message });
           }
+          if (code === 31506) {
+            form.setError('increaseGainRequirement', { message });
+          }
           if (code === 31505) {
             form.setError('increaseIdleDuration', { message });
           }
-          if (code === 31506) {
-            form.setError('increaseGainRequirement', { message });
+          if (code === 31511) {
+            form.setError('increaseIdleMode', { message });
           }
         } finally {
           setIsSubmitting(false);
@@ -400,6 +415,42 @@ const Strategy = ({ closeDialog }: IFormProps) => {
 
               <FormField
                 control={form.control}
+                name='increaseGainRequirement'
+                render={({ field }) => (
+                  <FormItem className='mt-7'>
+                    <FormLabelWithMoreInfo
+                      value='Gain requirement%'
+                      description={[
+                        'The position must be at a loss of at least "Gain requirement%" to be increasable.',
+                        `For example, say the "Gain requirement%" is set at -10%, and a position opens at $1,000/${exchangeConfig.baseAsset}. For it to be increasable, the price of ${exchangeConfig.baseAsset} must drop to at least $900.`,
+                        'Setting 0 disables this functionality. Meaning that the position can be increased on every reversal event regardless of the gain state.',
+                      ]}
+                    />
+                    <FormControl>
+                      <Input
+                        type='number'
+                        placeholder='-3'
+                        {...field}
+                        autoComplete='off'
+                        disabled={isSubmitting}
+                        min={-99}
+                        max={0}
+                        />
+                    </FormControl>
+                    <FormDescription>Size of the loss</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+                rules={{
+                  validate: {
+                    required: (value) => (isNumberValid(Number(value), -99, 0) ? true : 'Enter a number ranging -99% - 0%'),
+                  },
+                }}
+              />
+
+
+              <FormField
+                control={form.control}
                 name='increaseIdleDuration'
                 render={({ field }) => (
                   <FormItem className='mt-7'>
@@ -432,38 +483,44 @@ const Strategy = ({ closeDialog }: IFormProps) => {
                 }}
               />
 
-
               <FormField
                 control={form.control}
-                name='increaseGainRequirement'
+                name='increaseIdleMode'
                 render={({ field }) => (
                   <FormItem className='mt-7'>
                     <FormLabelWithMoreInfo
-                      value='Gain requirement%'
+                      value='Idle mode'
                       description={[
-                        'The position must be at a loss of at least "Gain requirement%" to be increasable.',
-                        `For example, say the "Gain requirement%" is set at -10%, and a position opens at $1,000/${exchangeConfig.baseAsset}. For it to be increasable, the price of ${exchangeConfig.baseAsset} must drop to at least $900.`,
-                        'Setting 0 disables this functionality. Meaning that the position can be increased on every reversal event regardless of the gain state.',
+                        'Balancer\'s Idle mode governs the waiting period before a position can be increased. Two modes are supported:',
+                        '- Incremental: the waiting period is "Idle duration" multiplied by the number of previous increases. For example, with "Idle duration" set to 24 hours and 5 previous increases, the wait time becomes 120 hours (24 * 5).',
+                        '- Fixed: the waiting period is always "Idle duration", regardless of the number of previous increases.',
                       ]}
+                      htmlFor='idleModeSelect'
                     />
                     <FormControl>
-                      <Input
-                        type='number'
-                        placeholder='-3'
-                        {...field}
-                        autoComplete='off'
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        value={field.value}
                         disabled={isSubmitting}
-                        min={-99}
-                        max={0}
-                        />
+                        name='idleModeSelect'
+                      >
+                        <SelectTrigger id='idleModeSelect'>
+                          <SelectValue placeholder='Select one option' />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value='incremental'>Incremental</SelectItem>
+                          <SelectItem value='fixed'>Fixed</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </FormControl>
-                    <FormDescription>Size of the loss</FormDescription>
+                    <FormDescription>Type of delay</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
                 rules={{
                   validate: {
-                    required: (value) => (isNumberValid(Number(value), -99, 0) ? true : 'Enter a number ranging -99% - 0%'),
+                    required: (value) => (value.length ? true : 'Select a valid mode'),
                   },
                 }}
               />
