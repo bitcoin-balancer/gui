@@ -10,6 +10,12 @@ import {
   DialogDescription,
   DialogContent,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/shared/shadcn/components/ui/tabs.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { VersionService } from '@/shared/backend/version/index.service.ts';
 import Code from '@/shared/components/code/index.component.tsx';
@@ -162,32 +168,101 @@ const PlatformUpdate = () => {
             </DialogDescription>
           </DialogHeader>
 
-          <p>1. Navigate to the <Code>cli</Code>'s directory:</p>
-          <CodeSnippet
-            code='cd balancer/cli'
-            isCommand={true}
-            canBeCopied={true}
-          />
-
-          <p className='mt-3'>2. Start the Balancer CLI:</p>
-          <CodeSnippet
-            code='npm start'
-            isCommand={true}
-            canBeCopied={true}
-          />
-
-          <p className='mt-3'>
-            3. Select the <strong>"Docker Compose"</strong> menu and execute the following action
-            on the <strong>remote host</strong>:
-          </p>
-          <CodeSnippet code='down-build-up' />
-
-          <p
-            className='text-light text-sm'
+          <Tabs
+            defaultValue='CLI-LITE'
+            className='w-full'
           >
-            The action will pull the latest images from the registry (Docker Hub), build them,
-            (re)create and start the containers.
-          </p>
+            <TabsList
+              className='grid w-full grid-cols-2'
+            >
+              <TabsTrigger value='CLI-LITE'>CLI-LITE</TabsTrigger>
+              <TabsTrigger value='CLI'>CLI</TabsTrigger>
+            </TabsList>
+
+            {/* **********
+              * CLI-LITE *
+              ********** */}
+            <TabsContent value='CLI-LITE'>
+              <p
+                className='mt-3 mb-2'
+              >
+                1. Connect to your virtual machine (Droplet).
+              </p>
+
+              <p
+                className='mt-5 mb-2'
+              >
+                2. Navigate to the <Code>CLI-LITE</Code>'s directory:
+              </p>
+              <CodeSnippet
+                code='cd ~/cli-lite'
+                isCommand={true}
+                canBeCopied={true}
+              />
+
+              <p className='mt-5 mb-2'>3. Start the <Code>CLI-LITE</Code>:</p>
+              <CodeSnippet
+                code='npm start'
+                isCommand={true}
+                canBeCopied={true}
+              />
+
+              <p className='mt-5 mb-2'>
+                4. Select the <strong>"Docker"</strong> menu and execute the following
+                 action:
+              </p>
+              <CodeSnippet code='down-up' />
+
+              <p
+                className='text-light text-sm mt-2'
+              >
+                The action will pull the latest images from the registry (Docker Hub), build them,
+                (re)create and start the containers.
+              </p>
+
+            </TabsContent>
+
+
+
+            {/* *****
+              * CLI *
+              ***** */}
+            <TabsContent value='CLI'>
+
+              <p
+                className='mt-3 mb-2'
+              >
+                1. Navigate to the <Code>CLI</Code>'s directory:
+              </p>
+              <CodeSnippet
+                code='cd balancer/cli'
+                isCommand={true}
+                canBeCopied={true}
+              />
+
+              <p className='mt-5 mb-2'>2. Start the <Code>CLI</Code>:</p>
+              <CodeSnippet
+                code='npm start'
+                isCommand={true}
+                canBeCopied={true}
+              />
+
+              <p className='mt-5 mb-2'>
+                3. Select the <strong>"Docker Compose"</strong> menu and execute the following
+                 action on the <strong>remote host</strong>:
+              </p>
+              <CodeSnippet code='down-build-up' />
+
+              <p
+                className='text-light text-sm mt-2'
+              >
+                The action will pull the latest images from the registry (Docker Hub), build them,
+                (re)create and start the containers.
+              </p>
+
+            </TabsContent>
+
+          </Tabs>
 
         </DialogContent>
       </Dialog>
