@@ -12,6 +12,7 @@ import {
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { VersionService } from '@/shared/backend/version/index.service.ts';
+import CodeSnippet from '@/shared/components/code-snippet/index.component.tsx';
 import Service from '@/pages/app/platform-update/service.component.tsx';
 import { IServiceName } from '@/pages/app/platform-update/types.ts';
 
@@ -160,28 +161,25 @@ const PlatformUpdate = () => {
             </DialogDescription>
           </DialogHeader>
 
-          <p>
-            1. Navigate to the Balancer CLI directory:
-          </p>
-
-          <code
-            className='p-5 bg-slate-900 text-slate-50 rounded-lg'
-          >$ cd balancer/cli</code>
+          <p>1. Navigate to the cli's directory:</p>
+          <CodeSnippet
+            code='cd balancer/cli'
+            isCommand={true}
+            canBeCopied={true}
+          />
 
           <p className='mt-3'>2. Start the Balancer CLI:</p>
-
-          <code
-            className='p-5 bg-slate-900 text-slate-50 rounded-lg'
-          >$ npm start</code>
+          <CodeSnippet
+            code='npm start'
+            isCommand={true}
+            canBeCopied={true}
+          />
 
           <p className='mt-3'>
             3. Select the <strong>"Docker Compose"</strong> menu and execute the following action
             on the <strong>remote host</strong>:
           </p>
-
-          <code
-            className='p-5 bg-slate-900 text-slate-50 rounded-lg'
-          >down-build-up</code>
+          <CodeSnippet code='down-build-up' />
 
           <p
             className='text-light text-sm'

@@ -1,5 +1,6 @@
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
+import CodeSnippet from '@/shared/components/code-snippet/index.component.tsx';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
@@ -104,11 +105,10 @@ const Window = () => (
       Once the state for each split is calculated, the overall Window state is determined as
        follows:
     </p>
-    <div
-      className='mt-2 overflow-x-auto p-5 rounded-lg bg-slate-900 text-slate-50 text-sm'
-    >
-      <pre>{windowStateCalculationCode}</pre>
-    </div>
+    <CodeSnippet
+      code={windowStateCalculationCode}
+      className='mt-2'
+    />
 
     <h3 className='text-md font-semibold mt-5'>Calculation example</h3>
     <p>

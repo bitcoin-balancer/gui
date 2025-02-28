@@ -10,6 +10,7 @@
  */
 type IComponentProps = {
   code: string;
+  isCommand?: boolean;
   canBeCopied?: boolean;
   className?: string;
 };

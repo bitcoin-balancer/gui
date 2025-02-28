@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { Copy } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { ClipboardService } from '@/shared/services/clipboard/index.service.ts';
@@ -12,7 +13,12 @@ import { IComponentProps } from '@/shared/components/code-snippet/types.ts';
  * CodeSnippet Component
  * Component in charge of displaying code or command snippets.
  */
-const CodeSnippet = ({ code, canBeCopied, className }: IComponentProps) => {
+const CodeSnippet = ({
+  code,
+  isCommand,
+  canBeCopied,
+  className,
+}: IComponentProps) => {
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
    ********************************************************************************************** */
@@ -38,16 +44,22 @@ const CodeSnippet = ({ code, canBeCopied, className }: IComponentProps) => {
    ********************************************************************************************** */
   return (
     <div
-      className={classNames('overflow-x-auto p-5 rounded-lg bg-slate-900 text-slate-50 text-sm', className)}
+      className={classNames('relative overflow-x-auto p-5 rounded-lg bg-slate-900 text-slate-50 text-sm', className)}
     >
       {
         canBeCopied && (
           <div className='absolute top-2 right-2'>
-            <Button onClick={copyToClipboard} />
+            <Button
+              variant='ghost'
+              size='icon'
+              onClick={copyToClipboard}
+            >
+              <Copy className='w-4 h-4' />
+            </Button>
           </div>
         )
       }
-      <pre>{code}</pre>
+      <pre>{`${isCommand ? '$ ' : ''}${code}`}</pre>
     </div>
   );
 };

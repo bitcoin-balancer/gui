@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
+import { Toaster } from '@/shared/shadcn/components/ui/toaster.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
 import ScrollToTop from '@/shared/components/scroll-to-top/index.component.tsx';
@@ -269,6 +270,13 @@ const Landing = () => {
         <ScrollToTop />
 
       </main>
+
+
+
+      {/* *********
+        * TOASTER *
+        ********* */}
+      <Toaster />
 
 
 
