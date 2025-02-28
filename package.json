@@ -61,6 +61,7 @@
     "browser-cache-async": "1.0.4",
     "browser-style-normalizer": "1.0.6",
     "class-variance-authority": "0.7.1",
+    "classnames": "2.5.1",
     "clsx": "2.1.1",
     "date-fns": "3.6.0",
     "embla-carousel-autoplay": "8.5.1",

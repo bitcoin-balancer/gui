@@ -1,4 +1,4 @@
-import { toast } from '@/shared/shadcn/components/ui/use-toast';
+import { toast } from '@/shared/shadcn/components/ui/use-toast.ts';
 import { IClipboardService } from '@/shared/services/clipboard/types.ts';
 
 /* ************************************************************************************************
