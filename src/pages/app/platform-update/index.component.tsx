@@ -12,6 +12,7 @@ import {
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { VersionService } from '@/shared/backend/version/index.service.ts';
+import Code from '@/shared/components/code/index.component.tsx';
 import CodeSnippet from '@/shared/components/code-snippet/index.component.tsx';
 import Service from '@/pages/app/platform-update/service.component.tsx';
 import { IServiceName } from '@/pages/app/platform-update/types.ts';
@@ -89,12 +90,12 @@ const PlatformUpdate = () => {
             && <p
               className='text-light text-sm mt-2'
             >
-                If you run into issues when updating the services, try
+                If you run into issues when updating the services, read
                 <Button
                   variant='link'
                   className='p-0 m-0 ml-1 text-light'
                   onClick={() => setOpen(true)}
-                >"Re-building the images"</Button>
+                ><strong>this</strong></Button> guide
             </p>
           }
 
@@ -161,7 +162,7 @@ const PlatformUpdate = () => {
             </DialogDescription>
           </DialogHeader>
 
-          <p>1. Navigate to the cli's directory:</p>
+          <p>1. Navigate to the <Code>cli</Code>'s directory:</p>
           <CodeSnippet
             code='cd balancer/cli'
             isCommand={true}
