@@ -84,7 +84,7 @@ const Landing = () => {
   return (
     <>
       <main
-        className='min-h-dvh animate-in fade-in duration-700'
+        className='min-h-dvh'
       >
 
         {/* ********
