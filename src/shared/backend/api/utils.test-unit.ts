@@ -1,3 +1,4 @@
+// @vitest-environment jsdom
 import { describe, beforeAll, afterAll, beforeEach, afterEach, test, expect, vi } from 'vitest';
 import { IEnvironment } from '@/environment/types.ts';
 import * as ENVIRONMENT from '@/environment/environment.ts';
