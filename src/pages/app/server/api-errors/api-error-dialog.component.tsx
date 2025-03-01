@@ -10,8 +10,8 @@ import {
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/shadcn/components/ui/tooltip.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
+import { copyToClipboard } from '@/shared/services/utils/index.service.ts';
 import { formatDate } from '@/shared/services/transformers/index.service.ts';
-import { ClipboardService } from '@/shared/services/clipboard/index.service.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
 import { IAPIErrorDialogProps } from '@/pages/app/server/api-errors/types.ts';
 
@@ -108,7 +108,7 @@ const APIErrorDialog = ({ record, closeDialog }: IAPIErrorDialogProps) => {
             <span className='flex-1'></span>
             <Tooltip>
               <TooltipTrigger
-                onClick={() => ClipboardService.writeText(record.uid!)}
+                onClick={() => copyToClipboard(record.uid!)}
                 tabIndex={-1}
               >
                 <p
@@ -133,7 +133,7 @@ const APIErrorDialog = ({ record, closeDialog }: IAPIErrorDialogProps) => {
             <span className='flex-1'></span>
             <Tooltip>
               <TooltipTrigger
-                onClick={() => ClipboardService.writeText(record.ip!)}
+                onClick={() => copyToClipboard(record.ip!)}
                 tabIndex={-1}
               >
                 <p

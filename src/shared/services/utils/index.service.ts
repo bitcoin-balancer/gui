@@ -1,4 +1,5 @@
 import { decodeError } from 'error-message-utils';
+import { ClipboardService } from 'clipboard-service';
 import { toast } from '@/shared/shadcn/components/ui/use-toast.ts';
 import { IHTMLElement } from '@/shared/types.ts';
 
@@ -42,6 +43,28 @@ const errorToast = (error: unknown, title: string = 'Error') => toast({
 
 
 /* ************************************************************************************************
+ *                                       CLIPBOARD HELPERS                                        *
+ ************************************************************************************************ */
+
+/**
+ * Copies data to the system clipboard in a stable way.
+ * @param data
+ * @returns Promise<void>
+ */
+const copyToClipboard = async (data: string): Promise<void> => {
+  try {
+    await ClipboardService.writeText(data);
+    toast({ title: 'Copied to clipboard', description: data });
+  } catch (e) {
+    errorToast(e, 'Error copying to clipboard');
+  }
+};
+
+
+
+
+
+/* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export {
@@ -50,4 +73,7 @@ export {
 
   // toast helpers
   errorToast,
+
+  // clipboard helpers
+  copyToClipboard,
 };

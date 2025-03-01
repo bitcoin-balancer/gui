@@ -17,7 +17,7 @@ import {
 } from '@/shared/shadcn/components/ui/table.tsx';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/shared/shadcn/components/ui/tooltip.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
-import { ClipboardService } from '@/shared/services/clipboard/index.service.ts';
+import { copyToClipboard } from '@/shared/services/utils/index.service.ts';
 import { formatDate } from '@/shared/services/transformers/index.service.ts';
 import { JWTService } from '@/shared/backend/auth/jwt/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
@@ -84,7 +84,7 @@ const DisplayAuthSessions = memo(({
                     <Button
                       variant='ghost'
                       className='max-w-24 sm:max-w-44 md:max-w-52'
-                      onClick={() => ClipboardService.writeText(record.token)}>
+                      onClick={() => copyToClipboard(record.token)}>
                         <p
                           className='truncate font-normal'
                         >{record.token}</p>

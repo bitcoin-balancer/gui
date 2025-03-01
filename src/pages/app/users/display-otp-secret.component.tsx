@@ -9,7 +9,7 @@ import {
   DialogTitle,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
-import { ClipboardService } from '@/shared/services/clipboard/index.service.ts';
+import { copyToClipboard } from '@/shared/services/utils/index.service.ts';
 import { UserService } from '@/shared/backend/auth/user/index.service.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
@@ -74,7 +74,7 @@ const DisplayOTPSecret = memo(({
               <Button
                 variant='ghost'
                 size='icon'
-                onClick={() => ClipboardService.writeText(data)}
+                onClick={() => copyToClipboard(data)}
                 aria-label='Copy the OTP secret'
               ><Copy aria-hidden='true' /></Button>
             </TooltipTrigger>

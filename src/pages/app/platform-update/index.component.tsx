@@ -182,7 +182,10 @@ const PlatformUpdate = () => {
             {/* **********
               * CLI-LITE *
               ********** */}
-            <TabsContent value='CLI-LITE'>
+            <TabsContent
+              value='CLI-LITE'
+              className='animate-in fade-in duration-500'
+            >
               <p
                 className='mt-3 mb-2'
               >
@@ -227,7 +230,10 @@ const PlatformUpdate = () => {
             {/* *****
               * CLI *
               ***** */}
-            <TabsContent value='CLI'>
+            <TabsContent
+              value='CLI'
+              className='animate-in fade-in duration-500'
+            >
 
               <p
                 className='mt-3 mb-2'
