@@ -1,15 +1,7 @@
 {
   "outDir": "dist",
   "template": "base",
-  "includeToPrecache": [
-    "/assets",
-    "/exchanges",
-    "/installer",
-    "/landing-page",
-    "/large-info-dialog",
-    "/logo",
-    "/index.html"
-  ],
+  "includeToPrecache": [],
   "excludeFilesFromPrecache": [],
   "excludeMIMETypesFromCache": [
     "application/json",
