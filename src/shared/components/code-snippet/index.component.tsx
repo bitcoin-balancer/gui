@@ -48,15 +48,14 @@ const CodeSnippet = ({
     >
       {
         canBeCopied && (
-          <div className='absolute top-2 right-2'>
-            <Button
+          <Button
+              className='absolute top-2 right-2'
               variant='ghost'
               size='icon'
               onClick={copyToClipboard}
             >
               <Copy className='w-4 h-4' />
-            </Button>
-          </div>
+          </Button>
         )
       }
       <pre>{`${isCommand ? '$ ' : ''}${code}`}</pre>
