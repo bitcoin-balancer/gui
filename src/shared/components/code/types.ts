@@ -12,13 +12,7 @@ type IComponentProps = PropsWithChildren<{
   className?: string;
 }>;
 
-
-
-
-
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export type {
-  IComponentProps,
-};
+export type { IComponentProps };

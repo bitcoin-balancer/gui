@@ -50,9 +50,6 @@ const socketIOServiceFactory = (): ISocketIOService => {
   // the error that was raised by the server when trying to connect to it
   let __connectionError: string | undefined;
 
-
-
-
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
    ********************************************************************************************** */
@@ -77,7 +74,10 @@ const socketIOServiceFactory = (): ISocketIOService => {
     __connected = false;
     __connectionError = msg;
     if (__socket.active) {
-      if (__DEBUG) console.log(`socket.connect_error -> temporary failure, will try to reconnect from: ${msg}`);
+      if (__DEBUG)
+        console.log(
+          `socket.connect_error -> temporary failure, will try to reconnect from: ${msg}`,
+        );
     } else {
       if (__DEBUG) console.log(`socket.connect_error -> unable to connect (fatal): ${msg}`);
       errorToast(msg, 'Socket Connection Error');
@@ -88,10 +88,6 @@ const socketIOServiceFactory = (): ISocketIOService => {
   const __onDisconnect = (): void => {
     if (__DEBUG) console.log('socket.disconnect -> no actions');
   };
-
-
-
-
 
   /* **********************************************************************************************
    *                                      CONNECTION MANAGER                                      *
@@ -124,10 +120,6 @@ const socketIOServiceFactory = (): ISocketIOService => {
     },
   );
 
-
-
-
-
   /* **********************************************************************************************
    *                                         MODULE BUILD                                         *
    ********************************************************************************************** */
@@ -150,18 +142,10 @@ const socketIOServiceFactory = (): ISocketIOService => {
   });
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                        GLOBAL INSTANCE                                         *
  ************************************************************************************************ */
 const SocketIOService = socketIOServiceFactory();
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

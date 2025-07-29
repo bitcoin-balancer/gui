@@ -17,11 +17,7 @@ type IComponentProps = {
   openSplitStatesDialog: (data: ISplitStatesDialogData) => void;
 };
 
-
-
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export type {
-  IComponentProps,
-};
+export type { IComponentProps };

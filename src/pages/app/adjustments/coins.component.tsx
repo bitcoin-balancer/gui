@@ -21,16 +21,14 @@ import {
   DialogTitle,
   DialogFooter,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '@/shared/shadcn/components/ui/tabs.tsx';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/shadcn/components/ui/tabs.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { isSymbolValid } from '@/shared/backend/validations/index.service.ts';
-import { CoinsService, ICoinsConfigGUI } from '@/shared/backend/market-state/coins/index.service.ts';
+import {
+  CoinsService,
+  ICoinsConfigGUI,
+} from '@/shared/backend/market-state/coins/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
@@ -57,10 +55,6 @@ const isWhitelistValid = (whitelist: string, baseAsset: string): boolean => {
   return false;
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
@@ -74,12 +68,14 @@ const Coins = ({ closeDialog }: IFormProps) => {
    *                                             STATE                                            *
    ********************************************************************************************** */
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
-  const { data, loading, error } = useAPIFetch(useMemo(
-    () => ({
-      fetchFn: () => CoinsService.getConfig(),
-    }),
-    [],
-  ));
+  const { data, loading, error } = useAPIFetch(
+    useMemo(
+      () => ({
+        fetchFn: () => CoinsService.getConfig(),
+      }),
+      [],
+    ),
+  );
   const { setValue, ...form } = useForm<ICoinsConfigGUI>({
     defaultValues: {
       size: data?.size ?? '',
@@ -94,10 +90,6 @@ const Coins = ({ closeDialog }: IFormProps) => {
   const exchangeConfig = useBoundStore((state) => state.exchangeConfig!);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
   const { authority } = useBoundStore((state) => state.user!);
-
-
-
-
 
   /* **********************************************************************************************
    *                                         SIDE EFFECTS                                         *
@@ -114,10 +106,6 @@ const Coins = ({ closeDialog }: IFormProps) => {
     }
   }, [data, setValue]);
 
-
-
-
-
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
    ********************************************************************************************** */
@@ -130,8 +118,9 @@ const Coins = ({ closeDialog }: IFormProps) => {
   const onSubmit = (formData: ICoinsConfigGUI): void => {
     openConfirmationDialog({
       mode: 'OTP',
-      title: 'Update coins\'s configuration',
-      description: 'The new configuration will be applied immediately upon submission and the state of the coins will be reset.',
+      title: "Update coins's configuration",
+      description:
+        'The new configuration will be applied immediately upon submission and the state of the coins will be reset.',
       onConfirmation: async (confirmation: string) => {
         try {
           setIsSubmitting(true);
@@ -175,61 +164,63 @@ const Coins = ({ closeDialog }: IFormProps) => {
     });
   };
 
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   let content;
   if (error) {
-    content = <PageLoadError variant='dialog' error={error} />;
+    content = (
+      <PageLoadError
+        variant="dialog"
+        error={error}
+      />
+    );
   } else if (loading) {
-    content = <PageLoader variant='dialog' />;
+    content = <PageLoader variant="dialog" />;
   } else {
     content = (
-      <Form setValue={setValue} {...form}>
+      <Form
+        setValue={setValue}
+        {...form}
+      >
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           noValidate
         >
-
           <Tabs
-            defaultValue='window'
-            className='w-full'
+            defaultValue="window"
+            className="w-full"
           >
-            <TabsList
-              className='grid w-full grid-cols-3'
-            >
-              <TabsTrigger value='window'>Window</TabsTrigger>
-              <TabsTrigger value='state'>State</TabsTrigger>
-              <TabsTrigger value='symbols'>Symbols</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="window">Window</TabsTrigger>
+              <TabsTrigger value="state">State</TabsTrigger>
+              <TabsTrigger value="symbols">Symbols</TabsTrigger>
             </TabsList>
 
             {/* ********
-              * WINDOW *
-              ******** */}
-            <TabsContent value='window'>
-              <fieldset className='mt-3 animate-in fade-in duration-700'>
+             * WINDOW *
+             ******** */}
+            <TabsContent value="window">
+              <fieldset className="mt-3 animate-in fade-in duration-700">
                 <FormField
                   control={form.control}
-                  name='size'
+                  name="size"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabelWithMoreInfo
-                        value='Size'
-                        description='The number of price items that comprise the window for each coin.'
+                        value="Size"
+                        description="The number of price items that comprise the window for each coin."
                       />
                       <FormControl>
                         <Input
-                          type='number'
-                          placeholder='128'
+                          type="number"
+                          placeholder="128"
                           {...field}
-                          autoComplete='off'
+                          autoComplete="off"
                           disabled={isSubmitting}
                           min={128}
                           max={512}
-                          />
+                        />
                       </FormControl>
                       <FormDescription>Price items quantity</FormDescription>
                       <FormMessage />
@@ -237,30 +228,33 @@ const Coins = ({ closeDialog }: IFormProps) => {
                   )}
                   rules={{
                     validate: {
-                      required: (value) => (isNumberValid(Number(value), 128, 512) ? true : 'Enter a number ranging 128 - 512'),
+                      required: (value) =>
+                        isNumberValid(Number(value), 128, 512)
+                          ? true
+                          : 'Enter a number ranging 128 - 512',
                     },
                   }}
                 />
 
                 <FormField
                   control={form.control}
-                  name='interval'
+                  name="interval"
                   render={({ field }) => (
-                    <FormItem className='mt-7'>
+                    <FormItem className="mt-7">
                       <FormLabelWithMoreInfo
-                        value='Interval'
-                        description='The number of seconds each price item will last before appending a new one.'
+                        value="Interval"
+                        description="The number of seconds each price item will last before appending a new one."
                       />
                       <FormControl>
                         <Input
-                          type='number'
-                          placeholder='15'
+                          type="number"
+                          placeholder="15"
                           {...field}
-                          autoComplete='off'
+                          autoComplete="off"
                           disabled={isSubmitting}
                           min={5}
                           max={3600}
-                          />
+                        />
                       </FormControl>
                       <FormDescription>Price item duration in seconds</FormDescription>
                       <FormMessage />
@@ -268,27 +262,28 @@ const Coins = ({ closeDialog }: IFormProps) => {
                   )}
                   rules={{
                     validate: {
-                      required: (value) => (isNumberValid(Number(value), 5, 3600) ? true : 'Enter a number ranging 5 - 3600'),
+                      required: (value) =>
+                        isNumberValid(Number(value), 5, 3600)
+                          ? true
+                          : 'Enter a number ranging 5 - 3600',
                     },
                   }}
                 />
               </fieldset>
             </TabsContent>
 
-
-
             {/* ********
-              * STATE *
-              ******** */}
-            <TabsContent value='state'>
-              <fieldset className='mt-3 animate-in fade-in duration-700'>
+             * STATE *
+             ******** */}
+            <TabsContent value="state">
+              <fieldset className="mt-3 animate-in fade-in duration-700">
                 <FormField
                   control={form.control}
-                  name='requirement'
+                  name="requirement"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabelWithMoreInfo
-                        value='State requirement%'
+                        value="State requirement%"
                         description={[
                           'The percentage change in a coin\'s price needed to mark a window split as "stateful". ',
                           'The possible states for this requirement are:',
@@ -298,14 +293,14 @@ const Coins = ({ closeDialog }: IFormProps) => {
                       />
                       <FormControl>
                         <Input
-                          type='number'
-                          placeholder='0.01'
+                          type="number"
+                          placeholder="0.01"
                           {...field}
-                          autoComplete='off'
+                          autoComplete="off"
                           disabled={isSubmitting}
                           min={0.01}
                           max={100}
-                          />
+                        />
                       </FormControl>
                       <FormDescription>Coin's price% change</FormDescription>
                       <FormMessage />
@@ -313,18 +308,21 @@ const Coins = ({ closeDialog }: IFormProps) => {
                   )}
                   rules={{
                     validate: {
-                      required: (value) => (isNumberValid(Number(value), 0.01, 100) ? true : 'Enter a number ranging 0.01% - 100%'),
+                      required: (value) =>
+                        isNumberValid(Number(value), 0.01, 100)
+                          ? true
+                          : 'Enter a number ranging 0.01% - 100%',
                     },
                   }}
                 />
 
                 <FormField
                   control={form.control}
-                  name='strongRequirement'
+                  name="strongRequirement"
                   render={({ field }) => (
-                    <FormItem className='mt-7'>
+                    <FormItem className="mt-7">
                       <FormLabelWithMoreInfo
-                        value='Strong state requirement%'
+                        value="Strong state requirement%"
                         description={[
                           'The percentage change in a coin\'s price needed to mark a window split as "stateful". ',
                           'The possible states for this requirement are:',
@@ -334,14 +332,14 @@ const Coins = ({ closeDialog }: IFormProps) => {
                       />
                       <FormControl>
                         <Input
-                          type='number'
-                          placeholder='0.3'
+                          type="number"
+                          placeholder="0.3"
                           {...field}
-                          autoComplete='off'
+                          autoComplete="off"
                           disabled={isSubmitting}
                           min={0.01}
                           max={100}
-                          />
+                        />
                       </FormControl>
                       <FormDescription>Coins's price% change</FormDescription>
                       <FormMessage />
@@ -349,39 +347,40 @@ const Coins = ({ closeDialog }: IFormProps) => {
                   )}
                   rules={{
                     validate: {
-                      required: (value) => (isNumberValid(Number(value), 0.01, 100) ? true : 'Enter a number ranging 0.01% - 100%'),
+                      required: (value) =>
+                        isNumberValid(Number(value), 0.01, 100)
+                          ? true
+                          : 'Enter a number ranging 0.01% - 100%',
                     },
                   }}
                 />
               </fieldset>
             </TabsContent>
 
-
-
             {/* ********
-              * SYMBOLS *
-              ******** */}
-            <TabsContent value='symbols'>
-              <fieldset className='mt-3 animate-in fade-in duration-700'>
+             * SYMBOLS *
+             ******** */}
+            <TabsContent value="symbols">
+              <fieldset className="mt-3 animate-in fade-in duration-700">
                 <FormField
                   control={form.control}
-                  name='limit'
+                  name="limit"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabelWithMoreInfo
-                        value='Limit'
-                        description='The maximum number of coins that will be selected based on the whitelist and their volume.'
+                        value="Limit"
+                        description="The maximum number of coins that will be selected based on the whitelist and their volume."
                       />
                       <FormControl>
                         <Input
-                          type='number'
-                          placeholder='24'
+                          type="number"
+                          placeholder="24"
                           {...field}
-                          autoComplete='off'
+                          autoComplete="off"
                           disabled={isSubmitting}
                           min={1}
                           max={24}
-                          />
+                        />
                       </FormControl>
                       <FormDescription>Maximum number of symbols</FormDescription>
                       <FormMessage />
@@ -389,26 +388,29 @@ const Coins = ({ closeDialog }: IFormProps) => {
                   )}
                   rules={{
                     validate: {
-                      required: (value) => (isIntegerValid(Number(value), 1, 24) ? true : 'Enter a number ranging 1 - 24'),
+                      required: (value) =>
+                        isIntegerValid(Number(value), 1, 24)
+                          ? true
+                          : 'Enter a number ranging 1 - 24',
                     },
                   }}
                 />
 
                 <FormField
                   control={form.control}
-                  name='whitelistedSymbolsStr'
+                  name="whitelistedSymbolsStr"
                   render={({ field }) => (
-                    <FormItem className='mt-7'>
+                    <FormItem className="mt-7">
                       <FormLabelWithMoreInfo
-                        value='Whitelist'
-                        description='The list of symbols that can be selected by the system.'
+                        value="Whitelist"
+                        description="The list of symbols that can be selected by the system."
                       />
                       <FormControl>
                         <Textarea
-                          placeholder='BTC,ETH,BNB,XRP,...'
+                          placeholder="BTC,ETH,BNB,XRP,..."
                           rows={7}
-                          autoComplete='false'
-                          spellCheck='false'
+                          autoComplete="false"
+                          spellCheck="false"
                           {...field}
                           disabled={isSubmitting}
                         />
@@ -419,7 +421,10 @@ const Coins = ({ closeDialog }: IFormProps) => {
                   )}
                   rules={{
                     validate: {
-                      required: (value) => (!isWhitelistValid(value, exchangeConfig.baseAsset) ? `Enter a valid list of whitelisted symbols separated by commas. Also make sure to include the base asset (${exchangeConfig.baseAsset})` : true),
+                      required: (value) =>
+                        !isWhitelistValid(value, exchangeConfig.baseAsset)
+                          ? `Enter a valid list of whitelisted symbols separated by commas. Also make sure to include the base asset (${exchangeConfig.baseAsset})`
+                          : true,
                     },
                   }}
                 />
@@ -427,29 +432,20 @@ const Coins = ({ closeDialog }: IFormProps) => {
             </TabsContent>
           </Tabs>
 
-
-
-
           {/* ************
-            * SUBMISSION *
-            ************ */}
+           * SUBMISSION *
+           ************ */}
           <DialogFooter>
             <Button
-              type='submit'
+              type="submit"
               disabled={isSubmitting || authority < 3}
-              className='mt-7 w-full'
+              className="mt-7 w-full"
             >
-              {
-                isSubmitting
-                && <Loader2
-                  className='mr-2 h-4 w-4 animate-spin'
-                />
-              } Update configuration
+              {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Update
+              configuration
             </Button>
           </DialogFooter>
-
         </form>
-
       </Form>
     );
   }
@@ -458,34 +454,26 @@ const Coins = ({ closeDialog }: IFormProps) => {
       open={isDialogOpen}
       onOpenChange={handleCloseDialog}
     >
-
       <DialogContent>
-
         <DialogHeader>
           <DialogTitle>Update Coins</DialogTitle>
-          <DialogDescription className='flex justify-center items-center sm:justify-start'>
+          <DialogDescription className="flex justify-center items-center sm:justify-start">
             Connected to
             <img
               src={`/exchanges/color/${exchangeConfig.coins}.png`}
               alt={`Logo of the Exchange being used by the Coins Module (${exchangeConfig.coins})`}
               height={435}
               width={90}
-              className='ml-1 max-h-4'
+              className="ml-1 max-h-4"
             />
           </DialogDescription>
         </DialogHeader>
 
         {content}
-
       </DialogContent>
-
     </Dialog>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

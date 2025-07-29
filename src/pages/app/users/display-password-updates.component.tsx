@@ -32,10 +32,6 @@ import { IDisplayAuthSessionsProps } from '@/pages/app/users/types.ts';
 // the number of records that will be retrieved at a time
 const LIMIT = 15;
 
-
-
-
-
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
@@ -44,57 +40,43 @@ const LIMIT = 15;
  * Display Password Updates Component
  * Component in charge of displaying the list of password update records a user has.
  */
-const DisplayPasswordUpdates = memo(({
-  uid,
-  nickname,
-  closeDialog,
-}: IDisplayAuthSessionsProps) => {
+const DisplayPasswordUpdates = memo(({ uid, nickname, closeDialog }: IDisplayAuthSessionsProps) => {
   /* **********************************************************************************************
    *                                             REFS                                             *
    ********************************************************************************************** */
   const rowsRef = useRef<HTMLTableSectionElement | null>(null);
 
-
-
-
-
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
-  const {
-    data,
-    loading,
-    error,
-    hasMore,
-    loadMore,
-    loadingMore,
-  } = useAPIFetch(useMemo(
-    () => ({
-      fetchFn: () => UserService.listUserPasswordUpdates(uid, LIMIT),
-      queryLimit: LIMIT,
-    }),
-    [uid],
-  ));
-
-
-
-
+  const { data, loading, error, hasMore, loadMore, loadingMore } = useAPIFetch(
+    useMemo(
+      () => ({
+        fetchFn: () => UserService.listUserPasswordUpdates(uid, LIMIT),
+        queryLimit: LIMIT,
+      }),
+      [uid],
+    ),
+  );
 
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   let content;
   if (error) {
-    content = <PageLoadError variant='dialog' error={error} />;
+    content = (
+      <PageLoadError
+        variant="dialog"
+        error={error}
+      />
+    );
   } else if (loading) {
-    content = <PageLoader variant='dialog' />;
+    content = <PageLoader variant="dialog" />;
   } else if (data.length) {
     content = (
       <>
-        <Table
-          className='animate-in fade-in duration-700'
-        >
+        <Table className="animate-in fade-in duration-700">
           <TableCaption>A list of password update records</TableCaption>
           <TableHeader>
             <TableRow>
@@ -109,34 +91,30 @@ const DisplayPasswordUpdates = memo(({
                 id={`pur-${record.event_time}`}
               >
                 <TableCell>
-                  <p
-                    className='text-light'
-                  >{i + 1}</p>
+                  <p className="text-light">{i + 1}</p>
                 </TableCell>
                 <TableCell>
-                  <p
-                    className='sm:hidden'
-                  >{formatDate(record.event_time, 'datetime-medium')}</p>
-                  <p
-                    className='hidden sm:block'
-                  >{formatDate(record.event_time, 'datetime-long')}</p>
+                  <p className="sm:hidden">{formatDate(record.event_time, 'datetime-medium')}</p>
+                  <p className="hidden sm:block">
+                    {formatDate(record.event_time, 'datetime-long')}
+                  </p>
                 </TableCell>
               </TableRow>
             ))}
-
           </TableBody>
         </Table>
-        {
-          (hasMore && data.length >= LIMIT)
-          && <LoadMoreButton
-            loadMore={() => loadMore(
-              () => UserService.listUserPasswordUpdates(uid, LIMIT, data.at(-1)!.event_time),
-              rowsRef.current!,
-              `pur-${data.at(-1)!.event_time}`,
-            )}
+        {hasMore && data.length >= LIMIT && (
+          <LoadMoreButton
+            loadMore={() =>
+              loadMore(
+                () => UserService.listUserPasswordUpdates(uid, LIMIT, data.at(-1)!.event_time),
+                rowsRef.current!,
+                `pur-${data.at(-1)!.event_time}`,
+              )
+            }
             loadingMore={loadingMore}
           />
-        }
+        )}
       </>
     );
   } else {
@@ -148,7 +126,6 @@ const DisplayPasswordUpdates = memo(({
       onOpenChange={handleCloseDialog}
     >
       <DialogContent>
-
         <DialogHeader>
           <DialogTitle>{nickname}'s Password Updates</DialogTitle>
           <DialogDescription>
@@ -157,16 +134,10 @@ const DisplayPasswordUpdates = memo(({
         </DialogHeader>
 
         {content}
-
       </DialogContent>
-
     </Dialog>
   );
 });
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

@@ -23,7 +23,6 @@ import { useBoundStore } from '@/shared/store/index.store.ts';
 import ConfirmationDialog from '@/shared/components/confirmation-dialog/index.component.tsx';
 import { IFormInputs } from '@/pages/auth/sign-in/types.ts';
 
-
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
@@ -41,10 +40,6 @@ const SignIn = () => {
   const [altcha, setAltcha] = useState<string | null | undefined>(undefined);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-
-
-
-
 
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
@@ -71,12 +66,7 @@ const SignIn = () => {
       onConfirmation: async (confirmation: string) => {
         try {
           setIsSubmitting(true);
-          await JWTService.signIn(
-            data.nickname,
-            data.password,
-            confirmation,
-            altcha,
-          );
+          await JWTService.signIn(data.nickname, data.password, confirmation, altcha);
         } catch (e) {
           errorToast(e, 'Authentication Error');
         } finally {
@@ -86,97 +76,65 @@ const SignIn = () => {
     });
   };
 
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
-    <main
-      className='flex min-h-dvh animate-in fade-in slide-in-from-left duration-500'
-    >
-
+    <main className="flex min-h-dvh animate-in fade-in slide-in-from-left duration-500">
       {/* *******
-        * QUOTE *
-        ******* */}
-      <aside
-        className='hidden md:block flex-1 bg-primary shadow-8 p-10'
-      >
-
-        <article
-          className='flex flex-col h-full'
-        >
-          <Link
-            to={NavService.landing()}
-          >
+       * QUOTE *
+       ******* */}
+      <aside className="hidden md:block flex-1 bg-primary shadow-8 p-10">
+        <article className="flex flex-col h-full">
+          <Link to={NavService.landing()}>
             <img
-              src='/logo/logo-light.png'
-              alt='Balancer Logo'
-              width='192'
-              height='60'
-              className='w-48'
+              src="/logo/logo-light.png"
+              alt="Balancer Logo"
+              width="192"
+              height="60"
+              className="w-48"
             />
           </Link>
 
-          <span className='my-auto'></span>
+          <span className="my-auto"></span>
 
-          <blockquote
-            className='text-white'
-          >
-            <p
-              className='text-2xl'
-            >
+          <blockquote className="text-white">
+            <p className="text-2xl">
               "Bitcoin is a remarkable cryptographic achievement, and the ability to create
               something that is not duplicable in the digital world has enormous value."
             </p>
-            <p
-              className='text-sm mt-3'
-            >Eric Schmidt, Former CEO of Google</p>
+            <p className="text-sm mt-3">Eric Schmidt, Former CEO of Google</p>
           </blockquote>
-
         </article>
-
       </aside>
 
-
-
       {/* ******
-        * FORM *
-        ****** */}
-      <section
-        className='flex-1 self-center p-5 sm:p-10'
-      >
-
-        <article
-          className='w-full sm:w-10/12 md:11/12 lg:w-9/12 xl:w-7/12 2xl:w-6/12 mx-auto'
-        >
-
+       * FORM *
+       ****** */}
+      <section className="flex-1 self-center p-5 sm:p-10">
+        <article className="w-full sm:w-10/12 md:11/12 lg:w-9/12 xl:w-7/12 2xl:w-6/12 mx-auto">
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
               noValidate
             >
-
-              <h1
-                className='text-3xl font-bold text-center'
-              >Sign in</h1>
-              <p
-                className='text-light text-md text-center'
-              >Enter your credentials to log into your account</p>
+              <h1 className="text-3xl font-bold text-center">Sign in</h1>
+              <p className="text-light text-md text-center">
+                Enter your credentials to log into your account
+              </p>
 
               <FormField
                 control={form.control}
-                name='nickname'
+                name="nickname"
                 render={({ field }) => (
-                  <FormItem className='mt-5'>
+                  <FormItem className="mt-5">
                     <FormLabel>Nickname</FormLabel>
                     <FormControl>
                       <Input
-                        type='text'
-                        placeholder='satoshi'
+                        type="text"
+                        placeholder="satoshi"
                         {...field}
-                        autoComplete='off'
+                        autoComplete="off"
                         autoFocus
                         disabled={isSubmitting}
                       />
@@ -193,16 +151,16 @@ const SignIn = () => {
 
               <FormField
                 control={form.control}
-                name='password'
+                name="password"
                 render={({ field }) => (
-                  <FormItem className='mt-5'>
+                  <FormItem className="mt-5">
                     <FormLabel>Password</FormLabel>
                     <FormControl>
                       <Input
-                        type='password'
-                        placeholder='********'
+                        type="password"
+                        placeholder="********"
                         {...field}
-                        autoComplete='off'
+                        autoComplete="off"
                         disabled={isSubmitting}
                       />
                     </FormControl>
@@ -216,73 +174,61 @@ const SignIn = () => {
                 }}
               />
 
-              <div
-                className={`mt-6 ${isSubmitting ? 'opacity-50' : ''}`}
-              >
-                <Altcha
-                  onChange={setAltcha}
-                />
-                {
-                  altcha === null
-                  && <p
-                    className='text-error animate-in fade-in duration-500 mt-2 text-sm font-bold'
-                  >Prove you're not a robot</p>}
+              <div className={`mt-6 ${isSubmitting ? 'opacity-50' : ''}`}>
+                <Altcha onChange={setAltcha} />
+                {altcha === null && (
+                  <p className="text-error animate-in fade-in duration-500 mt-2 text-sm font-bold">
+                    Prove you're not a robot
+                  </p>
+                )}
               </div>
 
               <Button
-                type='submit'
+                type="submit"
                 disabled={isSubmitting}
-                className='mt-7 w-full'
+                className="mt-7 w-full"
               >
-                {
-                  isSubmitting
-                  && <Loader2
-                    className='mr-2 h-4 w-4 animate-spin'
-                  />} Sign in
+                {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Sign in
               </Button>
 
               <Button
-                type='button'
+                type="button"
                 onClick={() => navigate(NavService.updatePassword())}
                 disabled={isSubmitting}
-                variant='outline'
-                className='mt-3 w-full'
-              >Update password</Button>
-
-              <p
-                className='text-light text-sm mt-6 text-center'
+                variant="outline"
+                className="mt-3 w-full"
               >
-                If this is your first time signing in, you'll need to set a password. Please visit the <Link className='mx-1' to={NavService.updatePassword()}><strong>"Update password"</strong></Link> section to do so.
-              </p>
+                Update password
+              </Button>
 
+              <p className="text-light text-sm mt-6 text-center">
+                If this is your first time signing in, you'll need to set a password. Please visit
+                the{' '}
+                <Link
+                  className="mx-1"
+                  to={NavService.updatePassword()}
+                >
+                  <strong>"Update password"</strong>
+                </Link>{' '}
+                section to do so.
+              </p>
             </form>
           </Form>
-
         </article>
-
       </section>
 
-
-
       {/* *********************
-        * CONFIRMATION DIALOG *
-        ******************** */}
+       * CONFIRMATION DIALOG *
+       ******************** */}
       <ConfirmationDialog />
 
-
-
       {/* ********
-        * TOASTR *
-        ******** */}
+       * TOASTR *
+       ******** */}
       <Toaster />
-
     </main>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

@@ -62,10 +62,6 @@ const toManualTrade = (data: IRecordFormInputs): IManualTrade => ({
   amount: Number(data.amount),
 });
 
-
-
-
-
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
@@ -92,10 +88,6 @@ const RecordForm = ({ record, closeDialog }: IRecordFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
 
-
-
-
-
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
    ********************************************************************************************** */
@@ -120,9 +112,10 @@ const RecordForm = ({ record, closeDialog }: IRecordFormProps) => {
     openConfirmationDialog({
       mode: 'OTP',
       title: record === null ? 'Create trade' : 'Update trade',
-      description: record === null
-        ? `A ${data.side} trade for ${formatBitcoinAmount(Number(data.amount))} will be created, altering the position immediately upon submission`
-        : `The ${data.side} trade '${record!.id}' for ${formatBitcoinAmount(Number(data.amount))} will be updated, altering the position immediately upon submission`,
+      description:
+        record === null
+          ? `A ${data.side} trade for ${formatBitcoinAmount(Number(data.amount))} will be created, altering the position immediately upon submission`
+          : `The ${data.side} trade '${record!.id}' for ${formatBitcoinAmount(Number(data.amount))} will be updated, altering the position immediately upon submission`,
       onConfirmation: async (confirmation: string) => {
         try {
           setIsSubmitting(true);
@@ -164,254 +157,245 @@ const RecordForm = ({ record, closeDialog }: IRecordFormProps) => {
     });
   };
 
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
     <Dialog
       open={isDialogOpen}
-      onOpenChange={() => __handleCloseDialog(undefined)}>
-
+      onOpenChange={() => __handleCloseDialog(undefined)}
+    >
       <DialogContent>
-
         <DialogHeader>
           <DialogTitle>{record === null ? 'Create trade' : 'Update trade'}</DialogTitle>
           <DialogDescription>
-            The trade will be {record === null ? 'created' : 'updated'} and the position will be recalculated immediately upon submission
+            The trade will be {record === null ? 'created' : 'updated'} and the position will be
+            recalculated immediately upon submission
           </DialogDescription>
         </DialogHeader>
 
-        {
-          record
-          && <>
-            <div
-              className='flex justify-start items-center'
-            >
-              <p
-                className='text-light text-xs sm:text-sm'
-              >ID</p>
-              <span className='flex-1'></span>
+        {record && (
+          <>
+            <div className="flex justify-start items-center">
+              <p className="text-light text-xs sm:text-sm">ID</p>
+              <span className="flex-1"></span>
               <p>{record.id}</p>
             </div>
           </>
-        }
+        )}
 
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
-
-              <FormField
-                control={form.control}
-                name='event_time'
-                render={({ field }) => (
-                  <FormItem className='flex flex-col'>
-                    <FormLabel>Event time</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant='outline'
-                            className={`w-full pl-3 text-left font-normal ${!field.value ? 'text-light' : ''}`}
-                            autoFocus
-                          >
-                            {field.value ? (
-                              formatDate(field.value, 'datetime-medium')
-                            ) : (
-                              <span>Pick a date</span>
-                            )}
-                            <CalendarIcon
-                              aria-hidden='true'
-                              className='ml-auto h-4 w-4 opacity-50'
-                            />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent
-                        className='w-auto p-0'
-                        align='start'
-                      >
-                        <Calendar
-                          mode='single'
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                    <FormDescription>
-                      Trade execution date
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name='side'
-                render={({ field }) => (
-                  <FormItem className='mt-7'>
-                    <FormLabelWithMoreInfo
-                      value='Side'
-                      description={[
-                        'The kind of action that was executed.',
-                        'In a \'buy\' trade, you exchange Dollars for Bitcoin. On the other hand, in a \'sell\' trade, you send Bitcoin in exchange for Dollars.',
-                      ]}
-                      htmlFor='sideSelect'
-                    />
-                    <FormControl>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                        value={field.value}
-                        disabled={isSubmitting}
-                        name='sideSelect'
-                      >
-                        <SelectTrigger id='sideSelect'>
-                          <SelectValue placeholder='Select one option' />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value='BUY'>Buy</SelectItem>
-                          <SelectItem value='SELL'>Sell</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-                    <FormDescription>Kind of action</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-                rules={{
-                  validate: {
-                    required: (value) => (value.length ? true : 'Select a valid side'),
-                  },
-                }}
-              />
-
-              <FormField
-                control={form.control}
-                name='price'
-                render={({ field }) => (
-                  <FormItem className='mt-7'>
-                    <FormLabelWithMoreInfo
-                      value='Price'
-                      description={[
-                        'The price in $ at which the trade was executed.',
-                        'Set this value carefully as it influences the entry price of the position in case of purchases.',
-                      ]}
-                    />
-                    <FormControl>
-                      <Input
-                        type='number'
-                        placeholder='66185.13'
-                        {...field}
-                        autoComplete='off'
-                        min={0.01}
-                        max={Number.MAX_SAFE_INTEGER}
-                        disabled={isSubmitting}
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            noValidate
+          >
+            <FormField
+              control={form.control}
+              name="event_time"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Event time</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          className={`w-full pl-3 text-left font-normal ${!field.value ? 'text-light' : ''}`}
+                          autoFocus
+                        >
+                          {field.value ? (
+                            formatDate(field.value, 'datetime-medium')
+                          ) : (
+                            <span>Pick a date</span>
+                          )}
+                          <CalendarIcon
+                            aria-hidden="true"
+                            className="ml-auto h-4 w-4 opacity-50"
+                          />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent
+                      className="w-auto p-0"
+                      align="start"
+                    >
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        initialFocus
                       />
-                    </FormControl>
-                    <FormDescription>The rate of the exchange (Bitcoin/USD)</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-                rules={{
-                  validate: {
-                    required: (value) => (isNumberValid(Number(value), 0.01, Number.MAX_SAFE_INTEGER) ? true : 'Enter a valid price'),
-                  },
-                }}
-              />
+                    </PopoverContent>
+                  </Popover>
+                  <FormDescription>Trade execution date</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-              <FormField
-                control={form.control}
-                name='amount'
-                render={({ field }) => (
-                  <FormItem className='mt-7'>
-                    <FormLabelWithMoreInfo
-                      value='Amount'
-                      description={[
-                        'The amount of Bitcoin that was bought or sold.',
-                        'Set this value carefully as it influences the position\'s amount.',
-                      ]}
+            <FormField
+              control={form.control}
+              name="side"
+              render={({ field }) => (
+                <FormItem className="mt-7">
+                  <FormLabelWithMoreInfo
+                    value="Side"
+                    description={[
+                      'The kind of action that was executed.',
+                      "In a 'buy' trade, you exchange Dollars for Bitcoin. On the other hand, in a 'sell' trade, you send Bitcoin in exchange for Dollars.",
+                    ]}
+                    htmlFor="sideSelect"
+                  />
+                  <FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      value={field.value}
+                      disabled={isSubmitting}
+                      name="sideSelect"
+                    >
+                      <SelectTrigger id="sideSelect">
+                        <SelectValue placeholder="Select one option" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="BUY">Buy</SelectItem>
+                        <SelectItem value="SELL">Sell</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormDescription>Kind of action</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+              rules={{
+                validate: {
+                  required: (value) => (value.length ? true : 'Select a valid side'),
+                },
+              }}
+            />
+
+            <FormField
+              control={form.control}
+              name="price"
+              render={({ field }) => (
+                <FormItem className="mt-7">
+                  <FormLabelWithMoreInfo
+                    value="Price"
+                    description={[
+                      'The price in $ at which the trade was executed.',
+                      'Set this value carefully as it influences the entry price of the position in case of purchases.',
+                    ]}
+                  />
+                  <FormControl>
+                    <Input
+                      type="number"
+                      placeholder="66185.13"
+                      {...field}
+                      autoComplete="off"
+                      min={0.01}
+                      max={Number.MAX_SAFE_INTEGER}
+                      disabled={isSubmitting}
                     />
-                    <FormControl>
-                      <Input
-                        type='number'
-                        placeholder='0.0712'
-                        {...field}
-                        autoComplete='off'
-                        min={0.00000001}
-                        max={Number.MAX_SAFE_INTEGER}
-                        disabled={isSubmitting}
-                      />
-                    </FormControl>
-                    <FormDescription>The amount of Bitcoin traded</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-                rules={{
-                  validate: {
-                    required: (value) => (isNumberValid(Number(value), 0.00000001, Number.MAX_SAFE_INTEGER) ? true : 'Enter a valid amount'),
-                  },
-                }}
-              />
+                  </FormControl>
+                  <FormDescription>The rate of the exchange (Bitcoin/USD)</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+              rules={{
+                validate: {
+                  required: (value) =>
+                    isNumberValid(Number(value), 0.01, Number.MAX_SAFE_INTEGER)
+                      ? true
+                      : 'Enter a valid price',
+                },
+              }}
+            />
 
-              <FormField
-                control={form.control}
-                name='notes'
-                render={({ field }) => (
-                  <FormItem className='mt-7'>
-                    <FormLabelWithMoreInfo
-                      value='Notes'
-                      description='The notes should contain the reason why the trade is being created and the expected effect it will have on the position.'
+            <FormField
+              control={form.control}
+              name="amount"
+              render={({ field }) => (
+                <FormItem className="mt-7">
+                  <FormLabelWithMoreInfo
+                    value="Amount"
+                    description={[
+                      'The amount of Bitcoin that was bought or sold.',
+                      "Set this value carefully as it influences the position's amount.",
+                    ]}
+                  />
+                  <FormControl>
+                    <Input
+                      type="number"
+                      placeholder="0.0712"
+                      {...field}
+                      autoComplete="off"
+                      min={0.00000001}
+                      max={Number.MAX_SAFE_INTEGER}
+                      disabled={isSubmitting}
                     />
-                    <FormControl>
-                      <Textarea
-                        placeholder='Explain why the trade is being created'
-                        rows={7}
-                        autoComplete='false'
-                        {...field}
-                        disabled={isSubmitting}
-                      />
-                    </FormControl>
-                    <FormDescription>Description of the trade</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-                rules={{
-                  validate: {
-                    required: (value) => (value.length > 0 && !isStringValid(value, 10, 49999) ? 'Enter a valid description' : true),
-                  },
-                }}
-              />
+                  </FormControl>
+                  <FormDescription>The amount of Bitcoin traded</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+              rules={{
+                validate: {
+                  required: (value) =>
+                    isNumberValid(Number(value), 0.00000001, Number.MAX_SAFE_INTEGER)
+                      ? true
+                      : 'Enter a valid amount',
+                },
+              }}
+            />
 
-              <DialogFooter>
-                <Button
-                  type='submit'
-                  disabled={isSubmitting}
-                  className='mt-7 w-full'
-                >
-                  {
-                    isSubmitting
-                    && <Loader2
-                      className='mr-2 h-4 w-4 animate-spin'
-                    />} {record === null ? 'Create trade' : 'Update trade'}
-                </Button>
-              </DialogFooter>
+            <FormField
+              control={form.control}
+              name="notes"
+              render={({ field }) => (
+                <FormItem className="mt-7">
+                  <FormLabelWithMoreInfo
+                    value="Notes"
+                    description="The notes should contain the reason why the trade is being created and the expected effect it will have on the position."
+                  />
+                  <FormControl>
+                    <Textarea
+                      placeholder="Explain why the trade is being created"
+                      rows={7}
+                      autoComplete="false"
+                      {...field}
+                      disabled={isSubmitting}
+                    />
+                  </FormControl>
+                  <FormDescription>Description of the trade</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+              rules={{
+                validate: {
+                  required: (value) =>
+                    value.length > 0 && !isStringValid(value, 10, 49999)
+                      ? 'Enter a valid description'
+                      : true,
+                },
+              }}
+            />
 
-            </form>
-          </Form>
-
+            <DialogFooter>
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                className="mt-7 w-full"
+              >
+                {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}{' '}
+                {record === null ? 'Create trade' : 'Update trade'}
+              </Button>
+            </DialogFooter>
+          </form>
+        </Form>
       </DialogContent>
-
     </Dialog>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

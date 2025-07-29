@@ -22,10 +22,6 @@ const userServiceFactory = (): IUserService => {
 
   // ...
 
-
-
-
-
   /* **********************************************************************************************
    *                                          RETRIEVERS                                          *
    ********************************************************************************************** */
@@ -34,24 +30,15 @@ const userServiceFactory = (): IUserService => {
    * Retrieves the list of existing user records ordered by authority descendingly.
    * @returns Promise<IUser[]>
    */
-  const listUsers = (): Promise<IUser[]> => APIService.request(
-    'GET',
-    'auth/user',
-    undefined,
-    true,
-  );
+  const listUsers = (): Promise<IUser[]> => APIService.request('GET', 'auth/user', undefined, true);
 
   /**
    * Retrieves the OTP Secret for an user.
    * @param uid
    * @returns Promise<string>
    */
-  const getOTPSecret = (uid: string): Promise<string> => APIService.request(
-    'GET',
-    `auth/user/${uid}/otp-secret`,
-    undefined,
-    true,
-  );
+  const getOTPSecret = (uid: string): Promise<string> =>
+    APIService.request('GET', `auth/user/${uid}/otp-secret`, undefined, true);
 
   /**
    * Retrieves the list of password update records for a uid.
@@ -75,17 +62,8 @@ const userServiceFactory = (): IUserService => {
     if (typeof startAtEventTime === 'number') {
       urlPath += `&startAtEventTime=${startAtEventTime}`;
     }
-    return APIService.request(
-      'GET',
-      urlPath,
-      undefined,
-      true,
-    );
+    return APIService.request('GET', urlPath, undefined, true);
   };
-
-
-
-
 
   /* **********************************************************************************************
    *                                    USER RECORD MANAGEMENT                                    *
@@ -97,25 +75,16 @@ const userServiceFactory = (): IUserService => {
    * @param authority
    * @param otpToken
    * @returns Promise<IUser>
-  * @throws
-  * - 3500: if the format of the nickname is invalid
-  * - 3501: if the nickname is already being used
-  * - 3502: if the root's authority is not the highest
-  * - 3503: if the root's password is invalid or weak
-  * - 3504: if a password is provided when creating a nonroot user
-  * - 3505: if the authority provided is not ranging 1 - 4
-  */
-  const createUser = (
-    nickname: string,
-    authority: IAuthority,
-    otpToken: string,
-  ): Promise<IUser> => APIService.request(
-    'POST',
-    'auth/user',
-    { nickname, authority },
-    true,
-    otpToken,
-  );
+   * @throws
+   * - 3500: if the format of the nickname is invalid
+   * - 3501: if the nickname is already being used
+   * - 3502: if the root's authority is not the highest
+   * - 3503: if the root's password is invalid or weak
+   * - 3504: if a password is provided when creating a nonroot user
+   * - 3505: if the authority provided is not ranging 1 - 4
+   */
+  const createUser = (nickname: string, authority: IAuthority, otpToken: string): Promise<IUser> =>
+    APIService.request('POST', 'auth/user', { nickname, authority }, true, otpToken);
 
   /**
    * Updates a nonroot user's nickname.
@@ -130,17 +99,8 @@ const userServiceFactory = (): IUserService => {
    * - 3507: if the record doesn't exist in the database
    * - 3508: if the record belongs to the root and has not been explicitly allowed
    */
-  const updateNickname = (
-    uid: string,
-    newNickname: string,
-    otpToken: string,
-  ): Promise<void> => APIService.request(
-    'PATCH',
-    `auth/user/${uid}/nickname`,
-    { newNickname },
-    true,
-    otpToken,
-  );
+  const updateNickname = (uid: string, newNickname: string, otpToken: string): Promise<void> =>
+    APIService.request('PATCH', `auth/user/${uid}/nickname`, { newNickname }, true, otpToken);
 
   /**
    * Updates a nonroot user's authority.
@@ -158,13 +118,8 @@ const userServiceFactory = (): IUserService => {
     uid: string,
     newAuthority: IAuthority,
     otpToken: string,
-  ): Promise<void> => APIService.request(
-    'PATCH',
-    `auth/user/${uid}/authority`,
-    { newAuthority },
-    true,
-    otpToken,
-  );
+  ): Promise<void> =>
+    APIService.request('PATCH', `auth/user/${uid}/authority`, { newAuthority }, true, otpToken);
 
   /**
    * Updates a nonroot user's password hash.
@@ -189,16 +144,13 @@ const userServiceFactory = (): IUserService => {
     newPassword: string,
     otpToken: string,
     altchaPayload: string,
-  ): Promise<void> => APIService.request(
-    'PATCH',
-    'auth/user/password',
-    {
+  ): Promise<void> =>
+    APIService.request('PATCH', 'auth/user/password', {
       nickname,
       newPassword,
       otpToken,
       altchaPayload,
-    },
-  );
+    });
 
   /**
    * Updates a nonroot user's OTP Secret. The new secret is returned on completion.
@@ -209,13 +161,8 @@ const userServiceFactory = (): IUserService => {
    * - 3507: if the record doesn't exist in the database
    * - 3508: if the record belongs to the root and has not been explicitly allowed
    */
-  const updateOTPSecret = (uid: string, otpToken: string): Promise<string> => APIService.request(
-    'PATCH',
-    `auth/user/${uid}/otp-secret`,
-    undefined,
-    true,
-    otpToken,
-  );
+  const updateOTPSecret = (uid: string, otpToken: string): Promise<string> =>
+    APIService.request('PATCH', `auth/user/${uid}/otp-secret`, undefined, true, otpToken);
 
   /**
    * Deletes a nonroot user account.
@@ -226,17 +173,8 @@ const userServiceFactory = (): IUserService => {
    * - 3507: if the record doesn't exist in the database
    * - 3508: if the record belongs to the root and has not been explicitly allowed
    */
-  const deleteUser = (uid: string, otpToken: string): Promise<void> => APIService.request(
-    'DELETE',
-    `auth/user/${uid}`,
-    undefined,
-    true,
-    otpToken,
-  );
-
-
-
-
+  const deleteUser = (uid: string, otpToken: string): Promise<void> =>
+    APIService.request('DELETE', `auth/user/${uid}`, undefined, true, otpToken);
 
   /* **********************************************************************************************
    *                                         MODULE BUILD                                         *
@@ -260,18 +198,10 @@ const userServiceFactory = (): IUserService => {
   });
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                        GLOBAL INSTANCE                                         *
  ************************************************************************************************ */
 const UserService = userServiceFactory();
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

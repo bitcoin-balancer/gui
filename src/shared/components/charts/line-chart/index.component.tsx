@@ -134,10 +134,6 @@ const LineChart = ({
     },
   });
 
-
-
-
-
   /* **********************************************************************************************
    *                                         SIDE EFFECTS                                         *
    ********************************************************************************************** */
@@ -167,21 +163,15 @@ const LineChart = ({
   /**
    * Fires whenever the data changes, keeping the local state synced.
    */
-  useEffect(() => { chartAPIRef.current.onSeriesChanges(data, priceLines); }, [data, priceLines]);
-
-
-
-
+  useEffect(() => {
+    chartAPIRef.current.onSeriesChanges(data, priceLines);
+  }, [data, priceLines]);
 
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return <div ref={chartContainerRef} />;
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

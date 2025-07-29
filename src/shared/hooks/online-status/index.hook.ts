@@ -9,25 +9,20 @@ import { useSyncExternalStore } from 'react';
  * Subscribes to the Client's Internet Connection Status.
  * @returns () => boolean
  */
-const useOnlineStatus: () => boolean = () => useSyncExternalStore(
-  (callback) => {
-    window.addEventListener('online', callback);
-    window.addEventListener('offline', callback);
-    return () => {
-      window.removeEventListener('online', callback);
-      window.removeEventListener('offline', callback);
-    };
-  },
-  () => navigator.onLine,
-);
-
-
-
-
+const useOnlineStatus: () => boolean = () =>
+  useSyncExternalStore(
+    (callback) => {
+      window.addEventListener('online', callback);
+      window.addEventListener('offline', callback);
+      return () => {
+        window.removeEventListener('online', callback);
+        window.removeEventListener('offline', callback);
+      };
+    },
+    () => navigator.onLine,
+  );
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export {
-  useOnlineStatus,
-};
+export { useOnlineStatus };

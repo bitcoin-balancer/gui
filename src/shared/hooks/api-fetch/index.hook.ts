@@ -1,10 +1,5 @@
 /* eslint-disable no-console */
-import {
-  useState,
-  useEffect,
-  useCallback,
-  useRef,
-} from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { flushSync } from 'react-dom';
 import { IHTMLElement } from '@/shared/types.ts';
 import { errorToast, scrollChildIntoView } from '@/shared/services/utils/index.service.ts';
@@ -17,10 +12,6 @@ import { IAPIFetchConfig, IAPIFetchHook } from '@/shared/hooks/api-fetch/types.t
 
 // if enabled, it will print logs on the console
 const DEBUG = false;
-
-
-
-
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -43,10 +34,6 @@ const useAPIFetch: IAPIFetchHook = <T>({
    ********************************************************************************************** */
   const refetchInterval = useRef<NodeJS.Timeout | undefined>(undefined);
 
-
-
-
-
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
@@ -57,10 +44,6 @@ const useAPIFetch: IAPIFetchHook = <T>({
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [loadingMore, setLoadingMore] = useState<boolean>(false);
 
-
-
-
-
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
    ********************************************************************************************** */
@@ -69,21 +52,18 @@ const useAPIFetch: IAPIFetchHook = <T>({
    * Refetches the initial data and sets the state a new.
    * @returns Promise<void>
    */
-  const refetchData = useCallback(
-    async (): Promise<void> => {
-      try {
-        setRefetching(true);
-        const res = await fetchFn();
-        if (DEBUG) console.log('useAPIFetch.refetchData', res);
-        setData(res);
-      } catch (e) {
-        errorToast(e, 'Refetch Error');
-      } finally {
-        setRefetching(false);
-      }
-    },
-    [fetchFn],
-  );
+  const refetchData = useCallback(async (): Promise<void> => {
+    try {
+      setRefetching(true);
+      const res = await fetchFn();
+      if (DEBUG) console.log('useAPIFetch.refetchData', res);
+      setData(res);
+    } catch (e) {
+      errorToast(e, 'Refetch Error');
+    } finally {
+      setRefetching(false);
+    }
+  }, [fetchFn]);
 
   /**
    * Loads the next set of records and updates the state.
@@ -123,9 +103,6 @@ const useAPIFetch: IAPIFetchHook = <T>({
     [data, queryLimit, appendNextRecords, sortFn],
   );
 
-
-
-
   /* **********************************************************************************************
    *                                         SIDE EFFECTS                                         *
    ********************************************************************************************** */
@@ -154,7 +131,9 @@ const useAPIFetch: IAPIFetchHook = <T>({
 
     fetchInitialData();
 
-    return () => { ignore = true; };
+    return () => {
+      ignore = true;
+    };
   }, [fetchFn, queryLimit]);
 
   /**
@@ -172,10 +151,6 @@ const useAPIFetch: IAPIFetchHook = <T>({
     };
   }, [refetchFrequency, refetchData]);
 
-
-
-
-
   /* **********************************************************************************************
    *                                         HOOK EXPORTS                                         *
    ********************************************************************************************** */
@@ -192,13 +167,7 @@ const useAPIFetch: IAPIFetchHook = <T>({
   };
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export {
-  useAPIFetch,
-};
+export { useAPIFetch };

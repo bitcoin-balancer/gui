@@ -1,18 +1,6 @@
 import { useMemo, useEffect, useRef } from 'react';
-import {
-  useNavigation,
-  useNavigate,
-  Navigate,
-  Outlet,
-  ScrollRestoration,
-} from 'react-router-dom';
-import {
-  House,
-  ArrowLeftRight,
-  Server,
-  SlidersHorizontal,
-  CloudDownload,
-} from 'lucide-react';
+import { useNavigation, useNavigate, Navigate, Outlet, ScrollRestoration } from 'react-router-dom';
+import { House, ArrowLeftRight, Server, SlidersHorizontal, CloudDownload } from 'lucide-react';
 import { prettifyBadgeCount } from 'web-utils-kit';
 import { SWService } from 'sw-service';
 import { Toaster } from '@/shared/shadcn/components/ui/toaster.tsx';
@@ -48,10 +36,6 @@ const APP_ESSENTIALS_REFETCH_FREQUENCY = 2;
 const APP_UPDATER_DELAY = Math.floor(SWService.registrationDurationSeconds / 2) * 1000;
 const APP_UPDATER_DURATION = 15 * 1000;
 
-
-
-
-
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
@@ -65,10 +49,6 @@ const App = () => {
    *                                             REFS                                             *
    ********************************************************************************************** */
   const versionTooltipDisplayed = useRef<boolean>(false);
-
-
-
-
 
   /* **********************************************************************************************
    *                                             STATE                                            *
@@ -84,9 +64,6 @@ const App = () => {
   const navigation = useNavigation();
   const navigate = useNavigate();
 
-
-
-
   /* **********************************************************************************************
    *                                       REACTIVE VALUES                                        *
    ********************************************************************************************** */
@@ -96,26 +73,41 @@ const App = () => {
 
   // the main navigation buttons located at the top on desktop and at the bottom on mobile devices
   const mainNavigationItems: IMainNavigationItem[] = useMemo(
-    () => ([
+    () => [
       {
         active: NavService.dashboard() === pathname,
         name: 'Dashboard',
         path: NavService.dashboard(),
-        icon: <House className='w-5 h-5' aria-hidden='true' />,
+        icon: (
+          <House
+            className="w-5 h-5"
+            aria-hidden="true"
+          />
+        ),
         requirement: 1,
       },
       {
         active: NavService.positions() === pathname,
         name: 'Positions',
         path: NavService.positions(),
-        icon: <ArrowLeftRight className='w-5 h-5' aria-hidden='true' />,
+        icon: (
+          <ArrowLeftRight
+            className="w-5 h-5"
+            aria-hidden="true"
+          />
+        ),
         requirement: 2,
       },
       {
         active: NavService.server() === pathname,
         name: 'Server',
         path: NavService.server(),
-        icon: <Server className='w-5 h-5' aria-hidden='true' />,
+        icon: (
+          <Server
+            className="w-5 h-5"
+            aria-hidden="true"
+          />
+        ),
         badge: typeof unreadAPIErrors === 'number' ? prettifyBadgeCount(unreadAPIErrors) : '0',
         requirement: 2,
       },
@@ -123,16 +115,17 @@ const App = () => {
         active: NavService.adjustments() === pathname,
         name: 'Adjustments',
         path: NavService.adjustments(),
-        icon: <SlidersHorizontal className='w-5 h-5' aria-hidden='true' />,
+        icon: (
+          <SlidersHorizontal
+            className="w-5 h-5"
+            aria-hidden="true"
+          />
+        ),
         requirement: 2,
       },
-    ]),
+    ],
     [pathname, unreadAPIErrors],
   );
-
-
-
-
 
   /* **********************************************************************************************
    *                                         SIDE EFFECTS                                         *
@@ -177,9 +170,12 @@ const App = () => {
     let interval: NodeJS.Timeout | undefined;
     if (authenticated) {
       __refetchEssentials([5, 15, 25]);
-      interval = setInterval(async () => {
-        await __refetchEssentials([5, 15, 25]);
-      }, (APP_ESSENTIALS_REFETCH_FREQUENCY * 60) * 1000);
+      interval = setInterval(
+        async () => {
+          await __refetchEssentials([5, 15, 25]);
+        },
+        APP_ESSENTIALS_REFETCH_FREQUENCY * 60 * 1000,
+      );
     }
     return () => clearInterval(interval);
   }, [authenticated, setAppEssentials]);
@@ -202,24 +198,25 @@ const App = () => {
   useEffect(() => {
     let timeout: NodeJS.Timeout | undefined;
     if (
-      version
-      && VersionService.getAvailableUpdates(version) !== null
-      && !versionTooltipDisplayed.current
+      version &&
+      VersionService.getAvailableUpdates(version) !== null &&
+      !versionTooltipDisplayed.current
     ) {
       timeout = setTimeout(() => {
         toast({
           title: 'Update available',
           description: 'Enjoy the latest innovations, bug fixes, and enhanced security.',
-          action:
+          action: (
             <ToastAction
-              altText='Update platform'
+              altText="Update platform"
               onClick={() => navigate(NavService.platformUpdate())}
             >
               <CloudDownload
-                aria-hidden='true'
-                className='w-5 h-5'
+                aria-hidden="true"
+                className="w-5 h-5"
               />
-            </ToastAction>,
+            </ToastAction>
+          ),
           duration: APP_UPDATER_DURATION,
         });
       }, APP_UPDATER_DELAY);
@@ -227,10 +224,6 @@ const App = () => {
     }
     return () => clearTimeout(timeout);
   }, [version, navigate]);
-
-
-
-
 
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
@@ -242,128 +235,85 @@ const App = () => {
     return <GlobalLoader />;
   }
   return (
-    <div
-      className='animate-in fade-in duration-700 min-h-dvh'
-    >
-
+    <div className="animate-in fade-in duration-700 min-h-dvh">
       {/* **************
-        * PROGRESS BAR *
-        ************** */}
-      {
-        navigation.state === 'loading'
-        && <div
-          className='progress-bar fixed top-0 left-0'
-        ><div className='progress-bar-value'></div></div>
-      }
-
-
+       * PROGRESS BAR *
+       ************** */}
+      {navigation.state === 'loading' && (
+        <div className="progress-bar fixed top-0 left-0">
+          <div className="progress-bar-value"></div>
+        </div>
+      )}
 
       {/* ********
-        * HEADER *
-        ******** */}
-      <Header items={mainNavigationItems} pathname={pathname} />
-
-
+       * HEADER *
+       ******** */}
+      <Header
+        items={mainNavigationItems}
+        pathname={pathname}
+      />
 
       {/* ***************
-        * ROUTER OUTLET *
-        *************** */}
+       * ROUTER OUTLET *
+       *************** */}
       <main>
         <Outlet />
       </main>
 
-
-
       {/* *************
-        * MOBILE TABS *
-        ************* */}
+       * MOBILE TABS *
+       ************* */}
       <MobileTabs items={mainNavigationItems} />
 
-
-
       {/* *************
-        * INFO DIALOG *
-        ************* */}
+       * INFO DIALOG *
+       ************* */}
       <InfoDialog />
 
-
-
       {/* *******************
-        * LARGE INFO DIALOG *
-        ******************* */}
-      {
-        isLargeInfoDialogOpen !== undefined
-        && <LargeInfoDialog
-          data={isLargeInfoDialogOpen}
-        />
-      }
-
-
+       * LARGE INFO DIALOG *
+       ******************* */}
+      {isLargeInfoDialogOpen !== undefined && <LargeInfoDialog data={isLargeInfoDialogOpen} />}
 
       {/* *********************
-        * CONFIRMATION DIALOG *
-        ********************* */}
+       * CONFIRMATION DIALOG *
+       ********************* */}
       <ConfirmationDialog />
 
-
-
       {/* *****************
-        * POSITION DIALOG *
-        ***************** */}
-      {
-        isPositionDialogOpen !== undefined
-        && <PositionDialog
-          data={isPositionDialogOpen}
-        />
-      }
-
-
+       * POSITION DIALOG *
+       ***************** */}
+      {isPositionDialogOpen !== undefined && <PositionDialog data={isPositionDialogOpen} />}
 
       {/* ********************
-        * TRANSACTION DIALOG *
-        ******************** */}
-      {
-        isTransactionDialogOpen !== undefined
-        && <TransactionDialog
-          data={isTransactionDialogOpen}
-        />
-      }
-
-
+       * TRANSACTION DIALOG *
+       ******************** */}
+      {isTransactionDialogOpen !== undefined && (
+        <TransactionDialog data={isTransactionDialogOpen} />
+      )}
 
       {/* ***************
-        * ONLINE STATUS *
-        *************** */}
+       * ONLINE STATUS *
+       *************** */}
       <OnlineStatus />
 
-
-
       {/* ***************
-        * APP INSTALLER *
-        *************** */}
+       * APP INSTALLER *
+       *************** */}
       <AppInstaller />
 
-
-
       {/* *********
-        * TOASTER *
-        ********* */}
+       * TOASTER *
+       ********* */}
       <Toaster />
 
-
-
       {/* ********************
-        * SCROLL RESTORATION *
-        ******************** */}
+       * SCROLL RESTORATION *
+       ******************** */}
       <ScrollRestoration />
-
     </div>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

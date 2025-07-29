@@ -38,11 +38,7 @@ import { IDecreasePlanComponentProps } from '@/pages/app/dashboard/position/plan
  * Decrease Plan Dialog Component
  * Component in charge of displaying the plan to decrease a position.
  */
-const DecreasePlanDialog = ({
-  windowState,
-  plan,
-  closeDialog,
-}: IDecreasePlanComponentProps) => {
+const DecreasePlanDialog = ({ windowState, plan, closeDialog }: IDecreasePlanComponentProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
@@ -50,9 +46,6 @@ const DecreasePlanDialog = ({
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
   const serverTime = useBoundStore((state) => state.serverTime!);
   const navigate = useNavigate();
-
-
-
 
   /* **********************************************************************************************
    *                                       REACTIVE VALUES                                        *
@@ -65,30 +58,25 @@ const DecreasePlanDialog = ({
   const windowData = toSplitStateItems(windowState.window);
 
   // the date at which a position can be decreased
-  const canDecreaseAtTime = (
+  const canDecreaseAtTime =
     plan.canDecrease && plan.canDecreaseAtTime
       ? formatDate(plan.canDecreaseAtTime, 'datetime-short')
-      : undefined
-  );
+      : undefined;
 
   // the price at which the position can be decreased
-  const canDecreaseAtPrice = (
+  const canDecreaseAtPrice =
     plan.canDecrease && plan.canDecreaseAtPrice
       ? formatDollarAmount(plan.canDecreaseAtPrice, 0)
-      : undefined
-  );
+      : undefined;
 
   // the balance gap
-  const missingBaseAmount = (
-    plan.canDecrease ? formatBitcoinAmount(plan.missingBaseAmount) : undefined
-  );
+  const missingBaseAmount = plan.canDecrease
+    ? formatBitcoinAmount(plan.missingBaseAmount)
+    : undefined;
 
   // the price lines
   const decreaseLevelPriceLines = buildDecreaseLevelPriceLines(plan, serverTime);
   const windowStatePriceLine = buildWindowStatePriceLine(plan);
-
-
-
 
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
@@ -102,19 +90,21 @@ const DecreasePlanDialog = ({
     navigate(NavService.adjustments());
   };
 
-
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   let planDescription: JSX.Element = (
     <div>
       The position won't be decreased because <strong>"Auto-decrease"</strong> is currently
-       disabled. In order to enable it, navigate to
-        the <Button variant='link' onClick={navigateToAdjustments} className='p-0 m-0 h-auto text-base text-sky-700'>Adjustments</Button> page and
-         update it via the <strong>"Strategy Form"</strong>
+      disabled. In order to enable it, navigate to the{' '}
+      <Button
+        variant="link"
+        onClick={navigateToAdjustments}
+        className="p-0 m-0 h-auto text-base text-sky-700"
+      >
+        Adjustments
+      </Button>{' '}
+      page and update it via the <strong>"Strategy Form"</strong>
     </div>
   );
 
@@ -123,7 +113,9 @@ const DecreasePlanDialog = ({
     // init helpers
     const dateBadge: JSX.Element | undefined = buildDateBadge(plan, canDecreaseAtTime);
     const priceBadge: JSX.Element | undefined = buildPriceBadge(plan, canDecreaseAtPrice);
-    const decreasePercentageBadge: JSX.Element = <Badge variant='secondary'>{plan.decreasePercentage}%</Badge>;
+    const decreasePercentageBadge: JSX.Element = (
+      <Badge variant="secondary">{plan.decreasePercentage}%</Badge>
+    );
 
     // put together the description according to the current requirements
     if (plan.canDecreaseAtTime) {
@@ -131,7 +123,7 @@ const DecreasePlanDialog = ({
         planDescription = (
           <div>
             The position will be decreased by {decreasePercentageBadge} if the price rises to
-             {priceBadge} after {dateBadge}
+            {priceBadge} after {dateBadge}
           </div>
         );
       } else {
@@ -145,15 +137,11 @@ const DecreasePlanDialog = ({
       planDescription = (
         <div>
           The position will be decreased by {decreasePercentageBadge} if the price rises to
-           {priceBadge}
+          {priceBadge}
         </div>
       );
     } else {
-      planDescription = (
-        <div>
-          The position will be decreased by {decreasePercentageBadge}
-        </div>
-      );
+      planDescription = <div>The position will be decreased by {decreasePercentageBadge}</div>;
     }
   }
   return (
@@ -161,37 +149,29 @@ const DecreasePlanDialog = ({
       open={isDialogOpen}
       onOpenChange={handleCloseDialog}
     >
-      <DialogContent className='p-0'>
-
-        <DialogHeader className='p-6 pb-0'>
+      <DialogContent className="p-0">
+        <DialogHeader className="p-6 pb-0">
           <DialogTitle>Decrease plan</DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
 
-        {
-          (plan.canDecrease && plan.missingBaseAmount > 0)
-          && (
-            <div className='px-6 pb-2'>
-              <Alert>
-                <Wallet className='h-4 w-4' />
-                <AlertTitle>Insufficient balance!</AlertTitle>
-                <AlertDescription>
-                  Please deposit <Badge variant='secondary'>{missingBaseAmount}</Badge> to your Spot
-                  Wallet so positions can be decreased.
-                </AlertDescription>
-              </Alert>
-            </div>
-          )
-        }
+        {plan.canDecrease && plan.missingBaseAmount > 0 && (
+          <div className="px-6 pb-2">
+            <Alert>
+              <Wallet className="h-4 w-4" />
+              <AlertTitle>Insufficient balance!</AlertTitle>
+              <AlertDescription>
+                Please deposit <Badge variant="secondary">{missingBaseAmount}</Badge> to your Spot
+                Wallet so positions can be decreased.
+              </AlertDescription>
+            </Alert>
+          </div>
+        )}
 
-        <div
-          className='text-light px-6 -mt-3 text-center sm:text-left'
-        >
-          {planDescription}
-        </div>
+        <div className="text-light px-6 -mt-3 text-center sm:text-left">{planDescription}</div>
 
         <LineChart
-          kind='line'
+          kind="line"
           height={breakpoint === 'xs' || breakpoint === 'sm' ? 350 : 450}
           data={windowData}
           priceLines={
@@ -201,16 +181,10 @@ const DecreasePlanDialog = ({
           }
           priceFormatterFunc={priceFormatter}
         />
-
       </DialogContent>
-
     </Dialog>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

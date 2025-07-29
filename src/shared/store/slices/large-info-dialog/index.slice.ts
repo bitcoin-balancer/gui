@@ -10,21 +10,17 @@ import { ILargeInfoDialogSlice } from '@/shared/store/slices/large-info-dialog/t
  * Large Info Dialog Slice
  * Creates the slice in charge of displaying large pieces of information.
  */
-const createLargeInfoDialogSlice: StateCreator<ILargeInfoDialogSlice> = (
-  set,
-) => ({
+const createLargeInfoDialogSlice: StateCreator<ILargeInfoDialogSlice> = (set) => ({
   isLargeInfoDialogOpen: undefined,
-  openLargeInfoDialog: (data: ISectionID) => set(() => ({
-    isLargeInfoDialogOpen: data,
-  })),
-  closeLargeInfoDialog: () => set(() => ({
-    isLargeInfoDialogOpen: undefined,
-  })),
+  openLargeInfoDialog: (data: ISectionID) =>
+    set(() => ({
+      isLargeInfoDialogOpen: data,
+    })),
+  closeLargeInfoDialog: () =>
+    set(() => ({
+      isLargeInfoDialogOpen: undefined,
+    })),
 });
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

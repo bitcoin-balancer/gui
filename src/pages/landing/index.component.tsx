@@ -41,10 +41,6 @@ const Landing = () => {
   const openLargeInfoDialog = useBoundStore((state) => state.openLargeInfoDialog);
   const navigate = useNavigate();
 
-
-
-
-
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
    ********************************************************************************************** */
@@ -67,29 +63,24 @@ const Landing = () => {
    * Opens the under construction dialog.
    */
   const openUnderConstructionDialog = useCallback(
-    () => openInfoDialog({
-      title: 'Under construction',
-      content: 'This section is currently under construction and will be available soon. Please check back in a few days.',
-    }),
+    () =>
+      openInfoDialog({
+        title: 'Under construction',
+        content:
+          'This section is currently under construction and will be available soon. Please check back in a few days.',
+      }),
     [openInfoDialog],
   );
-
-
-
-
 
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
     <>
-      <main
-        className='min-h-dvh'
-      >
-
+      <main className="min-h-dvh">
         {/* ********
-          * HEADER *
-          ******** */}
+         * HEADER *
+         ******** */}
         <Header
           openUnderConstructionDialog={openUnderConstructionDialog}
           openContactDialog={openContactDialog}
@@ -98,25 +89,21 @@ const Landing = () => {
           navigate={navigate}
         />
 
-
-
         {/* ******
-          * HERO *
-          ****** */}
+         * HERO *
+         ****** */}
         <Hero
           breakpoint={breakpoint}
           navigateToSection={navigateToSection}
           navigate={navigate}
         />
 
-
-
         {/* *****************
-          * POSITION SAMPLE *
-          ***************** */}
+         * POSITION SAMPLE *
+         ***************** */}
         <div
-          id='position_sample'
-          className='my-20 md:my-28'
+          id="position_sample"
+          className="my-20 md:my-28"
         >
           <PositionSample
             openUnderConstructionDialog={openUnderConstructionDialog}
@@ -124,26 +111,22 @@ const Landing = () => {
           />
         </div>
 
-
-
         {/* *****************
-          * CHARACTERISTICS *
-          ***************** */}
+         * CHARACTERISTICS *
+         ***************** */}
         <div
-          id='characteristics'
-          className='mt-20 md:mt-28'
+          id="characteristics"
+          className="mt-20 md:mt-28"
         >
           <Characteristics />
         </div>
 
-
-
         {/* **********
-          * FEATURES *
-          ********** */}
+         * FEATURES *
+         ********** */}
         <div
-          id='features'
-          className='mt-20 md:mt-3'
+          id="features"
+          className="mt-20 md:mt-3"
         >
           <Features
             breakpoint={breakpoint}
@@ -152,36 +135,26 @@ const Landing = () => {
           />
         </div>
 
-
-
-        <Separator className='my-20 md:my-28' />
-
-
+        <Separator className="my-20 md:my-28" />
 
         {/* ************
-          * INDICATORS *
-          ************ */}
+         * INDICATORS *
+         ************ */}
         <div
-          id='indicators'
-          className='my-20 md:my-28'
+          id="indicators"
+          className="my-20 md:my-28"
         >
-          <Indicators
-            openLargeInfoDialog={openLargeInfoDialog}
-          />
+          <Indicators openLargeInfoDialog={openLargeInfoDialog} />
         </div>
 
-
-
-        <Separator className='my-20 md:my-28' />
-
-
+        <Separator className="my-20 md:my-28" />
 
         {/* *********
-          * PLANNER *
-          ********* */}
+         * PLANNER *
+         ********* */}
         <div
-          id='planner'
-          className='my-20 md:my-28'
+          id="planner"
+          className="my-20 md:my-28"
         >
           <Planner
             openUnderConstructionDialog={openUnderConstructionDialog}
@@ -189,71 +162,54 @@ const Landing = () => {
           />
         </div>
 
-
-
-        <Separator className='my-20 md:my-28' />
-
-
-
+        <Separator className="my-20 md:my-28" />
 
         {/* ***********
-          * MONITORING *
-          *********** */}
+         * MONITORING *
+         *********** */}
         <div
-          id='monitoring'
-          className='my-20 md:my-28'
+          id="monitoring"
+          className="my-20 md:my-28"
         >
           <Monitoring />
         </div>
 
-
-
         {/* ***********
-          * EXCHANGES *
-          *********** */}
+         * EXCHANGES *
+         *********** */}
         <div
-          id='exchanges'
-          className='my-20 md:my-28'
+          id="exchanges"
+          className="my-20 md:my-28"
         >
           <Exchanges />
         </div>
 
-
-
         {/* **************
-          * TECHNOLOGIES *
-          ************** */}
+         * TECHNOLOGIES *
+         ************** */}
         <div
-          id='technologies'
-          className='my-20 md:my-28'
+          id="technologies"
+          className="my-20 md:my-28"
         >
           <Technologies />
         </div>
 
-
-
-        <Separator className='my-20 md:my-28' />
-
-
+        <Separator className="my-20 md:my-28" />
 
         {/* *****
-          * FAQ *
-          ***** */}
+         * FAQ *
+         ***** */}
         <div
-          id='faq'
-          className='my-20 md:my-28'
+          id="faq"
+          className="my-20 md:my-28"
         >
           <FAQ />
         </div>
 
-
-
         {/* ********
-          * FOOTER *
-          ******** */}
-        <div
-          id='footer'
-        >
+         * FOOTER *
+         ******** */}
+        <div id="footer">
           <Footer
             openUnderConstructionDialog={openUnderConstructionDialog}
             openContactDialog={openContactDialog}
@@ -262,57 +218,37 @@ const Landing = () => {
           />
         </div>
 
-
-
         {/* ***************
-          * SCROLL TO TOP *
-          *************** */}
+         * SCROLL TO TOP *
+         *************** */}
         <ScrollToTop />
-
       </main>
 
-
-
       {/* *********
-        * TOASTER *
-        ********* */}
+       * TOASTER *
+       ********* */}
       <Toaster />
 
-
-
       {/* ****************
-        * CONTACT DIALOG *
-        **************** */}
+       * CONTACT DIALOG *
+       **************** */}
       <ContactDialog
         isOpen={isContactDialogOpen}
         setIsOpen={setIsContactDialogOpen}
       />
 
-
-
       {/* *************
-        * INFO DIALOG *
-        ************* */}
+       * INFO DIALOG *
+       ************* */}
       <InfoDialog />
 
-
-
       {/* *******************
-        * LARGE INFO DIALOG *
-        ******************* */}
-      {
-        isLargeInfoDialogOpen !== undefined
-        && <LargeInfoDialog
-          data={isLargeInfoDialogOpen}
-        />
-      }
+       * LARGE INFO DIALOG *
+       ******************* */}
+      {isLargeInfoDialogOpen !== undefined && <LargeInfoDialog data={isLargeInfoDialogOpen} />}
     </>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

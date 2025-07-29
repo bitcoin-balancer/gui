@@ -14,22 +14,15 @@ import { ITransactionDialogSlice } from './slices/transaction-dialog/index.slice
  * Bound Store
  * The type containing the types for all slices.
  */
-type IBoundStore =
-  IAuthenticatedSlice
-  & IInfoDialogSlice
-  & ILargeInfoDialogSlice
-  & IConfirmationDialogSlice
-  & IAppEssentialsSlice
-  & IPositionDialogSlice
-  & ITransactionDialogSlice;
-
-
-
-
+type IBoundStore = IAuthenticatedSlice &
+  IInfoDialogSlice &
+  ILargeInfoDialogSlice &
+  IConfirmationDialogSlice &
+  IAppEssentialsSlice &
+  IPositionDialogSlice &
+  ITransactionDialogSlice;
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export type {
-  IBoundStore,
-};
+export type { IBoundStore };

@@ -27,10 +27,6 @@ const liquidityServiceFactory = (): ILiquidityService => {
 
   // ...
 
-
-
-
-
   /* **********************************************************************************************
    *                                           RETRIEVER                                          *
    ********************************************************************************************** */
@@ -39,16 +35,8 @@ const liquidityServiceFactory = (): ILiquidityService => {
    * Retrieves the up-to-date liquidity state.
    * @returns Promise<ILiquidityState>
    */
-  const getState = (): Promise<ILiquidityState> => APIService.request(
-    'GET',
-    'market-state/liquidity/state',
-    undefined,
-    true,
-  );
-
-
-
-
+  const getState = (): Promise<ILiquidityState> =>
+    APIService.request('GET', 'market-state/liquidity/state', undefined, true);
 
   /* **********************************************************************************************
    *                                         CONFIGURATION                                        *
@@ -58,12 +46,8 @@ const liquidityServiceFactory = (): ILiquidityService => {
    * Retrieves the configuration object for the Liquidity Module.
    * @returns Promise<ILiquidityConfig>
    */
-  const getConfig = (): Promise<ILiquidityConfig> => APIService.request(
-    'GET',
-    'market-state/liquidity/config',
-    undefined,
-    true,
-  );
+  const getConfig = (): Promise<ILiquidityConfig> =>
+    APIService.request('GET', 'market-state/liquidity/config', undefined, true);
 
   /**
    * Validates and updates the liquidity's configuration.
@@ -75,19 +59,8 @@ const liquidityServiceFactory = (): ILiquidityService => {
    * - 22502: if the intensity weights is not a valid object
    * - 22503: if any of the intensity weights is invalid
    */
-  const updateConfig = (newConfig: ILiquidityConfig, otpToken: string): Promise<void> => (
-    APIService.request(
-      'PUT',
-      'market-state/liquidity/config',
-      { newConfig },
-      true,
-      otpToken,
-    )
-  );
-
-
-
-
+  const updateConfig = (newConfig: ILiquidityConfig, otpToken: string): Promise<void> =>
+    APIService.request('PUT', 'market-state/liquidity/config', { newConfig }, true, otpToken);
 
   /* **********************************************************************************************
    *                                         MODULE BUILD                                         *
@@ -105,18 +78,10 @@ const liquidityServiceFactory = (): ILiquidityService => {
   });
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                        GLOBAL INSTANCE                                         *
  ************************************************************************************************ */
 const LiquidityService = liquidityServiceFactory();
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

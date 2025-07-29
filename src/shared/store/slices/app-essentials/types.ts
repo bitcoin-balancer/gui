@@ -13,13 +13,7 @@ type IAppEssentialsSlice = Partial<IAppEssentials> & {
   setAppEssentials: (payload: IAppEssentials | ICompactAppEssentials) => void;
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export type {
-  IAppEssentialsSlice,
-};
+export type { IAppEssentialsSlice };

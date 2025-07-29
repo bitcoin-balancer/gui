@@ -24,10 +24,6 @@ import LoadMoreButton from '@/shared/components/load-more-button/index.component
 // the number of records that will be retrieved at a time
 const LIMIT = 15;
 
-
-
-
-
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
@@ -39,39 +35,29 @@ const LIMIT = 15;
 const NotificationsDialog = ({
   unreadCount,
   closeDialog,
-}: { unreadCount: number, closeDialog: (nextState: undefined) => void }) => {
+}: {
+  unreadCount: number;
+  closeDialog: (nextState: undefined) => void;
+}) => {
   /* **********************************************************************************************
    *                                             REFS                                             *
    ********************************************************************************************** */
   const rowsRef = useRef<HTMLDivElement | null>(null);
   const unreadRef = useRef<number>(unreadCount);
 
-
-
-
-
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const {
-    data,
-    loading,
-    error,
-    hasMore,
-    loadMore,
-    loadingMore,
-  } = useAPIFetch(useMemo(
-    () => ({
-      fetchFn: () => NotificationService.list(LIMIT),
-      queryLimit: LIMIT,
-    }),
-    [],
-  ));
+  const { data, loading, error, hasMore, loadMore, loadingMore } = useAPIFetch(
+    useMemo(
+      () => ({
+        fetchFn: () => NotificationService.list(LIMIT),
+        queryLimit: LIMIT,
+      }),
+      [],
+    ),
+  );
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
-
-
-
-
 
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
@@ -79,12 +65,15 @@ const NotificationsDialog = ({
   let content;
   if (error) {
     content = (
-      <div className='pb-5'>
-        <PageLoadError variant='dialog' error={error} />
+      <div className="pb-5">
+        <PageLoadError
+          variant="dialog"
+          error={error}
+        />
       </div>
     );
   } else if (loading) {
-    content = <PageLoader variant='dialog' />;
+    content = <PageLoader variant="dialog" />;
   } else if (data.length) {
     content = (
       <>
@@ -95,48 +84,39 @@ const NotificationsDialog = ({
                 id={`nd-${record.id}`}
                 className={`py-8 px-6 first:pt-5 ${i < unreadRef.current ? 'bg-slate-50' : ''}`}
               >
-                <div
-                  className='flex justify-start items-start'
-                >
-                  <p
-                    className='font-medium'
-                  >{record.title}</p>
-                  <span className='flex-1'></span>
+                <div className="flex justify-start items-start">
+                  <p className="font-medium">{record.title}</p>
+                  <span className="flex-1"></span>
                   <Badge
-                    variant='secondary'
-                    className='text-xs max-w-[50%]'
+                    variant="secondary"
+                    className="text-xs max-w-[50%]"
                   >
-                    <p
-                      className='truncate'
-                    >{record.sender}</p>
+                    <p className="truncate">{record.sender}</p>
                   </Badge>
                 </div>
-                <p
-                  className='text-sm  mt-1 break-all'
-                >{record.description}</p>
-                <p
-                  className='text-xs text-light mt-1'
-                >{formatDate(record.event_time, 'datetime-medium')}</p>
+                <p className="text-sm  mt-1 break-all">{record.description}</p>
+                <p className="text-xs text-light mt-1">
+                  {formatDate(record.event_time, 'datetime-medium')}
+                </p>
               </article>
               {i < data.length - 1 && <Separator />}
             </Fragment>
           ))}
         </div>
-        {
-          (hasMore && data.length >= LIMIT)
-          && <div
-            className='py-5'
-          >
+        {hasMore && data.length >= LIMIT && (
+          <div className="py-5">
             <LoadMoreButton
-              loadMore={() => loadMore(
-                () => NotificationService.list(LIMIT, data.at(-1)!.id),
-                rowsRef.current!,
-                `nd-${data.at(-1)!.id}`,
-              )}
+              loadMore={() =>
+                loadMore(
+                  () => NotificationService.list(LIMIT, data.at(-1)!.id),
+                  rowsRef.current!,
+                  `nd-${data.at(-1)!.id}`,
+                )
+              }
               loadingMore={loadingMore}
             />
           </div>
-        }
+        )}
       </>
     );
   } else {
@@ -147,26 +127,17 @@ const NotificationsDialog = ({
       open={isDialogOpen}
       onOpenChange={handleCloseDialog}
     >
-      <DialogContent className='p-0'>
-
-        <DialogHeader className='p-6 pb-0'>
+      <DialogContent className="p-0">
+        <DialogHeader className="p-6 pb-0">
           <DialogTitle>Notifications</DialogTitle>
-          <DialogDescription>
-            Events broadcasted by the Balancer API
-          </DialogDescription>
+          <DialogDescription>Events broadcasted by the Balancer API</DialogDescription>
         </DialogHeader>
 
         {content}
-
       </DialogContent>
-
     </Dialog>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

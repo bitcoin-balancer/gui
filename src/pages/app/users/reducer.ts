@@ -20,21 +20,25 @@ const dispatch = (action: IAction, state: IUser[], setState: (state: IUser[]) =>
       break;
     }
     case 'UPDATE_NICKNAME': {
-      setState(state.map((user) => {
-        if (user.uid === action.payload.uid) {
-          return { ...user, nickname: action.payload.newNickname };
-        }
-        return user;
-      }));
+      setState(
+        state.map((user) => {
+          if (user.uid === action.payload.uid) {
+            return { ...user, nickname: action.payload.newNickname };
+          }
+          return user;
+        }),
+      );
       break;
     }
     case 'UPDATE_AUTHORITY': {
-      const newUsers = state.map((user) => {
-        if (user.uid === action.payload.uid) {
-          return { ...user, authority: action.payload.newAuthority };
-        }
-        return user;
-      }).sort(sortRecords('authority', 'desc'));
+      const newUsers = state
+        .map((user) => {
+          if (user.uid === action.payload.uid) {
+            return { ...user, authority: action.payload.newAuthority };
+          }
+          return user;
+        })
+        .sort(sortRecords('authority', 'desc'));
       setState(newUsers);
       break;
     }
@@ -51,13 +55,7 @@ const dispatch = (action: IAction, state: IUser[], setState: (state: IUser[]) =>
   }
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export {
-  dispatch,
-};
+export { dispatch };

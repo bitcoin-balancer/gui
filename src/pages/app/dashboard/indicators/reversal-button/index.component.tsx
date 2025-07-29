@@ -36,10 +36,6 @@ const ReversalButton = ({ reversalState }: { reversalState: IReversalState | und
   const [isRecordDialogOpen, setIsRecordDialogOpen] = useState<IPriceCrashStateRecord>();
   const [isListDialogOpen, setIsListDialogOpen] = useState<boolean>();
 
-
-
-
-
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
    ********************************************************************************************** */
@@ -56,13 +52,10 @@ const ReversalButton = ({ reversalState }: { reversalState: IReversalState | und
    * Displays the dialog for an individual record.
    * @param record
    */
-  const displayRecord = useCallback(
-    async (record: IPriceCrashStateRecord) => {
-      setIsMenuOpen(false);
-      setIsRecordDialogOpen(record);
-    },
-    [],
-  );
+  const displayRecord = useCallback(async (record: IPriceCrashStateRecord) => {
+    setIsMenuOpen(false);
+    setIsRecordDialogOpen(record);
+  }, []);
 
   /**
    * Displays the list of price crash states that have been stored.
@@ -91,25 +84,21 @@ const ReversalButton = ({ reversalState }: { reversalState: IReversalState | und
     }
   };
 
-
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
     <>
       {/* ********
-        * BUTTON *
-        ******** */}
+       * BUTTON *
+       ******** */}
       <button
         className={`h-[45px] text-xs text-white font-bold hover:opacity-80 ${reversalState === undefined ? 'bg-stateless' : ''}`}
         style={
           reversalState !== undefined
             ? {
-              background: `linear-gradient(90deg, ${ColorService.INCREASE_2} ${reversalState.points}%, ${ColorService.INCREASE_0} ${reversalState.points}%)`,
-            }
+                background: `linear-gradient(90deg, ${ColorService.INCREASE_2} ${reversalState.points}%, ${ColorService.INCREASE_0} ${reversalState.points}%)`,
+              }
             : {}
         }
         onClick={displayDialog}
@@ -117,36 +106,37 @@ const ReversalButton = ({ reversalState }: { reversalState: IReversalState | und
         {reversalState && reversalState.reversalEventTime ? 'REVERSED' : 'REVERSAL'}
       </button>
 
-
-
       {/* **************
-        * ACTIONS MENU *
-        ************** */}
-      <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
-        <SheetContent side='bottom'>
-          <div className='mx-auto w-full max-w-sm'>
-            <SheetHeader className='space-y-0'>
+       * ACTIONS MENU *
+       ************** */}
+      <Sheet
+        open={isMenuOpen}
+        onOpenChange={setIsMenuOpen}
+      >
+        <SheetContent side="bottom">
+          <div className="mx-auto w-full max-w-sm">
+            <SheetHeader className="space-y-0">
               <SheetTitle>Price crash state</SheetTitle>
               <SheetDescription>Choose what you wish to see</SheetDescription>
             </SheetHeader>
 
-            <div className='flex flex-row justify-center items-stretch gap-2 sm:gap-4 mt-5'>
+            <div className="flex flex-row justify-center items-stretch gap-2 sm:gap-4 mt-5">
               <Button
-                variant='outline'
-                aria-label='View the current state'
-                className='flex flex-col h-20 w-full gap-y-1'
+                variant="outline"
+                aria-label="View the current state"
+                className="flex flex-col h-20 w-full gap-y-1"
                 onClick={displayHistory}
               >
-                <MoveDownRight aria-hidden='true' />
+                <MoveDownRight aria-hidden="true" />
                 <p>Active</p>
               </Button>
               <Button
-                variant='outline'
-                aria-label='View the list of historical price crash states'
-                className='flex flex-col h-20 w-full gap-y-1'
+                variant="outline"
+                aria-label="View the list of historical price crash states"
+                className="flex flex-col h-20 w-full gap-y-1"
                 onClick={displayList}
               >
-                <History aria-hidden='true' />
+                <History aria-hidden="true" />
                 <p>History</p>
               </Button>
             </div>
@@ -154,53 +144,40 @@ const ReversalButton = ({ reversalState }: { reversalState: IReversalState | und
         </SheetContent>
       </Sheet>
 
-
-
       {/* ****************
-        * HISTORY DIALOG *
-        **************** */}
-      {
-        isHistoryDialogOpen !== undefined
-        && <PriceCrashStateHistoryDialog
+       * HISTORY DIALOG *
+       **************** */}
+      {isHistoryDialogOpen !== undefined && (
+        <PriceCrashStateHistoryDialog
           id={isHistoryDialogOpen.id}
           cacheRecord={isHistoryDialogOpen.cacheRecord}
           closeDialog={setIsHistoryDialogOpen}
         />
-      }
-
-
+      )}
 
       {/* ***************
-        * RECORD DIALOG *
-        *************** */}
-      {
-        isRecordDialogOpen !== undefined
-        && <PriceCrashStateRecordDialog
+       * RECORD DIALOG *
+       *************** */}
+      {isRecordDialogOpen !== undefined && (
+        <PriceCrashStateRecordDialog
           record={isRecordDialogOpen}
           closeDialog={setIsRecordDialogOpen}
           setIsHistoryDialogOpen={setIsHistoryDialogOpen}
         />
-      }
-
-
+      )}
 
       {/* *************
-        * LIST DIALOG *
-        ************* */}
-      {
-        isListDialogOpen
-        && <PriceCrashStatesDialog
+       * LIST DIALOG *
+       ************* */}
+      {isListDialogOpen && (
+        <PriceCrashStatesDialog
           displayRecord={displayRecord}
           closeDialog={setIsListDialogOpen}
         />
-      }
+      )}
     </>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

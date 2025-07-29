@@ -1,9 +1,4 @@
-import {
-  IChartApi,
-  Time,
-  ISeriesApi,
-  SeriesType,
-} from 'lightweight-charts';
+import { IChartApi, Time, ISeriesApi, SeriesType } from 'lightweight-charts';
 import { ICompactCandlestickRecords } from '@/shared/backend/candlestick/index.service.ts';
 import { IState } from '@/shared/backend/market-state/shared/types.ts';
 import { IMarker, IPriceFormatterFunc } from '@/shared/components/charts/shared/types.ts';
@@ -80,7 +75,6 @@ type ICandlestickBar = {
 type HorzScaleItem = any;
 type ICandlestickSeriesAPI = ISeriesApi<SeriesType, HorzScaleItem>;
 
-
 /**
  * Chart API Ref
  * ...
@@ -102,10 +96,6 @@ type IChartAPIRef = {
   // fires whenever new data comes into existance
   onSeriesChanges: (newData: ICompactCandlestickRecords) => void;
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

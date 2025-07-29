@@ -6,53 +6,54 @@ import { IUser, IAuthority } from '@/shared/backend/auth/user/index.service.ts';
  ************************************************************************************************ */
 
 // the actions that are dispatched when users are mutated in order to keep the state in sync
-type IActionType = 'ADD_USER' | 'UPDATE_NICKNAME' | 'UPDATE_AUTHORITY' | 'UPDATE_OTP_SECRET'
-| 'DELETE_USER';
+type IActionType =
+  | 'ADD_USER'
+  | 'UPDATE_NICKNAME'
+  | 'UPDATE_AUTHORITY'
+  | 'UPDATE_OTP_SECRET'
+  | 'DELETE_USER';
 type IAction = {
   type: IActionType;
 } & (
   | {
-    type: 'ADD_USER';
-    payload: IUser;
-  }
+      type: 'ADD_USER';
+      payload: IUser;
+    }
   | {
-    type: 'UPDATE_NICKNAME';
-    payload: { uid: string, newNickname: string };
-  }
+      type: 'UPDATE_NICKNAME';
+      payload: { uid: string; newNickname: string };
+    }
   | {
-    type: 'UPDATE_AUTHORITY';
-    payload: { uid: string, newAuthority: IAuthority };
-  }
+      type: 'UPDATE_AUTHORITY';
+      payload: { uid: string; newAuthority: IAuthority };
+    }
   | {
-    type: 'UPDATE_OTP_SECRET';
-    payload: { uid: string, newOTPSecret: string };
-  }
+      type: 'UPDATE_OTP_SECRET';
+      payload: { uid: string; newOTPSecret: string };
+    }
   | {
-    type: 'DELETE_USER';
-    payload: string;
-  }
+      type: 'DELETE_USER';
+      payload: string;
+    }
 );
 
 // the function used to dispatch actions from children components
 type IDispatchFunc = (action: IAction) => void;
-
-
-
 
 /* ************************************************************************************************
  *                                          USER DIALOG                                           *
  ************************************************************************************************ */
 
 // the names for all the users' dialogs
-type IDialogName = 'UPDATE_NICKNAME' | 'UPDATE_AUTHORITY' | 'DISPLAY_OTP_SECRET'
-| 'DISPLAY_AUTH_SESSIONS' | 'DISPLAY_PASSWORD_UPDATES';
+type IDialogName =
+  | 'UPDATE_NICKNAME'
+  | 'UPDATE_AUTHORITY'
+  | 'DISPLAY_OTP_SECRET'
+  | 'DISPLAY_AUTH_SESSIONS'
+  | 'DISPLAY_PASSWORD_UPDATES';
 
 // the function triggered by dialogs when dismissed. It may contain an action to be dispatched
 type IDialogCloseFunc = (action: IAction | undefined) => void;
-
-
-
-
 
 /* ************************************************************************************************
  *                                           USER ROW                                             *
@@ -63,10 +64,6 @@ type IUserRowProps = {
   user: IUser;
   dispatch: IDispatchFunc;
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                           ADD USER                                             *
@@ -83,10 +80,6 @@ type IAddUserInputs = {
   authority: IAuthority | '';
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                       UPDATE NICKNAME                                          *
  ************************************************************************************************ */
@@ -102,10 +95,6 @@ type IUpdateNicknameProps = {
 type IUpdateNicknameInputs = {
   newNickname: string;
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                        UPDATE AUTHORITY                                        *
@@ -124,10 +113,6 @@ type IUpdateAuthorityInputs = {
   newAuthority: IAuthority;
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                       DISPLAY OTP SECRET                                       *
  ************************************************************************************************ */
@@ -138,10 +123,6 @@ type IDisplayOTPSecretProps = {
   nickname: string;
   closeDialog: IDialogCloseFunc;
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                     DISPLAY AUTH SESSIONS                                      *
@@ -154,10 +135,6 @@ type IDisplayAuthSessionsProps = {
   closeDialog: IDialogCloseFunc;
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                    DISPLAY PASSWORD UPDATES                                    *
  ************************************************************************************************ */
@@ -168,10 +145,6 @@ type IDisplayPasswordUpdatesProps = {
   nickname: string;
   closeDialog: IDialogCloseFunc;
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

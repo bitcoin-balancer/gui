@@ -22,12 +22,7 @@ import {
   DialogTitle,
   DialogFooter,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '@/shared/shadcn/components/ui/tabs.tsx';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/shadcn/components/ui/tabs.tsx';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/shadcn/components/ui/tooltip.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
@@ -61,10 +56,6 @@ type IIntesityWeightInput = {
   subTitle: string;
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
  ************************************************************************************************ */
@@ -72,14 +63,20 @@ type IIntesityWeightInput = {
 // the list of intensity weights that can be configured
 const INTENSITY_WEIGHT_INPUTS: IIntesityWeightInput[] = [
   { name: 'intensityWeight1', label: 'Intensity 1', placeholder: '1', subTitle: 'Low intensity' },
-  { name: 'intensityWeight2', label: 'Intensity 2', placeholder: '3', subTitle: 'Medium intensity' },
+  {
+    name: 'intensityWeight2',
+    label: 'Intensity 2',
+    placeholder: '3',
+    subTitle: 'Medium intensity',
+  },
   { name: 'intensityWeight3', label: 'Intensity 3', placeholder: '6', subTitle: 'High intensity' },
-  { name: 'intensityWeight4', label: 'Intensity 4', placeholder: '12', subTitle: 'Very high intensity' },
+  {
+    name: 'intensityWeight4',
+    label: 'Intensity 4',
+    placeholder: '12',
+    subTitle: 'Very high intensity',
+  },
 ];
-
-
-
-
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -94,12 +91,14 @@ const Liquidity = ({ closeDialog }: IFormProps) => {
    *                                             STATE                                            *
    ********************************************************************************************** */
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
-  const { data, loading, error } = useAPIFetch(useMemo(
-    () => ({
-      fetchFn: () => LiquidityService.getConfig(),
-    }),
-    [],
-  ));
+  const { data, loading, error } = useAPIFetch(
+    useMemo(
+      () => ({
+        fetchFn: () => LiquidityService.getConfig(),
+      }),
+      [],
+    ),
+  );
   const { setValue, ...form } = useForm<ILiquidityForm>({
     defaultValues: {
       maxDistanceFromPrice: '',
@@ -115,10 +114,6 @@ const Liquidity = ({ closeDialog }: IFormProps) => {
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
   const { authority } = useBoundStore((state) => state.user!);
 
-
-
-
-
   /* **********************************************************************************************
    *                                         SIDE EFFECTS                                         *
    ********************************************************************************************** */
@@ -133,10 +128,6 @@ const Liquidity = ({ closeDialog }: IFormProps) => {
     }
   }, [data, setValue]);
 
-
-
-
-
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
    ********************************************************************************************** */
@@ -149,7 +140,7 @@ const Liquidity = ({ closeDialog }: IFormProps) => {
   const onSubmit = (formData: ILiquidityForm): void => {
     openConfirmationDialog({
       mode: 'OTP',
-      title: 'Update liquidity\'s configuration',
+      title: "Update liquidity's configuration",
       description: 'The new configuration will be applied immediately upon submission',
       onConfirmation: async (confirmation: string) => {
         try {
@@ -183,48 +174,50 @@ const Liquidity = ({ closeDialog }: IFormProps) => {
     });
   };
 
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   let content;
   if (error) {
-    content = <PageLoadError variant='dialog' error={error} />;
+    content = (
+      <PageLoadError
+        variant="dialog"
+        error={error}
+      />
+    );
   } else if (loading) {
-    content = <PageLoader variant='dialog' />;
+    content = <PageLoader variant="dialog" />;
   } else {
     content = (
-      <Form setValue={setValue} {...form}>
+      <Form
+        setValue={setValue}
+        {...form}
+      >
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           noValidate
         >
-
           <Tabs
-            defaultValue='general'
-            className='w-full'
+            defaultValue="general"
+            className="w-full"
           >
-            <TabsList
-              className='grid w-full grid-cols-2'
-            >
-              <TabsTrigger value='general'>General</TabsTrigger>
-              <TabsTrigger value='intensities'>Intensities</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="general">General</TabsTrigger>
+              <TabsTrigger value="intensities">Intensities</TabsTrigger>
             </TabsList>
 
             {/* *********
-              * GENERAL *
-              ********* */}
-            <TabsContent value='general'>
-              <fieldset className='mt-3 animate-in fade-in duration-700'>
+             * GENERAL *
+             ********* */}
+            <TabsContent value="general">
+              <fieldset className="mt-3 animate-in fade-in duration-700">
                 <FormField
                   control={form.control}
-                  name='maxDistanceFromPrice'
+                  name="maxDistanceFromPrice"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabelWithMoreInfo
-                        value='Max. distance% from price'
+                        value="Max. distance% from price"
                         description={[
                           'The "Max. distance% from price" setting defines the percentage deviation from the current price used to determine the liquidity range. This range encompasses all orders considered when calculating the liquidity state.',
                           'If the current price of BTC is $100 and the "Max. distance% from price" is set to 1%, the liquidity range will be $99 to $101. All orders placed within this range will be factored into the liquidity state calculation.',
@@ -232,14 +225,14 @@ const Liquidity = ({ closeDialog }: IFormProps) => {
                       />
                       <FormControl>
                         <Input
-                          type='number'
-                          placeholder='0.15'
+                          type="number"
+                          placeholder="0.15"
                           {...field}
-                          autoComplete='off'
+                          autoComplete="off"
                           disabled={isSubmitting}
                           min={0.01}
                           max={100}
-                          />
+                        />
                       </FormControl>
                       <FormDescription>Price range size</FormDescription>
                       <FormMessage />
@@ -247,116 +240,106 @@ const Liquidity = ({ closeDialog }: IFormProps) => {
                   )}
                   rules={{
                     validate: {
-                      required: (value) => (isNumberValid(Number(value), 0.01, 100) ? true : 'Enter a number ranging 0.01 - 100'),
+                      required: (value) =>
+                        isNumberValid(Number(value), 0.01, 100)
+                          ? true
+                          : 'Enter a number ranging 0.01 - 100',
                     },
                   }}
                 />
               </fieldset>
             </TabsContent>
 
-
-
-
             {/* *************
-              * INTENSITIES *
-              ************* */}
-            <TabsContent value='intensities'>
-              <fieldset className='mt-3 animate-in fade-in duration-700'>
+             * INTENSITIES *
+             ************* */}
+            <TabsContent value="intensities">
+              <fieldset className="mt-3 animate-in fade-in duration-700">
+                <div className="flex justify-start items-center">
+                  <legend className="text-md font-semibold">Weights</legend>
 
-                <div
-                  className='flex justify-start items-center'
-                >
-                  <legend className='text-md font-semibold'>Weights</legend>
-
-                  <span className='flex-1'></span>
+                  <span className="flex-1"></span>
 
                   <Tooltip>
                     <TooltipTrigger
-                      className='w-5 h-5'
-                      type='button'
-                      aria-label='View more information'
-                      onClick={() => openInfoDialog({
-                        title: 'Intensity weights',
-                        content: [
-                          'The weights that will be used to determine the value of each intensity when calculating the liquidity state.',
-                          'Liquidity requirements progressively increase across levels, culminating in the highest requirement at intensity level 4.',
-                        ],
-                      })}
+                      className="w-5 h-5"
+                      type="button"
+                      aria-label="View more information"
+                      onClick={() =>
+                        openInfoDialog({
+                          title: 'Intensity weights',
+                          content: [
+                            'The weights that will be used to determine the value of each intensity when calculating the liquidity state.',
+                            'Liquidity requirements progressively increase across levels, culminating in the highest requirement at intensity level 4.',
+                          ],
+                        })
+                      }
                       tabIndex={-1}
                     >
                       <CircleHelp
-                        className='w-5 h-5'
-                        aria-hidden='true'
+                        className="w-5 h-5"
+                        aria-hidden="true"
                       />
                     </TooltipTrigger>
-                    <TooltipContent side='left'><p>More info</p></TooltipContent>
+                    <TooltipContent side="left">
+                      <p>More info</p>
+                    </TooltipContent>
                   </Tooltip>
                 </div>
 
-
-                <div
-                  className='grid grid-cols-2 gap-5 mt-3'
-                >
-
-                {INTENSITY_WEIGHT_INPUTS.map((item, i) => (
-                  <FormField
-                    key={i}
-                    control={form.control}
-                    name={item.name}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{item.label}</FormLabel>
-                        <FormControl>
-                          <Input
-                            type='number'
-                            placeholder={item.placeholder}
-                            {...field}
-                            autoComplete='off'
-                            disabled={isSubmitting}
-                            min={1}
-                            max={100}
+                <div className="grid grid-cols-2 gap-5 mt-3">
+                  {INTENSITY_WEIGHT_INPUTS.map((item, i) => (
+                    <FormField
+                      key={i}
+                      control={form.control}
+                      name={item.name}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>{item.label}</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              placeholder={item.placeholder}
+                              {...field}
+                              autoComplete="off"
+                              disabled={isSubmitting}
+                              min={1}
+                              max={100}
                             />
-                        </FormControl>
-                        <FormDescription className='text-xs'>{item.subTitle}</FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                    rules={{
-                      validate: {
-                        required: (value) => (isNumberValid(Number(value), 1, 100) ? true : 'Enter an integer ranging 1 - 100'),
-                      },
-                    }}
-                  />
-                ))}
-
+                          </FormControl>
+                          <FormDescription className="text-xs">{item.subTitle}</FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                      rules={{
+                        validate: {
+                          required: (value) =>
+                            isNumberValid(Number(value), 1, 100)
+                              ? true
+                              : 'Enter an integer ranging 1 - 100',
+                        },
+                      }}
+                    />
+                  ))}
                 </div>
-
               </fieldset>
             </TabsContent>
-
           </Tabs>
 
-
           {/* ************
-            * SUBMISSION *
-            ************ */}
+           * SUBMISSION *
+           ************ */}
           <DialogFooter>
             <Button
-              type='submit'
+              type="submit"
               disabled={isSubmitting || authority < 3}
-              className='mt-7 w-full'
+              className="mt-7 w-full"
             >
-              {
-                isSubmitting
-                && <Loader2
-                  className='mr-2 h-4 w-4 animate-spin'
-                />
-              } Update configuration
+              {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Update
+              configuration
             </Button>
           </DialogFooter>
-
         </form>
-
       </Form>
     );
   }
@@ -365,34 +348,26 @@ const Liquidity = ({ closeDialog }: IFormProps) => {
       open={isDialogOpen}
       onOpenChange={handleCloseDialog}
     >
-
       <DialogContent>
-
         <DialogHeader>
           <DialogTitle>Update Liquidity</DialogTitle>
-          <DialogDescription className='flex justify-center items-center sm:justify-start'>
+          <DialogDescription className="flex justify-center items-center sm:justify-start">
             Connected to
             <img
               src={`/exchanges/color/${exchangeConfig.liquidity}.png`}
               alt={`Logo of the Exchange being used by the Liquidity Module (${exchangeConfig.liquidity})`}
               height={435}
               width={90}
-              className='ml-1 max-h-4'
+              className="ml-1 max-h-4"
             />
           </DialogDescription>
         </DialogHeader>
 
         {content}
-
       </DialogContent>
-
     </Dialog>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

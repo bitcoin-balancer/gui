@@ -28,15 +28,13 @@ import {
   DialogTitle,
   DialogFooter,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '@/shared/shadcn/components/ui/tabs.tsx';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/shadcn/components/ui/tabs.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
-import { WindowService, IWindowConfig } from '@/shared/backend/market-state/window/index.service.ts';
+import {
+  WindowService,
+  IWindowConfig,
+} from '@/shared/backend/market-state/window/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
 import { useAPIFetch } from '@/shared/hooks/api-fetch/index.hook.ts';
 import { useLazyDialog } from '@/shared/hooks/lazy-dialog/index.hook.ts';
@@ -58,12 +56,14 @@ const Window = ({ closeDialog }: IFormProps) => {
    *                                             STATE                                            *
    ********************************************************************************************** */
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
-  const { data, loading, error } = useAPIFetch(useMemo(
-    () => ({
-      fetchFn: () => WindowService.getConfig(),
-    }),
-    [],
-  ));
+  const { data, loading, error } = useAPIFetch(
+    useMemo(
+      () => ({
+        fetchFn: () => WindowService.getConfig(),
+      }),
+      [],
+    ),
+  );
   const { setValue, ...form } = useForm<IWindowConfig>({
     defaultValues: {
       refetchFrequency: data?.refetchFrequency ?? '',
@@ -77,10 +77,6 @@ const Window = ({ closeDialog }: IFormProps) => {
   const exchangeConfig = useBoundStore((state) => state.exchangeConfig!);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
   const { authority } = useBoundStore((state) => state.user!);
-
-
-
-
 
   /* **********************************************************************************************
    *                                         SIDE EFFECTS                                         *
@@ -96,10 +92,6 @@ const Window = ({ closeDialog }: IFormProps) => {
     }
   }, [data, setValue]);
 
-
-
-
-
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
    ********************************************************************************************** */
@@ -112,8 +104,9 @@ const Window = ({ closeDialog }: IFormProps) => {
   const onSubmit = (formData: IWindowConfig): void => {
     openConfirmationDialog({
       mode: 'OTP',
-      title: 'Update window\'s configuration',
-      description: 'The new configuration will be applied immediately upon submission. Moreover, the app will be refreshed automatically in order to prevent discrepancies',
+      title: "Update window's configuration",
+      description:
+        'The new configuration will be applied immediately upon submission. Moreover, the app will be refreshed automatically in order to prevent discrepancies',
       onConfirmation: async (confirmation: string) => {
         try {
           setIsSubmitting(true);
@@ -156,48 +149,50 @@ const Window = ({ closeDialog }: IFormProps) => {
     });
   };
 
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   let content;
   if (error) {
-    content = <PageLoadError variant='dialog' error={error} />;
+    content = (
+      <PageLoadError
+        variant="dialog"
+        error={error}
+      />
+    );
   } else if (loading) {
-    content = <PageLoader variant='dialog' />;
+    content = <PageLoader variant="dialog" />;
   } else {
     content = (
-      <Form setValue={setValue} {...form}>
+      <Form
+        setValue={setValue}
+        {...form}
+      >
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           noValidate
         >
-
           <Tabs
-            defaultValue='general'
-            className='w-full'
+            defaultValue="general"
+            className="w-full"
           >
-            <TabsList
-              className='grid w-full grid-cols-2'
-            >
-              <TabsTrigger value='general'>General</TabsTrigger>
-              <TabsTrigger value='state'>State</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="general">General</TabsTrigger>
+              <TabsTrigger value="state">State</TabsTrigger>
             </TabsList>
 
             {/* *********
-              * GENERAL *
-              ********* */}
-            <TabsContent value='general'>
-              <fieldset className='mt-3 animate-in fade-in duration-700'>
+             * GENERAL *
+             ********* */}
+            <TabsContent value="general">
+              <fieldset className="mt-3 animate-in fade-in duration-700">
                 <FormField
                   control={form.control}
-                  name='refetchFrequency'
+                  name="refetchFrequency"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabelWithMoreInfo
-                        value='Re-fetch frequency (seconds)'
+                        value="Re-fetch frequency (seconds)"
                         description={[
                           'The interval at which the pricing data is re-fetched from the exchange.',
                           '-----',
@@ -206,14 +201,14 @@ const Window = ({ closeDialog }: IFormProps) => {
                       />
                       <FormControl>
                         <Input
-                          type='number'
-                          placeholder='2.5'
+                          type="number"
+                          placeholder="2.5"
                           {...field}
-                          autoComplete='off'
+                          autoComplete="off"
                           disabled={isSubmitting}
                           min={2.5}
                           max={60}
-                          />
+                        />
                       </FormControl>
                       <FormDescription>Refresh interval</FormDescription>
                       <FormMessage />
@@ -221,30 +216,33 @@ const Window = ({ closeDialog }: IFormProps) => {
                   )}
                   rules={{
                     validate: {
-                      required: (value) => (isNumberValid(Number(value), 2.5, 60) ? true : 'Enter a number ranging 2.5 - 60'),
+                      required: (value) =>
+                        isNumberValid(Number(value), 2.5, 60)
+                          ? true
+                          : 'Enter a number ranging 2.5 - 60',
                     },
                   }}
                 />
 
                 <FormField
                   control={form.control}
-                  name='size'
+                  name="size"
                   render={({ field }) => (
-                    <FormItem className='mt-7'>
+                    <FormItem className="mt-7">
                       <FormLabelWithMoreInfo
-                        value='Window size'
-                        description='The number of candlestick bars that comprise the window.'
+                        value="Window size"
+                        description="The number of candlestick bars that comprise the window."
                       />
                       <FormControl>
                         <Input
-                          type='number'
-                          placeholder='128'
+                          type="number"
+                          placeholder="128"
                           {...field}
-                          autoComplete='off'
+                          autoComplete="off"
                           disabled={isSubmitting}
                           min={128}
                           max={512}
-                          />
+                        />
                       </FormControl>
                       <FormDescription>Candlestick bars</FormDescription>
                       <FormMessage />
@@ -252,20 +250,23 @@ const Window = ({ closeDialog }: IFormProps) => {
                   )}
                   rules={{
                     validate: {
-                      required: (value) => (isNumberValid(Number(value), 128, 512) ? true : 'Enter a number ranging 128 - 512'),
+                      required: (value) =>
+                        isNumberValid(Number(value), 128, 512)
+                          ? true
+                          : 'Enter a number ranging 128 - 512',
                     },
                   }}
                 />
 
                 <FormField
                   control={form.control}
-                  name='interval'
+                  name="interval"
                   render={({ field }) => (
-                    <FormItem className='mt-7'>
+                    <FormItem className="mt-7">
                       <FormLabelWithMoreInfo
-                        value='Interval'
-                        description='The amount of time contained by each candlestick bar.'
-                        htmlFor='intervalSelect'
+                        value="Interval"
+                        description="The amount of time contained by each candlestick bar."
+                        htmlFor="intervalSelect"
                       />
                       <FormControl>
                         <Select
@@ -273,19 +274,19 @@ const Window = ({ closeDialog }: IFormProps) => {
                           defaultValue={field.value}
                           value={field.value}
                           disabled={isSubmitting}
-                          name='intervalSelect'
+                          name="intervalSelect"
                         >
-                          <SelectTrigger id='intervalSelect'>
-                            <SelectValue placeholder='Select one option' />
+                          <SelectTrigger id="intervalSelect">
+                            <SelectValue placeholder="Select one option" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value='1m'>1 minute</SelectItem>
-                            <SelectItem value='5m'>5 minutes</SelectItem>
-                            <SelectItem value='15m'>15 minutes</SelectItem>
-                            <SelectItem value='30m'>30 minutes</SelectItem>
-                            <SelectItem value='1h'>1 hour</SelectItem>
-                            <SelectItem value='1d'>1 day</SelectItem>
-                            <SelectItem value='1w'>1 week</SelectItem>
+                            <SelectItem value="1m">1 minute</SelectItem>
+                            <SelectItem value="5m">5 minutes</SelectItem>
+                            <SelectItem value="15m">15 minutes</SelectItem>
+                            <SelectItem value="30m">30 minutes</SelectItem>
+                            <SelectItem value="1h">1 hour</SelectItem>
+                            <SelectItem value="1d">1 day</SelectItem>
+                            <SelectItem value="1w">1 week</SelectItem>
                           </SelectContent>
                         </Select>
                       </FormControl>
@@ -302,20 +303,18 @@ const Window = ({ closeDialog }: IFormProps) => {
               </fieldset>
             </TabsContent>
 
-
-
             {/* *******
-              * STATE *
-              ******* */}
-            <TabsContent value='state'>
-              <fieldset className='mt-3 animate-in fade-in duration-700'>
+             * STATE *
+             ******* */}
+            <TabsContent value="state">
+              <fieldset className="mt-3 animate-in fade-in duration-700">
                 <FormField
                   control={form.control}
-                  name='requirement'
+                  name="requirement"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabelWithMoreInfo
-                        value='State requirement%'
+                        value="State requirement%"
                         description={[
                           'The percentage change in Bitcoin\'s price needed to mark a window split as "stateful". ',
                           'The possible states for this requirement are:',
@@ -325,14 +324,14 @@ const Window = ({ closeDialog }: IFormProps) => {
                       />
                       <FormControl>
                         <Input
-                          type='number'
-                          placeholder='0.025'
+                          type="number"
+                          placeholder="0.025"
                           {...field}
-                          autoComplete='off'
+                          autoComplete="off"
                           disabled={isSubmitting}
                           min={0.01}
                           max={100}
-                          />
+                        />
                       </FormControl>
                       <FormDescription>Bitcoin's price% change</FormDescription>
                       <FormMessage />
@@ -340,18 +339,21 @@ const Window = ({ closeDialog }: IFormProps) => {
                   )}
                   rules={{
                     validate: {
-                      required: (value) => (isNumberValid(Number(value), 0.01, 100) ? true : 'Enter a number ranging 0.01% - 100%'),
+                      required: (value) =>
+                        isNumberValid(Number(value), 0.01, 100)
+                          ? true
+                          : 'Enter a number ranging 0.01% - 100%',
                     },
                   }}
                 />
 
                 <FormField
                   control={form.control}
-                  name='strongRequirement'
+                  name="strongRequirement"
                   render={({ field }) => (
-                    <FormItem className='mt-7'>
+                    <FormItem className="mt-7">
                       <FormLabelWithMoreInfo
-                        value='Strong state requirement%'
+                        value="Strong state requirement%"
                         description={[
                           'The percentage change in Bitcoin\'s price needed to mark a window split as "stateful". ',
                           'The possible states for this requirement are:',
@@ -361,14 +363,14 @@ const Window = ({ closeDialog }: IFormProps) => {
                       />
                       <FormControl>
                         <Input
-                          type='number'
-                          placeholder='0.85'
+                          type="number"
+                          placeholder="0.85"
                           {...field}
-                          autoComplete='off'
+                          autoComplete="off"
                           disabled={isSubmitting}
                           min={0.01}
                           max={100}
-                          />
+                        />
                       </FormControl>
                       <FormDescription>Bitcoin's price% change</FormDescription>
                       <FormMessage />
@@ -376,7 +378,10 @@ const Window = ({ closeDialog }: IFormProps) => {
                   )}
                   rules={{
                     validate: {
-                      required: (value) => (isNumberValid(Number(value), 0.01, 100) ? true : 'Enter a number ranging 0.01% - 100%'),
+                      required: (value) =>
+                        isNumberValid(Number(value), 0.01, 100)
+                          ? true
+                          : 'Enter a number ranging 0.01% - 100%',
                     },
                   }}
                 />
@@ -384,28 +389,20 @@ const Window = ({ closeDialog }: IFormProps) => {
             </TabsContent>
           </Tabs>
 
-
-
           {/* ************
-            * SUBMISSION *
-            ************ */}
+           * SUBMISSION *
+           ************ */}
           <DialogFooter>
             <Button
-              type='submit'
+              type="submit"
               disabled={isSubmitting || authority < 3}
-              className='mt-7 w-full'
+              className="mt-7 w-full"
             >
-              {
-                isSubmitting
-                && <Loader2
-                  className='mr-2 h-4 w-4 animate-spin'
-                />
-              } Update configuration
+              {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Update
+              configuration
             </Button>
           </DialogFooter>
-
         </form>
-
       </Form>
     );
   }
@@ -414,34 +411,26 @@ const Window = ({ closeDialog }: IFormProps) => {
       open={isDialogOpen}
       onOpenChange={handleCloseDialog}
     >
-
       <DialogContent>
-
         <DialogHeader>
           <DialogTitle>Update Window</DialogTitle>
-          <DialogDescription className='flex justify-center items-center sm:justify-start'>
+          <DialogDescription className="flex justify-center items-center sm:justify-start">
             Connected to
             <img
               src={`/exchanges/color/${exchangeConfig.window}.png`}
               alt={`Logo of the Exchange being used by the Window Module (${exchangeConfig.window})`}
               height={435}
               width={90}
-              className='ml-1 max-h-4'
+              className="ml-1 max-h-4"
             />
           </DialogDescription>
         </DialogHeader>
 
         {content}
-
       </DialogContent>
-
     </Dialog>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

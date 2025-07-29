@@ -34,10 +34,6 @@ const Server = () => {
   const breakpoint = useMediaQueryBreakpoint();
   const unreadAPIErrors = useBoundStore((state) => state.unreadAPIErrors!);
 
-
-
-
-
   /* **********************************************************************************************
    *                                         SIDE EFFECTS                                         *
    ********************************************************************************************** */
@@ -48,10 +44,6 @@ const Server = () => {
       setActivePage('api-errors');
     }
   }, [unreadAPIErrors]);
-
-
-
-
 
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
@@ -66,181 +58,146 @@ const Server = () => {
     setActivePage(name);
   };
 
-
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
     <>
-      <section
-        className='flex justify-center items-start animate-in fade-in duration-700'
-      >
-
-      {/* **********************
-        * DESKTOP SIDENAV MENU *
-        ********************** */}
-        {
-          (breakpoint === 'md' || breakpoint === 'lg' || breakpoint === 'xl' || breakpoint === '2xl')
-          && <aside
-            className='md:w-56 xl:w-64 pl-3 pt-3'
-          >
+      <section className="flex justify-center items-start animate-in fade-in duration-700">
+        {/* **********************
+         * DESKTOP SIDENAV MENU *
+         ********************** */}
+        {(breakpoint === 'md' ||
+          breakpoint === 'lg' ||
+          breakpoint === 'xl' ||
+          breakpoint === '2xl') && (
+          <aside className="md:w-56 xl:w-64 pl-3 pt-3">
             <header>
-              <h1
-                className='text-lg font-bold'
-              >Server</h1>
+              <h1 className="text-lg font-bold">Server</h1>
             </header>
 
-            <nav
-              className='mt-3'
-            >
+            <nav className="mt-3">
               <Button
-                variant='ghost'
-                className='w-full justify-start'
+                variant="ghost"
+                className="w-full justify-start"
                 onClick={() => setActivePage('monitoring')}
                 disabled={activePage === 'monitoring'}
               >
-                  <ChartNoAxesColumn
-                    aria-hidden='true'
-                    className='mr-2 w-5 h-5'
-                  /> Monitoring
-                </Button>
+                <ChartNoAxesColumn
+                  aria-hidden="true"
+                  className="mr-2 w-5 h-5"
+                />{' '}
+                Monitoring
+              </Button>
               <Button
-                variant='ghost'
-                className='w-full justify-start'
+                variant="ghost"
+                className="w-full justify-start"
                 onClick={() => setActivePage('api-errors')}
                 disabled={activePage === 'api-errors'}
               >
                 <Bug
-                  aria-hidden='true'
-                  className='mr-2 w-5 h-5'
-                /> API Errors
-                <span className='flex-1'></span>
-                {
-                  unreadAPIErrors > 0
-                  && <Badge
-                    variant='destructive'
-                  >{prettifyBadgeCount(unreadAPIErrors, 99)}</Badge>
-                }
+                  aria-hidden="true"
+                  className="mr-2 w-5 h-5"
+                />{' '}
+                API Errors
+                <span className="flex-1"></span>
+                {unreadAPIErrors > 0 && (
+                  <Badge variant="destructive">{prettifyBadgeCount(unreadAPIErrors, 99)}</Badge>
+                )}
               </Button>
               <Button
-                variant='ghost'
-                className='w-full justify-start'
+                variant="ghost"
+                className="w-full justify-start"
                 onClick={() => setActivePage('database')}
                 disabled={activePage === 'database'}
               >
                 <DatabaseIcon
-                  aria-hidden='true'
-                  className='mr-2 w-5 h-5'
-                /> Database
+                  aria-hidden="true"
+                  className="mr-2 w-5 h-5"
+                />{' '}
+                Database
               </Button>
             </nav>
           </aside>
-        }
+        )}
 
-        <div className='flex-1'>
-          {
-            activePage === 'monitoring'
-            && <Monitoring
-              setSidenavOpen={setSidenavOpen}
-            />
-          }
-          {
-            activePage === 'api-errors'
-            && <APIErrors
+        <div className="flex-1">
+          {activePage === 'monitoring' && <Monitoring setSidenavOpen={setSidenavOpen} />}
+          {activePage === 'api-errors' && (
+            <APIErrors
               setSidenavOpen={setSidenavOpen}
               unreadAPIErrors={unreadAPIErrors}
-            />}
-          {
-            activePage === 'database'
-            && <Database
-              setSidenavOpen={setSidenavOpen}
             />
-          }
+          )}
+          {activePage === 'database' && <Database setSidenavOpen={setSidenavOpen} />}
         </div>
-
       </section>
 
-
-
       {/* *********************
-        * MOBILE SIDENAV MENU *
-        ********************* */}
-      {
-        (breakpoint === 'xs' || breakpoint === 'sm')
-        && <Sheet
+       * MOBILE SIDENAV MENU *
+       ********************* */}
+      {(breakpoint === 'xs' || breakpoint === 'sm') && (
+        <Sheet
           open={sidenavOpen}
           onOpenChange={setSidenavOpen}
         >
-
           <SheetContent
-            className='w-64 sm:72 md-80 lg:96 p-4'
-            side='left'
+            className="w-64 sm:72 md-80 lg:96 p-4"
+            side="left"
           >
-
             <SheetHeader>
-              <SheetTitle className='text-left'>Server</SheetTitle>
+              <SheetTitle className="text-left">Server</SheetTitle>
               <SheetDescription></SheetDescription>
             </SheetHeader>
 
             <nav>
               <Button
-                variant='ghost'
-                className='w-full justify-start'
+                variant="ghost"
+                className="w-full justify-start"
                 onClick={() => navigateFromSidenav('monitoring')}
                 disabled={activePage === 'monitoring'}
               >
-                  <ChartNoAxesColumn
-                    aria-hidden='true'
-                    className='mr-2 w-5 h-5'
-                  /> Monitoring
-                </Button>
+                <ChartNoAxesColumn
+                  aria-hidden="true"
+                  className="mr-2 w-5 h-5"
+                />{' '}
+                Monitoring
+              </Button>
               <Button
-                variant='ghost'
-                className='w-full justify-start'
+                variant="ghost"
+                className="w-full justify-start"
                 onClick={() => navigateFromSidenav('api-errors')}
                 disabled={activePage === 'api-errors'}
               >
                 <Bug
-                  aria-hidden='true'
-                  className='mr-2 w-5 h-5'
-                /> API Errors
-                <span className='flex-1'></span>
-                {
-                  unreadAPIErrors > 0
-                  && <Badge
-                    variant='destructive'
-                  >{prettifyBadgeCount(unreadAPIErrors, 99)}</Badge>
-                }
+                  aria-hidden="true"
+                  className="mr-2 w-5 h-5"
+                />{' '}
+                API Errors
+                <span className="flex-1"></span>
+                {unreadAPIErrors > 0 && (
+                  <Badge variant="destructive">{prettifyBadgeCount(unreadAPIErrors, 99)}</Badge>
+                )}
               </Button>
               <Button
-                variant='ghost'
-                className='w-full justify-start'
+                variant="ghost"
+                className="w-full justify-start"
                 onClick={() => navigateFromSidenav('database')}
                 disabled={activePage === 'database'}
               >
                 <DatabaseIcon
-                  aria-hidden='true'
-                  className='mr-2 w-5 h-5'
-                /> Database
+                  aria-hidden="true"
+                  className="mr-2 w-5 h-5"
+                />{' '}
+                Database
               </Button>
             </nav>
-
           </SheetContent>
-
         </Sheet>
-      }
-
+      )}
     </>
-
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

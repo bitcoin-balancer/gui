@@ -1,12 +1,7 @@
 import { useEffect, useState } from 'react';
 import { prettifyValue } from 'bignumber-utils';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '@/shared/shadcn/components/ui/tabs.tsx';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/shadcn/components/ui/tabs.tsx';
 import { useBoundStore } from '@/shared/store/index.store';
 import { useMediaQueryBreakpoint } from '@/shared/hooks/media-query-breakpoint/index.hook.ts';
 import PageLoader from '@/shared/components/page-loader/index.component.tsx';
@@ -33,10 +28,6 @@ const buildDocumentTitle = (price: number, change: number): string => `
   ${change > 0 ? '+' : ''}${prettifyValue(change, { processing: { decimalPlaces: 1 }, format: { suffix: '%' } })}
 `;
 
-
-
-
-
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
@@ -53,10 +44,6 @@ const Dashboard = () => {
   const breakpoint = useMediaQueryBreakpoint();
   const marketState = useBoundStore((state) => state.marketState!);
   const [splitStatesDialog, setSplitStatesDialog] = useState<ISplitStatesDialogData>();
-
-
-
-
 
   /* **********************************************************************************************
    *                                         SIDE EFFECTS                                         *
@@ -87,10 +74,6 @@ const Dashboard = () => {
     };
   }, [marketState]);
 
-
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
@@ -99,113 +82,89 @@ const Dashboard = () => {
   }
   return (
     <>
-      <div
-        className='dashboard-container page-container flex flex-col lg:flex-row justify-center items-start gap-5 animate-in fade-in duration-700'
-      >
-
-        <section
-          className='window w-full lg:w-8/12 xl:w-8/12 2xl:w-9/12'
-        >
+      <div className="dashboard-container page-container flex flex-col lg:flex-row justify-center items-start gap-5 animate-in fade-in duration-700">
+        <section className="window w-full lg:w-8/12 xl:w-8/12 2xl:w-9/12">
           {/* **************
-            * WINDOW STATE *
-            ************** */}
+           * WINDOW STATE *
+           ************** */}
           <WindowState
             windowState={marketState.windowState}
             openSplitStatesDialog={setSplitStatesDialog}
           />
         </section>
 
-        <aside
-          className='flex-1 w-full'
-        >
-
-          <Separator className='my-10 md:hidden' />
+        <aside className="flex-1 w-full">
+          <Separator className="my-10 md:hidden" />
 
           {/* **********
-            * POSITION *
-            ********** */}
-          <Position
-            windowState={marketState.windowState}
-          />
+           * POSITION *
+           ********** */}
+          <Position windowState={marketState.windowState} />
 
-          <Separator className='my-10 md:hidden' />
+          <Separator className="my-10 md:hidden" />
 
           {/* ******
-            * TABS *
-            ****** */}
-          {
-            (breakpoint !== 'xs' && breakpoint !== 'sm')
-            && <Tabs
-              defaultValue='indicators'
-              className='w-full md:mt-7'
+           * TABS *
+           ****** */}
+          {breakpoint !== 'xs' && breakpoint !== 'sm' && (
+            <Tabs
+              defaultValue="indicators"
+              className="w-full md:mt-7"
             >
-              <TabsList
-                className='grid w-full grid-cols-2'
-              >
-                <TabsTrigger value='indicators'>Indicators</TabsTrigger>
-                <TabsTrigger value='coins'>Coins</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="indicators">Indicators</TabsTrigger>
+                <TabsTrigger value="coins">Coins</TabsTrigger>
               </TabsList>
 
-              <TabsContent value='indicators'>
+              <TabsContent value="indicators">
                 <Indicators
                   marketState={marketState}
                   openSplitStatesDialog={setSplitStatesDialog}
                 />
               </TabsContent>
 
-              <TabsContent value='coins'>
+              <TabsContent value="coins">
                 <Coins
                   coinsStates={marketState.coinsStates}
                   openSplitStatesDialog={setSplitStatesDialog}
                 />
               </TabsContent>
             </Tabs>
-          }
+          )}
 
           {/* *******
-            * CARDS *
-            ******* */}
-          {
-            (breakpoint === 'xs' || breakpoint === 'sm')
-            && <>
+           * CARDS *
+           ******* */}
+          {(breakpoint === 'xs' || breakpoint === 'sm') && (
+            <>
               <Indicators
-                  marketState={marketState}
-                  openSplitStatesDialog={setSplitStatesDialog}
-                />
+                marketState={marketState}
+                openSplitStatesDialog={setSplitStatesDialog}
+              />
 
-              <Separator className='my-10 md:hidden' />
+              <Separator className="my-10 md:hidden" />
 
               <Coins
                 coinsStates={marketState.coinsStates}
                 openSplitStatesDialog={setSplitStatesDialog}
               />
             </>
-          }
+          )}
         </aside>
-
       </div>
 
-
-
-
-
       {/* *********************
-        * SPLIT STATES DIALOG *
-        ********************* */}
-      {
-        splitStatesDialog !== undefined
-        && <SplitStatesDialog
+       * SPLIT STATES DIALOG *
+       ********************* */}
+      {splitStatesDialog !== undefined && (
+        <SplitStatesDialog
           data={splitStatesDialog}
           closeDialog={setSplitStatesDialog}
         />
-      }
+      )}
     </>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

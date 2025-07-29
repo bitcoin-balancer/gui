@@ -9,36 +9,33 @@ import { __buildAPIBaseURL } from './utils.ts';
  ************************************************************************************************ */
 
 // environment mock
-const mockEnvironment = (value: Partial<IEnvironment>) => vi.spyOn(
-  ENVIRONMENT,
-  'ENVIRONMENT',
-  'get',
-).mockReturnValue(<IEnvironment>value);
+const mockEnvironment = (value: Partial<IEnvironment>) =>
+  vi.spyOn(ENVIRONMENT, 'ENVIRONMENT', 'get').mockReturnValue(<IEnvironment>value);
 
 // window location mock
 const mockWindowLocation = (url?: string) => {
   mockEnvironment({ production: typeof url === 'string' });
-  vi.stubGlobal('window', { location: new URL(typeof url === 'string' ? url : 'http://localhost:5173/') });
+  vi.stubGlobal('window', {
+    location: new URL(typeof url === 'string' ? url : 'http://localhost:5173/'),
+  });
 };
-
-
 
 /* ************************************************************************************************
  *                                             TESTS                                              *
  ************************************************************************************************ */
 describe('__buildAPIBaseURL', () => {
-  beforeAll(() => { });
+  beforeAll(() => {});
 
-  afterAll(() => { });
+  afterAll(() => {});
 
-  beforeEach(() => { });
+  beforeEach(() => {});
 
   afterEach(() => {
     vi.restoreAllMocks();
     vi.unstubAllGlobals();
   });
 
-  test('can build the API\'s URL in development mode', () => {
+  test("can build the API's URL in development mode", () => {
     mockWindowLocation();
     expect(__buildAPIBaseURL()).toBe('http://localhost:5075');
   });

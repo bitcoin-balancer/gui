@@ -4,6 +4,8 @@ node_modules
 .eslintrc.cjs
 .git
 .gitignore
+.prettierignore
+.prettierrc
 Dockerfile
 LICENSE
 README.md

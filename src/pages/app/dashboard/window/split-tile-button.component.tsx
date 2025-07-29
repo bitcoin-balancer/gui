@@ -15,13 +15,8 @@ import { ISplitTileButtonProps } from '@/pages/app/dashboard/window/types.ts';
  * @param id
  * @returns 'top' | 'bottom'
  */
-const getTooltipSide = (id: ISplitStateID): 'top' | 'bottom' => (
-  id === 's100' || id === 's75' || id === 's50' || id === 's25' ? 'top' : 'bottom'
-);
-
-
-
-
+const getTooltipSide = (id: ISplitStateID): 'top' | 'bottom' =>
+  id === 's100' || id === 's75' || id === 's50' || id === 's25' ? 'top' : 'bottom';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -42,10 +37,6 @@ const SplitTileButton = memo(({ id, split, displayWindowDialog }: ISplitTileButt
   // the side in which the tooltip will appear to avoid interruptions
   const tooltipSide = getTooltipSide(id);
 
-
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
@@ -63,10 +54,6 @@ const SplitTileButton = memo(({ id, split, displayWindowDialog }: ISplitTileButt
     </Tooltip>
   );
 });
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

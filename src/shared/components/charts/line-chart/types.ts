@@ -1,9 +1,4 @@
-import type {
-  IChartApi,
-  Time,
-  ISeriesApi,
-  SeriesType,
-} from 'lightweight-charts';
+import type { IChartApi, Time, ISeriesApi, SeriesType } from 'lightweight-charts';
 import { IState, ISplitStateItem } from '@/shared/backend/market-state/shared/types.ts';
 import {
   IPriceFormatterFunc,
@@ -111,17 +106,7 @@ type IChartAPIRef = {
   onSeriesChanges: (newData: ISplitStateItem[], priceLines: IPriceLineOptions[]) => void;
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export type {
-  IChartKind,
-  IComponentProps,
-  ISeriesItem,
-  ILineSeriesAPI,
-  IChartAPIRef,
-};
+export type { IChartKind, IComponentProps, ISeriesItem, ILineSeriesAPI, IChartAPIRef };

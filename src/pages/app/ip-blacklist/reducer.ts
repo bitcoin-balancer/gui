@@ -22,12 +22,14 @@ const dispatch = (
       break;
     }
     case 'UPDATE_REGISTRATION': {
-      setState(state.map((record) => {
-        if (record.id === action.payload.id) {
-          return { ...record, ip: action.payload.ip, notes: action.payload.notes };
-        }
-        return record;
-      }));
+      setState(
+        state.map((record) => {
+          if (record.id === action.payload.id) {
+            return { ...record, ip: action.payload.ip, notes: action.payload.notes };
+          }
+          return record;
+        }),
+      );
       break;
     }
     case 'UNREGISTER_IP': {
@@ -43,13 +45,7 @@ const dispatch = (
   }
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export {
-  dispatch,
-};
+export { dispatch };

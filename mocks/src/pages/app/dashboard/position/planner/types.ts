@@ -36,15 +36,7 @@ type IDecreasePlanComponentProps = {
   closeDialog: (nextState: undefined) => void;
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export type {
-  IComponentProps,
-  IIncreasePlanComponentProps,
-  IDecreasePlanComponentProps,
-};
+export type { IComponentProps, IIncreasePlanComponentProps, IDecreasePlanComponentProps };

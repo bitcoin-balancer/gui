@@ -23,24 +23,20 @@ import PageLoader from '@/shared/components/page-loader/index.component.tsx';
  * Balances Dialog Component
  * Component in charge of displaying a price crash state record.
  */
-const BalancesDialog = memo(({
-  closeDialog,
-}: {
-  closeDialog: (nextState: undefined) => void,
-}) => {
+const BalancesDialog = memo(({ closeDialog }: { closeDialog: (nextState: undefined) => void }) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
-  const { data, loading, error } = useAPIFetch(useMemo(
-    () => ({
-      fetchFn: () => BalanceService.getBalances(),
-    }),
-    [],
-  ));
+  const { data, loading, error } = useAPIFetch(
+    useMemo(
+      () => ({
+        fetchFn: () => BalanceService.getBalances(),
+      }),
+      [],
+    ),
+  );
   const exchangeConfig = useBoundStore((state) => state.exchangeConfig!);
-
-
 
   /* **********************************************************************************************
    *                                       REACTIVE VALUES                                        *
@@ -54,82 +50,65 @@ const BalancesDialog = memo(({
 
   // the balances for both assets
   const baseBalance = useMemo(
-    () => (data ? prettifyValue(data[exchangeConfig.baseAsset], { processing: { decimalPlaces: 8 } }) : ''),
+    () =>
+      data
+        ? prettifyValue(data[exchangeConfig.baseAsset], { processing: { decimalPlaces: 8 } })
+        : '',
     [exchangeConfig.baseAsset, data],
   );
   const quoteBalance = useMemo(
-    () => (data ? prettifyValue(data[exchangeConfig.quoteAsset]!, { processing: { decimalPlaces: 2 } }) : ''),
+    () =>
+      data
+        ? prettifyValue(data[exchangeConfig.quoteAsset]!, { processing: { decimalPlaces: 2 } })
+        : '',
     [exchangeConfig.quoteAsset, data],
   );
-
-
-
-
 
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   let content;
   if (error) {
-    content = <PageLoadError variant='dialog' error={error} />;
+    content = (
+      <PageLoadError
+        variant="dialog"
+        error={error}
+      />
+    );
   } else if (loading) {
-    content = <PageLoader variant='dialog' />;
+    content = <PageLoader variant="dialog" />;
   } else {
-    content = <div>
-      <div
-        className='flex justify-center items-center mt-1'
-      >
-        <p
-          className='text-light'
-        >{exchangeConfig.baseAsset}</p>
-        <span className='flex-1'></span>
-        <p
-          className='text-xl'
-        >
-          {baseBalance}
-        </p>
+    content = (
+      <div>
+        <div className="flex justify-center items-center mt-1">
+          <p className="text-light">{exchangeConfig.baseAsset}</p>
+          <span className="flex-1"></span>
+          <p className="text-xl">{baseBalance}</p>
+        </div>
+        <div className="flex justify-center items-center mt-6">
+          <p className="text-light">{exchangeConfig.quoteAsset}</p>
+          <span className="flex-1"></span>
+          <p className="text-xl">{quoteBalance}</p>
+        </div>
       </div>
-      <div
-        className='flex justify-center items-center mt-6'
-      >
-        <p
-          className='text-light'
-        >{exchangeConfig.quoteAsset}</p>
-        <span className='flex-1'></span>
-        <p
-          className='text-xl'
-        >
-          {quoteBalance}
-        </p>
-      </div>
-    </div>;
+    );
   }
   return (
     <Dialog
       open={isDialogOpen}
       onOpenChange={handleCloseDialog}
     >
-
-      <DialogContent className='max-w-[400px]'>
-
+      <DialogContent className="max-w-[400px]">
         <DialogHeader>
           <DialogTitle>Balances</DialogTitle>
-          <DialogDescription>
-            {lastRefetch}
-          </DialogDescription>
+          <DialogDescription>{lastRefetch}</DialogDescription>
         </DialogHeader>
 
         {content}
-
       </DialogContent>
-
     </Dialog>
   );
 });
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

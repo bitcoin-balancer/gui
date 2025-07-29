@@ -26,10 +26,6 @@ const reversalServiceFactory = (): IReversalService => {
   // the instance of the state's cache
   const __priceCrashHistoryCache = new BrowserCache<IEventHistoryRecord>('price-crash-history');
 
-
-
-
-
   /* **********************************************************************************************
    *                                          RETRIEVERS                                          *
    ********************************************************************************************** */
@@ -51,36 +47,21 @@ const reversalServiceFactory = (): IReversalService => {
     if (typeof startAtEventTime === 'number') {
       urlPath += `&startAtEventTime=${startAtEventTime}`;
     }
-    return APIService.request(
-      'GET',
-      urlPath,
-      undefined,
-      true,
-    );
+    return APIService.request('GET', urlPath, undefined, true);
   };
 
   /**
    * Retrieves the event history candlesticks for a price crash state based on an ID.
    * @returns Promise<IEventHistoryRecord>
    */
-  const getEventHistory = (
-    id: string,
-    cacheRecord: boolean,
-  ): Promise<IEventHistoryRecord> => __priceCrashHistoryCache.run({
-    id,
-    query: () => APIService.request(
-      'GET',
-      `market-state/reversal/event-history/${id}`,
-      undefined,
-      true,
-    ),
-    cacheIf: cacheRecord,
-    revalidate: '100 years',
-  });
-
-
-
-
+  const getEventHistory = (id: string, cacheRecord: boolean): Promise<IEventHistoryRecord> =>
+    __priceCrashHistoryCache.run({
+      id,
+      query: () =>
+        APIService.request('GET', `market-state/reversal/event-history/${id}`, undefined, true),
+      cacheIf: cacheRecord,
+      revalidate: '100 years',
+    });
 
   /* **********************************************************************************************
    *                                         CONFIGURATION                                        *
@@ -90,12 +71,8 @@ const reversalServiceFactory = (): IReversalService => {
    * Retrieves the configuration object for the Reversal Module.
    * @returns Promise<IReversalConfig>
    */
-  const getConfig = (): Promise<IReversalConfig> => APIService.request(
-    'GET',
-    'market-state/reversal/config',
-    undefined,
-    true,
-  );
+  const getConfig = (): Promise<IReversalConfig> =>
+    APIService.request('GET', 'market-state/reversal/config', undefined, true);
 
   /**
    * Validates and updates the reversal's configuration.
@@ -111,19 +88,8 @@ const reversalServiceFactory = (): IReversalService => {
    * - 24507: if the coins base weight is invalid
    * - 24508: if adding the weights doesn't result in 100
    */
-  const updateConfig = (newConfig: IReversalConfig, otpToken: string): Promise<void> => (
-    APIService.request(
-      'PUT',
-      'market-state/reversal/config',
-      { newConfig },
-      true,
-      otpToken,
-    )
-  );
-
-
-
-
+  const updateConfig = (newConfig: IReversalConfig, otpToken: string): Promise<void> =>
+    APIService.request('PUT', 'market-state/reversal/config', { newConfig }, true, otpToken);
 
   /* **********************************************************************************************
    *                                           HELPERS                                            *
@@ -143,10 +109,6 @@ const reversalServiceFactory = (): IReversalService => {
     }
     return 'bg-increase-0';
   };
-
-
-
-
 
   /* **********************************************************************************************
    *                                         MODULE BUILD                                         *
@@ -168,18 +130,10 @@ const reversalServiceFactory = (): IReversalService => {
   });
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                        GLOBAL INSTANCE                                         *
  ************************************************************************************************ */
 const ReversalService = reversalServiceFactory();
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

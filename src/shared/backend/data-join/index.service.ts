@@ -1,5 +1,9 @@
 import { APIService } from '@/shared/backend/api/index.service.ts';
-import { IDataJoinService, IAppEssentials, ICompactAppEssentials } from '@/shared/backend/data-join/types.ts';
+import {
+  IDataJoinService,
+  IAppEssentials,
+  ICompactAppEssentials,
+} from '@/shared/backend/data-join/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -18,10 +22,6 @@ const dataJoinServiceFactory = (): IDataJoinService => {
 
   // ...
 
-
-
-
-
   /* **********************************************************************************************
    *                                          RETRIEVERS                                          *
    ********************************************************************************************** */
@@ -30,16 +30,8 @@ const dataJoinServiceFactory = (): IDataJoinService => {
    * Retrieves the App Essentials object for the currently authenticated user.
    * @returns Promise<IAppEssentials>
    */
-  const getAppEssentials = (): Promise<IAppEssentials> => APIService.request(
-    'GET',
-    'data-join/app-essentials',
-    undefined,
-    true,
-  );
-
-
-
-
+  const getAppEssentials = (): Promise<IAppEssentials> =>
+    APIService.request('GET', 'data-join/app-essentials', undefined, true);
 
   /* **********************************************************************************************
    *                                         MODULE BUILD                                         *
@@ -53,18 +45,10 @@ const dataJoinServiceFactory = (): IDataJoinService => {
   });
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                        GLOBAL INSTANCE                                         *
  ************************************************************************************************ */
 const DataJoinService = dataJoinServiceFactory();
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

@@ -35,12 +35,7 @@ import { IUpdateAuthorityProps, IUpdateAuthorityInputs, IAction } from '@/pages/
  * Update Authority Component
  * Component in charge of updating a user's authority.
  */
-const UpdateAuthority = ({
-  uid,
-  nickname,
-  authority,
-  closeDialog,
-}: IUpdateAuthorityProps) => {
+const UpdateAuthority = ({ uid, nickname, authority, closeDialog }: IUpdateAuthorityProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
@@ -48,10 +43,6 @@ const UpdateAuthority = ({
   const form = useForm<IUpdateAuthorityInputs>({ defaultValues: { newAuthority: authority } });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
-
-
-
-
 
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
@@ -96,9 +87,6 @@ const UpdateAuthority = ({
     });
   };
 
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
@@ -107,9 +95,7 @@ const UpdateAuthority = ({
       open={isDialogOpen}
       onOpenChange={() => __handleCloseDialog(undefined)}
     >
-
       <DialogContent>
-
         <DialogHeader>
           <DialogTitle>Update {nickname}’s authority</DialogTitle>
           <DialogDescription>
@@ -118,66 +104,54 @@ const UpdateAuthority = ({
         </DialogHeader>
 
         <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              noValidate
-            >
-
-              <FormField
-                control={form.control}
-                name='newAuthority'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Authority</FormLabel>
-                    <FormControl>
-                      <Input
-                        type='number'
-                        placeholder='3'
-                        {...field}
-                        autoComplete='off'
-                        autoFocus
-                        disabled={isSubmitting}
-                        min={1}
-                        max={4}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-                rules={{
-                  validate: {
-                    required: (value) => (isAuthorityValid(Number(value), 4) ? true : 'Enter a valid authority (1 - 4)'),
-                  },
-                }}
-              />
-
-              <DialogFooter>
-                <Button
-                  type='submit'
-                  disabled={isSubmitting}
-                  className='mt-7 w-full'
-                >
-                  {
-                    isSubmitting
-                    && <Loader2
-                      className='mr-2 h-4 w-4 animate-spin'
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            noValidate
+          >
+            <FormField
+              control={form.control}
+              name="newAuthority"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Authority</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      placeholder="3"
+                      {...field}
+                      autoComplete="off"
+                      autoFocus
+                      disabled={isSubmitting}
+                      min={1}
+                      max={4}
                     />
-                  } Update authority
-                </Button>
-              </DialogFooter>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+              rules={{
+                validate: {
+                  required: (value) =>
+                    isAuthorityValid(Number(value), 4) ? true : 'Enter a valid authority (1 - 4)',
+                },
+              }}
+            />
 
-            </form>
-          </Form>
-
+            <DialogFooter>
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                className="mt-7 w-full"
+              >
+                {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Update authority
+              </Button>
+            </DialogFooter>
+          </form>
+        </Form>
       </DialogContent>
-
     </Dialog>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

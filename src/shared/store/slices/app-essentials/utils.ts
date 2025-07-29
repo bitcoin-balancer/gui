@@ -24,18 +24,10 @@ const buildPristineState = (): Partial<IAppEssentials> => ({
  * @param payload
  * @returns boolean
  */
-const isAppEssentialsObject = (payload: unknown): payload is IAppEssentials => (
-  isObjectValid(payload) && typeof payload.serverTime === 'number'
-);
-
-
-
-
+const isAppEssentialsObject = (payload: unknown): payload is IAppEssentials =>
+  isObjectValid(payload) && typeof payload.serverTime === 'number';
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export {
-  buildPristineState,
-  isAppEssentialsObject,
-};
+export { buildPristineState, isAppEssentialsObject };

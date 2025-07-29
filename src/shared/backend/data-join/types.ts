@@ -21,10 +21,6 @@ type IDataJoinService = {
   getAppEssentials: () => Promise<IAppEssentials>;
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                         APP ESSENTIALS                                         *
  ************************************************************************************************ */
@@ -76,10 +72,6 @@ type ICompactAppEssentials = {
   // the active position record (if any)
   position: IPositionState;
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

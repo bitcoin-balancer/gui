@@ -1,5 +1,3 @@
-
-
 /* ************************************************************************************************
  *                                            SERVICE                                             *
  ************************************************************************************************ */
@@ -17,10 +15,6 @@ type IDatabaseService = {
   getDatabaseSummary: () => Promise<IDatabaseSummary>;
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                             TYPES                                              *
  ************************************************************************************************ */
@@ -30,8 +24,13 @@ type IDatabaseService = {
  * Each table has a unique name. However, the API creates a test version of each table to be used in
  * unit and integration tests.
  */
-type ITableName = 'api_errors' | 'users' | 'password_updates' | 'refresh_tokens' | 'ip_blacklist'
-| 'record_stores';
+type ITableName =
+  | 'api_errors'
+  | 'users'
+  | 'password_updates'
+  | 'refresh_tokens'
+  | 'ip_blacklist'
+  | 'record_stores';
 
 /**
  * Database Summary Table
@@ -65,10 +64,6 @@ type IDatabaseSummary = {
   // the list of tables that comprise the database
   tables: IDatabaseSummaryTable[];
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

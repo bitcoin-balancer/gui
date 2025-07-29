@@ -12,7 +12,8 @@ import { ENVIRONMENT } from '@/environment/environment.ts';
  * @returns boolean
  */
 const isIPAddress = (hostname: string): boolean => {
-  const ipPattern = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+  const ipPattern =
+    /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
   return ipPattern.test(hostname);
 };
 
@@ -43,17 +44,14 @@ const __buildAPIBaseURL = (): string => {
 
     // handle when the hostname is a domain name
     const www = hostname.includes('www') ? 'www.' : '';
-    const domain = www.length > 0
-      ? __getDomainName(hostname.substring(hostname.indexOf('.') + 1))
-      : __getDomainName(hostname);
+    const domain =
+      www.length > 0
+        ? __getDomainName(hostname.substring(hostname.indexOf('.') + 1))
+        : __getDomainName(hostname);
     return `${window.location.protocol}//${www}balancerapi.${domain}`;
   }
   return 'http://localhost:5075';
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
@@ -61,10 +59,6 @@ const __buildAPIBaseURL = (): string => {
 
 // the API's base url that's used to build route paths
 const __BASE_URL = __buildAPIBaseURL();
-
-
-
-
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -97,12 +91,13 @@ const buildAPIURL = (resourcePath: string): string => `${__BASE_URL}/${resourceP
 const __buildRequestHeaders = (
   accessJWT: string | undefined,
   otpToken: string | undefined,
-): Headers => (new Headers({
-  Accept: 'application/json',
-  'Content-Type': 'application/json',
-  authorization: typeof accessJWT === 'string' ? `Bearer ${accessJWT}` : '',
-  'otp-token': otpToken ?? '',
-}));
+): Headers =>
+  new Headers({
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+    authorization: typeof accessJWT === 'string' ? `Bearer ${accessJWT}` : '',
+    'otp-token': otpToken ?? '',
+  });
 
 /**
  * Builds the options object that will be used to send a request to the API.
@@ -125,10 +120,6 @@ const buildRequestOptions = (
   },
   acceptableStatusCodes: [200],
 });
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

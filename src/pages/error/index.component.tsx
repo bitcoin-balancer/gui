@@ -14,44 +14,28 @@ import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 const Error = () => {
   const error = useRouteError();
   return (
-    <main
-      className='h-dvh bg-primary flex justify-center items-center text-white animate-in fade-in duration-700'
-    >
+    <main className="h-dvh bg-primary flex justify-center items-center text-white animate-in fade-in duration-700">
+      <section className="text-center p-5 w-full sm:w-7/12 md:w-5/12 lg:w-4/12 xl:w-3/12">
+        <h1 className="text-7xl mt-5">Oops!</h1>
 
-      <section
-        className='text-center p-5 w-full sm:w-7/12 md:w-5/12 lg:w-4/12 xl:w-3/12'
-      >
-
-        <h1
-          className='text-7xl mt-5'
-        >Oops!</h1>
-
-        <p
-          className='mt-5'
-        >{extractMessage(error)}</p>
+        <p className="mt-5">{extractMessage(error)}</p>
 
         <Button
-          size='lg'
-          className='mt-5'
+          size="lg"
+          className="mt-5"
           onClick={SWService.updateApp}
-        >Refresh app</Button>
-
-        <p
-          className='text-xs text-slate-200'
         >
+          Refresh app
+        </Button>
+
+        <p className="text-xs text-slate-200">
           If the problem persists, close the app, clean the site data (cache) via your browser and
-           try again.
+          try again.
         </p>
-
       </section>
-
     </main>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

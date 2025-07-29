@@ -18,10 +18,6 @@ const scrollChildIntoView = (parentEl: IHTMLElement, childID: string): void => {
   el.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                         TOAST HELPERS                                          *
  ************************************************************************************************ */
@@ -32,15 +28,12 @@ const scrollChildIntoView = (parentEl: IHTMLElement, childID: string): void => {
  * @param title?
  * @returns Toast
  */
-const errorToast = (error: unknown, title: string = 'Error') => toast({
-  variant: 'destructive',
-  title,
-  description: decodeError(error).message,
-});
-
-
-
-
+const errorToast = (error: unknown, title: string = 'Error') =>
+  toast({
+    variant: 'destructive',
+    title,
+    description: decodeError(error).message,
+  });
 
 /* ************************************************************************************************
  *                                       CLIPBOARD HELPERS                                        *
@@ -59,10 +52,6 @@ const copyToClipboard = async (data: string): Promise<void> => {
     errorToast(e, 'Error copying to clipboard');
   }
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

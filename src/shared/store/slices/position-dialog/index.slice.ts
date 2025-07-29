@@ -10,21 +10,17 @@ import { IPositionDialogSlice } from '@/shared/store/slices/position-dialog/type
  * Position Dialog Slice
  * Creates the slice in charge of displaying the position dialog.
  */
-const createPositionDialogSlice: StateCreator<IPositionDialogSlice> = (
-  set,
-) => ({
+const createPositionDialogSlice: StateCreator<IPositionDialogSlice> = (set) => ({
   isPositionDialogOpen: undefined,
-  openPositionDialog: (data: string | IPosition) => set(() => ({
-    isPositionDialogOpen: data,
-  })),
-  closePositionDialog: () => set(() => ({
-    isPositionDialogOpen: undefined,
-  })),
+  openPositionDialog: (data: string | IPosition) =>
+    set(() => ({
+      isPositionDialogOpen: data,
+    })),
+  closePositionDialog: () =>
+    set(() => ({
+      isPositionDialogOpen: undefined,
+    })),
 });
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

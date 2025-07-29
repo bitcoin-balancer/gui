@@ -1,17 +1,7 @@
 import { memo, useMemo, useState } from 'react';
-import {
-  EllipsisVertical,
-  DollarSign,
-  Bitcoin,
-  Loader2,
-} from 'lucide-react';
+import { EllipsisVertical, DollarSign, Bitcoin, Loader2 } from 'lucide-react';
 import { delay } from 'web-utils-kit';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/shared/shadcn/components/ui/card.tsx';
+import { Card, CardContent, CardHeader, CardTitle } from '@/shared/shadcn/components/ui/card.tsx';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,7 +19,10 @@ import {
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { errorToast } from '@/shared/services/utils/index.service.ts';
 import { useBoundStore } from '@/shared/store/index.store.ts';
-import { CoinsService, ICoinStateAsset } from '@/shared/backend/market-state/coins/index.service.ts';
+import {
+  CoinsService,
+  ICoinStateAsset,
+} from '@/shared/backend/market-state/coins/index.service.ts';
 import { ColorService } from '@/shared/services/color/index.service.ts';
 import { IComponentProps } from '@/pages/app/dashboard/coins/types.ts';
 
@@ -50,9 +43,6 @@ const Coins = memo(({ coinsStates, openSplitStatesDialog }: IComponentProps) => 
   const [isRetrievingState, setIsRetrievingState] = useState<boolean>(false);
   const exchangeConfig = useBoundStore((state) => state.exchangeConfig!);
   const openLargeInfoDialog = useBoundStore((state) => state.openLargeInfoDialog);
-
-
-
 
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
@@ -91,10 +81,6 @@ const Coins = memo(({ coinsStates, openSplitStatesDialog }: IComponentProps) => 
     }
   };
 
-
-
-
-
   /* **********************************************************************************************
    *                                       REACTIVE VALUES                                        *
    ********************************************************************************************** */
@@ -106,16 +92,18 @@ const Coins = memo(({ coinsStates, openSplitStatesDialog }: IComponentProps) => 
   );
 
   // the background class that will be applied to the coins module's button
-  const coinBackgrounds: { [symbol: string ]: string } = useMemo(
-    () => topSymbols.reduce(
-      (previous, current) => ({
-        ...previous,
-        [current]: exchangeConfig.baseAsset === current
-          ? `${ColorService.STATE_CLASS_NAME[coinsStates.quote.statesBySymbol[current].state]}-stateless`
-          : `${ColorService.STATE_CLASS_NAME[coinsStates.quote.statesBySymbol[current].state]}-${ColorService.STATE_CLASS_NAME[coinsStates.base.statesBySymbol[current].state]}`,
-      }),
-      {},
-    ),
+  const coinBackgrounds: { [symbol: string]: string } = useMemo(
+    () =>
+      topSymbols.reduce(
+        (previous, current) => ({
+          ...previous,
+          [current]:
+            exchangeConfig.baseAsset === current
+              ? `${ColorService.STATE_CLASS_NAME[coinsStates.quote.statesBySymbol[current].state]}-stateless`
+              : `${ColorService.STATE_CLASS_NAME[coinsStates.quote.statesBySymbol[current].state]}-${ColorService.STATE_CLASS_NAME[coinsStates.base.statesBySymbol[current].state]}`,
+        }),
+        {},
+      ),
     [
       topSymbols,
       exchangeConfig.baseAsset,
@@ -124,45 +112,37 @@ const Coins = memo(({ coinsStates, openSplitStatesDialog }: IComponentProps) => 
     ],
   );
 
-
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
     <>
-      <Card className='md:mt-2'>
+      <Card className="md:mt-2">
         <CardHeader>
-          <CardTitle className='flex justify-start items-center'>
-              Coins
-              <span className='flex-1'></span>
-              <DropdownMenu>
-                <DropdownMenuTrigger aria-label='More information'>
-                  <EllipsisVertical
-                    className='w-5 h-5'
-                    aria-hidden='true'
-                  />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuLabel>Information</DropdownMenuLabel>
-                  <DropdownMenuItem
-                    onClick={() => openLargeInfoDialog('coins')}
-                  >
-                    <Bitcoin
-                      aria-hidden='true'
-                      className='mr-1 h-5 w-5'
-                    /> Coins
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </CardTitle>
+          <CardTitle className="flex justify-start items-center">
+            Coins
+            <span className="flex-1"></span>
+            <DropdownMenu>
+              <DropdownMenuTrigger aria-label="More information">
+                <EllipsisVertical
+                  className="w-5 h-5"
+                  aria-hidden="true"
+                />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>Information</DropdownMenuLabel>
+                <DropdownMenuItem onClick={() => openLargeInfoDialog('coins')}>
+                  <Bitcoin
+                    aria-hidden="true"
+                    className="mr-1 h-5 w-5"
+                  />{' '}
+                  Coins
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </CardTitle>
         </CardHeader>
-        <CardContent
-          className='grid grid-cols-4 gap-1'
-        >
-
+        <CardContent className="grid grid-cols-4 gap-1">
           {topSymbols.map((symbol) => (
             <button
               key={symbol}
@@ -175,53 +155,49 @@ const Coins = memo(({ coinsStates, openSplitStatesDialog }: IComponentProps) => 
         </CardContent>
       </Card>
 
-
-
       {/* **************
-        * ACTIONS MENU *
-        ************** */}
-      <Sheet open={isOpen} onOpenChange={setIsOpen}>
-        <SheetContent side='bottom'>
-          <div className='mx-auto w-full max-w-sm'>
-            <SheetHeader className='space-y-0'>
+       * ACTIONS MENU *
+       ************** */}
+      <Sheet
+        open={isOpen}
+        onOpenChange={setIsOpen}
+      >
+        <SheetContent side="bottom">
+          <div className="mx-auto w-full max-w-sm">
+            <SheetHeader className="space-y-0">
               <SheetTitle>Select a pair</SheetTitle>
-              <SheetDescription
-                className='flex justify-center items-center sm:justify-start'
-              >
-                {
-                  isRetrievingState
-                  && <Loader2
-                    className='mr-1 h-4 w-4 animate-spin'
-                  />
-                }
-                {
-                  isRetrievingState
-                    ? 'Retrieving state...'
-                    : `Display the state for ${activeSymbol}`
-                }
+              <SheetDescription className="flex justify-center items-center sm:justify-start">
+                {isRetrievingState && <Loader2 className="mr-1 h-4 w-4 animate-spin" />}
+                {isRetrievingState
+                  ? 'Retrieving state...'
+                  : `Display the state for ${activeSymbol}`}
               </SheetDescription>
             </SheetHeader>
 
-            <div className='flex flex-row justify-center items-stretch gap-2 sm:gap-4 mt-5'>
+            <div className="flex flex-row justify-center items-stretch gap-2 sm:gap-4 mt-5">
               <Button
-                variant='outline'
+                variant="outline"
                 aria-label={`View the state of the coin in the ${exchangeConfig.quoteAsset} pair`}
-                className='flex flex-col h-20 w-full gap-y-1'
+                className="flex flex-col h-20 w-full gap-y-1"
                 onClick={() => displaySplitStateDialog('quote')}
                 disabled={isRetrievingState}
               >
-                <DollarSign aria-hidden='true' />
-                <p>{activeSymbol}/{exchangeConfig.quoteAsset}</p>
+                <DollarSign aria-hidden="true" />
+                <p>
+                  {activeSymbol}/{exchangeConfig.quoteAsset}
+                </p>
               </Button>
               <Button
-                variant='outline'
+                variant="outline"
                 aria-label={`View the state of the coin in the ${exchangeConfig.baseAsset} pair`}
-                className='flex flex-col h-20 w-full gap-y-1'
+                className="flex flex-col h-20 w-full gap-y-1"
                 onClick={() => displaySplitStateDialog('base')}
                 disabled={isRetrievingState || activeSymbol === exchangeConfig.baseAsset}
               >
-                <Bitcoin aria-hidden='true' />
-                <p>{activeSymbol}/{exchangeConfig.baseAsset}</p>
+                <Bitcoin aria-hidden="true" />
+                <p>
+                  {activeSymbol}/{exchangeConfig.baseAsset}
+                </p>
               </Button>
             </div>
           </div>
@@ -230,10 +206,6 @@ const Coins = memo(({ coinsStates, openSplitStatesDialog }: IComponentProps) => 
     </>
   );
 });
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

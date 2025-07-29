@@ -17,10 +17,6 @@ const jwtServiceFactory = (): IJWTService => {
 
   // ...
 
-
-
-
-
   /* **********************************************************************************************
    *                                          RETRIEVERS                                          *
    ********************************************************************************************** */
@@ -32,16 +28,8 @@ const jwtServiceFactory = (): IJWTService => {
    * @throws
    * - 4500: if the uid has an invalid format
    */
-  const listRecords = (uid: string): Promise<IRefreshTokenRecord[]> => APIService.request(
-    'GET',
-    `auth/jwt/${uid}`,
-    undefined,
-    true,
-  );
-
-
-
-
+  const listRecords = (uid: string): Promise<IRefreshTokenRecord[]> =>
+    APIService.request('GET', `auth/jwt/${uid}`, undefined, true);
 
   /* **********************************************************************************************
    *                                         AUTH ACTIONS                                         *
@@ -72,20 +60,14 @@ const jwtServiceFactory = (): IJWTService => {
     otpToken: string,
     altchaPayload: string,
   ): Promise<void> => {
-    const accessJWT = await APIService.request<string>(
-      'POST',
-      'auth/jwt/sign-in',
-      {
-        nickname,
-        password,
-        otpToken,
-        altchaPayload,
-      },
-    );
+    const accessJWT = await APIService.request<string>('POST', 'auth/jwt/sign-in', {
+      nickname,
+      password,
+      otpToken,
+      altchaPayload,
+    });
     await AccessJWTService.accessJWTChanged(accessJWT);
   };
-
-
 
   /**
    * Signs an user out from a single or multiple devices in one go. Once it completes, it also
@@ -97,18 +79,9 @@ const jwtServiceFactory = (): IJWTService => {
    * - 4501: if the Refresh JWT has an invalid format
    */
   const signOut = async (allDevices?: boolean): Promise<void> => {
-    await APIService.request(
-      'POST',
-      'auth/jwt/sign-out',
-      { allDevices },
-      true,
-    );
+    await APIService.request('POST', 'auth/jwt/sign-out', { allDevices }, true);
     await AccessJWTService.accessJWTChanged(undefined);
   };
-
-
-
-
 
   /* **********************************************************************************************
    *                                         MODULE BUILD                                         *
@@ -126,18 +99,10 @@ const jwtServiceFactory = (): IJWTService => {
   });
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                        GLOBAL INSTANCE                                         *
  ************************************************************************************************ */
 const JWTService = jwtServiceFactory();
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

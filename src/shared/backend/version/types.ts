@@ -1,5 +1,3 @@
-
-
 /* ************************************************************************************************
  *                                            SERVICE                                             *
  ************************************************************************************************ */
@@ -16,10 +14,6 @@ type IVersionService = {
   getAvailableUpdates: (version: IVersion) => IAvailableUpdates;
   buildLastCommitText: (service: IServiceVersion) => string;
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                             TYPES                                              *
@@ -57,7 +51,7 @@ type ICommitRecord = {
     tree: object;
     url: string;
     comment_count: number;
-    verification: object
+    verification: object;
   };
   url: string;
   html_url: string;
@@ -115,10 +109,6 @@ type IVersion = {
  * down-build-up action in the remote while the GUI may need to be updated via the Service Worker.
  */
 type IAvailableUpdates = 'GUI' | 'API' | 'BOTH' | null;
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

@@ -6,12 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/shared/shadcn/components/ui/dialog.tsx';
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '@/shared/shadcn/components/ui/tabs.tsx';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/shadcn/components/ui/tabs.tsx';
 import {
   formatBitcoinAmount,
   formatDate,
@@ -36,9 +31,6 @@ import { IComponentProps } from '@/pages/app/dashboard/indicators/liquidity-butt
  ************************************************************************************************ */
 
 // ...
-
-
-
 
 /* ************************************************************************************************
  *                                            HELPERS                                             *
@@ -68,10 +60,6 @@ const buildInfoDialogContent = (state: ILiquidityState): IInfoDialogConfig => ({
   ],
 });
 
-
-
-
-
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
@@ -85,25 +73,21 @@ const LiquidityStateDialog = memo(({ closeDialog }: IComponentProps) => {
    *                                             STATE                                            *
    ********************************************************************************************** */
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
-  const { data, loading, error } = useAPIFetch(useMemo(
-    () => ({
-      fetchFn: () => LiquidityService.getState(),
-    }),
-    [],
-  ));
+  const { data, loading, error } = useAPIFetch(
+    useMemo(
+      () => ({
+        fetchFn: () => LiquidityService.getState(),
+      }),
+      [],
+    ),
+  );
   const openInfoDialog = useBoundStore((state) => state.openInfoDialog);
-
-
-
-
 
   /* **********************************************************************************************
    *                                       REACTIVE VALUES                                        *
    ********************************************************************************************** */
 
   // ...
-
-
 
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
@@ -114,77 +98,70 @@ const LiquidityStateDialog = memo(({ closeDialog }: IComponentProps) => {
    */
   const displayLiquidityInfo = (): void => openInfoDialog(buildInfoDialogContent(data));
 
-
-
-
-
   /* **********************************************************************************************
    *                                         SIDE EFFECTS                                         *
    ********************************************************************************************** */
 
   // ...
 
-
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   let content;
   if (error) {
-    content = <PageLoadError variant='dialog' error={error} />;
+    content = (
+      <PageLoadError
+        variant="dialog"
+        error={error}
+      />
+    );
   } else if (loading) {
-    content = <PageLoader variant='dialog' />;
+    content = <PageLoader variant="dialog" />;
   } else {
     content = (
       <Tabs
-        defaultValue='summary'
-        className='w-full'
+        defaultValue="summary"
+        className="w-full"
       >
-        <TabsList
-          className='grid w-full grid-cols-3'
-        >
-          <TabsTrigger value='summary'>Summary</TabsTrigger>
-          <TabsTrigger value='bids'>Bids</TabsTrigger>
-          <TabsTrigger value='asks'>Asks</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="summary">Summary</TabsTrigger>
+          <TabsTrigger value="bids">Bids</TabsTrigger>
+          <TabsTrigger value="asks">Asks</TabsTrigger>
         </TabsList>
 
-
         {/* *********
-          * SUMMARY *
-          ********* */}
+         * SUMMARY *
+         ********* */}
 
         <TabsContent
-          value='summary'
-          className='p-3 animate-in fade-in duration-700'
+          value="summary"
+          className="p-3 animate-in fade-in duration-700"
         >
           <LiquiditySummary state={data} />
         </TabsContent>
 
         {/* ******
-          * BIDS *
-          ****** */}
+         * BIDS *
+         ****** */}
         <TabsContent
-          value='bids'
-          className='animate-in fade-in duration-700'
+          value="bids"
+          className="animate-in fade-in duration-700"
         >
           <PriceLevels
-            id='bids'
+            id="bids"
             side={data.bids}
           />
         </TabsContent>
 
-
         {/* ******
-          * ASKS *
-          ****** */}
+         * ASKS *
+         ****** */}
         <TabsContent
-          value='asks'
-          className='animate-in fade-in duration-700'
+          value="asks"
+          className="animate-in fade-in duration-700"
         >
           <PriceLevels
-            id='asks'
+            id="asks"
             side={data.asks}
           />
         </TabsContent>
@@ -196,15 +173,11 @@ const LiquidityStateDialog = memo(({ closeDialog }: IComponentProps) => {
       open={isDialogOpen}
       onOpenChange={handleCloseDialog}
     >
-
-      <DialogContent
-        className='max-w-[900px]'
-      >
-
+      <DialogContent className="max-w-[900px]">
         <DialogHeader>
           <DialogTitle>
             <button
-              aria-label='Display liquidity information'
+              aria-label="Display liquidity information"
               onClick={displayLiquidityInfo}
             >
               Liquidity
@@ -214,16 +187,10 @@ const LiquidityStateDialog = memo(({ closeDialog }: IComponentProps) => {
         </DialogHeader>
 
         {content}
-
       </DialogContent>
-
     </Dialog>
   );
 });
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

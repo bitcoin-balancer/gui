@@ -19,10 +19,6 @@ const balanceServiceFactory = (): IBalanceService => {
 
   // ...
 
-
-
-
-
   /* **********************************************************************************************
    *                                          RETRIEVERS                                          *
    ********************************************************************************************** */
@@ -37,16 +33,8 @@ const balanceServiceFactory = (): IBalanceService => {
    * - 13750: if the balance for the base asset is not in the response object (binance)
    * - 13751: if the balance for the quote asset is not in the response object (binance)
    */
-  const getBalances = (): Promise<IBalances> => APIService.request(
-    'GET',
-    'position/balances',
-    undefined,
-    true,
-  );
-
-
-
-
+  const getBalances = (): Promise<IBalances> =>
+    APIService.request('GET', 'position/balances', undefined, true);
 
   /* **********************************************************************************************
    *                                         MODULE BUILD                                         *
@@ -60,18 +48,10 @@ const balanceServiceFactory = (): IBalanceService => {
   });
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                        GLOBAL INSTANCE                                         *
  ************************************************************************************************ */
 const BalanceService = balanceServiceFactory();
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

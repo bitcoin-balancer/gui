@@ -11,13 +11,8 @@ import { ISide } from '../../exchange/index.service.ts';
 type ITradeService = {
   // properties
   // ...
-
   // ...
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                             TYPES                                              *
@@ -43,10 +38,6 @@ type IManualTrade = {
   // the total amount in base asset
   amount: number;
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

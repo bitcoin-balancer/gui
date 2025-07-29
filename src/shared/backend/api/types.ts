@@ -1,6 +1,5 @@
 import { IRequestMethod } from 'fetch-request-browser';
 
-
 /* ************************************************************************************************
  *                                           SERVICES                                             *
  ************************************************************************************************ */
@@ -36,10 +35,6 @@ type IAccessJWTService = {
   // access JWT management
   accessJWTChanged: (newAccessJWT: string | null | undefined) => Promise<void>;
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

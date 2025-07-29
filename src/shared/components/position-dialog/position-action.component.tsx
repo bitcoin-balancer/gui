@@ -17,62 +17,42 @@ const PositionAction = ({ action }: { action: IPositionAction }) => {
    ********************************************************************************************** */
   const openTransactionDialog = useBoundStore((state) => state.openTransactionDialog);
 
-
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
     <article>
-      <div
-        className='flex justify-start items-center'
-      >
-        <p
-          className='text-light text-sm'
-        >ID</p>
-        <span className='flex-1'></span>
+      <div className="flex justify-start items-center">
+        <p className="text-light text-sm">ID</p>
+        <span className="flex-1"></span>
         <Button
-          variant='outline'
-          size='sm'
+          variant="outline"
+          size="sm"
           onClick={() => openTransactionDialog(action.txID)}
-          aria-label='Display transaction'
+          aria-label="Display transaction"
         >
           {action.txID}
         </Button>
       </div>
 
-      <div
-        className='flex justify-start items-center mt-5'
-      >
-        <p
-          className='text-light text-sm'
-        >Event</p>
-        <span className='flex-1'></span>
-        <p
-          className='max-w-[50%] sm:max-width-[70%] truncate'
-        >{formatDate(action.eventTime, 'datetime-medium')}</p>
+      <div className="flex justify-start items-center mt-5">
+        <p className="text-light text-sm">Event</p>
+        <span className="flex-1"></span>
+        <p className="max-w-[50%] sm:max-width-[70%] truncate">
+          {formatDate(action.eventTime, 'datetime-medium')}
+        </p>
       </div>
 
-      <div
-        className='flex justify-start items-center mt-5'
-      >
-        <p
-          className='text-light text-sm'
-        >Next event</p>
-        <span className='flex-1'></span>
-        <p
-          className='max-w-[50%] sm:max-width-[70%] truncate'
-        >{formatDate(action.nextEventTime, 'datetime-medium')}</p>
+      <div className="flex justify-start items-center mt-5">
+        <p className="text-light text-sm">Next event</p>
+        <span className="flex-1"></span>
+        <p className="max-w-[50%] sm:max-width-[70%] truncate">
+          {formatDate(action.nextEventTime, 'datetime-medium')}
+        </p>
       </div>
     </article>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

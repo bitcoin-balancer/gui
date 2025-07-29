@@ -17,13 +17,7 @@ type IPositionDialogSlice = {
   closePositionDialog: () => void;
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export type {
-  IPositionDialogSlice,
-};
+export type { IPositionDialogSlice };

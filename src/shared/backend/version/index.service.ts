@@ -23,10 +23,6 @@ const versionServiceFactory = (): IVersionService => {
 
   // ...
 
-
-
-
-
   /* **********************************************************************************************
    *                                            HELPERS                                           *
    ********************************************************************************************** */
@@ -39,8 +35,8 @@ const versionServiceFactory = (): IVersionService => {
    */
   const getAvailableUpdates = (version: IVersion): IAvailableUpdates => {
     if (
-      ENVIRONMENT.version !== version.gui.latest.version
-      && version.api.running !== version.api.latest.version
+      ENVIRONMENT.version !== version.gui.latest.version &&
+      version.api.running !== version.api.latest.version
     ) {
       return 'BOTH';
     }
@@ -58,13 +54,8 @@ const versionServiceFactory = (): IVersionService => {
    * @param service
    * @returns string
    */
-  const buildLastCommitText = (service: IServiceVersion): string => (
-    `v${service.version} · ${service.sha.slice(0, 7)} · ${formatDate(service.eventTime, 'date-short')}`
-  );
-
-
-
-
+  const buildLastCommitText = (service: IServiceVersion): string =>
+    `v${service.version} · ${service.sha.slice(0, 7)} · ${formatDate(service.eventTime, 'date-short')}`;
 
   /* **********************************************************************************************
    *                                         MODULE BUILD                                         *
@@ -79,18 +70,10 @@ const versionServiceFactory = (): IVersionService => {
   });
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                        GLOBAL INSTANCE                                         *
  ************************************************************************************************ */
 const VersionService = versionServiceFactory();
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

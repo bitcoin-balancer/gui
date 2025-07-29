@@ -57,10 +57,6 @@ const formatDateByBreakpoint = (date: number, breakpoint: IBreakpoint): string =
   }
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
@@ -78,10 +74,6 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
 
-
-
-
-
   /* **********************************************************************************************
    *                                       REACTIVE VALUES                                        *
    ********************************************************************************************** */
@@ -89,10 +81,6 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
     () => formatDateByBreakpoint(user.event_time, breakpoint),
     [user.event_time, breakpoint],
   );
-
-
-
-
 
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
@@ -132,7 +120,10 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
         try {
           setIsSubmitting(true);
           const newSecret = await UserService.updateOTPSecret(user.uid, confirmation);
-          dispatch({ type: 'UPDATE_OTP_SECRET', payload: { uid: user.uid, newOTPSecret: newSecret } });
+          dispatch({
+            type: 'UPDATE_OTP_SECRET',
+            payload: { uid: user.uid, newOTPSecret: newSecret },
+          });
 
           // display the new secret
           await delay(0.25);
@@ -160,36 +151,28 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
     [dispatch],
   );
 
-
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
     <>
       {/* ***********
-        * TABLE ROW *
-        *********** */}
-      <TableRow
-        className={`${isSubmitting ? 'opacity-50' : ''} animate-in fade-in duration-700`}
-      >
+       * TABLE ROW *
+       *********** */}
+      <TableRow className={`${isSubmitting ? 'opacity-50' : ''} animate-in fade-in duration-700`}>
         {/* *****
-          * UID *
-          ***** */}
+         * UID *
+         ***** */}
         <TableCell>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                variant='ghost'
-                size='sm'
-                className='max-w-20 md:max-w-24 lg:max-w-32 xl:max-w-36 2xl:max-w-40'
+                variant="ghost"
+                size="sm"
+                className="max-w-20 md:max-w-24 lg:max-w-32 xl:max-w-36 2xl:max-w-40"
                 onClick={() => copyToClipboard(user.uid)}
               >
-                <p
-                  className='text-ellipsis overflow-hidden font-bold'
-                >{user.uid}</p>
+                <p className="text-ellipsis overflow-hidden font-bold">{user.uid}</p>
               </Button>
             </TooltipTrigger>
             <TooltipContent>
@@ -199,32 +182,32 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
         </TableCell>
 
         {/* **********
-          * NICKNAME *
-          ********** */}
+         * NICKNAME *
+         ********** */}
         <TableCell>
-          <p className='font-bold'>{user.nickname}</p>
+          <p className="font-bold">{user.nickname}</p>
         </TableCell>
 
         {/* ***********
-          * AUTHORITY *
-          *********** */}
+         * AUTHORITY *
+         *********** */}
         <TableCell>
-          <Badge variant='secondary'>{user.authority}</Badge>
+          <Badge variant="secondary">{user.authority}</Badge>
         </TableCell>
 
         {/* ************
-          * OTP SECRET *
-          ************ */}
+         * OTP SECRET *
+         ************ */}
         <TableCell>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                variant='ghost'
-                size='icon'
+                variant="ghost"
+                size="icon"
                 onClick={() => setActiveDialog('DISPLAY_OTP_SECRET')}
-                aria-label='Display OTP secret'
+                aria-label="Display OTP secret"
               >
-                <KeyRound aria-hidden='true' />
+                <KeyRound aria-hidden="true" />
               </Button>
             </TooltipTrigger>
             <TooltipContent>
@@ -234,29 +217,29 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
         </TableCell>
 
         {/* **********
-          * CREATION *
-          ********** */}
+         * CREATION *
+         ********** */}
         <TableCell>
           <p>{creation}</p>
         </TableCell>
 
         {/* *********
-          * ACTIONS *
-          ********* */}
+         * ACTIONS *
+         ********* */}
         <TableCell>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
-                variant='ghost'
-                size='icon'
-                aria-label='User actions menu'
+                variant="ghost"
+                size="icon"
+                aria-label="User actions menu"
                 disabled={isSubmitting}
               >
-                {
-                  isSubmitting
-                    ? <Loader2 className='animate-spin' />
-                    : <EllipsisVertical aria-hidden='true'/>
-                }
+                {isSubmitting ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  <EllipsisVertical aria-hidden="true" />
+                )}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
@@ -267,120 +250,110 @@ const UserRow = ({ user, dispatch }: IUserRowProps) => {
                 disabled={user.authority === 5}
               >
                 <UserPen
-                  aria-hidden='true'
-                  className='w-4 h-4 mr-1'
-                /> Update nickname
+                  aria-hidden="true"
+                  className="w-4 h-4 mr-1"
+                />{' '}
+                Update nickname
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => setActiveDialog('UPDATE_AUTHORITY')}
                 disabled={user.authority === 5}
               >
                 <UserPen
-                  aria-hidden='true'
-                  className='w-4 h-4 mr-1'
-                /> Update authority
+                  aria-hidden="true"
+                  className="w-4 h-4 mr-1"
+                />{' '}
+                Update authority
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={updateOTPSecret}
                 disabled={user.authority === 5}
               >
                 <UserPen
-                  aria-hidden='true'
-                  className='w-4 h-4 mr-1'
-                /> Update OTP secret
+                  aria-hidden="true"
+                  className="w-4 h-4 mr-1"
+                />{' '}
+                Update OTP secret
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={deleteUser}
                 disabled={user.authority === 5}
               >
                 <UserMinus
-                  aria-hidden='true'
-                  className='w-4 h-4 mr-1'
-                /> Delete user
+                  aria-hidden="true"
+                  className="w-4 h-4 mr-1"
+                />{' '}
+                Delete user
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem
-                onClick={() => setActiveDialog('DISPLAY_AUTH_SESSIONS')}
-              >
+              <DropdownMenuItem onClick={() => setActiveDialog('DISPLAY_AUTH_SESSIONS')}>
                 <Fingerprint
-                  aria-hidden='true'
-                  className='w-4 h-4 mr-1'
-                /> Display auth sessions
+                  aria-hidden="true"
+                  className="w-4 h-4 mr-1"
+                />{' '}
+                Display auth sessions
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => setActiveDialog('DISPLAY_PASSWORD_UPDATES')}
                 disabled={user.authority === 5}
               >
                 <SquareAsterisk
-                  aria-hidden='true'
-                  className='w-4 h-4 mr-1'
-                /> Display password updates
+                  aria-hidden="true"
+                  className="w-4 h-4 mr-1"
+                />{' '}
+                Display password updates
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </TableCell>
       </TableRow>
 
-
-
-
       {/* **************
-        * FORM DIALOGS *
-        ************** */}
-      {
-        activeDialog === 'UPDATE_NICKNAME'
-        && <UpdateNickname
+       * FORM DIALOGS *
+       ************** */}
+      {activeDialog === 'UPDATE_NICKNAME' && (
+        <UpdateNickname
           uid={user.uid}
           nickname={user.nickname}
           closeDialog={handleFormDismissal}
         />
-      }
-      {
-        activeDialog === 'UPDATE_AUTHORITY'
-        && <UpdateAuthority
+      )}
+      {activeDialog === 'UPDATE_AUTHORITY' && (
+        <UpdateAuthority
           uid={user.uid}
           nickname={user.nickname}
           authority={user.authority}
           closeDialog={handleFormDismissal}
         />
-      }
-
-
+      )}
 
       {/* *****************
-        * DISPLAY DIALOGS *
-        ***************** */}
-      {
-        activeDialog === 'DISPLAY_OTP_SECRET'
-        && <DisplayOTPSecret
+       * DISPLAY DIALOGS *
+       ***************** */}
+      {activeDialog === 'DISPLAY_OTP_SECRET' && (
+        <DisplayOTPSecret
           uid={user.uid}
           nickname={user.nickname}
           closeDialog={handleFormDismissal}
         />
-      }
-      {
-        activeDialog === 'DISPLAY_AUTH_SESSIONS'
-        && <DisplayAuthSessions
+      )}
+      {activeDialog === 'DISPLAY_AUTH_SESSIONS' && (
+        <DisplayAuthSessions
           uid={user.uid}
           nickname={user.nickname}
           closeDialog={handleFormDismissal}
         />
-      }
-      {
-        activeDialog === 'DISPLAY_PASSWORD_UPDATES'
-        && <DisplayPasswordUpdates
+      )}
+      {activeDialog === 'DISPLAY_PASSWORD_UPDATES' && (
+        <DisplayPasswordUpdates
           uid={user.uid}
           nickname={user.nickname}
           closeDialog={handleFormDismissal}
         />
-      }
+      )}
     </>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

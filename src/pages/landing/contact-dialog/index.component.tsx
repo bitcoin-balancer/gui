@@ -15,33 +15,26 @@ import {
  * Contact Dialog
  * Component in charge of providing ways to contact the author of Balancer.
  */
-const ContactDialog = memo(({
-  isOpen,
-  setIsOpen,
-}: {
-  isOpen: boolean,
-  setIsOpen: (isOpen: boolean) => void,
-}) => (
-  <Dialog open={isOpen} onOpenChange={setIsOpen}>
-    <DialogContent
-      className='sm:max-w-[375px]'
+const ContactDialog = memo(
+  ({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (isOpen: boolean) => void }) => (
+    <Dialog
+      open={isOpen}
+      onOpenChange={setIsOpen}
     >
-      <DialogHeader>
-        <DialogTitle>Contact</DialogTitle>
-        <DialogDescription>
-        Having issues running the platform? Open a GitHub issue. For other inquiries, email
-        me at:
-        </DialogDescription>
-      </DialogHeader>
+      <DialogContent className="sm:max-w-[375px]">
+        <DialogHeader>
+          <DialogTitle>Contact</DialogTitle>
+          <DialogDescription>
+            Having issues running the platform? Open a GitHub issue. For other inquiries, email me
+            at:
+          </DialogDescription>
+        </DialogHeader>
 
-      <p className='text-center'>jesusgraterol.dev@protonmail.com</p>
-    </DialogContent>
-  </Dialog>
-));
-
-
-
-
+        <p className="text-center">jesusgraterol.dev@protonmail.com</p>
+      </DialogContent>
+    </Dialog>
+  ),
+);
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

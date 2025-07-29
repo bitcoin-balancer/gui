@@ -3,8 +3,14 @@ import { type IVersion } from '@/shared/backend/version/index.service.ts';
 import { type IUser } from '@/shared/backend/auth/user/index.service.ts';
 import { type IExchangeConfig } from '@/shared/backend/exchange/index.service.ts';
 import { CandlestickService } from '@/shared/backend/candlestick/index.service.ts';
-import type { IAppEssentials, ICompactAppEssentials } from '@/shared/backend/data-join/index.service.ts';
-import { buildPristineState, isAppEssentialsObject } from '@/shared/store/slices/app-essentials/utils.ts';
+import type {
+  IAppEssentials,
+  ICompactAppEssentials,
+} from '@/shared/backend/data-join/index.service.ts';
+import {
+  buildPristineState,
+  isAppEssentialsObject,
+} from '@/shared/store/slices/app-essentials/utils.ts';
 import { type IAppEssentialsSlice } from '@/shared/store/slices/app-essentials/types.ts';
 
 /* ************************************************************************************************
@@ -22,29 +28,28 @@ import { type IAppEssentialsSlice } from '@/shared/store/slices/app-essentials/t
 const __onNewCompactAppEssentials = (
   currentState: IAppEssentialsSlice,
   payload: ICompactAppEssentials,
-): IAppEssentials => (
+): IAppEssentials =>
   currentState.serverTime === undefined
     ? <IAppEssentials>buildPristineState()
     : {
-      serverTime: <number>currentState.serverTime,
-      version: <IVersion>currentState.version,
-      unreadNotifications: payload.unreadNotifications,
-      unreadAPIErrors: payload.unreadAPIErrors,
-      user: <IUser>currentState.user,
-      exchangeConfig: <IExchangeConfig>currentState.exchangeConfig,
-      marketState: {
-        ...payload.marketState,
-        windowState: {
-          ...payload.marketState.windowState,
-          window: CandlestickService.syncRecords(
-            currentState.marketState!.windowState.window,
-            payload.marketState.windowState.window,
-          ),
+        serverTime: <number>currentState.serverTime,
+        version: <IVersion>currentState.version,
+        unreadNotifications: payload.unreadNotifications,
+        unreadAPIErrors: payload.unreadAPIErrors,
+        user: <IUser>currentState.user,
+        exchangeConfig: <IExchangeConfig>currentState.exchangeConfig,
+        marketState: {
+          ...payload.marketState,
+          windowState: {
+            ...payload.marketState.windowState,
+            window: CandlestickService.syncRecords(
+              currentState.marketState!.windowState.window,
+              payload.marketState.windowState.window,
+            ),
+          },
         },
-      },
-      position: payload.position,
-    }
-);
+        position: payload.position,
+      };
 
 /**
  * Calculates the new state based on the type of payload.
@@ -55,15 +60,8 @@ const __onNewCompactAppEssentials = (
 const __onNewAppEssentials = (
   currentState: IAppEssentialsSlice,
   payload: IAppEssentials | ICompactAppEssentials,
-): IAppEssentials => (
-  isAppEssentialsObject(payload)
-    ? payload
-    : __onNewCompactAppEssentials(currentState, payload)
-);
-
-
-
-
+): IAppEssentials =>
+  isAppEssentialsObject(payload) ? payload : __onNewCompactAppEssentials(currentState, payload);
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -73,18 +71,11 @@ const __onNewAppEssentials = (
  * App Essentials Slice
  * Creates the slice in charge of managing the state of the app essentials.
  */
-const createAppEssentialsSlice: StateCreator<IAppEssentialsSlice> = (
-  set,
-) => ({
+const createAppEssentialsSlice: StateCreator<IAppEssentialsSlice> = (set) => ({
   ...buildPristineState(),
-  setAppEssentials: (payload: IAppEssentials | ICompactAppEssentials) => set(
-    (state) => __onNewAppEssentials(state, payload),
-  ),
+  setAppEssentials: (payload: IAppEssentials | ICompactAppEssentials) =>
+    set((state) => __onNewAppEssentials(state, payload)),
 });
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

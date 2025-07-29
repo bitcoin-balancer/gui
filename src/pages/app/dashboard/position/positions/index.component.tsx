@@ -1,9 +1,4 @@
-import {
-  Fragment,
-  memo,
-  useMemo,
-  useRef,
-} from 'react';
+import { Fragment, memo, useMemo, useRef } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -28,10 +23,6 @@ import { Separator } from '@/shared/shadcn/components/ui/separator';
 // the number of records that will be retrieved at a time
 const LIMIT = 15;
 
-
-
-
-
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
@@ -46,32 +37,19 @@ const PositionsDialog = memo(({ closeDialog }: { closeDialog: (nextState: undefi
    ********************************************************************************************** */
   const rowsRef = useRef<HTMLDivElement | null>(null);
 
-
-
-
-
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const {
-    data,
-    loading,
-    error,
-    hasMore,
-    loadMore,
-    loadingMore,
-  } = useAPIFetch(useMemo(
-    () => ({
-      fetchFn: () => PositionService.listCompactPositions(LIMIT),
-      queryLimit: LIMIT,
-    }),
-    [],
-  ));
+  const { data, loading, error, hasMore, loadMore, loadingMore } = useAPIFetch(
+    useMemo(
+      () => ({
+        fetchFn: () => PositionService.listCompactPositions(LIMIT),
+        queryLimit: LIMIT,
+      }),
+      [],
+    ),
+  );
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
-
-
-
-
 
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
@@ -79,12 +57,15 @@ const PositionsDialog = memo(({ closeDialog }: { closeDialog: (nextState: undefi
   let content;
   if (error) {
     content = (
-      <div className='pb-5'>
-        <PageLoadError variant='dialog' error={error} />
+      <div className="pb-5">
+        <PageLoadError
+          variant="dialog"
+          error={error}
+        />
       </div>
     );
   } else if (loading) {
-    content = <PageLoader variant='dialog' />;
+    content = <PageLoader variant="dialog" />;
   } else if (data.length) {
     content = (
       <>
@@ -96,21 +77,20 @@ const PositionsDialog = memo(({ closeDialog }: { closeDialog: (nextState: undefi
             </Fragment>
           ))}
         </div>
-        {
-          (hasMore && data.length >= LIMIT)
-          && <div
-            className='py-5'
-          >
+        {hasMore && data.length >= LIMIT && (
+          <div className="py-5">
             <LoadMoreButton
-              loadMore={() => loadMore(
-                () => PositionService.listCompactPositions(LIMIT, data.at(-1)!.open),
-                rowsRef.current!,
-                `pb-${data.at(-1)!.id}`,
-              )}
+              loadMore={() =>
+                loadMore(
+                  () => PositionService.listCompactPositions(LIMIT, data.at(-1)!.open),
+                  rowsRef.current!,
+                  `pb-${data.at(-1)!.id}`,
+                )
+              }
               loadingMore={loadingMore}
             />
           </div>
-        }
+        )}
       </>
     );
   } else {
@@ -121,26 +101,17 @@ const PositionsDialog = memo(({ closeDialog }: { closeDialog: (nextState: undefi
       open={isDialogOpen}
       onOpenChange={handleCloseDialog}
     >
-      <DialogContent className='p-0'>
-
-        <DialogHeader className='p-6 pb-0'>
+      <DialogContent className="p-0">
+        <DialogHeader className="p-6 pb-0">
           <DialogTitle>Positions</DialogTitle>
-          <DialogDescription>
-            Active and closed positions managed by Balancer
-          </DialogDescription>
+          <DialogDescription>Active and closed positions managed by Balancer</DialogDescription>
         </DialogHeader>
 
         {content}
-
       </DialogContent>
-
     </Dialog>
   );
 });
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

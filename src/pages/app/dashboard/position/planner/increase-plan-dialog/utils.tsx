@@ -15,18 +15,16 @@ import { IPriceLineOptions } from '@/shared/components/charts/shared/types.ts';
  */
 const buildPriceLines = (plan: IIncreasePlan): IPriceLineOptions[] => {
   if (plan.canIncrease && plan.canIncreaseAtPrice) {
-    return [{
-      id: 'open_increase_line',
-      price: plan.canIncreaseAtPrice,
-      color: ColorService.DECREASE_2,
-    }];
+    return [
+      {
+        id: 'open_increase_line',
+        price: plan.canIncreaseAtPrice,
+        color: ColorService.DECREASE_2,
+      },
+    ];
   }
   return [];
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                             BADGES                                             *
@@ -41,13 +39,13 @@ const buildPriceLines = (plan: IIncreasePlan): IPriceLineOptions[] => {
 const buildPriceBadge = (
   plan: IIncreasePlan,
   canIncreaseAtPrice: string | undefined,
-): JSX.Element | undefined => (
-  plan.canIncrease && plan.canIncreaseAtPrice && plan.canIncreaseAtPriceChange
-    ? <Badge variant='secondary'>
-      {canIncreaseAtPrice} <span className='ml-2 text-decrease-1'>{plan.canIncreaseAtPriceChange}%</span>
+): JSX.Element | undefined =>
+  plan.canIncrease && plan.canIncreaseAtPrice && plan.canIncreaseAtPriceChange ? (
+    <Badge variant="secondary">
+      {canIncreaseAtPrice}{' '}
+      <span className="ml-2 text-decrease-1">{plan.canIncreaseAtPriceChange}%</span>
     </Badge>
-    : undefined
-);
+  ) : undefined;
 
 /**
  * Builds the badge element that contains the formatted canIncreaseAtTime.
@@ -58,15 +56,10 @@ const buildPriceBadge = (
 const buildDateBadge = (
   plan: IIncreasePlan,
   canIncreaseAtTime: string | undefined,
-): JSX.Element | undefined => (
-  plan.canIncrease && plan.canIncreaseAtTime
-    ? <Badge variant='secondary'>{canIncreaseAtTime}</Badge>
-    : undefined
-);
-
-
-
-
+): JSX.Element | undefined =>
+  plan.canIncrease && plan.canIncreaseAtTime ? (
+    <Badge variant="secondary">{canIncreaseAtTime}</Badge>
+  ) : undefined;
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

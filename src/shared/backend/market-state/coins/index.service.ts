@@ -27,10 +27,6 @@ const coinsServiceFactory = (): ICoinsService => {
 
   // ...
 
-
-
-
-
   /* **********************************************************************************************
    *                                          RETRIEVERS                                          *
    ********************************************************************************************** */
@@ -44,15 +40,8 @@ const coinsServiceFactory = (): ICoinsService => {
    * - 23508: if the state asset is invalid
    * - 23510: if the symbol is not in the asset's statesBySymbol object
    */
-  const getStateForSymbol = (
-    asset: ICoinStateAsset,
-    symbol: string,
-  ): Promise<ICoinState> => APIService.request(
-    'GET',
-    `market-state/coins/state/${asset}/${symbol}`,
-    undefined,
-    true,
-  );
+  const getStateForSymbol = (asset: ICoinStateAsset, symbol: string): Promise<ICoinState> =>
+    APIService.request('GET', `market-state/coins/state/${asset}/${symbol}`, undefined, true);
 
   /**
    * Retrieves the semi-compact state for an asset.
@@ -62,16 +51,8 @@ const coinsServiceFactory = (): ICoinsService => {
    */
   const getSemiCompactStateForAsset = (
     asset: ICoinStateAsset,
-  ): Promise<ICoinsState<ISemiCompactCoinState>> => APIService.request(
-    'GET',
-    `market-state/coins/state/${asset}`,
-    undefined,
-    true,
-  );
-
-
-
-
+  ): Promise<ICoinsState<ISemiCompactCoinState>> =>
+    APIService.request('GET', `market-state/coins/state/${asset}`, undefined, true);
 
   /* **********************************************************************************************
    *                                         CONFIGURATION                                        *
@@ -81,12 +62,8 @@ const coinsServiceFactory = (): ICoinsService => {
    * Retrieves the configuration object for the Coins Module.
    * @returns Promise<ICoinsConfig>
    */
-  const getConfig = (): Promise<ICoinsConfig> => APIService.request(
-    'GET',
-    'market-state/coins/config',
-    undefined,
-    true,
-  );
+  const getConfig = (): Promise<ICoinsConfig> =>
+    APIService.request('GET', 'market-state/coins/config', undefined, true);
 
   /**
    * Validates and updates the coins module's configuration.
@@ -104,19 +81,8 @@ const coinsServiceFactory = (): ICoinsService => {
    * - 23509: if the whitelist doesn't include the base asset
    * - 23511: if the requirement is equals or larger than the strongRequirement
    */
-  const updateConfig = (newConfig: ICoinsConfig, otpToken: string): Promise<void> => (
-    APIService.request(
-      'PUT',
-      'market-state/coins/config',
-      { newConfig },
-      true,
-      otpToken,
-    )
-  );
-
-
-
-
+  const updateConfig = (newConfig: ICoinsConfig, otpToken: string): Promise<void> =>
+    APIService.request('PUT', 'market-state/coins/config', { newConfig }, true, otpToken);
 
   /* **********************************************************************************************
    *                                         MODULE BUILD                                         *
@@ -135,18 +101,10 @@ const coinsServiceFactory = (): ICoinsService => {
   });
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                        GLOBAL INSTANCE                                         *
  ************************************************************************************************ */
 const CoinsService = coinsServiceFactory();
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

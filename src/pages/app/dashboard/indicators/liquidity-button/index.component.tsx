@@ -12,7 +12,7 @@ import LiquidityStateDialog from '@/pages/app/dashboard/indicators/liquidity-but
  * @param bidDominance
  * @returns { asks: string, bids: string }
  */
-const getLiquidityColors = (bidDominance: number): { asks: string, bids: string } => {
+const getLiquidityColors = (bidDominance: number): { asks: string; bids: string } => {
   if (bidDominance >= 70) {
     return { asks: ColorService.INCREASE_0, bids: ColorService.INCREASE_2 };
   }
@@ -21,10 +21,6 @@ const getLiquidityColors = (bidDominance: number): { asks: string, bids: string 
   }
   return { asks: ColorService.DECREASE_1, bids: ColorService.INCREASE_1 };
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -41,9 +37,6 @@ const LiquidityButton = ({ liquidityState }: { liquidityState: ICompactLiquidity
    ********************************************************************************************** */
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>();
 
-
-
-
   /* **********************************************************************************************
    *                                       REACTIVE VALUES                                        *
    ********************************************************************************************** */
@@ -54,20 +47,16 @@ const LiquidityButton = ({ liquidityState }: { liquidityState: ICompactLiquidity
     [liquidityState.bidDominance],
   );
 
-
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
     <>
       {/* ********
-        * BUTTON *
-        ******** */}
+       * BUTTON *
+       ******** */}
       <button
-        className='h-[45px] text-xs text-white font-bold hover:opacity-80'
+        className="h-[45px] text-xs text-white font-bold hover:opacity-80"
         onClick={() => setIsDialogOpen(true)}
         style={{
           background: `linear-gradient(90deg, ${liquidityColors.bids} ${liquidityState.bidDominance}%, ${liquidityColors.asks} ${liquidityState.bidDominance}%)`,
@@ -76,23 +65,13 @@ const LiquidityButton = ({ liquidityState }: { liquidityState: ICompactLiquidity
         LIQUIDITY
       </button>
 
-
       {/* ********
-        * DIALOG *
-        ******** */}
-      {
-        isDialogOpen
-        && <LiquidityStateDialog
-          closeDialog={setIsDialogOpen}
-        />
-      }
+       * DIALOG *
+       ******** */}
+      {isDialogOpen && <LiquidityStateDialog closeDialog={setIsDialogOpen} />}
     </>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

@@ -1,16 +1,5 @@
-import {
-  memo,
-  useState,
-  useMemo,
-  useRef,
-  Fragment,
-} from 'react';
-import {
-  Menu,
-  Trash,
-  RefreshCcw,
-  EllipsisVertical,
-} from 'lucide-react';
+import { memo, useState, useMemo, useRef, Fragment } from 'react';
+import { Menu, Trash, RefreshCcw, EllipsisVertical } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Card, CardContent } from '@/shared/shadcn/components/ui/card.tsx';
 import {
@@ -39,10 +28,6 @@ import APIErrorDialog from '@/pages/app/server/api-errors/api-error-dialog.compo
 // the number of records that will be retrieved at a time
 const LIMIT = 15;
 
-
-
-
-
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
@@ -55,41 +40,26 @@ const APIErrors = memo(({ setSidenavOpen, unreadAPIErrors }: IServerComponentPro
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const {
-    data,
-    setData,
-    loading,
-    error,
-    refetchData,
-    refetching,
-    hasMore,
-    loadMore,
-    loadingMore,
-  } = useAPIFetch(useMemo(
-    () => ({
-      fetchFn: () => APIErrorService.list(LIMIT),
-      queryLimit: LIMIT,
-    }),
-    [],
-  ));
+  const { data, setData, loading, error, refetchData, refetching, hasMore, loadMore, loadingMore } =
+    useAPIFetch(
+      useMemo(
+        () => ({
+          fetchFn: () => APIErrorService.list(LIMIT),
+          queryLimit: LIMIT,
+        }),
+        [],
+      ),
+    );
   const [activeDialog, setActiveDialog] = useState<IAPIError>();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
   const { authority } = useBoundStore((state) => state.user!);
-
-
-
-
 
   /* **********************************************************************************************
    *                                             REFS                                             *
    ********************************************************************************************** */
   const rowsRef = useRef<HTMLDivElement | null>(null);
   const unreadRef = useRef<number>(unreadAPIErrors as number);
-
-
-
-
 
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
@@ -117,10 +87,6 @@ const APIErrors = memo(({ setSidenavOpen, unreadAPIErrors }: IServerComponentPro
     });
   };
 
-
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
@@ -132,101 +98,97 @@ const APIErrors = memo(({ setSidenavOpen, unreadAPIErrors }: IServerComponentPro
   }
   return (
     <>
-      <div
-        className='page-container flex justify-center items-start animate-in fade-in duration-700'
-      >
-        <section
-          className='w-full lg:w-11/12 xl:w-10/12 2xl:w-9/12'
-        >
-
+      <div className="page-container flex justify-center items-start animate-in fade-in duration-700">
+        <section className="w-full lg:w-11/12 xl:w-10/12 2xl:w-9/12">
           {/* ********
-            * HEADER *
-            ******** */}
-          <header
-            className='flex justify-start items-center mb-5'
-          >
+           * HEADER *
+           ******** */}
+          <header className="flex justify-start items-center mb-5">
             <Button
-              variant='ghost'
-              size='icon'
-              className='mr-2 md:hidden'
+              variant="ghost"
+              size="icon"
+              className="mr-2 md:hidden"
               onClick={() => setSidenavOpen(true)}
-              aria-label='Open Side Navigation'
-            ><Menu aria-hidden='true' /></Button>
+              aria-label="Open Side Navigation"
+            >
+              <Menu aria-hidden="true" />
+            </Button>
 
-            <h1
-              className='text-2xl font-semibold leading-none tracking-tight'
-            >API Errors</h1>
-            <span className='flex-1'></span>
+            <h1 className="text-2xl font-semibold leading-none tracking-tight">API Errors</h1>
+            <span className="flex-1"></span>
 
             {/* *****************
-              * DESKTOP ACTIONS *
-              ***************** */}
+             * DESKTOP ACTIONS *
+             ***************** */}
             <Button
-              variant='outline'
+              variant="outline"
               disabled={refetching}
               onClick={refetchData}
-              className='mr-2 hidden sm:flex'
-              aria-label='Refetch the API Errors'
+              className="mr-2 hidden sm:flex"
+              aria-label="Refetch the API Errors"
             >
               <RefreshCcw
-                aria-hidden='true'
-                className='w-4 h-4 mr-2'
-              /> Refresh
+                aria-hidden="true"
+                className="w-4 h-4 mr-2"
+              />{' '}
+              Refresh
             </Button>
             <Button
               onClick={deleteAll}
               disabled={isSubmitting || data.length === 0 || refetching || authority < 3}
-              className='hidden sm:flex'
+              className="hidden sm:flex"
             >
               <Trash
-                aria-hidden='true'
-                className='w-4 h-4 mr-2'
-              /> Delete all
+                aria-hidden="true"
+                className="w-4 h-4 mr-2"
+              />{' '}
+              Delete all
             </Button>
 
             {/* ****************
-              * MOBILE ACTIONS *
-              **************** */}
+             * MOBILE ACTIONS *
+             **************** */}
             <DropdownMenu>
               <DropdownMenuTrigger
-                className='sm:hidden'
+                className="sm:hidden"
                 disabled={isSubmitting || refetching}
-              ><EllipsisVertical aria-hidden='true'/></DropdownMenuTrigger>
+              >
+                <EllipsisVertical aria-hidden="true" />
+              </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem
                   onClick={refetchData}
-                  aria-label='Refetch the API Errors'
+                  aria-label="Refetch the API Errors"
                 >
                   <RefreshCcw
-                    aria-hidden='true'
-                    className='w-4 h-4 mr-2'
-                  /> Refresh
+                    aria-hidden="true"
+                    className="w-4 h-4 mr-2"
+                  />{' '}
+                  Refresh
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={deleteAll}
                   disabled={data.length === 0 || authority < 3}
-                  aria-label='Delete all of the API Errors'
+                  aria-label="Delete all of the API Errors"
                 >
                   <Trash
-                    aria-hidden='true'
-                    className='w-4 h-4 mr-2'
-                  /> Delete all
+                    aria-hidden="true"
+                    className="w-4 h-4 mr-2"
+                  />{' '}
+                  Delete all
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </header>
 
-
-
           {/* *********
-            * CONTENT *
-            ********* */}
-          {
-            data.length > 0
-              ? <Card>
+           * CONTENT *
+           ********* */}
+          {data.length > 0 ? (
+            <Card>
               <CardContent
                 ref={rowsRef}
-                className='pt-0 md:p-0'
+                className="pt-0 md:p-0"
               >
                 {data.map((record, i) => (
                   <Fragment key={record.id}>
@@ -241,49 +203,40 @@ const APIErrors = memo(({ setSidenavOpen, unreadAPIErrors }: IServerComponentPro
                 ))}
               </CardContent>
             </Card>
-              : <NoRecords />
-          }
-
-
+          ) : (
+            <NoRecords />
+          )}
 
           {/* ******************
-            * LOAD MORE BUTTON *
-            ****************** */}
-          {
-            (hasMore && data.length >= LIMIT)
-            && <LoadMoreButton
-              loadMore={() => loadMore(
-                () => APIErrorService.list(LIMIT, data.at(-1)!.id),
-                rowsRef.current!,
-                `aer-${data.at(-1)!.id}`,
-              )}
+           * LOAD MORE BUTTON *
+           ****************** */}
+          {hasMore && data.length >= LIMIT && (
+            <LoadMoreButton
+              loadMore={() =>
+                loadMore(
+                  () => APIErrorService.list(LIMIT, data.at(-1)!.id),
+                  rowsRef.current!,
+                  `aer-${data.at(-1)!.id}`,
+                )
+              }
               loadingMore={loadingMore}
             />
-          }
+          )}
         </section>
       </div>
 
-
-
-
-
       {/* **************
-        * ERROR DIALOG *
-        ************** */}
-      {
-        activeDialog !== undefined
-        && <APIErrorDialog
+       * ERROR DIALOG *
+       ************** */}
+      {activeDialog !== undefined && (
+        <APIErrorDialog
           record={activeDialog}
           closeDialog={setActiveDialog}
         />
-      }
+      )}
     </>
   );
 });
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

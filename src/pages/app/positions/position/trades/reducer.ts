@@ -12,11 +12,7 @@ import { IAction } from '@/pages/app/positions/position/trades/types.ts';
  * @param state
  * @param setState
  */
-const dispatch = (
-  action: IAction,
-  state: ITrade[],
-  setState: (state: ITrade[]) => void,
-) => {
+const dispatch = (action: IAction, state: ITrade[], setState: (state: ITrade[]) => void) => {
   switch (action.type) {
     case 'CREATE_TRADE': {
       setState([action.payload, ...state].sort(sortRecords('event_time', 'asc')));
@@ -24,12 +20,14 @@ const dispatch = (
     }
     case 'UPDATE_TRADE': {
       setState(
-        state.map((record) => {
-          if (record.id === action.payload.id) {
-            return action.payload;
-          }
-          return record;
-        }).sort(sortRecords('event_time', 'asc')),
+        state
+          .map((record) => {
+            if (record.id === action.payload.id) {
+              return action.payload;
+            }
+            return record;
+          })
+          .sort(sortRecords('event_time', 'asc')),
       );
       break;
     }
@@ -42,13 +40,7 @@ const dispatch = (
   }
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export {
-  dispatch,
-};
+export { dispatch };

@@ -1,5 +1,3 @@
-
-
 /* ************************************************************************************************
  *                                             STATE                                              *
  ************************************************************************************************ */
@@ -24,10 +22,6 @@ type IStateResult = {
   // the states for each split
   splits: ISplitStates;
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         SPLIT STATES                                           *
@@ -80,10 +74,6 @@ type ICompactSplitStates = {
   [key in ISplitStateID]: IState;
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                         GUI SPECIFIC                                           *
  ************************************************************************************************ */
@@ -93,7 +83,7 @@ type ICompactSplitStates = {
  * The readable names given to each supported state. For example: 'Increasing', 'Decreasing', etc...
  */
 type IStateNames = {
-  [key in IState]: string
+  [key in IState]: string;
 };
 
 /**
@@ -119,10 +109,6 @@ type ISplitValues = {
 type ISplitPercentageChanges = {
   [key in ISplitStateID]: string;
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

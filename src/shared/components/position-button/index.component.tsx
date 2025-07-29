@@ -34,10 +34,6 @@ const PositionButton = memo(({ record }: { record: ICompactPosition }) => {
   const openPositionDialog = useBoundStore((state) => state.openPositionDialog);
   const navigate = useNavigate();
 
-
-
-
-
   /* **********************************************************************************************
    *                                       REACTIVE VALUES                                        *
    ********************************************************************************************** */
@@ -53,10 +49,6 @@ const PositionButton = memo(({ record }: { record: ICompactPosition }) => {
 
   // pnl
   const pnl = useMemo(() => formatPNL(record.pnl), [record.pnl]);
-
-
-
-
 
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
@@ -86,36 +78,26 @@ const PositionButton = memo(({ record }: { record: ICompactPosition }) => {
     openPositionDialog(record.id);
   };
 
-
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
     <>
       {/* ********
-        * BUTTON *
-        ******** */}
+       * BUTTON *
+       ******** */}
       <button
         id={`pb-${record.id}`}
         className={`p-6 flex justify-start items-center w-full text-left ${record.archived ? 'opacity-50' : ''} hover:bg-slate-100`}
         onClick={displayActionsMenu}
-        aria-label='Display position'
+        aria-label="Display position"
       >
-        <div
-          className='max-w-[60%] sm:max-w-[70%]'
-        >
-          <p
-            className='font-medium truncate'
-          >{openTime}</p>
-          <p
-            className='text-light text-sm truncate'
-          >{timeDistance}</p>
+        <div className="max-w-[60%] sm:max-w-[70%]">
+          <p className="font-medium truncate">{openTime}</p>
+          <p className="text-light text-sm truncate">{timeDistance}</p>
         </div>
 
-        <span className='flex-1'></span>
+        <span className="flex-1"></span>
 
         <Badge
           className={`bg-stateless hover:bg-stateless/85 ${record.pnl > 0 ? 'bg-increase-1 hover:bg-increase-1/85' : 'bg-decrease-1 hover:bg-decrease-1/85'}`}
@@ -124,52 +106,48 @@ const PositionButton = memo(({ record }: { record: ICompactPosition }) => {
         </Badge>
       </button>
 
-
-
       {/* **************
-        * ACTIONS MENU *
-        ************** */}
-      {
-        isMenuVisible
-        && <Sheet open={actionsMenu.isDialogOpen} onOpenChange={actionsMenu.handleCloseDialog}>
-          <SheetContent side='bottom'>
-            <div className='mx-auto w-full max-w-sm'>
-              <SheetHeader className='space-y-0'>
+       * ACTIONS MENU *
+       ************** */}
+      {isMenuVisible && (
+        <Sheet
+          open={actionsMenu.isDialogOpen}
+          onOpenChange={actionsMenu.handleCloseDialog}
+        >
+          <SheetContent side="bottom">
+            <div className="mx-auto w-full max-w-sm">
+              <SheetHeader className="space-y-0">
                 <SheetTitle>Position</SheetTitle>
-                <SheetDescription className='text-xs'>{record.id}</SheetDescription>
+                <SheetDescription className="text-xs">{record.id}</SheetDescription>
               </SheetHeader>
 
-              <div className='flex flex-row justify-center items-stretch gap-2 sm:gap-4 mt-5'>
+              <div className="flex flex-row justify-center items-stretch gap-2 sm:gap-4 mt-5">
                 <Button
-                  variant='outline'
-                  aria-label='Go to the position page'
-                  className='w-full flex-1 flex flex-col h-20 gap-y-1'
+                  variant="outline"
+                  aria-label="Go to the position page"
+                  className="w-full flex-1 flex flex-col h-20 gap-y-1"
                   onClick={handleNavigateToPosition}
                 >
-                  <ExternalLink aria-hidden='true' />
+                  <ExternalLink aria-hidden="true" />
                   <p>Navigate</p>
                 </Button>
                 <Button
-                  variant='outline'
-                  aria-label='Open the position‘s dialog'
-                  className='w-full flex-1 flex flex-col h-20 gap-y-1'
+                  variant="outline"
+                  aria-label="Open the position‘s dialog"
+                  className="w-full flex-1 flex flex-col h-20 gap-y-1"
                   onClick={handleOpenPositionDialog}
                 >
-                  <ReceiptText aria-hidden='true' />
+                  <ReceiptText aria-hidden="true" />
                   <p>Details</p>
                 </Button>
               </div>
             </div>
           </SheetContent>
         </Sheet>
-      }
+      )}
     </>
   );
 });
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

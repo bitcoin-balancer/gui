@@ -44,28 +44,44 @@ const NAV_ITEMS: INavItem[] = [
   {
     id: 'general',
     name: 'General',
-    icon: <Gauge aria-hidden='true' className='mr-2 w-5 h-5' />,
+    icon: (
+      <Gauge
+        aria-hidden="true"
+        className="mr-2 w-5 h-5"
+      />
+    ),
   },
   {
     id: 'history',
     name: 'History',
-    icon: <ChartCandlestick aria-hidden='true' className='mr-2 w-5 h-5' />,
+    icon: (
+      <ChartCandlestick
+        aria-hidden="true"
+        className="mr-2 w-5 h-5"
+      />
+    ),
   },
   {
     id: 'trades',
     name: 'Trades',
-    icon: <List aria-hidden='true' className='mr-2 w-5 h-5' />,
+    icon: (
+      <List
+        aria-hidden="true"
+        className="mr-2 w-5 h-5"
+      />
+    ),
   },
   {
     id: 'transactions',
     name: 'Transactions',
-    icon: <ListChecks aria-hidden='true' className='mr-2 w-5 h-5' />,
+    icon: (
+      <ListChecks
+        aria-hidden="true"
+        className="mr-2 w-5 h-5"
+      />
+    ),
   },
 ];
-
-
-
-
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -80,17 +96,14 @@ const Position = () => {
    *                                             STATE                                            *
    ********************************************************************************************** */
   const { id } = useParams();
-  const {
-    data,
-    setData,
-    loading,
-    error,
-  } = useAPIFetch(useMemo(
-    () => ({
-      fetchFn: () => PositionService.getPosition(id as string),
-    }),
-    [id],
-  ));
+  const { data, setData, loading, error } = useAPIFetch(
+    useMemo(
+      () => ({
+        fetchFn: () => PositionService.getPosition(id as string),
+      }),
+      [id],
+    ),
+  );
   const [sidenavOpen, setSidenavOpen] = useState<boolean>(false);
   const [activePage, setActivePage] = useState<IPageName>('general');
   const openPositionDialog = useBoundStore((state) => state.openPositionDialog);
@@ -99,10 +112,6 @@ const Position = () => {
   const { authority } = useBoundStore((state) => state.user!);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const navigate = useNavigate();
-
-
-
-
 
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
@@ -121,16 +130,13 @@ const Position = () => {
    * Refetches the position record and updates the state.
    * @returns Promise<void>
    */
-  const refetchPosition = useCallback(
-    async () => {
-      try {
-        setData(await PositionService.getPosition(data.id));
-      } catch (e) {
-        errorToast(e);
-      }
-    },
-    [data, setData],
-  );
+  const refetchPosition = useCallback(async () => {
+    try {
+      setData(await PositionService.getPosition(data.id));
+    } catch (e) {
+      errorToast(e);
+    }
+  }, [data, setData]);
 
   /**
    * Prompts the user with the confirmation dialog and archives the active position.
@@ -147,7 +153,8 @@ const Position = () => {
           setData({ ...data, archived: true });
           toast({
             title: 'Success',
-            description: 'The position has been archived and will not be taken into consideration when calculating metrics.',
+            description:
+              'The position has been archived and will not be taken into consideration when calculating metrics.',
           });
         } catch (e) {
           errorToast(e);
@@ -173,7 +180,8 @@ const Position = () => {
           setData({ ...data, archived: true });
           toast({
             title: 'Success',
-            description: 'The position has been unarchived and will be taken into consideration when calculating metrics.',
+            description:
+              'The position has been unarchived and will be taken into consideration when calculating metrics.',
           });
         } catch (e) {
           errorToast(e);
@@ -183,10 +191,6 @@ const Position = () => {
       },
     });
   };
-
-
-
-
 
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
@@ -199,32 +203,22 @@ const Position = () => {
   }
   return (
     <>
-      <section
-        className='flex justify-center items-start animate-in fade-in duration-700'
-      >
-
-      {/* **********************
-        * DESKTOP SIDENAV MENU *
-        ********************** */}
-        {
-          (breakpoint === 'lg' || breakpoint === 'xl' || breakpoint === '2xl')
-          && <aside
-            className='md:w-56 xl:w-64 pl-3 pt-3'
-          >
+      <section className="flex justify-center items-start animate-in fade-in duration-700">
+        {/* **********************
+         * DESKTOP SIDENAV MENU *
+         ********************** */}
+        {(breakpoint === 'lg' || breakpoint === 'xl' || breakpoint === '2xl') && (
+          <aside className="md:w-56 xl:w-64 pl-3 pt-3">
             <header>
-              <h1
-                className='text-lg font-bold'
-              >Position</h1>
+              <h1 className="text-lg font-bold">Position</h1>
             </header>
 
-            <nav
-              className='mt-3'
-            >
+            <nav className="mt-3">
               {NAV_ITEMS.map((item) => (
                 <Button
                   key={item.id}
-                  variant='ghost'
-                  className='w-full justify-start'
+                  variant="ghost"
+                  className="w-full justify-start"
                   onClick={() => setActivePage(item.id)}
                   disabled={activePage === item.id || isSubmitting}
                 >
@@ -232,138 +226,125 @@ const Position = () => {
                 </Button>
               ))}
 
-              <Separator className='my-3' />
+              <Separator className="my-3" />
               <Button
-                  variant='ghost'
-                  className='w-full justify-start'
-                  onClick={() => openPositionDialog(data)}
-                  disabled={isSubmitting}
-                >
-                  <ReceiptText
-                    aria-hidden='true'
-                    className='mr-2 w-5 h-5'
-                  /> Display details
+                variant="ghost"
+                className="w-full justify-start"
+                onClick={() => openPositionDialog(data)}
+                disabled={isSubmitting}
+              >
+                <ReceiptText
+                  aria-hidden="true"
+                  className="mr-2 w-5 h-5"
+                />{' '}
+                Display details
               </Button>
 
-              <Separator className='my-3' />
-              {
-                data.archived
-                  ? <Button
-                      variant='ghost'
-                      className='w-full justify-start'
-                      onClick={unarchive}
-                      disabled={isSubmitting || authority < 4}
-                    >
-                      <ArchiveX
-                        aria-hidden='true'
-                        className='mr-2 w-5 h-5'
-                      /> Unarchive position
-
-                      <span className='flex-1'></span>
-
-                      {isSubmitting && <Loader2 className='w-4 h-4 animate-spin'/>}
-                  </Button>
-                  : <Button
-                      variant='ghost'
-                      className='w-full justify-start'
-                      onClick={archive}
-                      disabled={isSubmitting || authority < 4}
-                    >
-                      <Archive
-                        aria-hidden='true'
-                        className='mr-2 w-5 h-5'
-                      /> Archive position
-
-                      <span className='flex-1'></span>
-
-                      {isSubmitting && <Loader2 className='w-4 h-4 animate-spin'/>}
-                  </Button>
-              }
-
-
-              <Separator className='my-3' />
-              <Button
-                  variant='ghost'
-                  className='w-full justify-start'
-                  onClick={() => navigate(NavService.positions())}
-                  disabled={isSubmitting}
+              <Separator className="my-3" />
+              {data.archived ? (
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start"
+                  onClick={unarchive}
+                  disabled={isSubmitting || authority < 4}
                 >
-                  <ArrowLeft
-                    aria-hidden='true'
-                    className='mr-2 w-5 h-5'
-                  /> Back to full list
+                  <ArchiveX
+                    aria-hidden="true"
+                    className="mr-2 w-5 h-5"
+                  />{' '}
+                  Unarchive position
+                  <span className="flex-1"></span>
+                  {isSubmitting && <Loader2 className="w-4 h-4 animate-spin" />}
+                </Button>
+              ) : (
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start"
+                  onClick={archive}
+                  disabled={isSubmitting || authority < 4}
+                >
+                  <Archive
+                    aria-hidden="true"
+                    className="mr-2 w-5 h-5"
+                  />{' '}
+                  Archive position
+                  <span className="flex-1"></span>
+                  {isSubmitting && <Loader2 className="w-4 h-4 animate-spin" />}
+                </Button>
+              )}
+
+              <Separator className="my-3" />
+              <Button
+                variant="ghost"
+                className="w-full justify-start"
+                onClick={() => navigate(NavService.positions())}
+                disabled={isSubmitting}
+              >
+                <ArrowLeft
+                  aria-hidden="true"
+                  className="mr-2 w-5 h-5"
+                />{' '}
+                Back to full list
               </Button>
             </nav>
           </aside>
-        }
+        )}
 
-        <div className='flex-1 w-full'>
-          {
-            activePage === 'general'
-            && <General
+        <div className="flex-1 w-full">
+          {activePage === 'general' && (
+            <General
               position={data}
               setSidenavOpen={setSidenavOpen}
               refetchPosition={refetchPosition}
             />
-          }
-          {
-            activePage === 'history'
-            && <History
+          )}
+          {activePage === 'history' && (
+            <History
               position={data}
               setSidenavOpen={setSidenavOpen}
               refetchPosition={refetchPosition}
             />
-          }
-          {
-            activePage === 'trades'
-            && <Trades
+          )}
+          {activePage === 'trades' && (
+            <Trades
               position={data}
               setSidenavOpen={setSidenavOpen}
               refetchPosition={refetchPosition}
             />
-          }
-          {
-            activePage === 'transactions'
-            && <Transactions
+          )}
+          {activePage === 'transactions' && (
+            <Transactions
               position={data}
               setSidenavOpen={setSidenavOpen}
               refetchPosition={refetchPosition}
             />
-          }
+          )}
         </div>
-
       </section>
 
-
-
       {/* *********************
-        * MOBILE SIDENAV MENU *
-        ********************* */}
-      {
-        (breakpoint === 'xs' || breakpoint === 'sm' || breakpoint === 'md')
-        && <Sheet
+       * MOBILE SIDENAV MENU *
+       ********************* */}
+      {(breakpoint === 'xs' || breakpoint === 'sm' || breakpoint === 'md') && (
+        <Sheet
           open={sidenavOpen}
           onOpenChange={setSidenavOpen}
         >
-
           <SheetContent
-            className='w-64 sm:72 md-80 lg:96 p-4'
-            side='left'
+            className="w-64 sm:72 md-80 lg:96 p-4"
+            side="left"
           >
-
             <SheetHeader>
-              <SheetTitle className='text-left'>Position</SheetTitle>
+              <SheetTitle className="text-left">Position</SheetTitle>
               <SheetDescription></SheetDescription>
             </SheetHeader>
 
-            <nav
-              className='mt-3'
-            >
+            <nav className="mt-3">
               {NAV_ITEMS.map((item) => (
                 <Button
                   key={item.id}
-                  variant='ghost'
-                  className='w-full justify-start'
+                  variant="ghost"
+                  className="w-full justify-start"
                   onClick={() => navigateFromSidenav(item.id)}
                   disabled={activePage === item.id || isSubmitting}
                 >
@@ -371,46 +352,40 @@ const Position = () => {
                 </Button>
               ))}
 
-              <Separator className='my-3' />
+              <Separator className="my-3" />
               <Button
-                  variant='ghost'
-                  className='w-full justify-start'
-                  onClick={() => openPositionDialog(data)}
-                  disabled={isSubmitting}
-                >
-                  <ReceiptText
-                    aria-hidden='true'
-                    className='mr-2 w-5 h-5'
-                  /> Display details
+                variant="ghost"
+                className="w-full justify-start"
+                onClick={() => openPositionDialog(data)}
+                disabled={isSubmitting}
+              >
+                <ReceiptText
+                  aria-hidden="true"
+                  className="mr-2 w-5 h-5"
+                />{' '}
+                Display details
               </Button>
 
-              <Separator className='my-3' />
+              <Separator className="my-3" />
               <Button
-                  variant='ghost'
-                  className='w-full justify-start'
-                  onClick={() => navigate(NavService.positions())}
-                  disabled={isSubmitting}
-                >
-                  <ArrowLeft
-                    aria-hidden='true'
-                    className='mr-2 w-5 h-5'
-                  /> Back to full list
+                variant="ghost"
+                className="w-full justify-start"
+                onClick={() => navigate(NavService.positions())}
+                disabled={isSubmitting}
+              >
+                <ArrowLeft
+                  aria-hidden="true"
+                  className="mr-2 w-5 h-5"
+                />{' '}
+                Back to full list
               </Button>
             </nav>
-
           </SheetContent>
-
         </Sheet>
-      }
-
+      )}
     </>
-
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

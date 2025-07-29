@@ -18,10 +18,6 @@ const apiErrorServiceFactory = (): IAPIErrorService => {
 
   // ...
 
-
-
-
-
   /* **********************************************************************************************
    *                                           ACTIONS                                            *
    ********************************************************************************************** */
@@ -36,20 +32,12 @@ const apiErrorServiceFactory = (): IAPIErrorService => {
    * - 1000: if the startAtID was provided and is not a valid identifier
    * - 1001: if the query limit is larger than the limit
    */
-  const list = (
-    limit: number,
-    startAtID?: number,
-  ): Promise<IAPIError[]> => {
+  const list = (limit: number, startAtID?: number): Promise<IAPIError[]> => {
     let urlPath: string = `api-error?limit=${limit}`;
     if (typeof startAtID === 'number') {
       urlPath += `&startAtID=${startAtID}`;
     }
-    return APIService.request(
-      'GET',
-      urlPath,
-      undefined,
-      true,
-    );
+    return APIService.request('GET', urlPath, undefined, true);
   };
 
   /**
@@ -57,17 +45,8 @@ const apiErrorServiceFactory = (): IAPIErrorService => {
    * @param otpToken
    * @returns Promise<void>
    */
-  const deleteAll = (otpToken: string): Promise<void> => APIService.request(
-    'DELETE',
-    'api-error',
-    undefined,
-    true,
-    otpToken,
-  );
-
-
-
-
+  const deleteAll = (otpToken: string): Promise<void> =>
+    APIService.request('DELETE', 'api-error', undefined, true, otpToken);
 
   /* **********************************************************************************************
    *                                         MODULE BUILD                                         *
@@ -82,18 +61,10 @@ const apiErrorServiceFactory = (): IAPIErrorService => {
   });
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                        GLOBAL INSTANCE                                         *
  ************************************************************************************************ */
 const APIErrorService = apiErrorServiceFactory();
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

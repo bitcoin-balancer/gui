@@ -15,8 +15,6 @@ const useSocketEvent = <T extends IEventName>(name: IEventName): ISocketData<T> 
   const authenticated = useBoundStore((state) => state.authenticated);
   const [data, setData] = useState<ISocketData<T> | undefined>();
 
-
-
   useEffect(() => {
     // event listener
     const listener = (payload: unknown): void => {
@@ -36,18 +34,10 @@ const useSocketEvent = <T extends IEventName>(name: IEventName): ISocketData<T> 
     };
   }, [name, authenticated]);
 
-
-
   return data;
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export {
-  useSocketEvent,
-};
+export { useSocketEvent };

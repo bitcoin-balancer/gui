@@ -15,8 +15,8 @@ const WindowButton = ({
   windowState,
   openSplitStatesDialog,
 }: {
-  windowState: IWindowState,
-  openSplitStatesDialog: (data: ISplitStatesDialogData) => void,
+  windowState: IWindowState;
+  openSplitStatesDialog: (data: ISplitStatesDialogData) => void;
 }) => {
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
@@ -25,7 +25,7 @@ const WindowButton = ({
   /**
    * Opens the window state dialog an activates the split ID.
    */
-  const openWindowStateDialog = (): void => (
+  const openWindowStateDialog = (): void =>
     openSplitStatesDialog({
       moduleID: 'WINDOW',
       moduleState: {
@@ -33,12 +33,7 @@ const WindowButton = ({
         splitStates: windowState.splitStates,
         window: toSplitStateItems(windowState.window),
       },
-    })
-  );
-
-
-
-
+    });
 
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
@@ -52,10 +47,6 @@ const WindowButton = ({
     </button>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

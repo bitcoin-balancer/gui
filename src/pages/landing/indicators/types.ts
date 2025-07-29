@@ -1,6 +1,5 @@
 import { ISectionID } from '@/shared/components/large-info-dialog/index.component.tsx';
 
-
 /* ************************************************************************************************
  *                                             TYPES                                              *
  ************************************************************************************************ */
@@ -12,20 +11,12 @@ type IIndicatorProps = {
   openDialog: () => void;
 };
 
-
 // props used by the component
 type IIndicatorsProps = {
   openLargeInfoDialog: (data: ISectionID) => void;
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export type {
-  IIndicatorProps,
-  IIndicatorsProps,
-};
+export type { IIndicatorProps, IIndicatorsProps };

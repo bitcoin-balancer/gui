@@ -18,8 +18,6 @@ type IComponentProps = {
   openSplitStatesDialog: (data: ISplitStatesDialogData) => void;
 };
 
-
-
 /* ************************************************************************************************
  *                                       SPLIT TILE BUTTON                                        *
  ************************************************************************************************ */
@@ -33,10 +31,6 @@ type ISplitTileButtonProps = {
   split: ISplitStateResult;
   displayWindowDialog: (id: ISplitStateID) => void;
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

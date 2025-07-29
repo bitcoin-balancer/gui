@@ -32,21 +32,13 @@ import { IIncreasePlanComponentProps } from '@/pages/app/dashboard/position/plan
  * Increase Plan Dialog Component
  * Component in charge of displaying the plan to open/increase a position.
  */
-const IncreasePlanDialog = ({
-  windowState,
-  plan,
-  closeDialog,
-}: IIncreasePlanComponentProps) => {
+const IncreasePlanDialog = ({ windowState, plan, closeDialog }: IIncreasePlanComponentProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
   const breakpoint = useMediaQueryBreakpoint();
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
   const navigate = useNavigate();
-
-
-
-
 
   /* **********************************************************************************************
    *                                       REACTIVE VALUES                                        *
@@ -59,35 +51,29 @@ const IncreasePlanDialog = ({
   const windowData = toSplitStateItems(windowState.window);
 
   // the date at which a position can be increased
-  const canIncreaseAtTime = (
+  const canIncreaseAtTime =
     plan.canIncrease && plan.canIncreaseAtTime
       ? formatDate(plan.canIncreaseAtTime, 'datetime-short')
-      : undefined
-  );
+      : undefined;
 
   // the price at which the position can be opened/increased
-  const canIncreaseAtPrice = (
+  const canIncreaseAtPrice =
     plan.canIncrease && plan.canIncreaseAtPrice
       ? formatDollarAmount(plan.canIncreaseAtPrice, 0)
-      : undefined
-  );
+      : undefined;
 
   // the amount that will be used to open/increase a position
-  const increaseAmountQuote = (
-    plan.canIncrease ? formatDollarAmount(plan.increaseAmountQuote) : undefined
-  );
+  const increaseAmountQuote = plan.canIncrease
+    ? formatDollarAmount(plan.increaseAmountQuote)
+    : undefined;
 
   // the balance gap
-  const missingQuoteAmount = (
-    plan.canIncrease ? formatDollarAmount(plan.missingQuoteAmount) : undefined
-  );
+  const missingQuoteAmount = plan.canIncrease
+    ? formatDollarAmount(plan.missingQuoteAmount)
+    : undefined;
 
   // the price lines
   const priceLines = buildPriceLines(plan);
-
-
-
-
 
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
@@ -101,19 +87,21 @@ const IncreasePlanDialog = ({
     navigate(NavService.adjustments());
   };
 
-
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   let planDescription: JSX.Element = (
     <div>
       The position won't be opened or increased because <strong>"Auto-increase"</strong> is
-       currently disabled. In order to enable it, navigate to
-        the <Button variant='link' onClick={navigateToAdjustments} className='p-0 m-0 h-auto text-base text-sky-700'>Adjustments</Button> page and
-         update it via the <strong>"Strategy Form"</strong>
+      currently disabled. In order to enable it, navigate to the{' '}
+      <Button
+        variant="link"
+        onClick={navigateToAdjustments}
+        className="p-0 m-0 h-auto text-base text-sky-700"
+      >
+        Adjustments
+      </Button>{' '}
+      page and update it via the <strong>"Strategy Form"</strong>
     </div>
   );
 
@@ -122,7 +110,9 @@ const IncreasePlanDialog = ({
     // init helpers
     const dateBadge: JSX.Element | undefined = buildDateBadge(plan, canIncreaseAtTime);
     const priceBadge: JSX.Element | undefined = buildPriceBadge(plan, canIncreaseAtPrice);
-    const increaseAmountQuoteBadge: JSX.Element = <Badge variant='secondary'>{increaseAmountQuote}</Badge>;
+    const increaseAmountQuoteBadge: JSX.Element = (
+      <Badge variant="secondary">{increaseAmountQuote}</Badge>
+    );
 
     // put together the description according to the current requirements
     if (plan.canIncreaseAtTime) {
@@ -130,35 +120,39 @@ const IncreasePlanDialog = ({
         planDescription = (
           <div>
             The position will be increased by {increaseAmountQuoteBadge} if the price drops to
-             {priceBadge} after {dateBadge} and a reversal event is issued
+            {priceBadge} after {dateBadge} and a reversal event is issued
           </div>
         );
       } else {
         planDescription = (
           <div>
             The position will be increased by {increaseAmountQuoteBadge} after {dateBadge} and a
-             reversal event is issued
+            reversal event is issued
           </div>
         );
       }
     } else if (plan.canIncreaseAtPrice && plan.canIncreaseAtPriceChange) {
-      planDescription = plan.isOpen
-        ? <div>
+      planDescription = plan.isOpen ? (
+        <div>
           A {increaseAmountQuoteBadge} position will be opened if the price drops to {priceBadge}
           and a reversal event is issued
         </div>
-        : <div>
+      ) : (
+        <div>
           The position will be increased by {increaseAmountQuoteBadge} if the price drops to
-           {priceBadge} and a reversal event is issued
-        </div>;
+          {priceBadge} and a reversal event is issued
+        </div>
+      );
     } else {
-      planDescription = plan.isOpen
-        ? <div>
+      planDescription = plan.isOpen ? (
+        <div>
           A {increaseAmountQuoteBadge} position will be opened if a reversal event is issued
         </div>
-        : <div>
+      ) : (
+        <div>
           The position will be increased by {increaseAmountQuoteBadge} if a reversal event is issued
-        </div>;
+        </div>
+      );
     }
   }
   return (
@@ -166,52 +160,38 @@ const IncreasePlanDialog = ({
       open={isDialogOpen}
       onOpenChange={handleCloseDialog}
     >
-      <DialogContent className='p-0'>
-
-        <DialogHeader className='p-6 pb-0'>
+      <DialogContent className="p-0">
+        <DialogHeader className="p-6 pb-0">
           <DialogTitle>Increase plan</DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
 
-        {
-          (plan.canIncrease && plan.missingQuoteAmount > 0)
-          && (
-            <div className='px-6 pb-2'>
-              <Alert>
-                <Wallet className='h-4 w-4' />
-                <AlertTitle>Insufficient balance!</AlertTitle>
-                <AlertDescription>
-                  Please deposit <Badge variant='secondary'>{missingQuoteAmount}</Badge> to your Spot
-                  Wallet so positions can be opened/increased.
-                </AlertDescription>
-              </Alert>
-            </div>
-          )
-        }
+        {plan.canIncrease && plan.missingQuoteAmount > 0 && (
+          <div className="px-6 pb-2">
+            <Alert>
+              <Wallet className="h-4 w-4" />
+              <AlertTitle>Insufficient balance!</AlertTitle>
+              <AlertDescription>
+                Please deposit <Badge variant="secondary">{missingQuoteAmount}</Badge> to your Spot
+                Wallet so positions can be opened/increased.
+              </AlertDescription>
+            </Alert>
+          </div>
+        )}
 
-        <div
-          className='text-light px-6 -mt-3 text-center sm:text-left'
-        >
-          {planDescription}
-        </div>
+        <div className="text-light px-6 -mt-3 text-center sm:text-left">{planDescription}</div>
 
         <LineChart
-          kind='line'
+          kind="line"
           height={breakpoint === 'xs' || breakpoint === 'sm' ? 350 : 450}
           data={windowData}
           priceLines={priceLines}
           priceFormatterFunc={priceFormatter}
         />
-
       </DialogContent>
-
     </Dialog>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

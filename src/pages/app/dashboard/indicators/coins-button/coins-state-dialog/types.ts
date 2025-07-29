@@ -20,13 +20,7 @@ type IComponentProps = {
   closeDialog: (nexState: undefined) => void;
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export type {
-  IComponentProps,
-};
+export type { IComponentProps };

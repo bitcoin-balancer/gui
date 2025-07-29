@@ -23,10 +23,6 @@ const transactionServiceFactory = (): ITransactionService => {
 
   // ...
 
-
-
-
-
   /* **********************************************************************************************
    *                                          RETRIEVERS                                          *
    ********************************************************************************************** */
@@ -39,12 +35,8 @@ const transactionServiceFactory = (): ITransactionService => {
    * - 32500: if the identifier is invalid
    * - 32000: if the tx is not found in the db
    */
-  const getTransaction = (id: number): Promise<ITransaction> => APIService.request(
-    'GET',
-    `position/transaction/${id}`,
-    undefined,
-    true,
-  );
+  const getTransaction = (id: number): Promise<ITransaction> =>
+    APIService.request('GET', `position/transaction/${id}`, undefined, true);
 
   /**
    * Retrieves a series of transactions. If the startAtID is provided, it will start at that point
@@ -56,25 +48,13 @@ const transactionServiceFactory = (): ITransactionService => {
    * - 32501: if the query limit is larger than the limit
    * - 32502: if the startAtID was provided and is not a valid identifier
    */
-  const listTransactions = (
-    limit: number,
-    startAtID?: number,
-  ): Promise<ITransaction[]> => {
+  const listTransactions = (limit: number, startAtID?: number): Promise<ITransaction[]> => {
     let urlPath: string = `position/transactions?limit=${limit}`;
     if (typeof startAtID === 'number') {
       urlPath += `&startAtID=${startAtID}`;
     }
-    return APIService.request(
-      'GET',
-      urlPath,
-      undefined,
-      true,
-    );
+    return APIService.request('GET', urlPath, undefined, true);
   };
-
-
-
-
 
   /* **********************************************************************************************
    *                                         MODULE BUILD                                         *
@@ -89,18 +69,10 @@ const transactionServiceFactory = (): ITransactionService => {
   });
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                        GLOBAL INSTANCE                                         *
  ************************************************************************************************ */
 const TransactionService = transactionServiceFactory();
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

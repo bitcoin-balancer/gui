@@ -17,10 +17,6 @@ type ITransactionService = {
   listTransactions: (limit: number, startAtID?: number) => Promise<ITransaction[]>;
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                             TYPES                                              *
  ************************************************************************************************ */
@@ -93,10 +89,6 @@ type ITransactionActionResult = {
   // if it exists, the action failed to execute
   error?: string;
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

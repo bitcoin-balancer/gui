@@ -1,4 +1,8 @@
-import { ISplitStateItem, ISplitStates, IState } from '@/shared/backend/market-state/shared/types.ts';
+import {
+  ISplitStateItem,
+  ISplitStates,
+  IState,
+} from '@/shared/backend/market-state/shared/types.ts';
 
 /* ************************************************************************************************
  *                                            SERVICE                                             *
@@ -22,10 +26,6 @@ type ICoinsService = {
   getConfig: () => Promise<ICoinsConfig>;
   updateConfig: (newConfig: ICoinsConfig, otpToken: string) => Promise<void>;
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                             STATE                                              *
@@ -80,7 +80,7 @@ type ICoinsState<T> = {
   state: IState;
 
   // the state for each of the coins
-  statesBySymbol: { [symbol:string]: T };
+  statesBySymbol: { [symbol: string]: T };
 };
 
 /**
@@ -96,8 +96,8 @@ type ICoinsStates<T> = {
  * Utility type used to build the state calculation payload that will be passed to the market state.
  */
 type IStatesBySymbol = {
-  compact: { [symbol:string]: ICompactCoinState },
-  semiCompact: { [symbol:string]: ISemiCompactCoinState },
+  compact: { [symbol: string]: ICompactCoinState };
+  semiCompact: { [symbol: string]: ISemiCompactCoinState };
 };
 
 /**
@@ -109,10 +109,6 @@ type ICoinsStatesCalculationPayload = {
   compact: ICoinsStates<ICompactCoinState>;
   semiCompact: ICoinsStates<ISemiCompactCoinState>;
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         CONFIGURATION                                          *
@@ -150,10 +146,6 @@ type ICoinsConfig = {
 type ICoinsConfigGUI = Omit<ICoinsConfig, 'whitelistedSymbols'> & {
   whitelistedSymbolsStr: string;
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

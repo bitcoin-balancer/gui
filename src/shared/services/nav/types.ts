@@ -1,5 +1,3 @@
-
-
 /* ************************************************************************************************
  *                                            SERVICE                                             *
  ************************************************************************************************ */
@@ -17,14 +15,14 @@ type INavService = {
   buildAPICommitURL: (hash: string) => string;
 
   // external navigation
-  openURL:(url: string, newTab?: boolean, noReferrer?: boolean) => void;
-  createNewInstance:() => void;
-  openGitHubPage:() => void;
-  openCLIRepo:() => void;
-  openCLILITERepo:() => void;
-  openGUIRepo:() => void;
+  openURL: (url: string, newTab?: boolean, noReferrer?: boolean) => void;
+  createNewInstance: () => void;
+  openGitHubPage: () => void;
+  openCLIRepo: () => void;
+  openCLILITERepo: () => void;
+  openGUIRepo: () => void;
   openGUICommit: (hash: string) => void;
-  openAPIRepo:() => void;
+  openAPIRepo: () => void;
   openAPICommit: (hash: string) => void;
   openCTRepo: () => void;
   openPostgresImage: () => void;
@@ -46,18 +44,11 @@ type INavService = {
   platformUpdate: () => string;
 };
 
-
-
-
 /* ************************************************************************************************
  *                                             TYPES                                              *
  ************************************************************************************************ */
 
 // ...
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

@@ -9,23 +9,19 @@ import { IInfoDialogConfig, IInfoDialogSlice } from '@/shared/store/slices/info-
  * Info Dialog Slice
  * Creates the slice in charge of managing the state of the info dialog.
  */
-const createInfoDialogSlice: StateCreator<IInfoDialogSlice> = (
-  set,
-) => ({
+const createInfoDialogSlice: StateCreator<IInfoDialogSlice> = (set) => ({
   isInfoDialogOpen: false,
   infoDialogConfig: undefined,
-  openInfoDialog: (config: IInfoDialogConfig) => set(() => ({
-    isInfoDialogOpen: true,
-    infoDialogConfig: config,
-  })),
-  closeInfoDialog: () => set(() => ({
-    isInfoDialogOpen: false,
-  })),
+  openInfoDialog: (config: IInfoDialogConfig) =>
+    set(() => ({
+      isInfoDialogOpen: true,
+      infoDialogConfig: config,
+    })),
+  closeInfoDialog: () =>
+    set(() => ({
+      isInfoDialogOpen: false,
+    })),
 });
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

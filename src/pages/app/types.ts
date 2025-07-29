@@ -18,12 +18,7 @@ type IMainNavigationItem = {
   badge?: string;
 };
 
-
-
-
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export type {
-  IMainNavigationItem,
-};
+export type { IMainNavigationItem };

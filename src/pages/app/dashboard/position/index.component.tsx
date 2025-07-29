@@ -14,12 +14,7 @@ import {
 } from 'lucide-react';
 import { delay } from 'web-utils-kit';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/shared/shadcn/components/ui/card.tsx';
+import { Card, CardContent, CardHeader, CardTitle } from '@/shared/shadcn/components/ui/card.tsx';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -57,10 +52,6 @@ import Planner from './planner/index.component.tsx';
 // the percentages that can be used to reduce the amount of a position
 const DECREASE_OPTIONS: number[] = [5, 15, 25, 33, 50, 66, 75, 100];
 
-
-
-
-
 /* ************************************************************************************************
  *                                            HELPERS                                             *
  ************************************************************************************************ */
@@ -72,19 +63,16 @@ const DECREASE_OPTIONS: number[] = [5, 15, 25, 33, 50, 66, 75, 100];
  * @returns { percentage: number; amount: number; label: string; }
  */
 const buildDecreaseOption = (position: ICompactPosition | undefined, option: number) => {
-  const decreaseAmount = position === undefined
-    ? PositionService.calculateDecreaseAmount(0, option)
-    : PositionService.calculateDecreaseAmount(position.amount, option);
+  const decreaseAmount =
+    position === undefined
+      ? PositionService.calculateDecreaseAmount(0, option)
+      : PositionService.calculateDecreaseAmount(position.amount, option);
   return {
     percentage: option,
     amount: decreaseAmount,
     label: formatBitcoinAmount(decreaseAmount),
   };
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -108,55 +96,43 @@ const Position = memo(({ windowState }: { windowState: IWindowState }) => {
   const { authority } = useBoundStore((state) => state.user!);
   const navigate = useNavigate();
 
-
-
-
-
   /* **********************************************************************************************
    *                                       REACTIVE VALUES                                        *
    ********************************************************************************************** */
 
   // main position details
   const entry = useMemo(
-    () => (
-      position.active === undefined ? '$0' : formatDollarAmount(position.active.entry_price, 0)
-    ),
+    () =>
+      position.active === undefined ? '$0' : formatDollarAmount(position.active.entry_price, 0),
     [position.active],
   );
   const gain = useMemo(
-    () => (
-      position.active === undefined ? '0%' : formatPercentageChange(position.active.gain, 2)
-    ),
+    () => (position.active === undefined ? '0%' : formatPercentageChange(position.active.gain, 2)),
     [position.active],
   );
   const gainClassName = useMemo(
-    () => (
+    () =>
       position.active === undefined
         ? PositionService.getGainClassName(0)
-        : PositionService.getGainClassName(position.active.gain)
-    ),
+        : PositionService.getGainClassName(position.active.gain),
     [position.active],
   );
   const amountQuote = useMemo(
-    () => (
-      position.active === undefined ? '$0 ' : formatDollarAmount(position.active.amount_quote, 0)
-    ),
+    () =>
+      position.active === undefined ? '$0 ' : formatDollarAmount(position.active.amount_quote, 0),
     [position.active],
   );
   const decreased = useMemo(
-    () => (
-      position.active === undefined ? '$0 ' : formatDollarAmount(position.active.amount_quote_out, 0)
-    ),
+    () =>
+      position.active === undefined
+        ? '$0 '
+        : formatDollarAmount(position.active.amount_quote_out, 0),
     [position.active],
   );
   const decreaseMenu = useMemo(
     () => DECREASE_OPTIONS.map((option) => buildDecreaseOption(position.active, option)),
     [position.active],
   );
-
-
-
-
 
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
@@ -169,9 +145,10 @@ const Position = memo(({ windowState }: { windowState: IWindowState }) => {
     openConfirmationDialog({
       mode: 'OTP',
       title: position.active === undefined ? 'Open position' : 'Increase position',
-      description: position.active === undefined
-        ? 'A new position will be opened with the amount established in the strategy'
-        : 'The amount of the position will be increased following the strategy',
+      description:
+        position.active === undefined
+          ? 'A new position will be opened with the amount established in the strategy'
+          : 'The amount of the position will be increased following the strategy',
       onConfirmation: async (confirmation: string) => {
         try {
           setIsSubmitting(true);
@@ -209,43 +186,34 @@ const Position = memo(({ windowState }: { windowState: IWindowState }) => {
     });
   };
 
-
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
     <>
-
       {/* ******
-        * CARD *
-        ****** */}
-      <Card className='md:mt-2.5 lg:mt-0'>
+       * CARD *
+       ****** */}
+      <Card className="md:mt-2.5 lg:mt-0">
         <CardHeader>
-          <CardTitle className='flex justify-start items-center gap-1.5'>
+          <CardTitle className="flex justify-start items-center gap-1.5">
             Position
-
             <Planner
               windowState={windowState}
               positionState={position}
-              className='mt-1'
+              className="mt-1"
             />
-
-            {
-                isSubmitting
-                && <Loader2
-                  className='h-5 w-5 mt-1 animate-spin'
-                />
-              }
-            <span className='flex-1'></span>
+            {isSubmitting && <Loader2 className="h-5 w-5 mt-1 animate-spin" />}
+            <span className="flex-1"></span>
             <DropdownMenu>
               <DropdownMenuTrigger
-                aria-label='More information'
+                aria-label="More information"
                 disabled={isSubmitting}
               >
-                <EllipsisVertical className='w-5 h-5' aria-hidden='true' />
+                <EllipsisVertical
+                  className="w-5 h-5"
+                  aria-hidden="true"
+                />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuLabel>Active</DropdownMenuLabel>
@@ -254,36 +222,40 @@ const Position = memo(({ windowState }: { windowState: IWindowState }) => {
                   disabled={position.active === undefined || authority < 2}
                 >
                   <ReceiptText
-                      aria-hidden='true'
-                      className='mr-1 h-5 w-5'
-                    /> Details
+                    aria-hidden="true"
+                    className="mr-1 h-5 w-5"
+                  />{' '}
+                  Details
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={increasePosition}
                   disabled={authority < 4}
                 >
                   <ArrowUpWideNarrow
-                      aria-hidden='true'
-                      className='mr-1 h-5 w-5'
-                    /> Increase
+                    aria-hidden="true"
+                    className="mr-1 h-5 w-5"
+                  />{' '}
+                  Increase
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => setIsDecreaseMenuOpen(true)}
                   disabled={position.active === undefined || authority < 4}
                 >
                   <ArrowDownWideNarrow
-                      aria-hidden='true'
-                      className='mr-1 h-5 w-5'
-                    /> Decrease
+                    aria-hidden="true"
+                    className="mr-1 h-5 w-5"
+                  />{' '}
+                  Decrease
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => navigate(NavService.position(position.active!.id))}
                   disabled={position.active === undefined || authority < 2}
                 >
                   <ExternalLink
-                      aria-hidden='true'
-                      className='mr-1 h-5 w-5'
-                    /> Navigate
+                    aria-hidden="true"
+                    className="mr-1 h-5 w-5"
+                  />{' '}
+                  Navigate
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuLabel>Information</DropdownMenuLabel>
@@ -292,140 +264,120 @@ const Position = memo(({ windowState }: { windowState: IWindowState }) => {
                   disabled={authority < 2}
                 >
                   <Wallet
-                      aria-hidden='true'
-                      className='mr-1 h-5 w-5'
-                    /> Balances
+                    aria-hidden="true"
+                    className="mr-1 h-5 w-5"
+                  />{' '}
+                  Balances
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => setActiveDialog('positions')}
                   disabled={authority < 2}
                 >
                   <List
-                      aria-hidden='true'
-                      className='mr-1 h-5 w-5'
-                    /> Positions
+                    aria-hidden="true"
+                    className="mr-1 h-5 w-5"
+                  />{' '}
+                  Positions
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => setActiveDialog('transactions')}
                   disabled={authority < 2}
                 >
                   <ListChecks
-                      aria-hidden='true'
-                      className='mr-1 h-5 w-5'
-                    /> Transactions
+                    aria-hidden="true"
+                    className="mr-1 h-5 w-5"
+                  />{' '}
+                  Transactions
                 </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => openLargeInfoDialog('strategy')}
-                >
+                <DropdownMenuItem onClick={() => openLargeInfoDialog('strategy')}>
                   <ArrowLeftRight
-                      aria-hidden='true'
-                      className='mr-1 h-5 w-5'
-                    /> Strategy
+                    aria-hidden="true"
+                    className="mr-1 h-5 w-5"
+                  />{' '}
+                  Strategy
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </CardTitle>
         </CardHeader>
-        <CardContent className='grid grid-cols-2 gap-x-4 gap-y-6 text-center'>
-
+        <CardContent className="grid grid-cols-2 gap-x-4 gap-y-6 text-center">
           {/* *******
-            * ENTRY *
-            ******* */}
+           * ENTRY *
+           ******* */}
           <div>
             <p>{entry}</p>
-            <p className='text-light text-xs'>ENTRY</p>
+            <p className="text-light text-xs">ENTRY</p>
           </div>
 
           {/* ******
-            * GAIN *
-            ****** */}
+           * GAIN *
+           ****** */}
           <div>
-            <p
-              className={`${gainClassName} ${gain !== '0%' ? 'font-bold' : 'font-normal'}`}
-            >{gain}</p>
-            <p className='text-light text-xs'>GAIN</p>
+            <p className={`${gainClassName} ${gain !== '0%' ? 'font-bold' : 'font-normal'}`}>
+              {gain}
+            </p>
+            <p className="text-light text-xs">GAIN</p>
           </div>
 
           {/* ********
-            * AMOUNT *
-            ******** */}
+           * AMOUNT *
+           ******** */}
           <div>
-            <p>{position.active === undefined ? '' : '~'}{amountQuote}</p>
-            <p className='text-light text-xs'>AMOUNT</p>
+            <p>
+              {position.active === undefined ? '' : '~'}
+              {amountQuote}
+            </p>
+            <p className="text-light text-xs">AMOUNT</p>
           </div>
-
 
           {/* ***********
-            * DECREASED *
-            *********** */}
+           * DECREASED *
+           *********** */}
           <div>
             <p>{decreased}</p>
-            <p className='text-light text-xs'>DECREASED</p>
+            <p className="text-light text-xs">DECREASED</p>
           </div>
-
         </CardContent>
       </Card>
 
-
-
       {/* *********
-        * DIALOGS *
-        ********* */}
-      {
-        activeDialog === 'balances'
-        && <BalancesDialog
-          closeDialog={setActiveDialog}
-        />
-      }
-      {
-        activeDialog === 'positions'
-        && <PositionsDialog
-          closeDialog={setActiveDialog}
-        />
-      }
-      {
-        activeDialog === 'transactions'
-        && <TransactionsDialog
-          closeDialog={setActiveDialog}
-        />
-      }
-
-
-
-
+       * DIALOGS *
+       ********* */}
+      {activeDialog === 'balances' && <BalancesDialog closeDialog={setActiveDialog} />}
+      {activeDialog === 'positions' && <PositionsDialog closeDialog={setActiveDialog} />}
+      {activeDialog === 'transactions' && <TransactionsDialog closeDialog={setActiveDialog} />}
 
       {/* ***************
-        * DECREASE MENU *
-        *************** */}
-      <Sheet open={isDecreaseMenuOpen} onOpenChange={setIsDecreaseMenuOpen}>
+       * DECREASE MENU *
+       *************** */}
+      <Sheet
+        open={isDecreaseMenuOpen}
+        onOpenChange={setIsDecreaseMenuOpen}
+      >
         <SheetContent
-          side='bottom'
-          className='overflow-y-auto'
+          side="bottom"
+          className="overflow-y-auto"
         >
-          <div className='mx-auto w-full max-w-md'>
-            <SheetHeader className='space-y-0'>
+          <div className="mx-auto w-full max-w-md">
+            <SheetHeader className="space-y-0">
               <SheetTitle>Decrease position</SheetTitle>
               <SheetDescription>Select a percentage</SheetDescription>
             </SheetHeader>
 
-            <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4 mt-5'>
-              {
-                decreaseMenu.map((item) => (
-                  <Button
-                    key={item.percentage}
-                    variant='outline'
-                    aria-label={`Decrease the position amount by ${item.percentage}%`}
-                    className='flex flex-col h-20 w-full gap-y-1'
-                    onClick={() => decreasePosition(item.percentage)}
-                    disabled={item.amount === 0}
-                  >
-                    <p>{item.percentage}%</p>
-                    <p
-                      className='text-light text-xs'
-                    >{item.label}</p>
-                  </Button>
-                ))
-              }
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4 mt-5">
+              {decreaseMenu.map((item) => (
+                <Button
+                  key={item.percentage}
+                  variant="outline"
+                  aria-label={`Decrease the position amount by ${item.percentage}%`}
+                  className="flex flex-col h-20 w-full gap-y-1"
+                  onClick={() => decreasePosition(item.percentage)}
+                  disabled={item.amount === 0}
+                >
+                  <p>{item.percentage}%</p>
+                  <p className="text-light text-xs">{item.label}</p>
+                </Button>
+              ))}
             </div>
           </div>
         </SheetContent>
@@ -433,10 +385,6 @@ const Position = memo(({ windowState }: { windowState: IWindowState }) => {
     </>
   );
 });
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
