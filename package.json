@@ -2,7 +2,7 @@
   "name": "gui",
   "description": "The gui is a powerful, user-friendly Progressive Web Application (PWA) designed to simplify the configuration and management of the api.",
   "private": false,
-  "version": "1.0.26",
+  "version": "1.0.27",
   "type": "module",
   "scripts": {
     "dev": "gui-environment --development && vite && sw-builder",
