@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build-and-publish:
+  create-and-push-release-tag:
     runs-on: ubuntu-latest
 
     steps:
