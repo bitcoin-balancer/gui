@@ -62,15 +62,7 @@ type IComponentProps = {
   closeDialog: (nextState: undefined) => void;
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export type {
-  IModuleID,
-  ISplitStatesDialogData,
-  IComponentProps,
-};
+export type { IModuleID, ISplitStatesDialogData, IComponentProps };

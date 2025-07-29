@@ -30,15 +30,7 @@ type IProcessedPositions = {
   investmentsChart: ISplitStateItem[];
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export type {
-  IDateRangeID,
-  IDateRange,
-  IProcessedPositions,
-};
+export type { IDateRangeID, IDateRange, IProcessedPositions };

@@ -13,10 +13,6 @@ type ITradeMetadata = {
   positionAmount: string;
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                           DISPATCH                                             *
  ************************************************************************************************ */
@@ -27,22 +23,18 @@ type IAction = {
   type: IActionType;
 } & (
   | {
-    type: 'CREATE_TRADE';
-    payload: ITrade;
-  }
+      type: 'CREATE_TRADE';
+      payload: ITrade;
+    }
   | {
-    type: 'UPDATE_TRADE';
-    payload: ITrade;
-  }
+      type: 'UPDATE_TRADE';
+      payload: ITrade;
+    }
   | {
-    type: 'DELETE_TRADE';
-    payload: number;
-  }
+      type: 'DELETE_TRADE';
+      payload: number;
+    }
 );
-
-
-
-
 
 /* ************************************************************************************************
  *                                         RECORD FORM                                            *
@@ -69,10 +61,6 @@ type IRecordFormInputs = {
   price: string;
   amount: string;
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

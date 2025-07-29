@@ -29,10 +29,6 @@ const positionServiceFactory = (): IPositionService => {
 
   // ...
 
-
-
-
-
   /* **********************************************************************************************
    *                                           ACTIONS                                            *
    ********************************************************************************************** */
@@ -42,15 +38,8 @@ const positionServiceFactory = (): IPositionService => {
    * @param otpToken
    * @returns Promise<void>
    */
-  const increasePosition = (otpToken: string): Promise<void> => (
-    APIService.request(
-      'POST',
-      'position/increase',
-      undefined,
-      true,
-      otpToken,
-    )
-  );
+  const increasePosition = (otpToken: string): Promise<void> =>
+    APIService.request('POST', 'position/increase', undefined, true, otpToken);
 
   /**
    * Validates and attempts to decrease an active position.
@@ -61,15 +50,8 @@ const positionServiceFactory = (): IPositionService => {
    * - 30507: if there isn't an active position
    * - 30508: if the percentage is not a valid number
    */
-  const decreasePosition = (percentage: number, otpToken: string): Promise<void> => (
-    APIService.request(
-      'POST',
-      'position/decrease',
-      { percentage },
-      true,
-      otpToken,
-    )
-  );
+  const decreasePosition = (percentage: number, otpToken: string): Promise<void> =>
+    APIService.request('POST', 'position/decrease', { percentage }, true, otpToken);
 
   /**
    * Archives a position by its ID.
@@ -82,15 +64,8 @@ const positionServiceFactory = (): IPositionService => {
    * - 30510: if the positon has already been archived
    * - 30512: if the positon is currently active
    */
-  const archivePosition = (id: string, otpToken: string): Promise<void> => (
-    APIService.request(
-      'PATCH',
-      `position/archive/${id}`,
-      undefined,
-      true,
-      otpToken,
-    )
-  );
+  const archivePosition = (id: string, otpToken: string): Promise<void> =>
+    APIService.request('PATCH', `position/archive/${id}`, undefined, true, otpToken);
 
   /**
    * Unarchives a position by its ID.
@@ -102,19 +77,8 @@ const positionServiceFactory = (): IPositionService => {
    * - 30509: if the positon doesn't exist
    * - 30511: if the positon is not archived
    */
-  const unarchivePosition = (id: string, otpToken: string): Promise<void> => (
-    APIService.request(
-      'PATCH',
-      `position/unarchive/${id}`,
-      undefined,
-      true,
-      otpToken,
-    )
-  );
-
-
-
-
+  const unarchivePosition = (id: string, otpToken: string): Promise<void> =>
+    APIService.request('PATCH', `position/unarchive/${id}`, undefined, true, otpToken);
 
   /* **********************************************************************************************
    *                                          RETRIEVERS                                          *
@@ -128,12 +92,8 @@ const positionServiceFactory = (): IPositionService => {
    * - 30500: if the ID is not a valid uuid v4
    * - 30000: if the position does not exist
    */
-  const getPosition = (id: string): Promise<IPosition> => APIService.request(
-    'GET',
-    `position/record/${id}`,
-    undefined,
-    true,
-  );
+  const getPosition = (id: string): Promise<IPosition> =>
+    APIService.request('GET', `position/record/${id}`, undefined, true);
 
   /**
    * Validates and retrieves a list of compact position records.
@@ -152,12 +112,7 @@ const positionServiceFactory = (): IPositionService => {
     if (typeof startAtOpenTime === 'number') {
       urlPath += `&startAtOpenTime=${startAtOpenTime}`;
     }
-    return APIService.request(
-      'GET',
-      urlPath,
-      undefined,
-      true,
-    );
+    return APIService.request('GET', urlPath, undefined, true);
   };
 
   /**
@@ -179,12 +134,7 @@ const positionServiceFactory = (): IPositionService => {
     if (typeof endAt === 'number') {
       urlPath += `&endAt=${endAt}`;
     }
-    return APIService.request(
-      'GET',
-      urlPath,
-      undefined,
-      true,
-    );
+    return APIService.request('GET', urlPath, undefined, true);
   };
 
   /**
@@ -195,12 +145,8 @@ const positionServiceFactory = (): IPositionService => {
    * - 11000: if the id has an invalid format
    * - 11001: if the record was not found in the database
    */
-  const getPositionHistory = (id: string): Promise<IEventHistoryRecord> => APIService.request(
-    'GET',
-    `position/event-history/${id}`,
-    undefined,
-    true,
-  );
+  const getPositionHistory = (id: string): Promise<IEventHistoryRecord> =>
+    APIService.request('GET', `position/event-history/${id}`, undefined, true);
 
   /**
    * Retrieves all the trades that were executed in a position.
@@ -210,12 +156,8 @@ const positionServiceFactory = (): IPositionService => {
    * - 30500: if the ID is not a valid uuid v4
    * - 30000: if the positition is not found in the db
    */
-  const listPositionTrades = (id: string): Promise<ITrade[]> => APIService.request(
-    'GET',
-    `position/record/trades/${id}`,
-    undefined,
-    true,
-  );
+  const listPositionTrades = (id: string): Promise<ITrade[]> =>
+    APIService.request('GET', `position/record/trades/${id}`, undefined, true);
 
   /**
    * Retrieves all the transactions that were executed in a position.
@@ -225,16 +167,8 @@ const positionServiceFactory = (): IPositionService => {
    * - 30500: if the ID is not a valid uuid v4
    * - 30000: if the positition is not found in the db
    */
-  const listPositionTransactions = (id: string): Promise<ITransaction[]> => APIService.request(
-    'GET',
-    `position/record/transactions/${id}`,
-    undefined,
-    true,
-  );
-
-
-
-
+  const listPositionTransactions = (id: string): Promise<ITransaction[]> =>
+    APIService.request('GET', `position/record/transactions/${id}`, undefined, true);
 
   /* **********************************************************************************************
    *                                      TRADE MANAGEMENT                                        *
@@ -260,15 +194,8 @@ const positionServiceFactory = (): IPositionService => {
    * - 30516: if the state causes the entry price to be less than or equals to 0
    * - 30519: if the first trade is a sell
    */
-  const createTrade = (trade: IManualTrade, otpToken: string): Promise<ITrade> => (
-    APIService.request(
-      'POST',
-      'position/trade',
-      { trade },
-      true,
-      otpToken,
-    )
-  );
+  const createTrade = (trade: IManualTrade, otpToken: string): Promise<ITrade> =>
+    APIService.request('POST', 'position/trade', { trade }, true, otpToken);
 
   /**
    * Validates and updates a trade record for the active position.
@@ -293,15 +220,8 @@ const positionServiceFactory = (): IPositionService => {
    * - 30516: if the state causes the entry price to be less than or equals to 0
    * - 30519: if the first trade is a sell
    */
-  const updateTrade = (id: number, trade: IManualTrade, otpToken: string): Promise<ITrade> => (
-    APIService.request(
-      'PUT',
-      `position/trade/${id}`,
-      { trade },
-      true,
-      otpToken,
-    )
-  );
+  const updateTrade = (id: number, trade: IManualTrade, otpToken: string): Promise<ITrade> =>
+    APIService.request('PUT', `position/trade/${id}`, { trade }, true, otpToken);
 
   /**
    * Validates and deletes a trade record from the active position.
@@ -323,19 +243,8 @@ const positionServiceFactory = (): IPositionService => {
    * - 30519: if the first trade is a sell
    * - 30518: if the trade doesn't exist
    */
-  const deleteTrade = (id: number, otpToken: string): Promise<void> => (
-    APIService.request(
-      'DELETE',
-      `position/trade/${id}`,
-      undefined,
-      true,
-      otpToken,
-    )
-  );
-
-
-
-
+  const deleteTrade = (id: number, otpToken: string): Promise<void> =>
+    APIService.request('DELETE', `position/trade/${id}`, undefined, true, otpToken);
 
   /* **********************************************************************************************
    *                                           HELPERS                                            *
@@ -383,17 +292,11 @@ const positionServiceFactory = (): IPositionService => {
    * @param percentage
    * @returns number
    */
-  const calculateDecreaseAmount = (
-    positionAmount: number,
-    percentage: number,
-  ): number => processValue(
-    getBigNumber(positionAmount).times(percentage / 100),
-    { decimalPlaces: 4, roundingMode: 'ROUND_HALF_DOWN' },
-  );
-
-
-
-
+  const calculateDecreaseAmount = (positionAmount: number, percentage: number): number =>
+    processValue(getBigNumber(positionAmount).times(percentage / 100), {
+      decimalPlaces: 4,
+      roundingMode: 'ROUND_HALF_DOWN',
+    });
 
   /* **********************************************************************************************
    *                                         MODULE BUILD                                         *
@@ -428,18 +331,10 @@ const positionServiceFactory = (): IPositionService => {
   });
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                        GLOBAL INSTANCE                                         *
  ************************************************************************************************ */
 const PositionService = positionServiceFactory();
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

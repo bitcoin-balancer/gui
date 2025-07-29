@@ -25,19 +25,11 @@ const strategyServiceFactory = (): IStrategyService => {
 
   // ...
 
-
-
-
-
   /* **********************************************************************************************
    *                                            HELPERS                                           *
    ********************************************************************************************** */
 
   // ...
-
-
-
-
 
   /* **********************************************************************************************
    *                                         CONFIGURATION                                        *
@@ -47,12 +39,8 @@ const strategyServiceFactory = (): IStrategyService => {
    * Retrieves the strategy.
    * @returns Promise<IStrategy>
    */
-  const getConfig = (): Promise<IStrategy> => APIService.request(
-    'GET',
-    'position/strategy',
-    undefined,
-    true,
-  );
+  const getConfig = (): Promise<IStrategy> =>
+    APIService.request('GET', 'position/strategy', undefined, true);
 
   /**
    * Validates and updates the strategy.
@@ -71,19 +59,8 @@ const strategyServiceFactory = (): IStrategyService => {
    * - 31510: if any of the price levels' frequency property is invalid
    * - 31511: if the increaseIdleMode property is not supported
    */
-  const updateConfig = (newConfig: IStrategy, otpToken: string): Promise<void> => (
-    APIService.request(
-      'PUT',
-      'position/strategy',
-      { newConfig },
-      true,
-      otpToken,
-    )
-  );
-
-
-
-
+  const updateConfig = (newConfig: IStrategy, otpToken: string): Promise<void> =>
+    APIService.request('PUT', 'position/strategy', { newConfig }, true, otpToken);
 
   /* **********************************************************************************************
    *                                         MODULE BUILD                                         *
@@ -101,18 +78,10 @@ const strategyServiceFactory = (): IStrategyService => {
   });
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                        GLOBAL INSTANCE                                         *
  ************************************************************************************************ */
 const StrategyService = strategyServiceFactory();
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

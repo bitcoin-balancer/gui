@@ -1,10 +1,4 @@
-import {
-  memo,
-  useState,
-  useEffect,
-  useCallback,
-  useMemo,
-} from 'react';
+import { memo, useState, useEffect, useCallback, useMemo } from 'react';
 import { prettifyValue } from 'bignumber-utils';
 import {
   Dialog,
@@ -79,10 +73,6 @@ const buildInfoDialogContent = (
   ],
 });
 
-
-
-
-
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
@@ -91,180 +81,142 @@ const buildInfoDialogContent = (
  * Split States Dialog Component
  * Component in charge of displaying additional information regarding each of the window splits.
  */
-const SplitStatesDialog = memo(({
-  data: {
-    moduleID,
-    moduleState,
-    activeID = 's100',
-    asset,
-    symbol,
-  },
-  closeDialog,
-}: IComponentProps) => {
-  /* **********************************************************************************************
-   *                                             STATE                                            *
-   ********************************************************************************************** */
-  const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
-  const breakpoint = useMediaQueryBreakpoint();
-  const [activeSplitID, setActiveSplitID] = useState<ISplitStateID>(activeID);
-  const [activeSplit, setActiveSplit] = useState<ISplitStateItem[]>([]);
-  const exchangeConfig = useBoundStore((state) => state.exchangeConfig!);
-  const openInfoDialog = useBoundStore((state) => state.openInfoDialog);
+const SplitStatesDialog = memo(
+  ({
+    data: { moduleID, moduleState, activeID = 's100', asset, symbol },
+    closeDialog,
+  }: IComponentProps) => {
+    /* **********************************************************************************************
+     *                                             STATE                                            *
+     ********************************************************************************************** */
+    const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
+    const breakpoint = useMediaQueryBreakpoint();
+    const [activeSplitID, setActiveSplitID] = useState<ISplitStateID>(activeID);
+    const [activeSplit, setActiveSplit] = useState<ISplitStateItem[]>([]);
+    const exchangeConfig = useBoundStore((state) => state.exchangeConfig!);
+    const openInfoDialog = useBoundStore((state) => state.openInfoDialog);
 
+    /* **********************************************************************************************
+     *                                       REACTIVE VALUES                                        *
+     ********************************************************************************************** */
 
+    // the name of the asset
+    const assetName = asset === 'quote' ? exchangeConfig.quoteAsset : exchangeConfig.baseAsset;
 
+    // the dialog's title
+    const title = moduleID === 'COINS' ? `${symbol}/${assetName}` : 'Window';
 
+    // the percentage change experienced by each split
+    const splitChanges = useMemo(
+      () => formatSplitStateChanges(moduleState.splitStates),
+      [moduleState.splitStates],
+    );
 
-  /* **********************************************************************************************
-   *                                       REACTIVE VALUES                                        *
-   ********************************************************************************************** */
+    // the price formatter that will be used on the chart
+    const priceFormatter = useCallback((value: number) => prettifyPrice(value, asset), [asset]);
 
-  // the name of the asset
-  const assetName = asset === 'quote' ? exchangeConfig.quoteAsset : exchangeConfig.baseAsset;
+    /* **********************************************************************************************
+     *                                        EVENT HANDLERS                                        *
+     ********************************************************************************************** */
 
-  // the dialog's title
-  const title = moduleID === 'COINS' ? `${symbol}/${assetName}` : 'Window';
+    /**
+     * Activates a Split ID based on the window state prop.
+     * @param id
+     */
+    const activateSplit = useCallback(
+      (id: ISplitStateID): void => {
+        setActiveSplitID(id);
+        setActiveSplit(MarketStateService.applySplit(moduleState.window, id) as ISplitStateItem[]);
+      },
+      [moduleState.window],
+    );
 
-  // the percentage change experienced by each split
-  const splitChanges = useMemo(
-    () => formatSplitStateChanges(moduleState.splitStates),
-    [moduleState.splitStates],
-  );
+    /**
+     * Displays the information dialog which describes how to the window module operates.
+     */
+    const displayWindowInfo = (): void => {
+      openInfoDialog(
+        buildInfoDialogContent(moduleID, moduleState.window, asset, assetName, symbol),
+      );
+    };
 
-  // the price formatter that will be used on the chart
-  const priceFormatter = useCallback((value: number) => prettifyPrice(value, asset), [asset]);
+    /* **********************************************************************************************
+     *                                         SIDE EFFECTS                                         *
+     ********************************************************************************************** */
 
+    /**
+     * Activates the initial split based on the ID prop.
+     */
+    useEffect(() => {
+      activateSplit(activeID);
+    }, [activeID, activateSplit]);
 
-
-
-
-  /* **********************************************************************************************
-   *                                        EVENT HANDLERS                                        *
-   ********************************************************************************************** */
-
-  /**
-   * Activates a Split ID based on the window state prop.
-   * @param id
-   */
-  const activateSplit = useCallback(
-    (id: ISplitStateID): void => {
-      setActiveSplitID(id);
-      setActiveSplit(MarketStateService.applySplit(moduleState.window, id) as ISplitStateItem[]);
-    },
-    [moduleState.window],
-  );
-
-  /**
-   * Displays the information dialog which describes how to the window module operates.
-   */
-  const displayWindowInfo = (): void => {
-    openInfoDialog(buildInfoDialogContent(moduleID, moduleState.window, asset, assetName, symbol));
-  };
-
-
-
-
-
-  /* **********************************************************************************************
-   *                                         SIDE EFFECTS                                         *
-   ********************************************************************************************** */
-
-  /**
-   * Activates the initial split based on the ID prop.
-   */
-  useEffect(() => {
-    activateSplit(activeID);
-  }, [activeID, activateSplit]);
-
-
-
-
-
-  /* **********************************************************************************************
-   *                                           COMPONENT                                          *
-   ********************************************************************************************** */
-  return (
-    <Dialog
-      open={isDialogOpen}
-      onOpenChange={handleCloseDialog}
-    >
-
-      <DialogContent
-        className='max-w-[900px]'
+    /* **********************************************************************************************
+     *                                           COMPONENT                                          *
+     ********************************************************************************************** */
+    return (
+      <Dialog
+        open={isDialogOpen}
+        onOpenChange={handleCloseDialog}
       >
+        <DialogContent className="max-w-[900px]">
+          {/* ***************
+           * DIALOG HEADER *
+           *************** */}
+          <DialogHeader>
+            <DialogTitle>
+              <button
+                className="flex justify-center sm:justify-start items-center"
+                onClick={displayWindowInfo}
+              >
+                {title}
+                <StateIcon
+                  className="ml-2"
+                  state={moduleState.state}
+                />
+              </button>
+            </DialogTitle>
+            <DialogDescription></DialogDescription>
+          </DialogHeader>
 
-        {/* ***************
-          * DIALOG HEADER *
-          *************** */}
-        <DialogHeader>
-          <DialogTitle>
-            <button
-              className='flex justify-center sm:justify-start items-center'
-              onClick={displayWindowInfo}
-            >
-            {title}
-            <StateIcon
-              className='ml-2'
-              state={moduleState.state}
-            />
-            </button>
-          </DialogTitle>
-          <DialogDescription></DialogDescription>
-        </DialogHeader>
+          {/* *************
+           * SPLIT TILES *
+           ************* */}
+          <div className="grid grid-cols-4 gap-1 w-full">
+            {MarketStateService.SPLITS.map((split) => (
+              <button
+                key={split}
+                onClick={() => activateSplit(split)}
+                className={` py-2 px-0 sm:px-2 ${ColorService.STATE_BG_CLASS_NAME[moduleState.splitStates[split].state]} ${activeSplitID === split ? 'opacity-60' : 'hover:opacity-80'}`}
+                disabled={activeSplitID === split}
+              >
+                <p className="text-white text-sm font-semibold">{splitChanges[split]}</p>
+                <p className="text-white text-xs font-bold">
+                  {MarketStateService.SPLIT_NAMES[split]}
+                </p>
+              </button>
+            ))}
+          </div>
 
-
-
-        {/* *************
-          * SPLIT TILES *
-          ************* */}
-        <div
-          className='grid grid-cols-4 gap-1 w-full'
-        >
-          {MarketStateService.SPLITS.map((split) => (
-            <button
-              key={split}
-              onClick={() => activateSplit(split)}
-              className={` py-2 px-0 sm:px-2 ${ColorService.STATE_BG_CLASS_NAME[moduleState.splitStates[split].state]} ${activeSplitID === split ? 'opacity-60' : 'hover:opacity-80'}`}
-              disabled={activeSplitID === split}
-            >
-              <p className='text-white text-sm font-semibold'>{splitChanges[split]}</p>
-              <p className='text-white text-xs font-bold'>{MarketStateService.SPLIT_NAMES[split]}</p>
-            </button>
-          ))}
-        </div>
-
-
-        {/* *******
-          * CHART *
-          ******* */}
-        <LineChart
-          key={activeSplitID}
-          kind='area'
-          height={breakpoint === 'xs' || breakpoint === 'sm' ? 350 : 450}
-          data={activeSplit}
-          state={moduleState.splitStates[activeSplitID].state}
-          priceFormatterFunc={
-            moduleID === 'WINDOW'
-              ? priceFormatter
-              : undefined
-          }
-        />
-
-
-      </DialogContent>
-
-    </Dialog>
-  );
-});
-
-
-
-
+          {/* *******
+           * CHART *
+           ******* */}
+          <LineChart
+            key={activeSplitID}
+            kind="area"
+            height={breakpoint === 'xs' || breakpoint === 'sm' ? 350 : 450}
+            data={activeSplit}
+            state={moduleState.splitStates[activeSplitID].state}
+            priceFormatterFunc={moduleID === 'WINDOW' ? priceFormatter : undefined}
+          />
+        </DialogContent>
+      </Dialog>
+    );
+  },
+);
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export default SplitStatesDialog;
-export type {
-  ISplitStatesDialogData,
-};
+export type { ISplitStatesDialogData };

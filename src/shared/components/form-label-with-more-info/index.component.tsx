@@ -18,39 +18,36 @@ const FormLabelWithMoreInfo = ({ value, description, ...rest }: IComponentProps)
    ********************************************************************************************** */
   const openInfoDialog = useBoundStore((state) => state.openInfoDialog);
 
-
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
-    <FormLabel className='flex justify-start items-center' {...rest}>
+    <FormLabel
+      className="flex justify-start items-center"
+      {...rest}
+    >
       {value}
-      <span className='flex-1'></span>
+      <span className="flex-1"></span>
       <Tooltip>
         <TooltipTrigger
-          className='w-5 h-5'
-          type='button'
-          aria-label='View more information'
+          className="w-5 h-5"
+          type="button"
+          aria-label="View more information"
           onClick={() => openInfoDialog({ title: value, content: description })}
           tabIndex={-1}
         >
           <CircleHelp
-            className='w-5 h-5'
-            aria-hidden='true'
+            className="w-5 h-5"
+            aria-hidden="true"
           />
         </TooltipTrigger>
-        <TooltipContent side='left'><p>More info</p></TooltipContent>
+        <TooltipContent side="left">
+          <p>More info</p>
+        </TooltipContent>
       </Tooltip>
     </FormLabel>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

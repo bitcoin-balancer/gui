@@ -51,10 +51,6 @@ const RecordForm = ({ record, closeDialog }: IRecordFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
 
-
-
-
-
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
    ********************************************************************************************** */
@@ -79,9 +75,10 @@ const RecordForm = ({ record, closeDialog }: IRecordFormProps) => {
     openConfirmationDialog({
       mode: 'OTP',
       title: record === null ? 'Register IP' : 'Update Registration',
-      description: record === null
-        ? `The IP address ${data.ip} will be blacklisted immediately upon submission`
-        : `The changes will be applied to the IP address ${data.ip} immediately upon submission`,
+      description:
+        record === null
+          ? `The IP address ${data.ip} will be blacklisted immediately upon submission`
+          : `The changes will be applied to the IP address ${data.ip} immediately upon submission`,
       onConfirmation: async (confirmation: string) => {
         try {
           setIsSubmitting(true);
@@ -114,136 +111,116 @@ const RecordForm = ({ record, closeDialog }: IRecordFormProps) => {
     });
   };
 
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
     <Dialog
       open={isDialogOpen}
-      onOpenChange={() => __handleCloseDialog(undefined)}>
-
+      onOpenChange={() => __handleCloseDialog(undefined)}
+    >
       <DialogContent>
-
         <DialogHeader>
           <DialogTitle>{record === null ? 'Register IP' : 'Update registration'}</DialogTitle>
           <DialogDescription>
-            {
-              record === null
-                ? 'The IP address will be blacklisted immediately upon submission'
-                : 'The changes will be applied immediately upon submission'
-            }
+            {record === null
+              ? 'The IP address will be blacklisted immediately upon submission'
+              : 'The changes will be applied immediately upon submission'}
           </DialogDescription>
         </DialogHeader>
 
-        {
-          record
-          && <>
-            <div
-              className='flex justify-start items-center'
-            >
-              <p
-                className='text-light text-xs sm:text-sm'
-              >ID</p>
-              <span className='flex-1'></span>
+        {record && (
+          <>
+            <div className="flex justify-start items-center">
+              <p className="text-light text-xs sm:text-sm">ID</p>
+              <span className="flex-1"></span>
               <p>{record.id}</p>
             </div>
-            <div
-              className='flex justify-start items-center'
-            >
-              <p
-                className='text-light text-xs sm:text-sm'
-              >Registration</p>
-              <span className='flex-1'></span>
-              <p
-                className='text-sm sm:text-md'
-              >{formatDate(record.event_time, 'datetime-medium')}</p>
+            <div className="flex justify-start items-center">
+              <p className="text-light text-xs sm:text-sm">Registration</p>
+              <span className="flex-1"></span>
+              <p className="text-sm sm:text-md">
+                {formatDate(record.event_time, 'datetime-medium')}
+              </p>
             </div>
           </>
-        }
+        )}
 
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            noValidate
+          >
+            <FormField
+              control={form.control}
+              name="ip"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>IP address</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="192.0.2.126"
+                      {...field}
+                      autoComplete="off"
+                      autoFocus
+                      disabled={isSubmitting}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+              rules={{
+                validate: {
+                  required: (value) => (isIPValid(value) ? true : 'Enter a valid IP address'),
+                },
+              }}
+            />
 
-              <FormField
-                control={form.control}
-                name='ip'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>IP address</FormLabel>
-                    <FormControl>
-                      <Input
-                        type='text'
-                        placeholder='192.0.2.126'
-                        {...field}
-                        autoComplete='off'
-                        autoFocus
-                        disabled={isSubmitting}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-                rules={{
-                  validate: {
-                    required: (value) => (isIPValid(value) ? true : 'Enter a valid IP address'),
-                  },
-                }}
-              />
+            <FormField
+              control={form.control}
+              name="notes"
+              render={({ field }) => (
+                <FormItem className="mt-5">
+                  <FormLabel>Notes (Optional)</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Explain why the IP address should not be served by the API"
+                      rows={7}
+                      autoComplete="false"
+                      {...field}
+                      disabled={isSubmitting}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+              rules={{
+                validate: {
+                  required: (value) =>
+                    value.length > 0 && !isIPNotesValid(value)
+                      ? 'Enter a valid description of the event or clear the text area'
+                      : true,
+                },
+              }}
+            />
 
-              <FormField
-                control={form.control}
-                name='notes'
-                render={({ field }) => (
-                  <FormItem className='mt-5'>
-                    <FormLabel>Notes (Optional)</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder='Explain why the IP address should not be served by the API'
-                        rows={7}
-                        autoComplete='false'
-                        {...field}
-                        disabled={isSubmitting}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-                rules={{
-                  validate: {
-                    required: (value) => (value.length > 0 && !isIPNotesValid(value) ? 'Enter a valid description of the event or clear the text area' : true),
-                  },
-                }}
-              />
-
-              <DialogFooter>
-                <Button
-                  type='submit'
-                  disabled={isSubmitting}
-                  className='mt-7 w-full'
-                >
-                  {
-                    isSubmitting
-                    && <Loader2
-                      className='mr-2 h-4 w-4 animate-spin'
-                    />} {record === null ? 'Blacklist IP' : 'Update registration'}
-                </Button>
-              </DialogFooter>
-
-            </form>
-          </Form>
-
+            <DialogFooter>
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                className="mt-7 w-full"
+              >
+                {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}{' '}
+                {record === null ? 'Blacklist IP' : 'Update registration'}
+              </Button>
+            </DialogFooter>
+          </form>
+        </Form>
       </DialogContent>
-
     </Dialog>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

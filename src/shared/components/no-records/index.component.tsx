@@ -11,12 +11,10 @@ import { IComponentProps } from './types.ts';
 const NoRecords = ({ message = 'No records were found', className }: IComponentProps) => (
   <p
     className={`text-light text-sm text-center my-5 animate-in fade-in duration-700 ${typeof className === 'string' ? className : ''}`}
-  >{message}</p>
+  >
+    {message}
+  </p>
 );
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

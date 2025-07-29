@@ -1,8 +1,5 @@
 import { useState } from 'react';
-import {
-  Bitcoin,
-  DollarSign,
-} from 'lucide-react';
+import { Bitcoin, DollarSign } from 'lucide-react';
 import { delay } from 'web-utils-kit';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import {
@@ -34,8 +31,8 @@ const CoinsButton = ({
   coinsStates,
   openSplitStatesDialog,
 }: {
-  coinsStates: ICoinsStates<ICompactCoinState>,
-  openSplitStatesDialog: (data: ISplitStatesDialogData) => void,
+  coinsStates: ICoinsStates<ICompactCoinState>;
+  openSplitStatesDialog: (data: ISplitStatesDialogData) => void;
 }) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
@@ -43,10 +40,6 @@ const CoinsButton = ({
   const exchangeConfig = useBoundStore((state) => state.exchangeConfig!);
   const [assetMenu, setAssetMenu] = useState<boolean>(false);
   const [isDialogOpen, setIsDialogOpen] = useState<ICoinStateAsset>();
-
-
-
-
 
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
@@ -63,18 +56,14 @@ const CoinsButton = ({
     setIsDialogOpen(asset);
   };
 
-
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
     <>
       {/* ********
-        * BUTTON *
-        ******** */}
+       * BUTTON *
+       ******** */}
       <button
         className={`h-[45px] text-xs text-white font-bold ${ColorService.STATE_CLASS_NAME[coinsStates.quote.state]}-${ColorService.STATE_CLASS_NAME[coinsStates.base.state]} hover:opacity-80`}
         onClick={() => setAssetMenu(true)}
@@ -82,36 +71,37 @@ const CoinsButton = ({
         COINS
       </button>
 
-
-
       {/* **************
-        * ACTIONS MENU *
-        ************** */}
-      <Sheet open={assetMenu} onOpenChange={setAssetMenu}>
-        <SheetContent side='bottom'>
-          <div className='mx-auto w-full max-w-sm'>
-            <SheetHeader className='space-y-0'>
+       * ACTIONS MENU *
+       ************** */}
+      <Sheet
+        open={assetMenu}
+        onOpenChange={setAssetMenu}
+      >
+        <SheetContent side="bottom">
+          <div className="mx-auto w-full max-w-sm">
+            <SheetHeader className="space-y-0">
               <SheetTitle>Select an asset</SheetTitle>
               <SheetDescription>Display the state for all the coins</SheetDescription>
             </SheetHeader>
 
-            <div className='flex flex-row justify-center items-stretch gap-2 sm:gap-4 mt-5'>
+            <div className="flex flex-row justify-center items-stretch gap-2 sm:gap-4 mt-5">
               <Button
-                variant='outline'
+                variant="outline"
                 aria-label={`View the state of the coins in the ${exchangeConfig.quoteAsset} pair`}
-                className='flex flex-col h-20 w-full gap-y-1'
+                className="flex flex-col h-20 w-full gap-y-1"
                 onClick={() => displayDialog('quote')}
               >
-                <DollarSign aria-hidden='true' />
+                <DollarSign aria-hidden="true" />
                 <p>COINS/{exchangeConfig.quoteAsset}</p>
               </Button>
               <Button
-                variant='outline'
+                variant="outline"
                 aria-label={`View the state of the coins in the ${exchangeConfig.baseAsset} pair`}
-                className='flex flex-col h-20 w-full gap-y-1'
+                className="flex flex-col h-20 w-full gap-y-1"
                 onClick={() => displayDialog('base')}
               >
-                <Bitcoin aria-hidden='true' />
+                <Bitcoin aria-hidden="true" />
                 <p>COINS/{exchangeConfig.baseAsset}</p>
               </Button>
             </div>
@@ -119,26 +109,19 @@ const CoinsButton = ({
         </SheetContent>
       </Sheet>
 
-
-
       {/* ********
-        * DIALOG *
-        ******** */}
-      {
-        isDialogOpen
-        && <CoinsStateDialog
+       * DIALOG *
+       ******** */}
+      {isDialogOpen && (
+        <CoinsStateDialog
           asset={isDialogOpen}
           openSplitStatesDialog={openSplitStatesDialog}
           closeDialog={setIsDialogOpen}
         />
-      }
+      )}
     </>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

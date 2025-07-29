@@ -1,5 +1,3 @@
-
-
 /* ************************************************************************************************
  *                                             TYPES                                              *
  ************************************************************************************************ */
@@ -40,15 +38,7 @@ type IConfirmationDialogSlice = {
   closeConfirmationDialog: () => void;
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export type {
-  IConfirmationDialogMode,
-  IConfirmationDialogConfig,
-  IConfirmationDialogSlice,
-};
+export type { IConfirmationDialogMode, IConfirmationDialogConfig, IConfirmationDialogSlice };

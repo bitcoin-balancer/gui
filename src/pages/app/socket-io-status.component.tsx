@@ -1,11 +1,5 @@
 import { memo, useState, useEffect } from 'react';
-import {
-  HardDriveDownload,
-  Check,
-  CheckCheck,
-  Loader2,
-  Bug,
-} from 'lucide-react';
+import { HardDriveDownload, Check, CheckCheck, Loader2, Bug } from 'lucide-react';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
 import {
@@ -29,18 +23,12 @@ type ISocketIOStatus = {
   connectionError: string | undefined;
 };
 
-
-
-
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
  ************************************************************************************************ */
 
 // it will refetch the state of socket.io every REFETCH_FREQUENCY seconds
 const REFETCH_FREQUENCY = 5;
-
-
-
 
 /* ************************************************************************************************
  *                                            HELPERS                                             *
@@ -64,28 +52,24 @@ const getStatus = (): ISocketIOStatus => ({
  */
 const getNavIcon = (status: ISocketIOStatus): JSX.Element => {
   if (status.connected) {
-    return status.transport === 'websocket'
-      ? <CheckCheck
-        aria-hidden='true'
-        className='text-success w-5 h-5'
+    return status.transport === 'websocket' ? (
+      <CheckCheck
+        aria-hidden="true"
+        className="text-success w-5 h-5"
       />
-      : <Check
-        aria-hidden='true'
-        className='text-green-700 w-5 h-5'
-      />;
+    ) : (
+      <Check
+        aria-hidden="true"
+        className="text-green-700 w-5 h-5"
+      />
+    );
   }
-  return status.hasSocketInstance
-    ? <Loader2
-      className='animate-spin light-text w-5 h-5'
-    />
-    : <Bug
-      className='text-error w-5 h-5'
-    />;
+  return status.hasSocketInstance ? (
+    <Loader2 className="animate-spin light-text w-5 h-5" />
+  ) : (
+    <Bug className="text-error w-5 h-5" />
+  );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -102,10 +86,6 @@ const SocketIOStatus = memo(() => {
   const [status, setStatus] = useState<ISocketIOStatus>(getStatus());
   const [open, setOpen] = useState<boolean>(false);
 
-
-
-
-
   /* **********************************************************************************************
    *                                         SIDE EFFECTS                                         *
    ********************************************************************************************** */
@@ -119,10 +99,6 @@ const SocketIOStatus = memo(() => {
     return () => clearInterval(intervalID);
   }, []);
 
-
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
@@ -130,19 +106,23 @@ const SocketIOStatus = memo(() => {
   return (
     <>
       <Button
-        variant='ghost'
-        className='w-full justify-start'
+        variant="ghost"
+        className="w-full justify-start"
         onClick={() => setOpen(true)}
       >
         <HardDriveDownload
-          aria-hidden='true'
-          className='w-5 h-5 mr-2'
-        /> Socket.io
-        <span className='flex-1'></span>
+          aria-hidden="true"
+          className="w-5 h-5 mr-2"
+        />{' '}
+        Socket.io
+        <span className="flex-1"></span>
         {icon}
       </Button>
 
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog
+        open={open}
+        onOpenChange={setOpen}
+      >
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Socket IO</DialogTitle>
@@ -151,48 +131,39 @@ const SocketIOStatus = memo(() => {
             </DialogDescription>
           </DialogHeader>
 
-          <div className='flex justify-start items-center'>
-            <p className='text-light text-sm'>Connection</p>
-            <span className='flex-1'></span>
-            {
-              status.connected
-                ? <p
-                  className='text-success'
-                >Established</p>
-                : <p
-                  className='text-light'
-                >{status.hasSocketInstance ? 'Reconnecting...' : 'None'}</p>
-            }
+          <div className="flex justify-start items-center">
+            <p className="text-light text-sm">Connection</p>
+            <span className="flex-1"></span>
+            {status.connected ? (
+              <p className="text-success">Established</p>
+            ) : (
+              <p className="text-light">{status.hasSocketInstance ? 'Reconnecting...' : 'None'}</p>
+            )}
           </div>
 
-          <div className='flex justify-start items-center'>
-            <p className='text-light text-sm'>Transport</p>
-            <span className='flex-1'></span>
+          <div className="flex justify-start items-center">
+            <p className="text-light text-sm">Transport</p>
+            <span className="flex-1"></span>
             <Badge
-              variant='secondary'
-              className='text-sm'
-            >{status.transport}</Badge>
+              variant="secondary"
+              className="text-sm"
+            >
+              {status.transport}
+            </Badge>
           </div>
 
-          {
-            status.connectionError
-            && <div className='flex justify-start items-start'>
-              <p className='text-light text-sm min-w-20'>Error</p>
-              <span className='flex-1'></span>
-              <p
-                className='text-error text-right'
-              >{status.connectionError}</p>
+          {status.connectionError && (
+            <div className="flex justify-start items-start">
+              <p className="text-light text-sm min-w-20">Error</p>
+              <span className="flex-1"></span>
+              <p className="text-error text-right">{status.connectionError}</p>
             </div>
-          }
+          )}
         </DialogContent>
       </Dialog>
     </>
   );
 });
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

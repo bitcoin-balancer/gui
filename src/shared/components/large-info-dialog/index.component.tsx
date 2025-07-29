@@ -23,19 +23,21 @@ import { ISectionID, ISections } from '@/shared/components/large-info-dialog/typ
 const SECTIONS: ISections = {
   window: {
     title: 'Window',
-    description: 'Indicator used by Balancer to see Bitcoin\'s price and trend',
+    description: "Indicator used by Balancer to see Bitcoin's price and trend",
   },
   liquidity: {
     title: 'Liquidity',
-    description: 'Indicator used by Balancer to see Bitcoin\'s buy and sell orders',
+    description: "Indicator used by Balancer to see Bitcoin's buy and sell orders",
   },
   coins: {
     title: 'Coins',
-    description: 'Indicator used by Balancer to see the influx and outflux of capital in the market',
+    description:
+      'Indicator used by Balancer to see the influx and outflux of capital in the market',
   },
   reversal: {
     title: 'Reversal',
-    description: 'Indicator used by Balancer to measure the probability of the price reversing after a price crash',
+    description:
+      'Indicator used by Balancer to measure the probability of the price reversing after a price crash',
   },
   strategy: {
     title: 'Strategy',
@@ -46,10 +48,6 @@ const SECTIONS: ISections = {
     description: 'Legal agreements between you and Balancer',
   },
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -66,20 +64,12 @@ const LargeInfoDialog = ({ data }: { data: ISectionID }) => {
   const closeLargeInfoDialog = useBoundStore((state) => state.closeLargeInfoDialog);
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeLargeInfoDialog);
 
-
-
-
-
   /* **********************************************************************************************
    *                                       REACTIVE VALUES                                        *
    ********************************************************************************************** */
 
   // the section that will be displayed
   const section = SECTIONS[data];
-
-
-
-
 
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
@@ -89,46 +79,31 @@ const LargeInfoDialog = ({ data }: { data: ISectionID }) => {
       open={isDialogOpen}
       onOpenChange={handleCloseDialog}
     >
-      <DialogContent
-        className='max-w-[900px]'
-      >
-
+      <DialogContent className="max-w-[900px]">
         {/* ***************
-          * DIALOG HEADER *
-          *************** */}
+         * DIALOG HEADER *
+         *************** */}
         <DialogHeader>
-
-          <DialogTitle className='text-xl'>{section.title}</DialogTitle>
+          <DialogTitle className="text-xl">{section.title}</DialogTitle>
           <DialogDescription>{section.description}</DialogDescription>
-
         </DialogHeader>
 
-
-
         {/* ****************
-          * DIALOG CONTENT *
-          **************** */}
-        { data === 'window' && <Window />}
-        { data === 'liquidity' && <Liquidity />}
-        { data === 'coins' && <Coins />}
-        { data === 'reversal' && <Reversal />}
-        { data === 'strategy' && <Strategy />}
-        { data === 'terms' && <Terms />}
-
+         * DIALOG CONTENT *
+         **************** */}
+        {data === 'window' && <Window />}
+        {data === 'liquidity' && <Liquidity />}
+        {data === 'coins' && <Coins />}
+        {data === 'reversal' && <Reversal />}
+        {data === 'strategy' && <Strategy />}
+        {data === 'terms' && <Terms />}
       </DialogContent>
-
     </Dialog>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
 export default LargeInfoDialog;
-export type {
-  ISectionID,
-};
+export type { ISectionID };

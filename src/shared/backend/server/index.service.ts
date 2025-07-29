@@ -1,6 +1,10 @@
 import { BrowserCache } from 'browser-cache-async';
 import { APIService } from '@/shared/backend/api/index.service.ts';
-import { IServerService, IAlarmsConfiguration, IServerState } from '@/shared/backend/server/types.ts';
+import {
+  IServerService,
+  IAlarmsConfiguration,
+  IServerState,
+} from '@/shared/backend/server/types.ts';
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -20,10 +24,6 @@ const serverServiceFactory = (): IServerService => {
   // the instance of the state's cache
   const __serverStateCache = new BrowserCache<IServerState>('server-state');
 
-
-
-
-
   /* **********************************************************************************************
    *                                            STATE                                             *
    ********************************************************************************************** */
@@ -32,19 +32,11 @@ const serverServiceFactory = (): IServerService => {
    * Retrieves the current state of the server.
    * @returns Promise<IServerState>
    */
-  const getState = (): Promise<IServerState> => __serverStateCache.run({
-    query: () => APIService.request(
-      'GET',
-      'server',
-      undefined,
-      true,
-    ),
-    revalidate: '1 minute',
-  });
-
-
-
-
+  const getState = (): Promise<IServerState> =>
+    __serverStateCache.run({
+      query: () => APIService.request('GET', 'server', undefined, true),
+      revalidate: '1 minute',
+    });
 
   /* **********************************************************************************************
    *                                     ALARMS CONFIGURATION                                     *
@@ -54,12 +46,8 @@ const serverServiceFactory = (): IServerService => {
    * Retrieves the server alarms' configuration.
    * @returns Promise<IAlarmsConfiguration>
    */
-  const getAlarms = (): Promise<IAlarmsConfiguration> => APIService.request(
-    'GET',
-    'server/alarms',
-    undefined,
-    true,
-  );
+  const getAlarms = (): Promise<IAlarmsConfiguration> =>
+    APIService.request('GET', 'server/alarms', undefined, true);
 
   /**
    * Validates and updates the alarms' configuration.
@@ -71,19 +59,8 @@ const serverServiceFactory = (): IServerService => {
    * - 8252: if the maxMemoryUsage is invalid
    * - 8253: if the maxCPULoad is invalid
    */
-  const updateAlarms = (newConfig: IAlarmsConfiguration, otpToken: string): Promise<void> => (
-    APIService.request(
-      'PUT',
-      'server/alarms',
-      { newConfig },
-      true,
-      otpToken,
-    )
-  );
-
-
-
-
+  const updateAlarms = (newConfig: IAlarmsConfiguration, otpToken: string): Promise<void> =>
+    APIService.request('PUT', 'server/alarms', { newConfig }, true, otpToken);
 
   /* **********************************************************************************************
    *                                         MODULE BUILD                                         *
@@ -101,18 +78,10 @@ const serverServiceFactory = (): IServerService => {
   });
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                        GLOBAL INSTANCE                                         *
  ************************************************************************************************ */
 const ServerService = serverServiceFactory();
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

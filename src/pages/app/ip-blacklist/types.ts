@@ -10,26 +10,22 @@ type IAction = {
   type: IActionType;
 } & (
   | {
-    type: 'REGISTER_IP';
-    payload: IIPBlacklistRecord;
-  }
+      type: 'REGISTER_IP';
+      payload: IIPBlacklistRecord;
+    }
   | {
-    type: 'UPDATE_REGISTRATION';
-    payload: { id: number, ip: string, notes: string | undefined };
-  }
+      type: 'UPDATE_REGISTRATION';
+      payload: { id: number; ip: string; notes: string | undefined };
+    }
   | {
-    type: 'UNREGISTER_IP';
-    payload: number;
-  }
+      type: 'UNREGISTER_IP';
+      payload: number;
+    }
   | {
-    type: 'LOADED_MORE';
-    payload: IIPBlacklistRecord[];
-  }
+      type: 'LOADED_MORE';
+      payload: IIPBlacklistRecord[];
+    }
 );
-
-
-
-
 
 /* ************************************************************************************************
  *                                         RECORD FORM                                            *
@@ -53,10 +49,6 @@ type IRecordFormInputs = {
   ip: string;
   notes: string;
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

@@ -1,10 +1,5 @@
 import { memo, useState, useEffect } from 'react';
-import {
-  Braces,
-  CircleCheck,
-  CircleX,
-  Loader2,
-} from 'lucide-react';
+import { Braces, CircleCheck, CircleX, Loader2 } from 'lucide-react';
 import {
   Dialog,
   DialogTrigger,
@@ -34,12 +29,9 @@ import PageLoader from '@/shared/components/page-loader/index.component.tsx';
 const LOG_ACTIONS: Record<ITransactionActionName, string> = {
   INITIAL_BALANCES: 'Retrieve a snapshot of the balances from the exchange',
   EXECUTION: 'Build and send the transaction to the exchange',
-  CONFIRMATION: 'Retrieve another balance snapshot from the exchange and compare it against the initial one',
+  CONFIRMATION:
+    'Retrieve another balance snapshot from the exchange and compare it against the initial one',
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                            HELPERS                                             *
@@ -53,11 +45,26 @@ const LOG_ACTIONS: Record<ITransactionActionName, string> = {
 const getStatusIcon = (status: ITransactionStatus | undefined): JSX.Element => {
   switch (status) {
     case 'SUCCEEDED':
-      return <CircleCheck aria-hidden='true' className='ml-2 h-5 w-5 text-success' />;
+      return (
+        <CircleCheck
+          aria-hidden="true"
+          className="ml-2 h-5 w-5 text-success"
+        />
+      );
     case 'FAILED':
-      return <CircleX aria-hidden='true' className='ml-2 h-5 w-5 text-error' />;
+      return (
+        <CircleX
+          aria-hidden="true"
+          className="ml-2 h-5 w-5 text-error"
+        />
+      );
     default:
-      return <Loader2 aria-hidden='true' className='ml-2 h-4 w-4 animate-spin' />;
+      return (
+        <Loader2
+          aria-hidden="true"
+          className="ml-2 h-4 w-4 animate-spin"
+        />
+      );
   }
 };
 
@@ -93,10 +100,6 @@ const getStatusDescription = (status: ITransactionStatus | undefined): string =>
   }
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
@@ -115,10 +118,6 @@ const TransactionDialog = memo(({ data }: { data: number | ITransaction }) => {
   const closeTransactionDialog = useBoundStore((state) => state.closeTransactionDialog);
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeTransactionDialog);
 
-
-
-
-
   /* **********************************************************************************************
    *                                         SIDE EFFECTS                                         *
    ********************************************************************************************** */
@@ -126,133 +125,111 @@ const TransactionDialog = memo(({ data }: { data: number | ITransaction }) => {
   /**
    * Retrieves and sets the requested tx. If the record was passed, it sets it right away.
    */
-  useEffect(
-    () => {
-      let ignore = false;
+  useEffect(() => {
+    let ignore = false;
 
-      const fetchPosition = async () => {
-        try {
-          const value = typeof data === 'number' ? await TransactionService.getTransaction(data) : data;
-          if (!ignore) {
-            setTX(value);
-            setLoading(false);
-            setError(undefined);
-          }
-        } catch (e) {
-          setError(e as Error);
+    const fetchPosition = async () => {
+      try {
+        const value =
+          typeof data === 'number' ? await TransactionService.getTransaction(data) : data;
+        if (!ignore) {
+          setTX(value);
+          setLoading(false);
+          setError(undefined);
         }
-      };
+      } catch (e) {
+        setError(e as Error);
+      }
+    };
 
-      fetchPosition();
+    fetchPosition();
 
-      return () => { ignore = true; };
-    },
-    [data],
-  );
-
-
-
-
+    return () => {
+      ignore = true;
+    };
+  }, [data]);
 
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   let content;
   if (error) {
-    content = <PageLoadError variant='dialog' error={error} />;
+    content = (
+      <PageLoadError
+        variant="dialog"
+        error={error}
+      />
+    );
   } else if (loading) {
-    content = <PageLoader variant='dialog' />;
+    content = <PageLoader variant="dialog" />;
   } else {
     content = (
       <article>
-        <div
-          className='flex justify-center items-start'
-        >
-          <p
-            className='text-light text-sm'
-          >ID</p>
-          <span className='flex-1'></span>
+        <div className="flex justify-center items-start">
+          <p className="text-light text-sm">ID</p>
+          <span className="flex-1"></span>
           <p>{tx!.id}</p>
         </div>
 
-        <div
-          className='flex justify-center items-start mt-5'
-        >
-          <p
-            className='text-light text-sm'
-          >Event time</p>
-          <span className='flex-1'></span>
-          <p
-              className='max-w-[50%] sm:max-w-[70%] truncate'
-            >{formatDate(tx!.event_time, 'datetime-medium')}</p>
+        <div className="flex justify-center items-start mt-5">
+          <p className="text-light text-sm">Event time</p>
+          <span className="flex-1"></span>
+          <p className="max-w-[50%] sm:max-w-[70%] truncate">
+            {formatDate(tx!.event_time, 'datetime-medium')}
+          </p>
         </div>
 
-        <div
-          className='flex justify-center items-start mt-5'
-        >
-          <p
-            className='text-light text-sm'
-          >Amount</p>
-          <span className='flex-1'></span>
+        <div className="flex justify-center items-start mt-5">
+          <p className="text-light text-sm">Amount</p>
+          <span className="flex-1"></span>
           <p>{formatBitcoinAmount(tx!.amount)}</p>
         </div>
 
-        <div className='relative border-l border-gray-200 mt-5'>
+        <div className="relative border-l border-gray-200 mt-5">
           {tx!.logs.map((log, i) => (
             <div
               key={i}
-              className='mb-8 last:mb-0 ml-4'
+              className="mb-8 last:mb-0 ml-4"
             >
-              {
-                log.payload !== undefined
-                && <Dialog>
+              {log.payload !== undefined && (
+                <Dialog>
                   <DialogTrigger asChild>
                     <Button
-                      variant='outline'
-                      size='icon'
-                      className='float-right mt-1'
+                      variant="outline"
+                      size="icon"
+                      className="float-right mt-1"
                     >
-                      <Braces aria-hidden='true' className='w-4 h-4' />
+                      <Braces
+                        aria-hidden="true"
+                        className="w-4 h-4"
+                      />
                     </Button>
                   </DialogTrigger>
 
-                  <DialogContent
-                    className='max-w-[550px]'
-                  >
+                  <DialogContent className="max-w-[550px]">
                     <DialogHeader>
                       <DialogTitle>{log.action}</DialogTitle>
                       <DialogDescription></DialogDescription>
                     </DialogHeader>
-                    <div
-                      className='overflow-x-auto p-5 rounded-lg bg-slate-900 text-slate-50 text-sm'
-                    >
-                      <pre>
-                        {JSON.stringify(log.payload, null, 2)}
-                      </pre>
+                    <div className="overflow-x-auto p-5 rounded-lg bg-slate-900 text-slate-50 text-sm">
+                      <pre>{JSON.stringify(log.payload, null, 2)}</pre>
                     </div>
                   </DialogContent>
                 </Dialog>
-              }
+              )}
 
               <div
                 className={`absolute w-3 h-3 rounded-full mt-1.5 -left-1.5 border border-white ${log.outcome ? 'bg-success' : 'bg-error'}`}
               ></div>
-              <time
-                className='text-sm font-semibold leading-none text-light'>
-                  {formatDate(log.eventTime, 'datetime-medium')}
+              <time className="text-sm font-semibold leading-none text-light">
+                {formatDate(log.eventTime, 'datetime-medium')}
               </time>
-              <h3
-                className='text-sm font-semibold'
-              >{log.action}</h3>
-              {
-                log.error === undefined
-                  ? <p
-                    className='text-sm font-normal text-light'
-                  >{LOG_ACTIONS[log.action]}</p>
-                  : <p
-                    className='text-sm font-normal text-error'
-                  >{log.error}</p>
-              }
+              <h3 className="text-sm font-semibold">{log.action}</h3>
+              {log.error === undefined ? (
+                <p className="text-sm font-normal text-light">{LOG_ACTIONS[log.action]}</p>
+              ) : (
+                <p className="text-sm font-normal text-error">{log.error}</p>
+              )}
             </div>
           ))}
         </div>
@@ -265,30 +242,21 @@ const TransactionDialog = memo(({ data }: { data: number | ITransaction }) => {
       onOpenChange={handleCloseDialog}
     >
       <DialogContent>
-
         <DialogHeader>
-          <div
-            className='flex justify-center sm:justify-start items-center'
-          >
+          <div className="flex justify-center sm:justify-start items-center">
             <DialogTitle>{tx?.side === 'BUY' ? 'Increase' : 'Decrease'} Transaction</DialogTitle>
             {getStatusIcon(tx?.status)}
           </div>
-          <DialogDescription
-            className={getStatusClass(tx?.status)}
-          >{getStatusDescription(tx?.status)}</DialogDescription>
+          <DialogDescription className={getStatusClass(tx?.status)}>
+            {getStatusDescription(tx?.status)}
+          </DialogDescription>
         </DialogHeader>
 
         {content}
-
       </DialogContent>
-
     </Dialog>
   );
 });
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

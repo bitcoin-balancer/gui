@@ -1,12 +1,6 @@
 import { subMonths, subYears } from 'date-fns';
 import { useMemo, useState, Fragment } from 'react';
-import {
-  Calendar,
-  List,
-  DollarSign,
-  HandCoins,
-  Percent,
-} from 'lucide-react';
+import { Calendar, List, DollarSign, HandCoins, Percent } from 'lucide-react';
 import { isArrayValid, prettifyBadgeCount } from 'web-utils-kit';
 import { calculateMean, getBigNumber, processValue } from 'bignumber-utils';
 import {
@@ -25,12 +19,7 @@ import {
 } from '@/shared/shadcn/components/ui/dialog.tsx';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Badge } from '@/shared/shadcn/components/ui/badge.tsx';
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-} from '@/shared/shadcn/components/ui/card.tsx';
+import { Card, CardHeader, CardTitle, CardContent } from '@/shared/shadcn/components/ui/card.tsx';
 import { Separator } from '@/shared/shadcn/components/ui/separator.tsx';
 import {
   formatDollarAmount,
@@ -46,11 +35,7 @@ import PageLoadError from '@/shared/components/page-load-error/index.component.t
 import NoRecords from '@/shared/components/no-records/index.component.tsx';
 import LineChart from '@/shared/components/charts/line-chart/index.component.tsx';
 import PositionButton from '@/shared/components/position-button/index.component.tsx';
-import {
-  IDateRange,
-  IDateRangeID,
-  IProcessedPositions,
-} from '@/pages/app/positions/types.ts';
+import { IDateRange, IDateRangeID, IProcessedPositions } from '@/pages/app/positions/types.ts';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
@@ -67,10 +52,6 @@ const DATE_RANGES: IDateRange[] = [
   { id: '4y', label: '4 years' },
   { id: '5y', label: '5 years' },
 ];
-
-
-
-
 
 /* ************************************************************************************************
  *                                            HELPERS                                             *
@@ -165,10 +146,6 @@ const processPositions = (positions: ICompactPosition[] | undefined): IProcessed
   };
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
@@ -182,18 +159,16 @@ const Positions = () => {
    *                                             STATE                                            *
    ********************************************************************************************** */
   const [range, setRange] = useState<IDateRange>({ id: '1y', label: '1 year' });
-  const { data, loading, error } = useAPIFetch(useMemo(
-    () => ({
-      fetchFn: () => PositionService.listCompactPositionsByRange(calculateStartAt(range.id)),
-    }),
-    [range],
-  ));
+  const { data, loading, error } = useAPIFetch(
+    useMemo(
+      () => ({
+        fetchFn: () => PositionService.listCompactPositionsByRange(calculateStartAt(range.id)),
+      }),
+      [range],
+    ),
+  );
   const [activeChart, setActiveChart] = useState<'pnl' | 'roi' | 'investments'>('pnl');
   const breakpoint = useMediaQueryBreakpoint();
-
-
-
-
 
   /* **********************************************************************************************
    *                                       REACTIVE VALUES                                        *
@@ -209,10 +184,6 @@ const Positions = () => {
    */
   const processed = useMemo(() => processPositions(data), [data]);
 
-
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
@@ -223,297 +194,244 @@ const Positions = () => {
     return <PageLoader />;
   }
   return (
-    <div
-      className='page-container flex justify-center items-start animate-in fade-in duration-700'
-    >
-      <section
-        className='w-full lg:w-10/12 xl:w-9/12 2xl:w-8/12'
-      >
+    <div className="page-container flex justify-center items-start animate-in fade-in duration-700">
+      <section className="w-full lg:w-10/12 xl:w-9/12 2xl:w-8/12">
         {/* ********
-          * HEADER *
-          ******** */}
-          <header
-            className='flex justify-start items-center'
-          >
-            <h1
-              className='text-2xl font-semibold leading-none tracking-tight'
-            >Positions</h1>
-            {
-              processed.pnlChart.length > 0
-              && <Badge
-                className='ml-1 -mt-4'
-              >
-                {prettifyBadgeCount(processed.pnlChart.length, 99)}
-              </Badge>
-            }
+         * HEADER *
+         ******** */}
+        <header className="flex justify-start items-center">
+          <h1 className="text-2xl font-semibold leading-none tracking-tight">Positions</h1>
+          {processed.pnlChart.length > 0 && (
+            <Badge className="ml-1 -mt-4">
+              {prettifyBadgeCount(processed.pnlChart.length, 99)}
+            </Badge>
+          )}
 
-            <span className='flex-1'></span>
+          <span className="flex-1"></span>
 
-            {/* *********
-              * RECORDS *
-              ********* */}
-            <Dialog>
-              <DialogTrigger asChild>
-              {
-                  (breakpoint === 'xs' || breakpoint === 'sm')
-                    ? <Button
-                      variant='outline'
-                      size='icon'
-                      className='mr-2'
-                    >
-                      <List className='w-5 h-5' aria-hidden='true' />
-                    </Button>
-                    : <Button
-                      variant='outline'
-                      className='mr-2'
-                    >
-                      <List className='mr-1 w-5 h-5' aria-hidden='true' />
-                      Records
-                    </Button>
-                }
-              </DialogTrigger>
-              <DialogContent className='p-0'>
-                <DialogHeader className='p-6 pb-0'>
-                  <DialogTitle>Positions</DialogTitle>
-                  <DialogDescription>
-                    List of records within the range
-                  </DialogDescription>
-                </DialogHeader>
+          {/* *********
+           * RECORDS *
+           ********* */}
+          <Dialog>
+            <DialogTrigger asChild>
+              {breakpoint === 'xs' || breakpoint === 'sm' ? (
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="mr-2"
+                >
+                  <List
+                    className="w-5 h-5"
+                    aria-hidden="true"
+                  />
+                </Button>
+              ) : (
+                <Button
+                  variant="outline"
+                  className="mr-2"
+                >
+                  <List
+                    className="mr-1 w-5 h-5"
+                    aria-hidden="true"
+                  />
+                  Records
+                </Button>
+              )}
+            </DialogTrigger>
+            <DialogContent className="p-0">
+              <DialogHeader className="p-6 pb-0">
+                <DialogTitle>Positions</DialogTitle>
+                <DialogDescription>List of records within the range</DialogDescription>
+              </DialogHeader>
 
-                <div>
-                  {
-                    records.length > 0
-                      ? records.map((record, i) => (
-                        <Fragment key={record.id}>
-                          <PositionButton record={record} />
-                          {i < data.length - 1 && <Separator />}
-                        </Fragment>
-                      ))
-                      : <NoRecords />
-                  }
-                </div>
-              </DialogContent>
-            </Dialog>
+              <div>
+                {records.length > 0 ? (
+                  records.map((record, i) => (
+                    <Fragment key={record.id}>
+                      <PositionButton record={record} />
+                      {i < data.length - 1 && <Separator />}
+                    </Fragment>
+                  ))
+                ) : (
+                  <NoRecords />
+                )}
+              </div>
+            </DialogContent>
+          </Dialog>
 
-            {/* ************
-              * RANGE MENU *
-              ************ */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                {
-                  (breakpoint === 'xs' || breakpoint === 'sm')
-                    ? <Button
-                      size='icon'
-                      disabled={processed.pnlChart.length === 0}
-                    >
-                      <Calendar className='w-5 h-5' aria-hidden='true' />
-                    </Button>
-                    : <Button
-                      disabled={processed.pnlChart.length === 0}
-                    >
-                      <Calendar className='mr-1 w-5 h-5' aria-hidden='true' />
-                      {range.label}
-                    </Button>
-                }
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                {DATE_RANGES.map((dateRange) => (
-                  <DropdownMenuItem
-                    key={dateRange.id}
-                    onClick={() => setRange(dateRange)}
-                    disabled={range.id === dateRange.id}
-                  >
-                    {dateRange.label}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </header>
-
-
+          {/* ************
+           * RANGE MENU *
+           ************ */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              {breakpoint === 'xs' || breakpoint === 'sm' ? (
+                <Button
+                  size="icon"
+                  disabled={processed.pnlChart.length === 0}
+                >
+                  <Calendar
+                    className="w-5 h-5"
+                    aria-hidden="true"
+                  />
+                </Button>
+              ) : (
+                <Button disabled={processed.pnlChart.length === 0}>
+                  <Calendar
+                    className="mr-1 w-5 h-5"
+                    aria-hidden="true"
+                  />
+                  {range.label}
+                </Button>
+              )}
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              {DATE_RANGES.map((dateRange) => (
+                <DropdownMenuItem
+                  key={dateRange.id}
+                  onClick={() => setRange(dateRange)}
+                  disabled={range.id === dateRange.id}
+                >
+                  {dateRange.label}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </header>
 
         {/* *********
-          * CONTENT *
-          ********* */}
-        <article
-          className='mt-5'
-        >
-          {
-            processed.pnlChart.length > 0
-              ? <>
-                <header
-                  className='flex flex-col sm:flex-row justify-center items-center gap-4'
+         * CONTENT *
+         ********* */}
+        <article className="mt-5">
+          {processed.pnlChart.length > 0 ? (
+            <>
+              <header className="flex flex-col sm:flex-row justify-center items-center gap-4">
+                {/* *****
+                 * PNL *
+                 ***** */}
+                <button
+                  onClick={() => setActiveChart('pnl')}
+                  disabled={activeChart === 'pnl'}
+                  className="flex-1 w-full text-left"
                 >
-
-                  {/* *****
-                    * PNL *
-                    ***** */}
-                  <button
-                    onClick={() => setActiveChart('pnl')}
-                    disabled={activeChart === 'pnl'}
-                    className='flex-1 w-full text-left'
+                  <Card
+                    className={`border-solid shadow-sm hover:bg-slate-50 ${activeChart === 'pnl' ? 'bg-slate-50 cursor-not-allowed' : ''}`}
                   >
-                    <Card
-                      className={`border-solid shadow-sm hover:bg-slate-50 ${activeChart === 'pnl' ? 'bg-slate-50 cursor-not-allowed' : ''}`}
-                    >
-                      <CardHeader
-                        className='p-4 flex flex-row items-center justify-between'
-                      >
-                        <CardTitle
-                          className='text-base font-medium'
-                        >
-                          PNL
-                        </CardTitle>
+                    <CardHeader className="p-4 flex flex-row items-center justify-between">
+                      <CardTitle className="text-base font-medium">PNL</CardTitle>
 
-                        <HandCoins
-                          aria-hidden='true'
-                          className='h-5 w-5 md:h-6 md:w-6'
-                        />
-                      </CardHeader>
+                      <HandCoins
+                        aria-hidden="true"
+                        className="h-5 w-5 md:h-6 md:w-6"
+                      />
+                    </CardHeader>
 
-                      <CardContent
-                        className='p-4'
-                      >
-                        <p
-                          className={`text-2xl font-bold ${processed.pnlClass} truncate`}
-                        >{processed.pnl}</p>
-                      </CardContent>
-                    </Card>
-                  </button>
+                    <CardContent className="p-4">
+                      <p className={`text-2xl font-bold ${processed.pnlClass} truncate`}>
+                        {processed.pnl}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </button>
 
-                  {/* *****
-                    * ROI *
-                    ***** */}
-                  <button
-                    onClick={() => setActiveChart('roi')}
-                    disabled={activeChart === 'roi'}
-                      className='flex-1 w-full text-left'
-                  >
-                    <Card
-                      className={`border-solid shadow-sm hover:bg-slate-50 ${activeChart === 'roi' ? 'bg-slate-50 cursor-not-allowed' : ''}`}
-                    >
-                      <CardHeader
-                        className='p-4 flex flex-row items-center justify-between'
-                      >
-                        <CardTitle
-                          className='text-base font-medium truncate'
-                        >
-                          Avg. ROI
-                        </CardTitle>
-
-                        <Percent
-                          aria-hidden='true'
-                          className='h-5 w-5 md:h-6 md:w-6'
-                        />
-                      </CardHeader>
-
-                      <CardContent
-                        className='p-4'
-                      >
-                        <p
-                          className={`text-2xl font-bold ${processed.roiClass} truncate`}
-                        >
-                          {processed.roi}
-                        </p>
-                      </CardContent>
-                    </Card>
-                  </button>
-
-                  {/* *************
-                    * INVESTMENTS *
-                    ************* */}
-                  <button
-                    onClick={() => setActiveChart('investments')}
-                    disabled={activeChart === 'investments'}
-                    className='flex-1 w-full text-left'
-                  >
-                    <Card
-                      className={`border-solid shadow-sm hover:bg-slate-50 ${activeChart === 'investments' ? 'bg-slate-50 cursor-not-allowed' : ''}`}
-                    >
-                      <CardHeader
-                        className='p-4 flex flex-row items-center justify-between'
-                      >
-                        <CardTitle
-                          className='text-base font-medium truncate'
-                        >
-                          Avg. Investment
-                        </CardTitle>
-
-                        <DollarSign
-                          aria-hidden='true'
-                          className='h-5 w-5 md:h-6 md:w-6'
-                        />
-                      </CardHeader>
-
-                      <CardContent
-                        className='p-4'
-                      >
-                        <p
-                          className='text-2xl font-bold'
-                        >
-                          {processed.investments}
-                        </p>
-                      </CardContent>
-                    </Card>
-                  </button>
-                </header>
-
-                <div
-                  className='mt-5'
+                {/* *****
+                 * ROI *
+                 ***** */}
+                <button
+                  onClick={() => setActiveChart('roi')}
+                  disabled={activeChart === 'roi'}
+                  className="flex-1 w-full text-left"
                 >
-                  {
-                    activeChart === 'pnl'
-                    && <div
-                      className='animate-in fade-in duration-700'
-                    >
-                      <LineChart
-                        kind='area'
-                        height={breakpoint === 'xs' || breakpoint === 'sm' ? 350 : 450}
-                        data={processed.pnlChart}
-                        state={processed.pnlState}
-                      />
-                    </div>
-                  }
+                  <Card
+                    className={`border-solid shadow-sm hover:bg-slate-50 ${activeChart === 'roi' ? 'bg-slate-50 cursor-not-allowed' : ''}`}
+                  >
+                    <CardHeader className="p-4 flex flex-row items-center justify-between">
+                      <CardTitle className="text-base font-medium truncate">Avg. ROI</CardTitle>
 
-                  {
-                    activeChart === 'roi'
-                    && <div
-                      className='animate-in fade-in duration-700'
-                    >
-                      <LineChart
-                        kind='area'
-                        height={breakpoint === 'xs' || breakpoint === 'sm' ? 350 : 450}
-                        data={processed.roiChart}
-                        state={processed.roiState}
+                      <Percent
+                        aria-hidden="true"
+                        className="h-5 w-5 md:h-6 md:w-6"
                       />
-                    </div>
-                  }
+                    </CardHeader>
 
-                  {
-                    activeChart === 'investments'
-                    && <div
-                      className='animate-in fade-in duration-700'
-                    >
-                      <LineChart
-                        kind='area'
-                        height={breakpoint === 'xs' || breakpoint === 'sm' ? 350 : 450}
-                        data={processed.investmentsChart}
+                    <CardContent className="p-4">
+                      <p className={`text-2xl font-bold ${processed.roiClass} truncate`}>
+                        {processed.roi}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </button>
+
+                {/* *************
+                 * INVESTMENTS *
+                 ************* */}
+                <button
+                  onClick={() => setActiveChart('investments')}
+                  disabled={activeChart === 'investments'}
+                  className="flex-1 w-full text-left"
+                >
+                  <Card
+                    className={`border-solid shadow-sm hover:bg-slate-50 ${activeChart === 'investments' ? 'bg-slate-50 cursor-not-allowed' : ''}`}
+                  >
+                    <CardHeader className="p-4 flex flex-row items-center justify-between">
+                      <CardTitle className="text-base font-medium truncate">
+                        Avg. Investment
+                      </CardTitle>
+
+                      <DollarSign
+                        aria-hidden="true"
+                        className="h-5 w-5 md:h-6 md:w-6"
                       />
-                    </div>
-                  }
-                </div>
-              </>
-              : <NoRecords />
-          }
+                    </CardHeader>
+
+                    <CardContent className="p-4">
+                      <p className="text-2xl font-bold">{processed.investments}</p>
+                    </CardContent>
+                  </Card>
+                </button>
+              </header>
+
+              <div className="mt-5">
+                {activeChart === 'pnl' && (
+                  <div className="animate-in fade-in duration-700">
+                    <LineChart
+                      kind="area"
+                      height={breakpoint === 'xs' || breakpoint === 'sm' ? 350 : 450}
+                      data={processed.pnlChart}
+                      state={processed.pnlState}
+                    />
+                  </div>
+                )}
+
+                {activeChart === 'roi' && (
+                  <div className="animate-in fade-in duration-700">
+                    <LineChart
+                      kind="area"
+                      height={breakpoint === 'xs' || breakpoint === 'sm' ? 350 : 450}
+                      data={processed.roiChart}
+                      state={processed.roiState}
+                    />
+                  </div>
+                )}
+
+                {activeChart === 'investments' && (
+                  <div className="animate-in fade-in duration-700">
+                    <LineChart
+                      kind="area"
+                      height={breakpoint === 'xs' || breakpoint === 'sm' ? 350 : 450}
+                      data={processed.investmentsChart}
+                    />
+                  </div>
+                )}
+              </div>
+            </>
+          ) : (
+            <NoRecords />
+          )}
         </article>
       </section>
     </div>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

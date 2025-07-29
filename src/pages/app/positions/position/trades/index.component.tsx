@@ -1,17 +1,5 @@
-import {
-  memo,
-  useCallback,
-  useMemo,
-  useState,
-} from 'react';
-import {
-  ArrowLeftRight,
-  EllipsisVertical,
-  Menu,
-  Pencil,
-  Plus,
-  Trash,
-} from 'lucide-react';
+import { memo, useCallback, useMemo, useState } from 'react';
+import { ArrowLeftRight, EllipsisVertical, Menu, Pencil, Plus, Trash } from 'lucide-react';
 import { getBigNumber } from 'bignumber-utils';
 import { Button } from '@/shared/shadcn/components/ui/button.tsx';
 import { Card, CardContent } from '@/shared/shadcn/components/ui/card.tsx';
@@ -75,9 +63,10 @@ const buildMetadata = (trades: ITrade[]): ITradeMetadata[] => {
         event_time: formatDate(trade.event_time, 'datetime-medium'),
         price: formatDollarAmount(trade.price),
         amount: formatBitcoinAmount(trade.amount),
-        comission: trade.side === 'BUY'
-          ? formatBitcoinAmount(trade.comission)
-          : formatDollarAmount(trade.comission),
+        comission:
+          trade.side === 'BUY'
+            ? formatBitcoinAmount(trade.comission)
+            : formatDollarAmount(trade.comission),
         positionAmount: formatBitcoinAmount(positionAmount.toNumber()),
       });
     });
@@ -85,10 +74,6 @@ const buildMetadata = (trades: ITrade[]): ITradeMetadata[] => {
   }
   return [];
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -102,26 +87,19 @@ const Trades = memo(({ position, setSidenavOpen, refetchPosition }: IPositionCom
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const {
-    data,
-    setData,
-    loading,
-    error,
-  } = useAPIFetch(useMemo(
-    () => ({
-      fetchFn: () => PositionService.listPositionTrades(position.id),
-    }),
-    [position.id],
-  ));
+  const { data, setData, loading, error } = useAPIFetch(
+    useMemo(
+      () => ({
+        fetchFn: () => PositionService.listPositionTrades(position.id),
+      }),
+      [position.id],
+    ),
+  );
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
   const openPositionDialog = useBoundStore((state) => state.openPositionDialog);
   const [activeDialog, setActiveDialog] = useState<IDialogRecord>();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const { authority } = useBoundStore((state) => state.user!);
-
-
-
-
 
   /* **********************************************************************************************
    *                                       REACTIVE VALUES                                        *
@@ -129,10 +107,6 @@ const Trades = memo(({ position, setSidenavOpen, refetchPosition }: IPositionCom
 
   // trades' metadata
   const metadata = useMemo(() => buildMetadata(data), [data]);
-
-
-
-
 
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
@@ -175,10 +149,6 @@ const Trades = memo(({ position, setSidenavOpen, refetchPosition }: IPositionCom
     });
   };
 
-
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
@@ -190,244 +160,223 @@ const Trades = memo(({ position, setSidenavOpen, refetchPosition }: IPositionCom
   }
   return (
     <>
-      <div
-        className='page-container flex justify-center items-start animate-in fade-in duration-700'
-      >
-
-        <section
-          className='w-full xl:w-11/12 2xl:w-9/12'
-        >
+      <div className="page-container flex justify-center items-start animate-in fade-in duration-700">
+        <section className="w-full xl:w-11/12 2xl:w-9/12">
           {/* ********
-            * HEADER *
-            ******** */}
-          <header
-            className='flex justify-start items-center mb-5'
-          >
+           * HEADER *
+           ******** */}
+          <header className="flex justify-start items-center mb-5">
             <Button
-              variant='ghost'
-              size='icon'
-              className='mr-2 lg:hidden'
+              variant="ghost"
+              size="icon"
+              className="mr-2 lg:hidden"
               onClick={() => setSidenavOpen(true)}
-              aria-label='Open Side Navigation'
-            ><Menu aria-hidden='true' /></Button>
+              aria-label="Open Side Navigation"
+            >
+              <Menu aria-hidden="true" />
+            </Button>
 
-            <h1
-              className='text-2xl font-semibold leading-none tracking-tight'
-            >Trades</h1>
-            <span className='flex-1'></span>
-
-
+            <h1 className="text-2xl font-semibold leading-none tracking-tight">Trades</h1>
+            <span className="flex-1"></span>
 
             {/* *****************
-              * DESKTOP ACTIONS *
-              ***************** */}
+             * DESKTOP ACTIONS *
+             ***************** */}
             <Button
-              variant='outline'
+              variant="outline"
               disabled={isSubmitting}
               onClick={() => openPositionDialog(position)}
-              className='mr-2 hidden sm:flex'
-              aria-label='Display position'
+              className="mr-2 hidden sm:flex"
+              aria-label="Display position"
             >
               <ArrowLeftRight
-                aria-hidden='true'
-                className='w-4 h-4 mr-2'
-              /> Display position
+                aria-hidden="true"
+                className="w-4 h-4 mr-2"
+              />{' '}
+              Display position
             </Button>
             <Button
-              className='hidden sm:flex'
+              className="hidden sm:flex"
               onClick={() => setActiveDialog(null)}
               disabled={position.close !== null || isSubmitting || authority < 4}
             >
               <Plus
-                aria-hidden='true'
-                className='w-4 h-4 mr-2'
-              /> Add trade
+                aria-hidden="true"
+                className="w-4 h-4 mr-2"
+              />{' '}
+              Add trade
             </Button>
 
             {/* ****************
-              * MOBILE ACTIONS *
-              **************** */}
+             * MOBILE ACTIONS *
+             **************** */}
             <DropdownMenu>
               <DropdownMenuTrigger
-                className='sm:hidden'
+                className="sm:hidden"
                 disabled={isSubmitting}
-              ><EllipsisVertical aria-hidden='true'/></DropdownMenuTrigger>
+              >
+                <EllipsisVertical aria-hidden="true" />
+              </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem
                   onClick={() => openPositionDialog(position)}
-                  aria-label='Display position'
+                  aria-label="Display position"
                 >
                   <ArrowLeftRight
-                    aria-hidden='true'
-                    className='w-4 h-4 mr-2'
-                  /> Display position
+                    aria-hidden="true"
+                    className="w-4 h-4 mr-2"
+                  />{' '}
+                  Display position
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  aria-label='Add trade'
+                  aria-label="Add trade"
                   onClick={() => setActiveDialog(null)}
                   disabled={position.close !== null}
                 >
                   <Plus
-                    aria-hidden='true'
-                    className='w-4 h-4 mr-2'
-                  /> Add trade
+                    aria-hidden="true"
+                    className="w-4 h-4 mr-2"
+                  />{' '}
+                  Add trade
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </header>
 
-
-
           {/* *********
-            * CONTENT *
-            ********* */}
-            {
-              data.length
-                ? <>
-                    <Card className='md:mt-5'>
-                      <CardContent
-                        className='pt-0 md:p-0 md:mb-5'
-                      >
-                        <Table>
-                          <TableCaption>A list of trades</TableCaption>
-                          <TableHeader>
-                            <TableRow>
-                              <TableHead>ID</TableHead>
-                              <TableHead>Date</TableHead>
-                              <TableHead>Side</TableHead>
-                              <TableHead>Price</TableHead>
-                              <TableHead>Amount</TableHead>
-                              <TableHead>Comission</TableHead>
-                              <TableHead>Pos. Amount</TableHead>
-                              <TableHead>Actions</TableHead>
-                            </TableRow>
-                          </TableHeader>
-                          <TableBody>
-                            {data.map((record, i) => (
-                              <TableRow
-                                key={record.id}
-                                className='animate-in fade-in duration-500'
-                              >
-                              {/* ******
-                                * DATA *
-                                ****** */}
-                                <TableCell>
-                                  <p>{record.id}</p>
-                                </TableCell>
+           * CONTENT *
+           ********* */}
+          {data.length ? (
+            <>
+              <Card className="md:mt-5">
+                <CardContent className="pt-0 md:p-0 md:mb-5">
+                  <Table>
+                    <TableCaption>A list of trades</TableCaption>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>ID</TableHead>
+                        <TableHead>Date</TableHead>
+                        <TableHead>Side</TableHead>
+                        <TableHead>Price</TableHead>
+                        <TableHead>Amount</TableHead>
+                        <TableHead>Comission</TableHead>
+                        <TableHead>Pos. Amount</TableHead>
+                        <TableHead>Actions</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {data.map((record, i) => (
+                        <TableRow
+                          key={record.id}
+                          className="animate-in fade-in duration-500"
+                        >
+                          {/* ******
+                           * DATA *
+                           ****** */}
+                          <TableCell>
+                            <p>{record.id}</p>
+                          </TableCell>
 
-                                <TableCell>
-                                  <p>{metadata[i].event_time}</p>
-                                </TableCell>
+                          <TableCell>
+                            <p>{metadata[i].event_time}</p>
+                          </TableCell>
 
-                                <TableCell>
-                                  <p
-                                    className={`font-medium ${record.side === 'BUY' ? 'text-increase-1' : 'text-decrease-1'}`}
-                                  >{record.side}</p>
-                                </TableCell>
+                          <TableCell>
+                            <p
+                              className={`font-medium ${record.side === 'BUY' ? 'text-increase-1' : 'text-decrease-1'}`}
+                            >
+                              {record.side}
+                            </p>
+                          </TableCell>
 
-                                <TableCell>
-                                  <p>{metadata[i].price}</p>
-                                </TableCell>
+                          <TableCell>
+                            <p>{metadata[i].price}</p>
+                          </TableCell>
 
-                                <TableCell>
-                                  <p
-                                    className={`${record.side === 'BUY' ? 'text-increase-1' : 'text-decrease-1'}`}
+                          <TableCell>
+                            <p
+                              className={`${record.side === 'BUY' ? 'text-increase-1' : 'text-decrease-1'}`}
+                            >
+                              {metadata[i].amount}
+                            </p>
+                          </TableCell>
+
+                          <TableCell>
+                            <p className="text-decrease-1">{metadata[i].comission}</p>
+                          </TableCell>
+
+                          <TableCell>
+                            <p className="font-medium">{metadata[i].positionAmount}</p>
+                          </TableCell>
+
+                          {/* *********
+                           * ACTIONS *
+                           ********* */}
+                          <TableCell>
+                            {typeof record.notes === 'string' && (
+                              <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    aria-label="Trade actions menu"
+                                    disabled={isSubmitting || authority < 4}
                                   >
-                                    {metadata[i].amount}
-                                  </p>
-                                </TableCell>
-
-                                <TableCell>
-                                  <p
-                                    className='text-decrease-1'
+                                    <EllipsisVertical aria-hidden="true" />
+                                  </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent>
+                                  <DropdownMenuItem
+                                    aria-label="Update a trade that was added manually"
+                                    onClick={() => {
+                                      setActiveDialog(record);
+                                    }}
                                   >
-                                    {metadata[i].comission}
-                                  </p>
-                                </TableCell>
-
-                                <TableCell>
-                                  <p
-                                    className='font-medium'
+                                    <Pencil
+                                      aria-hidden="true"
+                                      className="w-4 h-4 mr-1"
+                                    />{' '}
+                                    Update trade
+                                  </DropdownMenuItem>
+                                  <DropdownMenuItem
+                                    aria-label="Delete a trade that was added manually"
+                                    onClick={() => deleteTrade(record)}
                                   >
-                                    {metadata[i].positionAmount}
-                                  </p>
-                                </TableCell>
-
-
-                                {/* *********
-                                  * ACTIONS *
-                                  ********* */}
-                                <TableCell>
-                                  {
-                                    typeof record.notes === 'string'
-                                    && <DropdownMenu>
-                                      <DropdownMenuTrigger asChild>
-                                        <Button
-                                          variant='ghost'
-                                          size='icon'
-                                          aria-label='Trade actions menu'
-                                          disabled={isSubmitting || authority < 4}
-                                        >
-                                          <EllipsisVertical aria-hidden='true'/>
-                                        </Button>
-                                      </DropdownMenuTrigger>
-                                      <DropdownMenuContent>
-                                        <DropdownMenuItem
-                                          aria-label='Update a trade that was added manually'
-                                          onClick={() => {
-                                            setActiveDialog(record);
-                                          }}
-                                        >
-                                            <Pencil
-                                              aria-hidden='true'
-                                              className='w-4 h-4 mr-1'
-                                            /> Update trade
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem
-                                          aria-label='Delete a trade that was added manually'
-                                          onClick={() => deleteTrade(record)}
-                                        >
-                                          <Trash
-                                            aria-hidden='true'
-                                            className='w-4 h-4 mr-1'
-                                          /> Delete trade
-                                        </DropdownMenuItem>
-                                      </DropdownMenuContent>
-                                    </DropdownMenu>
-                                  }
-                                </TableCell>
-                              </TableRow>
-                            ))}
-                          </TableBody>
-                        </Table>
-                      </CardContent>
-                    </Card>
-                </>
-                : <NoRecords />
-            }
+                                    <Trash
+                                      aria-hidden="true"
+                                      className="w-4 h-4 mr-1"
+                                    />{' '}
+                                    Delete trade
+                                  </DropdownMenuItem>
+                                </DropdownMenuContent>
+                              </DropdownMenu>
+                            )}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+            </>
+          ) : (
+            <NoRecords />
+          )}
         </section>
-
       </div>
 
-
-
       {/* **************
-        * FORM DIALOGS *
-        ************** */}
-      {
-        activeDialog !== undefined
-        && <RecordForm
+       * FORM DIALOGS *
+       ************** */}
+      {activeDialog !== undefined && (
+        <RecordForm
           record={activeDialog}
           closeDialog={handleDispatch}
         />
-      }
+      )}
     </>
   );
 });
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

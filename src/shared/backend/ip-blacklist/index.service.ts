@@ -17,10 +17,6 @@ const ipBlacklistServiceFactory = (): IIPBlacklistService => {
 
   // ...
 
-
-
-
-
   /* **********************************************************************************************
    *                                          RETRIEVERS                                          *
    ********************************************************************************************** */
@@ -35,25 +31,13 @@ const ipBlacklistServiceFactory = (): IIPBlacklistService => {
    * - 5255: if the starting point is provided and is invalid
    * - 5256: if the query limit is larger than the limit
    */
-  const list = (
-    limit: number,
-    startAtID?: number,
-  ): Promise<IIPBlacklistRecord[]> => {
+  const list = (limit: number, startAtID?: number): Promise<IIPBlacklistRecord[]> => {
     let urlPath: string = `ip-blacklist?limit=${limit}`;
     if (typeof startAtID === 'number') {
       urlPath += `&startAtID=${startAtID}`;
     }
-    return APIService.request(
-      'GET',
-      urlPath,
-      undefined,
-      true,
-    );
+    return APIService.request('GET', urlPath, undefined, true);
   };
-
-
-
-
 
   /* **********************************************************************************************
    *                                       RECORD MANAGEMENT                                      *
@@ -75,14 +59,8 @@ const ipBlacklistServiceFactory = (): IIPBlacklistService => {
     ip: string,
     notes: string | undefined,
     otpToken: string,
-  ): Promise<IIPBlacklistRecord> => APIService.request(
-    'POST',
-    'ip-blacklist',
-    { ip, notes },
-    true,
-    otpToken,
-  );
-
+  ): Promise<IIPBlacklistRecord> =>
+    APIService.request('POST', 'ip-blacklist', { ip, notes }, true, otpToken);
 
   /**
    * Updates an IP Blacklist Registration Record.
@@ -102,13 +80,8 @@ const ipBlacklistServiceFactory = (): IIPBlacklistService => {
     ip: string,
     notes: string | undefined,
     otpToken: string,
-  ): Promise<void> => APIService.request(
-    'PUT',
-    `ip-blacklist/${id}`,
-    { ip, notes },
-    true,
-    otpToken,
-  );
+  ): Promise<void> =>
+    APIService.request('PUT', `ip-blacklist/${id}`, { ip, notes }, true, otpToken);
 
   /**
    * Unregisters an IP Address from the Blacklist.
@@ -118,17 +91,8 @@ const ipBlacklistServiceFactory = (): IIPBlacklistService => {
    * @throws
    * - 5254: if the registration cannot be found in the database
    */
-  const unregisterIP = (id: number, otpToken: string): Promise<void> => APIService.request(
-    'DELETE',
-    `ip-blacklist/${id}`,
-    {},
-    true,
-    otpToken,
-  );
-
-
-
-
+  const unregisterIP = (id: number, otpToken: string): Promise<void> =>
+    APIService.request('DELETE', `ip-blacklist/${id}`, {}, true, otpToken);
 
   /* **********************************************************************************************
    *                                         MODULE BUILD                                         *
@@ -147,18 +111,10 @@ const ipBlacklistServiceFactory = (): IIPBlacklistService => {
   });
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                        GLOBAL INSTANCE                                         *
  ************************************************************************************************ */
 const IPBlacklistService = ipBlacklistServiceFactory();
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

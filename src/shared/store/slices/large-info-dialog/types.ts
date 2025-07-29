@@ -17,13 +17,7 @@ type ILargeInfoDialogSlice = {
   closeLargeInfoDialog: () => void;
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export type {
-  ILargeInfoDialogSlice,
-};
+export type { ILargeInfoDialogSlice };

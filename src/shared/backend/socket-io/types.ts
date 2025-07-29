@@ -17,12 +17,7 @@ type ISocketIOService = {
   connectionError: string | undefined;
 
   // ...
-
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                             TYPES                                              *
@@ -60,10 +55,6 @@ type IClientToServerEvents = object;
  * The instance of the socket tailored to meet Balancer's requirements
  */
 type ISocket = Socket<IServerToClientEvents, IClientToServerEvents>;
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

@@ -18,15 +18,14 @@ import { toLocalTime } from '@/shared/components/charts/shared/utils.ts';
  * @param records
  * @returns ICandlestickBar[]
  */
-const toBars = (records: ICompactCandlestickRecords): ICandlestickBar[] => records.id.map(
-  (value, idx) => ({
+const toBars = (records: ICompactCandlestickRecords): ICandlestickBar[] =>
+  records.id.map((value, idx) => ({
     time: toLocalTime(value),
     open: records.open[idx],
     high: records.high[idx],
     low: records.low[idx],
     close: records.close[idx],
-  }),
-);
+  }));
 
 /**
  * Builds the essential options for creating a candlesticks chart.
@@ -104,7 +103,7 @@ const buildChartOptions = (
  * @param state
  * @returns { upColor: string, downColor: string }
  */
-const getBarColorsByState = (state: IState | undefined): { upColor: string, downColor: string } => {
+const getBarColorsByState = (state: IState | undefined): { upColor: string; downColor: string } => {
   if (state === 2) {
     return { upColor: ColorService.INCREASE_2, downColor: ColorService.INCREASE_0 };
   }
@@ -124,22 +123,12 @@ const getBarColorsByState = (state: IState | undefined): { upColor: string, down
 const shouldChartBeRefreshed = (
   refreshFrequency: number | undefined,
   lastRefresh: number | undefined,
-): boolean => (
-  typeof refreshFrequency === 'number'
-  && typeof lastRefresh === 'number'
-  && Date.now() > addMinutes(lastRefresh, refreshFrequency).valueOf()
-);
-
-
-
-
+): boolean =>
+  typeof refreshFrequency === 'number' &&
+  typeof lastRefresh === 'number' &&
+  Date.now() > addMinutes(lastRefresh, refreshFrequency).valueOf();
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export {
-  toBars,
-  buildChartOptions,
-  getBarColorsByState,
-  shouldChartBeRefreshed,
-};
+export { toBars, buildChartOptions, getBarColorsByState, shouldChartBeRefreshed };

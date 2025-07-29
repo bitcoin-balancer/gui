@@ -18,13 +18,7 @@ type IServiceComponentProps = {
   updateService: (service: IServiceName) => void;
 };
 
-
-
-
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export type {
-  IServiceName,
-  IServiceComponentProps,
-};
+export type { IServiceName, IServiceComponentProps };

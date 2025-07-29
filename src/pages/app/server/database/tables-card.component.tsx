@@ -27,47 +27,36 @@ const TablesCard = ({ data }: { data: IDatabaseSummary }) => {
 
   // the % of the database each table is occupying
   const percentageRepresentations = useMemo(
-    () => data.tables.map(
-      (table) => calculatePercentageRepresentation(table.size, tablesTotalSize),
-    ),
+    () =>
+      data.tables.map((table) => calculatePercentageRepresentation(table.size, tablesTotalSize)),
     [data, tablesTotalSize],
   );
-
-
-
-
 
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
-    <Card className='animate-in fade-in duration-700'>
-      <CardContent className='pt-0 md:p-0'>
+    <Card className="animate-in fade-in duration-700">
+      <CardContent className="pt-0 md:p-0">
         {data.tables.map((item, i) => (
           <Fragment key={item.name}>
             <div
-              className='flex justify-start items-center py-4 px-2'
+              className="flex justify-start items-center py-4 px-2"
               style={{
                 background: `linear-gradient(90deg, ${ColorService.SLATE.H100} ${percentageRepresentations[i]}%, #FFFFFF ${percentageRepresentations[i]}%)`,
               }}
             >
               <p>{item.name}</p>
-              <span className='flex-1'></span>
-              <p
-                className='text-light text-sm'
-              >{prettifyFileSize(item.size)}</p>
+              <span className="flex-1"></span>
+              <p className="text-light text-sm">{prettifyFileSize(item.size)}</p>
             </div>
-            {(i < data.tables.length - 1) && <Separator />}
+            {i < data.tables.length - 1 && <Separator />}
           </Fragment>
         ))}
       </CardContent>
     </Card>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

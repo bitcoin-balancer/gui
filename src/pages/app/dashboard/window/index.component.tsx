@@ -1,10 +1,4 @@
-import {
-  useMemo,
-  useState,
-  useRef,
-  useEffect,
-  useCallback,
-} from 'react';
+import { useMemo, useState, useRef, useEffect, useCallback } from 'react';
 import {
   Card,
   CardContent,
@@ -30,10 +24,6 @@ import { IComponentProps } from '@/pages/app/dashboard/window/types.ts';
 // the height of the mobile chart in pixels
 const MOBILE_CHART_HEIGHT = 350;
 
-
-
-
-
 /* ************************************************************************************************
  *                                            HELPERS                                             *
  ************************************************************************************************ */
@@ -44,13 +34,11 @@ const MOBILE_CHART_HEIGHT = 350;
  * @param breakpoint
  * @returns string
  */
-const formatCurrentBarOpenTime = (openTime: number, breakpoint: IBreakpoint): string => formatDate(
-  openTime,
-  breakpoint === 'xs' || breakpoint === 'sm' ? 'time-medium' : 'datetime-medium',
-);
-
-
-
+const formatCurrentBarOpenTime = (openTime: number, breakpoint: IBreakpoint): string =>
+  formatDate(
+    openTime,
+    breakpoint === 'xs' || breakpoint === 'sm' ? 'time-medium' : 'datetime-medium',
+  );
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -66,19 +54,11 @@ const WindowState = ({ windowState, openSplitStatesDialog }: IComponentProps) =>
    ********************************************************************************************** */
   const chartContainerRef = useRef<HTMLDivElement | null>(null);
 
-
-
-
-
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
   const breakpoint = useMediaQueryBreakpoint();
   const [chartHeight, setChartHeight] = useState<number>();
-
-
-
-
 
   /* **********************************************************************************************
    *                                       REACTIVE VALUES                                        *
@@ -86,19 +66,13 @@ const WindowState = ({ windowState, openSplitStatesDialog }: IComponentProps) =>
 
   // the opening time of the current bar
   const currentBar = useMemo(
-    () => formatCurrentBarOpenTime(
-      windowState.window.id[windowState.window.id.length - 1],
-      breakpoint,
-    ),
+    () =>
+      formatCurrentBarOpenTime(windowState.window.id[windowState.window.id.length - 1], breakpoint),
     [breakpoint, windowState.window.id],
   );
 
   // the price formatter that will be used on the chart
   const priceFormatter = useCallback((value: number) => formatDollarAmount(value, 0), []);
-
-
-
-
 
   /* **********************************************************************************************
    *                                         SIDE EFFECTS                                         *
@@ -115,10 +89,6 @@ const WindowState = ({ windowState, openSplitStatesDialog }: IComponentProps) =>
     }
   }, [breakpoint]);
 
-
-
-
-
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
    ********************************************************************************************** */
@@ -127,7 +97,7 @@ const WindowState = ({ windowState, openSplitStatesDialog }: IComponentProps) =>
    * Opens the window state dialog an activates the split ID.
    * @param id
    */
-  const openWindowStateDialog = (id: ISplitStateID): void => (
+  const openWindowStateDialog = (id: ISplitStateID): void =>
     openSplitStatesDialog({
       moduleID: 'WINDOW',
       activeID: id,
@@ -136,45 +106,28 @@ const WindowState = ({ windowState, openSplitStatesDialog }: IComponentProps) =>
         splitStates: windowState.splitStates,
         window: toSplitStateItems(windowState.window),
       },
-    })
-  );
-
-
-
-
+    });
 
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
-    <Card
-      className='h-full flex flex-col'
-    >
-      <CardHeader
-        className='flex flex-col md:flex-row justify-start'
-      >
-        <div
-          className='flex flex-row justify-start items-center md:flex-col md:justify-start md:items-start'
-        >
-          <CardTitle
-            className='flex justify-start items-center gap-2'
-          >
+    <Card className="h-full flex flex-col">
+      <CardHeader className="flex flex-col md:flex-row justify-start">
+        <div className="flex flex-row justify-start items-center md:flex-col md:justify-start md:items-start">
+          <CardTitle className="flex justify-start items-center gap-2">
             Window
             <StateIcon state={windowState.state} />
           </CardTitle>
 
-          <span className='flex-1 md:hidden'></span>
+          <span className="flex-1 md:hidden"></span>
 
           <CardDescription>{currentBar}</CardDescription>
         </div>
 
-        <span
-          className='flex-1 hidden md:inline'
-        ></span>
+        <span className="flex-1 hidden md:inline"></span>
 
-        <div
-          className='grid grid-cols-4 gap-1 pt-3 md:pt-0 w-full md:w-7/12 xl:w-6/12 2xl:w-5/12'
-        >
+        <div className="grid grid-cols-4 gap-1 pt-3 md:pt-0 w-full md:w-7/12 xl:w-6/12 2xl:w-5/12">
           {MarketStateService.SPLITS.map((split) => (
             <SplitTileButton
               key={split}
@@ -187,26 +140,21 @@ const WindowState = ({ windowState, openSplitStatesDialog }: IComponentProps) =>
       </CardHeader>
       <CardContent
         ref={chartContainerRef}
-        className='pt-5 md:pb-0 md:pt-0 flex-1'
+        className="pt-5 md:pb-0 md:pt-0 flex-1"
       >
-        {
-          chartHeight !== undefined
-          && <CandlestickChart
+        {chartHeight !== undefined && (
+          <CandlestickChart
             height={chartHeight}
             data={windowState.window}
             state={windowState.state}
             priceFormatterFunc={priceFormatter}
             refreshFrequency={60}
           />
-        }
+        )}
       </CardContent>
     </Card>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

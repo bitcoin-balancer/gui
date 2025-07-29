@@ -16,10 +16,6 @@ const ScrollToTop = () => {
    ********************************************************************************************** */
   const verticalScroll = useVerticalScroll();
 
-
-
-
-
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
    ********************************************************************************************** */
@@ -31,31 +27,24 @@ const ScrollToTop = () => {
     window.scrollTo(0, 0);
   };
 
-
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
     <Button
       className={`fixed bottom-5 right-5 z-10 rounded-full shadow-5 transition-transform duration-500 ${verticalScroll > 200 ? 'translate-y-0' : 'translate-y-20'}`}
-      size='icon'
+      size="icon"
       onClick={scrollToTop}
-      aria-label='Scroll to Top'
+      aria-label="Scroll to Top"
     >
       <MoveUp
-        color='white'
-        aria-hidden='true'
-        className='w-5 h-5'
+        color="white"
+        aria-hidden="true"
+        className="w-5 h-5"
       />
     </Button>
   );
 };
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

@@ -1,5 +1,3 @@
-
-
 /* ************************************************************************************************
  *                                             TYPES                                              *
  ************************************************************************************************ */
@@ -16,15 +14,17 @@
  * - datetime-medium: Apr 29, 1453, 12:00:00 AM (PPpp)
  * - datetime-long: Friday, April 29th, 1453 at ... (PPPPpp)
  */
-type IDateFormat = 'date-short' | 'date-medium' | 'date-long'
-| 'time-short' | 'time-medium'
-| 'datetime-short' | 'datetime-medium' | 'datetime-long';
-
-
+type IDateFormat =
+  | 'date-short'
+  | 'date-medium'
+  | 'date-long'
+  | 'time-short'
+  | 'time-medium'
+  | 'datetime-short'
+  | 'datetime-medium'
+  | 'datetime-long';
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export type {
-  IDateFormat,
-};
+export type { IDateFormat };

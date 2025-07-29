@@ -44,10 +44,6 @@ const ConfirmationDialog = () => {
   const config = useBoundStore((state) => state.confirmationDialogConfig);
   const close = useBoundStore((state) => state.closeConfirmationDialog);
 
-
-
-
-
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
    ********************************************************************************************** */
@@ -88,7 +84,9 @@ const ConfirmationDialog = () => {
       setReadingClipboard(true);
       const val = await ClipboardService.readText();
       if (!isOTPTokenValid(val)) {
-        throw new Error(`The text extracted from the system's clipboard is not a valid OTP Token. Received: '${val}'`);
+        throw new Error(
+          `The text extracted from the system's clipboard is not a valid OTP Token. Received: '${val}'`,
+        );
       }
       onOTPTokenChanges(val);
     } catch (e) {
@@ -97,10 +95,6 @@ const ConfirmationDialog = () => {
       setReadingClipboard(false);
     }
   };
-
-
-
-
 
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
@@ -111,42 +105,31 @@ const ConfirmationDialog = () => {
       onOpenChange={closeDialog}
     >
       <DialogContent>
-
         {/* ***************
-          * DIALOG HEADER *
-          *************** */}
+         * DIALOG HEADER *
+         *************** */}
         <DialogHeader>
-
           <DialogTitle>{config?.title || 'Confirm Action'}</DialogTitle>
           <DialogDescription>{config?.description}</DialogDescription>
-
         </DialogHeader>
 
-
-
         {/* ****************
-          * DIALOG CONTENT *
-          **************** */}
+         * DIALOG CONTENT *
+         **************** */}
         {/* @TODO */}
 
-
-
         {/* *****************
-          * OTP TOKEN INPUT *
-          ***************** */}
-        {
-          config?.mode === 'OTP'
-          && <>
-            <div
-              className='flex justify-center items-center mt-5'
-            >
-
+         * OTP TOKEN INPUT *
+         ***************** */}
+        {config?.mode === 'OTP' && (
+          <>
+            <div className="flex justify-center items-center mt-5">
               <InputOTP
-                id='otp-confirmation'
+                id="otp-confirmation"
                 maxLength={6}
                 value={otpToken}
                 onChange={onOTPTokenChanges}
-                aria-label='One-time password input'
+                aria-label="One-time password input"
               >
                 <InputOTPGroup>
                   <InputOTPSlot index={0} />
@@ -160,61 +143,56 @@ const ConfirmationDialog = () => {
                   <InputOTPSlot index={5} />
                 </InputOTPGroup>
               </InputOTP>
-
             </div>
 
-            <p
-              className='text-light text-center text-xs'
-            >Enter your one-time password</p>
+            <p className="text-light text-center text-xs">Enter your one-time password</p>
           </>
-        }
-
+        )}
 
         {/* ***************
-          * DIALOG FOOTER *
-          *************** */}
-        <DialogFooter
-          className='flex mt-5'
-        >
-
+         * DIALOG FOOTER *
+         *************** */}
+        <DialogFooter className="flex mt-5">
           <Button
-            type='button'
-            variant='ghost'
+            type="button"
+            variant="ghost"
             onClick={closeDialog}
-            className='mt-3 sm:mt-0'
-          >Cancel</Button>
+            className="mt-3 sm:mt-0"
+          >
+            Cancel
+          </Button>
 
-          <span className='flex-1'></span>
+          <span className="flex-1"></span>
 
-          {
-            (config?.mode === 'OTP' && ClipboardService.isSupported)
-            && <Button
-              type='button'
+          {config?.mode === 'OTP' && ClipboardService.isSupported && (
+            <Button
+              type="button"
               onClick={pasteOTPToken}
               disabled={readingClipboard}
-              variant='outline'
-              className='sm:hidden mt-3'
-              aria-label='Paste the one-time password from the system’s clipboard'
-            >Paste</Button>
-          }
+              variant="outline"
+              className="sm:hidden mt-3"
+              aria-label="Paste the one-time password from the system’s clipboard"
+            >
+              Paste
+            </Button>
+          )}
 
-          {
-            (config?.mode === 'OTP' && ClipboardService.isSupported)
-            && <TooltipProvider>
+          {config?.mode === 'OTP' && ClipboardService.isSupported && (
+            <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button
-                    type='button'
+                    type="button"
                     onClick={pasteOTPToken}
                     disabled={readingClipboard}
-                    variant='outline'
-                    size='icon'
-                    className='hidden sm:flex'
-                    aria-label='Paste the one-time password from the system’s clipboard'
+                    variant="outline"
+                    size="icon"
+                    className="hidden sm:flex"
+                    aria-label="Paste the one-time password from the system’s clipboard"
                   >
                     <Clipboard
-                      className='h-4 w-4'
-                      aria-hidden='true'
+                      className="h-4 w-4"
+                      aria-hidden="true"
                     />
                   </Button>
                 </TooltipTrigger>
@@ -223,25 +201,20 @@ const ConfirmationDialog = () => {
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
-          }
+          )}
 
           <Button
-            type='submit'
+            type="submit"
             onClick={() => closeDialog(true)}
             disabled={config?.mode === 'OTP'}
-          >Confirm</Button>
-
+          >
+            Confirm
+          </Button>
         </DialogFooter>
-
       </DialogContent>
-
     </Dialog>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

@@ -21,8 +21,8 @@ const FAQ_ITEMS = [
     content: (
       <p>
         Balancer is a self-hosted platform that trades Bitcoin automatically, to help generate
-         passive income by taking advantage of price fluctuations. It utilizes a set of indicators
-          and algorithms to adjust your Bitcoin holdings based on market conditions.
+        passive income by taking advantage of price fluctuations. It utilizes a set of indicators
+        and algorithms to adjust your Bitcoin holdings based on market conditions.
       </p>
     ),
   },
@@ -31,10 +31,10 @@ const FAQ_ITEMS = [
     content: (
       <p>
         Balancer connects to a pre-configured exchange in real-time and monitors the price of
-         Bitcoin. It uses a dynamic moving window to analyze price trends, identifying potential
-          price reversals. It also uses a set of indicators to assess the overall market sentiment
-           and direction. Based on this analysis, Balancer automatically adjusts your Bitcoin
-            holdings by buying or selling at strategic intervals.
+        Bitcoin. It uses a dynamic moving window to analyze price trends, identifying potential
+        price reversals. It also uses a set of indicators to assess the overall market sentiment and
+        direction. Based on this analysis, Balancer automatically adjusts your Bitcoin holdings by
+        buying or selling at strategic intervals.
       </p>
     ),
   },
@@ -42,33 +42,31 @@ const FAQ_ITEMS = [
     title: 'What are the benefits of using Balancer?',
     content: (
       <>
-        <p>
-          Balancer offers several benefits:
-        </p>
-        <ul className='mt-2'>
+        <p>Balancer offers several benefits:</p>
+        <ul className="mt-2">
           <li>
             <p>
               <strong>* Automated strategy:</strong> it takes the guesswork out of trading by
-               automating a proven strategy, allowing you to focus on your long-term goals.
+              automating a proven strategy, allowing you to focus on your long-term goals.
             </p>
           </li>
           <li>
             <p>
               <strong>* Secure asset storage:</strong> Balancer significantly reduces your exchange
-               risk by enabling you to store most of your Bitcoin/USD in your cold storage wallet,
-                only keeping the minimum required on the exchange for trading.
+              risk by enabling you to store most of your Bitcoin/USD in your cold storage wallet,
+              only keeping the minimum required on the exchange for trading.
             </p>
           </li>
           <li>
             <p>
               <strong>* Reduced risk:</strong> the trading strategy helps you minimize the impact of
-               market fluctuations and reduce overall risk.
+              market fluctuations and reduce overall risk.
             </p>
           </li>
           <li>
             <p>
               <strong>* Long-term growth:</strong> it is designed to help you build wealth steadily
-               over time, taking advantage of market trends to maximize potential returns.
+              over time, taking advantage of market trends to maximize potential returns.
             </p>
           </li>
         </ul>
@@ -77,20 +75,16 @@ const FAQ_ITEMS = [
   },
   {
     title: 'How much does Balancer cost?',
-    content: (
-      <p>
-        Balancer is free to use. There are no subscription fees or hidden costs.
-      </p>
-    ),
+    content: <p>Balancer is free to use. There are no subscription fees or hidden costs.</p>,
   },
   {
     title: 'How secure is Balancer?',
     content: (
       <p>
         Balancer prioritizes security, employing industry-leading protocols, undergoing regular
-         security audits, and maintaining a dedicated development team to address vulnerabilities
-          and ensure ongoing platform stability. Your data and credentials are protected by advanced
-           encryption and security measures, ensuring a safe and trusted trading environment.
+        security audits, and maintaining a dedicated development team to address vulnerabilities and
+        ensure ongoing platform stability. Your data and credentials are protected by advanced
+        encryption and security measures, ensuring a safe and trusted trading environment.
       </p>
     ),
   },
@@ -99,8 +93,8 @@ const FAQ_ITEMS = [
     content: (
       <p>
         Balancer is self-hosted, meaning you control your data and are not reliant on a centralized
-         third party. Your data is not stored on servers accessible by others. This fosters greater
-          privacy and security, as your data remains under your control.
+        third party. Your data is not stored on servers accessible by others. This fosters greater
+        privacy and security, as your data remains under your control.
       </p>
     ),
   },
@@ -109,8 +103,8 @@ const FAQ_ITEMS = [
     content: (
       <p>
         Yes, Balancer's code is completely open source, allowing anyone to inspect and audit it for
-         security and transparency. This ensures that the platform is built on a foundation of trust
-          and accountability.
+        security and transparency. This ensures that the platform is built on a foundation of trust
+        and accountability.
       </p>
     ),
   },
@@ -118,34 +112,45 @@ const FAQ_ITEMS = [
     title: 'What exchanges does Balancer support?',
     content: (
       <>
-        <p>
-          Balancer currently supports the following exchanges:
-        </p>
-        <ul className='mt-2'>
+        <p>Balancer currently supports the following exchanges:</p>
+        <ul className="mt-2">
           <li>
-            <p><strong>* Binance</strong></p>
+            <p>
+              <strong>* Binance</strong>
+            </p>
           </li>
           <li>
-            <p><strong>* Bitfinex (partially)</strong></p>
+            <p>
+              <strong>* Bitfinex (partially)</strong>
+            </p>
           </li>
           <li>
-            <p><strong>* Coinbase (planned)</strong></p>
+            <p>
+              <strong>* Coinbase (planned)</strong>
+            </p>
           </li>
           <li>
-            <p><strong>* Kraken (partially)</strong></p>
+            <p>
+              <strong>* Kraken (partially)</strong>
+            </p>
           </li>
           <li>
-            <p><strong>* OKX (planned)</strong></p>
+            <p>
+              <strong>* OKX (planned)</strong>
+            </p>
           </li>
         </ul>
         <p>
-          More more information,
-          visit <a
-            href='https://github.com/bitcoin-balancer/.github/blob/main/profile/sections/supported-exchanges/index.md'
-            target='_blank'
-            rel='noopener noreferrer'
-            className='text-sky-700'
-          >Supported exchanges</a>.
+          More more information, visit{' '}
+          <a
+            href="https://github.com/bitcoin-balancer/.github/blob/main/profile/sections/supported-exchanges/index.md"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sky-700"
+          >
+            Supported exchanges
+          </a>
+          .
         </p>
       </>
     ),
@@ -154,12 +159,16 @@ const FAQ_ITEMS = [
     title: 'How do I get started with Balancer?',
     content: (
       <p>
-        Find detailed instructions on how to run Balancer
-         on the <a
-          href='https://github.com/bitcoin-balancer'
-          target='_blank'
-          rel='noopener noreferrer'
-          className='text-sky-700'>GitHub</a> page.
+        Find detailed instructions on how to run Balancer on the{' '}
+        <a
+          href="https://github.com/bitcoin-balancer"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-sky-700"
+        >
+          GitHub
+        </a>{' '}
+        page.
       </p>
     ),
   },
@@ -168,7 +177,7 @@ const FAQ_ITEMS = [
     content: (
       <p>
         Balancer is flexible. You can adjust your trading parameters and customize your approach to
-         fit your personal investment goals.
+        fit your personal investment goals.
       </p>
     ),
   },
@@ -177,16 +186,13 @@ const FAQ_ITEMS = [
     content: (
       <p>
         Balancer is a free-to-use open-source project, and therefore, at this point, it has no
-         customer support. If you are having issues running the platform, feel free to open a GitHub
-          issue. For any other inquiries, you can get in touch
-           via <strong>jesusgraterol.dev@protonmail.com</strong>.
+        customer support. If you are having issues running the platform, feel free to open a GitHub
+        issue. For any other inquiries, you can get in touch via{' '}
+        <strong>jesusgraterol.dev@protonmail.com</strong>.
       </p>
     ),
   },
 ];
-
-
-
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -202,66 +208,49 @@ const FrequentlyAskedQuestions = memo(() => {
    ********************************************************************************************** */
   const [visibleRecords, setVisibleRecords] = useState<number>(INITIAL_RECORDS);
 
-
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
-    <div
-      className='w-full flex justify-center items-start'
-    >
-      <section
-        className='w-full sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-5/12 2xl:w-4/12 p-3'
-      >
-        <header className='text-center'>
-          <h2
-            className='text-center text-4xl sm:text-5xl font-bold'
-          >FAQ</h2>
-          <p className='text-xs sm:text-sm mt-2 text-light'>
-            Answers to common questions
-          </p>
+    <div className="w-full flex justify-center items-start">
+      <section className="w-full sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-5/12 2xl:w-4/12 p-3">
+        <header className="text-center">
+          <h2 className="text-center text-4xl sm:text-5xl font-bold">FAQ</h2>
+          <p className="text-xs sm:text-sm mt-2 text-light">Answers to common questions</p>
         </header>
 
-        <Accordion type='single' collapsible className='w-full mt-2'>
-          {
-            FAQ_ITEMS.slice(0, visibleRecords).map((item, i) => (
-              <AccordionItem
-                key={i}
-                value={`item-${i}`}
-                className='animate-in fade-in'
-              >
-                <AccordionTrigger>
-                  <p className='text-left'>{item.title}</p>
-                </AccordionTrigger>
-                <AccordionContent>
-                  {item.content}
-                </AccordionContent>
-              </AccordionItem>
-            ))
-          }
+        <Accordion
+          type="single"
+          collapsible
+          className="w-full mt-2"
+        >
+          {FAQ_ITEMS.slice(0, visibleRecords).map((item, i) => (
+            <AccordionItem
+              key={i}
+              value={`item-${i}`}
+              className="animate-in fade-in"
+            >
+              <AccordionTrigger>
+                <p className="text-left">{item.title}</p>
+              </AccordionTrigger>
+              <AccordionContent>{item.content}</AccordionContent>
+            </AccordionItem>
+          ))}
         </Accordion>
 
-        {
-          visibleRecords === INITIAL_RECORDS
-          && (
-            <Button
-              variant='ghost'
-              className='w-full mt-2'
-              onClick={() => setVisibleRecords(100)}
-            >View all</Button>
-          )
-        }
+        {visibleRecords === INITIAL_RECORDS && (
+          <Button
+            variant="ghost"
+            className="w-full mt-2"
+            onClick={() => setVisibleRecords(100)}
+          >
+            View all
+          </Button>
+        )}
       </section>
     </div>
   );
 });
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

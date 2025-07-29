@@ -11,9 +11,8 @@ import { ISortFn } from '@/shared/hooks/api-fetch/types.ts';
  * @param queryLimit
  * @returns boolean
  */
-const hasMoreRecords = (data: unknown, queryLimit: number | undefined): boolean => (
-  typeof queryLimit === 'number' && Array.isArray(data) && data.length >= queryLimit
-);
+const hasMoreRecords = (data: unknown, queryLimit: number | undefined): boolean =>
+  typeof queryLimit === 'number' && Array.isArray(data) && data.length >= queryLimit;
 
 /**
  * Fires when the loadMore function is invoked. It merges the current data with the new data that
@@ -32,23 +31,16 @@ const onMoreData = <T>(
 ): T => {
   // prioritize the sortFn if it was provided
   if (typeof sortFn === 'function') {
-    return [...records as any[], nextRecords].sort(sortFn) as T;
+    return [...(records as any[]), nextRecords].sort(sortFn) as T;
   }
 
   // otherwise, append or prepend the data
   return appendNextRecords
-    ? [...records as any[], ...nextRecords as any[]] as T
-    : [...nextRecords as any[], ...records as any[]] as T;
+    ? ([...(records as any[]), ...(nextRecords as any[])] as T)
+    : ([...(nextRecords as any[]), ...(records as any[])] as T);
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export {
-  hasMoreRecords,
-  onMoreData,
-};
+export { hasMoreRecords, onMoreData };

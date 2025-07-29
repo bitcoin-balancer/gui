@@ -23,10 +23,6 @@ const InfoDialog = () => {
   const config = useBoundStore((state) => state.infoDialogConfig!);
   const closeDialog = useBoundStore((state) => state.closeInfoDialog);
 
-
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
@@ -39,39 +35,23 @@ const InfoDialog = () => {
       open={isOpen}
       onOpenChange={closeDialog}
     >
-      <DialogContent
-        className='max-w-[80%] sm:max-w-[330px] max-h-[85dvh] sm:max-h-[70dvh]'
-      >
-
+      <DialogContent className="max-w-[80%] sm:max-w-[330px] max-h-[85dvh] sm:max-h-[70dvh]">
         {/* ***************
-          * DIALOG HEADER *
-          *************** */}
+         * DIALOG HEADER *
+         *************** */}
         <DialogHeader>
-
           <DialogTitle>{config?.title}</DialogTitle>
           <DialogDescription>{config?.description}</DialogDescription>
-
         </DialogHeader>
 
-
-
         {/* ****************
-          * DIALOG CONTENT *
-          **************** */}
-        {
-          content
-          && content.map((item, i) => <p key={i}>{item}</p>)
-        }
-
+         * DIALOG CONTENT *
+         **************** */}
+        {content && content.map((item, i) => <p key={i}>{item}</p>)}
       </DialogContent>
-
     </Dialog>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

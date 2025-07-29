@@ -8,24 +8,19 @@
 /* Typography Font */
 @import url('/node_modules/webfont-ubuntu/dist/index.css');
 
-
-
-
-
 /* ************************************************************************************************
  *                                            GLOBALS                                             *
  ************************************************************************************************ */
- :root {
+:root {
   /* Theme Colors */
-  --primary-color: #0C0C0C;
+  --primary-color: #0c0c0c;
   --secondary-color: #1d1c1c;
 
-  --success-color: #1B5E20;
-  --error-color: #B71C1C;
+  --success-color: #1b5e20;
+  --error-color: #b71c1c;
 
   --text-color: #0f172a;
   --light-text-color: #64748b;
-
 
   /* State Colors */
   --stateless-color: #64748b;
@@ -36,11 +31,8 @@
   --decrease-1-color: #dc2626;
   --decrease-2-color: #7f1d1d;
 
-
   /* Font */
   --font-size: 16px;
-
-
 
   /* Altcha */
   --altcha-border-width: 1px;
@@ -50,15 +42,10 @@
   --altcha-color-error-text: var(--error-color);
   --altcha-max-width: 100%;
 
-
   /* App Header */
   --app-header-desktop-height: 75px;
   --app-header-mobile-height: 65px;
 }
-
-
-
-
 
 /* ************************************************************************************************
  *                                      TAILWIND DIRECTIVES                                       *
@@ -69,17 +56,13 @@
 
 @layer base {
   html {
-    font-family: "Ubuntu", sans-serif;
+    font-family: 'Ubuntu', sans-serif;
     font-size: var(--font-size);
     font-weight: 400;
     font-style: normal;
     font-display: swap;
   }
 }
-
-
-
-
 
 /* ************************************************************************************************
  *                                        GENERAL ELEMENTS                                        *
@@ -108,41 +91,70 @@ a:hover {
   box-shadow: none;
 }
 .shadow-1 {
-  box-shadow: 0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12), 0 1px 3px 0 rgba(0,0,0,0.20);
+  box-shadow:
+    0 1px 1px 0 rgba(0, 0, 0, 0.14),
+    0 2px 1px -1px rgba(0, 0, 0, 0.12),
+    0 1px 3px 0 rgba(0, 0, 0, 0.2);
 }
 .shadow-2 {
-  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.20);
+  box-shadow:
+    0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 3px 1px -2px rgba(0, 0, 0, 0.12),
+    0 1px 5px 0 rgba(0, 0, 0, 0.2);
 }
 .shadow-3 {
-  box-shadow: 0 3px 4px 0 rgba(0,0,0,0.14), 0 3px 3px -2px rgba(0,0,0,0.12), 0 1px 8px 0 rgba(0,0,0,0.20);
+  box-shadow:
+    0 3px 4px 0 rgba(0, 0, 0, 0.14),
+    0 3px 3px -2px rgba(0, 0, 0, 0.12),
+    0 1px 8px 0 rgba(0, 0, 0, 0.2);
 }
 .shadow-4 {
-  box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.20);
+  box-shadow:
+    0 4px 5px 0 rgba(0, 0, 0, 0.14),
+    0 1px 10px 0 rgba(0, 0, 0, 0.12),
+    0 2px 4px -1px rgba(0, 0, 0, 0.2);
 }
 .shadow-5 {
-  box-shadow: 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12), 0 3px 5px -1px rgba(0,0,0,0.20);
+  box-shadow:
+    0 6px 10px 0 rgba(0, 0, 0, 0.14),
+    0 1px 18px 0 rgba(0, 0, 0, 0.12),
+    0 3px 5px -1px rgba(0, 0, 0, 0.2);
 }
 .shadow-6 {
-  box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.20);
+  box-shadow:
+    0 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0 3px 14px 2px rgba(0, 0, 0, 0.12),
+    0 5px 5px -3px rgba(0, 0, 0, 0.2);
 }
 .shadow-7 {
-  box-shadow: 0 9px 12px 1px rgba(0,0,0,0.14), 0 3px 16px 2px rgba(0,0,0,0.12), 0 5px 6px -3px rgba(0,0,0,0.20);
+  box-shadow:
+    0 9px 12px 1px rgba(0, 0, 0, 0.14),
+    0 3px 16px 2px rgba(0, 0, 0, 0.12),
+    0 5px 6px -3px rgba(0, 0, 0, 0.2);
 }
 .shadow-8 {
-  box-shadow: 0 12px 17px 2px rgba(0,0,0,0.14), 0 5px 22px 4px rgba(0,0,0,0.12), 0 7px 8px -4px rgba(0,0,0,0.20);
+  box-shadow:
+    0 12px 17px 2px rgba(0, 0, 0, 0.14),
+    0 5px 22px 4px rgba(0, 0, 0, 0.12),
+    0 7px 8px -4px rgba(0, 0, 0, 0.2);
 }
 .shadow-9 {
-  box-shadow: 0 16px 24px 2px rgba(0,0,0,0.14), 0 6px 30px 5px rgba(0,0,0,0.12), 0 8px 10px -5px rgba(0,0,0,0.20);
+  box-shadow:
+    0 16px 24px 2px rgba(0, 0, 0, 0.14),
+    0 6px 30px 5px rgba(0, 0, 0, 0.12),
+    0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 .shadow-10 {
-  box-shadow: 0 24px 38px 3px rgba(0,0,0,0.14), 0 9px 46px 8px rgba(0,0,0,0.12), 0 11px 15px -7px rgba(0,0,0,0.20);
+  box-shadow:
+    0 24px 38px 3px rgba(0, 0, 0, 0.14),
+    0 9px 46px 8px rgba(0, 0, 0, 0.12),
+    0 11px 15px -7px rgba(0, 0, 0, 0.2);
 }
 
 /*
  * Lists
  */
 ul {
-
 }
 ul li {
   margin: 15px 0;
@@ -150,10 +162,6 @@ ul li {
 ul li:first-child {
   margin: 0;
 }
-
-
-
-
 
 /* ************************************************************************************************
  *                                   INDETERMINATE PROGRESS BAR                                   *
@@ -173,20 +181,15 @@ ul li:first-child {
 }
 @keyframes indeterminateAnimation {
   0% {
-    transform:  translateX(0) scaleX(0);
+    transform: translateX(0) scaleX(0);
   }
   40% {
-    transform:  translateX(0) scaleX(0.4);
+    transform: translateX(0) scaleX(0.4);
   }
   100% {
-    transform:  translateX(100%) scaleX(0.5);
+    transform: translateX(100%) scaleX(0.5);
   }
 }
-
-
-
-
-
 
 /* ************************************************************************************************
  *                                          LANDING PAGE                                          *
@@ -196,13 +199,9 @@ ul li:first-child {
 }
 
 #landing-hero {
-  margin-top:-1px;
+  margin-top: -1px;
   height: calc(100dvh - 69px);
 }
-
-
-
-
 
 /* ************************************************************************************************
  *                                           APP HEADER                                           *
@@ -211,10 +210,6 @@ ul li:first-child {
   height: var(--app-header-mobile-height);
   padding: 0 10px;
 }
-
-
-
-
 
 /* ************************************************************************************************
  *                                          PAGE LOADER                                           *
@@ -226,20 +221,12 @@ ul li:first-child {
   align-items: center;
 }
 
-
-
-
-
 /* ************************************************************************************************
  *                                        PAGE CONTAINER                                          *
  ************************************************************************************************ */
 .page-container {
   padding: 20px 10px 100px 10px;
 }
-
-
-
-
 
 /* ************************************************************************************************
  *                                          LANDING PAGE                                          *
@@ -255,13 +242,8 @@ ul li:first-child {
 }
 .monitoring-container img {
   -webkit-mask-image: linear-gradient(to top, transparent 0%, black 25%);
-  mask-image: linear-gradient(to top, transparent 0%, black 25%); 
+  mask-image: linear-gradient(to top, transparent 0%, black 25%);
 }
-
-
-
-
-
 
 /* ************************************************************************************************
  *                                        COMBINED STATES                                         *
@@ -270,69 +252,109 @@ ul li:first-child {
 /**
  * Decreasing Strongly Variants
  */
-.decrease-2-decrease-2 { background: linear-gradient(90deg, var(--decrease-2-color) 50%, var(--decrease-2-color) 50%);}
-.decrease-2-decrease-1 { background: linear-gradient(90deg, var(--decrease-2-color) 50%, var(--decrease-1-color) 50%);}
-.decrease-2-stateless { background: linear-gradient(90deg, var(--decrease-2-color) 50%, var(--stateless-color) 50%);}
-.decrease-2-increase-1 { background: linear-gradient(90deg, var(--decrease-2-color) 50%, var(--increase-1-color) 50%);}
-.decrease-2-increase-2 { background: linear-gradient(90deg, var(--decrease-2-color) 50%, var(--increase-2-color) 50%);}
+.decrease-2-decrease-2 {
+  background: linear-gradient(90deg, var(--decrease-2-color) 50%, var(--decrease-2-color) 50%);
+}
+.decrease-2-decrease-1 {
+  background: linear-gradient(90deg, var(--decrease-2-color) 50%, var(--decrease-1-color) 50%);
+}
+.decrease-2-stateless {
+  background: linear-gradient(90deg, var(--decrease-2-color) 50%, var(--stateless-color) 50%);
+}
+.decrease-2-increase-1 {
+  background: linear-gradient(90deg, var(--decrease-2-color) 50%, var(--increase-1-color) 50%);
+}
+.decrease-2-increase-2 {
+  background: linear-gradient(90deg, var(--decrease-2-color) 50%, var(--increase-2-color) 50%);
+}
 
 /**
  * Decreasing Variants
  */
-.decrease-1-decrease-2 { background: linear-gradient(90deg, var(--decrease-1-color) 50%, var(--decrease-2-color) 50%);}
-.decrease-1-decrease-1 { background: linear-gradient(90deg, var(--decrease-1-color) 50%, var(--decrease-1-color) 50%);}
-.decrease-1-stateless { background: linear-gradient(90deg, var(--decrease-1-color) 50%, var(--stateless-color) 50%);}
-.decrease-1-increase-1 { background: linear-gradient(90deg, var(--decrease-1-color) 50%, var(--increase-1-color) 50%);}
-.decrease-1-increase-2 { background: linear-gradient(90deg, var(--decrease-1-color) 50%, var(--increase-2-color) 50%);}
- 
+.decrease-1-decrease-2 {
+  background: linear-gradient(90deg, var(--decrease-1-color) 50%, var(--decrease-2-color) 50%);
+}
+.decrease-1-decrease-1 {
+  background: linear-gradient(90deg, var(--decrease-1-color) 50%, var(--decrease-1-color) 50%);
+}
+.decrease-1-stateless {
+  background: linear-gradient(90deg, var(--decrease-1-color) 50%, var(--stateless-color) 50%);
+}
+.decrease-1-increase-1 {
+  background: linear-gradient(90deg, var(--decrease-1-color) 50%, var(--increase-1-color) 50%);
+}
+.decrease-1-increase-2 {
+  background: linear-gradient(90deg, var(--decrease-1-color) 50%, var(--increase-2-color) 50%);
+}
+
 /**
  * Stateless Variants
  */
-.stateless-decrease-2 { background: linear-gradient(90deg, var(--stateless-color) 50%, var(--decrease-2-color) 50%);}
-.stateless-decrease-1 { background: linear-gradient(90deg, var(--stateless-color) 50%, var(--decrease-1-color) 50%);}
-.stateless-stateless { background: linear-gradient(90deg, var(--stateless-color) 50%, var(--stateless-color) 50%);}
-.stateless-increase-1 { background: linear-gradient(90deg, var(--stateless-color) 50%, var(--increase-1-color) 50%);}
-.stateless-increase-2 { background: linear-gradient(90deg, var(--stateless-color) 50%, var(--increase-2-color) 50%);}
- 
+.stateless-decrease-2 {
+  background: linear-gradient(90deg, var(--stateless-color) 50%, var(--decrease-2-color) 50%);
+}
+.stateless-decrease-1 {
+  background: linear-gradient(90deg, var(--stateless-color) 50%, var(--decrease-1-color) 50%);
+}
+.stateless-stateless {
+  background: linear-gradient(90deg, var(--stateless-color) 50%, var(--stateless-color) 50%);
+}
+.stateless-increase-1 {
+  background: linear-gradient(90deg, var(--stateless-color) 50%, var(--increase-1-color) 50%);
+}
+.stateless-increase-2 {
+  background: linear-gradient(90deg, var(--stateless-color) 50%, var(--increase-2-color) 50%);
+}
+
 /**
  * Increasing Variants
  */
-.increase-1-decrease-2 { background: linear-gradient(90deg, var(--increase-1-color) 50%, var(--decrease-2-color) 50%);}
-.increase-1-decrease-1 { background: linear-gradient(90deg, var(--increase-1-color) 50%, var(--decrease-1-color) 50%);}
-.increase-1-stateless { background: linear-gradient(90deg, var(--increase-1-color) 50%, var(--stateless-color) 50%);}
-.increase-1-increase-1 { background: linear-gradient(90deg, var(--increase-1-color) 50%, var(--increase-1-color) 50%);}
-.increase-1-increase-2 { background: linear-gradient(90deg, var(--increase-1-color) 50%, var(--increase-2-color) 50%);}
+.increase-1-decrease-2 {
+  background: linear-gradient(90deg, var(--increase-1-color) 50%, var(--decrease-2-color) 50%);
+}
+.increase-1-decrease-1 {
+  background: linear-gradient(90deg, var(--increase-1-color) 50%, var(--decrease-1-color) 50%);
+}
+.increase-1-stateless {
+  background: linear-gradient(90deg, var(--increase-1-color) 50%, var(--stateless-color) 50%);
+}
+.increase-1-increase-1 {
+  background: linear-gradient(90deg, var(--increase-1-color) 50%, var(--increase-1-color) 50%);
+}
+.increase-1-increase-2 {
+  background: linear-gradient(90deg, var(--increase-1-color) 50%, var(--increase-2-color) 50%);
+}
 
 /**
  * Increasing Strongly Variants
  */
-.increase-2-decrease-2 { background: linear-gradient(90deg, var(--increase-2-color) 50%, var(--decrease-2-color) 50%);}
-.increase-2-decrease-1 { background: linear-gradient(90deg, var(--increase-2-color) 50%, var(--decrease-1-color) 50%);}
-.increase-2-stateless { background: linear-gradient(90deg, var(--increase-2-color) 50%, var(--stateless-color) 50%);}
-.increase-2-increase-1 { background: linear-gradient(90deg, var(--increase-2-color) 50%, var(--increase-1-color) 50%);}
-.increase-2-increase-2 { background: linear-gradient(90deg, var(--increase-2-color) 50%, var(--increase-2-color) 50%);}
- 
-
-
-
+.increase-2-decrease-2 {
+  background: linear-gradient(90deg, var(--increase-2-color) 50%, var(--decrease-2-color) 50%);
+}
+.increase-2-decrease-1 {
+  background: linear-gradient(90deg, var(--increase-2-color) 50%, var(--decrease-1-color) 50%);
+}
+.increase-2-stateless {
+  background: linear-gradient(90deg, var(--increase-2-color) 50%, var(--stateless-color) 50%);
+}
+.increase-2-increase-1 {
+  background: linear-gradient(90deg, var(--increase-2-color) 50%, var(--increase-1-color) 50%);
+}
+.increase-2-increase-2 {
+  background: linear-gradient(90deg, var(--increase-2-color) 50%, var(--increase-2-color) 50%);
+}
 
 /* ************************************************************************************************
  *                                           DASHBOARD                                            *
  ************************************************************************************************ */
 .dashboard-container {
-
 }
 
 /**
  * Window
  */
 .dashboard-container .window {
-
 }
-
-
-
-
 
 /* ************************************************************************************************
  *                                    RESPONSIVE MEDIA QUERIES                                    *
@@ -350,10 +372,6 @@ ul li:first-child {
   }
 }
 
- 
- 
-
-
 /*
  * Breakpoint Prefix: md
  */
@@ -368,15 +386,11 @@ ul li:first-child {
   /*
    * Dashboard
    */
-   .dashboard-container .window {
+  .dashboard-container .window {
     /* 100dvh - appHeader - pageContainerPadding */
     height: calc((100dvh - var(--app-header-desktop-height) - 40px));
   }
 }
-
- 
- 
-
 
 /*
  * Breakpoint Prefix: lg
@@ -404,10 +418,6 @@ ul li:first-child {
   }
 }
 
- 
- 
-
-
 /*
  * Breakpoint Prefix: xl
  */
@@ -416,25 +426,20 @@ ul li:first-child {
    * Page Container
    */
   .page-container {
-    padding: 25px 15px ;
+    padding: 25px 15px;
   }
 
   /*
    * Dashboard
    */
-   .dashboard-container .window {
+  .dashboard-container .window {
     /* 100dvh - appHeader - pageContainerPadding */
     height: calc((100dvh - var(--app-header-desktop-height) - 50px));
   }
 }
 
-
-
-
-
 /*
  * Breakpoint Prefix: 2xl
  */
 @media (min-width: 1536px) {
-
 }

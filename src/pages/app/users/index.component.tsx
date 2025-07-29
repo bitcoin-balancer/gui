@@ -32,19 +32,14 @@ const Users = () => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
-  const {
-    data,
-    setData,
-    loading,
-    error,
-  } = useAPIFetch(useMemo(
-    () => ({
-      fetchFn: () => UserService.listUsers(),
-    }),
-    [],
-  ));
-
-
+  const { data, setData, loading, error } = useAPIFetch(
+    useMemo(
+      () => ({
+        fetchFn: () => UserService.listUsers(),
+      }),
+      [],
+    ),
+  );
 
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
@@ -59,10 +54,6 @@ const Users = () => {
     [data, setData],
   );
 
-
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
@@ -73,97 +64,73 @@ const Users = () => {
     return <PageLoader />;
   }
   return (
-    <div
-      className='page-container flex justify-center items-start animate-in fade-in duration-700'
-    >
-
-      <section
-        className='w-full lg:w-9/12 xl:w-8/12 2xl:w-7/12'
-      >
-
-        <header
-          className='flex justify-start items-center'
-        >
-          <h1
-            className='text-2xl font-semibold leading-none tracking-tight'
-          >Users</h1>
+    <div className="page-container flex justify-center items-start animate-in fade-in duration-700">
+      <section className="w-full lg:w-9/12 xl:w-8/12 2xl:w-7/12">
+        <header className="flex justify-start items-center">
+          <h1 className="text-2xl font-semibold leading-none tracking-tight">Users</h1>
 
           <span className="flex-1"></span>
 
-          <AddUser
-            dispatch={handleDispatch}
-          >
+          <AddUser dispatch={handleDispatch}>
             <div>
               <Button
-                size='icon'
-                aria-label='Add User'
-                className='sm:hidden'
+                size="icon"
+                aria-label="Add User"
+                className="sm:hidden"
               >
                 <UserPlus
-                  aria-hidden='true'
-                  className='w-5 h-5'
+                  aria-hidden="true"
+                  className="w-5 h-5"
                 />
               </Button>
               <Button
-                aria-label='Add User'
-                className='hidden sm:flex'
-                >
-                  <UserPlus
-                    aria-hidden='true'
-                    className='w-5 h-5 mr-2'
-                  /> Add user
-                </Button>
+                aria-label="Add User"
+                className="hidden sm:flex"
+              >
+                <UserPlus
+                  aria-hidden="true"
+                  className="w-5 h-5 mr-2"
+                />{' '}
+                Add user
+              </Button>
             </div>
           </AddUser>
-
         </header>
 
-        {
-          data.length
-            ? <Card className='md:mt-5'>
-              <CardContent
-                className='pt-0 md:p-0 md:mb-5'
-              >
-                <Table>
-                  <TableCaption>A list of users</TableCaption>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>ID</TableHead>
-                      <TableHead>Nickname</TableHead>
-                      <TableHead>Authority</TableHead>
-                      <TableHead>OTP Secret</TableHead>
-                      <TableHead>Creation</TableHead>
-                      <TableHead>Actions</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {
-                      data.map(
-                        (user) => (
-                          <UserRow
-                            key={user.uid}
-                            user={user}
-                            dispatch={handleDispatch}
-                          />
-                        ),
-                      )
-                    }
-                  </TableBody>
-                </Table>
-              </CardContent>
-            </Card>
-            : <NoRecords />
-        }
-
+        {data.length ? (
+          <Card className="md:mt-5">
+            <CardContent className="pt-0 md:p-0 md:mb-5">
+              <Table>
+                <TableCaption>A list of users</TableCaption>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>ID</TableHead>
+                    <TableHead>Nickname</TableHead>
+                    <TableHead>Authority</TableHead>
+                    <TableHead>OTP Secret</TableHead>
+                    <TableHead>Creation</TableHead>
+                    <TableHead>Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {data.map((user) => (
+                    <UserRow
+                      key={user.uid}
+                      user={user}
+                      dispatch={handleDispatch}
+                    />
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        ) : (
+          <NoRecords />
+        )}
       </section>
-
     </div>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

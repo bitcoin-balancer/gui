@@ -30,10 +30,6 @@ const accessJWTServiceFactory = (): IAccessJWTService => {
   // the current Access JWT
   let __current: string | undefined;
 
-
-
-
-
   /* **********************************************************************************************
    *                                            ACTIONS                                           *
    ********************************************************************************************** */
@@ -93,17 +89,20 @@ const accessJWTServiceFactory = (): IAccessJWTService => {
 
       // start the interval if the user is actually logged in
       if (typeof __current === 'string') {
-        __accessJWTRefreshInterval = setInterval(async () => {
-          try {
-            __current = await __refreshAccessJWT();
-          } catch (e) {
-            if (needsNewSession(e)) {
-              return accessJWTChanged(undefined);
+        __accessJWTRefreshInterval = setInterval(
+          async () => {
+            try {
+              __current = await __refreshAccessJWT();
+            } catch (e) {
+              if (needsNewSession(e)) {
+                return accessJWTChanged(undefined);
+              }
+              console.error(e);
             }
-            console.error(e);
-          }
-          return undefined;
-        }, __ACCESS_JWT_DURATION * (60 * 1000));
+            return undefined;
+          },
+          __ACCESS_JWT_DURATION * (60 * 1000),
+        );
       }
     } catch (e) {
       if (needsNewSession(e)) {
@@ -113,10 +112,6 @@ const accessJWTServiceFactory = (): IAccessJWTService => {
     }
     return undefined;
   };
-
-
-
-
 
   /* **********************************************************************************************
    *                                         MODULE BUILD                                         *
@@ -132,22 +127,12 @@ const accessJWTServiceFactory = (): IAccessJWTService => {
   });
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                        GLOBAL INSTANCE                                         *
  ************************************************************************************************ */
 const AccessJWTService = accessJWTServiceFactory();
 
-
-
-
-
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export {
-  AccessJWTService,
-};
+export { AccessJWTService };

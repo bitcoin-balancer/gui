@@ -14,7 +14,7 @@ import { IMarker, IPriceLineOptions } from '@/shared/components/charts/shared/ty
  */
 const toLocalTime = (originalTime: number): UTCTimestamp => {
   const d = new Date(originalTime);
-  return Date.UTC(
+  return (Date.UTC(
     d.getFullYear(),
     d.getMonth(),
     d.getDate(),
@@ -22,7 +22,7 @@ const toLocalTime = (originalTime: number): UTCTimestamp => {
     d.getMinutes(),
     d.getSeconds(),
     d.getMilliseconds(),
-  ) / 1000 as UTCTimestamp;
+  ) / 1000) as UTCTimestamp;
 };
 
 /**
@@ -66,23 +66,10 @@ const buildChartPriceLine = (options: IPriceLineOptions): IPriceLineOptions => (
  * @param b
  * @returns boolean
  */
-const areLinesEqual = (a: IPriceLineOptions, b: IPriceLineOptions): boolean => (
-  a.id === b.id
-  && a.price === b.price
-  && a.color === b.color
-  && a.title === b.title
-);
-
-
-
-
+const areLinesEqual = (a: IPriceLineOptions, b: IPriceLineOptions): boolean =>
+  a.id === b.id && a.price === b.price && a.color === b.color && a.title === b.title;
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export {
-  toLocalTime,
-  buildChartMarker,
-  buildChartPriceLine,
-  areLinesEqual,
-};
+export { toLocalTime, buildChartMarker, buildChartPriceLine, areLinesEqual };

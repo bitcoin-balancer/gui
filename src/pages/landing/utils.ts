@@ -12,21 +12,16 @@ import { buildChartMarker } from '@/shared/components/charts/shared/utils.ts';
  * @param isIncrease
  * @returns IMarker
  */
-const buildMarker = (timestamp: number, isIncrease: boolean): IMarker => buildChartMarker(
-  timestamp,
-  isIncrease ? 'belowBar' : 'aboveBar',
-  isIncrease ? ColorService.INCREASE_1 : ColorService.DECREASE_1,
-  isIncrease ? 'arrowUp' : 'arrowDown',
-  isIncrease ? 'Buy' : 'Sell',
-);
-
-
-
-
+const buildMarker = (timestamp: number, isIncrease: boolean): IMarker =>
+  buildChartMarker(
+    timestamp,
+    isIncrease ? 'belowBar' : 'aboveBar',
+    isIncrease ? ColorService.INCREASE_1 : ColorService.DECREASE_1,
+    isIncrease ? 'arrowUp' : 'arrowDown',
+    isIncrease ? 'Buy' : 'Sell',
+  );
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export {
-  buildMarker,
-};
+export { buildMarker };

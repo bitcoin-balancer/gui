@@ -26,24 +26,23 @@ const Planner = memo(({ windowState, positionState, className }: IComponentProps
   const [isIncreasePlanOpen, setIsIncreasePlanOpen] = useState<boolean>();
   const [isDecreasePlanOpen, setIsDecreasePlanOpen] = useState<boolean>();
 
-
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
     <>
       {/* ******
-        * MENU *
-        ****** */}
+       * MENU *
+       ****** */}
       <DropdownMenu>
         <DropdownMenuTrigger
-          aria-label='Position planner'
+          aria-label="Position planner"
           className={className}
         >
-          <TrendingUpDown className='w-5 h-5' aria-hidden='true' />
+          <TrendingUpDown
+            className="w-5 h-5"
+            aria-hidden="true"
+          />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem
@@ -51,55 +50,45 @@ const Planner = memo(({ windowState, positionState, className }: IComponentProps
             disabled={positionState.plan.decrease === undefined}
           >
             <ArrowDownWideNarrow
-                aria-hidden='true'
-                className='mr-1 h-5 w-5'
-              /> Decrease plan
+              aria-hidden="true"
+              className="mr-1 h-5 w-5"
+            />{' '}
+            Decrease plan
           </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => setIsIncreasePlanOpen(true)}
-          >
+          <DropdownMenuItem onClick={() => setIsIncreasePlanOpen(true)}>
             <ArrowUpWideNarrow
-                aria-hidden='true'
-                className='mr-1 h-5 w-5'
-              /> Increase plan
+              aria-hidden="true"
+              className="mr-1 h-5 w-5"
+            />{' '}
+            Increase plan
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 
-
-
       {/* **********************
-        * DECREASE PLAN DIALOG *
-        ********************** */}
-      {
-        isDecreasePlanOpen && positionState.plan.decrease
-        && <DecreasePlanDialog
+       * DECREASE PLAN DIALOG *
+       ********************** */}
+      {isDecreasePlanOpen && positionState.plan.decrease && (
+        <DecreasePlanDialog
           windowState={windowState}
           plan={positionState.plan.decrease as { canDecrease: true } & IDecreasePlan}
           closeDialog={setIsDecreasePlanOpen}
         />
-      }
-
-
+      )}
 
       {/* **********************
-        * INCREASE PLAN DIALOG *
-        ********************** */}
-      {
-        isIncreasePlanOpen
-        && <IncreasePlanDialog
+       * INCREASE PLAN DIALOG *
+       ********************** */}
+      {isIncreasePlanOpen && (
+        <IncreasePlanDialog
           windowState={windowState}
           plan={positionState.plan.increase}
           closeDialog={setIsIncreasePlanOpen}
         />
-      }
+      )}
     </>
   );
 });
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

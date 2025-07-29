@@ -44,19 +44,10 @@ type IPriceLineStore = {
   [id: string]: {
     options: IPriceLineOptions;
     instance: IPriceLine;
-  }
+  };
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export type {
-  IPriceFormatterFunc,
-  IMarker,
-  IPriceLineOptions,
-  IPriceLineStore,
-};
+export type { IPriceFormatterFunc, IMarker, IPriceLineOptions, IPriceLineStore };

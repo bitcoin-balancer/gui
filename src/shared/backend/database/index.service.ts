@@ -20,10 +20,6 @@ const databaseServiceFactory = (): IDatabaseService => {
   // the instance of the state's cache
   const __dbSummaryCache = new BrowserCache<IDatabaseSummary>('db-summary');
 
-
-
-
-
   /* **********************************************************************************************
    *                                       DATABASE SUMMARY                                       *
    ********************************************************************************************** */
@@ -32,19 +28,11 @@ const databaseServiceFactory = (): IDatabaseService => {
    * Retrieves the essential database info to get an idea of how things are going from the GUI.
    * @returns Promise<IDatabaseSummary>
    */
-  const getDatabaseSummary = (): Promise<IDatabaseSummary> => __dbSummaryCache.run({
-    query: () => APIService.request(
-      'GET',
-      'database/summary',
-      undefined,
-      true,
-    ),
-    revalidate: '1 hour',
-  });
-
-
-
-
+  const getDatabaseSummary = (): Promise<IDatabaseSummary> =>
+    __dbSummaryCache.run({
+      query: () => APIService.request('GET', 'database/summary', undefined, true),
+      revalidate: '1 hour',
+    });
 
   /* **********************************************************************************************
    *                                         MODULE BUILD                                         *
@@ -58,18 +46,10 @@ const databaseServiceFactory = (): IDatabaseService => {
   });
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                        GLOBAL INSTANCE                                         *
  ************************************************************************************************ */
 const DatabaseService = databaseServiceFactory();
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

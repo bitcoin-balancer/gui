@@ -21,15 +21,7 @@ type IPositionComponentProps = {
   refetchPosition: () => Promise<void>;
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export type {
-  IPageName,
-  INavItem,
-  IPositionComponentProps,
-};
+export type { IPageName, INavItem, IPositionComponentProps };

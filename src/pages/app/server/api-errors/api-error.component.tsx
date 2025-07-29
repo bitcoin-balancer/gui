@@ -13,12 +13,7 @@ import { IAPIErrorProps } from '@/pages/app/server/api-errors/types.ts';
  * API Error Component
  * Component in charge of displaying all the information regarding an error.
  */
-const APIError = memo(({
-  id,
-  data,
-  openDialog,
-  isUnread,
-}: IAPIErrorProps) => {
+const APIError = memo(({ id, data, openDialog, isUnread }: IAPIErrorProps) => {
   /* **********************************************************************************************
    *                                       REACTIVE VALUES                                        *
    ********************************************************************************************** */
@@ -26,54 +21,44 @@ const APIError = memo(({
   // decoded error
   const { message, code } = useMemo(() => decodeError(data.error), [data]);
 
-
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
     <Button
       id={id}
-      variant='ghost'
+      variant="ghost"
       className={`w-full justify-start items-center text-left h-auto py-5 px-3 text-wrap ${isUnread ? 'bg-slate-50' : ''}`}
-      aria-label='Display API Error'
+      aria-label="Display API Error"
       onClick={() => openDialog(data)}
     >
-
       <div>
         <Badge
-          variant='secondary'
-          className='max-w-44 sm:max-w-96 xl:max-w-[500px]'
+          variant="secondary"
+          className="max-w-44 sm:max-w-96 xl:max-w-[500px]"
         >
-          <p className='truncate text-sm'>{data.origin}</p>
+          <p className="truncate text-sm">{data.origin}</p>
         </Badge>
-        <p
-          className='text-light text-sm mt-1 break-all'
-        >{message}</p>
-        <p
-          className='text-light text-xs font-normal hidden sm:block mt-1'
-        >{formatDate(data.event_time, 'datetime-long')}</p>
-        <p
-          className='text-light text-xs font-normal sm:hidden mt-1'
-        >{formatDate(data.event_time, 'datetime-medium')}</p>
+        <p className="text-light text-sm mt-1 break-all">{message}</p>
+        <p className="text-light text-xs font-normal hidden sm:block mt-1">
+          {formatDate(data.event_time, 'datetime-long')}
+        </p>
+        <p className="text-light text-xs font-normal sm:hidden mt-1">
+          {formatDate(data.event_time, 'datetime-medium')}
+        </p>
       </div>
 
-      <span className='flex-1'></span>
+      <span className="flex-1"></span>
 
       <Badge
-        variant='destructive'
-        className='max-w-20 self-start'
-      ><p className='truncate'>{code}</p></Badge>
-
+        variant="destructive"
+        className="max-w-20 self-start"
+      >
+        <p className="truncate">{code}</p>
+      </Badge>
     </Button>
   );
 });
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

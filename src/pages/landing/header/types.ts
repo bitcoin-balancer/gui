@@ -9,18 +9,12 @@ import { ISectionID as ILandingSectionID } from '@/pages/landing/types.ts';
 type IHeaderProps = {
   openUnderConstructionDialog: () => void;
   openContactDialog: () => void;
-  openLargeInfoDialog: (data: ISectionID) => void,
+  openLargeInfoDialog: (data: ISectionID) => void;
   navigateToSection: (id: ILandingSectionID) => void;
-  navigate: (path: string) => void,
+  navigate: (path: string) => void;
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export type {
-  IHeaderProps,
-};
+export type { IHeaderProps };

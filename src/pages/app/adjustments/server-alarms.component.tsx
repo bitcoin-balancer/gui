@@ -44,12 +44,14 @@ const ServerAlarms = ({ closeDialog }: IFormProps) => {
    *                                             STATE                                            *
    ********************************************************************************************** */
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
-  const { data, loading, error } = useAPIFetch(useMemo(
-    () => ({
-      fetchFn: () => ServerService.getAlarms(),
-    }),
-    [],
-  ));
+  const { data, loading, error } = useAPIFetch(
+    useMemo(
+      () => ({
+        fetchFn: () => ServerService.getAlarms(),
+      }),
+      [],
+    ),
+  );
   const { setValue, ...form } = useForm<IAlarmsConfiguration>({
     defaultValues: {
       maxCPULoad: data?.maxCPULoad ?? '',
@@ -60,10 +62,6 @@ const ServerAlarms = ({ closeDialog }: IFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
   const { authority } = useBoundStore((state) => state.user!);
-
-
-
-
 
   /* **********************************************************************************************
    *                                         SIDE EFFECTS                                         *
@@ -76,10 +74,6 @@ const ServerAlarms = ({ closeDialog }: IFormProps) => {
       setValue('maxFileSystemUsage', data.maxFileSystemUsage);
     }
   }, [data, setValue]);
-
-
-
-
 
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
@@ -126,41 +120,45 @@ const ServerAlarms = ({ closeDialog }: IFormProps) => {
     });
   };
 
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   let content;
   if (error) {
-    content = <PageLoadError variant='dialog' error={error} />;
+    content = (
+      <PageLoadError
+        variant="dialog"
+        error={error}
+      />
+    );
   } else if (loading) {
-    content = <PageLoader variant='dialog' />;
+    content = <PageLoader variant="dialog" />;
   } else {
     content = (
-      <Form setValue={setValue} {...form}>
+      <Form
+        setValue={setValue}
+        {...form}
+      >
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           noValidate
         >
-
           <FormField
             control={form.control}
-            name='maxCPULoad'
+            name="maxCPULoad"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Max. CPU load%</FormLabel>
                 <FormControl>
                   <Input
-                    type='number'
-                    placeholder='75'
+                    type="number"
+                    placeholder="75"
                     {...field}
-                    autoComplete='off'
+                    autoComplete="off"
                     disabled={isSubmitting}
                     min={30}
                     max={99}
-                    />
+                  />
                 </FormControl>
                 <FormDescription>Core processing unit</FormDescription>
                 <FormMessage />
@@ -168,23 +166,24 @@ const ServerAlarms = ({ closeDialog }: IFormProps) => {
             )}
             rules={{
               validate: {
-                required: (value) => (isNumberValid(Number(value), 30, 99) ? true : 'Enter a number ranging 30% - 99%'),
+                required: (value) =>
+                  isNumberValid(Number(value), 30, 99) ? true : 'Enter a number ranging 30% - 99%',
               },
             }}
           />
 
           <FormField
             control={form.control}
-            name='maxMemoryUsage'
+            name="maxMemoryUsage"
             render={({ field }) => (
-              <FormItem className='mt-7'>
+              <FormItem className="mt-7">
                 <FormLabel>Max. memory usage%</FormLabel>
                 <FormControl>
                   <Input
-                    type='number'
-                    placeholder='75'
+                    type="number"
+                    placeholder="75"
                     {...field}
-                    autoComplete='off'
+                    autoComplete="off"
                     disabled={isSubmitting}
                     min={30}
                     max={99}
@@ -196,23 +195,24 @@ const ServerAlarms = ({ closeDialog }: IFormProps) => {
             )}
             rules={{
               validate: {
-                required: (value) => (isNumberValid(Number(value), 30, 99) ? true : 'Enter a number ranging 30% - 99%'),
+                required: (value) =>
+                  isNumberValid(Number(value), 30, 99) ? true : 'Enter a number ranging 30% - 99%',
               },
             }}
           />
 
           <FormField
             control={form.control}
-            name='maxFileSystemUsage'
+            name="maxFileSystemUsage"
             render={({ field }) => (
-              <FormItem className='mt-7'>
+              <FormItem className="mt-7">
                 <FormLabel>Max. file system usage%</FormLabel>
                 <FormControl>
                   <Input
-                    type='number'
-                    placeholder='80'
+                    type="number"
+                    placeholder="80"
                     {...field}
-                    autoComplete='off'
+                    autoComplete="off"
                     disabled={isSubmitting}
                     min={30}
                     max={99}
@@ -224,28 +224,23 @@ const ServerAlarms = ({ closeDialog }: IFormProps) => {
             )}
             rules={{
               validate: {
-                required: (value) => (isNumberValid(Number(value), 30, 99) ? true : 'Enter a number ranging 30% - 99%'),
+                required: (value) =>
+                  isNumberValid(Number(value), 30, 99) ? true : 'Enter a number ranging 30% - 99%',
               },
             }}
           />
 
           <DialogFooter>
             <Button
-              type='submit'
+              type="submit"
               disabled={isSubmitting || authority < 3}
-              className='mt-7 w-full'
+              className="mt-7 w-full"
             >
-              {
-                isSubmitting
-                && <Loader2
-                  className='mr-2 h-4 w-4 animate-spin'
-                />
-              } Update configuration
+              {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Update
+              configuration
             </Button>
           </DialogFooter>
-
         </form>
-
       </Form>
     );
   }
@@ -254,9 +249,7 @@ const ServerAlarms = ({ closeDialog }: IFormProps) => {
       open={isDialogOpen}
       onOpenChange={handleCloseDialog}
     >
-
       <DialogContent>
-
         <DialogHeader>
           <DialogTitle>Update alarms</DialogTitle>
           <DialogDescription>
@@ -265,16 +258,10 @@ const ServerAlarms = ({ closeDialog }: IFormProps) => {
         </DialogHeader>
 
         {content}
-
       </DialogContent>
-
     </Dialog>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

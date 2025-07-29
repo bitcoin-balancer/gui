@@ -30,8 +30,6 @@ const navServiceFactory = (): INavService => {
   const __GUI_IMAGE_URL = 'https://hub.docker.com/r/jesusgraterol/balancer-gui';
   const __CT_IMAGE_URL = 'https://hub.docker.com/r/jesusgraterol/balancer-ct';
 
-
-
   /* **********************************************************************************************
    *                                     EXTERNAL URLS BUILDER                                    *
    ********************************************************************************************** */
@@ -49,10 +47,6 @@ const navServiceFactory = (): INavService => {
    * @returns string
    */
   const buildAPICommitURL = (hash: string): string => `${__API_REPO_URL}/commit/${hash}`;
-
-
-
-
 
   /* **********************************************************************************************
    *                                      EXTERNAL NAVIGATION                                     *
@@ -143,10 +137,6 @@ const navServiceFactory = (): INavService => {
    */
   const openCTImage = (): void => openURL(__CT_IMAGE_URL);
 
-
-
-
-
   /* **********************************************************************************************
    *                                      INTERNAL NAVIGATION                                     *
    ********************************************************************************************** */
@@ -218,10 +208,6 @@ const navServiceFactory = (): INavService => {
    */
   const platformUpdate = (): string => '/app/platform-update';
 
-
-
-
-
   /* **********************************************************************************************
    *                                         MODULE BUILD                                         *
    ********************************************************************************************** */
@@ -264,22 +250,12 @@ const navServiceFactory = (): INavService => {
   });
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                        GLOBAL INSTANCE                                         *
  ************************************************************************************************ */
 const NavService = navServiceFactory();
 
-
-
-
-
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export {
-  NavService,
-};
+export { NavService };

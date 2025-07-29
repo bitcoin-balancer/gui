@@ -46,9 +46,8 @@ const formatDate = (date: string | number | Date, dateFormat: IDateFormat): stri
  * @param decimalPlaces?
  * @returns string
  */
-const formatPercentageChange = (value: number, decimalPlaces: number = 2): string => (
-  `${value > 0 ? '+' : ''}${processValue(value, { decimalPlaces })}%`
-);
+const formatPercentageChange = (value: number, decimalPlaces: number = 2): string =>
+  `${value > 0 ? '+' : ''}${processValue(value, { decimalPlaces })}%`;
 
 /**
  * Prettifies a dollar amount and returns the string representation.
@@ -56,9 +55,11 @@ const formatPercentageChange = (value: number, decimalPlaces: number = 2): strin
  * @param decimalPlaces?
  * @returns string
  */
-const formatDollarAmount = (value: number, decimalPlaces: number = 2, prefix: string = '$'): string => (
-  prettifyValue(value, { processing: { decimalPlaces }, format: { prefix } })
-);
+const formatDollarAmount = (
+  value: number,
+  decimalPlaces: number = 2,
+  prefix: string = '$',
+): string => prettifyValue(value, { processing: { decimalPlaces }, format: { prefix } });
 
 /**
  * Prettifies a bitcoin amount and returns the string representation.
@@ -66,9 +67,8 @@ const formatDollarAmount = (value: number, decimalPlaces: number = 2, prefix: st
  * @param decimalPlaces?
  * @returns string
  */
-const formatBitcoinAmount = (value: number, decimalPlaces: number = 8): string => (
-  prettifyValue(value, { processing: { decimalPlaces }, format: { prefix: '₿' } })
-);
+const formatBitcoinAmount = (value: number, decimalPlaces: number = 8): string =>
+  prettifyValue(value, { processing: { decimalPlaces }, format: { prefix: '₿' } });
 
 /**
  * Prettifies a PNL value and returns the string representation.
@@ -86,19 +86,14 @@ const formatPNL = (pnl: number, decimalPlaces?: number): string => {
  * @param splitStates
  * @returns ISplitPercentageChanges
  */
-const formatSplitStateChanges = (splitStates: ISplitStates): ISplitPercentageChanges => (
+const formatSplitStateChanges = (splitStates: ISplitStates): ISplitPercentageChanges =>
   Object.keys(splitStates).reduce(
     (prev, current) => ({
       ...prev,
       [current]: formatPercentageChange(splitStates[current as ISplitStateID].change, 1),
     }),
     {} as ISplitPercentageChanges,
-  )
-);
-
-
-
-
+  );
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

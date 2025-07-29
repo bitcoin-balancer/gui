@@ -13,10 +13,7 @@ type IReversalService = {
   // ...
 
   // retrievers
-  listRecords: (
-    limit: number,
-    startAtEventTime?: number,
-  ) => Promise<IPriceCrashStateRecord[]>;
+  listRecords: (limit: number, startAtEventTime?: number) => Promise<IPriceCrashStateRecord[]>;
   getEventHistory: (id: string, cacheRecord: boolean) => Promise<IEventHistoryRecord>;
 
   // configuration
@@ -26,10 +23,6 @@ type IReversalService = {
   // helpers
   getBadgeBGColor: (points: number) => string;
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                             STATE                                              *
@@ -73,10 +66,6 @@ type IReversalState = {
   reversalEventTime: number | null;
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                         CONFIGURATION                                          *
  ************************************************************************************************ */
@@ -113,10 +102,6 @@ type IReversalConfig = {
   // the weights by module used to calculate the points
   weights: IReversalPointWeights;
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

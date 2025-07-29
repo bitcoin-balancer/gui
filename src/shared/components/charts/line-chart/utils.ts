@@ -21,12 +21,11 @@ import { IChartKind, ISeriesItem } from '@/shared/components/charts/line-chart/t
  * @param items
  * @returns ISeriesItem[]
  */
-const toSeriesItems = (items: ISplitStateItem[]): ISeriesItem[] => items.map(
-  (value) => ({
+const toSeriesItems = (items: ISplitStateItem[]): ISeriesItem[] =>
+  items.map((value) => ({
     time: toLocalTime(value.x),
     value: value.y,
-  }),
-);
+  }));
 
 /**
  * Builds the essential options for creating a line chart.
@@ -105,30 +104,28 @@ const buildChartOptions = (
  */
 const __getLineChartColor = (
   state: IState | undefined,
-): DeepPartial<LineStyleOptions & SeriesOptionsCommon> => (
-  { color: state === undefined ? ColorService.PRIMARY : ColorService.STATE[state] }
-);
+): DeepPartial<LineStyleOptions & SeriesOptionsCommon> => ({
+  color: state === undefined ? ColorService.PRIMARY : ColorService.STATE[state],
+});
 const __getAreaChartColor = (
   state: IState | undefined,
-): DeepPartial<AreaStyleOptions & SeriesOptionsCommon> => (
+): DeepPartial<AreaStyleOptions & SeriesOptionsCommon> =>
   state === undefined
     ? {
-      lineColor: ColorService.PRIMARY,
-      topColor: ColorService.PRIMARY,
-      bottomColor: `rgba(${ColorService.PRIMARY_RGB}, 0.28)`,
-    }
+        lineColor: ColorService.PRIMARY,
+        topColor: ColorService.PRIMARY,
+        bottomColor: `rgba(${ColorService.PRIMARY_RGB}, 0.28)`,
+      }
     : {
-      lineColor: ColorService.STATE[state],
-      topColor: ColorService.STATE[state],
-      bottomColor: `rgba(${ColorService.STATE_RGB[state]}, 0.28)`,
-    }
-);
+        lineColor: ColorService.STATE[state],
+        topColor: ColorService.STATE[state],
+        bottomColor: `rgba(${ColorService.STATE_RGB[state]}, 0.28)`,
+      };
 const getColorByState = (
   kind: IChartKind,
   state: IState | undefined,
-): DeepPartial<(LineStyleOptions | AreaStyleOptions) & SeriesOptionsCommon> => (
-  kind === 'line' ? __getLineChartColor(state) : __getAreaChartColor(state)
-);
+): DeepPartial<(LineStyleOptions | AreaStyleOptions) & SeriesOptionsCommon> =>
+  kind === 'line' ? __getLineChartColor(state) : __getAreaChartColor(state);
 
 /**
  * Builds the options object for a line/area chart.
@@ -149,16 +146,7 @@ const buildSeriesOptions = (
   crosshairMarkerVisible: !hideCrosshairMarker,
 });
 
-
-
-
-
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export {
-  toSeriesItems,
-  buildChartOptions,
-  getColorByState,
-  buildSeriesOptions,
-};
+export { toSeriesItems, buildChartOptions, getColorByState, buildSeriesOptions };

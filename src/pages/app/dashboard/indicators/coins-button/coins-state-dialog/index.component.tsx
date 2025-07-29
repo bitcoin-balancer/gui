@@ -1,9 +1,4 @@
-import {
-  memo,
-  useState,
-  useMemo,
-  Fragment,
-} from 'react';
+import { memo, useState, useMemo, Fragment } from 'react';
 import { Loader2 } from 'lucide-react';
 import {
   Dialog,
@@ -41,18 +36,17 @@ const CoinsStateDialog = memo(({ asset, openSplitStatesDialog, closeDialog }: IC
    *                                             STATE                                            *
    ********************************************************************************************** */
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
-  const { data, loading, error } = useAPIFetch(useMemo(
-    () => ({
-      fetchFn: () => CoinsService.getSemiCompactStateForAsset(asset),
-    }),
-    [asset],
-  ));
+  const { data, loading, error } = useAPIFetch(
+    useMemo(
+      () => ({
+        fetchFn: () => CoinsService.getSemiCompactStateForAsset(asset),
+      }),
+      [asset],
+    ),
+  );
   const [retrievingState, setRetrievingState] = useState<boolean>(false);
   const exchangeConfig = useBoundStore((state) => state.exchangeConfig!);
   const breakpoint = useMediaQueryBreakpoint();
-
-
-
 
   /* **********************************************************************************************
    *                                       REACTIVE VALUES                                        *
@@ -62,20 +56,13 @@ const CoinsStateDialog = memo(({ asset, openSplitStatesDialog, closeDialog }: IC
   const assetName = asset === 'quote' ? exchangeConfig.quoteAsset : exchangeConfig.baseAsset;
 
   // the list of symbols present in the states object
-  const topSymbols = useMemo(
-    () => (data ? Object.keys(data.statesBySymbol).sort() : []),
-    [data],
-  );
+  const topSymbols = useMemo(() => (data ? Object.keys(data.statesBySymbol).sort() : []), [data]);
 
   // the list of charts that will be rendered
   const charts = useMemo(
     () => topSymbols.map((symbol) => toLineSeries(data.statesBySymbol[symbol].splitStates)),
     [topSymbols, data],
   );
-
-
-
-
 
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
@@ -104,42 +91,41 @@ const CoinsStateDialog = memo(({ asset, openSplitStatesDialog, closeDialog }: IC
     }
   };
 
-
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   let content;
   if (error) {
-    content = <PageLoadError variant='dialog' error={error} />;
+    content = (
+      <PageLoadError
+        variant="dialog"
+        error={error}
+      />
+    );
   } else if (loading) {
-    content = <PageLoader variant='dialog' />;
+    content = <PageLoader variant="dialog" />;
   } else {
     content = (
-      <div
-        className='grid grid-cols-1 gap-6 sm:grid-cols-3 md:grid-cols-4 animate-in fade-in duration-700'
-      >
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 md:grid-cols-4 animate-in fade-in duration-700">
         {topSymbols.map((symbol, i) => (
           <Fragment key={symbol}>
             <div>
               <Card
-                role='button'
+                role="button"
                 aria-label={`Display the split states dialog for ${symbol}`}
                 tabIndex={1}
                 className={`hover:ring-1 hover:ring-slate-300 ${retrievingState ? 'hover:cursor-not-allowed opacity-50 ' : 'hover:pointer'}`}
                 onClick={() => displaySplitStatesDialog(symbol)}
               >
-                <CardContent
-                  className='md:pt-0 md:p-2 relative'
-                >
+                <CardContent className="md:pt-0 md:p-2 relative">
                   <span
                     className={`absolute top-1 left-1/2 transform -translate-x-1/2 z-10 text-base font-semibold ${ColorService.STATE_TEXT_CLASS_NAME[data.statesBySymbol[symbol].state]}`}
-                  >{symbol}</span>
+                  >
+                    {symbol}
+                  </span>
                   <LineChart
-                    kind='line'
-                    height={breakpoint === 'xs' || breakpoint === 'sm' ? 200 : 150 }
+                    kind="line"
+                    height={breakpoint === 'xs' || breakpoint === 'sm' ? 200 : 150}
                     data={charts[i]}
                     state={data.statesBySymbol[symbol].state}
                     showAttributionLogo={false}
@@ -153,7 +139,7 @@ const CoinsStateDialog = memo(({ asset, openSplitStatesDialog, closeDialog }: IC
                   />
                 </CardContent>
               </Card>
-              {i < topSymbols.length - 1 && <Separator className='my-7 block md:hidden' />}
+              {i < topSymbols.length - 1 && <Separator className="my-7 block md:hidden" />}
             </div>
           </Fragment>
         ))}
@@ -165,44 +151,26 @@ const CoinsStateDialog = memo(({ asset, openSplitStatesDialog, closeDialog }: IC
       open={isDialogOpen}
       onOpenChange={handleCloseDialog}
     >
-
-      <DialogContent
-        className='max-w-[1000px]'
-      >
-
+      <DialogContent className="max-w-[1000px]">
         <DialogHeader>
-          <DialogTitle
-            className='flex justify-center sm:justify-start items-center'
-          >
+          <DialogTitle className="flex justify-center sm:justify-start items-center">
             COINS/{assetName}
-            {
-              (!error && !loading && !retrievingState)
-                && <StateIcon
-                className='ml-2'
+            {!error && !loading && !retrievingState && (
+              <StateIcon
+                className="ml-2"
                 state={data.state}
               />
-            }
-            {
-                retrievingState
-                && <Loader2
-                  className='ml-2 h-4 w-4 animate-spin'
-                />
-              }
+            )}
+            {retrievingState && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
           </DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
 
         {content}
-
       </DialogContent>
-
     </Dialog>
   );
 });
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

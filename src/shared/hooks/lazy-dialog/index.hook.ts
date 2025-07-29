@@ -19,10 +19,6 @@ const useLazyDialog = (
    ********************************************************************************************** */
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(true);
 
-
-
-
-
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
    ********************************************************************************************** */
@@ -31,18 +27,11 @@ const useLazyDialog = (
    * Handles the closing of the dialog after a small delay in order to let the animation complete
    * before removing the element from the DOM.
    */
-  const handleCloseDialog = useCallback(
-    async (): Promise<void> => {
-      setIsDialogOpen(false);
-      await delay(delaySeconds);
-      closeDialog(undefined);
-    },
-    [closeDialog, delaySeconds],
-  );
-
-
-
-
+  const handleCloseDialog = useCallback(async (): Promise<void> => {
+    setIsDialogOpen(false);
+    await delay(delaySeconds);
+    closeDialog(undefined);
+  }, [closeDialog, delaySeconds]);
 
   /* **********************************************************************************************
    *                                         HOOK EXPORTS                                         *
@@ -54,11 +43,7 @@ const useLazyDialog = (
   };
 };
 
-
-
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export {
-  useLazyDialog,
-};
+export { useLazyDialog };

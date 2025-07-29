@@ -45,10 +45,6 @@ const AddUser = ({ children, dispatch }: IAddUserProps) => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const openConfirmationDialog = useBoundStore((state) => state.openConfirmationDialog);
 
-
-
-
-
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
    ********************************************************************************************** */
@@ -75,13 +71,19 @@ const AddUser = ({ children, dispatch }: IAddUserProps) => {
           errorToast(e);
           const { code } = decodeError(e);
           if (code === 3500) {
-            form.setError('nickname', { message: `The provided nickname '${data.nickname}' has an invalid format` });
+            form.setError('nickname', {
+              message: `The provided nickname '${data.nickname}' has an invalid format`,
+            });
           }
           if (code === 3501) {
-            form.setError('nickname', { message: `The nickname '${data.nickname}' is already being used by another user` });
+            form.setError('nickname', {
+              message: `The nickname '${data.nickname}' is already being used by another user`,
+            });
           }
           if (code === 3505) {
-            form.setError('authority', { message: `The authority must be a number ranging between 1 and 4. Received '${data.authority}'` });
+            form.setError('authority', {
+              message: `The authority must be a number ranging between 1 and 4. Received '${data.authority}'`,
+            });
           }
         } finally {
           setIsSubmitting(false);
@@ -89,9 +91,6 @@ const AddUser = ({ children, dispatch }: IAddUserProps) => {
       },
     });
   };
-
-
-
 
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
@@ -101,11 +100,9 @@ const AddUser = ({ children, dispatch }: IAddUserProps) => {
       open={open}
       onOpenChange={setOpen}
     >
-
       <DialogTrigger asChild>{children}</DialogTrigger>
 
       <DialogContent>
-
         <DialogHeader>
           <DialogTitle>Add user</DialogTitle>
           <DialogDescription>
@@ -114,90 +111,79 @@ const AddUser = ({ children, dispatch }: IAddUserProps) => {
         </DialogHeader>
 
         <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              noValidate
-            >
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            noValidate
+          >
+            <FormField
+              control={form.control}
+              name="nickname"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Nickname</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="satoshi"
+                      {...field}
+                      autoComplete="off"
+                      autoFocus
+                      disabled={isSubmitting}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+              rules={{
+                validate: {
+                  required: (value) => (isSlugValid(value) ? true : 'Enter a valid nickname'),
+                },
+              }}
+            />
 
-              <FormField
-                control={form.control}
-                name='nickname'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Nickname</FormLabel>
-                    <FormControl>
-                      <Input
-                        type='text'
-                        placeholder='satoshi'
-                        {...field}
-                        autoComplete='off'
-                        autoFocus
-                        disabled={isSubmitting}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-                rules={{
-                  validate: {
-                    required: (value) => (isSlugValid(value) ? true : 'Enter a valid nickname'),
-                  },
-                }}
-              />
+            <FormField
+              control={form.control}
+              name="authority"
+              render={({ field }) => (
+                <FormItem className="mt-5">
+                  <FormLabel>Authority</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      placeholder="3"
+                      {...field}
+                      autoComplete="off"
+                      disabled={isSubmitting}
+                      min={1}
+                      max={4}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+              rules={{
+                validate: {
+                  required: (value) =>
+                    isAuthorityValid(Number(value), 4) ? true : 'Enter a valid authority',
+                },
+              }}
+            />
 
-              <FormField
-                control={form.control}
-                name='authority'
-                render={({ field }) => (
-                  <FormItem className='mt-5'>
-                    <FormLabel>Authority</FormLabel>
-                    <FormControl>
-                      <Input
-                        type='number'
-                        placeholder='3'
-                        {...field}
-                        autoComplete='off'
-                        disabled={isSubmitting}
-                        min={1}
-                        max={4}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-                rules={{
-                  validate: {
-                    required: (value) => (isAuthorityValid(Number(value), 4) ? true : 'Enter a valid authority'),
-                  },
-                }}
-              />
-
-              <DialogFooter>
-                <Button
-                  type='submit'
-                  disabled={isSubmitting}
-                  className='mt-7 w-full'
-                >
-                  {
-                    isSubmitting
-                    && <Loader2
-                      className='mr-2 h-4 w-4 animate-spin'
-                    />} Add user
-                </Button>
-              </DialogFooter>
-
-            </form>
-          </Form>
-
+            <DialogFooter>
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                className="mt-7 w-full"
+              >
+                {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Add user
+              </Button>
+            </DialogFooter>
+          </form>
+        </Form>
       </DialogContent>
-
     </Dialog>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

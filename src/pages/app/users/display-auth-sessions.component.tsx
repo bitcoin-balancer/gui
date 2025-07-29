@@ -35,38 +35,36 @@ import { IDisplayAuthSessionsProps } from '@/pages/app/users/types.ts';
  * Display Auth Sessions Component
  * Component in charge of displaying the list of auth sessions a user has.
  */
-const DisplayAuthSessions = memo(({
-  uid,
-  nickname,
-  closeDialog,
-}: IDisplayAuthSessionsProps) => {
+const DisplayAuthSessions = memo(({ uid, nickname, closeDialog }: IDisplayAuthSessionsProps) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
   const { isDialogOpen, handleCloseDialog } = useLazyDialog(closeDialog);
-  const { data, loading, error } = useAPIFetch(useMemo(
-    () => ({
-      fetchFn: () => JWTService.listRecords(uid),
-    }),
-    [uid],
-  ));
-
-
-
+  const { data, loading, error } = useAPIFetch(
+    useMemo(
+      () => ({
+        fetchFn: () => JWTService.listRecords(uid),
+      }),
+      [uid],
+    ),
+  );
 
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   let content;
   if (error) {
-    content = <PageLoadError variant='dialog' error={error} />;
+    content = (
+      <PageLoadError
+        variant="dialog"
+        error={error}
+      />
+    );
   } else if (loading) {
-    content = <PageLoader variant='dialog' />;
+    content = <PageLoader variant="dialog" />;
   } else if (data.length) {
     content = (
-      <Table
-        className='animate-in fade-in duration-700'
-      >
+      <Table className="animate-in fade-in duration-700">
         <TableCaption>A list of refresh JWTs</TableCaption>
         <TableHeader>
           <TableRow>
@@ -82,12 +80,11 @@ const DisplayAuthSessions = memo(({
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button
-                      variant='ghost'
-                      className='max-w-24 sm:max-w-44 md:max-w-52'
-                      onClick={() => copyToClipboard(record.token)}>
-                        <p
-                          className='truncate font-normal'
-                        >{record.token}</p>
+                      variant="ghost"
+                      className="max-w-24 sm:max-w-44 md:max-w-52"
+                      onClick={() => copyToClipboard(record.token)}
+                    >
+                      <p className="truncate font-normal">{record.token}</p>
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -97,7 +94,6 @@ const DisplayAuthSessions = memo(({
               </TableCell>
             </TableRow>
           ))}
-
         </TableBody>
       </Table>
     );
@@ -109,9 +105,7 @@ const DisplayAuthSessions = memo(({
       open={isDialogOpen}
       onOpenChange={handleCloseDialog}
     >
-
       <DialogContent>
-
         <DialogHeader>
           <DialogTitle>{nickname}'s Auth Sessions</DialogTitle>
           <DialogDescription>
@@ -120,16 +114,10 @@ const DisplayAuthSessions = memo(({
         </DialogHeader>
 
         {content}
-
       </DialogContent>
-
     </Dialog>
   );
 });
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

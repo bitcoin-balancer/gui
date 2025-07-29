@@ -58,10 +58,6 @@ const marketStateServiceFactory = (): IMarketStateService => {
     s2: 0.02,
   };
 
-
-
-
-
   /* **********************************************************************************************
    *                                            HELPERS                                           *
    ********************************************************************************************** */
@@ -75,13 +71,8 @@ const marketStateServiceFactory = (): IMarketStateService => {
   const applySplit = (
     series: number[] | ISplitStateItem[],
     splitID: ISplitStateID,
-  ): number[] | ISplitStateItem[] => (
-    series.slice(series.length - Math.ceil(series.length * SPLIT_VALUES[splitID]))
-  );
-
-
-
-
+  ): number[] | ISplitStateItem[] =>
+    series.slice(series.length - Math.ceil(series.length * SPLIT_VALUES[splitID]));
 
   /* **********************************************************************************************
    *                                         MODULE BUILD                                         *
@@ -98,18 +89,10 @@ const marketStateServiceFactory = (): IMarketStateService => {
   });
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                        GLOBAL INSTANCE                                         *
  ************************************************************************************************ */
 const MarketStateService = marketStateServiceFactory();
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

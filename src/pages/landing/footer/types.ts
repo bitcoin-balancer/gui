@@ -7,18 +7,12 @@ import { ISectionID } from '@/shared/components/large-info-dialog/index.componen
 // props used by the component
 type IFooterProps = {
   openUnderConstructionDialog: () => void;
-  openContactDialog: () => void,
-  openLargeInfoDialog: (data: ISectionID) => void,
-  navigate: (path: string) => void,
+  openContactDialog: () => void;
+  openLargeInfoDialog: (data: ISectionID) => void;
+  navigate: (path: string) => void;
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export type {
-  IFooterProps,
-};
+export type { IFooterProps };

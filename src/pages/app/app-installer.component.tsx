@@ -11,8 +11,6 @@ const DURATION: number = 3 * 1000;
 // the app's host name
 const APP_URL = new URL(window.location.href).hostname.replace('www.', '');
 
-
-
 /* **********************************************************************************************
  *                                            HELPERS                                           *
  ********************************************************************************************** */
@@ -22,11 +20,8 @@ const APP_URL = new URL(window.location.href).hostname.replace('www.', '');
  * @param remaining
  * @returns string
  */
-const getProgressBarWidth = (remaining: number): string => `${((remaining * 100) / DURATION).toFixed(2)}%`;
-
-
-
-
+const getProgressBarWidth = (remaining: number): string =>
+  `${((remaining * 100) / DURATION).toFixed(2)}%`;
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -42,10 +37,6 @@ const AppInstaller = () => {
    ********************************************************************************************** */
   const [visible, setVisible] = useState(false);
   const [remainingTime, setRemainingTime] = useState(DURATION);
-
-
-
-
 
   /* **********************************************************************************************
    *                                         SIDE EFFECTS                                         *
@@ -81,10 +72,6 @@ const AppInstaller = () => {
     };
   }, []);
 
-
-
-
-
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
    ********************************************************************************************** */
@@ -96,10 +83,6 @@ const AppInstaller = () => {
     }
   };
 
-
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
@@ -108,62 +91,48 @@ const AppInstaller = () => {
   }
   return (
     <button
-      aria-label='Install Application'
-      role='alert'
+      aria-label="Install Application"
+      role="alert"
       onClick={installApp}
-      className='fixed bottom-5 inset-x-0 z-20 w-64 md:w-72 mx-auto text-left bg-white shadow-md rounded-md border border-slate-200 hover:bg-gray-200 animate-in fade-in zoom-in duration-500'
+      className="fixed bottom-5 inset-x-0 z-20 w-64 md:w-72 mx-auto text-left bg-white shadow-md rounded-md border border-slate-200 hover:bg-gray-200 animate-in fade-in zoom-in duration-500"
     >
-
       {/* **************
-        * PROGRESS BAR *
-        ************** */}
+       * PROGRESS BAR *
+       ************** */}
       <div
-        className='h-1 bg-primary rounded-t-md'
+        className="h-1 bg-primary rounded-t-md"
         style={{ width: getProgressBarWidth(remainingTime) }}
-        role='progressbar'
+        role="progressbar"
       ></div>
 
-
-
       {/* *********
-        * CONTENT *
-        ********* */}
-      <div
-        className='flex justify-start items-center p-3'
-      >
+       * CONTENT *
+       ********* */}
+      <div className="flex justify-start items-center p-3">
         <img
-          src='/installer/mobile-installer.png'
-          alt='App Installer Icon'
-          className='w-11 md:hidden'
+          src="/installer/mobile-installer.png"
+          alt="App Installer Icon"
+          className="w-11 md:hidden"
           width="44"
           height="44"
         />
 
         <img
-          src='/installer/desktop-installer.png'
-          alt='App Installer Icon'
-          className='w-11 hidden md:block' width="44" height="44"
+          src="/installer/desktop-installer.png"
+          alt="App Installer Icon"
+          className="w-11 hidden md:block"
+          width="44"
+          height="44"
         />
 
-        <div
-          className='ml-2'
-        >
-          <p
-            className='font-semibold'
-          >Install app</p>
-          <p
-            className='text-slate-500 text-sm'
-          >{APP_URL}</p>
+        <div className="ml-2">
+          <p className="font-semibold">Install app</p>
+          <p className="text-slate-500 text-sm">{APP_URL}</p>
         </div>
       </div>
-
     </button>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

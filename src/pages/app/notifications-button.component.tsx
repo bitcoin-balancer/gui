@@ -20,15 +20,20 @@ import NotificationsDialog from '@/pages/app/notifications-dialog.component.tsx'
 const getComponentElements = (
   unreadNotifications: string | undefined,
   size: 'icon' | 'default',
-): { icon: JSX.Element, badge: JSX.Element | null } => {
+): { icon: JSX.Element; badge: JSX.Element | null } => {
   // init values
-  let icon: JSX.Element = <Bell className='w-5 h-5' aria-hidden='true' />;
+  let icon: JSX.Element = (
+    <Bell
+      className="w-5 h-5"
+      aria-hidden="true"
+    />
+  );
   let badgeClassName: string = '';
 
   // proceed if there are unread notifications
   if (unreadNotifications) {
     // set the icon
-    icon = <BellRing aria-hidden='true' />;
+    icon = <BellRing aria-hidden="true" />;
 
     // set the spacing based on the number of unread notifications and the size of the btn
     if (unreadNotifications === '9+') {
@@ -41,21 +46,14 @@ const getComponentElements = (
   // finally, return the elements
   return {
     icon,
-    badge: unreadNotifications !== undefined
-      ? <div
-          className={`absolute -top-2 ${badgeClassName}`}
-        >
-          <Badge
-            className='py-0.5 px-1.5'
-          >{unreadNotifications}</Badge>
+    badge:
+      unreadNotifications !== undefined ? (
+        <div className={`absolute -top-2 ${badgeClassName}`}>
+          <Badge className="py-0.5 px-1.5">{unreadNotifications}</Badge>
         </div>
-      : null,
+      ) : null,
   };
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -73,10 +71,6 @@ const NotificationsButton = memo(({ size }: { size: 'icon' | 'default' }) => {
   const [open, setOpen] = useState<boolean>();
   const unreadNotifications = useBoundStore((state) => state.unreadNotifications!);
 
-
-
-
-
   /* **********************************************************************************************
    *                                       REACTIVE VALUES                                        *
    ********************************************************************************************** */
@@ -87,10 +81,6 @@ const NotificationsButton = memo(({ size }: { size: 'icon' | 'default' }) => {
     [unreadNotifications],
   );
 
-
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
@@ -100,9 +90,9 @@ const NotificationsButton = memo(({ size }: { size: 'icon' | 'default' }) => {
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
-            variant='ghost'
+            variant="ghost"
             className={`relative ${size === 'icon' && unreadNotifications > 0 ? 'mr-2' : ''}`}
-            aria-label='Display notification'
+            aria-label="Display notification"
             size={size}
             onClick={() => setOpen(true)}
           >
@@ -115,24 +105,18 @@ const NotificationsButton = memo(({ size }: { size: 'icon' | 'default' }) => {
         </TooltipContent>
       </Tooltip>
 
-
       {/* **********************
-        * NOTIFICATIONS DIALOG *
-        ********************** */}
-      {
-        open
-        && <NotificationsDialog
+       * NOTIFICATIONS DIALOG *
+       ********************** */}
+      {open && (
+        <NotificationsDialog
           unreadCount={unreadNotifications}
           closeDialog={setOpen}
         />
-      }
+      )}
     </>
   );
 });
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

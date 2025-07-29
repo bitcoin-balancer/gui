@@ -1,16 +1,10 @@
 import { decodeError } from 'error-message-utils';
 import { delay } from 'web-utils-kit';
-import {
-  IRequestInput,
-  IRequestMethod,
-  IOptions,
-  send,
-} from 'fetch-request-browser';
+import { IRequestInput, IRequestMethod, IOptions, send } from 'fetch-request-browser';
 import { IAPIResponse } from 'api-response-utils';
 import { buildAPIURL, buildRequestOptions } from '@/shared/backend/api/utils.ts';
 import { AccessJWTService } from '@/shared/backend/api/access-jwt.service.ts';
 import { IAPIService } from '@/shared/backend/api/types.ts';
-
 
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
@@ -27,10 +21,6 @@ const apiServiceFactory = (): IAPIService => {
    ********************************************************************************************** */
 
   // ...
-
-
-
-
 
   /* **********************************************************************************************
    *                                            ACTIONS                                           *
@@ -75,7 +65,9 @@ const apiServiceFactory = (): IAPIService => {
   ): Promise<T> => {
     // if it requires auth, the Access JWT must be set
     if (requiresAuth && typeof AccessJWTService.current !== 'string') {
-      throw new Error('The request requires the user to be authenticated but the Access JWT has not been set.');
+      throw new Error(
+        'The request requires the user to be authenticated but the Access JWT has not been set.',
+      );
     }
 
     // send the request
@@ -109,10 +101,6 @@ const apiServiceFactory = (): IAPIService => {
     throw new Error(res.error);
   };
 
-
-
-
-
   /* **********************************************************************************************
    *                                         MODULE BUILD                                         *
    ********************************************************************************************** */
@@ -125,18 +113,10 @@ const apiServiceFactory = (): IAPIService => {
   });
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                        GLOBAL INSTANCE                                         *
  ************************************************************************************************ */
 const APIService = apiServiceFactory();
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

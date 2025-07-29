@@ -9,7 +9,7 @@ import { IHTMLElement } from '@/shared/types.ts';
  * The sort function used to keep records in order when loading more records.
  */
 type ISortFn =
-  (<T extends string | number>(a: T, b: T) => number)
+  | (<T extends string | number>(a: T, b: T) => number)
   | (<T extends Record<string, unknown>>(a: T, b: T) => number);
 
 /**
@@ -53,15 +53,7 @@ type IAPIFetchHook = <T>(config: IAPIFetchConfig<T>) => {
   loadingMore: boolean;
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export type {
-  ISortFn,
-  IAPIFetchConfig,
-  IAPIFetchHook,
-};
+export type { ISortFn, IAPIFetchConfig, IAPIFetchHook };

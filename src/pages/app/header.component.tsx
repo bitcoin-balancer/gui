@@ -1,9 +1,4 @@
-import {
-  memo,
-  useState,
-  useMemo,
-  useCallback,
-} from 'react';
+import { memo, useState, useMemo, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Menu,
@@ -56,7 +51,7 @@ import { IMainNavigationItem } from '@/pages/app/types.ts';
  * Header Component
  * Component in charge of providing the top and side navigation systems.
  */
-const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathname: string }) => {
+const Header = memo(({ items, pathname }: { items: IMainNavigationItem[]; pathname: string }) => {
   /* **********************************************************************************************
    *                                             STATE                                            *
    ********************************************************************************************** */
@@ -70,10 +65,6 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
   const { authority } = useBoundStore((state) => state.user!);
   const [isSigningOut, setIsSigningOut] = useState<boolean>(false);
 
-
-
-
-
   /* **********************************************************************************************
    *                                       REACTIVE VALUES                                        *
    ********************************************************************************************** */
@@ -86,10 +77,6 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
     () => VersionService.buildLastCommitText(version.gui.latest),
     [version.gui.latest],
   );
-
-
-
-
 
   /* **********************************************************************************************
    *                                        EVENT HANDLERS                                        *
@@ -108,10 +95,12 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
    * Opens the under construction dialog.
    */
   const openUnderConstructionDialog = useCallback(
-    () => openInfoDialog({
-      title: 'Under construction',
-      content: 'This section is currently under construction and will be available soon. Please check back in a few days.',
-    }),
+    () =>
+      openInfoDialog({
+        title: 'Under construction',
+        content:
+          'This section is currently under construction and will be available soon. Please check back in a few days.',
+      }),
     [openInfoDialog],
   );
 
@@ -137,63 +126,49 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
     });
   };
 
-
-
-
-
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
     <nav
-      id='app-header'
-      className='flex justify-center items-center border-b border-slate-200 gap-3 md:gap-5'
+      id="app-header"
+      className="flex justify-center items-center border-b border-slate-200 gap-3 md:gap-5"
     >
-
-      <Link
-        to={NavService.landing()}
-      >
+      <Link to={NavService.landing()}>
         <img
-          src='/logo/logo-dark.png'
-          alt='Balancer’s Logo'
-          width='176'
-          height='60'
-          className='w-32 lg:w-36'
+          src="/logo/logo-dark.png"
+          alt="Balancer’s Logo"
+          width="176"
+          height="60"
+          className="w-32 lg:w-36"
         />
       </Link>
 
-      <span className='flex-1'></span>
-
-
+      <span className="flex-1"></span>
 
       {/* ****************
-        * TOP NAVIGATION *
-        **************** */}
+       * TOP NAVIGATION *
+       **************** */}
 
       {/* ************
-        * MD BUTTONS *
-        ************ */}
+       * MD BUTTONS *
+       ************ */}
       {items.map((item, i) => (
         <Tooltip key={i}>
           <TooltipTrigger asChild>
             <Button
-              variant='ghost'
-              className='hidden md:flex lg:hidden relative'
+              variant="ghost"
+              className="hidden md:flex lg:hidden relative"
               aria-label={item.name}
               onClick={() => navigate(item.path)}
               disabled={item.active || item.requirement > authority}
             >
               {item.icon}
-              {
-                item.badge
-                && <div
-                  className={`absolute -top-2 ${item.badge === '9+' ? '-right-3' : '-right-2'}`}
-                >
-                  <Badge
-                    className='py-0.5 px-1.5'
-                  >{item.badge}</Badge>
+              {item.badge && (
+                <div className={`absolute -top-2 ${item.badge === '9+' ? '-right-3' : '-right-2'}`}>
+                  <Badge className="py-0.5 px-1.5">{item.badge}</Badge>
                 </div>
-              }
+              )}
             </Button>
           </TooltipTrigger>
           <TooltipContent>
@@ -202,248 +177,239 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
         </Tooltip>
       ))}
 
-
-
       {/* **************
-        * LG BUTTONS *
-        ************** */}
+       * LG BUTTONS *
+       ************** */}
       {items.map((item, i) => (
         <Button
           key={i}
-          variant='ghost'
-          className='hidden lg:flex relative'
+          variant="ghost"
+          className="hidden lg:flex relative"
           onClick={() => navigate(item.path)}
           disabled={item.active || item.requirement > authority}
         >
-          {item.icon} <span className='ml-2'>{item.name}</span>
-          {
-            item.badge
-            && <div
-              className={`absolute -top-2 ${item.badge === '9+' ? '-right-3' : '-right-2'}`}
-            >
-              <Badge
-                className='py-0.5 px-1.5'
-              >{item.badge}</Badge>
+          {item.icon} <span className="ml-2">{item.name}</span>
+          {item.badge && (
+            <div className={`absolute -top-2 ${item.badge === '9+' ? '-right-3' : '-right-2'}`}>
+              <Badge className="py-0.5 px-1.5">{item.badge}</Badge>
             </div>
-          }
+          )}
         </Button>
       ))}
 
-
       {/* ***************
-        * NOTIFICATIONS *
-        *************** */}
+       * NOTIFICATIONS *
+       *************** */}
       <NotificationsButton size={breakpoint === 'xs' || breakpoint === 'sm' ? 'icon' : 'default'} />
 
-
-
       {/* **************
-        * SIDENAV MENU *
-        ************** */}
+       * SIDENAV MENU *
+       ************** */}
       <Sheet
         open={sidenavOpen}
         onOpenChange={setSidenavOpen}
       >
-
         <SheetTrigger asChild>
           <div>
             <Button
-              variant='ghost'
-              aria-label='Side Navigation Menu'
+              variant="ghost"
+              aria-label="Side Navigation Menu"
               size={breakpoint === 'xs' || breakpoint === 'sm' ? 'icon' : 'default'}
-            ><Menu className='w-5 h-5' aria-hidden='true' /></Button>
+            >
+              <Menu
+                className="w-5 h-5"
+                aria-hidden="true"
+              />
+            </Button>
           </div>
         </SheetTrigger>
 
-        <SheetContent
-          className='w-64 sm:72 md-80 lg:96 p-4 overflow-y-auto'
-        >
+        <SheetContent className="w-64 sm:72 md-80 lg:96 p-4 overflow-y-auto">
           <SheetHeader>
-            <SheetTitle
-              className='flex justify-start items-center'
-            >
+            <SheetTitle className="flex justify-start items-center">
               <img
-                src='/logo/logo-dark.png'
-                alt='Balancer’s Logo'
-                width='80'
-                height='30'
-                className='w-20'
+                src="/logo/logo-dark.png"
+                alt="Balancer’s Logo"
+                width="80"
+                height="30"
+                className="w-20"
               />
               <Badge
-                variant='secondary'
-                className='ml-2'
-              >GUI</Badge>
+                variant="secondary"
+                className="ml-2"
+              >
+                GUI
+              </Badge>
             </SheetTitle>
 
             <SheetDescription
-              className='text-left'
+              className="text-left"
               asChild
             >
-              {
-                availableUpdates === null
-                  ? <a
-                      href={NavService.buildGUICommitURL(version.gui.latest.sha)}
-                      target='_blank'
-                      rel='noopener noreferrer'
-                      className='flex justify-start items-center text-light'
-                      style={{ marginTop: 3 }}
-                    >
-                      <CodeXml
-                          className='mr-1 w-4 h-4'
-                      />
-                      <p
-                        className='truncate max-w-[85%] text-sm'
-                      >{lastCommit}</p>
-                    </a>
-                  : <Button
-                      variant='link'
-                      className='justify-start p-0 min-h-0 text-light text-sm'
-                      onClick={() => navigateFromSidenav(NavService.platformUpdate())}
-                      style={{ marginTop: '-3px' }}
-                    >
-                      <CodeXml
-                        className='mr-1 w-4 h-4'
-                      />
-                      <p className='truncate max-w-[85%]'>Update available</p>
-                    </Button>
-              }
+              {availableUpdates === null ? (
+                <a
+                  href={NavService.buildGUICommitURL(version.gui.latest.sha)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex justify-start items-center text-light"
+                  style={{ marginTop: 3 }}
+                >
+                  <CodeXml className="mr-1 w-4 h-4" />
+                  <p className="truncate max-w-[85%] text-sm">{lastCommit}</p>
+                </a>
+              ) : (
+                <Button
+                  variant="link"
+                  className="justify-start p-0 min-h-0 text-light text-sm"
+                  onClick={() => navigateFromSidenav(NavService.platformUpdate())}
+                  style={{ marginTop: '-3px' }}
+                >
+                  <CodeXml className="mr-1 w-4 h-4" />
+                  <p className="truncate max-w-[85%]">Update available</p>
+                </Button>
+              )}
             </SheetDescription>
           </SheetHeader>
 
-          <nav className='mt-4'>
-
+          <nav className="mt-4">
             <Button
-              variant='ghost'
-              className='w-full justify-start'
+              variant="ghost"
+              className="w-full justify-start"
               onClick={() => navigateFromSidenav(NavService.ipBlacklist())}
               disabled={pathname === NavService.ipBlacklist() || authority < 2}
             >
               <EarthLock
-                aria-hidden='true'
-                className='w-5 h-5 mr-2'
-              /> IP address blacklist
+                aria-hidden="true"
+                className="w-5 h-5 mr-2"
+              />{' '}
+              IP address blacklist
             </Button>
 
             <Button
-              variant='ghost'
-              className='w-full justify-start'
+              variant="ghost"
+              className="w-full justify-start"
               onClick={() => navigateFromSidenav(NavService.users())}
               disabled={pathname === NavService.users() || authority < 5}
             >
               <Users
-                aria-hidden='true'
-                className='w-5 h-5 mr-2'
-              /> Users
+                aria-hidden="true"
+                className="w-5 h-5 mr-2"
+              />{' '}
+              Users
             </Button>
 
             <Button
-              variant='ghost'
-              className='w-full justify-start'
+              variant="ghost"
+              className="w-full justify-start"
               onClick={() => navigateFromSidenav(NavService.platformUpdate())}
               disabled={pathname === NavService.platformUpdate()}
             >
               <CloudDownload
-                aria-hidden='true'
-                className='w-5 h-5 mr-2'
-              /> Platform update
-              <span className='flex-1'></span>
-              {
-                availableUpdates !== null
-                && <Badge
-                  className='text-xs py-0.5 px-1.5'
-                >{availableUpdates === 'BOTH' ? 2 : 1}</Badge>
-              }
+                aria-hidden="true"
+                className="w-5 h-5 mr-2"
+              />{' '}
+              Platform update
+              <span className="flex-1"></span>
+              {availableUpdates !== null && (
+                <Badge className="text-xs py-0.5 px-1.5">
+                  {availableUpdates === 'BOTH' ? 2 : 1}
+                </Badge>
+              )}
             </Button>
 
-            <Separator className='my-4' />
+            <Separator className="my-4" />
 
             <SocketIOStatus />
 
-            <Separator className='my-4' />
+            <Separator className="my-4" />
 
             <Button
-              variant='ghost'
-              className='w-full justify-start'
+              variant="ghost"
+              className="w-full justify-start"
               onClick={NavService.createNewInstance}
             >
               <ExternalLink
-                aria-hidden='true'
-                className='w-5 h-5 mr-2'
-              /> Create new instance
+                aria-hidden="true"
+                className="w-5 h-5 mr-2"
+              />{' '}
+              Create new instance
             </Button>
 
             <Button
-              variant='ghost'
-              className='w-full justify-start'
+              variant="ghost"
+              className="w-full justify-start"
               onClick={() => navigateFromSidenav(NavService.landing())}
               disabled={pathname === NavService.landing()}
             >
               <FlaskConical
-                aria-hidden='true'
-                className='w-5 h-5 mr-2'
-              /> About the project
+                aria-hidden="true"
+                className="w-5 h-5 mr-2"
+              />{' '}
+              About the project
             </Button>
 
             <Button
-              variant='ghost'
-              className='w-full justify-start'
+              variant="ghost"
+              className="w-full justify-start"
               onClick={NavService.openGitHubPage}
             >
               <HardDriveDownload
-                aria-hidden='true'
-                className='w-5 h-5 mr-2'
-              /> Get Balancer
+                aria-hidden="true"
+                className="w-5 h-5 mr-2"
+              />{' '}
+              Get Balancer
             </Button>
 
             <Button
-              variant='ghost'
-              className='w-full justify-start'
+              variant="ghost"
+              className="w-full justify-start"
               onClick={NavService.openGitHubPage}
             >
               <Github
-                aria-hidden='true'
-                className='w-5 h-5 mr-2'
-              /> GitHub page
+                aria-hidden="true"
+                className="w-5 h-5 mr-2"
+              />{' '}
+              GitHub page
             </Button>
 
             <Button
-              variant='ghost'
-              className='w-full justify-start'
+              variant="ghost"
+              className="w-full justify-start"
               onClick={openUnderConstructionDialog}
             >
               <Youtube
-                aria-hidden='true'
-                className='w-5 h-5 mr-2'
-              /> YouTube page
+                aria-hidden="true"
+                className="w-5 h-5 mr-2"
+              />{' '}
+              YouTube page
             </Button>
 
             <Button
-              variant='ghost'
-              className='w-full justify-start'
+              variant="ghost"
+              className="w-full justify-start"
               onClick={() => openLargeInfoDialog('terms')}
             >
               <Scale
-                aria-hidden='true'
-                className='w-5 h-5 mr-2'
-              /> Terms
+                aria-hidden="true"
+                className="w-5 h-5 mr-2"
+              />{' '}
+              Terms
             </Button>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
-                  variant='ghost'
-                  className='w-full justify-start'
+                  variant="ghost"
+                  className="w-full justify-start"
                   disabled={isSigningOut}
                 >
                   <LogOut
-                    aria-hidden='true'
-                    className='w-5 h-5 mr-2'
-                  /> Sign out
-                    <span className='flex-1'></span>
-                    {
-                      isSigningOut
-                      && <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-                    }
+                    aria-hidden="true"
+                    className="w-5 h-5 mr-2"
+                  />{' '}
+                  Sign out
+                  <span className="flex-1"></span>
+                  {isSigningOut && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
@@ -456,45 +422,37 @@ const Header = memo(({ items, pathname }: { items: IMainNavigationItem[], pathna
               </DropdownMenuContent>
             </DropdownMenu>
 
-
-
-            <Separator className='my-5' />
-
+            <Separator className="my-5" />
 
             <Button
-              variant='ghost'
-              className='w-full justify-start'
+              variant="ghost"
+              className="w-full justify-start"
               onClick={openUnderConstructionDialog}
             >
               <Youtube
-                aria-hidden='true'
-                className='w-5 h-5 mr-2'
-              /> What is Balancer?
+                aria-hidden="true"
+                className="w-5 h-5 mr-2"
+              />{' '}
+              What is Balancer?
             </Button>
 
             <Button
-              variant='ghost'
-              className='w-full justify-start'
+              variant="ghost"
+              className="w-full justify-start"
               onClick={openUnderConstructionDialog}
             >
               <Youtube
-                aria-hidden='true'
-                className='w-5 h-5 mr-2'
-              /> Platform walk-through
+                aria-hidden="true"
+                className="w-5 h-5 mr-2"
+              />{' '}
+              Platform walk-through
             </Button>
           </nav>
-
         </SheetContent>
-
       </Sheet>
-
     </nav>
   );
 });
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

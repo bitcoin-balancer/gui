@@ -38,17 +38,23 @@ type IColorService = {
   // ...
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                             TYPES                                              *
  ************************************************************************************************ */
 
 // tailwind color palette
-type ITailwindPaletteHue = 'H50' | 'H100' | 'H200' | 'H300' | 'H400' | 'H500' | 'H600' | 'H700'
-| 'H800' | 'H900' | 'H950';
+type ITailwindPaletteHue =
+  | 'H50'
+  | 'H100'
+  | 'H200'
+  | 'H300'
+  | 'H400'
+  | 'H500'
+  | 'H600'
+  | 'H700'
+  | 'H800'
+  | 'H900'
+  | 'H950';
 type ITailwindPalette = {
   [key in ITailwindPaletteHue]: string;
 };
@@ -57,9 +63,6 @@ type ITailwindPalette = {
 type IStateColors = {
   [key in IState]: string;
 };
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

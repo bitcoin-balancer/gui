@@ -8,18 +8,12 @@ import { ISectionID as ILandingSectionID } from '@/pages/landing/types.ts';
 
 // props used by the component
 type IFeaturesProps = {
-  breakpoint: IBreakpoint
-  openLargeInfoDialog: (data: ISectionID) => void,
-  navigateToSection: (id: ILandingSectionID) => void,
+  breakpoint: IBreakpoint;
+  openLargeInfoDialog: (data: ISectionID) => void;
+  navigateToSection: (id: ILandingSectionID) => void;
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export type {
-  IFeaturesProps,
-};
+export type { IFeaturesProps };

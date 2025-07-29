@@ -28,17 +28,14 @@ const __generateMarkerText = (actionsCount: number, isIncrease: boolean): string
  * @param isIncrease
  * @returns IMarker
  */
-const __buildMarker = (
-  time: number,
-  count: number,
-  isIncrease: boolean,
-): IMarker => buildChartMarker(
-  time,
-  isIncrease ? 'belowBar' : 'aboveBar',
-  isIncrease ? ColorService.INCREASE_1 : ColorService.DECREASE_1,
-  isIncrease ? 'arrowUp' : 'arrowDown',
-  __generateMarkerText(count, isIncrease),
-);
+const __buildMarker = (time: number, count: number, isIncrease: boolean): IMarker =>
+  buildChartMarker(
+    time,
+    isIncrease ? 'belowBar' : 'aboveBar',
+    isIncrease ? ColorService.INCREASE_1 : ColorService.DECREASE_1,
+    isIncrease ? 'arrowUp' : 'arrowDown',
+    __generateMarkerText(count, isIncrease),
+  );
 
 /**
  * Builds a list of markers for a type of action based on the candlestick open times for optimal
@@ -73,8 +70,8 @@ const __buildActionMarkers = (
   });
 
   // turn the record into a list
-  return Object.entries(markers).map(
-    ([time, count]) => __buildMarker(Number(time), count, isIncrease),
+  return Object.entries(markers).map(([time, count]) =>
+    __buildMarker(Number(time), count, isIncrease),
   );
 };
 
@@ -99,13 +96,7 @@ const buildPositionMarkers = (
   ].sort(sortRecords('time', 'asc'));
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export {
-  buildPositionMarkers,
-};
+export { buildPositionMarkers };

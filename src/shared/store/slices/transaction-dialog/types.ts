@@ -17,13 +17,7 @@ type ITransactionDialogSlice = {
   closeTransactionDialog: () => void;
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export type {
-  ITransactionDialogSlice,
-};
+export type { ITransactionDialogSlice };

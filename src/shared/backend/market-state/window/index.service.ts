@@ -22,10 +22,6 @@ const windowServiceFactory = (): IWindowService => {
 
   // ...
 
-
-
-
-
   /* **********************************************************************************************
    *                                         CONFIGURATION                                        *
    ********************************************************************************************** */
@@ -34,12 +30,8 @@ const windowServiceFactory = (): IWindowService => {
    * Retrieves the configuration object for the Window Module.
    * @returns Promise<IWindowConfig>
    */
-  const getConfig = (): Promise<IWindowConfig> => APIService.request(
-    'GET',
-    'market-state/window/config',
-    undefined,
-    true,
-  );
+  const getConfig = (): Promise<IWindowConfig> =>
+    APIService.request('GET', 'market-state/window/config', undefined, true);
 
   /**
    * Validates and updates the window's configuration.
@@ -54,19 +46,8 @@ const windowServiceFactory = (): IWindowService => {
    * - 21505: if the size of the window is an invalid integer
    * - 21506: if the interval is not supported
    */
-  const updateConfig = (newConfig: IWindowConfig, otpToken: string): Promise<void> => (
-    APIService.request(
-      'PUT',
-      'market-state/window/config',
-      { newConfig },
-      true,
-      otpToken,
-    )
-  );
-
-
-
-
+  const updateConfig = (newConfig: IWindowConfig, otpToken: string): Promise<void> =>
+    APIService.request('PUT', 'market-state/window/config', { newConfig }, true, otpToken);
 
   /* **********************************************************************************************
    *                                         MODULE BUILD                                         *
@@ -81,18 +62,10 @@ const windowServiceFactory = (): IWindowService => {
   });
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                        GLOBAL INSTANCE                                         *
  ************************************************************************************************ */
 const WindowService = windowServiceFactory();
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

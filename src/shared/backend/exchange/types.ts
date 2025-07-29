@@ -1,5 +1,3 @@
-
-
 /* ************************************************************************************************
  *                                            SERVICE                                             *
  ************************************************************************************************ */
@@ -12,10 +10,6 @@ type IExchangeService = {
   // properties
   // ...
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                             TYPES                                              *
@@ -78,14 +72,13 @@ type IExchangeConfig = {
  * The duration of each candlestick period (supported by all exchanges).
  */
 type ICandlestickInterval =
-'1m' | '5m' | '15m' | '30m' | // minutes
-'1h' | // hours
-'1d' | // days
-'1w'; // weeks
-
-
-
-
+  | '1m'
+  | '5m'
+  | '15m'
+  | '30m' // minutes
+  | '1h' // hours
+  | '1d' // days
+  | '1w'; // weeks
 
 /* ************************************************************************************************
  *                                          ACCOUNT DATA                                          *
@@ -136,10 +129,6 @@ type ITrade = {
   // the total comission charged in base or quote asset (whichever asset was received)
   comission: number;
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

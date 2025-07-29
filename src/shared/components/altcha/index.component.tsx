@@ -43,8 +43,6 @@ const Altcha = ({ onChange, debug = false }: IProps) => {
     };
   }, [onChange, debug]);
 
-
-
   return (
     <altcha-widget
       name="altcha-widget"
@@ -56,13 +54,7 @@ const Altcha = ({ onChange, debug = false }: IProps) => {
   );
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export {
-  Altcha,
-};
+export { Altcha };

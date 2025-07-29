@@ -1,18 +1,20 @@
-
-
 /* ************************************************************************************************
  *                                             TYPES                                              *
  ************************************************************************************************ */
 
 // sections that can be navigated to
-type ISectionID = 'position_sample' | 'characteristics' | 'features' | 'indicators' | 'planner'
-| 'exchanges' | 'monitoring' | 'technologies' | 'faq';
-
-
+type ISectionID =
+  | 'position_sample'
+  | 'characteristics'
+  | 'features'
+  | 'indicators'
+  | 'planner'
+  | 'exchanges'
+  | 'monitoring'
+  | 'technologies'
+  | 'faq';
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
  ************************************************************************************************ */
-export type {
-  ISectionID,
-};
+export type { ISectionID };

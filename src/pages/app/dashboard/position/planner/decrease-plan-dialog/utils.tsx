@@ -36,9 +36,8 @@ const buildDecreaseLevelPriceLines = (
  * @param valueB
  * @returns number
  */
-const __calculateAbsolutePercentageDifference = (valueA: number, valueB: number): number => (
-  Math.abs(calculatePercentageChange(valueA, valueB))
-);
+const __calculateAbsolutePercentageDifference = (valueA: number, valueB: number): number =>
+  Math.abs(calculatePercentageChange(valueA, valueB));
 
 /**
  * Checks if the planner is targeting a decrease level.
@@ -51,9 +50,8 @@ const __isTargetingDecreaseLevel = (
   targetPrice: number,
   levelPrice: number,
   maxPercentageDifference: number,
-): boolean => (
-  __calculateAbsolutePercentageDifference(targetPrice, levelPrice) < maxPercentageDifference
-);
+): boolean =>
+  __calculateAbsolutePercentageDifference(targetPrice, levelPrice) < maxPercentageDifference;
 
 /**
  * Verifies if the window state price line should be plotted based on the targeted price.
@@ -64,12 +62,11 @@ const __isTargetingDecreaseLevel = (
 const __shouldPlotWindowStatePriceLine = (
   plan: { canDecrease: true } & IDecreasePlan,
   maxPercentageDifference: number,
-): plan is { canDecrease: true, canDecreaseAtPrice: number } & IDecreasePlan => (
-  typeof plan.canDecreaseAtPrice === 'number'
-  && plan.decreaseLevels.filter((level) => (
-    __isTargetingDecreaseLevel(plan.canDecreaseAtPrice!, level.price, maxPercentageDifference)
-  )).length === 0
-);
+): plan is { canDecrease: true; canDecreaseAtPrice: number } & IDecreasePlan =>
+  typeof plan.canDecreaseAtPrice === 'number' &&
+  plan.decreaseLevels.filter((level) =>
+    __isTargetingDecreaseLevel(plan.canDecreaseAtPrice!, level.price, maxPercentageDifference),
+  ).length === 0;
 
 /**
  * Checks if the plan is targeting the decrease levels or the window state. Returns undefined if
@@ -91,10 +88,6 @@ const buildWindowStatePriceLine = (
   return undefined;
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                             BADGES                                             *
  ************************************************************************************************ */
@@ -108,14 +101,14 @@ const buildWindowStatePriceLine = (
 const buildPriceBadge = (
   plan: { canDecrease: true } & IDecreasePlan,
   canDecreaseAtPrice: string | undefined,
-): JSX.Element | undefined => (
-  typeof plan.canDecreaseAtPrice === 'number'
-  && typeof plan.canDecreaseAtPriceChange === 'number'
-    ? <Badge variant='secondary'>
-      {canDecreaseAtPrice} <span className='ml-2 text-increase-1'>+{plan.canDecreaseAtPriceChange}%</span>
+): JSX.Element | undefined =>
+  typeof plan.canDecreaseAtPrice === 'number' &&
+  typeof plan.canDecreaseAtPriceChange === 'number' ? (
+    <Badge variant="secondary">
+      {canDecreaseAtPrice}{' '}
+      <span className="ml-2 text-increase-1">+{plan.canDecreaseAtPriceChange}%</span>
     </Badge>
-    : undefined
-);
+  ) : undefined;
 
 /**
  * Builds the badge element that contains the formatted canDecreaseAtTime.
@@ -126,15 +119,10 @@ const buildPriceBadge = (
 const buildDateBadge = (
   plan: { canDecrease: true } & IDecreasePlan,
   canDecreaseAtTime: string | undefined,
-): JSX.Element | undefined => (
-  typeof plan.canDecreaseAtTime === 'number'
-    ? <Badge variant='secondary'>{canDecreaseAtTime}</Badge>
-    : undefined
-);
-
-
-
-
+): JSX.Element | undefined =>
+  typeof plan.canDecreaseAtTime === 'number' ? (
+    <Badge variant="secondary">{canDecreaseAtTime}</Badge>
+  ) : undefined;
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

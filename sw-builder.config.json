@@ -3,8 +3,5 @@
   "template": "base",
   "includeToPrecache": [],
   "excludeFilesFromPrecache": [],
-  "excludeMIMETypesFromCache": [
-    "application/json",
-    "text/plain"
-  ]
+  "excludeMIMETypesFromCache": ["application/json", "text/plain"]
 }

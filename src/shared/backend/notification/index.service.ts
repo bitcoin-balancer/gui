@@ -17,10 +17,6 @@ const notificationServiceFactory = (): INotificationService => {
 
   // ...
 
-
-
-
-
   /* **********************************************************************************************
    *                                           ACTIONS                                            *
    ********************************************************************************************** */
@@ -35,25 +31,13 @@ const notificationServiceFactory = (): INotificationService => {
    * - 10500: if the startAtID was provided and is not a valid identifier
    * - 10501: if the query limit is larger than the limit
    */
-  const list = (
-    limit: number,
-    startAtID?: number,
-  ): Promise<INotification[]> => {
+  const list = (limit: number, startAtID?: number): Promise<INotification[]> => {
     let urlPath: string = `notification?limit=${limit}`;
     if (typeof startAtID === 'number') {
       urlPath += `&startAtID=${startAtID}`;
     }
-    return APIService.request(
-      'GET',
-      urlPath,
-      undefined,
-      true,
-    );
+    return APIService.request('GET', urlPath, undefined, true);
   };
-
-
-
-
 
   /* **********************************************************************************************
    *                                         MODULE BUILD                                         *
@@ -67,18 +51,10 @@ const notificationServiceFactory = (): INotificationService => {
   });
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                        GLOBAL INSTANCE                                         *
  ************************************************************************************************ */
 const NotificationService = notificationServiceFactory();
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

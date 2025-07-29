@@ -1,5 +1,3 @@
-
-
 /* ************************************************************************************************
  *                                            SERVICE                                             *
  ************************************************************************************************ */
@@ -17,10 +15,6 @@ type IAPIErrorService = {
   deleteAll: (otpToken: string) => Promise<void>;
 };
 
-
-
-
-
 /* ************************************************************************************************
  *                                             TYPES                                              *
  ************************************************************************************************ */
@@ -29,17 +23,39 @@ type IAPIErrorService = {
  * API Error Origin
  * The invocation that triggered the error. It can be a specific function or a route.
  */
-type IAPIErrorOrigin = 'AutomatedTest' | 'Notification.broadcast' | 'APIErrorRouter.get'
-| 'APIErrorRouter.delete' | 'PingRouter.get' | 'AltchaRouter.get' | 'IPBlacklistRouter.get'
-| 'IPBlacklistRouter.post' | 'IPBlacklistRouter.put' | 'IPBlacklistRouter.delete'
-| 'UserRouter.get' | 'UserRouter.get.otp-secret' | 'UserRouter.get.password-updates'
-| 'UserRouter.post' | 'UserRouter.patch.nickname' | 'UserRouter.patch.authority'
-| 'UserRouter.patch.password' | 'UserRouter.patch.otpSecret' | 'UserRouter.delete' | 'JWTRouter.get'
-| 'JWTRouter.post.sign-in' | 'JWTRouter.post.refresh-jwt' | 'JWTRouter.post.sign-out'
-| 'VersionService.initialize.__buildVersion' | 'ServerRouter.get' | 'ServerRouter.get.alarms'
-| 'ServerRouter.put.alarms' | 'ServerService.initialize.__refetchState' | 'DatabaseRouter.get.summary'
-| 'DataJoinRouter.get.app-essentials' | 'DataJoinService.initialize.emitCompactAppEssentials'
-| 'NotificationRouter.get';
+type IAPIErrorOrigin =
+  | 'AutomatedTest'
+  | 'Notification.broadcast'
+  | 'APIErrorRouter.get'
+  | 'APIErrorRouter.delete'
+  | 'PingRouter.get'
+  | 'AltchaRouter.get'
+  | 'IPBlacklistRouter.get'
+  | 'IPBlacklistRouter.post'
+  | 'IPBlacklistRouter.put'
+  | 'IPBlacklistRouter.delete'
+  | 'UserRouter.get'
+  | 'UserRouter.get.otp-secret'
+  | 'UserRouter.get.password-updates'
+  | 'UserRouter.post'
+  | 'UserRouter.patch.nickname'
+  | 'UserRouter.patch.authority'
+  | 'UserRouter.patch.password'
+  | 'UserRouter.patch.otpSecret'
+  | 'UserRouter.delete'
+  | 'JWTRouter.get'
+  | 'JWTRouter.post.sign-in'
+  | 'JWTRouter.post.refresh-jwt'
+  | 'JWTRouter.post.sign-out'
+  | 'VersionService.initialize.__buildVersion'
+  | 'ServerRouter.get'
+  | 'ServerRouter.get.alarms'
+  | 'ServerRouter.put.alarms'
+  | 'ServerService.initialize.__refetchState'
+  | 'DatabaseRouter.get.summary'
+  | 'DataJoinRouter.get.app-essentials'
+  | 'DataJoinService.initialize.emitCompactAppEssentials'
+  | 'NotificationRouter.get';
 
 /**
  * API Error
@@ -67,10 +83,6 @@ type IAPIError = {
   // the arguments used when the error was thrown
   args: Record<string, unknown> | null;
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

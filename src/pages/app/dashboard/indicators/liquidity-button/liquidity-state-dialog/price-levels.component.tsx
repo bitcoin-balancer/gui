@@ -9,7 +9,10 @@ import {
   TableRow,
 } from '@/shared/shadcn/components/ui/table.tsx';
 import { Progress } from '@/shared/shadcn/components/ui/progress.tsx';
-import { formatBitcoinAmount, formatDollarAmount } from '@/shared/services/transformers/index.service.ts';
+import {
+  formatBitcoinAmount,
+  formatDollarAmount,
+} from '@/shared/services/transformers/index.service.ts';
 import {
   ILiquiditySideID,
   ILiquiditySide,
@@ -42,8 +45,6 @@ const calculatePercentageRepresentation = (intensity: ILiquidityIntensity): numb
   }
 };
 
-
-
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
@@ -52,40 +53,37 @@ const calculatePercentageRepresentation = (intensity: ILiquidityIntensity): numb
  * Price Levels Component
  * Component in charge of displaying the price levels for a liquidity side.
  */
-const PriceLevels = ({ id, side }: { id: ILiquiditySideID, side: ILiquiditySide }) => {
+const PriceLevels = ({ id, side }: { id: ILiquiditySideID; side: ILiquiditySide }) => {
   /* **********************************************************************************************
    *                                       REACTIVE VALUES                                        *
    ********************************************************************************************** */
 
   // the list of processed price levels
   const priceLevels = useMemo(
-    () => side.levels.map((level) => ({
-      price: formatDollarAmount(level[0]),
-      intensity: level[2],
-      liquidity: formatBitcoinAmount(level[1], 3),
-      share: calculatePercentageRepresentation(level[2]),
-      color: id === 'bids' ? ColorService.INCREASE_0 : ColorService.DECREASE_0,
-    })),
+    () =>
+      side.levels.map((level) => ({
+        price: formatDollarAmount(level[0]),
+        intensity: level[2],
+        liquidity: formatBitcoinAmount(level[1], 3),
+        share: calculatePercentageRepresentation(level[2]),
+        color: id === 'bids' ? ColorService.INCREASE_0 : ColorService.DECREASE_0,
+      })),
     [id, side],
   );
-
-
-
-
 
   /* **********************************************************************************************
    *                                           COMPONENT                                          *
    ********************************************************************************************** */
   return (
-    <Table className='pt-0'>
+    <Table className="pt-0">
       <TableCaption>A list of {id}.</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead>Price</TableHead>
           <TableHead>Intensity</TableHead>
-          <TableHead className='text-right'>
-            <span className='hidden sm:inline'>Liquidity</span>
-            <span className='sm:hidden'>Liq.</span>
+          <TableHead className="text-right">
+            <span className="hidden sm:inline">Liquidity</span>
+            <span className="sm:hidden">Liq.</span>
           </TableHead>
         </TableRow>
       </TableHeader>
@@ -93,28 +91,22 @@ const PriceLevels = ({ id, side }: { id: ILiquiditySideID, side: ILiquiditySide 
         {priceLevels.map((level) => (
           <TableRow
             key={level.price}
-            className='hover:contrast-115'
+            className="hover:contrast-115"
           >
-            <TableCell
-              className='font-medium'
-            >{level.price}</TableCell>
+            <TableCell className="font-medium">{level.price}</TableCell>
             <TableCell>
               <Progress
                 className={id === 'bids' ? '[&>*]:bg-increase-1' : '[&>*]:bg-decrease-1'}
                 value={level.share}
               />
             </TableCell>
-            <TableCell className='text-right'>{level.liquidity}</TableCell>
+            <TableCell className="text-right">{level.liquidity}</TableCell>
           </TableRow>
         ))}
       </TableBody>
     </Table>
   );
 };
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

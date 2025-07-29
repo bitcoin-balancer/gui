@@ -1,6 +1,10 @@
 import { memo } from 'react';
 import Autoplay from 'embla-carousel-autoplay';
-import { Carousel, CarouselContent, CarouselItem } from '@/shared/shadcn/components/ui/carousel.tsx';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from '@/shared/shadcn/components/ui/carousel.tsx';
 
 /* ************************************************************************************************
  *                                           CONSTANTS                                            *
@@ -15,10 +19,6 @@ const EXCHANGES = [
   { id: 'okx', className: 'max-w-20 sm:max-w-24' },
 ];
 
-
-
-
-
 /* ************************************************************************************************
  *                                         IMPLEMENTATION                                         *
  ************************************************************************************************ */
@@ -28,61 +28,46 @@ const EXCHANGES = [
  * Component in charge of displaying the list of supported exchanges.
  */
 const Exchanges = memo(() => (
-  <div
-    className='w-full flex justify-center items-start bg-primary text-slate-50 shadow-4'
-  >
-    <section
-      className='w-full lg:w-10/12 xl:w-9/12 2xl:w-7/12 py-20 md:py-28 px-3'
-    >
-      <header className='text-center'>
-        <h2
-          className='text-center text-4xl sm:text-5xl font-bold'
-        >Exchange-agnostic</h2>
-        <p className='text-xs sm:text-sm mt-2 text-slate-200'>
+  <div className="w-full flex justify-center items-start bg-primary text-slate-50 shadow-4">
+    <section className="w-full lg:w-10/12 xl:w-9/12 2xl:w-7/12 py-20 md:py-28 px-3">
+      <header className="text-center">
+        <h2 className="text-center text-4xl sm:text-5xl font-bold">Exchange-agnostic</h2>
+        <p className="text-xs sm:text-sm mt-2 text-slate-200">
           Operate with your preferred platform
         </p>
       </header>
 
       <Carousel
-        className='mt-10'
+        className="mt-10"
         opts={{
           align: 'center',
           loop: true,
         }}
-        plugins={[
-          Autoplay({ delay: 1500 }),
-        ]}
+        plugins={[Autoplay({ delay: 1500 })]}
       >
         <CarouselContent>
-          {
-            EXCHANGES.map((item) => (
-              <CarouselItem
-                key={item.id}
-                className='basis-full'>
-                <div
-                  className='w-full flex justify-center'
-                >
-                  <img
-                    src={`exchanges/white/${item.id}.png`}
-                    alt={`${item.id} logo`}
-                    className={item.className}
-                    width='175'
-                    height='50'
-                    loading='lazy'
-                  />
-                </div>
-              </CarouselItem>
-            ))
-          }
+          {EXCHANGES.map((item) => (
+            <CarouselItem
+              key={item.id}
+              className="basis-full"
+            >
+              <div className="w-full flex justify-center">
+                <img
+                  src={`exchanges/white/${item.id}.png`}
+                  alt={`${item.id} logo`}
+                  className={item.className}
+                  width="175"
+                  height="50"
+                  loading="lazy"
+                />
+              </div>
+            </CarouselItem>
+          ))}
         </CarouselContent>
       </Carousel>
     </section>
   </div>
 ));
-
-
-
-
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *
