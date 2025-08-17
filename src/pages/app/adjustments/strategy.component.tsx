@@ -142,20 +142,20 @@ const PRISTINE_FORM: IStrategyForm = {
 
 // the list of gainRequirements
 const GAIN_REQUIREMENTS: IInputList = [
-  { name: 'gainRequirement0', placeholder: '0.50' },
-  { name: 'gainRequirement1', placeholder: '1.50' },
-  { name: 'gainRequirement2', placeholder: '2.50' },
-  { name: 'gainRequirement3', placeholder: '3.50' },
-  { name: 'gainRequirement4', placeholder: '5.00' },
+  { name: 'gainRequirement0', placeholder: '1.50' },
+  { name: 'gainRequirement1', placeholder: '3.50' },
+  { name: 'gainRequirement2', placeholder: '5.50' },
+  { name: 'gainRequirement3', placeholder: '7.50' },
+  { name: 'gainRequirement4', placeholder: '10.00' },
 ];
 
 // the list of percentages
 const PERCENTAGES: IInputList = [
-  { name: 'percentage0', placeholder: '0.50' },
-  { name: 'percentage1', placeholder: '1.50' },
-  { name: 'percentage2', placeholder: '2.50' },
-  { name: 'percentage3', placeholder: '3.50' },
-  { name: 'percentage4', placeholder: '5.00' },
+  { name: 'percentage0', placeholder: '5.00' },
+  { name: 'percentage1', placeholder: '10.00' },
+  { name: 'percentage2', placeholder: '17.50' },
+  { name: 'percentage3', placeholder: '25.00' },
+  { name: 'percentage4', placeholder: '35.00' },
 ];
 
 // the list of frequencies
@@ -456,7 +456,7 @@ const Strategy = ({ closeDialog }: IFormProps) => {
                       <FormControl>
                         <Input
                           type="number"
-                          placeholder="72"
+                          placeholder="48"
                           {...field}
                           autoComplete="off"
                           disabled={isSubmitting}
