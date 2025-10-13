@@ -265,17 +265,14 @@ const Positions = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               {breakpoint === 'xs' || breakpoint === 'sm' ? (
-                <Button
-                  size="icon"
-                  disabled={processed.pnlChart.length === 0}
-                >
+                <Button size="icon">
                   <Calendar
                     className="w-5 h-5"
                     aria-hidden="true"
                   />
                 </Button>
               ) : (
-                <Button disabled={processed.pnlChart.length === 0}>
+                <Button>
                   <Calendar
                     className="mr-1 w-5 h-5"
                     aria-hidden="true"
